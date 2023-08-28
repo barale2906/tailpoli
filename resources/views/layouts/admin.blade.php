@@ -14,7 +14,10 @@
         <!-- Font Awesome -->
         <script src="https://kit.fontawesome.com/c5e988e23f.js" crossorigin="anonymous"></script>
 
-        <!-- Scripts -->
+        <!-- Font Awesome -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Sweetalert2 -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
@@ -39,5 +42,11 @@
         @stack('modals')
 
         @livewireScripts
+        @if (session('Swal'))
+            <script>
+                Swal.fire(@json(session('Swal')))
+            </script>
+        @endif
+
     </body>
 </html>
