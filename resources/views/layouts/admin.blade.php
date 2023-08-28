@@ -20,7 +20,9 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" x-data="{
+        open: false,
+    }">
 
         @include('layouts.includes.admin.nav');
         @include('layouts.includes.admin.aside');
