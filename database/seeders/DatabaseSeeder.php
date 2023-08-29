@@ -15,8 +15,11 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(100)->create();
 
         \App\Models\User::factory()->create([
-             'name' => 'Ing Alexander Barajas V',
-             'email' => 'alexanderbarajas@gmail.com',
-         ]);
+            'name' => 'Ing Alexander Barajas V',
+            'email' => 'alexanderbarajas@gmail.com',
+        ]);
+        $this->call([
+            CountrySeeder::class
+        ]);
     }
 }
