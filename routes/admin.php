@@ -1,17 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\CountryController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
-
-    /* session()->flash('Swal', [
-
-            'icon'=> 'error',
-            'title'=> 'Oops...',
-            'text'=> 'Something went wrong!',
-            'footer'=> '<a href="">Why do I have this issue?</a>'
-
-    ]); */
-
     return view('admin.dashboard');
 })->name('dashboard');
+
+Route::resource('/countries', CountryController::class)->except('show');

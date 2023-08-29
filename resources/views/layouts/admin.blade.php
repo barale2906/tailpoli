@@ -22,6 +22,8 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        @stack('css')
     </head>
     <body class="font-sans antialiased"
     :class="{'overflow-hidden':  open}"
@@ -47,6 +49,6 @@
                 Swal.fire(@json(session('Swal')))
             </script>
         @endif
-
+        @stack('js')
     </body>
 </html>

@@ -1,16 +1,16 @@
 @php
     $links = [
         [
-            'name'      => 'CARTERA',
+            'name'      => 'ADMINISTRATIVO',
             'url'       => route('admin.dashboard'),
             'active'    => request()->routeIs('admin.dashboard'),
             'icon'      =>'fa-solid fa-cash-register',
         ],
         [
-            'name'      => 'MATRICULAS',
-            'url'       => route('admin.dashboard'),
-            'active'    => request()->routeIs('admin.dash'),
-            'icon'      =>'fa-solid fa-graduation-cap',
+            'name'      => 'COUNTRY',
+            'url'       => route('admin.countries.index'),
+            'active'    => request()->routeIs('admin.countries.*'),
+            'icon'      =>'fa-solid fa-earth-americas',
         ]
     ]
 @endphp
