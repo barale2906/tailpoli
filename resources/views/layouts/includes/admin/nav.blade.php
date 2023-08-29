@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<nav class="fixed top-0 z-50 w-full bg-blue-300 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start">
@@ -11,7 +11,7 @@
                     </svg>
                 </button>
                 <a href="/admin" class="flex ml-2 md:mr-24">
-                    <img src="{{env('APP_URL')}}" class="h-8 mr-3" alt="{{env('APP_NAME')}} Logo" />
+                    <img src="{{asset('img/logo.png')}}" class="object-cover h-8 mr-3 rounded-t-lg" alt="{{env('APP_NAME')}} Logo" />
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{{env('APP_NAME')}}</span>
                 </a>
             </div>
