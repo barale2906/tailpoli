@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
+        <title>@stack('title')</title>
 
         <link rel="shortcut icon" href="{{asset('img/icon.ico')}}">
 
@@ -37,8 +38,8 @@
         @include('layouts.includes.admin.nav');
         @include('layouts.includes.admin.aside');
 
-        <div class="p-4 sm:ml-64 bg-blue-100" x-on:click="open: false">
-            <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+        <div class="p-2 sm:ml-64 bg-white h-full" x-on:click="open: false">
+            <div class="p-4 border-2 border-blue-500 border-dashed rounded-lg dark:border-gray-700 mt-14">
                 {{ $slot }}
             </div>
         </div>

@@ -1,4 +1,7 @@
 <x-admin-layout>
+    @push('title')
+        Editar | Eliminar País
+    @endpush
     <form action="{{route('admin.countries.update', $country)}}"
     method="POST"
     class="bg-white rounded-lg p-6 shadow-lg"

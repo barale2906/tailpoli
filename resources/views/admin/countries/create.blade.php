@@ -1,4 +1,7 @@
 <x-admin-layout>
+    @push('title')
+        Crear País
+    @endpush
     <form action="{{route('admin.countries.store')}}"
     method="POST"
     class="bg-white rounded-lg p-6 shadow-lg"
