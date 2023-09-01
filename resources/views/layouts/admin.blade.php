@@ -47,6 +47,7 @@
         @stack('modals')
 
         @livewireScripts
+
         @if (session('Swal'))
             <script>
                 Swal.fire(@json(session('Swal')))
