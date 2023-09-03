@@ -17,9 +17,11 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Ing Alexander Barajas V',
             'email' => 'alexanderbarajas@gmail.com',
+            'password'=>bcrypt('10203040')
         ]);
         $this->call([
-            CountrySeeder::class
+            CountrySeeder::class,
+            RegimenSaludSeeder::class
         ]);
     }
 }

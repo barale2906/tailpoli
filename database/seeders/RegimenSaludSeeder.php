@@ -12,6 +12,24 @@ class RegimenSaludSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\Admin\RegimenSalud::create([
+            'name' => 'Sisben !',
+        ]);
+
+        \App\Models\Admin\RegimenSalud::create([
+            'name' => 'Sisben 1',
+        ]);
+
+        \App\Models\Admin\RegimenSalud::create([
+            'name' => 'Sisben 2',
+        ]);
+
+        \App\Models\Admin\RegimenSalud::create([
+            'name' => 'Sisben 3',
+        ]);
+
+        \App\Models\Admin\RegimenSalud::create([
+            'name' => 'Sisben 4',
+        ]);
     }
 }
