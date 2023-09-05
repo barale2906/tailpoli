@@ -73,12 +73,14 @@ class RegimenSalud extends Component
             'timer' => 1500
         ]); */
 
+        $this->dispatch('alerta', name:$this->name);
         $this->resetFields();
 
         //refresh
         $this->is_creating = false;
         $this->is_modify = !$this->is_modify;
         $this->dispatch('refresh');
+
     }
     // Mostrar Regimen de Salud
     public function showRegimen($regimen, $act){
@@ -109,6 +111,7 @@ class RegimenSalud extends Component
             'name'=>$this->name
         ]);
 
+        $this->dispatch('alerta');
         $this->resetFields();
 
         //refresh

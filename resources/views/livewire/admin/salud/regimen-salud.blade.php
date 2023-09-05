@@ -67,6 +67,7 @@
             </a>
         </form>
     @endif
+
     @if ($is_editing)
         <form wire:submit.prevent="editRegimen">
             <div class="mb-6">
@@ -88,6 +89,7 @@
             </a>
         </form>
     @endif
+
     @if ($is_deleting)
         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 " role="alert">
             <span class="font-medium">¡IMPORTANTE!</span> ¿Está seguro(a) de cambiar el estado de <strong class="uppercase text-3xl"><h1>{{$name}}</h1></strong>.
@@ -99,4 +101,22 @@
             <i class="fa-solid fa-rectangle-xmark"></i> cancelar
         </a>
     @endif
+
+    @push('js')
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('alerta', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'center-end',
+                        icon: 'success',
+                        title: 'Se ha creado correctamente el regímen de salud: '+variable['name'],
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                });
+            });
+        </script>
+    @endpush
 </div>
