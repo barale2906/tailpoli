@@ -3,14 +3,14 @@
 namespace App\Livewire\Admin\Salud;
 
 use App\Models\Admin\RegimenSalud;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
-class RegimenEditar extends Component
+class RegimenInactivar extends Component
 {
     public $name = '';
     public $id = '';
     public $regimenElegido;
+    public $status = true;
 
     /**
      * Reglas de validación
@@ -25,40 +25,39 @@ class RegimenEditar extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'id');
+        $this->reset('name', 'id', 'status');
     }
 
     public function mount($regimenElegido = null)
     {
         $this->name=$regimenElegido['name'];
         $this->id=$regimenElegido['id'];
+        if($regimenElegido['status']===1){
+            $this->status=true;
+        }else{
+            $this->status=false;
+        }
     }
 
-    //Actualizar Regimen de Salud
-    public function editRegimen()
+    //Inactivar Regimen de Salud
+    public function inactivarRegimen()
     {
-        // validate
-        $this->validate();
 
         //Actualizar registros
         RegimenSalud::whereId($this->id)->update([
-            'name'=>$this->name
+            'status'=>!$this->status
         ]);
 
-        $this->dispatch('alerta', name:'Se ha modificado correctamente el regímen de salud: '.$this->name);
+        $this->dispatch('alerta', name:'Se cambio el estado del regímen de salud: '.$this->name);
         $this->resetFields();
 
         //refresh
         $this->dispatch('refresh');
-        $this->dispatch('Editando-regimen');
+        $this->dispatch('Inactivando-regimen');
     }
-
-
-
-
 
     public function render()
     {
-        return view('livewire.admin.salud.regimen-editar');
+        return view('livewire.admin.salud.regimen-inactivar');
     }
 }

@@ -54,10 +54,14 @@ class RegimenSalud extends Component
         $this->is_modify = !$this->is_modify;
         $this->is_editing = !$this->is_editing;
     }
+
+    //Activar evento
+    #[On('Inactivando-regimen')]
     //Mostrar formulario de inactivación
     public function updatedIsDeleting()
     {
         $this->is_modify = !$this->is_modify;
+        $this->is_deleting = !$this->is_deleting;
         //$this->resetFields();
     }
 
@@ -65,8 +69,8 @@ class RegimenSalud extends Component
     public function showRegimen($regimen, $act){
 
         $this->regimenElegido=$regimen;
-
         $this->is_modify = !$this->is_modify;
+
         if($act===0){
             $this->is_editing=!$this->is_editing;
         }else{
