@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Salud;
 use App\Models\Admin\RegimenSalud as AdminRegimenSalud;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class RegimenSalud extends Component
 {
@@ -12,10 +13,19 @@ class RegimenSalud extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $pages = 15;
     public $regimenElegido;
 
+    use WithPagination;
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    //Numero de registros
+    public function paginas($valor)
+    {
+        $this->resetPage();
+        $this->pages=$valor;
+    }
 
     //Activar evento
     #[On('created-regimen')]
@@ -59,7 +69,7 @@ class RegimenSalud extends Component
 
     public function render()
     {
-        $regimenes = AdminRegimenSalud::all();
+        $regimenes = AdminRegimenSalud::paginate($this->pages);
 
         return view('livewire.admin.salud.regimen-salud', [
             'regimenes' => $regimenes

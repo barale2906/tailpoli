@@ -43,6 +43,23 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="m-3 w-auto grid grid-cols-2 gap-4 bg-blue-100">
+                <div>
+                    <label class="relative inline-flex items-center mb-4 cursor-pointer">
+                        <span class="ml-3 mr-3 text-sm font-medium text-gray-900 dark:text-gray-300">Registros:</span>
+                        <select wire:click="paginas($event.target.value)" id="countries" class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value=15>15</option>
+                            <option value=20>20</option>
+                            <option value=20>50</option>
+                            <option value=100>100</option>
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    {{ $regimenes->links() }}
+                </div>
+            </div>
+
         </div>
     @endif
 
