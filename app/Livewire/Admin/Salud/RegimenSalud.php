@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Salud;
 
 use App\Models\Admin\RegimenSalud as AdminRegimenSalud;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class RegimenSalud extends Component
@@ -23,7 +24,7 @@ class RegimenSalud extends Component
      * Reglas de validación
      */
     protected $rules = [
-        'name' => 'required'
+        'name' => 'required|max:100'
     ];
 
     /**
@@ -31,13 +32,16 @@ class RegimenSalud extends Component
      * @return void
      */
     public function resetFields(){
-        $this->name = '';
+        $this->reset('name');
     }
 
+    //Activar evento
+    #[On('created-regimen')]
     //Mostrar formulario de creación
     public function updatedIsCreating()
     {
         $this->is_modify = !$this->is_modify;
+        $this->is_creating = !$this->is_creating;
         $this->resetFields();
     }
 
@@ -54,25 +58,6 @@ class RegimenSalud extends Component
         $this->resetFields();
     }
 
-    // Crear Regimen de Salud
-    public function newRegimen(){
-        // validate
-        $this->validate();
-
-        //Crear registro
-        AdminRegimenSalud::create([
-            'name'=>strtolower($this->name),
-        ]);
-
-        $this->dispatch('alerta', name:'Se ha creado correctamente el regímen de salud: '.$this->name);
-        $this->resetFields();
-
-        //refresh
-        $this->is_creating = false;
-        $this->is_modify = !$this->is_modify;
-        $this->dispatch('refresh');
-
-    }
     // Mostrar Regimen de Salud
     public function showRegimen($regimen, $act){
         $this->is_modify = !$this->is_modify;
