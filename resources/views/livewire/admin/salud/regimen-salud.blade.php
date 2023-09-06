@@ -111,7 +111,7 @@
                     Swal.fire({
                         position: 'center-end',
                         icon: 'success',
-                        title: 'Se ha creado correctamente el regímen de salud: '+variable['name'],
+                        title: variable['name'],
                         showConfirmButton: false,
                         timer: 2000
                     })

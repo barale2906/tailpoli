@@ -63,17 +63,8 @@ class RegimenSalud extends Component
         AdminRegimenSalud::create([
             'name'=>strtolower($this->name),
         ]);
-        // Notificación
 
-        /* session()->flash('Swal', [
-            'position' => 'top-end',
-            'icon' => 'success',
-            'title' => 'Se creo correctamente el Régimen: '.$this->name,
-            'showConfirmButton' => false,
-            'timer' => 1500
-        ]); */
-
-        $this->dispatch('alerta', name:$this->name);
+        $this->dispatch('alerta', name:'Se ha creado correctamente el regímen de salud: '.$this->name);
         $this->resetFields();
 
         //refresh
@@ -111,7 +102,7 @@ class RegimenSalud extends Component
             'name'=>$this->name
         ]);
 
-        $this->dispatch('alerta');
+        $this->dispatch('alerta', name:'Se ha modificado correctamente el regímen de salud: '.$this->name);
         $this->resetFields();
 
         //refresh
@@ -129,6 +120,7 @@ class RegimenSalud extends Component
             'status'=>!$this->status
         ]);
 
+        $this->dispatch('alerta', name:'Se cambio el estado del regímen de salud: '.$this->name);
         $this->resetFields();
 
         //refresh
