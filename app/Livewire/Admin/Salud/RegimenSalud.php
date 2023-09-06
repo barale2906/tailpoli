@@ -12,29 +12,10 @@ class RegimenSalud extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
-    public $name = '';
-    public $id = '';
-    public $status = true;
-    public $estado = false;
     public $regimenElegido;
 
 
     protected $listeners = ['refresh' => '$refresh'];
-
-    /**
-     * Reglas de validación
-     */
-    /* protected $rules = [
-        'name' => 'required|max:100'
-    ]; */
-
-    /**
-     * Reset de todos los campos
-     * @return void
-     */
-    /* public function resetFields(){
-        $this->reset('name');
-    } */
 
     //Activar evento
     #[On('created-regimen')]
@@ -43,7 +24,6 @@ class RegimenSalud extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_creating = !$this->is_creating;
-        //$this->resetFields();
     }
 
     //Activar evento
@@ -62,7 +42,6 @@ class RegimenSalud extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_deleting = !$this->is_deleting;
-        //$this->resetFields();
     }
 
     // Mostrar Regimen de Salud
@@ -76,51 +55,6 @@ class RegimenSalud extends Component
         }else{
             $this->is_deleting=!$this->is_deleting;
         }
-        /* $this->name=$regimen['name'];
-        $this->id=$regimen['id'];
-        if($regimen['status']===1){
-            $this->status=true;
-        }else{
-            $this->status=false;
-        } */
-    }
-
-    //Actualizar Regimen de Salud
-    /* public function editRegimen()
-    {
-        // validate
-        $this->validate();
-
-        //Actualizar registros
-        AdminRegimenSalud::whereId($this->id)->update([
-            'name'=>$this->name
-        ]);
-
-        $this->dispatch('alerta', name:'Se ha modificado correctamente el regímen de salud: '.$this->name);
-        $this->resetFields();
-
-        //refresh
-        $this->is_editing = false;
-        $this->is_modify = !$this->is_modify;
-        $this->dispatch('refresh');
-    } */
-
-    //Inactivar Regimen de Salud
-    public function inactivarRegimen()
-    {
-
-        //Actualizar registros
-        AdminRegimenSalud::whereId($this->id)->update([
-            'status'=>!$this->status
-        ]);
-
-        $this->dispatch('alerta', name:'Se cambio el estado del regímen de salud: '.$this->name);
-        $this->resetFields();
-
-        //refresh
-        $this->is_deleting = false;
-        $this->is_modify = !$this->is_modify;
-        $this->dispatch('refresh');
     }
 
     public function render()

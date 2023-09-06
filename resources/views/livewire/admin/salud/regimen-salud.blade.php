@@ -69,7 +69,7 @@
                         icon: 'success',
                         title: variable['name'],
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 1500
                     })
                 });
             });
