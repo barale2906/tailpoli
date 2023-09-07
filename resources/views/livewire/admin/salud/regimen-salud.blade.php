@@ -1,4 +1,7 @@
 <div>
+    <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
+        <h1 class="text-xl uppercase">regímenes de salud</h1>
+    </div>
     @if ($is_modify)
         <div class="flex justify-end mb-4 ">
             <div class="w-full">
@@ -97,7 +100,6 @@
                     {{ $regimenes->links() }}
                 </div>
             </div>
-
         </div>
     @endif
 
