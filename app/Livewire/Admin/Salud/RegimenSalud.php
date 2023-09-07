@@ -107,15 +107,6 @@ class RegimenSalud extends Component
 
     public function render()
     {
-        /*
-        $regimenes = AdminRegimenSalud::query();
-        $regimenes->where('name', 'like', "%$this->search%");
-
-
-        return view('livewire.admin.salud.regimen-salud', [
-            'regimenes' => $regimenes->paginate($this->pages)
-        ]); */
-
         return view('livewire.admin.salud.regimen-salud', [
             'regimenes' => $this->regimenes()
         ]);

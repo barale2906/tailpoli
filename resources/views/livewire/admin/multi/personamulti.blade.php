@@ -2,6 +2,7 @@
     <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
         <h1 class="text-xl uppercase">personas multiculturales</h1>
     </div>
+
     @if ($is_modify)
         <div class="flex justify-end mb-4 ">
             <a href="#" wire:click.prevent="$dispatch('created-multi')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
@@ -82,4 +83,34 @@
             </div>
         </div>
     @endif
+
+    @if ($is_creating)
+        <livewire:admin.multi.personamulti-create />
+    @endif
+
+    @if ($is_editing)
+        <livewire:admin.salud.regimen-editar :regimenElegido="$regimenElegido" />
+    @endif
+
+    @if ($is_deleting)
+        <livewire:admin.salud.regimen-inactivar :regimenElegido="$regimenElegido" />
+    @endif
+
+    @push('js')
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('alerta', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: variable['name'],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+            });
+        </script>
+    @endpush
 </div>
