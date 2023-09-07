@@ -12,6 +12,9 @@ Route::get('/saluds', function () {
     return view('admin.salud.index');
 })->name('saluds');
 
+Route::get('/multis', function () {
+    return view('admin.multi.index');
+})->name('multis');
 
 
 Route::resource('/countries', CountryController::class)->except('show');
