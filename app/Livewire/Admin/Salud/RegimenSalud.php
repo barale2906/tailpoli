@@ -15,20 +15,33 @@ class RegimenSalud extends Component
     public $is_deleting = false;
 
     public $regimenElegido;
-    public $search='';
+    public $buscar='';
+    public $buscamin='';
 
     public $ordena='id';
     public $ordenado='ASC';
-    public $pages = 3;
+    public $pages = 10;
 
     use WithPagination;
 
     protected $listeners = ['refresh' => '$refresh'];
 
+    //Cargar variable
+    public function buscaText(){
+        $this->resetPage();
+        $this->buscamin=strtolower($this->buscar);
+    }
+
+    //Limpiar variables
+    public function limpiar(){
+        $this->reset('buscamin', 'buscar');
+        $this->resetPage();
+    }
+
     // Muestra los regimenes activos
     private function regimenes()
     {
-        return AdminRegimenSalud::where('name', 'like', "%".$this->search."%")
+        return AdminRegimenSalud::where('name', 'like', "%".$this->buscamin."%")
                                 ->orderBy($this->ordena, $this->ordenado)
                                 ->paginate($this->pages);
     }
