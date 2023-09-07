@@ -13,18 +13,43 @@ class RegimenSalud extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
-    public $pages = 15;
+
     public $regimenElegido;
+    public $search='';
+
+    public $ordena='id';
+    public $ordenado='ASC';
+    public $pages = 3;
 
     use WithPagination;
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    // Muestra los regimenes activos
+    private function regimenes()
+    {
+        return AdminRegimenSalud::where('name', 'like', "%".$this->search."%")
+                                ->orderBy($this->ordena, $this->ordenado)
+                                ->paginate($this->pages);
+    }
 
     //Numero de registros
     public function paginas($valor)
     {
         $this->resetPage();
         $this->pages=$valor;
+    }
+
+    // Ordenar Registros
+    public function organizar($campo)
+    {
+        if($this->ordenado === 'ASC')
+        {
+            $this->ordenado = 'DESC';
+        }else{
+            $this->ordenado = 'ASC';
+        }
+        return $this->ordena = $campo;
     }
 
     //Activar evento
@@ -69,10 +94,17 @@ class RegimenSalud extends Component
 
     public function render()
     {
-        $regimenes = AdminRegimenSalud::paginate($this->pages);
+        /*
+        $regimenes = AdminRegimenSalud::query();
+        $regimenes->where('name', 'like', "%$this->search%");
+
 
         return view('livewire.admin.salud.regimen-salud', [
-            'regimenes' => $regimenes
+            'regimenes' => $regimenes->paginate($this->pages)
+        ]); */
+
+        return view('livewire.admin.salud.regimen-salud', [
+            'regimenes' => $this->regimenes()
         ]);
     }
 }

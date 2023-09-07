@@ -1,5 +1,13 @@
 <div>
     @if ($is_modify)
+        <div class="w-full">
+            <input
+                type="text"
+                placeholder="Buscar..."
+                class="bg-blue-100 border-0 rounded-md p-3"
+                wire:model.debounce.150ms="search"
+            >
+        </div>
         <div class="flex justify-end mb-4 ">
             <a href="#" wire:click.prevent="$dispatch('created-regimen')" class="text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
                 <i class="fa-solid fa-plus"></i> crear
@@ -9,11 +17,29 @@
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('id')">
                             ID
+                            @if ($ordena != 'id')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('name')">
                             Régimen
+                            @if ($ordena != 'name')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
                         </th>
                         <th scope="col" class="px-6 py-3">
 
@@ -43,7 +69,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="m-3 w-auto grid grid-cols-2 gap-4 bg-blue-100">
+            <div class="mt-2 p-1 w-auto rounded-lg grid grid-cols-2 gap-4 bg-blue-100">
                 <div>
                     <label class="relative inline-flex items-center mb-4 cursor-pointer">
                         <span class="ml-3 mr-3 text-sm font-medium text-gray-900 dark:text-gray-300">Registros:</span>
