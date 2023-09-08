@@ -62,7 +62,7 @@ class Personamulti extends Component
     }
 
     // Mostrar Regimen de Salud
-    public function showRegimen($multi, $act){
+    public function showMulti($multi, $act){
 
         $this->multiElegido=$multi;
         $this->is_modify = !$this->is_modify;
@@ -72,6 +72,15 @@ class Personamulti extends Component
         }else{
             $this->is_deleting=!$this->is_deleting;
         }
+    }
+
+    //Activar evento
+    #[On('Inactivando')]
+    //Mostrar formulario de inactivación
+    public function updatedIsDeleting()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_deleting = !$this->is_deleting;
     }
 
     private function personMultis()

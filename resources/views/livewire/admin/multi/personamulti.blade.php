@@ -1,6 +1,6 @@
 <div>
     <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
-        <h1 class="text-xl uppercase">personas multiculturales</h1>
+        <h1 class="text-xl uppercase">tipos de personas multiculturales</h1>
     </div>
 
     @if ($is_modify)
@@ -53,11 +53,11 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @if ($personMulti->status===1)
-                                    <a href="#" wire:click.prevent="showRegimen({{$personMulti}},{{0}})" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <a href="#" wire:click.prevent="showMulti({{$personMulti}},{{0}})" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                         <i class="fa-solid fa-marker"></i>
                                     </a>
                                 @endif
-                                <a href="#" wire:click.prevent="showRegimen({{$personMulti}},{{1}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                <a href="#" wire:click.prevent="showMulti({{$personMulti}},{{1}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                     <i class="fa-brands fa-creative-commons-sa"></i>
                                 </a>
                             </th>
@@ -93,7 +93,7 @@
     @endif
 
     @if ($is_deleting)
-        <livewire:admin.salud.regimen-inactivar :multiElegido="$multiElegido" />
+        <livewire:admin.multi.personamulti-inactivar :multiElegido="$multiElegido" />
     @endif
 
     @push('js')
