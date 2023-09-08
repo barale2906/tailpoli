@@ -150,15 +150,15 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:inventario.producto.producto-create /> --}}
+        <livewire:academico.curso.curso-crear />
     @endif
 
     @if ($is_editing)
-{{--         <livewire:inventario.producto.producto-editar :elegido="$elegido" /> --}}
+{{--         <livewire:academico.curso.curso-editar :elegido="$elegido" /> --}}
     @endif
 
     @if ($is_deleting)
-{{--         <livewire:inventario.producto.producto-inactivar :elegido="$elegido" /> --}}
+{{--         <livewire:academico.curso.curso-inactivar :elegido="$elegido" /> --}}
     @endif
 
     @push('js')
