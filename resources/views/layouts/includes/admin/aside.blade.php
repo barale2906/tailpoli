@@ -1,36 +1,3 @@
-{{-- @php
-    $links = [
-        [
-            'name'      => 'ACADEMICO',
-            'active'    => request()->routeIs('admin.*'),
-            'icon'      =>'fa-solid fa-toolbox',
-            'subs'      => [
-                                'name'      => 'Profesores',
-                                'url'       => route('admin.countries.index'),
-                                'active'    => request()->routeIs('admin.countries.*'),
-                                'icon'      =>'fa-solid fa-ruler',
-                            ],
-                            [
-                                'name'      => 'Contrato',
-                                'url'       => route('admin.countries.index'),
-                                'active'    => request()->routeIs('admin.countries.*'),
-                                'icon'      =>'fa-solid fa-ruler',
-                            ],
-                            [
-                                'name'      => 'Multiculturales',
-                                'url'       => route('admin.countries.index'),
-                                'active'    => request()->routeIs('admin.countries.*'),
-                                'icon'      =>'fa-solid fa-ruler',
-                            ],
-                            [
-                                'name'      => 'Regímenes',
-                                'url'       => route('admin.countries.index'),
-                                'active'    => request()->routeIs('admin.countries.*'),
-                                'icon'      =>'fa-solid fa-ruler',
-                            ]
-        ]
-];
-@endphp --}}
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-blue-200 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
 :class="{
     '-translate-x-full': !open,
@@ -48,11 +15,11 @@ aria-label="Sidebar">
                         </button>
                     </x-slot>
                     <x-slot name="content">
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.cursos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Estudiantes</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.cursos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Matriculas</span>
                         </a>
@@ -60,19 +27,19 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Cursos</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.cursos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Módulos</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.cursos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Grupos</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.cursos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Notas</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.cursos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Asistencias</span>
                         </a>
@@ -251,3 +218,36 @@ aria-label="Sidebar">
         </ul>
     </div>
 </aside>
+{{-- @php
+    $links = [
+        [
+            'name'      => 'ACADEMICO',
+            'active'    => request()->routeIs('admin.*'),
+            'icon'      =>'fa-solid fa-toolbox',
+            'subs'      => [
+                                'name'      => 'Profesores',
+                                'url'       => route('admin.countries.index'),
+                                'active'    => request()->routeIs('admin.countries.*'),
+                                'icon'      =>'fa-solid fa-ruler',
+                            ],
+                            [
+                                'name'      => 'Contrato',
+                                'url'       => route('admin.countries.index'),
+                                'active'    => request()->routeIs('admin.countries.*'),
+                                'icon'      =>'fa-solid fa-ruler',
+                            ],
+                            [
+                                'name'      => 'Multiculturales',
+                                'url'       => route('admin.countries.index'),
+                                'active'    => request()->routeIs('admin.countries.*'),
+                                'icon'      =>'fa-solid fa-ruler',
+                            ],
+                            [
+                                'name'      => 'Regímenes',
+                                'url'       => route('admin.countries.index'),
+                                'active'    => request()->routeIs('admin.countries.*'),
+                                'icon'      =>'fa-solid fa-ruler',
+                            ]
+        ]
+];
+@endphp --}}
