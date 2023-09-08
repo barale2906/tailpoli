@@ -41,7 +41,7 @@ class PersonamultiEditar extends Component
 
         //Actualizar registros
         PersonaMulticultural::whereId($this->id)->update([
-            'name'=>$this->name
+            'name'=>strtolower($this->name)
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el tipo de persona multicultural: '.$this->name);

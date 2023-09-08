@@ -44,8 +44,8 @@ class ProductoEditar extends Component
 
         //Actualizar registros
         Producto::whereId($this->id)->update([
-            'name'=>$this->name,
-            'descripcion'=>$this->descripcion
+            'name'=>strtolower($this->name),
+            'descripcion'=>strtolower($this->descripcion)
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el producto: '.$this->name);

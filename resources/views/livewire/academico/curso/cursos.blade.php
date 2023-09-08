@@ -154,7 +154,7 @@
     @endif
 
     @if ($is_editing)
-{{--         <livewire:academico.curso.curso-editar :elegido="$elegido" /> --}}
+        <livewire:academico.curso.curso-editar :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)

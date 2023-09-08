@@ -41,7 +41,7 @@ class EstadoEditar extends Component
 
         //Actualizar registros
         Estado::whereId($this->id)->update([
-            'name'=>$this->name
+            'name'=>strtolower($this->name)
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el estado: '.$this->name);

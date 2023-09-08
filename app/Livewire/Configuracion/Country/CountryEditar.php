@@ -41,7 +41,7 @@ class CountryEditar extends Component
 
         //Actualizar registros
         Country::whereId($this->id)->update([
-            'name'=>$this->name
+            'name'=>strtolower($this->name)
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el país: '.$this->name);

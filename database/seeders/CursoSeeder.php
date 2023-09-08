@@ -14,27 +14,27 @@ class CursoSeeder extends Seeder
     {
         \App\Models\Academico\Curso::create([
             'name'              =>'Técnico Mantenimiento De Motocicletas',
-            'tipo'              =>'Técnico',
+            'tipo'              =>'técnico',
             'duracion_horas'    =>159,
             'duracion_meses'   =>6
         ]);
 
         \App\Models\Academico\Curso::create([
             'name'              =>'Técnico En Mecánica De Vehículos Automotores',
-            'tipo'              =>'Técnico',
+            'tipo'              =>'técnico',
             'duracion_horas'    =>159,
             'duracion_meses'   =>6
         ]);
 
         \App\Models\Academico\Curso::create([
             'name'              =>'Instalación De Car Audio Y Alarmas',
-            'tipo'              =>'Práctico',
+            'tipo'              =>'práctico',
             'duracion_horas'    =>159,
             'duracion_meses'   =>6
         ]);
         \App\Models\Academico\Curso::create([
             'name'              =>'Inyección Electrónica Y Alto Cilindraje De Motos',
-            'tipo'              =>'Práctico',
+            'tipo'              =>'práctico',
             'duracion_horas'    =>159,
             'duracion_meses'   =>6
         ]);

@@ -42,7 +42,7 @@ class RegimenEditar extends Component
 
         //Actualizar registros
         RegimenSalud::whereId($this->id)->update([
-            'name'=>$this->name
+            'name'=>strtolower($this->name)
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el regímen de salud: '.$this->name);
