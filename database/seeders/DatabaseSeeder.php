@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             RegimenSaludSeeder::class,
             PersonaMulticulturalSeeder::class,
-            EstadoSeeder::class
+            EstadoSeeder::class,
+            ProductoSeeder::class
         ]);
     }
 }
