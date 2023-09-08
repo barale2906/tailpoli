@@ -89,11 +89,11 @@
     @endif
 
     @if ($is_editing)
-        <livewire:admin.salud.regimen-editar :regimenElegido="$regimenElegido" />
+        <livewire:admin.multi.personamulti-editar :multiElegido="$multiElegido" />
     @endif
 
     @if ($is_deleting)
-        <livewire:admin.salud.regimen-inactivar :regimenElegido="$regimenElegido" />
+        <livewire:admin.salud.regimen-inactivar :multiElegido="$multiElegido" />
     @endif
 
     @push('js')

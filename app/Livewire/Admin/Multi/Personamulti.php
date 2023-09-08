@@ -20,6 +20,8 @@ class Personamulti extends Component
     public $is_editing = false;
     public $is_deleting = false;
 
+    public $multiElegido;
+
     protected $listeners = ['refresh' => '$refresh'];
 
     // Ordenar Registros
@@ -48,6 +50,28 @@ class Personamulti extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_creating = !$this->is_creating;
+    }
+
+    //Activar evento
+    #[On('Editando-multi')]
+    //Mostrar formulario de creación
+    public function updatedIsEditing()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_editing = !$this->is_editing;
+    }
+
+    // Mostrar Regimen de Salud
+    public function showRegimen($multi, $act){
+
+        $this->multiElegido=$multi;
+        $this->is_modify = !$this->is_modify;
+
+        if($act===0){
+            $this->is_editing=!$this->is_editing;
+        }else{
+            $this->is_deleting=!$this->is_deleting;
+        }
     }
 
     private function personMultis()

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Livewire\Admin\Salud;
+namespace App\Livewire\Admin\Multi;
 
-use App\Models\Admin\RegimenSalud;
-use Livewire\Attributes\On;
+use App\Models\Admin\PersonaMulticultural;
 use Livewire\Component;
 
-class RegimenEditar extends Component
+class PersonamultiEditar extends Component
 {
     public $name = '';
     public $id = '';
-    public $regimenElegido;
+    public $multiElegido;
 
     /**
      * Reglas de validación
@@ -28,10 +27,10 @@ class RegimenEditar extends Component
         $this->reset('name', 'id');
     }
 
-    public function mount($regimenElegido = null)
+    public function mount($multiElegido = null)
     {
-        $this->name=$regimenElegido['name'];
-        $this->id=$regimenElegido['id'];
+        $this->name=$multiElegido['name'];
+        $this->id=$multiElegido['id'];
     }
 
     //Actualizar Regimen de Salud
@@ -41,20 +40,20 @@ class RegimenEditar extends Component
         $this->validate();
 
         //Actualizar registros
-        RegimenSalud::whereId($this->id)->update([
+        PersonaMulticultural::whereId($this->id)->update([
             'name'=>$this->name
         ]);
 
-        $this->dispatch('alerta', name:'Se ha modificado correctamente el regímen de salud: '.$this->name);
+        $this->dispatch('alerta', name:'Se ha modificado correctamente el tipo de persona multicultural: '.$this->name);
         $this->resetFields();
 
         //refresh
         $this->dispatch('refresh');
-        $this->dispatch('Editando-regimen');
+        $this->dispatch('Editando-multi');
     }
 
     public function render()
     {
-        return view('livewire.admin.salud.regimen-editar');
+        return view('livewire.admin.multi.personamulti-editar');
     }
 }
