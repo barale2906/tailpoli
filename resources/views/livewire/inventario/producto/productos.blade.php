@@ -100,15 +100,15 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:configuracion.estado.estado-create /> --}}
+        <livewire:inventario.producto.producto-create />
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:configuracion.estado.estado-editar :elegido="$elegido" /> --}}
+        {{-- <livewire:inventario.producto.producto-editar :elegido="$elegido" /> --}}
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.estado.estado-inactivar :elegido="$elegido" /> --}}
+        {{-- <livewire:inventario.producto.producto-inactivar :elegido="$elegido" /> --}}
     @endif
 
     @push('js')
