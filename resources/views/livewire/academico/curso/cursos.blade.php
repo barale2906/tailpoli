@@ -93,6 +93,18 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('created_at')">
+                            Fecha de Creación
+                            @if ($ordena != 'created_at')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
                         <th scope="col" class="px-6 py-3">
 
                         </th>
@@ -115,6 +127,9 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$curso->duracion_meses}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$curso->created_at->diffForHumans()}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @if ($curso->status===1)
@@ -158,7 +173,7 @@
     @endif
 
     @if ($is_deleting)
-{{--         <livewire:academico.curso.curso-inactivar :elegido="$elegido" /> --}}
+        <livewire:academico.curso.curso-inactivar :elegido="$elegido" />
     @endif
 
     @push('js')
