@@ -89,7 +89,7 @@
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:admin.multi.personamulti-editar :elegido="$elegido" /> --}}
+        <livewire:configuracion.estado.estado-editar :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)
