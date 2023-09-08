@@ -93,7 +93,7 @@
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.estado.estado-inactivar :elegido="$elegido" /> --}}
+        <livewire:configuracion.country.country-inactivar :elegido="$elegido" />
     @endif
 
     @push('js')
