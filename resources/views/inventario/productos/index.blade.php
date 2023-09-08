@@ -3,6 +3,6 @@
         Productos
     @endpush
 
-    {{-- <livewire:configuracion.country.countries /> --}}
+    <livewire:inventario.producto.productos />
 
 </x-admin-layout>
