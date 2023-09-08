@@ -22,7 +22,22 @@ class Productos extends Component
 
     public $elegido;
 
+    public $buscar='';
+    public $buscamin='';
+
     protected $listeners = ['refresh' => '$refresh'];
+
+    //Cargar variable
+    public function buscaText(){
+        $this->resetPage();
+        $this->buscamin=strtolower($this->buscar);
+    }
+
+    //Limpiar variables
+    public function limpiar(){
+        $this->reset('buscamin', 'buscar');
+        $this->resetPage();
+    }
 
     // Ordenar Registros
     public function organizar($campo)
@@ -85,7 +100,9 @@ class Productos extends Component
 
     private function productos()
     {
-        return Producto::orderBy($this->ordena, $this->ordenado)
+        return Producto::where('name', 'like', "%".$this->buscamin."%")
+                    ->orwhere('descripcion', 'like', "%".$this->buscamin."%")
+                    ->orderBy($this->ordena, $this->ordenado)
                     ->paginate($this->pages);
     }
 
