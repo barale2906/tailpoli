@@ -85,7 +85,7 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:admin.multi.personamulti-create /> --}}
+        <livewire:configuracion.estado.estado-create />
     @endif
 
     @if ($is_editing)
