@@ -85,7 +85,7 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:configuracion.estado.estado-create /> --}}
+        <livewire:configuracion.country.country-create />
     @endif
 
     @if ($is_editing)
