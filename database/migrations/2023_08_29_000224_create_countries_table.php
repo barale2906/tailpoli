@@ -15,7 +15,7 @@ return new class extends Migration
             $table->comment('Países donde se tiene presencia');
             $table->id();
             $table->string('name')->unique();
-            $table->integer('status')->default(1)->comment('0 Inactivo, 1 activo');
+            $table->boolean('status')->default(true)->comment('false Inactivo, true activo');
             $table->timestamps();
         });
     }

@@ -12,20 +12,20 @@ class CountrySeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Admin\Country::create([
+        \App\Models\Configuracion\Country::create([
             'name' => 'Colombia',
         ]);
 
-        \App\Models\Admin\Country::create([
+        \App\Models\Configuracion\Country::create([
             'name' => 'Venezuela',
         ]);
-        \App\Models\Admin\Country::create([
+        \App\Models\Configuracion\Country::create([
             'name' => 'Chile',
         ]);
-        \App\Models\Admin\Country::create([
+        \App\Models\Configuracion\Country::create([
             'name' => 'Haiti',
         ]);
-        \App\Models\Admin\Country::create([
+        \App\Models\Configuracion\Country::create([
             'name' => 'Otros',
         ]);
     }

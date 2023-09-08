@@ -240,7 +240,7 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Sedes</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('configuracion.country')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.country') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Ubicación</span>
                         </a>
