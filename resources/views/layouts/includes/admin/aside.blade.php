@@ -222,7 +222,7 @@ aria-label="Sidebar">
             <li>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger" >
-                        <button type="button" class="iflex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.*') ? 'bg-gray-100' : ''}}">
+                        <button type="button" class="iflex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.*') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-screwdriver-wrench text-gray-500"></i>
                             <span class="ml-3">CONFIGURACIÓN</span>
                         </button>
@@ -232,7 +232,7 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Usuarios</span>
                         </a>
-                        <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.estados') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Estados Estudiantes</span>
                         </a>

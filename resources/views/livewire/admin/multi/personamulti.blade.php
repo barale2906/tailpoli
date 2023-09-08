@@ -26,7 +26,7 @@
                             @endif
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('name')">
-                            Régimen
+                            Tipo de Persona Multicultural
                             @if ($ordena != 'name')
                                 <i class="fas fa-sort"></i>
                             @else
