@@ -130,21 +130,21 @@ aria-label="Sidebar">
             <li>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger" >
-                        <button type="button" class="iflex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.*') ? 'bg-gray-100' : ''}}">
+                        <button type="button" class="iflex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventarios.*') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-cart-flatbed text-gray-500"></i>
                             <span class="ml-3">INVENTARIO</span>
                         </button>
                     </x-slot>
                     <x-slot name="content">
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('inventario.productos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventario.productos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-warehouse text-gray-500"></i>
                             <span class="ml-3">Movimiento Inventario</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('inventario.productos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventario.productos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-warehouse text-gray-500"></i>
                             <span class="ml-3">Productos</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('inventario.productos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventario.productos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-warehouse text-gray-500"></i>
                             <span class="ml-3">Almacenes</span>
                         </a>
@@ -184,7 +184,7 @@ aria-label="Sidebar">
                         </button>
                     </x-slot>
                     <x-slot name="content">
-                        <a href="{{route('admin.dashboard')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('admin.saluds')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.saluds') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-screwdriver text-gray-500"></i>
                             <span class="ml-3">Profesores</span>
                         </a>
@@ -192,11 +192,11 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-screwdriver text-gray-500"></i>
                             <span class="ml-3">Regímenes de Salud</span>
                         </a>
-                        <a href="{{route('admin.multis')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('admin.multis')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.multis') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-screwdriver text-gray-500"></i>
                             <span class="ml-3">Personas Multiculturales</span>
                         </a>
-                        <a href="{{route('admin.dashboard')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('admin.multis')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.multis') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-screwdriver text-gray-500"></i>
                             <span class="ml-3">Tipo de Contrato</span>
                         </a>
@@ -228,7 +228,7 @@ aria-label="Sidebar">
                         </button>
                     </x-slot>
                     <x-slot name="content">
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.estados') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Usuarios</span>
                         </a>
@@ -236,7 +236,7 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Estados Estudiantes</span>
                         </a>
-                        <a href="{{route('admin.countries.index')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.countries.create') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.estados') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Sedes</span>
                         </a>
