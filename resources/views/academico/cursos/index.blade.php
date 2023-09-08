@@ -3,6 +3,6 @@
         Cursos
     @endpush
 
-    {{-- <livewire:admin.multi.personamulti /> --}}
+    <livewire:academico.curso.cursos />
 
 </x-admin-layout>
