@@ -93,7 +93,7 @@
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:financiera.concepto-pago.concepto-pagos-inactivar :elegido="$elegido" /> --}}
+        <livewire:financiera.concepto-pago.concepto-pagos-inactivar :elegido="$elegido" />
     @endif
 
     @push('js')
