@@ -85,15 +85,15 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:configuracion.estado.estado-create /> --}}
+        <livewire:financiera.concepto-pago.concepto-pagos-create />
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:configuracion.estado.estado-editar :elegido="$elegido" /> --}}
+        {{-- <livewire:financiera.concepto-pago.concepto-pagos.concepto-pago-editar :elegido="$elegido" /> --}}
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.estado.estado-inactivar :elegido="$elegido" /> --}}
+        {{-- <livewire:financiera.concepto-pago.concepto-pagos.concepto-pago-inactivar :elegido="$elegido" /> --}}
     @endif
 
     @push('js')
