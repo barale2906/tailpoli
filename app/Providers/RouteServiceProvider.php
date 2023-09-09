@@ -55,6 +55,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('academico')
                 ->name('academico.')
                 ->group(base_path('routes/academico.php'));
+
+            Route::middleware('web', 'auth')
+                ->prefix('financiera')
+                ->name('financiera.')
+                ->group(base_path('routes/financiera.php'));
         });
     }
 }
