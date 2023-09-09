@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             EstadoSeeder::class,
             ProductoSeeder::class,
             CursoSeeder::class,
-            ConceptoPagoSeeder::class
+            ConceptoPagoSeeder::class,
+            AreaSeeder::class
         ]);
     }
 }
