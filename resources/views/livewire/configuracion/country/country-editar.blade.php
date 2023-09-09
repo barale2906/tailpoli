@@ -24,6 +24,6 @@
     <hr class="m-4">
 
     @if ($is_state)
-        <livewire:configuracion.state.states :elegido="$elegido" />
+        <livewire:configuracion.state.states :country="$elegido" />
     @endif
 </div>
