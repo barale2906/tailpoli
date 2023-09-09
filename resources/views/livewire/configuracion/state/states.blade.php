@@ -109,6 +109,6 @@
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.state.states-inactivar :elegido="$elegido" /> --}}
+        <livewire:configuracion.state.states-inactivar :elegido="$elegido" />
     @endif
 </div>
