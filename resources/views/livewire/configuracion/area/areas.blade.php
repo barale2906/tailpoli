@@ -1,6 +1,6 @@
 <div>
     <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
-        <h1 class="text-xl uppercase">estados de usuario / estudiante</h1>
+        <h1 class="text-xl uppercase">áreas </h1>
     </div>
 
     @if ($is_modify)
@@ -85,15 +85,15 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:configuracion.estado.estado-create /> --}}
+        <livewire:configuracion.area.areas-create />
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:configuracion.estado.estado-editar :elegido="$elegido" /> --}}
+        {{-- <livewire:configuracion.area.areas-editar :elegido="$elegido" /> --}}
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.estado.estado-inactivar :elegido="$elegido" /> --}}
+        {{-- <livewire:configuracion.area.areas-inactivar :elegido="$elegido" /> --}}
     @endif
 
     @push('js')
