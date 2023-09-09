@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             ProductoSeeder::class,
             CursoSeeder::class,
             ConceptoPagoSeeder::class,
-            AreaSeeder::class
+            AreaSeeder::class,
+            HorarioSeeder::class
         ]);
     }
 }
