@@ -8,8 +8,8 @@ Route::get('/estados', function () {
 
 Route::get('/country', function () {
     return view('configuracion.countries.index');
-})->name('country');
+})->name('ubicacionCountry');
 
 Route::get('/areas', function () {
     return view('configuracion.areas.index');
-})->name('areas');
+})->name('ubicacionAreas');

@@ -3,6 +3,6 @@
         Áreas
     @endpush
 
-    {{-- <livewire:configuracion.country.countries /> --}}
+    <livewire:configuracion.area.areas />
 
 </x-admin-layout>
