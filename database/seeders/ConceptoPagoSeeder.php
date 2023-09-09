@@ -13,27 +13,27 @@ class ConceptoPagoSeeder extends Seeder
     public function run(): void
     {
         \App\Models\Financiera\ConceptoPago::create([
-            'name'              =>'Matricula'
+            'name'              =>'Matricula',
         ]);
 
         \App\Models\Financiera\ConceptoPago::create([
-            'name'              =>'Cuota Inicial'
+            'name'              =>'Cuota Inicial',
         ]);
 
         \App\Models\Financiera\ConceptoPago::create([
-            'name'              =>'Semestre'
+            'name'              =>'Semestre',
         ]);
 
         \App\Models\Financiera\ConceptoPago::create([
-            'name'              =>'Mensualidad'
+            'name'              =>'Mensualidad',
         ]);
 
         \App\Models\Financiera\ConceptoPago::create([
-            'name'              =>'Kit Uniforme'
+            'name'              =>'Kit Uniforme',
         ]);
 
         \App\Models\Financiera\ConceptoPago::create([
-            'name'              =>'Kit Herramienta'
+            'name'              =>'Kit Herramienta',
         ]);
     }
 }
