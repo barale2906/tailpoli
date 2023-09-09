@@ -93,7 +93,7 @@
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.area.areas-inactivar :elegido="$elegido" /> --}}
+        <livewire:configuracion.area.areas-inactivar :elegido="$elegido" />
     @endif
 
     @push('js')
