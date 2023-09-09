@@ -4,17 +4,17 @@ namespace App\Models\Configuracion;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Country extends Model
+class State extends Model
 {
     use HasFactory;
 
     protected $fillable =['name', 'status'];
 
-    //Relación uno a muchos
-    public function sectors(): HasMany
+    //Relacion uno a muchos inversa
+    public function country() : BelongsTo
     {
-        return $this->hasMany(Sector::class);
+        return $this->BelongsTo(Country::class);
     }
 }
