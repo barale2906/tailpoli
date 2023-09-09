@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
             ConceptoPagoSeeder::class,
             AreaSeeder::class,
             HorarioSeeder::class,
-            StateSeeder::class
+            StateSeeder::class,
+            SectorSeeder::class,
         ]);
     }
 }
