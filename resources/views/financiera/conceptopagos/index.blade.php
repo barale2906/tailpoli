@@ -3,6 +3,6 @@
         Concepto de Pago
     @endpush
 
-    {{-- <livewire:inventario.producto.productos /> --}}
+    <livewire:financiera.concepto-pago.concepto-pagos />
 
 </x-admin-layout>
