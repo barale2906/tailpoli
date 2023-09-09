@@ -105,10 +105,10 @@
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:configuracion.state.states-editar :elegido="$country" /> --}}
+        <livewire:configuracion.state.states-editar :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.state.states-inactivar :elegido="$country" /> --}}
+        {{-- <livewire:configuracion.state.states-inactivar :elegido="$elegido" /> --}}
     @endif
 </div>
