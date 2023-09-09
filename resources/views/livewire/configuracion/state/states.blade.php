@@ -101,14 +101,14 @@
         </div>
     @endif
     @if ($is_creating)
-        {{-- <livewire:configuracion.country.country-create /> --}}
+        <livewire:configuracion.state.states-create :elegido="$country" />
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:configuracion.country.country-editar :elegido="$elegido" /> --}}
+        {{-- <livewire:configuracion.state.states-editar :elegido="$country" /> --}}
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.country.country-inactivar :elegido="$elegido" /> --}}
+        {{-- <livewire:configuracion.state.states-inactivar :elegido="$country" /> --}}
     @endif
 </div>

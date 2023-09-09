@@ -10,7 +10,7 @@ class State extends Model
 {
     use HasFactory;
 
-    protected $fillable =['name', 'status'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //Relacion uno a muchos inversa
     public function country() : BelongsTo
