@@ -9,3 +9,7 @@ Route::get('/estados', function () {
 Route::get('/country', function () {
     return view('configuracion.countries.index');
 })->name('country');
+
+Route::get('/areas', function () {
+    return view('configuracion.areas.index');
+})->name('areas');
