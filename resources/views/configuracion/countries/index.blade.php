@@ -1,6 +1,6 @@
 <x-admin-layout>
     @push('title')
-        Paises
+        Ubicación
     @endpush
 
     <livewire:configuracion.country.countries />

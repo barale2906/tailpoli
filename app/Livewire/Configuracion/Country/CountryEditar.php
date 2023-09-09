@@ -3,6 +3,7 @@
 namespace App\Livewire\Configuracion\Country;
 
 use App\Models\Configuracion\Country;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CountryEditar extends Component
@@ -10,6 +11,8 @@ class CountryEditar extends Component
     public $name = '';
     public $id = '';
     public $elegido;
+
+    public $is_state = false;
 
     /**
      * Reglas de validación
@@ -50,6 +53,11 @@ class CountryEditar extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('Editando');
+    }
+
+    //Mostrar departamentos
+    public function mostrar(){
+        $this->is_state = !$this->is_state;
     }
 
     public function render()
