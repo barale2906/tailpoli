@@ -89,7 +89,7 @@
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:configuracion.area.areas-editar :elegido="$elegido" /> --}}
+        <livewire:configuracion.area.areas-editar :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)
