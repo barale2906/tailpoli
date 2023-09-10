@@ -86,14 +86,14 @@
         </div>
     @endif
     @if ($is_creating)
-        {{-- <livewire:configuracion.state.states-create :elegido="$country" /> --}}
+        <livewire:configuracion.sector.sectors-create :elegido="$depto" />
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:configuracion.state.states-editar :elegido="$elegido" /> --}}
+        {{-- <livewire:configuracion.sector.sectors-editar :elegido="$elegido" /> --}}
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.state.states-inactivar :elegido="$elegido" /> --}}
+        {{-- <livewire:configuracion.sector.sectors-inactivar :elegido="$elegido" /> --}}
     @endif
 </div>
