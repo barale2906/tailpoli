@@ -94,6 +94,6 @@
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.sector.sectors-inactivar :elegido="$elegido" /> --}}
+        <livewire:configuracion.sector.sectors-inactivar :elegido="$elegido" />
     @endif
 </div>
