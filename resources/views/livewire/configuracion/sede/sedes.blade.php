@@ -138,7 +138,7 @@
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:configuracion.sede.sedes-inactivar :elegido="$elegido" /> --}}
+        <livewire:configuracion.sede.sedes-inactivar :elegido="$elegido" />
     @endif
 
     @push('js')
