@@ -4,30 +4,27 @@ namespace App\Models\Configuracion;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Area extends Model
+class Sede extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    /**
-     * Relación muchos a muchos.
-     * áreas que componen la sede
-     */
-    public function sedes(): BelongsToMany
+    //Relacion uno a muchos inversa
+    public function sector() : BelongsTo
     {
-        return $this->belongsToMany(Sede::class);
+        return $this->BelongsTo(Sector::class);
     }
 
     /**
      * Relación muchos a muchos.
      * áreas que componen la sede
      */
-    public function horarios(): BelongsToMany
+    public function areas(): BelongsToMany
     {
-        return $this->belongsToMany(Horario::class);
+        return $this->belongsToMany(Area::class);
     }
-
 }

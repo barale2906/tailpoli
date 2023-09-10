@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             HorarioSeeder::class,
             StateSeeder::class,
             SectorSeeder::class,
+            SedeSeeder::class,
         ]);
     }
 }
