@@ -36,6 +36,7 @@
         <a href="#" wire:click.prevent="sectorVer()" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
             <i class="fa-solid fa-rectangle-xmark"></i> Volver
         </a>
+        <livewire:configuracion.sector.sectors :depto="$elegido" />
     @endif
 
 </div>
