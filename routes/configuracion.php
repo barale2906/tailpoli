@@ -13,3 +13,7 @@ Route::get('/country', function () {
 Route::get('/areas', function () {
     return view('configuracion.areas.index');
 })->name('ubicacionAreas');
+
+Route::get('/sedes', function () {
+    return view('configuracion.sedes.index');
+})->name('ubicacionSedes');

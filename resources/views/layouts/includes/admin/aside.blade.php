@@ -204,7 +204,7 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Estados Estudiantes</span>
                         </a>
-                        <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.estados') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('configuracion.ubicacionSedes')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.sedes') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Sedes</span>
                         </a>
