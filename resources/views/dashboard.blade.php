@@ -1,4 +1,8 @@
 <x-admin-layout>
+    @push('title')
+        Tablero de Control
+    @endpush
+
     <h1>Entrando acá se pondran las imagenes de inicio y tareas pendientes</h1>
 </x-admin-layout>
 
