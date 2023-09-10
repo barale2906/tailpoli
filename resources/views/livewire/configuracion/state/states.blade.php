@@ -1,9 +1,11 @@
 <div>
-    <div class="bg-cyan-100 rounded-lg align-middle p-2 mb-2 text-center">
-        <h1 class="text-xl align-middle p-2 mb-2 text-center capitalize">
-            A continuación se muestran los departamentos del país <strong class="uppercase">{{$name}}</strong>
-        </h1>
-    </div>
+    @if ($is_sector)
+        <div class="bg-cyan-100 rounded-lg align-middle text-center">
+            <h1 class="text-xl align-middle p-2 mb-2 text-center capitalize">
+                A continuación se muestran los departamentos del país <strong class="uppercase">{{$name}}</strong>
+            </h1>
+        </div>
+    @endif
 
     @if ($is_modify)
         <div class="flex justify-end mb-4 ">
@@ -100,6 +102,7 @@
             </div>
         </div>
     @endif
+
     @if ($is_creating)
         <livewire:configuracion.state.states-create :elegido="$country" />
     @endif

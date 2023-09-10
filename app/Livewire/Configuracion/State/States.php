@@ -21,6 +21,7 @@ class States extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $is_sector = true;
 
     public $elegido;
 
@@ -51,6 +52,13 @@ class States extends Component
     {
         $this->resetPage();
         $this->pages=$valor;
+    }
+
+    //Activar evento encabezado
+    #[On('verSector')]
+    //Mostrar o no encabezado
+    public function sectorVer(){
+        $this->is_sector=!$this->is_sector;
     }
 
     //Activar evento

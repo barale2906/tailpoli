@@ -13,6 +13,7 @@ class CountryEditar extends Component
     public $elegido;
 
     public $is_state = false;
+    public $is_sector = true;
 
     /**
      * Reglas de validación
@@ -34,6 +35,13 @@ class CountryEditar extends Component
     {
         $this->name=$elegido['name'];
         $this->id=$elegido['id'];
+    }
+
+    //Activar evento encabezado
+    #[On('verSector')]
+    //Mostrar o no encabezado
+    public function sectorVer(){
+        $this->is_sector=!$this->is_sector;
     }
 
     //Actualizar Regimen de Salud
