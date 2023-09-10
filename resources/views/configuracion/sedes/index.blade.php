@@ -3,6 +3,6 @@
         Sedes
     @endpush
 
-    {{-- <livewire:configuracion.estado.estados /> --}}
+    <livewire:configuracion.sede.sedes />
 
 </x-admin-layout>
