@@ -22,7 +22,7 @@ class State extends Model
     //Relación uno a muchos
     public function sectors(): HasMany
     {
-        return $this->hasMany(Sector::class);
+        return $this->hasMany(App\Models\Configuracion\Sector::class);
     }
 
 

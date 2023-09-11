@@ -10,10 +10,10 @@
             </a>
         </div>
         <div class="relative overflow-x-auto">
-            <table class=" text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
+            <table class=" text-sm text-left text-gray-500 dark:text-gray-400 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3 w-1/8" style="cursor: pointer;" wire:click="organizar('id')">
+                        <th scope="col" class="px-6 py-3 " style="cursor: pointer;" wire:click="organizar('id')">
                             ID
                             @if ($ordena != 'id')
                                 <i class="fas fa-sort"></i>
@@ -25,7 +25,7 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3 w-1/8" style="cursor: pointer;" wire:click="organizar('id')">
+                        <th scope="col" class="px-6 py-3 " style="cursor: pointer;" wire:click="organizar('id')">
                             NIT
                             @if ($ordena != 'id')
                                 <i class="fas fa-sort"></i>
@@ -37,7 +37,7 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3 w-1/8" style="cursor: pointer;" wire:click="organizar('name')">
+                        <th scope="col" class="px-6 py-3 " style="cursor: pointer;" wire:click="organizar('name')">
                             Sede
                             @if ($ordena != 'name')
                                 <i class="fas fa-sort"></i>
@@ -49,7 +49,7 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3 w-1/8" style="cursor: pointer;" wire:click="organizar('address')">
+                        <th scope="col" class="px-6 py-3 " style="cursor: pointer;" wire:click="organizar('address')">
                             Dirección
                             @if ($ordena != 'address')
                                 <i class="fas fa-sort"></i>
@@ -61,7 +61,7 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3 w-1/8" style="cursor: pointer;" wire:click="organizar('phone')">
+                        <th scope="col" class="px-6 py-3 " style="cursor: pointer;" wire:click="organizar('phone')">
                             Teléfono
                             @if ($ordena != 'phone')
                                 <i class="fas fa-sort"></i>
@@ -130,7 +130,7 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:configuracion.sede.sedes-create /> --}}
+        <livewire:configuracion.sede.sedes-create />
     @endif
 
     @if ($is_editing)

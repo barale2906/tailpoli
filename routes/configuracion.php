@@ -16,4 +16,4 @@ Route::get('/areas', function () {
 
 Route::get('/sedes', function () {
     return view('configuracion.sedes.index');
-})->name('ubicacionSedes');
+})->name('sedes');
