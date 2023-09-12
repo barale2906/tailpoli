@@ -1,36 +1,51 @@
 <div>
-    <form wire:submit.prevent="new">
-        <div class="mb-6">
-            <label for="pais" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">País</label>
-            <select wire:click="country($event.target.value)" id="countries" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option >Elegir país...</option>
-                @foreach ($paises as $item)
-                <option value={{$item->id}}>{{$item->name}}</option>
-                @endforeach
-            </select>
-        </div>
-        @if ($pais && $states->count()>0)
-            <div class="mb-6">
-                <label for="depto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
-                <select wire:click="depart($event.target.value)" id="depto" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option >Elegir departamento...</option>
-                    @foreach ($states as $item)
+
+    <form wire:submit.prevent="edit">
+        <h1 class="text-xl bg-green-100 mt-2 mb-3 p-3 rounded-full">
+            Esta sede se encuentra ubicada en la ciudad: <strong>{{$poblaName}}</strong>, del departamento: <strong>{{$deptoName}}</strong>, del país <strong>{{$paisName}}.</strong>
+            @if (!$cambia)
+
+            @endif
+            <a href="#" wire:click.prevent="changeUbicacion()" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                <i class="fa-solid fa-rectangle-xmark"></i> Cambiar Ubicación
+            </a>
+        </h1>
+        @if ($cambia)
+            <div>
+                <div class="mb-6">
+                    <label for="pais" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">País</label>
+                    <select wire:click="country($event.target.value)"  id="countries" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option >Elegir país...</option>
+                        @foreach ($paises as $item)
                         <option value={{$item->id}}>{{$item->name}}</option>
-                    @endforeach
-                </select>
+                        @endforeach
+                    </select>
+                </div>
+                @if ($pais && $states->count()>0)
+                    <div class="mb-6">
+                        <label for="depto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
+                        <select wire:click="depart($event.target.value)" id="depto" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option >Elegir departamento...</option>
+                            @foreach ($states as $item)
+                                <option value={{$item->id}}>{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+                @if ($depto && $ciudades->count()>0)
+                    <div class="mb-6">
+                        <label for="pobla" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Población - Ciudad</label>
+                        <select wire:click="poblacion($event.target.value)" id="pobla" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option >Elegir población - Ciudad...</option>
+                            @foreach ($ciudades as $item)
+                                <option value={{$item->id}}>{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
             </div>
         @endif
-        @if ($depto && $ciudades->count()>0)
-            <div class="mb-6">
-                <label for="pobla" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Población - Ciudad</label>
-                <select wire:click="poblacion($event.target.value)" id="pobla" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option >Elegir población - Ciudad...</option>
-                    @foreach ($ciudades as $item)
-                        <option value={{$item->id}}>{{$item->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-        @endif
+
         @if ($pobla)
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la sede</label>
@@ -131,10 +146,10 @@
             <button type="submit"
             class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
             >
-                Nueva Sede
+                Editar Sede
             </button>
         @endif
-        <a href="#" wire:click.prevent="$dispatch('created')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+        <a href="#" wire:click.prevent="$dispatch('Editando')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
             <i class="fa-solid fa-rectangle-xmark"></i> cancelar
         </a>
     </form>

@@ -134,7 +134,7 @@
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:configuracion.sede.sedes-editar :elegido="$elegido" /> --}}
+        <livewire:configuracion.sede.sedes-editar :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)
