@@ -90,15 +90,15 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:inventario.almacen.almacen-create /> --}}
+        {{-- <livewire:inventario.almacen.almacenes-create /> --}}
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:inventario.almacen.almacen-editar :elegido="$elegido" /> --}}
+        {{-- <livewire:inventario.almacen.almacenes-editar :elegido="$elegido" /> --}}
     @endif
 
     @if ($is_deleting)
-        {{-- <livewire:inventario.almacen.almacen-inactivar :elegido="$elegido" /> --}}
+        <livewire:inventario.almacen.almacenes-inactivar :elegido="$elegido" />
     @endif
 
     @push('js')
