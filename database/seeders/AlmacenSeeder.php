@@ -28,17 +28,17 @@ class AlmacenSeeder extends Seeder
         ]);
 
         \App\Models\Inventario\Almacen::create([
-            'name' => 'ropas',
+            'name' => 'ropas sede 2',
             'sede_id'=> 2
         ]);
 
         \App\Models\Inventario\Almacen::create([
-            'name' => 'insumos aseo',
+            'name' => 'insumos aseo sede 2',
             'sede_id'=> 2
         ]);
 
         \App\Models\Inventario\Almacen::create([
-            'name' => 'papelería',
+            'name' => 'papelería sede 2',
             'sede_id'=> 2
         ]);
     }

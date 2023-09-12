@@ -3,6 +3,6 @@
         Almacenes
     @endpush
 
-    {{-- <livewire:inventario.producto.productos /> --}}
+    <livewire:inventario.almacen.almacenes />
 
 </x-admin-layout>

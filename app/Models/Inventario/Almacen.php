@@ -2,9 +2,11 @@
 
 namespace App\Models\Inventario;
 
+use App\Models\Configuracion\Sede;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Almacen extends Model
 {
@@ -13,8 +15,8 @@ class Almacen extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //Relacion uno a muchos inversa
-    public function sedes() : BelongsTo
+    public function sede() : BelongsTo
     {
-        return $this->BelongsTo(App\Models\Configuracion\Sede::class);
+        return $this->BelongsTo(Sede::class);
     }
 }
