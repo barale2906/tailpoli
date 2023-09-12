@@ -20,8 +20,8 @@ class SedeSeeder extends Seeder
             'portfolio_assistant_name'  =>'Marcela Quiceno',
             'portfolio_assistant_phone' =>'314-5490446',
             'portfolio_assistant_email' =>'cobranzasycarterapoliandino@gmail.com',
-            'start'                     =>'06:00:00',
-            'finish'                    =>'21:59:59',
+            'start'                     =>'06:00',
+            'finish'                    =>'21:59',
             'sector_id'                 =>1
         ]);
         \App\Models\Configuracion\Sede::create([
@@ -32,8 +32,8 @@ class SedeSeeder extends Seeder
             'portfolio_assistant_name'  =>'Stehany Izquierdo',
             'portfolio_assistant_phone' =>'314-5490446',
             'portfolio_assistant_email' =>'stephanyIz@gmail.com',
-            'start'                     =>'06:00:00',
-            'finish'                    =>'20:59:59',
+            'start'                     =>'06:00',
+            'finish'                    =>'20:59',
             'sector_id'                 =>2
         ]);
     }
