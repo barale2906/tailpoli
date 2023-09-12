@@ -2,7 +2,7 @@
     <form wire:submit.prevent="new">
         <div class="mb-6">
             <label for="pais" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">País</label>
-            <select wire:click="country($event.target.value)" id="countries" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select wire:click="country($event.target.value)" id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option >Elegir país...</option>
                 @foreach ($paises as $item)
                 <option value={{$item->id}}>{{$item->name}}</option>

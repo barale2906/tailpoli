@@ -90,7 +90,7 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:inventario.almacen.almacenes-create /> --}}
+        <livewire:inventario.almacen.almacenes-create />
     @endif
 
     @if ($is_editing)
