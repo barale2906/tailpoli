@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Configuracion\Sede;
 
+use App\Models\Configuracion\Area;
 use App\Models\Configuracion\Country;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\State;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class SedesEditar extends Component
@@ -35,6 +37,10 @@ class SedesEditar extends Component
     public $ciudades;
 
     public $elegido;
+
+    public $areas = 0;
+    public $areaSede;
+    public $areasDefault;
 
     public function mount($elegido = null)
     {
@@ -170,6 +176,42 @@ class SedesEditar extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('Editando');
+    }
+
+    //Mostrar áreas
+    public function areaShow()
+    {
+        $this->areasDefault=Area::where('status', true)
+                            ->orderBy('name')
+                            ->get();
+
+        $this->areas=$this->id;
+        $areaasigna=Sede::whereid($this->id)->first();
+        $this->areaSede=$areaasigna->areas;
+    }
+
+    //ASignar área
+    public function asignArea($idArea){
+        //Buscar si ya esta asignado
+        $esta=DB::table('area_sede')
+                ->where('area_id', '=', $idArea)
+                ->where('sede_id', '=', $this->id)
+                ->count();
+
+        if($esta>0){
+            $this->dispatch('alerta', name:'El área ya esta asignada a esta sede.');
+        }else{
+            DB::table('area_sede')
+                ->insert([
+                    'area_id'=>$idArea,
+                    'sede_id'=>$this->id,
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+            $this->dispatch('alerta', name:'El área fue asignada correctamente.');
+            $this->areaShow();
+        }
     }
 
     //Consultar países
