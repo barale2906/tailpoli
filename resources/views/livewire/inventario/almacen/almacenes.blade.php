@@ -94,7 +94,7 @@
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:inventario.almacen.almacenes-editar :elegido="$elegido" /> --}}
+        <livewire:inventario.almacen.almacenes-editar :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)
