@@ -3,6 +3,6 @@
         Modulos
     @endpush
 
-    {{-- <livewire:academico.curso.cursos /> --}}
+    <livewire:academico.modulo.modulos />
 
 </x-admin-layout>
