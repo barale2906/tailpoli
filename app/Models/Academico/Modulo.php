@@ -4,17 +4,18 @@ namespace App\Models\Academico;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Curso extends Model
+class Modulo extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    //Relación uno a muchos
-    public function modulos(): HasMany
+    //Relacion uno a muchos inversa
+    public function curso() : BelongsTo
     {
-        return $this->hasMany(Modulo::class);
+        return $this->BelongsTo(Curso::class);
     }
+
 }

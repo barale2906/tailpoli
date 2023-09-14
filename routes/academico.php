@@ -9,3 +9,7 @@ Route::get('/cursos', function () {
 Route::get('/horarios', function () {
     return view('academico.horario.index');
 })->name('cursoHorarios');
+
+Route::get('/modulos', function () {
+    return view('academico.modulo.index');
+})->name('modulos');

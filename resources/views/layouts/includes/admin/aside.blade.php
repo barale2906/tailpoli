@@ -28,7 +28,7 @@ aria-label="Sidebar">
                             <span class="ml-3">Cursos</span>
                         </a>
 
-                        <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.cursos') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('academico.modulos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.modulos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Módulos</span>
                         </a>

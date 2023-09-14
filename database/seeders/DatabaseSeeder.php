@@ -33,7 +33,8 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             SectorSeeder::class,
             SedeSeeder::class,
-            AlmacenSeeder::class
+            AlmacenSeeder::class,
+            ModuloSeeder::class
         ]);
     }
 }
