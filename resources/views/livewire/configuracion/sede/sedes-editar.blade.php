@@ -158,7 +158,7 @@
     @else
         <div class="m-5">
             <h1 class="text-xl bg-green-100 mt-2 mb-3 p-3 rounded-full">
-                A continuación se muestran las áres de la sede: <strong class="capitalize">{{$poblaName}}</strong>
+                A continuación se muestran las áres de la sede: <strong class="capitalize">{{$name}}</strong>
             </h1>
             <a href="#" wire:click.prevent="$dispatch('Editando')" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-rectangle-xmark"></i> volver a sedes

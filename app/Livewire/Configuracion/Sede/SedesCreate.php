@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Configuracion\Sede;
 
+use App\Models\Configuracion\Area;
 use App\Models\Configuracion\Country;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\State;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class SedesCreate extends Component
@@ -26,6 +28,7 @@ class SedesCreate extends Component
 
     public $states;
     public $ciudades;
+    public $areaSele = [];
 
     public function country($valor){
         $this->depto='';
@@ -73,6 +76,7 @@ class SedesCreate extends Component
         'portfolio_assistant_email' => 'required|email|max:50',
         'start' => 'required',
         'finish' => 'required',
+        'areaSele' => 'required'
     ];
 
     /**
@@ -105,7 +109,7 @@ class SedesCreate extends Component
             $this->dispatch('alerta', name:'Ya existe esta sede: '.$this->name);
         } else {
             //Crear registro
-            Sede::create([
+            $nueva = Sede::create([
                 'sector_id'=>$this->pobla,
                 'name'=>strtolower($this->name),
                 'address' => strtolower($this->address),
@@ -117,6 +121,17 @@ class SedesCreate extends Component
                 'start' => $this->start,
                 'finish' => $this->finish,
             ]);
+
+            //Asignar áreas
+            foreach($this->areaSele as $item){
+                DB::table('area_sede')
+                ->insert([
+                    'area_id'=>$item,
+                    'sede_id'=>$nueva->id,
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+            }
 
             // Notificación
             $this->dispatch('alerta', name:'Se ha creado correctamente la sede: '.$this->name);
@@ -135,10 +150,18 @@ class SedesCreate extends Component
                         ->get();
     }
 
+    //Consultar áreas
+    private function areas(){
+        return Area::where('status', true)
+                    ->orderBy('name')
+                    ->get();
+    }
+
     public function render()
     {
         return view('livewire.configuracion.sede.sedes-create',[
-            'paises' => $this->paises()
+            'paises'    => $this->paises(),
+            'areas'     => $this->areas()
         ]);
     }
 }
