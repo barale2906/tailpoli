@@ -6,6 +6,7 @@ use App\Models\Configuracion\Sede;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class Almacen extends Model
@@ -18,5 +19,11 @@ class Almacen extends Model
     public function sede() : BelongsTo
     {
         return $this->BelongsTo(Sede::class);
+    }
+
+    //Relación uno a muchos
+    public function inventarios(): HasMany
+    {
+        return $this->hasMany(Inventario::class);
     }
 }

@@ -104,7 +104,7 @@ aria-label="Sidebar">
                         </button>
                     </x-slot>
                     <x-slot name="content">
-                        <a href="{{route('inventario.productos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventario.produc') ? 'bg-gray-100' : ''}}">
+                        <a href="{{route('inventario.inventarios')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventario.inventarios') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-warehouse text-gray-500"></i>
                             <span class="ml-3">Movimiento Inventario</span>
                         </a>

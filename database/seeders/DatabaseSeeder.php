@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
             SectorSeeder::class,
             SedeSeeder::class,
             AlmacenSeeder::class,
-            ModuloSeeder::class
+            ModuloSeeder::class,
+            InventarioSeeder::class
         ]);
     }
 }
