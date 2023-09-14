@@ -164,13 +164,13 @@
                 <i class="fa-solid fa-rectangle-xmark"></i> volver a sedes
             </a>
         </div>
-        <div class="grid grid-cols-2 gap-4 ring-4 rounded-lg">
-            <div class="ring-4 p-2">
+        <div class="grid grid-cols-2 gap-4 ">
+            <div class="ring-4 p-2 rounded-lg">
                 <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Listado de áreas:</h2>
                 <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                     @foreach ($areasDefault as $item)
                         <li class="m-3">
-                            <a href="#" wire:click.prevent="asignArea({{$item->id}})" >
+                            <a href="#" wire:click.prevent="asignArea({{$item}})" >
                                 {{$item->name}}
                                 <span class="bg-green-100 text-green-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
                                     <i class="fa-solid fa-upload"></i>
@@ -180,15 +180,18 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="ring-4 p-2">
+            <div class="ring-4 p-2 rounded-lg">
                 <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Áreas asignadas a esta sede:</h2>
                 @if ($areaSede->count()>0)
                     <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                         @foreach ($areaSede as $item)
-                            <li class="m-3" style="cursor: pointer;" wire:click="">
-                                {{$item->name}} <span class="bg-orange-100 text-orange-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
-                                    <i class="fa-solid fa-download"></i>
-                                </span>
+                            <li class="m-3">
+                                <a href="#" wire:click.prevent="eliminarArea({{$item}})" >
+                                    {{$item->name}}
+                                    <span class="bg-orange-100 text-orange-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                        <i class="fa-solid fa-download"></i>
+                                    </span>
+                                </a>
                             </li>
                         @endforeach
                     </ul>

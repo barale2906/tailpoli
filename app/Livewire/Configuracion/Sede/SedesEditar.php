@@ -187,31 +187,42 @@ class SedesEditar extends Component
 
         $this->areas=$this->id;
         $areaasigna=Sede::whereid($this->id)->first();
-        $this->areaSede=$areaasigna->areas;
+        $this->areaSede=$areaasigna->areas()->orderBy('name')->get();
     }
 
     //ASignar área
     public function asignArea($idArea){
         //Buscar si ya esta asignado
         $esta=DB::table('area_sede')
-                ->where('area_id', '=', $idArea)
+                ->where('area_id', '=', $idArea['id'])
                 ->where('sede_id', '=', $this->id)
                 ->count();
 
         if($esta>0){
-            $this->dispatch('alerta', name:'El área ya esta asignada a esta sede.');
+            $this->dispatch('alerta', name:$idArea['name'].' YA asignada.');
         }else{
             DB::table('area_sede')
                 ->insert([
-                    'area_id'=>$idArea,
+                    'area_id'=>$idArea['id'],
                     'sede_id'=>$this->id,
                     'created_at'=>now(),
                     'updated_at'=>now(),
                 ]);
 
-            $this->dispatch('alerta', name:'El área fue asignada correctamente.');
+            //$this->dispatch('alerta', name:$idArea['name'].' asignada correctamente.');
             $this->areaShow();
         }
+    }
+
+    //Eliminar área
+    public function eliminarArea($idAsig){
+        DB::table('area_sede')
+            ->where('area_id', $idAsig['id'])
+            ->where('sede_id', $this->id)
+            ->delete();
+
+        //$this->dispatch('alerta', name:$idAsig['name'].' ELIMINADA correctamente.');
+        $this->areaShow();
     }
 
     //Consultar países
