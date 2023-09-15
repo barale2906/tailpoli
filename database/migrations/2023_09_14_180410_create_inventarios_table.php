@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('inventarios', function (Blueprint $table) {
             $table->comment('Descripción de movimientos de inventario');
             $table->id();
-            $table->integer('tipo')->default(1)->comment('tipo de movimiento, 1 entra 2 sale');
-            $table->date('fecha_movimiento');
+            $table->integer('tipo')->default(1)->comment('tipo de movimiento, 1 entra 0 sale');
+            $table->datetime('fecha_movimiento');
             $table->double('cantidad');
             $table->double('saldo')->comment('Suma algebraica de las cantidades luego de este registro');
             $table->double('precio')->comment('Precio de compra o venta según el caso');

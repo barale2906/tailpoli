@@ -45,6 +45,18 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('tipo')">
+                            Tipo
+                            @if ($ordena != 'tipo')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_movimiento')">
                             Fecha
                             @if ($ordena != 'fecha_movimiento')
@@ -121,9 +133,12 @@
                 </thead>
                 <tbody>
                     @foreach ($inventarios as $inventario)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$inventario->id}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{$inventario->tipo ? "ENTRADA":"SALIDA"}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$inventario->fecha_movimiento}}
@@ -183,15 +198,15 @@
     @endif
 
     @if ($is_creating)
-        <livewire:inventario.inventario.inventario-create />
+        <livewire:inventario.inventario.inventarios-crear :tipon="1"/>
     @endif
 
     @if ($is_editing)
-        <livewire:inventario.inventario.inventario-editar :elegido="$elegido" />
+        <livewire:inventario.inventario.inventarios-editar :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)
-        <livewire:inventario.inventario.inventario-inactivar :elegido="$elegido" />
+        <livewire:inventario.inventario.inventarios-inactivar :elegido="$elegido" />
     @endif
 
     @push('js')

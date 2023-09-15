@@ -103,7 +103,7 @@ class Inventarios extends Component
         return Inventario::query()
                             ->with(['producto', 'almacen', 'user'])
                             ->when($this->buscamin, function($query){
-                                return $query->where('status', '=', true)
+                                return $query->where('status', true)
                                         ->where('descripcion', 'like', "%".$this->buscamin."%")
                                         ->orwhere('fecha_movimiento', 'like', "%".$this->buscamin."%")
                                         ->orWhereHas('producto', function($q){
