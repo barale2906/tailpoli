@@ -2,6 +2,7 @@
 
 namespace App\Models\Inventario;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,19 +14,19 @@ class Inventario extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //Relacion uno a muchos inversa
-    public function productos() : BelongsTo
+    public function producto() : BelongsTo
     {
         return $this->BelongsTo(Producto::class);
     }
 
     //Relacion uno a muchos inversa
-    public function almacenes() : BelongsTo
+    public function almacen() : BelongsTo
     {
         return $this->BelongsTo(Almacen::class);
     }
 
     //Relacion uno a muchos inversa
-    public function users() : BelongsTo
+    public function user() : BelongsTo
     {
         return $this->BelongsTo(User::class);
     }
