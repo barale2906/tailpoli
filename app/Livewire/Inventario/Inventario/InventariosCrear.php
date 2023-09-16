@@ -23,6 +23,7 @@ class InventariosCrear extends Component
     public $sedeName='';
     public $producto_id='';
     public $productoName='';
+    public $ultimoregistro;
 
     public $buscar=null;
     public $buscasede=0;
@@ -96,6 +97,15 @@ class InventariosCrear extends Component
     {
         $this->producto_id=$item['id'];
         $this->productoName=$item['name'];
+        $this->actual();
+    }
+
+    //Seleccionar registro activo
+    public function actual(){
+        $this->ultimoregistro= Inventario::where('almacen_id', $this->almacen_id)
+                                        ->where('producto_id', $this->producto_id)
+                                        ->where('status', true)
+                                        ->first();
     }
 
     // Crear Regimen de Salud
@@ -106,24 +116,18 @@ class InventariosCrear extends Component
         // validate
         $this->validate();
 
-        //Validar saldos
-        $sal = Inventario::where('almacen_id', $this->almacen_id)
-                            ->where('producto_id', $this->producto_id)
-                            ->where('status', true)
-                            ->first();
-
-        if($sal==null && $this->tipo===0){
+        if($this->ultimoregistro==null && $this->tipo===0){
             $this->dispatch('alerta', name:'¡NO SE PUEDE SACAR UN PRODUCTO INEXISTENTE!');
         }else{
 
-            if($this->tipo===0 && $sal){
+            if($this->tipo===0 && $this->ultimoregistro){
                 $this->cantiAlge=$this->cantidad*(-1);
             }else{
                 $this->cantiAlge=$this->cantidad;
             }
 
-            if($sal){
-                $this->saldo=$sal->saldo+$this->cantiAlge;
+            if($this->ultimoregistro){
+                $this->saldo=$this->ultimoregistro->saldo+$this->cantiAlge;
             }else{
                 $this->saldo=$this->cantiAlge;
             }
@@ -145,9 +149,9 @@ class InventariosCrear extends Component
                 ]);
 
 
-                if($sal){
+                if($this->ultimoregistro){
                     //Actualizar registro anterior
-                    Inventario::whereId($sal->id)->update([
+                    Inventario::whereId($this->ultimoregistro->id)->update([
                         'status'=>false
                     ]);
                 }

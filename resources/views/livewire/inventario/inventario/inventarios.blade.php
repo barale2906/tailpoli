@@ -206,7 +206,7 @@
     @endif
 
     @if ($is_deleting)
-        <livewire:inventario.inventario.inventarios-inactivar :elegido="$elegido" />
+        <livewire:inventario.inventario.inventarios-consultar :elegido="$elegido" />
     @endif
 
     @push('js')
