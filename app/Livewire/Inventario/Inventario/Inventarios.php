@@ -117,6 +117,7 @@ class Inventarios extends Component
                                         });
                             })
                             ->orderBy($this->ordena, $this->ordenado)
+                            ->orderBy('id', 'DESC')
                             ->paginate($this->pages);
     }
 
