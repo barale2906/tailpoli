@@ -21,12 +21,14 @@ class InventariosConsultar extends Component
     public $producto_id='';
     public $productoName='';
     public $user='';
+    public $actual;
 
     public $saldostate=true;
     public $almacenstate=false;
 
     public function mount($elegido = null)
     {
+        $this->actual=$elegido;
         $this->id=$elegido['id'];
         $this->tipo=$elegido['tipo'];
         $this->fecha_movimiento=$elegido['fecha_movimiento'];
@@ -39,7 +41,11 @@ class InventariosConsultar extends Component
         $this->almaceName=$elegido['almacen']['name'];
         $this->productoName=$elegido['producto']['name'];
         $this->user=$elegido['user']['name'];
-        //dd($elegido);
+    }
+
+    public function cambiaVista(){
+        $this->saldostate=!$this->saldostate;
+        $this->almacenstate=!$this->almacenstate;
     }
 
     private function saldos(){

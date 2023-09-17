@@ -41,10 +41,10 @@
             <div class="flex items-center">
                 <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm capitalize">
                     <li class="{{$saldostate ? 'bg-green-100': ''}} p-4">
-                        <a href="#" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Saldo de este producto por Almacén</a>
+                        <a href="#" wire:click.prevent="cambiaVista()" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Saldo de este producto por Almacén</a>
                     </li>
-                    <li class="bg-orange-100 p-4">
-                        <a href="#" class="text-gray-900 dark:text-white hover:underline">Movimientos por almacén de este producto</a>
+                    <li class="{{$almacenstate ? 'bg-orange-100': ''}} p-4">
+                        <a href="#" wire:click.prevent="cambiaVista()" class="text-gray-900 dark:text-white hover:underline">Movimientos por almacén de este producto</a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +64,7 @@
         </div>
     @endif
     @if ($almacenstate)
-        <livewire:inventario.inventario.inventarios-consultar :producto="$producto_id" />
+        <livewire:inventario.inventario.inventarios-sede :producto="$actual" />
     @endif
 
 
