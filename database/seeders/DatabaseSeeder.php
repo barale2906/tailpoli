@@ -13,13 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(100)->create();
-
-        \App\Models\User::factory()->create([
-            'name' => 'Ing Alexander Barajas V',
-            'email' => 'alexanderbarajas@gmail.com',
-            'password'=>bcrypt('10203040')
-        ]);
         $this->call([
             CountrySeeder::class,
             RegimenSaludSeeder::class,
@@ -35,7 +28,9 @@ class DatabaseSeeder extends Seeder
             SedeSeeder::class,
             AlmacenSeeder::class,
             ModuloSeeder::class,
-            InventarioSeeder::class
+            RoleSeeder::class,
+            UserSeeder::class,
+            InventarioSeeder::class,
         ]);
     }
 }
