@@ -17,3 +17,7 @@ Route::get('/areas', function () {
 Route::get('/sedes', function () {
     return view('configuracion.sedes.index');
 })->middleware('can:co_sedes')->name('sedes');
+
+Route::get('/roles', function () {
+    return view('configuracion.roles.index');
+})->middleware('can:co_rols')->name('roles');

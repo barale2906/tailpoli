@@ -250,7 +250,12 @@ aria-label="Sidebar">
                                 <span class="ml-3">Ubicación</span>
                             </a>
                         @endcan
-
+                        @can('co_rols')
+                            <a href="{{route('configuracion.roles')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.roles') ? 'bg-gray-100' : ''}}">
+                                <i class="fa-solid fa-wrench text-gray-500"></i>
+                                <span class="ml-3">Roles</span>
+                            </a>
+                        @endcan
                     </x-slot>
                 </x-dropdown>
             </li>
