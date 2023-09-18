@@ -86,20 +86,20 @@ class RoleSeeder extends Seeder
 
 
         Permission::create(['name'=>'Configuracion'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_estados'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_estadoCrear'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_estadoEditar'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_estadoInactivar'])->syncRoles([$Superusuario]);
+        Permission::create(['name'=>'co_rols'])->syncRoles([$Superusuario]);
+        Permission::create(['name'=>'co_rolCrear'])->syncRoles([$Superusuario]);
+        Permission::create(['name'=>'co_rolEditar'])->syncRoles([$Superusuario]);
+        Permission::create(['name'=>'co_rolInactivar'])->syncRoles([$Superusuario]);
+
+        Permission::create(['name'=>'co_permisos'])->syncRoles([$Superusuario]);
+        Permission::create(['name'=>'co_permisoCrear'])->syncRoles([$Superusuario]);
+        Permission::create(['name'=>'co_permisoEditar'])->syncRoles([$Superusuario]);
+        Permission::create(['name'=>'co_permisoInactivar'])->syncRoles([$Superusuario]);
 
         Permission::create(['name'=>'co_countrys'])->syncRoles([$Superusuario]);
         Permission::create(['name'=>'co_countryCrear'])->syncRoles([$Superusuario]);
         Permission::create(['name'=>'co_countryEditar'])->syncRoles([$Superusuario]);
         Permission::create(['name'=>'co_countryInactivar'])->syncRoles([$Superusuario]);
-
-        Permission::create(['name'=>'co_areas'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_areaCrear'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_areaEditar'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_areaInactivar'])->syncRoles([$Superusuario]);
 
         Permission::create(['name'=>'co_sedes'])->syncRoles([$Superusuario]);
         Permission::create(['name'=>'co_sedeCrear'])->syncRoles([$Superusuario]);
