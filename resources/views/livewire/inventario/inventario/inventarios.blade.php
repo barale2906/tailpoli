@@ -25,9 +25,11 @@
                     </button>
                 </div>
             </div>
-            <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
-                <i class="fa-solid fa-plus"></i> Ingreso
-            </a>
+            @can('in_inventarioCrear')
+                <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                    <i class="fa-solid fa-plus"></i> Ingreso
+                </a>
+            @endcan
         </div>
         <div class="relative overflow-x-auto">
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
@@ -132,9 +134,11 @@
                     @foreach ($inventarios as $inventario)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <a href="#" wire:click.prevent="show({{$inventario}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-blue-500 hover:underline">
-                                    <i class="fa-solid fa-marker"></i> - {{$inventario->id}}
-                                </a>
+                                @can('in_inventarioAnular')
+                                    <a href="#" wire:click.prevent="show({{$inventario}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-blue-500 hover:underline">
+                                        <i class="fa-solid fa-marker"></i> - {{$inventario->id}}
+                                    </a>
+                                @endcan
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$inventario->tipo ? "ENTRADA":"SALIDA"}}

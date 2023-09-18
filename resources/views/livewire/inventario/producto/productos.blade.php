@@ -25,9 +25,11 @@
                     </button>
                 </div>
             </div>
-            <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
-                <i class="fa-solid fa-plus"></i> crear
-            </a>
+            @can('in_productoCrear')
+                <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                    <i class="fa-solid fa-plus"></i> crear
+                </a>
+            @endcan
         </div>
         <div class="relative overflow-x-auto">
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
@@ -87,14 +89,18 @@
                                 {{$producto->descripcion}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                @if ($producto->status===1)
-                                    <a href="#" wire:click.prevent="show({{$producto}},{{0}})" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                        <i class="fa-solid fa-marker"></i>
+                                @can('in_productoEditar')
+                                    @if ($producto->status===1)
+                                        <a href="#" wire:click.prevent="show({{$producto}},{{0}})" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                            <i class="fa-solid fa-marker"></i>
+                                        </a>
+                                    @endif
+                                @endcan
+                                @can('in_productoInactivar')
+                                    <a href="#" wire:click.prevent="show({{$producto}},{{1}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                        <i class="fa-brands fa-creative-commons-sa"></i>
                                     </a>
-                                @endif
-                                <a href="#" wire:click.prevent="show({{$producto}},{{1}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                    <i class="fa-brands fa-creative-commons-sa"></i>
-                                </a>
+                                @endcan
                             </th>
                         </tr>
                     @endforeach

@@ -62,8 +62,8 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name'=>'in_inventarios'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
         Permission::create(['name'=>'in_inventarioCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_inventarioEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_inventarioInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create(['name'=>'in_inventarioAnular'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create(['name'=>'in_inventarioConsultar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
 
 
         Permission::create(['name'=>'Reportes'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
