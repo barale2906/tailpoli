@@ -4,4 +4,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/conceptopagos', function () {
     return view('financiera.conceptopagos.index');
-})->middleware('can:conceptopagos')->name('conceptopagos');
+})->middleware('can:fi_conceptopagos')->name('conceptopagos');

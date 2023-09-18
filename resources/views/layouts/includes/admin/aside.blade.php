@@ -25,14 +25,14 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Matriculas</span>
                         </a>
-                        @can('cursos')
+                        @can('ac_cursos')
                             <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.curs*') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-book text-gray-500"></i>
                                 <span class="ml-3">Cursos</span>
                             </a>
                         @endcan
 
-                        @can('modulos')
+                        @can('ac_modulos')
                             <a href="{{route('academico.modulos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.modulos') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-book text-gray-500"></i>
                                 <span class="ml-3">Módulos</span>
@@ -94,7 +94,7 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-ranking-star text-gray-500"></i>
                             <span class="ml-3">Cierre Caja</span>
                         </a>
-                        @can('conceptopagos')
+                        @can('fi_conceptopagos')
                             <a href="{{route('financiera.conceptopagos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('financiera.conceptopagos') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-ranking-star text-gray-500"></i>
                                 <span class="ml-3">Concepto Pago</span>
@@ -118,19 +118,19 @@ aria-label="Sidebar">
                         @endcan
                     </x-slot>
                     <x-slot name="content">
-                        @can('inventarios')
+                        @can('in_inventarios')
                             <a href="{{route('inventario.inventarios')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventario.inventarios') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-warehouse text-gray-500"></i>
                                 <span class="ml-3">Movimiento Inventario</span>
                             </a>
                         @endcan
-                        @can('productos')
+                        @can('in_productos')
                             <a href="{{route('inventario.productos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventario.productos') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-warehouse text-gray-500"></i>
                                 <span class="ml-3">Productos</span>
                             </a>
                         @endcan
-                        @can('almacens')
+                        @can('in_almacens')
                             <a href="{{route('inventario.almacens')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('inventario.almacens') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-warehouse text-gray-500"></i>
                                 <span class="ml-3">Almacenes</span>
@@ -180,14 +180,18 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-screwdriver text-gray-500"></i>
                             <span class="ml-3">Profesores</span>
                         </a>
-                        <a href="{{route('admin.saluds')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.saluds') ? 'bg-gray-100' : ''}}">
-                            <i class="fa-solid fa-screwdriver text-gray-500"></i>
-                            <span class="ml-3">Regímenes de Salud</span>
-                        </a>
-                        <a href="{{route('admin.multis')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.multis') ? 'bg-gray-100' : ''}}">
-                            <i class="fa-solid fa-screwdriver text-gray-500"></i>
-                            <span class="ml-3">Personas Multiculturales</span>
-                        </a>
+                        @can('ad_saluds')
+                            <a href="{{route('admin.saluds')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.saluds') ? 'bg-gray-100' : ''}}">
+                                <i class="fa-solid fa-screwdriver text-gray-500"></i>
+                                <span class="ml-3">Regímenes de Salud</span>
+                            </a>
+                        @endcan
+                        @can('ad_multis')
+                            <a href="{{route('admin.multis')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.multis') ? 'bg-gray-100' : ''}}">
+                                <i class="fa-solid fa-screwdriver text-gray-500"></i>
+                                <span class="ml-3">Personas Multiculturales</span>
+                            </a>
+                        @endcan
                         <a href="{{route('admin.multis')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('admin.multis') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-screwdriver text-gray-500"></i>
                             <span class="ml-3">Tipo de Contrato</span>
@@ -228,18 +232,24 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-wrench text-gray-500"></i>
                             <span class="ml-3">Usuarios</span>
                         </a>
-                        <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.estados') ? 'bg-gray-100' : ''}}">
-                            <i class="fa-solid fa-wrench text-gray-500"></i>
-                            <span class="ml-3">Estados Estudiantes</span>
-                        </a>
-                        <a href="{{route('configuracion.sedes')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.sed*') ? 'bg-gray-100' : ''}}">
-                            <i class="fa-solid fa-wrench text-gray-500"></i>
-                            <span class="ml-3">Sedes</span>
-                        </a>
-                        <a href="{{route('configuracion.ubicacionCountry')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.ubica*') ? 'bg-gray-100' : ''}}">
-                            <i class="fa-solid fa-wrench text-gray-500"></i>
-                            <span class="ml-3">Ubicación</span>
-                        </a>
+                        @can('co_estados')
+                            <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.estados') ? 'bg-gray-100' : ''}}">
+                                <i class="fa-solid fa-wrench text-gray-500"></i>
+                                <span class="ml-3">Estados Estudiantes</span>
+                            </a>
+                        @endcan
+                        @can('co_sedes')
+                            <a href="{{route('configuracion.sedes')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.sed*') ? 'bg-gray-100' : ''}}">
+                                <i class="fa-solid fa-wrench text-gray-500"></i>
+                                <span class="ml-3">Sedes</span>
+                            </a>
+                        @endcan
+                        @can('co_countrys')
+                            <a href="{{route('configuracion.ubicacionCountry')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.ubica*') ? 'bg-gray-100' : ''}}">
+                                <i class="fa-solid fa-wrench text-gray-500"></i>
+                                <span class="ml-3">Ubicación</span>
+                            </a>
+                        @endcan
 
                     </x-slot>
                 </x-dropdown>

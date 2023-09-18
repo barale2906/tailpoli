@@ -4,12 +4,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/productos', function () {
     return view('inventario.productos.index');
-})->middleware('can:productos')->name('productos');
+})->middleware('can:in_productos')->name('productos');
 
 Route::get('/almacens', function () {
     return view('inventario.almacens.index');
-})->middleware('can:almacens')->name('almacens');
+})->middleware('can:in_almacens')->name('almacens');
 
 Route::get('/inventarios', function () {
     return view('inventario.inventarios.index');
-})->middleware('can:inventarios')->name('inventarios');
+})->middleware('can:in_inventarios')->name('inventarios');
