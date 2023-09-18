@@ -10,11 +10,11 @@ Route::get('/', function () {
 
 Route::get('/saluds', function () {
     return view('admin.salud.index');
-})->name('saluds');
+})->middleware('can:saluds')->name('saluds');
 
 Route::get('/multis', function () {
     return view('admin.multi.index');
-})->name('multis');
+})->middleware('can:multis')->name('multis');
 
 
 Route::resource('/countries', CountryController::class)->except('show');
