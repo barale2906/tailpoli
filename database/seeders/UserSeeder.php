@@ -20,5 +20,35 @@ class UserSeeder extends Seeder
             'email' => 'alexanderbarajas@gmail.com',
             'password'=>bcrypt('10203040')
         ])->assignRole('Superusuario');
+
+        User::factory()->create([
+            'name' => 'Administrador Barajas V',
+            'email' => 'alexanderbarajas1@gmail.com',
+            'password'=>bcrypt('10203040')
+        ])->assignRole('Administrador');
+
+        User::factory()->create([
+            'name' => 'Coordinador Barajas V',
+            'email' => 'alexanderbarajas2@gmail.com',
+            'password'=>bcrypt('10203040')
+        ])->assignRole('Coordinador');
+
+        User::factory()->create([
+            'name' => 'Auxiliar Barajas V',
+            'email' => 'alexanderbarajas3@gmail.com',
+            'password'=>bcrypt('10203040')
+        ])->assignRole('Auxiliar');
+
+        User::factory()->create([
+            'name' => 'Profesor Barajas V',
+            'email' => 'alexanderbarajas4@gmail.com',
+            'password'=>bcrypt('10203040')
+        ])->assignRole('Profesor');
+
+        User::factory()->create([
+            'name' => 'Estudiante Barajas V',
+            'email' => 'alexanderbarajas5@gmail.com',
+            'password'=>bcrypt('10203040')
+        ])->assignRole('Estudiante');
     }
 }
