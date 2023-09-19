@@ -2,22 +2,26 @@
 
 namespace App\Livewire\Configuracion\Rol;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class RolesCreate extends Component
+class RolesEditar extends Component
 {
     public $name = '';
+    public $id = '';
     public $permis = [];
+    public $rolEleg;
+    public $elegido;
 
     /**
      * Reglas de validación
      */
     protected $rules = [
-        'name' => 'required|max:100',
-        'permis'=>'required',
-
+        'name'  => 'required|max:100',
+        'id'    => 'required',
+        'permis'=>'required'
     ];
 
     /**
@@ -25,37 +29,46 @@ class RolesCreate extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'permis');
-
+        $this->reset('name', 'id', 'permis');
     }
 
-    // Crear Regimen de Salud
-    public function new(){
+    public function mount($elegido = null)
+    {
+        $this->name=$elegido['name'];
+        $this->id=$elegido['id'];
+        $this->permi();
+    }
+
+    //obtener permisos
+    public function permi(){
+        $this->rolEleg= Role::whereId($this->id)->first();
+        //dd($rol->permissions);
+        //$this->permis=$rol->permissions;
+        foreach ($this->rolEleg->permissions as $value) {
+            array_push($this->permis,$value->id);
+        }
+    }
+
+    //Actualizar Regimen de Salud
+    public function edit()
+    {
         // validate
         $this->validate();
 
-        //Verificar que no exista el registro en la base de datos
-        $existe=Role::Where('name', '=',strtolower($this->name))->count();
+        //Actualizar registros
+        Role::whereId($this->id)->update([
+            'name'=>strtolower($this->name)
+        ]);
 
-        if($existe>0){
-            $this->dispatch('alerta', name:'Ya existe este rol: '.$this->name);
-        } else {
-            //Crear registro
-            $rol = Role::create([
-                'name'=>strtolower($this->name),
-            ]);
+        //Actualizar permisos
+        $this->rolEleg->permissions()->sync($this->permis);
 
-            //Asignar permisos
-            $rol->givePermissionTo($this->permis);
+        $this->dispatch('alerta', name:'Se ha modificado correctamente el Rol: '.$this->name);
+        $this->resetFields();
 
-            // Notificación
-            $this->dispatch('alerta', name:'Se ha creado correctamente el rol: '.$this->name);
-            $this->resetFields();
-
-            //refresh
-            $this->dispatch('refresh');
-            $this->dispatch('created');
-        }
+        //refresh
+        $this->dispatch('refresh');
+        $this->dispatch('Editando');
     }
 
     private function permisosac(){
@@ -106,9 +119,14 @@ class RolesCreate extends Component
                             ->get();
     }
 
+    private function permissions(){
+        return Permission::orderBy('id')
+                            ->get();
+    }
+
     public function render()
     {
-        return view('livewire.configuracion.rol.roles-create', [
+        return view('livewire.configuracion.rol.roles-editar', [
             'permisosac'=>$this->permisosac(),
             'permisosca'=>$this->permisosca(),
             'permisosfi'=>$this->permisosfi(),
@@ -117,6 +135,7 @@ class RolesCreate extends Component
             'permisosad'=>$this->permisosad(),
             'permisosar'=>$this->permisosar(),
             'permisosco'=>$this->permisosco(),
+            'permissions'=>$this->permissions(),
         ]);
     }
 }
