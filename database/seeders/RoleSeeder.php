@@ -21,93 +21,270 @@ class RoleSeeder extends Seeder
         $Profesor=Role::create(['name'=>'Profesor']);
         $Estudiante=Role::create(['name'=>'Estudiante']);
 
-        Permission::create(['name'=>'Academico'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_cursos'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_cursoCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_cursoEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_cursoInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'Academico',
+                            'descripcion'=>'Ingreso al menú Acádemico'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_cursos',
+                            'descripcion'=>'ver cursos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_cursoCrear',
+                            'descripcion'=>'crear cursos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_cursoEditar',
+                            'descripcion'=>'editar cursos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_cursoInactivar',
+                            'descripcion'=>'inactivar cursos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
-        Permission::create(['name'=>'ac_horarios'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_horarioCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_horarioEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_horarioInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_horarios',
+                            'descripcion'=>'ver horarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_horarioCrear',
+                            'descripcion'=>'crear horarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_horarioEditar',
+                            'descripcion'=>'editar horarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_horarioInactivar',
+                            'descripcion'=>'inactivar horarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
-        Permission::create(['name'=>'ac_modulos'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_moduloCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_moduloEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create(['name'=>'ac_moduloInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-
-
-        Permission::create(['name'=>'Cartera'])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
-
-
-
-        Permission::create(['name'=>'Financiera'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'fi_conceptopagos'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'fi_conceptopagoCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'fi_conceptopagoEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'fi_conceptopagoInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-
-
-        Permission::create(['name'=>'Inventario'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_productos'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_productoCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_productoEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_productoInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-
-        Permission::create(['name'=>'in_almacens'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_almacenCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_almacenEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_almacenInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-
-        Permission::create(['name'=>'in_inventarios'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_inventarioCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_inventarioAnular'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-        Permission::create(['name'=>'in_inventarioConsultar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
-
-
-        Permission::create(['name'=>'Reportes'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-
-
-
-        Permission::create(['name'=>'Administracion'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'ad_saluds'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'ad_saludCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'ad_saludEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'ad_saludInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-
-        Permission::create(['name'=>'ad_multis'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'ad_multiCrear'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'ad_multiEditar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-        Permission::create(['name'=>'ad_multiInactivar'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ac_modulos',
+                            'descripcion'=>'ver modulos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_moduloCrear',
+                            'descripcion'=>'crear modulos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_moduloEditar',
+                            'descripcion'=>'editar modulos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_moduloInactivar',
+                            'descripcion'=>'inactivar modulos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
 
-        Permission::create(['name'=>'Archivo'])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
-
-
-        Permission::create(['name'=>'Configuracion'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_rols'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_rolCrear'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_rolEditar'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_rolInactivar'])->syncRoles([$Superusuario]);
-
-        Permission::create(['name'=>'co_permisos'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_permisoCrear'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_permisoEditar'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_permisoInactivar'])->syncRoles([$Superusuario]);
-
-        Permission::create(['name'=>'co_countrys'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_countryCrear'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_countryEditar'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_countryInactivar'])->syncRoles([$Superusuario]);
-
-        Permission::create(['name'=>'co_sedes'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_sedeCrear'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_sedeEditar'])->syncRoles([$Superusuario]);
-        Permission::create(['name'=>'co_sedeInactivar'])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'Cartera',
+                            'descripcion'=>'ingreso al menú cartera'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
 
 
+        Permission::create([
+                            'name'=>'Financiera',
+                            'descripcion'=>'ingreso al menú financiera'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'fi_conceptopagos',
+                            'descripcion'=>'ver conceptos de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'fi_conceptopagoCrear',
+                            'descripcion'=>'crear concepto de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'fi_conceptopagoEditar',
+                            'descripcion'=>'editar concepto de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'fi_conceptopagoInactivar',
+                            'descripcion'=>'inactivar concepto de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+
+        Permission::create([
+                            'name'=>'Inventario',
+                            'descripcion'=>'ingreso al menú inventario'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_productos',
+                            'descripcion'=>'ver productos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_productoCrear',
+                            'descripcion'=>'crear productos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_productoEditar',
+                            'descripcion'=>'editar productos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_productoInactivar',
+                            'descripcion'=>'inactivar producto'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+
+        Permission::create([
+                            'name'=>'in_almacens',
+                            'descripcion'=>'ver almacenes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_almacenCrear',
+                            'descripcion'=>'crear almacenes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_almacenEditar',
+                            'descripcion'=>'editar almacenes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_almacenInactivar',
+                            'descripcion'=>'inactivar almacenes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+
+        Permission::create([
+                            'name'=>'in_inventarios',
+                            'descripcion'=>'ver inventarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_inventarioCrear',
+                            'descripcion'=>'crear inventarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_inventarioAnular',
+                            'descripcion'=>'anular inventarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'in_inventarioConsultar',
+                            'descripcion'=>'consultar inventarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+
+
+        Permission::create([
+                            'name'=>'Reportes',
+                            'descripcion'=>'ingreso al menú reportes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+
+
+        Permission::create([
+                            'name'=>'Administracion',
+                            'descripcion'=>'ingreso al menú administración'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_saluds',
+                            'descripcion'=>'ver regímenes de salud'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_saludCrear',
+                            'descripcion'=>'crear regímenes de salud'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_saludEditar',
+                            'descripcion'=>'editar regímenes de salud'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_saludInactivar',
+                            'descripcion'=>'inactivar regímenes de salud'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+        Permission::create([
+                            'name'=>'ad_multis',
+                            'descripcion'=>'ver personas multiculturales'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_multiCrear',
+                            'descripcion'=>'crear personas multiculturales'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_multiEditar',
+                            'descripcion'=>'editar personas multiculturales'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_multiInactivar',
+                            'descripcion'=>'inactivar personas multiculturales'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+
+        Permission::create([
+                            'name'=>'Archivo',
+                            'descripcion'=>'ingreso al menú archivo'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+
+        Permission::create([
+                            'name'=>'Configuracion',
+                            'descripcion'=>'ingreso al menú configuración'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_rols',
+                            'descripcion'=>'ver roles'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_rolCrear',
+                            'descripcion'=>'crear roles'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_rolEditar',
+                            'descripcion'=>'editar roles'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_rolInactivar',
+                            'descripcion'=>'inactivar roles'
+                            ])->syncRoles([$Superusuario]);
+
+        Permission::create([
+                            'name'=>'co_countrys',
+                            'descripcion'=>'ver países, departamentos, ciudades'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_countryCrear',
+                            'descripcion'=>'crear países, departamentos, ciudades'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_countryEditar',
+                            'descripcion'=>'editar países, departamentos, ciudades'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_countryInactivar',
+                            'descripcion'=>'inactivar países, departamentos, ciudades'
+                            ])->syncRoles([$Superusuario]);
+
+        Permission::create([
+                            'name'=>'co_sedes',
+                            'descripcion'=>'ver sedes'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_sedeCrear',
+                            'descripcion'=>'crear sede'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_sedeEditar',
+                            'descripcion'=>'editar sede'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_sedeInactivar',
+                            'descripcion'=>'inactivar sede'
+                            ])->syncRoles([$Superusuario]);
+
+        Permission::create([
+                            'name'=>'co_areas',
+                            'descripcion'=>'ver áreas'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_areaCrear',
+                            'descripcion'=>'crear área'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_areaEditar',
+                            'descripcion'=>'editar área'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_areaInactivar',
+                            'descripcion'=>'inactivar área'
+                            ])->syncRoles([$Superusuario]);
 
     }
 }
