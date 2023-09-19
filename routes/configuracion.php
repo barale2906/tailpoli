@@ -23,5 +23,5 @@ Route::get('/roles', function () {
 })->middleware('can:co_rols')->name('roles');
 
 Route::get('/users', function () {
-    return view('configuracion.roles.index');
+    return view('configuracion.users.index');
 })->middleware('can:co_users')->name('users');
