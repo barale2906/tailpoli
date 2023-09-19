@@ -286,5 +286,23 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'inactivar área'
                             ])->syncRoles([$Superusuario]);
 
+
+        Permission::create([
+                            'name'=>'co_users',
+                            'descripcion'=>'ver usuarios'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_userCrear',
+                            'descripcion'=>'crear Usuario'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_userEditar',
+                            'descripcion'=>'editar usuario'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_userInactivar',
+                            'descripcion'=>'inactivar usuario'
+                            ])->syncRoles([$Superusuario]);
+
     }
 }
