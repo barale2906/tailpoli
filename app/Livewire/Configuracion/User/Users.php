@@ -102,6 +102,7 @@ class Users extends Component
     {
         return User::where('name', 'like', "%".$this->buscamin."%")
                     ->orwhere('email', 'like', "%".$this->buscamin."%")
+                    ->orwhere('documento', 'like', "%".$this->buscamin."%")
                     ->orderBy($this->ordena, $this->ordenado)
                     ->paginate($this->pages);
     }

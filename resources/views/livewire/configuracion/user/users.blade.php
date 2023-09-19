@@ -126,15 +126,15 @@
     @endif
 
     @if ($is_creating)
-        <livewire:inventario.usuario.usuario-create />
+        <livewire:configuracion.user.users-create />
     @endif
 
     @if ($is_editing)
-        <livewire:inventario.usuario.usuario-editar :elegido="$elegido" />
+        <livewire:configuracion.user.users-editar :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)
-        <livewire:inventario.usuario.usuario-inactivar :elegido="$elegido" />
+        <livewire:configuracion.user.users-inactivar :elegido="$elegido" />
     @endif
 
     @push('js')
