@@ -21,5 +21,14 @@ class Horario extends Model
         return $this->belongsToMany(Area::class);
     }
 
+    /**
+     * Relación muchos a muchos.
+     * Grupos de este modulo
+     */
+    public function grupos(): BelongsToMany
+    {
+        return $this->belongsToMany(Grupo::class);
+    }
+
 
 }
