@@ -47,4 +47,10 @@ class Grupo extends Model
     {
         return $this->BelongsTo(Sede::class);
     }
+
+    //Relacion uno a muchos inversa
+    public function profesor() : BelongsTo
+    {
+        return $this->BelongsTo(User::class);
+    }
 }

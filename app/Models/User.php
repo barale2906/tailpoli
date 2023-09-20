@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Academico\Grupo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,6 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -67,5 +70,21 @@ class User extends Authenticatable
     public function inventarios(): HasMany
     {
         return $this->hasMany(Inventario::class);
+    }
+
+    //Relación uno a muchos
+    public function grupos(): HasMany
+    {
+        return $this->hasMany(Grupo::class);
+    }
+
+    /**
+     * Relación muchos a muchos.
+     * alumnos por cada grupo
+     */
+    public function alumnos(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+
     }
 }

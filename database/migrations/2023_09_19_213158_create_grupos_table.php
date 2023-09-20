@@ -23,6 +23,9 @@ return new class extends Migration
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');
 
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->timestamps();
         });
     }
