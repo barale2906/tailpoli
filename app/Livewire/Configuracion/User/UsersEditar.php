@@ -51,7 +51,9 @@ class UsersEditar extends Component
     public function rolasig(){
         $this->actual=User::whereId($this->id)->first();
 
-        $this->rol=$this->actual->roles[0]['name'];
+        if($this->actual->roles->count()){
+            $this->rol=$this->actual->roles[0]['name'];
+        }
     }
 
     //Actualizar
