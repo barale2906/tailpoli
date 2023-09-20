@@ -251,7 +251,7 @@ aria-label="Sidebar">
                             </a>
                         @endcan
                         @can('co_users')
-                            <a href="{{route('configuracion.users')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.roles') ? 'bg-gray-100' : ''}}">
+                            <a href="{{route('configuracion.users')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.users') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-wrench text-gray-500"></i>
                                 <span class="ml-3">Usuario</span>
                             </a>
