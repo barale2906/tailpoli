@@ -228,10 +228,6 @@ aria-label="Sidebar">
                         @endcan
                     </x-slot>
                     <x-slot name="content">
-                        <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.estados') ? 'bg-gray-100' : ''}}">
-                            <i class="fa-solid fa-wrench text-gray-500"></i>
-                            <span class="ml-3">Usuarios</span>
-                        </a>
                         @can('co_estados')
                             <a href="{{route('configuracion.estados')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.estados') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-wrench text-gray-500"></i>
@@ -253,7 +249,7 @@ aria-label="Sidebar">
                         @can('co_users')
                             <a href="{{route('configuracion.users')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('configuracion.users') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-wrench text-gray-500"></i>
-                                <span class="ml-3">Usuario</span>
+                                <span class="ml-3">Usuarios</span>
                             </a>
                         @endcan
                         @can('co_rols')
