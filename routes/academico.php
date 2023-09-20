@@ -13,3 +13,7 @@ Route::get('/horarios', function () {
 Route::get('/modulos', function () {
     return view('academico.modulo.index');
 })->middleware('can:ac_modulos')->name('modulos');
+
+Route::get('/grupos', function () {
+    return view('academico.grupo.index');
+})->middleware('can:ac_grupos')->name('grupos');

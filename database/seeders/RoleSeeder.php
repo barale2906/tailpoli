@@ -76,6 +76,23 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'inactivar modulos'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
+        Permission::create([
+                            'name'=>'ac_grupos',
+                            'descripcion'=>'ver grupos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_grupoCrear',
+                            'descripcion'=>'crear grupos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_grupoEditar',
+                            'descripcion'=>'editar grupos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_grupoInactivar',
+                            'descripcion'=>'inactivar grupos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+
 
         Permission::create([
                             'name'=>'Cartera',
