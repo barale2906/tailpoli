@@ -18,7 +18,8 @@ class GrupoSeeder extends Seeder
             'finish_date'       => '2023-09-30',
             'quantity_limit'    => 20,
             'sede_id'           => 1,
-            'user_id'           => 125
+            'user_id'           => 125,
+            'modulo_id'         => 1
         ]);
 
         \App\Models\Academico\Grupo::create([
@@ -27,7 +28,8 @@ class GrupoSeeder extends Seeder
             'finish_date'       => '2023-09-30',
             'quantity_limit'    => 20,
             'sede_id'           => 1,
-            'user_id'           => 125
+            'user_id'           => 124,
+            'modulo_id'         => 2
         ]);
     }
 }

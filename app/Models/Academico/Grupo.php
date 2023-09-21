@@ -18,9 +18,9 @@ class Grupo extends Model
      * Relación muchos a muchos.
      * Grupos de este modulo
      */
-    public function modulos(): BelongsToMany
+    public function modulo(): BelongsTo
     {
-        return $this->belongsToMany(Modulo::class);
+        return $this->belongsTo(Modulo::class);
     }
 
     /**
@@ -49,7 +49,7 @@ class Grupo extends Model
     }
 
     //Relacion uno a muchos inversa
-    public function profesor() : BelongsTo
+    public function user() : BelongsTo
     {
         return $this->BelongsTo(User::class);
     }

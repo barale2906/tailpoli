@@ -5,7 +5,7 @@ namespace App\Models\Academico;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Modulo extends Model
 {
@@ -23,9 +23,9 @@ class Modulo extends Model
      * Relación muchos a muchos.
      * Grupos de este horario
      */
-    public function grupos(): BelongsToMany
+    public function grupos(): HasMany
     {
-        return $this->belongsToMany(Grupo::class);
+        return $this->hasMany(Grupo::class);
     }
 
 }
