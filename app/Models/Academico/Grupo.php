@@ -49,7 +49,7 @@ class Grupo extends Model
     }
 
     //Relacion uno a muchos inversa
-    public function user() : BelongsTo
+    public function profesor() : BelongsTo
     {
         return $this->BelongsTo(User::class);
     }

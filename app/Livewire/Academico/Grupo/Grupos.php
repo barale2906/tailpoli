@@ -102,14 +102,14 @@ class Grupos extends Component
     private function grupos()
     {
         return Grupo::query()
-                        ->with(['modulo', 'user'])
+                        ->with(['modulo', 'profesor'])
                         ->when($this->buscamin, function($query){
                             return $query->where('status', true)
                                     ->where('name', 'like', "%".$this->buscamin."%")
                                     ->orWhereHas('modulo', function($q){
                                         $q->where('name', 'like', "%".$this->buscamin."%");
                                     })
-                                    ->orWhereHas('user', function($qu){
+                                    ->orWhereHas('profesor', function($qu){
                                         $qu->where('name', 'like', "%".$this->buscamin."%");
                                     });
                         })
