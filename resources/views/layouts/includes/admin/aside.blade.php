@@ -21,10 +21,12 @@ aria-label="Sidebar">
                             <i class="fa-solid fa-book text-gray-500"></i>
                             <span class="ml-3">Estudiantes</span>
                         </a>
-                        <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.cursos') ? 'bg-gray-100' : ''}}">
-                            <i class="fa-solid fa-book text-gray-500"></i>
-                            <span class="ml-3">Matriculas</span>
-                        </a>
+                        @can('ac_matriculas')
+                            <a href="{{route('academico.matriculas')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.matriculas') ? 'bg-gray-100' : ''}}">
+                                <i class="fa-solid fa-book text-gray-500"></i>
+                                <span class="ml-3">Matriculas</span>
+                            </a>
+                        @endcan
                         @can('ac_cursos')
                             <a href="{{route('academico.cursos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('academico.curs*') ? 'bg-gray-100' : ''}}">
                                 <i class="fa-solid fa-book text-gray-500"></i>

@@ -17,3 +17,7 @@ Route::get('/modulos', function () {
 Route::get('/grupos', function () {
     return view('academico.grupo.index');
 })->middleware('can:ac_grupos')->name('grupos');
+
+Route::get('/matriculas', function () {
+    return view('academico.matriculas.index');
+})->middleware('can:ac_matriculas')->name('matriculas');
