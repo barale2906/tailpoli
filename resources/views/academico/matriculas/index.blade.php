@@ -3,6 +3,6 @@
         Matriculas
     @endpush
 
-    {{-- <livewire:academico.matricula.matriculas /> --}}
+    <livewire:academico.matricula.matriculas />
 
 </x-admin-layout>
