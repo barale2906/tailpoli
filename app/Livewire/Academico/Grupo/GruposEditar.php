@@ -8,7 +8,7 @@ use App\Models\Configuracion\Sede;
 use App\Models\User;
 use Livewire\Component;
 
-class GruposCrear extends Component
+class GruposEditar extends Component
 {
     public $name = '';
     public $start_date='';
@@ -17,18 +17,8 @@ class GruposCrear extends Component
     public $sede_id='';
     public $profesor_id='';
     public $modulo_id = '';
-
-    public function modulo($item){
-        $this->modulo_id=$item;
-    }
-
-    public function sede($item){
-        $this->sede_id=$item;
-    }
-
-    public function profesor($item){
-        $this->profesor_id=$item;
-    }
+    public $id = '';
+    public $elegido;
 
     /**
      * Reglas de validación
@@ -41,6 +31,7 @@ class GruposCrear extends Component
         'sede_id'=>'required|integer',
         'modulo_id'=>'required|integer',
         'profesor_id'=>'required|integer',
+        'id'    => 'required'
     ];
 
     /**
@@ -49,25 +40,39 @@ class GruposCrear extends Component
      */
     public function resetFields(){
         $this->reset(
-                        'name',
-                        'start_date',
-                        'finish_date',
-                        'quantity_limit',
-                        'modulo_id',
-                        'sede_id',
-                        'profesor_id'
-                    );
+                    'name',
+                    'start_date',
+                    'finish_date',
+                    'quantity_limit',
+                    'modulo_id',
+                    'sede_id',
+                    'profesor_id',
+                    'id'
+                );
     }
 
-    // Crear Regimen de Salud
-    public function new(){
+    public function mount($elegido = null)
+    {
+        $this->id=$elegido['id'];
+        $this->name=$elegido['name'];
+        $this->start_date=$elegido['start_date'];
+        $this->finish_date=$elegido['finish_date'];
+        $this->quantity_limit=$elegido['quantity_limit'];
+        $this->sede_id=$elegido['sede_id'];
+        $this->modulo_id=$elegido['modulo_id'];
+        $this->profesor_id=$elegido['profesor_id'];
+
+    }
+
+    //Actualizar Regimen de Salud
+    public function edit()
+    {
         // validate
         $this->validate();
 
-        //Validar fechas
+        //Actualizar registros
         if($this->start_date<$this->finish_date){
-            //Crear registro
-            Grupo::create([
+            Grupo::whereId($this->id)->update([
                 'name'=>strtolower($this->name),
                 'start_date'        =>$this->start_date,
                 'finish_date'       =>$this->finish_date,
@@ -77,15 +82,12 @@ class GruposCrear extends Component
                 'profesor_id'       =>$this->profesor_id
             ]);
 
-
-            // Notificación
-            $this->dispatch('alerta', name:'Se ha creado correctamente el grupo: '.$this->name);
+            $this->dispatch('alerta', name:'Se ha modificado correctamente el grupo: '.$this->name);
             $this->resetFields();
 
             //refresh
             $this->dispatch('refresh');
-            $this->dispatch('created');
-
+            $this->dispatch('Editando');
         }else{
             $this->dispatch('alerta', name:'La fecha de inicio debe ser menor a la fecha de finalización.');
         }
@@ -114,7 +116,7 @@ class GruposCrear extends Component
 
     public function render()
     {
-        return view('livewire.academico.grupo.grupos-crear', [
+        return view('livewire.academico.grupo.grupos-editar', [
             'modulos'   => $this->modulos(),
             'sedes'      => $this->sedes(),
             'profesores'=> $this->profesores()
