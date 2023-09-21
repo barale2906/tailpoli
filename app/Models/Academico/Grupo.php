@@ -53,4 +53,10 @@ class Grupo extends Model
     {
         return $this->BelongsTo(User::class);
     }
+
+    //Relacion uno a muchos inversa
+    public function matriculas() : BelongsToMany
+    {
+        return $this->BelongsToMany(Matricula::class);
+    }
 }

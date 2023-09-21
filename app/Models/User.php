@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Academico\Grupo;
+use App\Models\Academico\Matricula;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -82,9 +83,27 @@ class User extends Authenticatable
      * Relación muchos a muchos.
      * alumnos por cada grupo
      */
-    public function alumnos(): BelongsToMany
+    public function alumnosGrupo(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Grupo::class);
 
+    }
+
+    //Relación uno a muchos
+    public function matriculAlumno(): HasMany
+    {
+        return $this->hasMany(Matricula::class);
+    }
+
+    //Relación uno a muchos
+    public function matriculaCreador(): HasMany
+    {
+        return $this->hasMany(Matricula::class);
+    }
+
+    //Relación uno a muchos
+    public function matriculaComercial(): HasMany
+    {
+        return $this->hasMany(Matricula::class);
     }
 }
