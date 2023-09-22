@@ -1,6 +1,6 @@
 <div>
     <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
-        <h1 class="text-xl uppercase">usuarios de inventario</h1>
+        <h1 class="text-xl uppercase">usuarios registrados en el sistema</h1>
     </div>
 
     @if ($is_modify)
