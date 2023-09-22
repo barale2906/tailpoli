@@ -13,7 +13,7 @@ class Matriculas extends Component
     use WithPagination;
 
     public $ordena='id';
-    public $ordenado='ASC';
+    public $ordenado='DESC';
     public $pages = 10;
 
     public $is_modify = true;
