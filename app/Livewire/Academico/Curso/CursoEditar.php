@@ -42,7 +42,7 @@ class CursoEditar extends Component
         $this->id=$elegido['id'];
     }
 
-    //Actualizar Regimen de Salud
+    //Actualizar
     public function edit()
     {
         // validate

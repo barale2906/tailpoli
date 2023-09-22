@@ -95,19 +95,19 @@ class RoleSeeder extends Seeder
 
         Permission::create([
                             'name'=>'ac_matriculas',
-                            'descripcion'=>'ver grumatriculas'
+                            'descripcion'=>'ver matriculas'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
         Permission::create([
                             'name'=>'ac_matriculaCrear',
-                            'descripcion'=>'crear grumatriculas'
+                            'descripcion'=>'crear matriculas'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
         Permission::create([
-                            'name'=>'ac_matriculaEditar',
-                            'descripcion'=>'editar grumatriculas'
+                            'name'=>'ac_matriculaAnular',
+                            'descripcion'=>'Anular matriculas'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
         Permission::create([
                             'name'=>'ac_matriculaInactivar',
-                            'descripcion'=>'inactivar grumatriculas'
+                            'descripcion'=>'inactivar matriculas'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
 
