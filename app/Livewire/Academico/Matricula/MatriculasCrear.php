@@ -158,6 +158,17 @@ class MatriculasCrear extends Component
                 'created_at'=>now(),
                 'updated_at'=>now(),
             ]);
+
+            //Sumar estudiante al grupo
+            $inscrito=Grupo::where('id', $item['id'])
+                            ->select('inscritos')
+                            ->first();
+
+            $ins=$inscrito->inscritos+1;
+
+            Grupo::whereId($item['id'])->update([
+                'inscritos'=>$ins
+            ]);
         }
 
         // Notificación

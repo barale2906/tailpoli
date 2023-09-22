@@ -103,11 +103,7 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
         Permission::create([
                             'name'=>'ac_matriculaAnular',
-                            'descripcion'=>'Anular matriculas'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
-        Permission::create([
-                            'name'=>'ac_matriculaInactivar',
-                            'descripcion'=>'inactivar matriculas'
+                            'descripcion'=>'anular matriculas'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
 
