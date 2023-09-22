@@ -6,6 +6,7 @@ use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -30,6 +31,9 @@ class MatriculasCrear extends Component
 
     public $buscaGrupo=null;
     public $buscamin='';
+    public $matriculados;
+    public $gruposAct=[];
+
 
     //Buscar Alumno
     public function buscAlumno(){
@@ -50,10 +54,37 @@ class MatriculasCrear extends Component
         $this->alumno_id=$item['id'];
         $this->alumnoName=$item['name'];
         $this->alumnodocumento=$item['documento'];
+        $this->matrActual();
+    }
+
+    public function matrActual(){
+        $this->matriculados = Matricula::where('status', true)
+                                        ->where('alumno_id', $this->alumno_id)
+                                        ->get();
+
+        if($this->matriculados->count()){
+            foreach ($this->matriculados as $value) {
+                $this->grupoActual($value->id);
+            }
+        }
+    }
+
+    public function grupoActual($id){
+        $gr = Matricula::find($id);
+        foreach($gr->grupos as $value){
+            array_push($this->gruposAct, $value->id);
+        }
     }
 
     public function selGrupo($item){
+        if(in_array($item['id'], $this->gruposAct)){
+            $this->dispatch('alerta', name:'Ya esta matriculado al grupo: '.$item['name']);
+        }else{
+            $this->asigGrupo($item);
+        }
+    }
 
+    public function asigGrupo($item){
         if(now()<$item['finish_date']){
             if(in_array([
                 'id'=>$item['id'],
@@ -67,12 +98,12 @@ class MatriculasCrear extends Component
                     'name'=>$item['name']
                 ];
                 array_push($this->grupos,$nuevo);
+
+                $this->seleccionado=true;
             }
         } else{
-            $this->dispatch('alerta', name:'Ya excedio la fecha de finalización del grupo: '.$item['name']);
+            $this->dispatch('alerta', name:'El grupo: '.$item['name'].' ya finalizó.');
         }
-
-        $this->seleccionado=true;
     }
 
     /**
@@ -107,37 +138,42 @@ class MatriculasCrear extends Component
         // validate
         $this->validate();
 
-        //Verificar que no exista el registro en la base de datos
-        $existe=Matricula::Where('alumno_id', '=', $this->alumno_id)->count();
+        //Crear registro
+        $matricula = Matricula::create([
+                                'medio'=>$this->medio,
+                                'nivel'=>$this->nivel,
+                                'valor'=>$this->valor,
+                                'metodo'=>$this->metodo,
+                                'alumno_id'=>$this->alumno_id,
+                                'comercial_id'=>$this->comercial_id,
+                                'creador_id'=>Auth::user()->id
+                            ]);
 
-        if($existe>0){
-            $this->dispatch('alerta', name:'Ya está matriculado a este curso: '.$this->name);
-        } else {
-            //Crear registro
-            Matricula::create([
-                'medio'=>$this->medio,
-                'nivel'=>$this->nivel,
-                'valor'=>$this->valor,
-                'metodo'=>$this->metodo,
-                'alumno_id'=>$this->alumno_id,
-                'comercial_id'=>$this->comercial_id,
-                'creador_id'=>Auth::user()->id
+        //Asignar Grupos
+        foreach($this->grupos as $item){
+            DB::table('grupo_matricula')
+            ->insert([
+                'grupo_id'=>$item['id'],
+                'matricula_id'=>$matricula->id,
+                'created_at'=>now(),
+                'updated_at'=>now(),
             ]);
-
-            // Notificación
-            $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
-            $this->resetFields();
-
-            //refresh
-            $this->dispatch('refresh');
-            $this->dispatch('created');
         }
+
+        // Notificación
+        $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
+        $this->resetFields();
+
+        //refresh
+        $this->dispatch('refresh');
+        $this->dispatch('created');
+
     }
 
     private function estudiantes(){
         return User::where('status', true)
                         ->where('name', 'like', "%".$this->buscaestudi."%")
-                        ->orWhere('name', 'like', "%".$this->buscaestudi."%")
+                        ->orWhere('documento', 'like', "%".$this->buscaestudi."%")
                         ->orderBy('name')
                         ->with('roles')->get()->filter(
                             fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()

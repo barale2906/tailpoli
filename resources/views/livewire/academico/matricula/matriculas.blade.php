@@ -181,7 +181,7 @@
                         icon: 'success',
                         title: variable['name'],
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 2000
                     })
                 });
             });

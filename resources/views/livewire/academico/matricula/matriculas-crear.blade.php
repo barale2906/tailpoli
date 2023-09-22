@@ -37,7 +37,7 @@
         @if ($alumno_id>0)
             <div class="mb-6">
                 <div class="w-full">
-                    <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white capitalize">Elegir Grupo(s) para {{$alumnoName}}</label>
+                    <p class="max-w-lg text-xl font-semibold leading-normal text-gray-900 dark:text-white">Elegir Grupo(s) para {{$alumnoName}}</p>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
