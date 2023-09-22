@@ -2,13 +2,17 @@
 
 namespace App\Livewire\Academico\Matricula;
 
+use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class MatriculasCrear extends Component
 {
+    use WithPagination;
+
     public $medio = '';
     public $nivel = '';
     public $valor='';
@@ -17,12 +21,15 @@ class MatriculasCrear extends Component
     public $alumnoName='';
     public $alumnodocumento='';
     public $comercial_id='';
+    public $grupos=[];
+    public $grupoNombre=[];
+    public $seleccionado=false;
 
     public $buscar=null;
     public $buscaestudi='';
 
     public $buscaGrupo=null;
-    public $busgrupito='';
+    public $buscamin='';
 
     //Buscar Alumno
     public function buscAlumno(){
@@ -31,7 +38,7 @@ class MatriculasCrear extends Component
 
     //Buscar Alumno
     public function buscGrupo(){
-        $this->busgrupito=strtolower($this->buscaGrupo);
+        $this->buscamin=strtolower($this->buscaGrupo);
     }
 
     //Limpiar variables
@@ -43,6 +50,29 @@ class MatriculasCrear extends Component
         $this->alumno_id=$item['id'];
         $this->alumnoName=$item['name'];
         $this->alumnodocumento=$item['documento'];
+    }
+
+    public function selGrupo($item){
+
+        if(now()<$item['finish_date']){
+            if(in_array([
+                'id'=>$item['id'],
+                'name'=>$item['name']
+            ], $this->grupos))
+            {
+
+            }else{
+                $nuevo=[
+                    'id'=>$item['id'],
+                    'name'=>$item['name']
+                ];
+                array_push($this->grupos,$nuevo);
+            }
+        } else{
+            $this->dispatch('alerta', name:'Ya excedio la fecha de finalización del grupo: '.$item['name']);
+        }
+
+        $this->seleccionado=true;
     }
 
     /**
@@ -122,11 +152,30 @@ class MatriculasCrear extends Component
                         );
     }
 
+    private function grupost()
+    {
+        return Grupo::query()
+                        ->with(['modulo', 'profesor'])
+                        ->when($this->buscamin, function($query){
+                            return $query->where('status', true)
+                                    ->where('name', 'like', "%".$this->buscamin."%")
+                                    ->orWhereHas('modulo', function($q){
+                                        $q->where('name', 'like', "%".$this->buscamin."%");
+                                    })
+                                    ->orWhereHas('profesor', function($qu){
+                                        $qu->where('name', 'like', "%".$this->buscamin."%");
+                                    });
+                        })
+                        ->orderBy('id', 'DESC')
+                        ->paginate(3);
+    }
+
     public function render()
     {
         return view('livewire.academico.matricula.matriculas-crear', [
             'estudiantes'=>$this->estudiantes(),
             'noestudiantes'=>$this->noestudiantes(),
+            'grupost'=> $this->grupost(),
         ]);
     }
 }

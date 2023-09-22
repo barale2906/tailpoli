@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('start_date')->comment('Fecha inicio del grupo');
             $table->date('finish_date')->comment('Fecha final del grupo');
             $table->integer('quantity_limit')->comment('Cantidad máxima de estudiantes');
+            $table->integer('inscritos')->default(0)->comment('Cantidad de estudiantes inscritos');
             $table->boolean('status')->default(true)->comment('false Saldo Inactivo, true Saldo Activo');
 
             $table->unsignedBigInteger('sede_id');
