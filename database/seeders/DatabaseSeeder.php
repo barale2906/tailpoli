@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Financiera\EstadoCartera;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             InventarioSeeder::class,
             GrupoSeeder::class,
             MatriculaSeeder::class,
+            EstadoCarteraSeeder::class,
         ]);
     }
 }

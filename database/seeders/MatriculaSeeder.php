@@ -30,7 +30,7 @@ class MatriculaSeeder extends Seeder
             'anula'=>'',
             'anula_user'=>'',
             'valor'=>'1300000',
-            'metodo'=>'financiado',
+            'metodo'=>'contado',
             'alumno_id'=>'4',
             'comercial_id'=>'125',
             'creador_id'=>'124'
