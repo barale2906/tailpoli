@@ -3,6 +3,7 @@
 namespace App\Models\Financiera;
 
 use App\Models\Academico\Matricula;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +19,7 @@ class Cartera extends Model
     public function matricula() : BelongsTo
     {
         return $this->BelongsTo(Matricula::class);
-    }    
+    }
 
     //Relacion uno a muchos inversa
     public function estadoCartera() : BelongsTo
@@ -26,11 +27,9 @@ class Cartera extends Model
         return $this->BelongsTo(EstadoCartera::class);
     }
 
-    /**
-     * Obtener Usuario a través de la matricula.
-     */
-    public function deudor(): HasOneThrough
+    //Relacion uno a muchos inversa
+    public function responsable(): BelongsTo
     {
-        return $this->hasOneThrough(User::class, Matricula::class);
+        return $this->BelongsTo(User::class);
     }
 }

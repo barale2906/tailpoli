@@ -26,6 +26,9 @@ return new class extends Migration
             $table->unsignedBigInteger('estado_cartera_id');
             $table->foreign('estado_cartera_id')->references('id')->on('estado_carteras');
 
+            $table->unsignedBigInteger('responsable_id');
+            $table->foreign('responsable_id')->references('id')->on('users');
+
             $table->timestamps();
         });
     }

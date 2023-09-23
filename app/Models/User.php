@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Financiera\Cartera;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -105,5 +106,11 @@ class User extends Authenticatable
     public function matriculaComercial(): HasMany
     {
         return $this->hasMany(Matricula::class);
+    }
+
+    //Relación uno a muchos
+    public function responsables(): HasMany
+    {
+        return $this->hasMany(Cartera::class);
     }
 }

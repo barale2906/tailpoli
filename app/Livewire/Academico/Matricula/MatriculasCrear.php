@@ -186,8 +186,6 @@ class MatriculasCrear extends Component
             ]);
         }
 
-        //Crear cartera
-        $fecha_actual=date("Y-d-m");
 
         if($this->metodo!=="Contado"){
 
@@ -198,6 +196,7 @@ class MatriculasCrear extends Component
                 'saldo'=>$this->inicial,
                 'observaciones'=>'Cuota inicial de un total de: '.$this->valor,
                 'matricula_id'=>$matricula->id,
+                'responsable_id'=>$this->alumno_id,
                 'estado_cartera_id'=>1
             ]);
             //Cuotas
@@ -210,6 +209,7 @@ class MatriculasCrear extends Component
                     'saldo'=>$this->mensual,
                     'observaciones'=>$a.' cuota mensual de un total de: '.$this->valor,
                     'matricula_id'=>$matricula->id,
+                    'responsable_id'=>$this->alumno_id,
                     'estado_cartera_id'=>1
                 ]);
                 $a++;
