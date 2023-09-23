@@ -17,6 +17,10 @@ class EstadoCarteraSeeder extends Seeder
         ]);
 
         \App\Models\Financiera\EstadoCartera::create([
+            'name' => 'abonada',
+        ]);
+
+        \App\Models\Financiera\EstadoCartera::create([
             'name' => 'mora',
         ]);
 

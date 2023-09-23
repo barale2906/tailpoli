@@ -18,13 +18,7 @@ class Cartera extends Model
     public function matricula() : BelongsTo
     {
         return $this->BelongsTo(Matricula::class);
-    }
-
-    //Relacion uno a muchos inversa
-    public function conceptoPago() : BelongsTo
-    {
-        return $this->BelongsTo(ConceptoPago::class);
-    }
+    }    
 
     //Relacion uno a muchos inversa
     public function estadoCartera() : BelongsTo

@@ -4,7 +4,9 @@ namespace App\Livewire\Academico\Matricula;
 
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Financiera\Cartera;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -17,7 +19,7 @@ class MatriculasCrear extends Component
     public $medio = '';
     public $nivel = '';
     public $valor='';
-    public $metodo='';
+    public $metodo='a';
     public $alumno_id='';
     public $alumnoName='';
     public $alumnodocumento='';
@@ -33,6 +35,10 @@ class MatriculasCrear extends Component
     public $buscamin='';
     public $matriculados;
     public $gruposAct=[];
+
+    public $inicial='';
+    public $cuota;
+    public $mensual;
 
 
     //Buscar Alumno
@@ -106,6 +112,14 @@ class MatriculasCrear extends Component
         }
     }
 
+    public function calculaMes(){
+        if($this->cuota>0 && $this->inicial<$this->valor){
+            $this->mensual=($this->valor-$this->inicial)/$this->cuota;
+        }else{
+            $this->dispatch('alerta', name:'Revise los valores.');
+        }
+    }
+
     /**
      * Reglas de validación
      */
@@ -138,6 +152,7 @@ class MatriculasCrear extends Component
         // validate
         $this->validate();
 
+        $date = Carbon::now();
         //Crear registro
         $matricula = Matricula::create([
                                 'medio'=>$this->medio,
@@ -171,6 +186,36 @@ class MatriculasCrear extends Component
             ]);
         }
 
+        //Crear cartera
+        $fecha_actual=date("Y-d-m");
+
+        if($this->metodo!=="Contado"){
+
+            //Inicial
+            Cartera::create([
+                'fecha_pago'=>now(),
+                'valor'=>$this->inicial,
+                'saldo'=>$this->inicial,
+                'observaciones'=>'Cuota inicial de un total de: '.$this->valor,
+                'matricula_id'=>$matricula->id,
+                'estado_cartera_id'=>1
+            ]);
+            //Cuotas
+            $a=1;
+            while ($a <= $this->cuota) {
+                $endDate = $date->addMonths();
+                Cartera::create([
+                    'fecha_pago'=>$endDate,
+                    'valor'=>$this->mensual,
+                    'saldo'=>$this->mensual,
+                    'observaciones'=>$a.' cuota mensual de un total de: '.$this->valor,
+                    'matricula_id'=>$matricula->id,
+                    'estado_cartera_id'=>1
+                ]);
+                $a++;
+            }
+        }
+
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
         $this->resetFields();
@@ -199,8 +244,7 @@ class MatriculasCrear extends Component
                         );
     }
 
-    private function grupost()
-    {
+    private function grupost(){
         return Grupo::query()
                         ->with(['modulo', 'profesor'])
                         ->when($this->buscamin, function($query){
@@ -217,8 +261,7 @@ class MatriculasCrear extends Component
                         ->paginate(3);
     }
 
-    public function render()
-    {
+    public function render(){
         return view('livewire.academico.matricula.matriculas-crear', [
             'estudiantes'=>$this->estudiantes(),
             'noestudiantes'=>$this->noestudiantes(),
