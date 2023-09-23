@@ -92,10 +92,12 @@ aria-label="Sidebar">
                         @endcan
                     </x-slot>
                     <x-slot name="content">
-                        <a href="{{route('financiera.conceptopagos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('financiera.conceptopagos') ? 'bg-gray-100' : ''}}">
-                            <i class="fa-solid fa-ranking-star text-gray-500"></i>
-                            <span class="ml-3">Recibos Pago</span>
-                        </a>
+                        @can('fi_recibopagos')
+                            <a href="{{route('financiera.recibopagos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('financiera.recibopagos') ? 'bg-gray-100' : ''}}">
+                                <i class="fa-solid fa-ranking-star text-gray-500"></i>
+                                <span class="ml-3">Recibos Pago</span>
+                            </a>
+                        @endcan
                         <a href="{{route('financiera.conceptopagos')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{request()->routeIs('financiera.conceptopagos') ? 'bg-gray-100' : ''}}">
                             <i class="fa-solid fa-ranking-star text-gray-500"></i>
                             <span class="ml-3">Cierre Caja</span>

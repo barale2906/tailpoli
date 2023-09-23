@@ -135,6 +135,19 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'inactivar concepto de pago'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
+        Permission::create([
+                            'name'=>'fi_recibopagos',
+                            'descripcion'=>'ver recibos de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'fi_recibopagoCrear',
+                            'descripcion'=>'crear recibo de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'fi_recibopagoAnular',
+                            'descripcion'=>'anular recibo de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
 
         Permission::create([
                             'name'=>'Inventario',
