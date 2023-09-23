@@ -23,8 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');
 
-            $table->unsignedBigInteger('crea_id');
-            $table->foreign('crea_id')->references('id')->on('users');
+            $table->unsignedBigInteger('creador_id');
+            $table->foreign('creador_id')->references('id')->on('users');
 
             $table->unsignedBigInteger('paga_id');
             $table->foreign('paga_id')->references('id')->on('users');

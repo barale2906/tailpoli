@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Cartera extends Model
@@ -31,5 +32,14 @@ class Cartera extends Model
     public function responsable(): BelongsTo
     {
         return $this->BelongsTo(User::class);
+    }
+
+    /**
+     * Relación muchos a muchos.
+     * recibos de pago por pagos de cartera
+     */
+    public function recibos(): BelongsToMany
+    {
+        return $this->belongsToMany(ReciboPago::class);
     }
 }

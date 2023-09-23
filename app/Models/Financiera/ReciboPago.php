@@ -28,7 +28,7 @@ class ReciboPago extends Model
     }
 
     //Relacion uno a muchos inversa
-    public function pagador() : BelongsTo
+    public function paga() : BelongsTo
     {
         return $this->BelongsTo(User::class);
     }

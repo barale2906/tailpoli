@@ -3,6 +3,7 @@
 namespace App\Models\Configuracion;
 
 use App\Models\Academico\Grupo;
+use App\Models\Financiera\ReciboPago;
 use App\Models\Inventario\Almacen;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,5 +42,11 @@ class Sede extends Model
     public function almacenes(): HasMany
     {
         return $this->hasMany(Almacen::class);
+    }
+
+    //Relación uno a muchos
+    public function recibos(): HasMany
+    {
+        return $this->hasMany(ReciboPago::class);
     }
 }

@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\ReciboPago;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -112,5 +113,17 @@ class User extends Authenticatable
     public function responsables(): HasMany
     {
         return $this->hasMany(Cartera::class);
+    }
+
+    //Relación uno a muchos
+    public function creadors(): HasMany
+    {
+        return $this->hasMany(ReciboPago::class);
+    }
+
+    //Relación uno a muchos
+    public function pagas(): HasMany
+    {
+        return $this->hasMany(ReciboPago::class);
     }
 }

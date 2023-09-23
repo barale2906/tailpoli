@@ -3,6 +3,6 @@
         Recibos de Pago
     @endpush
 
-    {{-- <livewire:financiera.concepto-pago.concepto-pagos /> --}}
+    <livewire:financiera.recibo-pago.recibos-pago />
 
 </x-admin-layout>
