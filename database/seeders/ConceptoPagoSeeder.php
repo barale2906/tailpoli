@@ -29,11 +29,7 @@ class ConceptoPagoSeeder extends Seeder
         ]);
 
         \App\Models\Financiera\ConceptoPago::create([
-            'name'              =>'Kit Uniforme',
-        ]);
-
-        \App\Models\Financiera\ConceptoPago::create([
-            'name'              =>'Kit Herramienta',
+            'name'              =>'Inventario',
         ]);
     }
 }

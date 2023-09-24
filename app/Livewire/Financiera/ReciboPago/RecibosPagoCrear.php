@@ -27,6 +27,9 @@ class RecibosPagoCrear extends Component
     public $detalles=[];
     public $control=[];
 
+    public $otrosDeta=[];
+    public $otroscontrol=[];
+
     public $buscar=null;
     public $buscaestudi='';
 

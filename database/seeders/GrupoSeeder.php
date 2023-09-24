@@ -13,7 +13,7 @@ class GrupoSeeder extends Seeder
     public function run(): void
     {
         \App\Models\Academico\Grupo::create([
-            'name'              => 'Entresemana',
+            'name'              => 'entresemana sede pricipal en la mañana',
             'start_date'        => '2023-09-01',
             'finish_date'       => '2023-09-30',
             'quantity_limit'    => 20,
@@ -23,7 +23,7 @@ class GrupoSeeder extends Seeder
         ]);
 
         \App\Models\Academico\Grupo::create([
-            'name'              => 'Fin de Semana',
+            'name'              => 'fin de semana sede principal',
             'start_date'        => '2023-09-01',
             'finish_date'       => '2023-09-30',
             'quantity_limit'    => 20,
