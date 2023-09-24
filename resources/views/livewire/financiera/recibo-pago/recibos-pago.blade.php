@@ -163,15 +163,15 @@
     @endif
 
     @if ($is_creating)
-        <livewire:recibo.recibo.recibos-crear :tipon="1"/>
+        <livewire:financiera.recibo-pago.recibos-pago-crear :tipon="1"/>
     @endif
 
     @if ($is_editing)
-        <livewire:recibo.recibo.recibos-editar :elegido="$elegido" />
+        <livewire:financiera.recibo-pago.recibos-pago-anular :elegido="$elegido" />
     @endif
 
     @if ($is_deleting)
-        <livewire:recibo.recibo.recibos-consultar :elegido="$elegido" />
+        <livewire:financiera.recibo-pago.recibos-pago-consultar :elegido="$elegido" />
     @endif
 
     @push('js')

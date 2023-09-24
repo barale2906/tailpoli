@@ -42,14 +42,6 @@ class ReciboPago extends Model
         return $this->belongsToMany(CierreCaja::class);
     } */
 
-    /**
-     * Relación muchos a muchos.
-     * recibos de pago por pagos de cartera
-     */
-    public function carteras(): BelongsToMany
-    {
-        return $this->belongsToMany(Cartera::class);
-    }
 
     /**
      * Relación muchos a muchos.

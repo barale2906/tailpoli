@@ -16,12 +16,10 @@ return new class extends Migration
             $table->id();
 
             $table->double('valor')->comment('Valor pagado concepto pago');
+            $table->integer('cartera_id')->nullable();
 
             $table->unsignedBigInteger('conceptos_id');
             $table->foreign('conceptos_id')->references('id')->on('concepto_pagos');
-
-            $table->unsignedBigInteger('carteras_id');
-            $table->foreign('carteras_id')->references('id')->on('carteras');
 
             $table->unsignedBigInteger('recibos_id');
             $table->foreign('recibos_id')->references('id')->on('recibo_pagos');

@@ -32,6 +32,10 @@ class EstadoCarteraSeeder extends Seeder
             'name' => 'convenio',
         ]);
 
+        \App\Models\Financiera\EstadoCartera::create([
+            'name' => 'cerrada',
+        ]);
+
 
     }
 }

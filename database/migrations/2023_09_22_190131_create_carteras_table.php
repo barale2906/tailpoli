@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('valor')->comment('Valor del concepto');
             $table->double('saldo')->default(0)->comment('Saldo del concepto');
             $table->longtext('observaciones')->comment('Historia de cambios');
+            $table->boolean('status')->default(true)->comment('false Inactivo, true Activo');
 
             $table->unsignedBigInteger('matricula_id');
             $table->foreign('matricula_id')->references('id')->on('matriculas');

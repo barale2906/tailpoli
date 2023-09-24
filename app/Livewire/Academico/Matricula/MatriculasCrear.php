@@ -224,6 +224,9 @@ class MatriculasCrear extends Component
         $this->dispatch('refresh');
         $this->dispatch('created');
 
+        //Enviar a crear recibo
+        $this->redirect('/financiera/recibopagos');
+
     }
 
     private function estudiantes(){
