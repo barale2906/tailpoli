@@ -53,6 +53,7 @@
         </div>
         @if ($alumno_id>0)
             <h5 class="text-center text-3xl m-8">Registrar pago para: <strong class="uppercase">{{$alumnoName}}</strong> con documento N°: <strong class="uppercase">{{$alumnodocumento}}</strong></h5>
+
             <div class="grid grid-cols-3 gap-2 mb-4">
                 <div class="ring-2 bg-slate-50 col-span-2 p-4">
 

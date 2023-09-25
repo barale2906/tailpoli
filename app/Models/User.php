@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ReciboPago;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -125,5 +126,14 @@ class User extends Authenticatable
     public function pagas(): HasMany
     {
         return $this->hasMany(ReciboPago::class);
+    }
+
+    /**
+     * Relación muchos a muchos.
+     * usuarios que gestionan las sedes
+     */
+    public function sedes(): BelongsToMany
+    {
+        return $this->belongsToMany(Sede::class);
     }
 }

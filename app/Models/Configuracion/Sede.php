@@ -5,6 +5,7 @@ namespace App\Models\Configuracion;
 use App\Models\Academico\Grupo;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Inventario\Almacen;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +31,15 @@ class Sede extends Model
     public function areas(): BelongsToMany
     {
         return $this->belongsToMany(Area::class);
+    }
+
+    /**
+     * Relación muchos a muchos.
+     * usuarios admninistradtivos que gestionan la sede
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
     }
 
     //Relación uno a muchos

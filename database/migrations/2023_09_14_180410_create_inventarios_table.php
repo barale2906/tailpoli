@@ -22,6 +22,8 @@ return new class extends Migration
             $table->longText('descripcion');
             $table->boolean('status')->default(true)->comment('false Saldo Inactivo, true Saldo Activo');
 
+            $table->integer('compra_id')->nullable()->comment('Sirve para identificar las compras por usuario');
+
             $table->unsignedBigInteger('almacen_id');
             $table->foreign('almacen_id')->references('id')->on('almacens');
 
