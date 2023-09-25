@@ -130,6 +130,20 @@ class RecibosPagoCrear extends Component
 
     }
 
+    public function elimOtro($item){
+        dd($item);
+
+        $this->dispatch('alerta', name:'ELIMINIAR '.$item['name']);
+
+        /* $textos = array("Hola", "Chau", "Bien", "Mal");
+
+        echo "Borrando la palabra 'Chau' dentro del array:<br>";
+        if (($clave = array_search("Chau", $textos)) !== false) {
+            unset($textos[$clave]);
+            print_r($textos);
+        } */
+    }
+
 
 
     /**

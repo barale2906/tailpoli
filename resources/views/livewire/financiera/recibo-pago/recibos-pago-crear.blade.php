@@ -206,6 +206,7 @@
                                     <th scope="col" class="px-6 py-3" >
                                         Valor pagado
                                     </th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -216,6 +217,11 @@
                                         </th>
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
                                             $ {{number_format($detalle['valor'], 0, '.', ' ')}}
+                                        </th>
+                                        <th>
+                                            <a href="#" wire:click.prevent="elimOtro({{$detalle['name']}})" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
                                         </th>
                                     </tr>
                                 @endforeach
