@@ -7,6 +7,7 @@ use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -164,8 +165,15 @@ class RecibosPagoCrear extends Component
     }
 
     private function sedes(){
-        return Sede::where('status', true)
-                    ->orderBy('name', 'ASC')
+        return Sede::query()
+                    ->with(['users'])
+                    ->when(Auth::user()->id, function($qu){
+                        return $qu->where('status', true)
+                                ->whereHas('users', function($q){
+                                    $q->where('user_id', Auth::user()->id);
+                                });
+                    })
+                    ->orderBy('name')
                     ->get();
     }
 

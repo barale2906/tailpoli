@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'password'=>bcrypt('10203040')
         ])->assignRole('Superusuario');
 
-        DB::table('users_sedes')
+        DB::table('sede_user')
                 ->insert([
                     'user_id'=>$super->id,
                     'sede_id'=>1,
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
-        DB::table('users_sedes')
+        DB::table('sede_user')
                 ->insert([
                     'user_id'=>$super->id,
                     'sede_id'=>2,
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
             'password'=>bcrypt('10203040')
         ])->assignRole('Administrador');
 
-        DB::table('users_sedes')
+        DB::table('sede_user')
                 ->insert([
                     'user_id'=>$admon->id,
                     'sede_id'=>1,
