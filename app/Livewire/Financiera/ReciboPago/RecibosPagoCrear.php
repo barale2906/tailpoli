@@ -7,6 +7,7 @@ use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -22,14 +23,14 @@ class RecibosPagoCrear extends Component
     public $paga_id;
 
     public $valor=0;
-    public $conceptos=4;
+    public $conceptos=0;
     public $concep=[];
+    public $nameConcep='';
     public $Total=0;
     public $detalles=[];
     public $control=[];
 
     public $otrosDeta=[];
-    public $otroscontrol=[];
 
     public $buscar=null;
     public $buscaestudi='';
@@ -64,7 +65,7 @@ class RecibosPagoCrear extends Component
     }
 
     public function asignar($item){
-        //dd($item);
+
         if($item['saldo']>=$this->valor && $this->valor>0){
             if(in_array([
                 'id'=>$item['id'],
@@ -92,7 +93,43 @@ class RecibosPagoCrear extends Component
         }else{
             $this->dispatch('alerta', name:'El valor debe ser mayor a 0 y menor al saldo');
         }
+
     }
+
+    public function asigOtro(){
+        if($this->valor>0){
+            foreach ($this->concep as $value) {
+
+                if($value['id']===intval($this->conceptos)){
+                    $nuevo=[
+                        'concepto'=>$this->conceptos,
+                        'name'=>$value['name'],
+                        'valor'=>$this->valor
+                    ];
+                    array_push($this->otrosDeta,$nuevo);
+
+                    $this->Total=$this->Total+$this->valor;
+
+                    $this->reset(
+                                'valor' ,
+                                'conceptos',
+                                'name'
+                                );
+
+                    $this->dispatch('alerta', name:'CARGADO');
+                }
+            }
+        }else{
+            $this->dispatch('alerta', name:'VALOR Mayor que cero');
+            $this->reset(
+                'valor' ,
+                'conceptos',
+                'name'
+                );
+        }
+
+    }
+
 
 
     /**
@@ -188,6 +225,7 @@ class RecibosPagoCrear extends Component
 
     private function concePagos(){
         $this->concep=ConceptoPago::where('status', true)
+                            ->orderBy('name')
                             ->get();
 
         return $this->concep;
