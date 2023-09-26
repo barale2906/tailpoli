@@ -157,6 +157,7 @@
                     <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                         Total: $ {{number_format($Total, 0, '.', ' ')}}
                     </h5>
+
                     @if (count($detalles)>0)
                         <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                             Obligaciones de Cartera
@@ -192,8 +193,7 @@
                             </tbody>
                         </table>
                     @endif
-
-                    @if (count($otrosDeta)>0)
+                    @if ($cargados)
                         <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                             Otros Pagos
                         </h5>
@@ -210,25 +210,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($otrosDeta as $detalle)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                            {{$detalle['name']}}
-                                        </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                            $ {{number_format($detalle['valor'], 0, '.', ' ')}}
-                                        </th>
-                                        <th>
-                                            <a href="#" wire:click.prevent="elimOtro({{$detalle['name']}})" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </a>
-                                        </th>
-                                    </tr>
+                                @foreach ($cargados as $otros)
+                                    @if ($otros->tipo==='otro')
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                {{$otros->concepto}}
+                                            </th>
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                                $ {{number_format($otros->valor, 0, '.', ' ')}}
+                                            </th>
+                                            <th>
+                                                <a href="#" wire:click.prevent="elimOtro({{$otros->id}}, {{$otros->valor}})"  class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
                     @endif
-
                 </div>
             </div>
             <div class="mb-6">

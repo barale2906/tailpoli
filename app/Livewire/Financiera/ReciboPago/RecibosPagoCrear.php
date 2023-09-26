@@ -19,8 +19,10 @@ class RecibosPagoCrear extends Component
     public $medio='';
     public $observaciones='';
     public $sede_id;
+    public $cargados;
     public $crea_id;
     public $paga_id;
+
 
     public $valor=0;
     public $conceptos=0;
@@ -30,7 +32,7 @@ class RecibosPagoCrear extends Component
     public $detalles=[];
     public $control=[];
 
-    public $otrosDeta=[];
+    public $otrosDeta=array();
 
     public $buscar=null;
     public $buscaestudi='';
@@ -40,6 +42,20 @@ class RecibosPagoCrear extends Component
     public $alumnodocumento='';
 
     public $pendientes;
+
+    public function mount(){
+        DB::table('apoyo_recibo')
+            ->where('id_creador', Auth::user()->id)
+            ->delete();
+    }
+
+    //obtener itemes cargados
+    public function cargando(){
+        $this->cargados=DB::table('apoyo_recibo')
+                            ->where('id_creador', Auth::user()->id)
+                            ->orderBy('tipo')
+                            ->get();
+    }
 
     //Buscar Alumno
     public function buscAlumno(){
@@ -101,12 +117,20 @@ class RecibosPagoCrear extends Component
             foreach ($this->concep as $value) {
 
                 if($value['id']===intval($this->conceptos)){
-                    $nuevo=[
+                    /* $nuevo=[
                         'concepto'=>$this->conceptos,
                         'name'=>$value['name'],
                         'valor'=>$this->valor
                     ];
-                    array_push($this->otrosDeta,$nuevo);
+                    array_push($this->otrosDeta,$nuevo); */
+
+                    DB::table('apoyo_recibo')->insert([
+                        'tipo'=>'otro',
+                        'id_creador'=>Auth::user()->id,
+                        'id_concepto'=>$this->conceptos,
+                        'concepto'=>$value['name'],
+                        'valor'=>$this->valor
+                    ]);
 
                     $this->Total=$this->Total+$this->valor;
 
@@ -116,7 +140,7 @@ class RecibosPagoCrear extends Component
                                 'name'
                                 );
 
-                    $this->dispatch('alerta', name:'CARGADO');
+                    $this->cargando();
                 }
             }
         }else{
@@ -130,19 +154,17 @@ class RecibosPagoCrear extends Component
 
     }
 
-    public function elimOtro($item){
-        dd($item);
+    public function elimOtro($item, $valor){
 
-        $this->dispatch('alerta', name:'ELIMINIAR '.$item['name']);
+        DB::table('apoyo_recibo')
+            ->where('id', $item)
+            ->delete();
 
-        /* $textos = array("Hola", "Chau", "Bien", "Mal");
+        $this->Total=$this->Total-$valor;
 
-        echo "Borrando la palabra 'Chau' dentro del array:<br>";
-        if (($clave = array_search("Chau", $textos)) !== false) {
-            unset($textos[$clave]);
-            print_r($textos);
-        } */
+        $this->cargando();
     }
+
 
 
 
@@ -205,7 +227,7 @@ class RecibosPagoCrear extends Component
             ]);
             $a++;
         }
- */
+        */
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente el recibo: '.$this->name);
         $this->resetFields();
@@ -214,6 +236,7 @@ class RecibosPagoCrear extends Component
         $this->dispatch('refresh');
         $this->dispatch('created');
     }
+
 
     private function sedes(){
         return Sede::query()
