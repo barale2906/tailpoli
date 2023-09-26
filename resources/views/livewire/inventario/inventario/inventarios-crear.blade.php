@@ -133,20 +133,22 @@
 
 
             <div class="grid grid-cols-3 gap-3 bg-slate-300 m-3 p-3">
-                <div>
-                    <div class="mb-6">
-                        <label for="fecha_movimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de movimiento:</strong></label>
-                        <input type="date" id="fecha_movimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="fecha_movimiento">
-                    </div>
-                    @error('fecha_movimiento')
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                @if ($tipo!==0)
+                    <div>
+                        <div class="mb-6">
+                            <label for="fecha_movimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de movimiento:</strong></label>
+                            <input type="date" id="fecha_movimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="fecha_movimiento">
                         </div>
-                    @enderror
-                </div>
+                        @error('fecha_movimiento')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
+                    </div>
+                @endif
                 <div>
                     <div class="mb-6">
-                        <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos del movimiento</label>
+                        <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
                         <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cantidad" wire:model.blur="cantidad">
                     </div>
                     @error('cantidad')
@@ -166,6 +168,15 @@
                         </div>
                     @enderror
                 </div>
+                <div>
+                    @if ($cantidad>0)
+                    <label for="precio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargar</label>
+                        <a href="#" wire:click.prevent="temporal()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                    @endif
+                </div>
+
             </div>
 
             <div class="mb-6">
@@ -181,13 +192,15 @@
 
         @endif
 
-        <button type="submit"
-        class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
-        >
-            Nuevo Registro
-        </button>
-        <a href="#" wire:click.prevent="$dispatch('created')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-            <i class="fa-solid fa-rectangle-xmark"></i> cancelar
-        </a>
+        @if ($tipo!==0)
+            <button type="submit"
+            class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
+            >
+                Nuevo Registro
+            </button>
+            <a href="#" wire:click.prevent="$dispatch('created')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                <i class="fa-solid fa-rectangle-xmark"></i> cancelar
+            </a>
+        @endif
     </form>
 </div>

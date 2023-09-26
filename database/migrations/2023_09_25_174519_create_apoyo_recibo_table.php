@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('almacen')->nullable()->comment('nombre del almacén del movimiento');
             $table->integer('id_ultimoreg')->nullable()->comment('id del último registro activo');
 
-            $table->double('saldo')->comment('Saldo del concepto o del producto al momento del registro');
+            $table->double('saldo')->nullable()->comment('Saldo del concepto o del producto al momento del registro');
             $table->integer('id_cartera')->nullable()->comment('id del registro de cartera');
         });
     }

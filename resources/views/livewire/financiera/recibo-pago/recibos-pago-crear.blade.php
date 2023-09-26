@@ -95,8 +95,8 @@
                         <div class="mb-6">
                             <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Tipo de Movimiento</h3>
                             <select wire:model.blur="radio" wire:change="deftipo()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                <option value="1">De Inventario</option>
                                 <option value="0">De Cartera</option>
+                                <option value="1">De Inventario</option>
                             </select>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                             <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                 Generar Sálidas de Inventario.
                             </h5>
-                            <livewire:inventario.inventario.inventarios-crear :tipon="0" :concepto="$conceptos"/>
+                            <livewire:inventario.inventario.inventarios-crear :tipon="0" />
                         </div>
                     @else
                         <div>
@@ -237,6 +237,42 @@
                             <tbody>
                                 @foreach ($cargados as $otros)
                                     @if ($otros->tipo==='otro')
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                {{$otros->concepto}}
+                                            </th>
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                                $ {{number_format($otros->valor, 0, '.', ' ')}}
+                                            </th>
+                                            <th>
+                                                <a href="#" wire:click.prevent="elimOtro({{$otros->id}}, {{$otros->valor}})"  class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            Movimientos de Inventario
+                        </h5>
+                        <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3" >
+                                        Concepto de pago
+                                    </th>
+                                    <th scope="col" class="px-6 py-3" >
+                                        Valor pagado
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cargados as $otros)
+                                    @if ($otros->tipo==='inventario')
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                                 {{$otros->concepto}}

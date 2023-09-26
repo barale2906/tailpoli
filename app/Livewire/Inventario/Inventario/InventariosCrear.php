@@ -6,6 +6,7 @@ use App\Models\Inventario\Almacen;
 use App\Models\Inventario\Inventario;
 use App\Models\Inventario\Producto;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class InventariosCrear extends Component
@@ -32,7 +33,8 @@ class InventariosCrear extends Component
 
     public function mount($tipon = null)    {
 
-        $this->tipo=$tipon;
+        $this->tipo=intval($tipon);
+
     }
 
     //Buscar almacén
@@ -93,8 +95,7 @@ class InventariosCrear extends Component
     }
 
     // Cargar producto
-    public function selProduc($item)
-    {
+    public function selProduc($item){
         $this->producto_id=$item['id'];
         $this->productoName=$item['name'];
         $this->actual();
@@ -108,7 +109,53 @@ class InventariosCrear extends Component
                                         ->first();
     }
 
-    // Crear Regimen de Salud
+    //Cargar producto al temporal
+    public function temporal(){
+        if($this->tipo===1 && $this->ultimoregistro===null){
+            DB::table('apoyo_recibo')->insert([
+                'tipo'=>'inventario',
+                'id_creador'=>Auth::user()->id,
+                'id_concepto'=>5,
+                'concepto'=>"Sálida de Inventario",
+                'valor'=>$this->precio,
+                'cantidad'=>$this->cantidad,
+                'id_producto'=>$this->producto_id,
+                'producto'=>$this->productoName,
+                'id_almacen'=>$this->almacen_id,
+                'almacen'=>$this->almaceName,
+                'id_ultimoreg'=>0,
+                'saldo'=>0
+            ]);
+        }
+        if($this->precio>0 && $this->cantidad>0 && $this->ultimoregistro!==null && $this->cantidad<$this->ultimoregistro->saldo &&$this->tipo===0){
+            DB::table('apoyo_recibo')->insert([
+                'tipo'=>'inventario',
+                'id_creador'=>Auth::user()->id,
+                'id_concepto'=>5,
+                'concepto'=>"Sálida de Inventario",
+                'valor'=>$this->precio,
+                'cantidad'=>$this->cantidad,
+                'id_producto'=>$this->producto_id,
+                'producto'=>$this->productoName,
+                'id_almacen'=>$this->almacen_id,
+                'almacen'=>$this->almaceName,
+                'id_ultimoreg'=>$this->ultimoregistro->id,
+                'saldo'=>$this->ultimoregistro->saldo
+            ]);
+        } else {
+            $this->dispatch('alerta', name:'Debe tener costo, cantidad y ser menor que el saldo');
+        }
+
+        $this->reset(
+            'cantidad',
+            'precio',
+            'producto_id'
+        );
+
+        $this->dispatch('cargados');
+    }
+
+    // Crear
     public function new(){
 
         //dd($this->tipon, $this->almacen_id, $this->producto_id);

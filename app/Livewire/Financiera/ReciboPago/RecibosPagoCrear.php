@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class RecibosPagoCrear extends Component
@@ -51,6 +52,7 @@ class RecibosPagoCrear extends Component
             ->delete();
     }
 
+    #[On('cargados')]
     //obtener itemes cargados
     public function cargando(){
         $this->cargados=DB::table('apoyo_recibo')
