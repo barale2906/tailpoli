@@ -14,6 +14,8 @@ use Livewire\Component;
 
 class RecibosPagoCrear extends Component
 {
+    public $inveCart=true;
+    public $radio="1";
     public $fecha = '';
     public $valor_total = '';
     public $medio='';
@@ -72,6 +74,15 @@ class RecibosPagoCrear extends Component
         $this->alumnoName=$item['name'];
         $this->alumnodocumento=$item['documento'];
         $this->obligaciones();
+    }
+
+    //Definir tipo de movimiento
+    public function deftipo(){
+        if($this->radio==="1"){
+            $this->inveCart=true;
+        }else{
+            $this->inveCart=false;
+        }
     }
 
     public function obligaciones(){
