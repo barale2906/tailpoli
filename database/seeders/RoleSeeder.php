@@ -150,6 +150,26 @@ class RoleSeeder extends Seeder
 
 
         Permission::create([
+                            'name'=>'fi_configuracionpagos',
+                            'descripcion'=>'ver configuraciones de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'fi_configuracionpagoCrear',
+                            'descripcion'=>'crear configuracion de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+        Permission::create([
+                            'name'=>'fi_configuracionpagoEditar',
+                            'descripcion'=>'editar configuración de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
+                            'name'=>'fi_configuracionpagoInactivar',
+                            'descripcion'=>'inactivar configuración de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+
+
+
+        Permission::create([
                             'name'=>'Inventario',
                             'descripcion'=>'ingreso al menú inventario'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);

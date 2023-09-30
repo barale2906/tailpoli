@@ -9,3 +9,7 @@ Route::get('/recibopagos', function () {
 Route::get('/conceptopagos', function () {
     return view('financiera.conceptopagos.index');
 })->middleware('can:fi_conceptopagos')->name('conceptopagos');
+
+Route::get('/configpagos', function () {
+    return view('financiera.configpagos.index');
+})->middleware('can:fi_configuracionpagos')->name('configpagos');

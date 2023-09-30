@@ -38,9 +38,31 @@ class UserSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
+        $stephany = User::factory()->create([
+                    'name' => 'stephany izquierdo ocampo',
+                    'email' => 'direccionsedea@gmail.com',
+                    'password'=>bcrypt('Poliandino2023*')
+                ])->assignRole('Superusuario');
+
+                DB::table('sede_user')
+                        ->insert([
+                            'user_id'=>$stephany->id,
+                            'sede_id'=>1,
+                            'created_at'=>now(),
+                            'updated_at'=>now(),
+                        ]);
+
+                DB::table('sede_user')
+                        ->insert([
+                            'user_id'=>$stephany->id,
+                            'sede_id'=>2,
+                            'created_at'=>now(),
+                            'updated_at'=>now(),
+                        ]);
+
         $admon = User::factory()->create([
             'name' => 'Administrador Barajas V',
-            'email' => 'alexanderbarajas1@gmail.com',
+            'email' => 'administrador@gmail.com',
             'password'=>bcrypt('10203040')
         ])->assignRole('Administrador');
 
@@ -54,25 +76,25 @@ class UserSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Coordinador Barajas V',
-            'email' => 'alexanderbarajas2@gmail.com',
+            'email' => 'coordinador@gmail.com',
             'password'=>bcrypt('10203040')
         ])->assignRole('Coordinador');
 
         User::factory()->create([
             'name' => 'Auxiliar Barajas V',
-            'email' => 'alexanderbarajas3@gmail.com',
+            'email' => 'auxiliar@gmail.com',
             'password'=>bcrypt('10203040')
         ])->assignRole('Auxiliar');
 
         User::factory()->create([
             'name' => 'Profesor Barajas V',
-            'email' => 'alexanderbarajas4@gmail.com',
+            'email' => 'profesor@gmail.com',
             'password'=>bcrypt('10203040')
         ])->assignRole('Profesor');
 
         User::factory()->create([
             'name' => 'Estudiante Barajas V',
-            'email' => 'alexanderbarajas5@gmail.com',
+            'email' => 'estudiante@gmail.com',
             'password'=>bcrypt('10203040')
         ])->assignRole('Estudiante');
     }
