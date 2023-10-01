@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('configuracion_pagos', function (Blueprint $table) {
+            $table->comment('Describe todas las configuraciones de pago');
             $table->id();
             $table->double('valor_curso')->comment('Valor del curso para esta ubicación');
             $table->double('valor_matricula')->comment('Valor de la matricula');
