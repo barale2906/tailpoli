@@ -1,7 +1,7 @@
 <div>
     <form wire:submit.prevent="new">
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-3 gap-4 m-2">
             <div class="mb-6">
                 <select wire:model.blur="sede_id" id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                     <option >Elija sede...</option>
@@ -17,7 +17,7 @@
             </div>
 
             <div class="mb-6">
-                <select wire:model.blur="curso_id" id="curso" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                <select wire:model.blur="curso_id" id="curso" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize" wire:change="buscaModulos()">
                     <option >Elija curso...</option>
                     @foreach ($cursos as $item)
                         <option value={{$item->id}}>{{$item->name}}</option>
@@ -29,8 +29,20 @@
                     </div>
                 @enderror
             </div>
+            <div>
+                @if ($curso_id>0)
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Modulos del curso elegido</h2>
+                    <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 capitalize">
+                        @foreach ($modulos as $item)
+                            <li>
+                                {{$item->name}}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
         </div>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-3 gap-4 m">
             <div class="mb-6">
                 <label for="valor_curso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor total del curso</label>
                 <input type="number" id="valor_curso" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Costo del curso" wire:model.blur="valor_curso">

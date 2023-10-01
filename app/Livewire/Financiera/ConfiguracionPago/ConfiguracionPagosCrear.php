@@ -3,6 +3,7 @@
 namespace App\Livewire\Financiera\ConfiguracionPago;
 
 use App\Models\Academico\Curso;
+use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\ConfiguracionPago;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ class ConfiguracionPagosCrear extends Component
     public $descripcion='';
     public $sede_id='';
     public $curso_id='';
+    public $modulos;
 
     /**
      * Reglas de validación
@@ -50,6 +52,14 @@ class ConfiguracionPagosCrear extends Component
                         'curso_id',
                         'saldo'
                     );
+    }
+
+    //Busca modulos
+    public function buscaModulos(){
+        $this->modulos=Modulo::where('curso_id', $this->curso_id)
+                                ->where('status', true)
+                                ->orderBy('name')
+                                ->get();
     }
 
     //Activa cuotas
