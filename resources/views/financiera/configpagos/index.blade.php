@@ -3,6 +3,6 @@
         Configuración de Pago
     @endpush
 
-    {{-- <livewire:financiera.recibo-pago.recibos-pago /> --}}
+    <livewire:financiera.configuracion-pago.configuracion-pagos />
 
 </x-admin-layout>
