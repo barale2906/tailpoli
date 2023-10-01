@@ -32,7 +32,7 @@ class ConceptoPagosEditar extends Component
     public function mount($elegido = null)
     {
         $this->name=$elegido['name'];
-        $this->name=$elegido['tipo'];
+        $this->tipo=$elegido['tipo'];
         $this->id=$elegido['id'];
     }
 
