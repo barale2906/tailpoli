@@ -3,6 +3,7 @@
 namespace App\Models\Configuracion;
 
 use App\Models\Academico\Grupo;
+use App\Models\Financiera\ConfiguracionPago;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Inventario\Almacen;
 use App\Models\User;
@@ -40,6 +41,12 @@ class Sede extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    //Relación uno a muchos
+    public function configpagos(): HasMany
+    {
+        return $this->hasMany(ConfiguracionPago::class);
     }
 
     //Relación uno a muchos

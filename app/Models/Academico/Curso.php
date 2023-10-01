@@ -2,6 +2,7 @@
 
 namespace App\Models\Academico;
 
+use App\Models\Financiera\ConfiguracionPago;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,5 +17,11 @@ class Curso extends Model
     public function modulos(): HasMany
     {
         return $this->hasMany(Modulo::class);
+    }
+
+    //Relación uno a muchos
+    public function configpagos(): HasMany
+    {
+        return $this->hasMany(ConfiguracionPago::class);
     }
 }
