@@ -11,16 +11,16 @@ use Livewire\Component;
 
 class ConfiguracionPagosEditar extends Component
 {
-    public $valor_curso='';
-    public $valor_matricula='';
-    public $valor_cuota_inicial='';
-    public $saldo='';
-    public $cuotas='';
-    public $valor_cuota='';
-    public $descripcion='';
-    public $sede_id='';
-    public $curso_id='';
-    public $id='';
+    public $valor_curso;
+    public $valor_matricula;
+    public $valor_cuota_inicial;
+    public $saldo;
+    public $cuotas;
+    public $valor_cuota;
+    public $descripcion;
+    public $sede_id;
+    public $curso_id;
+    public $id;
     public $modulos;
 
     /**
@@ -87,7 +87,7 @@ class ConfiguracionPagosEditar extends Component
     //Activa cuotas
     public function calcuCuota(){
         if($this->valor_curso>$this->valor_cuota_inicial){
-            $this->saldo=$this->valor_curso-$this->valor_cuota_inicial;
+            $this->saldo=$this->valor_curso-$this->valor_matricula-$this->valor_cuota_inicial;
         }
 
         if($this->valor_curso===$this->valor_cuota_inicial){
@@ -106,7 +106,7 @@ class ConfiguracionPagosEditar extends Component
     // Calculo de las cuotas
     public function calcula(){
         if($this->cuotas>0 && $this->valor_curso>$this->valor_cuota_inicial){
-            $saldo = $this->valor_curso-$this->valor_cuota_inicial;
+            $saldo = $this->valor_curso-$this->valor_matricula-$this->valor_cuota_inicial;
             $this->valor_cuota=$saldo/$this->cuotas;
         }
     }

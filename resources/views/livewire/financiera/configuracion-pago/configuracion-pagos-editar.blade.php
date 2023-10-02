@@ -72,7 +72,7 @@
                 @enderror
             </div>
 
-            @if ($valor_curso>0 && $valor_cuota_inicial<$valor_curso)
+            @if ($valor_curso>0 && $valor_cuota_inicial<$valor_curso && $valor_cuota_inicial)
                 <div class="mb-6">
                     <label for="cuotas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Número de cuotas{{$saldo>0 ? " Para: $ ".number_format($saldo, 0, '.', ' '):""}}</label>
                     <input type="number" id="cuotas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número de cuotas" wire:model.blur="cuotas" wire:keydown="calcula()">

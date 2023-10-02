@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Academico\Matricula;
 
+use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\User;
 use Carbon\Carbon;
@@ -28,6 +30,12 @@ class MatriculasCrear extends Component
     public $grupoNombre=[];
     public $seleccionado=false;
 
+    public $sede_id;
+    public $cursos;
+    public $curso_id;
+
+
+
     public $buscar=null;
     public $buscaestudi='';
 
@@ -39,6 +47,25 @@ class MatriculasCrear extends Component
     public $inicial='';
     public $cuota;
     public $mensual;
+
+    //Cursos por sede
+    public function cursosede(){
+        $this->cursos=Curso::query()
+                            ->with(['configpagos'])
+                            ->when($this->sede_id, function($query){
+                                return $query->where('status', true)
+                                        ->WhereHas('configpagos', function($q){
+                                            $q->where('sede_id', $this->sede_id);
+                                        });
+                                })
+                            ->orderBy('name')
+                            ->get();
+    }
+
+    //Configuraciones por curso
+    public function buscaconfiguraciones(){
+
+    }
 
 
     //Buscar Alumno
@@ -264,11 +291,18 @@ class MatriculasCrear extends Component
                         ->paginate(3);
     }
 
+    private function sedes(){
+        return Sede::where('status', true)
+                    ->orderBy('name')
+                    ->get();
+    }
+
     public function render(){
         return view('livewire.academico.matricula.matriculas-crear', [
             'estudiantes'=>$this->estudiantes(),
             'noestudiantes'=>$this->noestudiantes(),
             'grupost'=> $this->grupost(),
+            'sedes'=>$this->sedes(),
         ]);
     }
 }

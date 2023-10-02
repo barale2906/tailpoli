@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             GrupoSeeder::class,
             MatriculaSeeder::class,
             EstadoCarteraSeeder::class,
+            ConfiguracioPagoSeeder::class,
         ]);
     }
 }

@@ -1,5 +1,48 @@
 <div>
     <form wire:submit.prevent="new">
+        <div class="grid grid-cols-3 gap-4 m-2">
+            <div class="mb-6">
+                <select wire:model.blur="sede_id" wire:change="cursosede()" id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                    <option >Elija sede...</option>
+                    @foreach ($sedes as $item)
+                        <option value={{$item->id}}>{{$item->name}} - {{$item->sector->name}}</option>
+                    @endforeach
+                </select>
+                @error('sede_id')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
+            </div>
+            @if ($sede_id>0)
+                <div class="mb-6">
+                    <select wire:model.blur="curso_id" id="curso" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize" wire:change="buscaconfiguraciones()">
+                        <option >Elija curso...</option>
+                        @foreach ($cursos as $item)
+                            <option value={{$item->id}}>{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('curso_id')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+            @endif
+
+            {{-- <div>
+                @if ($curso_id>0)
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Modulos del curso elegido</h2>
+                    <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 capitalize">
+                        @foreach ($modulos as $item)
+                            <li>
+                                {{$item->name}}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div> --}}
+        </div>
         <div class="mb-6">
             <div class="w-full">
                 <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar Alumno</label>
