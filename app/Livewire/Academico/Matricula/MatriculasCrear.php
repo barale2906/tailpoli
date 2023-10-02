@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Matricula;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConfiguracionPago;
@@ -37,6 +38,7 @@ class MatriculasCrear extends Component
     public $config_id;
     public $configElegida;
     public $configPago;
+    public $modulos;
 
 
     public $buscar=null;
@@ -66,6 +68,8 @@ class MatriculasCrear extends Component
                             ->get();
     }
 
+
+
     //Configuraciones por curso
     public function buscaconfiguraciones(){
         $this->reset('config_id');
@@ -73,6 +77,29 @@ class MatriculasCrear extends Component
                                             ->where('curso_id', $this->curso_id)
                                             ->orderBy('descripcion')
                                             ->get();
+    }
+
+    //Buscar grupos aplicables al curso
+    public function buscaModulos(){
+        $this->reset('');
+        $this->modulos=Modulo::where('curso_id', $this->curso_id)
+                        ->where('status', true)
+                        ->orderBy('name')
+                        ->get();
+
+        $this->buscaGrupos();
+    }
+
+    public function buscaGrupos(){
+        foreach ($this->modulos as $value) {
+            $paquete=Grupo::where('modulo_id', $value['id'])
+                            ->where('sede_id', $this->sede_id)
+                            ->get();
+
+            if($paquete->count()){
+
+            }
+        }
     }
 
 
@@ -97,7 +124,7 @@ class MatriculasCrear extends Component
         $this->alumnodocumento=$item['documento'];
         $this->matrActual();
     }
-    //Determinar matricualas activas del estudiante
+    //Determinar matriculas activas del estudiante
     public function matrActual(){
         $this->matriculados = Matricula::where('status', true)
                                         ->where('alumno_id', $this->alumno_id)
@@ -145,14 +172,6 @@ class MatriculasCrear extends Component
             }
         } else{
             $this->dispatch('alerta', name:'El grupo: '.$item['name'].' ya finalizó.');
-        }
-    }
-
-    public function calculaMes(){
-        if($this->cuota>0 && $this->inicial<$this->valor){
-            $this->mensual=($this->valor-$this->inicial)/$this->cuota;
-        }else{
-            $this->dispatch('alerta', name:'Revise los valores.');
         }
     }
 

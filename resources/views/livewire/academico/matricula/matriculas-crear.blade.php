@@ -31,10 +31,10 @@
                     @enderror
                 </div>
             @endif
-            @if ($curso_id)
+            @if ($curso_id && $configPago)
                 <div class="mb-6">
-                    <label for="config_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Escoja el curso</label>
-                    <select wire:model.blur="config_id" id="curso" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                    <label for="config_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Escoja Configuración de Pago</label>
+                    <select wire:model.blur="config_id" wire:change="buscaModulos()" id="curso" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                         <option >Elija configuración de pago...</option>
                         @foreach ($configPago as $item)
                             <option value={{$item->id}}>{{$item->descripcion}}</option>
