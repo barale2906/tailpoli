@@ -20,6 +20,12 @@ class Curso extends Model
     }
 
     //Relación uno a muchos
+    public function matriculas(): HasMany
+    {
+        return $this->hasMany(Matricula::class);
+    }
+
+    //Relación uno a muchos
     public function configpagos(): HasMany
     {
         return $this->hasMany(ConfiguracionPago::class);

@@ -7,6 +7,7 @@ use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\ConfiguracionPago;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,8 @@ class MatriculasCrear extends Component
     public $sede_id;
     public $cursos;
     public $curso_id;
+    public $config_id;
+    public $configElegida;
     public $configPago;
 
 
@@ -50,6 +53,7 @@ class MatriculasCrear extends Component
 
     //Cursos por sede
     public function cursosede(){
+        $this->reset('curso_id');
         $this->cursos=Curso::query()
                             ->with(['configpagos'])
                             ->when($this->sede_id, function($query){
@@ -64,7 +68,11 @@ class MatriculasCrear extends Component
 
     //Configuraciones por curso
     public function buscaconfiguraciones(){
-
+        $this->reset('config_id');
+        $this->configPago=ConfiguracionPago::where('sede_id', $this->sede_id)
+                                            ->where('curso_id', $this->curso_id)
+                                            ->orderBy('descripcion')
+                                            ->get();
     }
 
 
@@ -89,7 +97,7 @@ class MatriculasCrear extends Component
         $this->alumnodocumento=$item['documento'];
         $this->matrActual();
     }
-
+    //Determinar matricualas activas del estudiante
     public function matrActual(){
         $this->matriculados = Matricula::where('status', true)
                                         ->where('alumno_id', $this->alumno_id)
@@ -101,7 +109,7 @@ class MatriculasCrear extends Component
             }
         }
     }
-
+    //Cargar grupos a los que esta matriculado el estudiante
     public function grupoActual($id){
         $gr = Matricula::find($id);
         foreach($gr->grupos as $value){
@@ -109,6 +117,7 @@ class MatriculasCrear extends Component
         }
     }
 
+    //Determinar si el estudiante ya esta registrado en el grupo
     public function selGrupo($item){
         if(in_array($item['id'], $this->gruposAct)){
             $this->dispatch('alerta', name:'Ya esta matriculado al grupo: '.$item['name']);
@@ -116,7 +125,7 @@ class MatriculasCrear extends Component
             $this->asigGrupo($item);
         }
     }
-
+    //Cargar al estudiante al grupo respectivo
     public function asigGrupo($item){
         if(now()<$item['finish_date']){
             if(in_array([

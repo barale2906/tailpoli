@@ -34,6 +34,12 @@ class Matricula extends Model
     }
 
     //Relacion uno a muchos inversa
+    public function curso() : BelongsTo
+    {
+        return $this->BelongsTo(Curso::class);
+    }
+
+    //Relacion uno a muchos inversa
     public function grupos() : BelongsToMany
     {
         return $this->BelongsToMany(Grupo::class);

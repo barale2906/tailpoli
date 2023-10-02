@@ -21,7 +21,8 @@ class MatriculaSeeder extends Seeder
             'metodo'=>'contado',
             'alumno_id'=>'2',
             'comercial_id'=>'124',
-            'creador_id'=>'125'
+            'creador_id'=>'125',
+            'curso_id'=>1
         ]);
 
         \App\Models\Academico\Matricula::create([
@@ -33,7 +34,8 @@ class MatriculaSeeder extends Seeder
             'metodo'=>'contado',
             'alumno_id'=>'4',
             'comercial_id'=>'125',
-            'creador_id'=>'124'
+            'creador_id'=>'124',
+            'curso_id'=>2
         ]);
     }
 }
