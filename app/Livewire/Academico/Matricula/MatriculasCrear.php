@@ -33,7 +33,7 @@ class MatriculasCrear extends Component
     public $sede_id;
     public $cursos;
     public $curso_id;
-
+    public $configPago;
 
 
     public $buscar=null;
