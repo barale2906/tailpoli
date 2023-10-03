@@ -55,10 +55,10 @@
             <h5 class="text-xl uppercase text-center ">saldos por almacén</h5>
             <dl class="grid max-w-screen-xl grid-cols-4 gap-3 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
                 @foreach ($saldos as $item)
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl font-extrabold">{{$item->saldo}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400 capitalize">{{$item->almacen->name}}</dd>
-                </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-3xl font-extrabold">{{$item->saldo}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">{{$item->almacen->name}}</dd>
+                    </div>
                 @endforeach
             </dl>
         </div>
