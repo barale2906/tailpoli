@@ -4,6 +4,8 @@ namespace App\Livewire\Academico\Matricula;
 
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Financiera\Cartera;
+use App\Models\Financiera\EstadoCartera;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -58,6 +60,17 @@ class MatriculasAnular extends Component
 
             Grupo::whereId($value['id'])->update([
                 'inscritos'=>$ins
+            ]);
+        }
+
+        // Inactivar Cartera
+        $carteras=Cartera::where('matricula_id', $this->id)->get();
+        $estado=EstadoCartera::where('name', 'anulada')->first();
+
+        foreach ($carteras as $value) {
+            Cartera::whereId($value->id)->update([
+                'status'=>$estado->id,
+                'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$value->observaciones
             ]);
         }
 

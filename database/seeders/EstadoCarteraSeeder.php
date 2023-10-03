@@ -36,6 +36,10 @@ class EstadoCarteraSeeder extends Seeder
             'name' => 'cerrada',
         ]);
 
+        \App\Models\Financiera\EstadoCartera::create([
+            'name' => 'anulada',
+        ]);
+
 
     }
 }
