@@ -44,7 +44,7 @@ class MatriculasAnular extends Component
 
         //Actualizar registros
         Matricula::whereId($this->id)->update([
-            'anula'=>strtolower($this->motivo),
+            'anula'=>now()." ¡¡¡ANULADO!!! ".strtolower($this->motivo),
             'anula_user'=>Auth::user()->name,
             'status'=>false
         ]);
