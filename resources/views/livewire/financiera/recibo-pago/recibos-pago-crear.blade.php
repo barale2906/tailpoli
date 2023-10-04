@@ -1,7 +1,7 @@
 <div>
     <form wire:submit.prevent="new">
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
             <div class="mb-6">
                 <select wire:model.blur="sede_id" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                     <option >Elija sede...</option>
@@ -54,7 +54,7 @@
         @if ($alumno_id>0 && $sede_id>0)
             <h5 class="text-center text-3xl m-8">Registrar pago para: <strong class="uppercase">{{$alumnoName}}</strong> con documento N°: <strong class="uppercase">{{$alumnodocumento}}</strong></h5>
 
-            <div class="grid grid-cols-3 gap-2 mb-4">
+            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-2 mb-4">
                 <div class="ring-2 bg-slate-50 col-span-2 p-4">
 
                     <div>
@@ -78,7 +78,7 @@
                                         <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
                                     </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
-                                        <select wire:model.blur="conceptos" wire:change="asigOtro()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                        <select wire:model.blur="conceptos" wire:change="asigOtro(0,0)" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                                             <option>Seleccione...</option>
                                             @foreach ($concePagos as $item)
                                                 @if ($item->tipo==='otro')
@@ -92,132 +92,64 @@
                         </table>
                     </div>
                     <div>
-                        <div class="mb-6">
-                            <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Tipo de Movimiento</h3>
-                            <select wire:model.blur="radio" wire:change="deftipo()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                <option value="0">De Cartera</option>
-                                <option value="1">De Inventario</option>
-                            </select>
-                        </div>
-                    </div>
-                    @if ($inveCart)
-                        <div>
-                            <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                Generar Sálidas de Inventario.
+                        @if ($pendientes->count()>0)
+                            <h5 class="mb-2 mt-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                Obligaciones de Cartera
                             </h5>
-                            <livewire:inventario.inventario.inventarios-crear :tipon="0" />
-                        </div>
-                    @else
-                        <div>
-                            @if ($pendientes->count()>0)
-                                <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                    Obligaciones de Cartera
-                                </h5>
-                                <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
-                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
-                                                Fecha pago programada
+                            <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
+                                            Fecha pago programada
+                                        </th>
+                                        <th scope="col" class="px-6 py-3" >
+                                            Saldo <small class=" text-red-400">De esta deuda</small>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3" >
+                                            Valor pagado
+                                        </th>
+                                        <th scope="col" class="px-6 py-3" >
+                                            Concepto de pago
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($pendientes as $pendiente)
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                {{$pendiente->fecha_pago}}
                                             </th>
-                                            <th scope="col" class="px-6 py-3" >
-                                                Saldo <small class=" text-red-400">De esta deuda</small>
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                                $ {{number_format($pendiente->saldo, 0, '.', ' ')}}
                                             </th>
-                                            <th scope="col" class="px-6 py-3" >
-                                                Valor pagado
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
                                             </th>
-                                            <th scope="col" class="px-6 py-3" >
-                                                Concepto de pago
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
+                                                <select wire:model.blur="conceptos" wire:change="asigOtro(1, {{$pendiente}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                                    <option>Seleccione...</option>
+                                                    @foreach ($concePagos as $item)
+                                                        @if ($item->tipo==="cartera")
+                                                            <option value={{$item->id}}>{{$item->name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
                                             </th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($pendientes as $pendiente)
-                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                                    {{$pendiente->fecha_pago}}
-                                                </th>
-                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                                    $ {{number_format($pendiente->saldo, 0, '.', ' ')}}
-                                                </th>
-                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                                    <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
-                                                </th>
-                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
-                                                    <div class="grid grid-cols-2 gap-2">
-                                                        <div>
-                                                            <select wire:model.blur="conceptos" wire:change="asignar({{$pendiente}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                                                @foreach ($concePagos as $item)
-                                                                    @if ($item->tipo==="cartera")
-                                                                        <option value={{$item->id}}>{{$item->name}}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div>
-                                                            <button type="button"
-                                                            class="text-white bg-cyan-500 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm w-full sm:w-auto text-center p-2 dark:bg-cyan-400 dark:hover:bg-cyan-500 dark:focus:ring-cyan-400"
-                                                            wire:click.prevent="asignar({{$pendiente}})"
-                                                            >
-                                                                <i class="fas fa-check"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                    No Tiene Obligaciones de Cartera Registradas
-                                </h5>
-                            @endif
-                        </div>
-                    @endif
-
-
-
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <h5 class="mb-2 mt-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                No Tiene Obligaciones de Cartera Registradas
+                            </h5>
+                        @endif
+                    </div>
                 </div>
                 <div class="ring-2 bg-gray-50 p-4">
                     <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        Total: $ {{number_format($Total, 0, '.', ' ')}}
+                        Total: $ {{number_format($Total, 0, ',', '.')}}
                     </h5>
-
-                    @if (count($detalles)>0)
-                        <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                            Obligaciones de Cartera
-                        </h5>
-                        <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3" >
-                                        Concepto de pago
-                                    </th>
-                                    <th scope="col" class="px-6 py-3" >
-                                        Saldo <small class=" text-red-400">De esta deuda</small>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3" >
-                                        Valor pagado
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($detalles as $detalle)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                            {{$detalle['concepto']}}
-                                        </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                            $ {{number_format($detalle['saldo'], 0, '.', ' ')}}
-                                        </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                            $ {{number_format($detalle['valor'], 0, '.', ' ')}}
-                                        </th>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
                     @if ($cargados)
                         <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                             Otros Pagos
@@ -256,7 +188,7 @@
                         </table>
 
                         <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                            Movimientos de Inventario
+                            Obligaciones de Cartera
                         </h5>
                         <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -272,7 +204,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($cargados as $otros)
-                                    @if ($otros->tipo==='inventario')
+                                    @if ($otros->tipo==='cartera')
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                                 {{$otros->concepto}}
@@ -293,16 +225,34 @@
                     @endif
                 </div>
             </div>
-            <div class="mb-6">
-                <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
-                <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones del recibo" wire:model.blur="observaciones">
-            </div>
-            @error('observaciones')
-                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                </div>
-            @enderror
+            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-2 mb-4">
+                <div class="mb-6">
+                    <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
+                    <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones del recibo" wire:model.blur="observaciones">
 
+                    @error('observaciones')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
+                    <select wire:model.blur="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                        <option >Elija...</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="PSE">PSE</option>
+                        <option value="tarjeta credito">Tarjeta Crédito</option>
+                        <option value="tarjeta debito">Tarjeta débito</option>
+                        <option value="cheque">Cheque</option>
+                    </select>
+                    @error('medio')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+            </div>
             @if ($Total>0)
                 <button type="submit"
                 class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"

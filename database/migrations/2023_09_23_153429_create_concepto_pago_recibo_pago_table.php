@@ -16,14 +16,14 @@ return new class extends Migration
             $table->id();
 
             $table->double('valor')->comment('Valor pagado concepto pago');
-            $table->integer('relacion_id')->nullable()->comment('Verifica la relación con Cartera o con Inventario');
-            $table->longtext('detalle')->comment('Detalle de la transacción');
+            $table->string('tipo')->comment('otros, cartera, inventario');
+            //$table->longtext('detalle')->comment('Detalle de la transacción');
 
             $table->unsignedBigInteger('conceptos_id');
             $table->foreign('conceptos_id')->references('id')->on('concepto_pagos');
 
-            $table->unsignedBigInteger('recibos_id');
-            $table->foreign('recibos_id')->references('id')->on('recibo_pagos');
+            $table->unsignedBigInteger('recibo_id');
+            $table->foreign('recibo_id')->references('id')->on('recibo_pagos');
 
             $table->timestamps();
         });

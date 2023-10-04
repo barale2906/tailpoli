@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('recibo_pagos', function (Blueprint $table) {
             $table->comment('Detalles de los recibos de pago');
             $table->id();
-            $table->boolean('tipo')->default(true)->comment('false Inventario Inactivo, true Cartera');
             $table->date('fecha')->comment('Fecha del recibo');
             $table->double('valor_total')->comment('Valor total del recibo');
             $table->string('medio')->comment('medio de pago');

@@ -5,6 +5,7 @@ namespace App\Livewire\Financiera\ReciboPago;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
+use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,16 +16,14 @@ use Livewire\Component;
 
 class RecibosPagoCrear extends Component
 {
-    public $inveCart=true;
-    public $radio="1";
-    public $fecha = '';
-    public $valor_total = '';
     public $medio='';
     public $observaciones='';
     public $sede_id;
     public $cargados;
-    public $crea_id;
-    public $paga_id;
+    public $tipo;
+    public $saldo;
+    public $id_cartera;
+    public $estado;
 
 
     public $valor=0;
@@ -32,7 +31,6 @@ class RecibosPagoCrear extends Component
     public $concep=[];
     public $nameConcep='';
     public $Total=0;
-    public $detalles=[];
     public $control=[];
 
     public $otrosDeta=array();
@@ -78,71 +76,42 @@ class RecibosPagoCrear extends Component
         $this->obligaciones();
     }
 
-    //Definir tipo de movimiento
-    public function deftipo(){
-        if($this->radio==="1"){
-            $this->inveCart=true;
-        }else{
-            $this->inveCart=false;
-        }
-    }
-
     public function obligaciones(){
         $this->pendientes= Cartera::where('responsable_id', $this->alumno_id)
                                 ->where('status', true)
+                                ->orderBy('fecha_pago')
                                 ->get();
     }
 
-    public function asignar($item){
+    public function asigOtro($id, $item){
+        switch ($id) {
+            case 0:
+                $this->tipo="otro";
+                break;
 
-        if($item['saldo']>=$this->valor && $this->valor>0){
-            if(in_array([
-                'id'=>$item['id'],
-                'saldo'=>$item['saldo']
-            ], $this->control))
-            {
-                $this->dispatch('alerta', name:'Item ya cargado');
-            }else{
-                $nuevo=[
-                    'id'=>$item['id'],
-                    'saldo'=>$item['saldo'],
-                    'fecha_pago'=>$item['fecha_pago'],
-                    'concepto'=>$this->conceptos,
-                    'valor'=>$this->valor
-                ];
-                $crt=[
-                    'id'=>$item['id'],
-                'saldo'=>$item['saldo']
-                ];
-                array_push($this->detalles,$nuevo);
-                array_push($this->control,$crt);
-                $this->Total=$this->Total+$this->valor;
-                $this->valor=0;
-            }
-        }else{
-            $this->dispatch('alerta', name:'El valor debe ser mayor a 0 y menor al saldo');
+            case 1:
+                $this->tipo="cartera";
+                $this->saldo=$item['saldo'];
+                $this->id_cartera=$item['id'];
+                break;
+
+            default:
+                $this->tipo="inventario";
+                break;
         }
-
-    }
-
-    public function asigOtro(){
         if($this->valor>0){
             foreach ($this->concep as $value) {
 
                 if($value['id']===intval($this->conceptos)){
-                    /* $nuevo=[
-                        'concepto'=>$this->conceptos,
-                        'name'=>$value['name'],
-                        'valor'=>$this->valor
-                    ];
-                    array_push($this->otrosDeta,$nuevo); */
 
                     DB::table('apoyo_recibo')->insert([
-                        'tipo'=>'otro',
+                        'tipo'=>$this->tipo,
                         'id_creador'=>Auth::user()->id,
                         'id_concepto'=>$this->conceptos,
                         'concepto'=>$value['name'],
-                        'valor'=>$this->valor
+                        'valor'=>$this->valor,
+                        'saldo'=>$this->saldo,
+                        'id_cartera'=>$this->id_cartera
                     ]);
 
                     $this->Total=$this->Total+$this->valor;
@@ -185,13 +154,9 @@ class RecibosPagoCrear extends Component
      * Reglas de validación
      */
     protected $rules = [
-        'fecha' => 'required',
-        'valor_total'=>'required',
         'medio'=>'required',
         'observaciones'=>'required',
-        'sede_id'=>'required',
-        'crea_id'=>'required',
-        'paga_id'=>'required'
+        'sede_id'=>'required'
     ];
 
     /**
@@ -200,13 +165,9 @@ class RecibosPagoCrear extends Component
      */
     public function resetFields(){
         $this->reset(
-                    'fecha' ,
-                    'valor_total',
                     'medio',
                     'observaciones',
-                    'sede_id',
-                    'crea_id',
-                    'paga_id'
+                    'sede_id'
                     );
     }
 
@@ -216,33 +177,56 @@ class RecibosPagoCrear extends Component
         $this->validate();
 
         //Crear registro
-        ReciboPago::create([
-            'fecha'=>$this->fecha,
-            'valor_total'=>$this->valor_total,
-            'medio'=>$this->medio,
-            'observaciones'=>strtolower($this->observaciones),
-            'sede_id'=>$this->sede_id,
-            'crea_id'=>$this->crea_id,
-            'paga_id'=>$this->paga_id
-        ]);
+        $recibo= ReciboPago::create([
+                                'fecha'=>now(),
+                                'valor_total'=>$this->Total,
+                                'medio'=>$this->medio,
+                                'observaciones'=>strtolower($this->observaciones),
+                                'sede_id'=>$this->sede_id,
+                                'creador_id'=>Auth::user()->id,
+                                'paga_id'=>$this->alumno_id
+                            ]);
 
         //registros
-        $a=0;
-        /*  while ($a <= count($this->valor)) {
+
+        foreach ($this->cargados as $value) {
+
             DB::table('concepto_pago_recibo_pago')
             ->insert([
-                'valor'=>$item,
-                'cartera_id'=>$this->cartera_id[],
-                'conceptos_id',
-                'recibos_id',
+                'valor'=>$value->valor,
+                'tipo'=>$value->tipo,
+                'conceptos_id'=>$value->id_concepto,
+                'recibo_id'=>$recibo->id,
                 'created_at'=>now(),
                 'updated_at'=>now(),
             ]);
-            $a++;
+
+            if($value->tipo==="cartera"){
+
+                $item=Cartera::find($value->id_cartera);
+                $saldo=$item->saldo-$value->saldo;
+                dd($item->saldo, $value->saldo, $saldo);
+                $observa=now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
+                if($saldo===0){
+                    $esta=EstadoCartera::where('name', 'cerrada')->first();
+                    $this->estado=$esta->id;
+                    dd($esta->id);
+                }else if($saldo>0){
+                    $esta=EstadoCartera::where('name', 'abonada')->first();
+                    $this->estado=$esta->id;
+                }
+
+                $item->update([
+                    'fecha_real'=>now(),
+                    'saldo'=>$saldo,
+                    'observaciones'=>$observa,
+                    'status'=>$this->estado
+                ]);
+            }
+
         }
-        */
         // Notificación
-        $this->dispatch('alerta', name:'Se ha creado correctamente el recibo: '.$this->name);
+        $this->dispatch('alerta', name:'Se ha creado correctamente el recibo: '.$recibo->id);
         $this->resetFields();
 
         //refresh
@@ -281,8 +265,7 @@ class RecibosPagoCrear extends Component
         return $this->concep;
     }
 
-    public function render()
-    {
+    public function render(){
         return view('livewire.financiera.recibo-pago.recibos-pago-crear',[
             'sedes'=>$this->sedes(),
             'estudiantes'=>$this->estudiantes(),
