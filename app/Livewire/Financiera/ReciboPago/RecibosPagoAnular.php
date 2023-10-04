@@ -20,6 +20,7 @@ class RecibosPagoAnular extends Component
     public $reciboActual;
     public $detalles;
     public $estado;
+    public $accion;
 
     /**
      * Reset de todos los campos
@@ -35,7 +36,8 @@ class RecibosPagoAnular extends Component
         );
     }
 
-    public function mount($elegido = null){
+    public function mount($elegido = null, $accion){
+        $this->accion=$accion;
         $this->id=$elegido['id'];
         $this->fecha=$elegido['fecha'];
         $this->valor_total=$elegido['valor_total'];

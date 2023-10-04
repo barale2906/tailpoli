@@ -110,23 +110,29 @@
                     @foreach ($recibos as $recibo)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                @can('fi_recibopagoAnular')
-                                    @if ($recibo->status===0)
-                                        <a href="#" wire:click.prevent="show({{$recibo}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-blue-500 hover:underline">
-                                            <i class="fa-solid fa-marker"></i> - {{$recibo->id}}
-                                        </a>
-                                    @else
-                                        {{$recibo->id}}
-                                    @endif
-                                @endcan
+                                @if ($recibo->status===0)
+                                    @can('fi_recibopagoAnular')
+                                        <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                            <a href="#" wire:click.prevent="show({{$recibo}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                                <i class="fa-solid fa-marker"></i> - {{$recibo->id}}
+                                            </a>
+                                        </span>
+                                    @endcan
+                                @else
+                                    {{$recibo->id}}
+                                @endif
+                                <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                    <a href="#" wire:click.prevent="show({{$recibo}},{{2}})" class="inline-flex items-center font-medium text-green-600 dark:texgreen-500 hover:underline">
+                                        <i class="fa-solid fa-binoculars"></i>
+                                    </a>
+                                </span>
+
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$recibo->fecha}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                <a href="#" wire:click.prevent="show({{$recibo}},{{1}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                    {{$recibo->paga->name}}
-                                </a>
+                                {{$recibo->paga->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$recibo->sede->name}}
@@ -171,7 +177,7 @@
     @endif
 
     @if ($is_editing)
-        <livewire:financiera.recibo-pago.recibos-pago-anular :elegido="$elegido" />
+        <livewire:financiera.recibo-pago.recibos-pago-anular :elegido="$elegido" :accion="$accion" />
     @endif
 
     @if ($is_deleting)

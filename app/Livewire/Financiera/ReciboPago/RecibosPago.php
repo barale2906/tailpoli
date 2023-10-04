@@ -20,6 +20,8 @@ class RecibosPago extends Component
     public $is_editing = false;
     public $is_deleting = false;
 
+    public $accion;
+
     public $elegido;
 
     public $buscar='';
@@ -82,7 +84,9 @@ class RecibosPago extends Component
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
 
-        if($act===0){
+        $this->accion=$act;
+
+        if($act===0 || $act===2){
             $this->is_editing=!$this->is_editing;
         }else{
             $this->is_deleting=!$this->is_deleting;
