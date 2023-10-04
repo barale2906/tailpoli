@@ -86,54 +86,71 @@ class RecibosPagoCrear extends Component
     }
 
     public function asigOtro($id, $item){
-        switch ($id) {
-            case 0:
-                $this->tipo="otro";
-                break;
 
-            case 1:
-                $this->tipo="cartera";
-                $this->saldo=$item['saldo'];
-                $this->id_cartera=$item['id'];
-                break;
-
-            default:
-                $this->tipo="inventario";
-                break;
-        }
-        if($this->valor>0){
-            foreach ($this->concep as $value) {
-
-                if($value['id']===intval($this->conceptos)){
-
-                    DB::table('apoyo_recibo')->insert([
-                        'tipo'=>$this->tipo,
-                        'id_creador'=>Auth::user()->id,
-                        'id_concepto'=>$this->conceptos,
-                        'concepto'=>$value['name'],
-                        'valor'=>$this->valor,
-                        'saldo'=>$this->saldo,
-                        'id_cartera'=>$this->id_cartera
-                    ]);
-
-                    $this->Total=$this->Total+$this->valor;
-
-                    $this->reset(
-                                'valor' ,
-                                'conceptos',
-                                'name'
-                                );
-
-                    $this->cargando();
-                }
-            }
-        }else{
-            $this->dispatch('alerta', name:'VALOR Mayor que cero');
+        //Verificar que no se haya cargado el dato
+        $ya= DB::table('apoyo_recibo')->where('id_cartera',$item['id'])->count();
+        if($ya>0){
+            $this->dispatch('alerta', name:'Ya esta cargado');
             $this->reset(
                 'valor' ,
                 'conceptos',
                 'name'
                 );
+        }else{
+            switch ($id) {
+                case 0:
+                    $this->tipo="otro";
+                    break;
+
+                case 1:
+                    $this->tipo="cartera";
+                    $this->saldo=$item['saldo'];
+                    $this->id_cartera=$item['id'];
+                    break;
+
+                default:
+                    $this->tipo="inventario";
+                    break;
+            }
+
+            if($this->valor>0){
+                foreach ($this->concep as $value) {
+
+                    if($value['id']===intval($this->conceptos)){
+
+                        if($this->saldo<$this->valor){
+                            $this->valor=$this->saldo;
+                        }
+
+                        DB::table('apoyo_recibo')->insert([
+                            'tipo'=>$this->tipo,
+                            'id_creador'=>Auth::user()->id,
+                            'id_concepto'=>$this->conceptos,
+                            'concepto'=>$value['name'],
+                            'valor'=>$this->valor,
+                            'saldo'=>$this->saldo,
+                            'id_cartera'=>$this->id_cartera
+                        ]);
+
+                        $this->Total=$this->Total+$this->valor;
+
+                        $this->reset(
+                                    'valor' ,
+                                    'conceptos',
+                                    'name'
+                                    );
+
+                        $this->cargando();
+                    }
+                }
+            }else{
+                $this->dispatch('alerta', name:'VALOR Mayor que cero');
+                $this->reset(
+                    'valor' ,
+                    'conceptos',
+                    'name'
+                    );
+            }
         }
 
     }
@@ -243,7 +260,6 @@ class RecibosPagoCrear extends Component
         $this->dispatch('refresh');
         $this->dispatch('created');
     }
-
 
     private function sedes(){
         return Sede::query()
