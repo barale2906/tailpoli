@@ -18,7 +18,8 @@ return new class extends Migration
             $table->double('valor_total')->comment('Valor total del recibo');
             $table->string('medio')->comment('medio de pago');
             $table->longtext('observaciones')->comment('Obserevaciones al recibo');
-            $table->integer('status')->default(0)->comment('0 Creado, #Cierre de caja');
+            $table->integer('status')->default(0)->comment('0 Creado, 1 cerrado, 2 anulado');
+            $table->integer('cierre')->nullable()->comment('#Cierre de caja');
 
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');

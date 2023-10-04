@@ -8,7 +8,6 @@ use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -33,8 +32,6 @@ class RecibosPagoCrear extends Component
     public $nameConcep='';
     public $Total=0;
     public $control=[];
-
-    public $otrosDeta=array();
 
     public $buscar=null;
     public $buscaestudi='';
@@ -86,9 +83,14 @@ class RecibosPagoCrear extends Component
     }
 
     public function asigOtro($id, $item){
+        if($item===0){
+            $ya=0;
+            $this->saldo=$this->valor;
+        }else{
+            //Verificar que no se haya cargado el dato
+            $ya= DB::table('apoyo_recibo')->where('id_cartera',$item['id'])->count();
+        }
 
-        //Verificar que no se haya cargado el dato
-        $ya= DB::table('apoyo_recibo')->where('id_cartera',$item['id'])->count();
         if($ya>0){
             $this->dispatch('alerta', name:'Ya esta cargado');
             $this->reset(
@@ -214,6 +216,7 @@ class RecibosPagoCrear extends Component
             ->insert([
                 'valor'=>$value->valor,
                 'tipo'=>$value->tipo,
+                'id_relacional'=>$value->id_cartera,
                 'concepto_pago_id'=>$value->id_concepto,
                 'recibo_pago_id'=>$recibo->id,
                 'created_at'=>now(),

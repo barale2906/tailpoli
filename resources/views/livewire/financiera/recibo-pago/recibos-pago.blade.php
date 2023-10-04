@@ -111,9 +111,13 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @can('fi_recibopagoAnular')
-                                    <a href="#" wire:click.prevent="show({{$recibo}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-blue-500 hover:underline">
-                                        <i class="fa-solid fa-marker"></i> - {{$recibo->id}}
-                                    </a>
+                                    @if ($recibo->status===0)
+                                        <a href="#" wire:click.prevent="show({{$recibo}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-blue-500 hover:underline">
+                                            <i class="fa-solid fa-marker"></i> - {{$recibo->id}}
+                                        </a>
+                                    @else
+                                        {{$recibo->id}}
+                                    @endif
                                 @endcan
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -163,7 +167,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:financiera.recibo-pago.recibos-pago-crear :tipon="1"/>
+        <livewire:financiera.recibo-pago.recibos-pago-crear />
     @endif
 
     @if ($is_editing)
