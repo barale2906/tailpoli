@@ -24,6 +24,7 @@ class RecibosPagoCrear extends Component
     public $saldo;
     public $id_cartera;
     public $estado;
+    public $status;
 
 
     public $valor=0;
@@ -73,6 +74,7 @@ class RecibosPagoCrear extends Component
         $this->alumno_id=$item['id'];
         $this->alumnoName=$item['name'];
         $this->alumnodocumento=$item['documento'];
+        $this->limpiar();
         $this->obligaciones();
     }
 
@@ -195,8 +197,8 @@ class RecibosPagoCrear extends Component
             ->insert([
                 'valor'=>$value->valor,
                 'tipo'=>$value->tipo,
-                'conceptos_id'=>$value->id_concepto,
-                'recibo_id'=>$recibo->id,
+                'concepto_pago_id'=>$value->id_concepto,
+                'recibo_pago_id'=>$recibo->id,
                 'created_at'=>now(),
                 'updated_at'=>now(),
             ]);
@@ -204,27 +206,35 @@ class RecibosPagoCrear extends Component
             if($value->tipo==="cartera"){
 
                 $item=Cartera::find($value->id_cartera);
-                $saldo=$item->saldo-$value->saldo;
-                dd($item->saldo, $value->saldo, $saldo);
+                $saldo=$item->saldo-$value->valor;
                 $observa=now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
-                if($saldo===0){
-                    $esta=EstadoCartera::where('name', 'cerrada')->first();
-                    $this->estado=$esta->id;
-                    dd($esta->id);
-                }else if($saldo>0){
+
+                if($saldo>0){
                     $esta=EstadoCartera::where('name', 'abonada')->first();
                     $this->estado=$esta->id;
+                    $this->status=true;
+                }else{
+                    $esta=EstadoCartera::where('name', 'cerrada')->first();
+                    $this->estado=$esta->id;
+                    $this->status=false;
                 }
 
                 $item->update([
                     'fecha_real'=>now(),
                     'saldo'=>$saldo,
                     'observaciones'=>$observa,
-                    'status'=>$this->estado
+                    'status'=>$this->status,
+                    'estado_cartera_id'=>$this->estado
                 ]);
             }
 
         }
+
+        //Eliminar datos de apoyo
+        DB::table('apoyo_recibo')
+            ->where('id_creador', Auth::user()->id)
+            ->delete();
+
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente el recibo: '.$recibo->id);
         $this->resetFields();

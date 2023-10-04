@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('tipo')->comment('otros, cartera, inventario');
             //$table->longtext('detalle')->comment('Detalle de la transacción');
 
-            $table->unsignedBigInteger('conceptos_id');
-            $table->foreign('conceptos_id')->references('id')->on('concepto_pagos');
+            $table->unsignedBigInteger('concepto_pago_id');
+            $table->foreign('concepto_pago_id')->references('id')->on('concepto_pagos');
 
-            $table->unsignedBigInteger('recibo_id');
-            $table->foreign('recibo_id')->references('id')->on('recibo_pagos');
+            $table->unsignedBigInteger('recibo_pago_id');
+            $table->foreign('recibo_pago_id')->references('id')->on('recibo_pagos');
 
             $table->timestamps();
         });
