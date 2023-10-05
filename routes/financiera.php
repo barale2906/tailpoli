@@ -13,3 +13,7 @@ Route::get('/conceptopagos', function () {
 Route::get('/configpagos', function () {
     return view('financiera.configpagos.index');
 })->middleware('can:fi_configuracionpagos')->name('configpagos');
+
+Route::get('/cierrecaja', function () {
+    return view('financiera.cierrecaja.index');
+})->middleware('can:fi_cierrecaja')->name('cierrecaja');
