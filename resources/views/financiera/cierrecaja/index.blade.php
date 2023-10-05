@@ -3,6 +3,6 @@
         Cierre de Caja
     @endpush
 
-    {{-- <livewire:financiera.recibo-pago.recibos-pago /> --}}
+    <livewire:financiera.cierre-caja.cierre-cajas />
 
 </x-admin-layout>
