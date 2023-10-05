@@ -92,8 +92,8 @@ class MatriculasCrear extends Component
         $this->modulos=Modulo::where('curso_id', $this->curso_id)
                         ->where('status', true)
                         ->orderBy('name')
-                        ->get();       
-        
+                        ->get();
+
 
         $this->buscaGrupos();
     }
@@ -152,6 +152,7 @@ class MatriculasCrear extends Component
         $this->alumno_id=$item['id'];
         $this->alumnoName=$item['name'];
         $this->alumnodocumento=$item['documento'];
+        $this->limpiar();
         $this->matrActual();
     }
     //Determinar matriculas activas del estudiante
@@ -293,7 +294,7 @@ class MatriculasCrear extends Component
                 'inscritos'=>$ins
             ]);
         }
-       
+
 
         //Inicial
         Cartera::create([
@@ -333,8 +334,8 @@ class MatriculasCrear extends Component
                 ]);
                 $a++;
             }
-        }       
-        
+        }
+
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
