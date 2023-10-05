@@ -37,10 +37,10 @@ class ReciboPago extends Model
      * Relación muchos a muchos.
      * Cierres de caja y recibos de pago
      */
-    /* public function cierres(): BelongsToMany
+    public function cierres(): BelongsToMany
     {
         return $this->belongsToMany(CierreCaja::class);
-    } */
+    }
 
 
     /**

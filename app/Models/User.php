@@ -8,6 +8,7 @@ use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ReciboPago;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -126,6 +127,12 @@ class User extends Authenticatable
     public function pagas(): HasMany
     {
         return $this->hasMany(ReciboPago::class);
+    }
+
+    //Relación uno a muchos
+    public function cierres(): HasMany
+    {
+        return $this->hasMany(CierreCaja::class);
     }
 
     /**

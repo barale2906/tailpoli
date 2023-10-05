@@ -3,6 +3,7 @@
 namespace App\Models\Configuracion;
 
 use App\Models\Academico\Grupo;
+use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ConfiguracionPago;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Inventario\Almacen;
@@ -65,5 +66,11 @@ class Sede extends Model
     public function recibos(): HasMany
     {
         return $this->hasMany(ReciboPago::class);
+    }
+
+    //Relación uno a muchos
+    public function cierres(): HasMany
+    {
+        return $this->hasMany(CierreCaja::class);
     }
 }
