@@ -130,7 +130,13 @@ class User extends Authenticatable
     }
 
     //Relación uno a muchos
-    public function cierres(): HasMany
+    public function cajeros(): HasMany
+    {
+        return $this->hasMany(CierreCaja::class);
+    }
+
+    //Relación uno a muchos
+    public function coorcajas(): HasMany
     {
         return $this->hasMany(CierreCaja::class);
     }

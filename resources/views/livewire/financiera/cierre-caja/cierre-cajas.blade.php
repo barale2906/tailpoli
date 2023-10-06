@@ -118,7 +118,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:financiera.cierre-caja.cierre-cajas-create />
+        <livewire:financiera.cierre-caja.cierre-cajas-crear />
     @endif
 
     @if ($is_editing)

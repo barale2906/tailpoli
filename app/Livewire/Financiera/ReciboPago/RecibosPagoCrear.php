@@ -216,6 +216,7 @@ class RecibosPagoCrear extends Component
             ->insert([
                 'valor'=>$value->valor,
                 'tipo'=>$value->tipo,
+                'medio'=>$this->medio,
                 'id_relacional'=>$value->id_cartera,
                 'concepto_pago_id'=>$value->id_concepto,
                 'recibo_pago_id'=>$recibo->id,

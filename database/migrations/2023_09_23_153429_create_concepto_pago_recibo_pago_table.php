@@ -17,6 +17,8 @@ return new class extends Migration
 
             $table->double('valor')->comment('Valor pagado concepto pago');
             $table->string('tipo')->comment('otros, cartera, inventario');
+
+            $table->string('medio')->comment('medio de pago');
             $table->string('id_relacional')->nullable()->comment('muestra el id del movimiento afectado ');
 
             $table->unsignedBigInteger('concepto_pago_id');

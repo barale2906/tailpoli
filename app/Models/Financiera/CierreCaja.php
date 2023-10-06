@@ -31,7 +31,13 @@ class CierreCaja extends Model
     }
 
     //Relacion uno a muchos inversa
-    public function creador() : BelongsTo
+    public function cajero() : BelongsTo
+    {
+        return $this->BelongsTo(User::class);
+    }
+
+    //Relacion uno a muchos inversa
+    public function coorcaja() : BelongsTo
     {
         return $this->BelongsTo(User::class);
     }
