@@ -63,110 +63,68 @@
                 </div>
             </div>
 
-            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4  mt-2">
-                <div class="bg-gray-100 p-2">
-                    <div class="mb-6">
-                        <div class="flex flex-col items-center justify-center">
-                            <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($valor_pensiones, 0, ',', '.')}}</dt>
-                            <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor pensiones</dd>
-                        </div>
-                    </div>
-                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-2">
-
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_efectivo, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Efectivo Pensiones</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_tarjeta, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Tarjetas</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_cheque, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Cheques</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_consignacion, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Transferencia PSE </dd>
-                            </div>
-                        </div>
+            <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 bg-slate-200">
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($valor_pensiones, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor pensiones</dd>
                     </div>
                 </div>
-                <div class="bg-gray-100 p-2">
-                    <div class="mb-6">
-                        <div class="flex flex-col items-center justify-center">
-                            <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($valor_herramientas, 0, ',', '.')}}</dt>
-                            <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor Herramientas</dd>
-                        </div>
-                    </div>
-                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-2">
-
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_efectivo_h, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Efectivo Herramientas</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_tarjeta_h, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Tarjetas</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_cheque_h, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Cheques</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_consignacion_h, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Transferencia PSE </dd>
-                            </div>
-                        </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_efectivo, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Efectivo Pensiones</dd>
                     </div>
                 </div>
-                <div class="bg-gray-100 p-2">
-                    <div class="mb-6">
-                        <div class="flex flex-col items-center justify-center">
-                            <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($valor_otros, 0, ',', '.')}}</dt>
-                            <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor Otros</dd>
-                        </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_tarjeta, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Tarjetas</dd>
                     </div>
-                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_cheque, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Cheques</dd>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_consignacion, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Transferencia PSE </dd>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_efectivo_o, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Efectivo Otros</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_tarjeta_o, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Tarjetas</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_cheque_o, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Cheques</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_consignacion_o, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Transferencia PSE </dd>
-                            </div>
-                        </div>
+            <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 bg-slate-100">
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($valor_otros, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor Otros</dd>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_efectivo_o, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Efectivo Otros</dd>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_tarjeta_o, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Tarjetas</dd>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_cheque_o, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Cheques</dd>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_consignacion_o, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Transferencia PSE </dd>
                     </div>
                 </div>
             </div>
@@ -187,6 +145,7 @@
         </div>
     </form>
     @if ($sede_id>0 && $cajero_id>0)
+        <h5 class="text-semibold md:text-lg sm:text-sm capitalize">Recibos de caja encontrados</h5>
         <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>

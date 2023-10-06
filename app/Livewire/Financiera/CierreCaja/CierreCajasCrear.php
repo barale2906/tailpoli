@@ -27,11 +27,11 @@ class CierreCajasCrear extends Component
     public $valor_cheque=0;
     public $valor_consignacion=0;
 
-    public $valor_herramientas=0;
+    /* public $valor_herramientas=0;
     public $valor_efectivo_h=0;
     public $valor_tarjeta_h=0;
     public $valor_cheque_h=0;
-    public $valor_consignacion_h=0;
+    public $valor_consignacion_h=0; */
 
     public $valor_otros=0;
     public $valor_efectivo_o=0;
@@ -160,9 +160,9 @@ class CierreCajasCrear extends Component
                                     ->whereIn('concepto_pago_recibo_pago.medio', ['consignacion', 'PSE', ])
                                     ->sum('concepto_pago_recibo_pago.valor');
 
-        $this->herramientasdet();
+        $this->otrosdet();
 
-    }
+    }/*
 
     public function herramientasdet(){
         $this->valor_herramientas = DB::table('concepto_pago_recibo_pago')
@@ -211,7 +211,7 @@ class CierreCajasCrear extends Component
                                     ->sum('concepto_pago_recibo_pago.valor');
 
         $this->otrosdet();
-    }
+    } */
 
     public function otrosdet(){
         $this->valor_otros = DB::table('concepto_pago_recibo_pago')
@@ -219,7 +219,7 @@ class CierreCajasCrear extends Component
                                     ->where('recibo_pagos.sede_id', $this->sede_id)
                                     ->where('recibo_pagos.creador_id', $this->cajero_id)
                                     ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'otro')
+                                    ->where('concepto_pago_recibo_pago.tipo','!=', 'cartera')
                                     //->where('concepto_pago_recibo_pago.medio', 'efectivo')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
@@ -228,7 +228,7 @@ class CierreCajasCrear extends Component
                                     ->where('recibo_pagos.sede_id', $this->sede_id)
                                     ->where('recibo_pagos.creador_id', $this->cajero_id)
                                     ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'otro')
+                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
                                     ->where('concepto_pago_recibo_pago.medio', 'efectivo')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
@@ -237,7 +237,7 @@ class CierreCajasCrear extends Component
                                     ->where('recibo_pagos.sede_id', $this->sede_id)
                                     ->where('recibo_pagos.creador_id', $this->cajero_id)
                                     ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'otro')
+                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
                                     ->whereIn('concepto_pago_recibo_pago.medio', ['tarjeta credito', 'tarjeta debito'])
                                     ->sum('concepto_pago_recibo_pago.valor');
 
@@ -246,7 +246,7 @@ class CierreCajasCrear extends Component
                                     ->where('recibo_pagos.sede_id', $this->sede_id)
                                     ->where('recibo_pagos.creador_id', $this->cajero_id)
                                     ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'otro')
+                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
                                     ->where('concepto_pago_recibo_pago.medio', 'cheque')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
@@ -255,7 +255,7 @@ class CierreCajasCrear extends Component
                                     ->where('recibo_pagos.sede_id', $this->sede_id)
                                     ->where('recibo_pagos.creador_id', $this->cajero_id)
                                     ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'otro')
+                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
                                     ->whereIn('concepto_pago_recibo_pago.medio', ['consignacion', 'PSE', ])
                                     ->sum('concepto_pago_recibo_pago.valor');
     }
@@ -283,11 +283,11 @@ class CierreCajasCrear extends Component
                         'valor_cheque_o'=>$this->valor_cheque_o,
                         'valor_consignacion_o'=>$this->valor_consignacion_o,
 
-                        'valor_herramientas'=>$this->valor_herramientas,
+                        /* 'valor_herramientas'=>$this->valor_herramientas,
                         'valor_efectivo_h'=>$this->valor_efectivo_h,
                         'valor_tarjeta_h'=>$this->valor_tarjeta_h,
                         'valor_cheque_h'=>$this->valor_cheque_h,
-                        'valor_consignacion_h'=>$this->valor_consignacion_h,
+                        'valor_consignacion_h'=>$this->valor_consignacion_h, */
 
                         'sede_id'=>$this->sede_id,
                         'cajero_id'=>$this->cajero_id,
