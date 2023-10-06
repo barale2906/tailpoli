@@ -39,6 +39,8 @@ class CierreCajasCrear extends Component
     public $valor_cheque_o=0;
     public $valor_consignacion_o=0;
 
+    public $status=1;
+
     /**
      * Reglas de validación
      */
@@ -59,7 +61,9 @@ class CierreCajasCrear extends Component
         $this->reset('cajero_id');
 
         $datos=ReciboPago::where('sede_id', $this->sede_id)
-                                    ->get();
+                            ->where('cierre', null)
+                            ->where('status', '!=', 1)
+                            ->get();
 
         $agrupar=$datos->groupBy('creador_id');
         $this->cajeros=$agrupar->all();
@@ -262,13 +266,60 @@ class CierreCajasCrear extends Component
         $this->validate();
 
         //Crear registro
-        CierreCaja::create([
-            'name'=>strtolower($this->name),
-            'tipo'=>strtolower($this->tipo),
-        ]);
+        $cierre=CierreCaja::create([
+                        'fecha_cierre'=>now(),
+                        'valor_total'=>$this->valor_total,
+                        'observaciones'=>$this->observaciones,
+
+                        'valor_pensiones'=>$this->valor_pensiones,
+                        'valor_efectivo'=>$this->valor_efectivo,
+                        'valor_tarjeta'=>$this->valor_tarjeta,
+                        'valor_cheque'=>$this->valor_cheque,
+                        'valor_consignacion'=>$this->valor_consignacion,
+
+                        'valor_otros'=>$this->valor_otros,
+                        'valor_efectivo_o'=>$this->valor_efectivo_o,
+                        'valor_tarjeta_o'=>$this->valor_tarjeta_o,
+                        'valor_cheque_o'=>$this->valor_cheque_o,
+                        'valor_consignacion_o'=>$this->valor_consignacion_o,
+
+                        'valor_herramientas'=>$this->valor_herramientas,
+                        'valor_efectivo_h'=>$this->valor_efectivo_h,
+                        'valor_tarjeta_h'=>$this->valor_tarjeta_h,
+                        'valor_cheque_h'=>$this->valor_cheque_h,
+                        'valor_consignacion_h'=>$this->valor_consignacion_h,
+
+                        'sede_id'=>$this->sede_id,
+                        'cajero_id'=>$this->cajero_id,
+                        'coorcaja_id'=>Auth::user()->id
+                    ]);
+
+        //relacionar recibos
+        foreach ($this->recibos as $value) {
+            if($value===2){
+                $this->status=2;
+            }
+
+            //Actualizar recibo
+            ReciboPago::whereId($value->id)->update([
+                                    'status'=>$this->status,
+                                    'cierre'=>$cierre->id
+                                ]);
+
+            //Cargar recibo al cierre
+            DB::table('cierre_caja_recibo_pago')
+            ->insert([
+                'cierre_caja_id'=>$cierre->id,
+                'recibo_pago_id'=>$value->id,
+                'created_at'=>now(),
+                'updated_at'=>now(),
+            ]);
+
+            $this->reset('status');
+        }
 
         // Notificación
-        $this->dispatch('alerta', name:'Se ha creado correctamente el concepto de pago: '.$this->name);
+        $this->dispatch('alerta', name:'Se ha realizado correctamente el cierre de caja N°: '.$cierre->id);
         $this->resetFields();
 
         //refresh

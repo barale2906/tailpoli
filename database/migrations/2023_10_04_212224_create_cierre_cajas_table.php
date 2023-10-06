@@ -24,6 +24,12 @@ return new class extends Migration
             $table->double('valor_cheque')->default(0)->comment('Valor recibido en cheques');
             $table->double('valor_consignacion')->default(0)->comment('Valor recibido en transferencias consignaciones PSE');
 
+            $table->double('valor_otros')->default(0)->comment('Valor total del cierre por otros conceptos');
+            $table->double('valor_efectivo_o')->default(0)->comment('Valor recibido en efectivo por otros conceptos');
+            $table->double('valor_tarjeta_o')->default(0)->comment('Valor recibido en tarjetas credito y debito por otros conceptos');
+            $table->double('valor_cheque_o')->default(0)->comment('Valor recibido en cheques por otros conceptos');
+            $table->double('valor_consignacion_o')->default(0)->comment('Valor recibido en transferencias consignaciones por otros conceptos');
+
             $table->double('valor_herramientas')->default(0)->comment('Valor total del cierre por herramienta');
             $table->double('valor_efectivo_h')->default(0)->comment('Valor recibido en efectivo por herramienta');
             $table->double('valor_tarjeta_h')->default(0)->comment('Valor recibido en tarjetas credito y debito por herramienta');

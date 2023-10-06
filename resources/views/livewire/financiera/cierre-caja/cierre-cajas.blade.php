@@ -31,7 +31,10 @@
                             Sede
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;">
-                            Creador
+                            Coordinador
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;">
+                            Cajero
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_cierre')">
                             Fecha
@@ -72,13 +75,16 @@
                                 {{$cierre->sede->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$cierre->creador->name}}
+                                {{$cierre->coorcaja->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$cierre->cajero->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$cierre->fecha_cierre}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$cierre->valor_total}}
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize text-right">
+                                $ {{number_format($cierre->valor_total, 0, ',', '.')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @can('fi_cierrecajaAnular')
