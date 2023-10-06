@@ -242,6 +242,7 @@
                         <option >Elija...</option>
                         <option value="efectivo">Efectivo</option>
                         <option value="PSE">PSE</option>
+                        <option value="transferencia">Transferencia</option>
                         <option value="tarjeta credito">Tarjeta Crédito</option>
                         <option value="tarjeta debito">Tarjeta débito</option>
                         <option value="cheque">Cheque</option>
