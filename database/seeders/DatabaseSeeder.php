@@ -31,11 +31,12 @@ class DatabaseSeeder extends Seeder
             ModuloSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+            Menuseeder::class,
             InventarioSeeder::class,
             GrupoSeeder::class,
             MatriculaSeeder::class,
             EstadoCarteraSeeder::class,
-            ConfiguracioPagoSeeder::class,
+            ConfiguracioPagoSeeder::class,            
         ]);
     }
 }
