@@ -21,6 +21,7 @@ return new class extends Migration
             $table->double('valor_cuota')->comment('Valor por cuota');
             $table->longText('descripcion');
             $table->boolean('status')->default(true)->comment('false Inactivo, true Activo');
+            $table->boolean('incluye')->default(true)->comment('false incluye algunos modulos, true incluye todos los modulos');
 
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');
