@@ -89,7 +89,8 @@ class ModulosCrear extends Component
                 //Crear registro
                 $mod = Modulo::create([
                     'name'=>strtolower($this->name),
-                    'curso_id'=>strtolower($this->curso_id)
+                    'curso_id'=>strtolower($this->curso_id),
+                    'dependencia'=>true
                 ]);
 
                 foreach ($this->moduloDepen as $value) {
