@@ -44,8 +44,10 @@ DB_PASSWORD=Poliandino_2023 --}}
     }"
     >
 
-        @include('layouts.includes.admin.nav');
-        @include('layouts.includes.admin.aside');
+        {{-- @include('layouts.includes.admin.nav');
+        @include('layouts.includes.admin.aside'); --}}
+
+        <livewire:layouts.navbar />
 
         <div class="p-2 sm:ml-64 bg-white h-full" x-on:click="open: false">
             <div class="p-4 border-2 border-blue-500 border-dashed rounded-lg dark:border-gray-700 mt-14">
