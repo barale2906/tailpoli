@@ -7,6 +7,7 @@ use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\ConfiguracionPago;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ConfiguracionPagosCrear extends Component
@@ -21,6 +22,8 @@ class ConfiguracionPagosCrear extends Component
     public $sede_id;
     public $curso_id;
     public $modulos;
+
+    public $moduloDepen=[];
 
     /**
      * Reglas de validación
@@ -55,7 +58,7 @@ class ConfiguracionPagosCrear extends Component
     }
 
     //Busca modulos
-    public function buscaModulos(){
+    public function updatedCursoId(){
         $this->modulos=Modulo::where('curso_id', $this->curso_id)
                                 ->where('status', true)
                                 ->orderBy('name')
@@ -64,16 +67,28 @@ class ConfiguracionPagosCrear extends Component
 
     //Activa cuotas
     public function calcuCuota(){
-        if($this->valor_curso>$this->valor_cuota_inicial){
-            $this->saldo=$this->valor_curso-$this->valor_matricula-$this->valor_cuota_inicial;
+
+        if($this->valor_matricula===''){
+            $this->valor_matricula=0;
         }
 
-        if($this->valor_curso===$this->valor_cuota_inicial){
+        if($this->valor_cuota_inicial===''){
+            $this->valor_cuota_inicial=0;
+        }
+
+        $diferencia=$this->valor_cuota_inicial+$this->valor_matricula;
+
+        if($this->valor_curso>$diferencia){
+            $this->saldo=$this->valor_curso-$diferencia;
+        }
+
+        if($this->valor_curso===$diferencia){
             $this->valor_cuota=0;
             $this->cuotas=0;
         }
-        if($this->valor_curso<$this->valor_cuota_inicial){
-            $this->dispatch('alerta', name:'La cuota inicial debe ser menor al valor del curso.');
+
+        if($this->valor_curso<$diferencia){
+            $this->dispatch('alerta', name:'La cuota inicial/matricula debe ser menor al valor del curso.');
             $this->reset(
                 'cuotas',
                 'valor_cuota',
@@ -89,24 +104,91 @@ class ConfiguracionPagosCrear extends Component
         }
     }
 
+    //Elegir los modulos incluidos
+    public function selModulo($id){
+
+        foreach ($this->modulos as $value) {
+            if($value->id===$id){
+                $nuevo=[
+                    'id'=>$id,
+                    'name'=>$value->name
+                ];
+
+                if(in_array($nuevo, $this->moduloDepen)){
+
+                }else{
+                    array_push($this->moduloDepen, $nuevo);
+                }
+
+            };
+
+        }
+    }
+
+    // Eliminar modulo elegido
+    public function elimModulo($id){
+        foreach ($this->modulos as $value) {
+            if($value->id===$id){
+                $nuevo=[
+                    'id'=>$id,
+                    'name'=>$value->name
+                ];
+            }
+        }
+        $indice=array_search($nuevo,$this->moduloDepen,true);
+        unset($this->moduloDepen[$indice]);
+    }
+
     // Crear Regimen de Salud
     public function new(){
         // validate
         $this->validate();
 
+        if($this->valor_matricula===0 && $this->valor_cuota_inicial){
+            $this->valor_matricula=$this->valor_curso;
+        }
+        // Verifica inclusión
+        if(count($this->moduloDepen)>0){
 
-        //Crear registro
-        ConfiguracionPago::create([
+            //Crear registro
+            $nuevo = ConfiguracionPago::create([
+                                            'valor_curso'=>$this->valor_curso,
+                                            'valor_matricula'=>$this->valor_matricula,
+                                            'valor_cuota_inicial'=>$this->valor_cuota_inicial,
+                                            'cuotas'=>$this->cuotas,
+                                            'valor_cuota'=>$this->valor_cuota,
+                                            'descripcion'=>$this->descripcion,
+                                            'sede_id'=>$this->sede_id,
+                                            'curso_id'=>$this->curso_id,
+                                            'incluye'=>false
+                                        ]);
 
-            'valor_curso'=>$this->valor_curso,
-            'valor_matricula'=>$this->valor_matricula,
-            'valor_cuota_inicial'=>$this->valor_cuota_inicial,
-            'cuotas'=>$this->cuotas,
-            'valor_cuota'=>$this->valor_cuota,
-            'descripcion'=>$this->descripcion,
-            'sede_id'=>$this->sede_id,
-            'curso_id'=>$this->curso_id
-        ]);
+            foreach ($this->moduloDepen as $value) {
+                    DB::table('configpago_modulo')
+                        ->insert([
+                            'config_id'     =>$nuevo->id,
+                            'modulo_id'     =>$value['id'],
+                            'name'          =>$value['name'],
+                            'created_at'    =>now(),
+                            'updated_at'    =>now(),
+                        ]);
+                }
+
+        }else{
+            //Crear registro
+            ConfiguracionPago::create([
+
+                'valor_curso'=>$this->valor_curso,
+                'valor_matricula'=>$this->valor_matricula,
+                'valor_cuota_inicial'=>$this->valor_cuota_inicial,
+                'cuotas'=>$this->cuotas,
+                'valor_cuota'=>$this->valor_cuota,
+                'descripcion'=>$this->descripcion,
+                'sede_id'=>$this->sede_id,
+                'curso_id'=>$this->curso_id
+            ]);
+        }
+
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la configuración de pago: ');
