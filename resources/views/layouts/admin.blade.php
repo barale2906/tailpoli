@@ -49,7 +49,7 @@ DB_PASSWORD=Poliandino_2023 --}}
 
         <livewire:layouts.navbar />
 
-        <div class="p-2 sm:ml-64 bg-white h-full" x-on:click="open: false">
+        <div class="p-2 bg-white h-full" x-on:click="open: false">
             <div class="p-4 border-2 border-blue-500 border-dashed rounded-lg dark:border-gray-700 mt-14">
                 {{ $slot }}
             </div>
