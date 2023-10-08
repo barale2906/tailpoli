@@ -51,7 +51,7 @@ class MatriculasAnular extends Component
 
         // Descontar estudiante de los grupos
         foreach ($this->matricula->grupos as $value) {
-            //Sumar estudiante al grupo
+            //Restar estudiante al grupo
             $inscrito=Grupo::where('id', $value['id'])
                             ->select('inscritos')
                             ->first();
