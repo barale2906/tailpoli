@@ -27,8 +27,6 @@ class MatriculasCrear extends Component
     public $alumnoName='';
     public $alumnodocumento='';
     public $comercial_id='';
-    public $grupos=[]; //Grupos seleccionados
-    public $seleccionado=false;
 
     public $sede_id;
     public $cursos;
@@ -45,20 +43,16 @@ class MatriculasCrear extends Component
     public $valor_cuota_inicial;
     public $cuotas;
 
-    public $grupocurso=[];
-
 
     public $buscar=null;
     public $buscaestudi='';
 
     public $buscamin='';
-    public $matriculados;
-    public $gruposAct=[];
 
 
 
     //Cursos por sede
-    public function cursosede(){
+    public function updatedSedeId(){
         $this->reset('curso_id');
         $this->cursos=Curso::query()
                             ->with(['configpagos'])
@@ -73,40 +67,35 @@ class MatriculasCrear extends Component
     }
 
     //Configuraciones por curso
-    public function buscaconfiguraciones(){
+    public function updatedCursoId(){
         $this->reset('config_id');
         $this->configPago=ConfiguracionPago::where('sede_id', $this->sede_id)
                                             ->where('curso_id', $this->curso_id)
                                             ->orderBy('descripcion')
                                             ->get();
+
+        $this->matrCurso();
     }
 
-    //Buscar grupos aplicables al curso
-    public function buscaModulos(){
+    //Determinar Si el estudiante ya esta matriculado a este curso
+    public function matrCurso(){
+        $matriculados = Matricula::where('status', true)
+                                        ->where('alumno_id', $this->alumno_id)
+                                        ->where('curso_id', $this->curso_id)
+                                        ->count();
+
+        if($matriculados>0){
+            $this->dispatch('alerta', name:'El estudiante tiene una matricula activa a este curso.');
+        }
+    }
+
+
+    //Buscar modulos
+    public function updatedConfigId(){
         $this->reset(
             'modulos'
         );
 
-        //Buscar modulos del curso
-
-        $this->modulos=Modulo::where('curso_id', $this->curso_id)
-                        ->where('status', true)
-                        ->orderBy('name')
-                        ->get();
-
-
-        $this->buscaGrupos();
-    }
-
-    public function buscaGrupos(){
-        $this->reset(
-            'valor_curso',
-            'valor_matricula',
-            'valor_cuota_inicial',
-            'cuota',
-            'valor_cuota',
-            'grupocurso'
-        );
         //Cargar datos de pago
         $pagos=ConfiguracionPago::find($this->config_id);
 
@@ -116,27 +105,18 @@ class MatriculasCrear extends Component
         $this->cuotas=$pagos->cuotas;
         $this->valor_cuota=$pagos->valor_cuota;
 
-        foreach ($this->modulos as $value){
-            $paquete=Grupo::where('status', true)
-                            ->where('modulo_id', $value['id'])
-                            ->where('sede_id', $this->sede_id)
-                            ->orderBy('name')
-                            ->get();
+        if($pagos->incluye){
+            $this->modulos=Modulo::where('curso_id', $this->curso_id)
+                                    ->where('status', true)
+                                    ->orderBy('name')
+                                    ->get();
+        }else{
+            $this->modulos=DB::table('configpago_modulo')
+                                ->where('config_id', $this->config_id)
+                                ->get();
 
-            if($paquete->count()){
-                foreach ($paquete as $item) {
-                    $nuevo=[
-                        'id'=>$item['id'],
-                        'name'=>$item['name'],
-                        'profesor'=>$item->profesor['name'],
-                        'modulo'=>$item->modulo['name']
-                    ];
-                    array_push($this->grupocurso,$nuevo);
-                }
-            }
         }
     }
-
 
     //Buscar Alumno
     public function buscAlumno(){
@@ -153,74 +133,6 @@ class MatriculasCrear extends Component
         $this->alumnoName=$item['name'];
         $this->alumnodocumento=$item['documento'];
         $this->limpiar();
-        $this->matrActual();
-    }
-    //Determinar matriculas activas del estudiante
-    public function matrActual(){
-        $this->matriculados = Matricula::where('status', true)
-                                        ->where('alumno_id', $this->alumno_id)
-                                        ->get();
-
-        if($this->matriculados->count()){
-            foreach ($this->matriculados as $value) {
-                $this->grupoActual($value->id);
-            }
-        }
-    }
-
-    //Cargar grupos a los que esta matriculado el estudiante
-    public function grupoActual($id){
-        $gr = Matricula::find($id);
-        foreach($gr->grupos as $value){
-            array_push($this->gruposAct, $value->id);
-        }
-    }
-
-    //Determinar si el estudiante ya esta registrado en el grupo
-    public function selGrupo($id){
-
-        if(in_array($id, $this->gruposAct)){
-            $this->dispatch('alerta', name:'Ya esta matriculado al grupo.');
-        }else{
-            foreach ($this->grupocurso as $value) {
-                if($id===$value['id']){
-                    $nuevo=[
-                        'id'=>$id,
-                        'name'=>$value['name']
-                    ];
-
-                    if(in_array($nuevo, $this->grupos)){
-
-                    }else{
-                        array_push($this->grupos,$nuevo);
-                        $this->seleccionado=true;
-                    }
-                }
-            }
-
-        }
-    }
-    //Cargar al estudiante al grupo respectivo
-    public function asigGrupo($item){
-        if(now()<$item['finish_date']){
-            if(in_array([
-                'id'=>$item['id'],
-                'name'=>$item['name']
-            ], $this->grupos))
-            {
-
-            }else{
-                $nuevo=[
-                    'id'=>$item['id'],
-                    'name'=>$item['name']
-                ];
-                array_push($this->grupos,$nuevo);
-
-                $this->seleccionado=true;
-            }
-        } else{
-            $this->dispatch('alerta', name:'El grupo: '.$item['name'].' ya finalizó.');
-        }
     }
 
     /**
@@ -272,28 +184,6 @@ class MatriculasCrear extends Component
                                 'comercial_id'=>$this->comercial_id,
                                 'creador_id'=>Auth::user()->id
                             ]);
-
-        //Asignar Grupos
-        foreach($this->grupos as $item){
-            DB::table('grupo_matricula')
-            ->insert([
-                'grupo_id'=>$item['id'],
-                'matricula_id'=>$matricula->id,
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ]);
-
-            //Sumar estudiante al grupo
-            $inscrito=Grupo::where('id', $item['id'])
-                            ->select('inscritos')
-                            ->first();
-
-            $ins=$inscrito->inscritos+1;
-
-            Grupo::whereId($item['id'])->update([
-                'inscritos'=>$ins
-            ]);
-        }
 
 
         //Inicial

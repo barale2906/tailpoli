@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Academico\Matricula;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,7 +13,7 @@ class MatriculaSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Academico\Matricula::create([
+        Matricula::create([
             'medio' => 'google',
             'nivel'=>'pre grado',
             'anula'=>'',
@@ -25,7 +26,7 @@ class MatriculaSeeder extends Seeder
             'curso_id'=>1
         ]);
 
-        \App\Models\Academico\Matricula::create([
+        Matricula::create([
             'medio' => 'amigo',
             'nivel'=>'bachiller',
             'anula'=>'',

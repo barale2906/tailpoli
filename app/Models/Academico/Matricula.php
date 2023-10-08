@@ -39,7 +39,7 @@ class Matricula extends Model
         return $this->BelongsTo(Curso::class);
     }
 
-    //Relacion uno a muchos inversa
+    //Relacion muchos a muchos
     public function grupos() : BelongsToMany
     {
         return $this->BelongsToMany(Grupo::class);
