@@ -12,6 +12,8 @@ use Livewire\Component;
 
 class ConfiguracionPagosCrear extends Component
 {
+    public $inicia;
+    public $finaliza;
     public $valor_curso;
     public $valor_matricula;
     public $valor_cuota_inicial;
@@ -29,14 +31,16 @@ class ConfiguracionPagosCrear extends Component
      * Reglas de validación
      */
     protected $rules = [
-        'valor_curso' => 'required|min:1',
-        'valor_matricula' => 'required|min:1',
-        'valor_cuota_inicial'=> 'required|min:1',
-        'cuotas'=> 'required|integer',
-        'valor_cuota'=> 'required|min:1',
-        'descripcion'=> 'required',
-        'sede_id'=> 'required|integer',
-        'curso_id'=> 'required|integer'
+        'inicia'                => 'required',
+        'finaliza'              => 'required',
+        'valor_curso'           => 'required|min:1',
+        'valor_matricula'       => 'required|min:1',
+        'valor_cuota_inicial'   => 'required|min:1',
+        'cuotas'                => 'required|integer',
+        'valor_cuota'           => 'required|min:1',
+        'descripcion'           => 'required',
+        'sede_id'               => 'required|integer',
+        'curso_id'              => 'required|integer'
     ];
 
     /**
@@ -45,6 +49,8 @@ class ConfiguracionPagosCrear extends Component
      */
     public function resetFields(){
         $this->reset(
+                        'inicia',
+                        'finaliza',
                         'valor_curso',
                         'valor_matricula',
                         'valor_cuota_inicial',
@@ -55,6 +61,13 @@ class ConfiguracionPagosCrear extends Component
                         'curso_id',
                         'saldo'
                     );
+    }
+
+    public function updatedFinaliza(){
+        if($this->finaliza<$this->inicia){
+            $this->dispatch('alerta', name:'Finalización debe ser mayor a inicio');
+            $this->reset('finaliza');
+        }
     }
 
     //Busca modulos
@@ -152,6 +165,8 @@ class ConfiguracionPagosCrear extends Component
 
             //Crear registro
             $nuevo = ConfiguracionPago::create([
+                                            'inicia'=>$this->inicia,
+                                            'finaliza'=>$this->finaliza,
                                             'valor_curso'=>$this->valor_curso,
                                             'valor_matricula'=>$this->valor_matricula,
                                             'valor_cuota_inicial'=>$this->valor_cuota_inicial,
@@ -177,7 +192,8 @@ class ConfiguracionPagosCrear extends Component
         }else{
             //Crear registro
             ConfiguracionPago::create([
-
+                'inicia'=>$this->inicia,
+                'finaliza'=>$this->finaliza,
                 'valor_curso'=>$this->valor_curso,
                 'valor_matricula'=>$this->valor_matricula,
                 'valor_cuota_inicial'=>$this->valor_cuota_inicial,

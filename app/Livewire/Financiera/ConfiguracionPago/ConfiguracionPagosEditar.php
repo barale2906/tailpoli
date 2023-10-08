@@ -12,6 +12,8 @@ use Livewire\Component;
 
 class ConfiguracionPagosEditar extends Component
 {
+    public $inicia;
+    public $finaliza;
     public $valor_curso;
     public $valor_matricula;
     public $valor_cuota_inicial;
@@ -30,15 +32,24 @@ class ConfiguracionPagosEditar extends Component
      * Reglas de validación
      */
     protected $rules = [
-        'valor_curso' => 'required|min:1',
-        'valor_matricula' => 'required|min:1',
-        'valor_cuota_inicial'=> 'required|min:1',
-        'cuotas'=> 'required|integer',
-        'valor_cuota'=> 'required|min:1',
-        'descripcion'=> 'required',
-        'sede_id'=> 'required|integer',
-        'curso_id'=> 'required|integer'
+        'inicia'                => 'required',
+        'finaliza'              => 'required',
+        'valor_curso'           => 'required|min:1',
+        'valor_matricula'       => 'required|min:1',
+        'valor_cuota_inicial'   => 'required|min:1',
+        'cuotas'                => 'required|integer',
+        'valor_cuota'           => 'required|min:1',
+        'descripcion'           => 'required',
+        'sede_id'               => 'required|integer',
+        'curso_id'              => 'required|integer'
     ];
+
+    public function updatedFinaliza(){
+        if($this->finaliza<$this->inicia){
+            $this->dispatch('alerta', name:'Finalización debe ser mayor a inicio');
+            $this->reset('finaliza');
+        }
+    }
 
     /**
      * Reset de todos los campos
@@ -46,6 +57,8 @@ class ConfiguracionPagosEditar extends Component
      */
     public function resetFields(){
         $this->reset(
+                        'inicia',
+                        'finaliza',
                         'valor_curso',
                         'valor_matricula',
                         'valor_cuota_inicial',
@@ -60,6 +73,8 @@ class ConfiguracionPagosEditar extends Component
 
     public function mount($elegido = null)
     {
+        $this->inicia=$elegido['inicia'];
+        $this->finaliza=$elegido['finaliza'];
         $this->valor_curso=$elegido['valor_curso'];
         $this->valor_matricula=$elegido['valor_matricula'];
         $this->valor_cuota_inicial=$elegido['valor_cuota_inicial'];
@@ -211,6 +226,8 @@ class ConfiguracionPagosEditar extends Component
 
             //Editar registro
             ConfiguracionPago::whereId($this->id)->update([
+                'inicia'=>$this->inicia,
+                'finaliza'=>$this->finaliza,
                 'valor_curso'=>$this->valor_curso,
                 'valor_matricula'=>$this->valor_matricula,
                 'valor_cuota_inicial'=>$this->valor_cuota_inicial,
@@ -235,6 +252,8 @@ class ConfiguracionPagosEditar extends Component
 
         }else{
             ConfiguracionPago::whereId($this->id)->update([
+                'inicia'=>$this->inicia,
+                'finaliza'=>$this->finaliza,
                 'valor_curso'=>$this->valor_curso,
                 'valor_matricula'=>$this->valor_matricula,
                 'valor_cuota_inicial'=>$this->valor_cuota_inicial,

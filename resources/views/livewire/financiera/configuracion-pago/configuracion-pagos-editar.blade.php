@@ -1,7 +1,26 @@
 <div>
     <form wire:submit.prevent="edit">
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
+        <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 m-2">
             <div class="mb-6">
+                <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Inicia Vigencia</label>
+                <input type="date" id="inicia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Primer pago" wire:model.blur="inicia" >
+                @error('inicia')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-6">
+                <label for="finaliza" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Finaliza Vigencia</label>
+                <input type="date" id="finaliza" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Primer pago" wire:model.blur="finaliza" >
+                @error('finaliza')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-6">
+                <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Sede donde Aplica</label>
                 <select wire:model.live="sede_id" id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                     <option >Elija sede...</option>
                     @foreach ($sedes as $item)
@@ -16,6 +35,7 @@
             </div>
 
             <div class="mb-6">
+                <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Curso al que aplica</label>
                 <select wire:model.live="curso_id" id="curso" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize" >
                     <option >Elija curso...</option>
                     @foreach ($cursos as $item)
