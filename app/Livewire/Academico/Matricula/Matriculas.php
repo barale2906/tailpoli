@@ -84,10 +84,20 @@ class Matriculas extends Component
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
 
-        if($act===0){
-            $this->is_editing=!$this->is_editing;
-        }else{
-            $this->is_deleting=!$this->is_deleting;
+        switch ($act) {
+            case 0:
+                $this->is_editing=!$this->is_editing;
+                break;
+
+            case 1:
+                $this->is_deleting=!$this->is_deleting;
+                break;
+
+            case 2:
+                $this->is_modify = false;
+                $this->reset('is_editing', 'is_deleting');
+                $this->is_grupos=true;
+                break;
         }
     }
 
@@ -98,6 +108,15 @@ class Matriculas extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_deleting = !$this->is_deleting;
+    }
+
+    //Activar evento
+    #[On('grupos')]
+    //Mostrar formulario de inactivación
+    public function updatedIsGrupos()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_grupos = !$this->is_grupos;
     }
 
     private function matriculas()

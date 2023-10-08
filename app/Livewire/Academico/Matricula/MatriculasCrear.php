@@ -43,6 +43,10 @@ class MatriculasCrear extends Component
     public $valor_cuota_inicial;
     public $cuotas;
 
+    public $matricula;
+
+    public $vista=true;
+
 
     public $buscar=null;
     public $buscaestudi='';
@@ -174,7 +178,7 @@ class MatriculasCrear extends Component
 
         $date = Carbon::now();
         //Crear registro
-        $matricula = Matricula::create([
+        $this->matricula = Matricula::create([
                                 'medio'=>$this->medio,
                                 'nivel'=>$this->nivel,
                                 'valor'=>$this->valor_curso,
@@ -192,7 +196,7 @@ class MatriculasCrear extends Component
             'valor'=>$this->valor_cuota_inicial,
             'saldo'=>$this->valor_cuota_inicial,
             'observaciones'=>'Curso: '.$this->cursoName.'. Cuota inicial de un total de: '.$this->valor_cuota_inicial,
-            'matricula_id'=>$matricula->id,
+            'matricula_id'=>$this->matricula->id,
             'responsable_id'=>$this->alumno_id,
             'estado_cartera_id'=>1
         ]);
@@ -203,7 +207,7 @@ class MatriculasCrear extends Component
             'valor'=>$this->valor_matricula,
             'saldo'=>$this->valor_matricula,
             'observaciones'=>'Curso: '.$this->cursoName.'. Cuota inicial de un total de: '.$this->valor_matricula,
-            'matricula_id'=>$matricula->id,
+            'matricula_id'=>$this->matricula->id,
             'responsable_id'=>$this->alumno_id,
             'estado_cartera_id'=>1
         ]);
@@ -218,7 +222,7 @@ class MatriculasCrear extends Component
                     'valor'=>$this->valor_cuota,
                     'saldo'=>$this->valor_cuota,
                     'observaciones'=>'Curso: '.$this->cursoName.'. '.$a.'a. cuota mensual para un curso por valor de: '.$this->valor_curso,
-                    'matricula_id'=>$matricula->id,
+                    'matricula_id'=>$this->matricula->id,
                     'responsable_id'=>$this->alumno_id,
                     'estado_cartera_id'=>1
                 ]);
@@ -230,13 +234,14 @@ class MatriculasCrear extends Component
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
         $this->resetFields();
+        $this->vista=!$this->vista;
 
         //refresh
         /* $this->dispatch('refresh');
         $this->dispatch('created'); */
 
         //Enviar a crear recibo
-        $this->redirect('/financiera/recibopagos');
+        //$this->redirect('/financiera/recibopagos');
 
     }
 

@@ -178,6 +178,10 @@
         <livewire:academico.matricula.matriculas-grupo :elegido="$elegido" />
     @endif
 
+    @if ($is_grupos)
+        <livewire:academico.matricula.matriculas-asigna :elegido="$elegido" />
+    @endif
+
     @push('js')
         <script>
             document.addEventListener('livewire:initialized', function (){
