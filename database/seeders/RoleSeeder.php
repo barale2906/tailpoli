@@ -89,6 +89,10 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'editar grupos'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
         Permission::create([
+                            'name'=>'ac_grupoAsignar',
+                            'descripcion'=>'asignar grupos a estudiantes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
                             'name'=>'ac_grupoInactivar',
                             'descripcion'=>'inactivar grupos'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);

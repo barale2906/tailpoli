@@ -20,6 +20,7 @@ class Matriculas extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $is_grupos=false;
 
     public $elegido;
 
@@ -77,7 +78,7 @@ class Matriculas extends Component
         $this->is_editing = !$this->is_editing;
     }
 
-    // Mostrar Regimen de Salud
+    // Mostrar
     public function show($esta, $act){
 
         $this->elegido=$esta;

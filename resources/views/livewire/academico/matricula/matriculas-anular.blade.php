@@ -6,7 +6,7 @@
             </svg>
             <span class="sr-only">Info</span>
             <div>
-                <span class="font-bold uppercase text-2xl ">Datos seleccionados para la matricula de: {{$matricula->alumno->name}}.</span>
+                <span class="font-bold uppercase text-2xl ">Datos seleccionados para la matricula de: {{$matricula->alumno->name}} al curso: {{$matricula->curso->name}}</span>
                 <div class="grid grid-cols-3 gap-3 m-3">
                     <div>
                         <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg capitalize">
