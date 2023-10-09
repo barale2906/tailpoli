@@ -187,7 +187,8 @@ class MatriculasCrear extends Component
                                 'curso_id'=>$this->curso_id,
                                 'alumno_id'=>$this->alumno_id,
                                 'comercial_id'=>$this->comercial_id,
-                                'creador_id'=>Auth::user()->id
+                                'creador_id'=>Auth::user()->id,
+                                'configpago'=>$this->config_id
                             ]);
 
 

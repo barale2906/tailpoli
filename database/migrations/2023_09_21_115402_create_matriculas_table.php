@@ -21,6 +21,7 @@ return new class extends Migration
             $table->double('valor')->comment('Valor del curso pactado');
             $table->string('metodo')->comment('método de pago elegido');
             $table->boolean('status')->default(true)->comment('false Saldo Inactivo, true Saldo Activo');
+            $table->string('configpago')->comment('id de la configuración de pago aplicada');
 
 
             $table->unsignedBigInteger('alumno_id');
