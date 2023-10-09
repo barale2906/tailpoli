@@ -90,6 +90,7 @@ class MatriculasCrear extends Component
 
         if($matriculados>0){
             $this->dispatch('alerta', name:'El estudiante tiene una matricula activa a este curso.');
+            $this->reset('curso_id', 'config_id', 'modulos');
         }
     }
 

@@ -218,14 +218,14 @@
                     {{$matricula->curso->name}}
                 </p>
                 <div class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                    <a href="#" class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                    <a href="" wire:click.prevent="$parent.show({{$matricula}},{{2}})" class="w-full sm:w-auto bg-cyan-800 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-cyan-700 dark:hover:bg-cyan-600 dark:focus:ring-cyan-700">
                         <i class="fa-solid fa-people-roof fa-beat mr-3"></i>
                         <div class="text-left">
                             <div class="mb-1 text-xs"> Asignarle:</div>
                             <div class="-mt-1 font-sans text-sm font-semibold"> GRUPOS</div>
                         </div>
                     </a>
-                    <a href="#" class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                    <a href="/financiera/recibopagos" class="w-full sm:w-auto bg-orange-800 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-orange-700 dark:hover:bg-orange-600 dark:focus:ring-orange-700">
                         <i class="fa-solid fa-chart-line fa-beat mr-3"></i>
                         <div class="text-left">
                             <div class="mb-1 text-xs"> Generar</div>

@@ -95,7 +95,7 @@ class Matriculas extends Component
 
             case 2:
                 $this->is_modify = false;
-                $this->reset('is_editing', 'is_deleting');
+                $this->reset('is_editing', 'is_deleting','is_creating');
                 $this->is_grupos=true;
                 break;
         }
