@@ -124,7 +124,8 @@ class ConfiguracionPagosCrear extends Component
             if($value->id===$id){
                 $nuevo=[
                     'id'=>$id,
-                    'name'=>$value->name
+                    'name'=>$value->name,
+                    'dependencia'=>$value->dependencia
                 ];
 
                 if(in_array($nuevo, $this->moduloDepen)){
@@ -144,7 +145,8 @@ class ConfiguracionPagosCrear extends Component
             if($value->id===$id){
                 $nuevo=[
                     'id'=>$id,
-                    'name'=>$value->name
+                    'name'=>$value->name,
+                    'dependencia'=>$value->dependencia,
                 ];
             }
         }
@@ -184,6 +186,7 @@ class ConfiguracionPagosCrear extends Component
                             'config_id'     =>$nuevo->id,
                             'modulo_id'     =>$value['id'],
                             'name'          =>$value['name'],
+                            'dependencia'   =>$value['dependencia'],
                             'created_at'    =>now(),
                             'updated_at'    =>now(),
                         ]);
@@ -203,6 +206,7 @@ class ConfiguracionPagosCrear extends Component
                 'sede_id'=>$this->sede_id,
                 'curso_id'=>$this->curso_id
             ]);
+
         }
 
 

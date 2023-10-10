@@ -232,6 +232,21 @@ class MatriculasCrear extends Component
             }
         }
 
+        // Cargar modulos
+        foreach ($this->modulos as $value) {
+            DB::table('matricula_modulos_aprobacion')
+                ->insert([
+                    'matricula_id'  =>$this->matricula->id,
+                    'alumno_id'     =>$this->alumno_id,
+                    'modulo_id'     =>$value->id,
+                    'name'          =>$value->name,
+                    'dependencia'   =>$value->dependencia,
+                    'observaciones' =>now()." ".Auth::user()->name." Genera el registro.",
+                    'created_at'    =>now(),
+                    'updated_at'    =>now(),
+                ]);
+        }
+
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');

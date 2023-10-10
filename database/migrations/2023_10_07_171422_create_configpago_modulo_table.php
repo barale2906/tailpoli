@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('config_id')->comment('configuracion de pago');
             $table->integer('modulo_id')->comment('modulo');
             $table->string('name')->comment('nombre del modulo asignado');
+            $table->boolean('dependencia')->default(false)->comment('false no depende de otros modulos, true depende de otros modulos');
             $table->timestamps();
         });
     }
