@@ -3,10 +3,10 @@
         <div class="w-full p-4 col-span-3 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{$matricula->alumno->name}} </h5>
             <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-                Matricula N°: {{$matricula->id}}, documento del alumno N°: {{$matricula->alumno->documento}}
+                Matricula N°: {{$matricula->id}}, documento del alumno N°: {{number_format($matricula->alumno->documento, 0, ',', '.')}}
             </p>
-            <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-                {{$matricula->curso->name}}
+            <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400 uppercase">
+                <strong>{{$matricula->curso->name}}</strong>
             </p>
             <div class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
                 <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
@@ -25,14 +25,16 @@
                 @endforeach
             </div>
         </div>
-        <div class="w-full p-4 col-span-2 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
+        <div class="w-full p-1 col-span-2 text-center bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <p class="mb-5 text-base text-gray-500 md:text-lg dark:text-gray-400">
                 Grupo(s) a los cuáles esta inscrito
             </p>
             @foreach ($matricula->grupos as $item)
-                <a href="" wire:click.prevent="" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 capitalize">
-                    <i class="fa-solid fa-person-hiking fa-beat m-3"></i> {{$item->name}}
-                </a>
+                <div class="w-full p-1 text-center bg-white shadow ">
+                    <a href="" wire:click.prevent="" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm text-center m-1 p-1 capitalize">
+                        <i class="fa-solid fa-person-hiking fa-beat m-3"></i> {{$item->name}}
+                    </a>
+                </div>
             @endforeach
         </div>
     </div>

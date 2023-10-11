@@ -69,6 +69,35 @@ class MatriculasAsigna extends Component
             }
         }
 
+        $this->yaMatriculado();
+    }
+
+    //eliminar grupos a donde este matriculado ya
+    public function yaMatriculado(){
+        foreach ($this->disponibles as $value) {
+            $esta=DB::table('grupo_matricula')
+                    ->where('grupo_id', $value['id'])
+                    ->where('matricula_id', $this->matricula->id,)
+                    ->count();
+
+            if($esta>0){
+                $nuevo=[
+                    'id'            =>$value['id'],
+                    'name'          =>$value['name'],
+                    'modulo'        =>$value['modulo'],
+                    'modulo_id'     =>$value['modulo_id'],
+                    'dependencia'   =>$value['dependencia'],
+                    'finish_date'   =>$value['finish_date'],
+                    'inscritos'     =>$value['inscritos']
+                ];
+
+                if(in_array($nuevo, $this->disponibles)){
+                    $indice=array_search($nuevo,$this->disponibles,true);
+                    unset($this->disponibles[$indice]);
+                }
+            }
+        }
+
         $this->dependencias();
     }
 
@@ -77,10 +106,10 @@ class MatriculasAsigna extends Component
 
         foreach ($this->disponibles as $value){
 
-            $aprobo=DB::table('matricula_modulos_aprobacion')
+            /* $aprobo=DB::table('matricula_modulos_aprobacion')
                         ->where('modulo_id', $value['modulo_id'])
                         ->where('matricula_id', $this->matricula->id)
-                        ->first();
+                        ->first(); */
 
             if(!$value['dependencia']){
 
