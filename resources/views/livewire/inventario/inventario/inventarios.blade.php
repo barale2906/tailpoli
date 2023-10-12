@@ -193,7 +193,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:inventario.inventario.inventarios-crear :tipon="1"/>
+        <livewire:inventario.inventario.inventarios-create />
     @endif
 
     @if ($is_editing)
