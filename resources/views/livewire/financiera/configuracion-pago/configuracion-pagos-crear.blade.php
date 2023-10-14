@@ -21,14 +21,14 @@
                 @enderror
             </div>
             <div class="mb-6">
-                <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Sede donde Aplica</label>
-                <select wire:model.live="sede_id" id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                    <option >Elija sede...</option>
+                <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Ciudad donde Aplica</label>
+                <select wire:model.live="state_id" id="state" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                    <option >Elija ciudad...</option>
                     @foreach ($sedes as $item)
-                        <option value={{$item->id}}>{{$item->name}} - {{$item->sector->name}}</option>
+                        <option value={{$item->id}}>{{$item->name}}</option>
                     @endforeach
                 </select>
-                @error('sede_id')
+                @error('state_id')
                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                     </div>

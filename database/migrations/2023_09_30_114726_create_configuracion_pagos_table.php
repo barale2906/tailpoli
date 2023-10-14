@@ -25,8 +25,8 @@ return new class extends Migration
             $table->boolean('status')->default(true)->comment('false Inactivo, true Activo');
             $table->boolean('incluye')->default(true)->comment('false incluye algunos modulos, true incluye todos los modulos');
 
-            $table->unsignedBigInteger('state_id');
-            $table->foreign('state_id')->references('id')->on('states');
+            $table->unsignedBigInteger('sector_id');
+            $table->foreign('sector_id')->references('id')->on('sectors');
 
             $table->unsignedBigInteger('curso_id');
             $table->foreign('curso_id')->references('id')->on('cursos');

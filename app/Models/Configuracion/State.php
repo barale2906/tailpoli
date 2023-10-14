@@ -22,14 +22,6 @@ class State extends Model
     //Relación uno a muchos
     public function sectors(): HasMany
     {
-        return $this->hasMany(App\Models\Configuracion\Sector::class);
+        return $this->hasMany(Sector::class);
     }
-
-    //Relación uno a muchos
-    public function configpagos(): HasMany
-    {
-        return $this->hasMany(ConfiguracionPago::class);
-    }
-
-
 }

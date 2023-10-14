@@ -5,6 +5,7 @@ namespace App\Livewire\Financiera\ConfiguracionPago;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sede;
+use App\Models\Configuracion\State;
 use App\Models\Financiera\ConfiguracionPago;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,6 @@ class ConfiguracionPagosCrear extends Component
     public $finaliza;
     public $valor_curso;
     public $valor_matricula;
-    public $valor_cuota_inicial;
     public $saldo;
     public $cuotas;
     public $valor_cuota;
@@ -27,6 +27,8 @@ class ConfiguracionPagosCrear extends Component
 
     public $moduloDepen=[];
 
+    public $contado=true;
+
     /**
      * Reglas de validación
      */
@@ -35,7 +37,6 @@ class ConfiguracionPagosCrear extends Component
         'finaliza'              => 'required',
         'valor_curso'           => 'required|min:1',
         'valor_matricula'       => 'required|min:1',
-        'valor_cuota_inicial'   => 'required|min:1',
         'cuotas'                => 'required|integer',
         'valor_cuota'           => 'required|min:1',
         'descripcion'           => 'required',
@@ -53,7 +54,6 @@ class ConfiguracionPagosCrear extends Component
                         'finaliza',
                         'valor_curso',
                         'valor_matricula',
-                        'valor_cuota_inicial',
                         'cuotas',
                         'valor_cuota',
                         'descripcion',
@@ -85,23 +85,17 @@ class ConfiguracionPagosCrear extends Component
             $this->valor_matricula=0;
         }
 
-        if($this->valor_cuota_inicial===''){
-            $this->valor_cuota_inicial=0;
+        if($this->valor_curso>$this->valor_matricula){
+            $this->saldo=$this->valor_curso-$this->valor_matricula;
         }
 
-        $diferencia=$this->valor_cuota_inicial+$this->valor_matricula;
-
-        if($this->valor_curso>$diferencia){
-            $this->saldo=$this->valor_curso-$diferencia;
-        }
-
-        if($this->valor_curso===$diferencia){
+        if($this->valor_curso===$this->valor_matricula){
             $this->valor_cuota=0;
             $this->cuotas=0;
         }
 
-        if($this->valor_curso<$diferencia){
-            $this->dispatch('alerta', name:'La cuota inicial/matricula debe ser menor al valor del curso.');
+        if($this->valor_curso<$this->valor_matricula){
+            $this->dispatch('alerta', name:'La matricula debe ser menor al valor del curso.');
             $this->reset(
                 'cuotas',
                 'valor_cuota',
@@ -171,7 +165,6 @@ class ConfiguracionPagosCrear extends Component
                                             'finaliza'=>$this->finaliza,
                                             'valor_curso'=>$this->valor_curso,
                                             'valor_matricula'=>$this->valor_matricula,
-                                            'valor_cuota_inicial'=>$this->valor_cuota_inicial,
                                             'cuotas'=>$this->cuotas,
                                             'valor_cuota'=>$this->valor_cuota,
                                             'descripcion'=>$this->descripcion,
@@ -199,7 +192,6 @@ class ConfiguracionPagosCrear extends Component
                 'finaliza'=>$this->finaliza,
                 'valor_curso'=>$this->valor_curso,
                 'valor_matricula'=>$this->valor_matricula,
-                'valor_cuota_inicial'=>$this->valor_cuota_inicial,
                 'cuotas'=>$this->cuotas,
                 'valor_cuota'=>$this->valor_cuota,
                 'descripcion'=>$this->descripcion,
@@ -219,15 +211,8 @@ class ConfiguracionPagosCrear extends Component
         $this->dispatch('created');
     }
 
-    private function sedes(){
-        return Sede::query()
-                    ->with(['users'])
-                    ->when(Auth::user()->id, function($qu){
-                        return $qu->where('status', true)
-                                ->whereHas('users', function($q){
-                                    $q->where('user_id', Auth::user()->id);
-                                });
-                    })
+    private function ciudades(){
+        return State::where('status', true)
                     ->orderBy('name')
                     ->get();
     }
@@ -238,10 +223,9 @@ class ConfiguracionPagosCrear extends Component
                     ->get();
     }
 
-    public function render()
-    {
+    public function render(){
         return view('livewire.financiera.configuracion-pago.configuracion-pagos-crear', [
-            'sedes'=>$this->sedes(),
+            'ciudades'=>$this->ciudades(),
             'cursos'=>$this->cursos()
         ]);
     }

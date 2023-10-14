@@ -101,11 +101,11 @@ class ConfiguracionPagos extends Component
     private function configuraciones()
     {
         return ConfiguracionPago::query()
-                        ->with(['sede', 'curso'])
+                        ->with(['sector', 'curso'])
                         ->when($this->buscamin, function($query){
                             return $query->where('status', true)
                                     ->where('descripcion', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('sede', function($q){
+                                    ->orWhereHas('sector', function($q){
                                         $q->where('name', 'like', "%".$this->buscamin."%");
                                     })
                                     ->orWhereHas('curso', function($qu){

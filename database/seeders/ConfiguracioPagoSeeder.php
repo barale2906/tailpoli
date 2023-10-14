@@ -22,7 +22,7 @@ class ConfiguracioPagoSeeder extends Seeder
             'cuotas'                =>0,
             'valor_cuota'           =>0,
             'descripcion'           =>'Curso 1 Sede 1 contado',
-            'state_id'               =>1,
+            'sector_id'             =>1,
             'curso_id'              =>1
         ]);
 
@@ -35,7 +35,7 @@ class ConfiguracioPagoSeeder extends Seeder
             'cuotas'                =>4,
             'valor_cuota'           =>350000,
             'descripcion'           =>'Curso 1 Sede 1 crédito',
-            'state_id'               =>1,
+            'sector_id'             =>1,
             'curso_id'              =>1
         ]);
 
@@ -48,7 +48,7 @@ class ConfiguracioPagoSeeder extends Seeder
             'cuotas'                =>0,
             'valor_cuota'           =>0,
             'descripcion'           =>'Curso 2 Sede 1 contado',
-            'state_id'               =>1,
+            'sector_id'             =>1,
             'curso_id'              =>2
         ]);
 
@@ -61,7 +61,7 @@ class ConfiguracioPagoSeeder extends Seeder
             'cuotas'                =>5,
             'valor_cuota'           =>290000,
             'descripcion'           =>'Curso 2 Sede 1 crédito',
-            'state_id'               =>1,
+            'sector_id'             =>1,
             'curso_id'              =>2
         ]);
 
@@ -76,7 +76,7 @@ class ConfiguracioPagoSeeder extends Seeder
             'cuotas'                =>0,
             'valor_cuota'           =>0,
             'descripcion'           =>'Curso 1 Sede 2 contado',
-            'state_id'               =>2,
+            'sector_id'             =>2,
             'curso_id'              =>1
         ]);
 
@@ -89,7 +89,7 @@ class ConfiguracioPagoSeeder extends Seeder
             'cuotas'                =>6,
             'valor_cuota'           =>225000,
             'descripcion'           =>'Curso 1 Sede 2 crédito',
-            'state_id'               =>2,
+            'sector_id'             =>2,
             'curso_id'              =>1
         ]);
 
@@ -102,7 +102,7 @@ class ConfiguracioPagoSeeder extends Seeder
             'cuotas'                =>0,
             'valor_cuota'           =>0,
             'descripcion'           =>'Curso 2 Sede 2 contado',
-            'state_id'               =>2,
+            'sector_id'             =>2,
             'curso_id'              =>2
         ]);
 
@@ -115,7 +115,7 @@ class ConfiguracioPagoSeeder extends Seeder
             'cuotas'                =>6,
             'valor_cuota'           =>300000,
             'descripcion'           =>'Curso 2 Sede 2 crédito',
-            'state_id'               =>2,
+            'sector_id'             =>2,
             'curso_id'              =>2
         ]);
     }

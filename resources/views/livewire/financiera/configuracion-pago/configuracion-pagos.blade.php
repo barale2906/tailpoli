@@ -48,7 +48,7 @@
                             @endif
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
-                            SEDE
+                            CIUDAD
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                             CURSO
@@ -80,18 +80,6 @@
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('valor_matricula')">
                             VALOR MATRICULA
                             @if ($ordena != 'valor_matricula')
-                                <i class="fas fa-sort"></i>
-                            @else
-                                @if ($ordenado=='ASC')
-                                    <i class="fas fa-sort-up"></i>
-                                @else
-                                    <i class="fas fa-sort-down"></i>
-                                @endif
-                            @endif
-                        </th>
-                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('valor_cuota_inicial')">
-                            CUOTA INICIAL
-                            @if ($ordena != 'valor_cuota_inicial')
                                 <i class="fas fa-sort"></i>
                             @else
                                 @if ($ordenado=='ASC')
@@ -137,7 +125,7 @@
                                 {{$configuracione->id}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$configuracione->sede->name}}
+                                {{$configuracione->sector->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$configuracione->curso->name}}
@@ -150,9 +138,6 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 $ {{number_format($configuracione->valor_matricula, 0, '.', ' ')}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                $ {{number_format($configuracione->valor_cuota_inicial, 0, '.', ' ')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$configuracione->cuotas}}

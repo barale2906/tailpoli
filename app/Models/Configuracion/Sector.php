@@ -2,6 +2,7 @@
 
 namespace App\Models\Configuracion;
 
+use App\Models\Financiera\ConfiguracionPago;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,12 @@ class Sector extends Model
     public function state() : BelongsTo
     {
         return $this->BelongsTo(State::class);
+    }
+
+    //Relación uno a muchos
+    public function configpagos(): HasMany
+    {
+        return $this->hasMany(ConfiguracionPago::class);
     }
 
     //Relación uno a muchos
