@@ -3,7 +3,7 @@
 namespace App\Models\Financiera;
 
 use App\Models\Academico\Curso;
-use App\Models\Configuracion\Sede;
+use App\Models\Configuracion\State;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,9 +15,9 @@ class ConfiguracionPago extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //Relacion uno a muchos inversa
-    public function sede() : BelongsTo
+    public function ciudad() : BelongsTo
     {
-        return $this->BelongsTo(Sede::class);
+        return $this->BelongsTo(State::class);
     }
 
     //Relacion uno a muchos inversa

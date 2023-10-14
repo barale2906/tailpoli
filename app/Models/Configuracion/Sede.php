@@ -45,12 +45,6 @@ class Sede extends Model
     }
 
     //Relación uno a muchos
-    public function configpagos(): HasMany
-    {
-        return $this->hasMany(ConfiguracionPago::class);
-    }
-
-    //Relación uno a muchos
     public function grupos(): HasMany
     {
         return $this->hasMany(Grupo::class);
