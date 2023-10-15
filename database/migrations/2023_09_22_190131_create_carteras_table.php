@@ -27,6 +27,10 @@ return new class extends Migration
             $table->unsignedBigInteger('estado_cartera_id');
             $table->foreign('estado_cartera_id')->references('id')->on('estado_carteras');
 
+            $table->unsignedBigInteger('concepto_pago_id');
+            $table->foreign('concepto_pago_id')->references('id')->on('concepto_pagos');
+            $table->string('concepto')->comment('Concepto de pago');
+
             $table->unsignedBigInteger('responsable_id');
             $table->foreign('responsable_id')->references('id')->on('users');
 

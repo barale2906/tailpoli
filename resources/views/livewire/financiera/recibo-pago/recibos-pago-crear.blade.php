@@ -106,11 +106,12 @@
                                             Saldo <small class=" text-red-400">De esta deuda</small>
                                         </th>
                                         <th scope="col" class="px-6 py-3" >
-                                            Valor pagado
-                                        </th>
-                                        <th scope="col" class="px-6 py-3" >
                                             Concepto de pago
                                         </th>
+                                        <th scope="col" class="px-6 py-3" >
+                                            Valor pagado
+                                        </th>
+                                        <th scope="col" class="px-6 py-3" ></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -123,13 +124,16 @@
                                                 $ {{number_format($pendiente->saldo, 0, '.', ' ')}}
                                             </th>
                                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                {{$pendiente->concepto}}
+                                            </th>
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                                 <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
                                             </th>
                                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
                                                 <select wire:model.blur="conceptos" wire:change="asigOtro(1, {{$pendiente}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                                                     <option>Seleccione...</option>
                                                     @foreach ($concePagos as $item)
-                                                        @if ($item->tipo==="cartera")
+                                                        @if ($item->tipo==="cartera" && $item->id===$pendiente->concepto_pago_id)
                                                             <option value={{$item->id}}>{{$item->name}}</option>
                                                         @endif
                                                     @endforeach
@@ -228,7 +232,7 @@
             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-2 mb-4">
                 <div class="mb-6">
                     <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
-                    <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones del recibo" wire:model.blur="observaciones">
+                    <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones del recibo" wire:model.blur="observaciones" autocomplete="off">
 
                     @error('observaciones')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">

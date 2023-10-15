@@ -8,6 +8,7 @@ use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ConfiguracionPago;
 use App\Models\User;
 use Carbon\Carbon;
@@ -195,17 +196,25 @@ class MatriculasCrear extends Component
 
 
         //matricula
+        $concepto=ConceptoPago::where('name', 'Matricula')
+                                ->where('status', true)
+                                ->first();
         Cartera::create([
             'fecha_pago'=>now(),
             'valor'=>$this->valor_matricula,
             'saldo'=>$this->valor_matricula,
             'observaciones'=>'Curso: '.$this->cursoName.'. Cuota inicial de un total de: '.$this->valor_matricula,
             'matricula_id'=>$this->matricula->id,
+            'concepto_pago_id'=>$concepto->id,
+            'concepto'=>$concepto->name,
             'responsable_id'=>$this->alumno_id,
             'estado_cartera_id'=>1
         ]);
 
         //Cuotas
+        $concepto=ConceptoPago::where('name', 'Mensualidad')
+                                ->where('status', true)
+                                ->first();
         if($this->cuotas>0){
             $a=1;
             while ($a <= $this->cuotas) {
@@ -216,6 +225,8 @@ class MatriculasCrear extends Component
                     'saldo'=>$this->valor_cuota,
                     'observaciones'=>'Curso: '.$this->cursoName.'. '.$a.'a. cuota mensual para un curso por valor de: '.$this->valor_curso,
                     'matricula_id'=>$this->matricula->id,
+                    'concepto_pago_id'=>$concepto->id,
+                    'concepto'=>$concepto->name,
                     'responsable_id'=>$this->alumno_id,
                     'estado_cartera_id'=>1
                 ]);
