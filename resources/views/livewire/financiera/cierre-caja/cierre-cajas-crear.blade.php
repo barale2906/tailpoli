@@ -1,6 +1,6 @@
 <div>
     <form wire:submit.prevent="new">
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
             <div class="mb-6">
                 <select wire:model.live="sede_id" id="sede_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                     <option >Elija sede...</option>
@@ -37,7 +37,7 @@
                 <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Anotaciones importantes" wire:model.blur="observaciones">
 
                 @error('observaciones')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 m-2" role="alert">
                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                     </div>
                 @enderror
@@ -96,7 +96,7 @@
                 </div>
             </div>
 
-            <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 bg-slate-100">
+            <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 bg-slate-100 mb-3">
                 <div class="mb-6">
                     <div class="flex flex-col items-center justify-center">
                         <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($valor_otros, 0, ',', '.')}}</dt>
@@ -129,7 +129,7 @@
                 </div>
             </div>
         @endif
-        <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+        <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
             @if ($sede_id>0 && $cajero_id>0)
                 <button type="submit"
                 class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
@@ -145,8 +145,8 @@
         </div>
     </form>
     @if ($sede_id>0 && $cajero_id>0)
-        <h5 class="text-semibold md:text-lg sm:text-sm capitalize">Recibos de caja encontrados</h5>
-        <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+        <h5 class="text-semibold md:text-lg sm:text-sm capitalize m-3">Recibos de caja encontrados</h5>
+        <table class=" text-sm text-left text-gray-500 dark:text-gray-400 m-2">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3" >

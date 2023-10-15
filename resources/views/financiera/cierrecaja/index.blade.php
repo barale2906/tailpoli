@@ -3,6 +3,12 @@
         Cierre de Caja
     @endpush
 
-    <livewire:financiera.cierre-caja.cierre-cajas />
+    @can('fi_cierrecaja')
+        <livewire:financiera.cierre-caja.cierre-cajas />
+    @endcan
+
+    @can('fi_cierrecajaCajero')
+        <livewire:financiera.cierre-caja.cierre-cajero />
+    @endcan
 
 </x-admin-layout>

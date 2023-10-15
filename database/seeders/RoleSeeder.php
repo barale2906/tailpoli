@@ -156,15 +156,20 @@ class RoleSeeder extends Seeder
         Permission::create([
                             'name'=>'fi_cierrecaja',
                             'descripcion'=>'ver cierre de caja'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'fi_cierrecajaCrear',
                             'descripcion'=>'crear cierre de caja'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'fi_cierrecajaAnular',
                             'descripcion'=>'anular cierre de caja'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+        Permission::create([
+                            'name'=>'fi_cierrecajaCajero',
+                            'descripcion'=>'Generar cierre de caja por parte del cajero'
+                            ])->syncRoles([$Auxiliar]);
 
 
         Permission::create([

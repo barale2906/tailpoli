@@ -28,7 +28,7 @@ class MenuSeeder extends Seeder
                 'name'              => 'Estudiantes',
                 'icono'             => 'fa-solid fa-book text-gray-500',
                 'menu_id'           => $m1->id
-                
+
             ]);
 
             Submenu::create([
@@ -130,6 +130,15 @@ class MenuSeeder extends Seeder
                     'permiso'           => 'fi_cierrecaja',
                     'ruta'              => 'financiera.cierrecaja',
                     'identificaRuta'    => 'financiera.cierrecaja',
+                    'name'              => 'Cierre Caja',
+                    'icono'             => 'fa-solid fa-ranking-star text-gray-500',
+                    'menu_id'           => $m3->id
+                ]);
+
+                Submenu::create([
+                    'permiso'           => 'fi_cierrecajaCajero',
+                    'ruta'              => 'financiera.cajero',
+                    'identificaRuta'    => 'financiera.cajero',
                     'name'              => 'Cierre Caja',
                     'icono'             => 'fa-solid fa-ranking-star text-gray-500',
                     'menu_id'           => $m3->id

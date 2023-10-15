@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CountrySeeder::class,
+            Menuseeder::class,
             RegimenSaludSeeder::class,
             PersonaMulticulturalSeeder::class,
             EstadoSeeder::class,
@@ -31,12 +32,12 @@ class DatabaseSeeder extends Seeder
             ModuloSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            Menuseeder::class,
+            //Menuseeder::class,
             InventarioSeeder::class,
             GrupoSeeder::class,
             MatriculaSeeder::class,
             EstadoCarteraSeeder::class,
-            ConfiguracioPagoSeeder::class,            
+            ConfiguracioPagoSeeder::class,
         ]);
     }
 }
