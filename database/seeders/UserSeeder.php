@@ -84,11 +84,19 @@ class UserSeeder extends Seeder
             'password'=>bcrypt('10203040')
         ])->assignRole('Coordinador');
 
-        User::factory()->create([
+        $aux=User::factory()->create([
             'name' => 'Auxiliar Barajas V',
             'email' => 'auxiliar@gmail.com',
             'password'=>bcrypt('10203040')
         ])->assignRole('Auxiliar');
+
+        DB::table('sede_user')
+                ->insert([
+                    'user_id'=>$aux->id,
+                    'sede_id'=>1,
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
 
         User::factory()->create([
             'name' => 'Profesor Barajas V',

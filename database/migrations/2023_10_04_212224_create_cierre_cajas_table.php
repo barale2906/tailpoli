@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('fecha_cierre')->comment('Fecha del cierre');
             $table->double('valor_total')->comment('Valor total del cierre');
+            $table->double('valor_reportado')->default(0)->comment('Valor en efectivo reportado por el cajero, sera cero (0) cuando el cierre lo haga coordinador');
             $table->longtext('observaciones')->comment('Observaciones al cierre');
 
             $table->double('valor_pensiones')->default(0)->comment('Valor total por itemes de cartera');
@@ -36,7 +37,7 @@ return new class extends Migration
             $table->double('valor_cheque_h')->default(0)->comment('Valor recibido en cheques por herramienta');
             $table->double('valor_consignacion_h')->default(0)->comment('Valor recibido en transferencias consignaciones por herramienta'); */
 
-            $table->integer('status')->default(0)->comment('0 Precierre, 1 Cierre');
+            $table->boolean('status')->default(false)->comment('false Precierre, true cierre');
 
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');

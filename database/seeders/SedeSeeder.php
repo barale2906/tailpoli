@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Configuracion\Sede;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,7 +13,7 @@ class SedeSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Configuracion\Sede::create([
+        Sede::create([
             'name'                      => 'SEDE A - PRINCIPAL',
             'address'                   => 'Cra. 12A BIS Nro. 22-12 SUR - SAN JOSÉ Localidad Rafael Uribe Uribe',
             'phone'                     => '2627700',
@@ -24,7 +25,7 @@ class SedeSeeder extends Seeder
             'finish'                    =>'21:59',
             'sector_id'                 =>1
         ]);
-        \App\Models\Configuracion\Sede::create([
+        Sede::create([
             'name'                      => 'SEDE - BOGOTÁ',
             'address'                   => 'Cerca a la casa',
             'phone'                     => '2627700',
