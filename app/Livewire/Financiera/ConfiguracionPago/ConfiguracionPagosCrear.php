@@ -4,10 +4,8 @@ namespace App\Livewire\Financiera\ConfiguracionPago;
 
 use App\Models\Academico\Curso;
 use App\Models\Academico\Modulo;
-use App\Models\Configuracion\Sede;
-use App\Models\Configuracion\State;
+use App\Models\Configuracion\Sector;
 use App\Models\Financiera\ConfiguracionPago;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -21,7 +19,7 @@ class ConfiguracionPagosCrear extends Component
     public $cuotas;
     public $valor_cuota;
     public $descripcion;
-    public $sede_id;
+    public $sector_id;
     public $curso_id;
     public $modulos;
 
@@ -40,7 +38,7 @@ class ConfiguracionPagosCrear extends Component
         'cuotas'                => 'required|integer',
         'valor_cuota'           => 'required|min:1',
         'descripcion'           => 'required',
-        'sede_id'               => 'required|integer',
+        'sector_id'               => 'required|integer',
         'curso_id'              => 'required|integer'
     ];
 
@@ -57,10 +55,18 @@ class ConfiguracionPagosCrear extends Component
                         'cuotas',
                         'valor_cuota',
                         'descripcion',
-                        'sede_id',
+                        'sector_id',
                         'curso_id',
                         'saldo'
                     );
+    }
+
+    public function updatedContado(){
+        if($this->contado){
+            $this->valor_matricula=$this->valor_curso;
+            $this->cuotas=0;
+            $this->valor_cuota=0;
+        }
     }
 
     public function updatedFinaliza(){
@@ -81,17 +87,8 @@ class ConfiguracionPagosCrear extends Component
     //Activa cuotas
     public function calcuCuota(){
 
-        if($this->valor_matricula===''){
-            $this->valor_matricula=0;
-        }
-
         if($this->valor_curso>$this->valor_matricula){
             $this->saldo=$this->valor_curso-$this->valor_matricula;
-        }
-
-        if($this->valor_curso===$this->valor_matricula){
-            $this->valor_cuota=0;
-            $this->cuotas=0;
         }
 
         if($this->valor_curso<$this->valor_matricula){
@@ -105,8 +102,8 @@ class ConfiguracionPagosCrear extends Component
 
     // Calculo de las cuotas
     public function calcula(){
-        if($this->cuotas>0 && $this->valor_curso>$this->valor_cuota_inicial){
-            $saldo = $this->valor_curso-$this->valor_matricula-$this->valor_cuota_inicial;
+        if($this->cuotas>0 && $this->valor_curso>$this->valor_matricula){
+            $saldo = $this->valor_curso-$this->valor_matricula;
             $this->valor_cuota=$saldo/$this->cuotas;
         }
     }
@@ -168,7 +165,7 @@ class ConfiguracionPagosCrear extends Component
                                             'cuotas'=>$this->cuotas,
                                             'valor_cuota'=>$this->valor_cuota,
                                             'descripcion'=>$this->descripcion,
-                                            'sede_id'=>$this->sede_id,
+                                            'sector_id'=>$this->sector_id,
                                             'curso_id'=>$this->curso_id,
                                             'incluye'=>false
                                         ]);
@@ -195,7 +192,7 @@ class ConfiguracionPagosCrear extends Component
                 'cuotas'=>$this->cuotas,
                 'valor_cuota'=>$this->valor_cuota,
                 'descripcion'=>$this->descripcion,
-                'sede_id'=>$this->sede_id,
+                'sector_id'=>$this->sector_id,
                 'curso_id'=>$this->curso_id
             ]);
 
@@ -212,7 +209,7 @@ class ConfiguracionPagosCrear extends Component
     }
 
     private function ciudades(){
-        return State::where('status', true)
+        return Sector::where('status', true)
                     ->orderBy('name')
                     ->get();
     }
