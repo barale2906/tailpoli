@@ -7,7 +7,7 @@
         <div class="flex justify-end mb-4 ">
 
             <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
-                <i class="fa-solid fa-plus"></i> crear
+                <i class="fa-solid fa-plus"></i> Generar
             </a>
 
         </div>
@@ -72,7 +72,12 @@
                                 {{$cierre->sede->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$cierre->coorcaja->name}}
+                                @if ($cierre->status)
+                                    {{$cierre->coorcaja->name}}
+                                @else
+                                    Pendiente de aprobación
+                                @endif
+
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$cierre->fecha_cierre}}
@@ -115,7 +120,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:financiera.cierre-caja.cierre-cajas-crear />
+        <livewire:financiera.cierre-caja.cierre-cajero-crear />
     @endif
 
     @if ($is_watching)
