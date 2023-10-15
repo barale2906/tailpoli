@@ -12,7 +12,7 @@
                         </svg>
                     </button>
                     <a href="/dashboard" class="flex ml-2 md:mr-24">
-                        <img src="{{asset('img/logo.png')}}" class="object-cover h-8 mr-3 rounded-t-lg" alt="{{env('APP_NAME')}} Logo" />
+                        <img src="{{asset('img/logo.jpeg')}}" class="object-cover h-10 mr-3 rounded-t-lg" alt="{{env('APP_NAME')}} Logo" />
                         <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{{env('APP_NAME')}}</span>
                     </a>
                 </div>
