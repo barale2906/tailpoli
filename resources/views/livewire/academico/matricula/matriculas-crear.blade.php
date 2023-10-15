@@ -101,12 +101,6 @@
                         </div>
                         <div class="mb-6">
                             <div class="flex flex-col items-center justify-center">
-                                <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($valor_cuota_inicial, 0, ',', '.')}}</dt>
-                                <dd class="text-gray-500 dark:text-gray-400 capitalize">Cuota Inicial</dd>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <div class="flex flex-col items-center justify-center">
                                 <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($cuotas, 0, ',', '.')}}</dt>
                                 <dd class="text-gray-500 dark:text-gray-400 capitalize">N° de Cuotas</dd>
                             </div>

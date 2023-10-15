@@ -29,6 +29,7 @@ class MatriculasCrear extends Component
     public $comercial_id='';
 
     public $sede_id;
+    public $sedeele;
     public $cursos;
     public $curso_id;
     public $cursoName;
@@ -40,7 +41,6 @@ class MatriculasCrear extends Component
     public $valor_curso;
     public $valor_matricula;
     public $valor_cuota;
-    public $valor_cuota_inicial;
     public $cuotas;
 
     public $matricula;
@@ -57,13 +57,17 @@ class MatriculasCrear extends Component
 
     //Cursos por sede
     public function updatedSedeId(){
-        $this->reset('curso_id');
+
+        $this->reset('curso_id','sedeele');
+
+        $this->sedeele=Sede::find($this->sede_id);
+
         $this->cursos=Curso::query()
                             ->with(['configpagos'])
                             ->when($this->sede_id, function($query){
                                 return $query->where('status', true)
                                         ->WhereHas('configpagos', function($q){
-                                            $q->where('sede_id', $this->sede_id);
+                                            $q->where('sector_id', $this->sedeele->sector->id);
                                         });
                                 })
                             ->orderBy('name')
@@ -73,7 +77,7 @@ class MatriculasCrear extends Component
     //Configuraciones por curso
     public function updatedCursoId(){
         $this->reset('config_id');
-        $this->configPago=ConfiguracionPago::where('sede_id', $this->sede_id)
+        $this->configPago=ConfiguracionPago::where('sector_id', $this->sedeele->sector->id)
                                             ->where('curso_id', $this->curso_id)
                                             ->orderBy('descripcion')
                                             ->get();
@@ -106,7 +110,6 @@ class MatriculasCrear extends Component
 
         $this->valor_curso=$pagos->valor_curso;
         $this->valor_matricula=$pagos->valor_matricula;
-        $this->valor_cuota_inicial=$pagos->valor_cuota_inicial;
         $this->cuotas=$pagos->cuotas;
         $this->valor_cuota=$pagos->valor_cuota;
 
@@ -148,7 +151,6 @@ class MatriculasCrear extends Component
         'nivel'=>'required',
         'valor_curso'=>'required',
         'valor_matricula'=>'required',
-        'valor_cuota_inicial'=>'required',
         'metodo'=>'required',
         'alumno_id'=>'required|integer',
         'comercial_id'=>'required|integer',
@@ -191,17 +193,6 @@ class MatriculasCrear extends Component
                                 'configpago'=>$this->config_id
                             ]);
 
-
-        //Inicial
-        Cartera::create([
-            'fecha_pago'=>now(),
-            'valor'=>$this->valor_cuota_inicial,
-            'saldo'=>$this->valor_cuota_inicial,
-            'observaciones'=>'Curso: '.$this->cursoName.'. Cuota inicial de un total de: '.$this->valor_cuota_inicial,
-            'matricula_id'=>$this->matricula->id,
-            'responsable_id'=>$this->alumno_id,
-            'estado_cartera_id'=>1
-        ]);
 
         //matricula
         Cartera::create([
