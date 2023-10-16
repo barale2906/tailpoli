@@ -32,6 +32,8 @@ class CierreCajeroCrear extends Component
     public $valor_cheque_o=0;
     public $valor_consignacion_o=0;
 
+    public $print=false;
+
     public function mount (){
         $this->recibos=ReciboPago::where('creador_id', Auth::user()->id)
                                 ->where('status', '!=', 1)
@@ -261,7 +263,7 @@ class CierreCajeroCrear extends Component
 
         //refresh
         $this->dispatch('refresh');
-        $this->dispatch('created');
+        $this->print=!$this->print;
     }
 
     public function render()
