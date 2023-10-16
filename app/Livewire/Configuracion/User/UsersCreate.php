@@ -13,6 +13,20 @@ class UsersCreate extends Component
     public $documento = '';
     public $password = '';
     public $rol = '';
+    public $clase;
+
+    public function mount($clase){
+        $this->clase=$clase;
+
+        $this->tipo();
+
+    }
+
+    public function tipo(){
+        if($this->clase===1){
+            $this->rol="Estudiante";
+        }
+    }
 
     /**
      * Reglas de validación

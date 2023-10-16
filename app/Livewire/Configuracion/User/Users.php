@@ -21,6 +21,7 @@ class Users extends Component
     public $is_deleting = false;
 
     public $elegido;
+    public $clase=0;
 
     public $buscar='';
     public $buscamin='';

@@ -126,7 +126,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:configuracion.user.users-create />
+        <livewire:configuracion.user.users-create :clase="$clase"/>
     @endif
 
     @if ($is_editing)
