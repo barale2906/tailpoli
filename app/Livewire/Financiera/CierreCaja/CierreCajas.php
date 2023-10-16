@@ -17,11 +17,11 @@ class CierreCajas extends Component
 
     public $is_modify = true;
     public $is_creating = false;
-    public $is_editing = false;
     public $is_deleting = false;
     public $is_watching = false;
 
     public $elegido;
+    public $accion;
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -53,31 +53,19 @@ class CierreCajas extends Component
         $this->is_creating = !$this->is_creating;
     }
 
-    //Activar evento
-    #[On('Editando')]
-    //Mostrar formulario de creación
-    public function updatedIsEditing()
-    {
-        $this->is_modify = !$this->is_modify;
-        $this->is_editing = !$this->is_editing;
-    }
-
     // Mostrar Regimen de Salud
     public function show($esta, $act){
 
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
+        $this->accion=$act;
 
-        switch ($act) {
+        switch ($act){
             case 0:
-                $this->is_editing=!$this->is_editing;
-                break;
-
-            case 1:
                 $this->is_deleting=!$this->is_deleting;
                 break;
 
-            case 2:
+            case 1:
                 $this->is_watching=!$this->is_watching;
                 break;
         }

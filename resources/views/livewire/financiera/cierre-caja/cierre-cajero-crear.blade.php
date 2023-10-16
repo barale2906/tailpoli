@@ -34,7 +34,7 @@
                     </div>
                     <div class="mb-6">
                         <label for="valor_reportado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">efectivo entregado:</label>
-                        <input type="text" id="valor_reportado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Anotaciones importantes" wire:model.blur="valor_reportado">
+                        <input type="text" id="valor_reportado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor anexado en efectivo" wire:model.blur="valor_reportado">
 
                         @error('valor_reportado')
                             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 m-2" role="alert">
@@ -103,6 +103,6 @@
             </div>
         </form>
     @else
-        <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido"/>
+        <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido" :accion="$accion"/>
     @endif
 </div>

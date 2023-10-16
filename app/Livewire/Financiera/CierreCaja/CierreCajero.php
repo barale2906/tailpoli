@@ -21,6 +21,7 @@ class CierreCajero extends Component
     public $is_watching = false;
 
     public $elegido;
+    public $accion=1;
 
     protected $listeners = ['refresh' => '$refresh'];
 

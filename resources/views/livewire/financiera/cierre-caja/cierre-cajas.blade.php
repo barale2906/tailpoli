@@ -87,19 +87,14 @@
                                 $ {{number_format($cierre->valor_total, 0, ',', '.')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                @can('fi_cierrecajaAnular')
-                                    @if ($cierre->status===1)
-                                        <a href="#" wire:click.prevent="show({{$cierre}},{{0}})" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                            <i class="fa-solid fa-marker"></i>
+                                @if (!$cierre->status)
+                                    @can('fi_cierrecajaAprobar')
+                                        <a href="#" wire:click.prevent="show({{$cierre}},{{0}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                            <i class="fa-solid fa-check-double"></i>
                                         </a>
-                                    @endif
-                                @endcan
-                                @can('fi_cierrecajaAnular')
-                                    <a href="#" wire:click.prevent="show({{$cierre}},{{1}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                        <i class="fa-brands fa-creative-commons-sa"></i>
-                                    </a>
-                                @endcan
-                                <a href="#" wire:click.prevent="show({{$cierre}},{{2}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    @endcan
+                                @endif
+                                <a href="#" wire:click.prevent="show({{$cierre}},{{1}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                     <i class="fa-solid fa-binoculars"></i>
                                 </a>
                             </th>
@@ -130,16 +125,12 @@
         <livewire:financiera.cierre-caja.cierre-cajas-crear />
     @endif
 
-    @if ($is_editing)
-        <livewire:financiera.cierre-caja.cierre-cajas-editar :elegido="$elegido" />
-    @endif
-
     @if ($is_deleting)
-        <livewire:financiera.cierre-caja.cierre-cajas-inactivar :elegido="$elegido" />
+        <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido" :accion="$accion"/>
     @endif
 
     @if ($is_watching)
-        <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido"/>
+        <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido" :accion="$accion"/>
     @endif
 
     @push('js')

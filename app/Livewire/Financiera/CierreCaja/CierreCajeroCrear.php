@@ -6,6 +6,7 @@ use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ReciboPago;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CierreCajeroCrear extends Component
@@ -33,6 +34,7 @@ class CierreCajeroCrear extends Component
     public $valor_consignacion_o=0;
 
     public $elegido;
+    public $accion=2;
 
     public $print=false;
 
@@ -269,6 +271,13 @@ class CierreCajeroCrear extends Component
         //refresh
         $this->dispatch('refresh');
         $this->print=!$this->print;
+
+    }
+
+    //volver
+    #[On('volver')]
+    public function vuelve(){
+        $this->dispatch('created');
     }
 
     public function render()

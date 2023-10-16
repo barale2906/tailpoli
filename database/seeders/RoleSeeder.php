@@ -162,8 +162,8 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'crear cierre de caja'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
-                            'name'=>'fi_cierrecajaAnular',
-                            'descripcion'=>'anular cierre de caja'
+                            'name'=>'fi_cierrecajaAprobar',
+                            'descripcion'=>'aprobar cierre de caja'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
         Permission::create([
