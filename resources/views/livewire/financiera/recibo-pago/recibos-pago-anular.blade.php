@@ -30,6 +30,12 @@
                                 </h2>
                             </div>
                             <div>
+                                <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Medio de Pago:</label>
+                                <h2 class="md:text-xl font-bold text-gray-900 dark:text-white capitalize">
+                                    {{$reciboActual->medio}}
+                                </h2>
+                            </div>
+                            <div>
                                 <label for="valor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor:</label>
                                 <h2 class="md:text-xl font-bold text-gray-900 dark:text-white">
                                     $ {{number_format($reciboActual->valor_total, 0, ',', '.')}}

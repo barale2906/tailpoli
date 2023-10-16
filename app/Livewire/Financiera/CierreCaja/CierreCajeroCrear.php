@@ -32,6 +32,8 @@ class CierreCajeroCrear extends Component
     public $valor_cheque_o=0;
     public $valor_consignacion_o=0;
 
+    public $elegido;
+
     public $print=false;
 
     public function mount (){
@@ -256,6 +258,9 @@ class CierreCajeroCrear extends Component
 
             $this->reset('status');
         }
+
+        //Datos de impresión
+        $this->elegido=$cierre;
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha realizado correctamente el pre-cierre de caja N°: '.$cierre->id);

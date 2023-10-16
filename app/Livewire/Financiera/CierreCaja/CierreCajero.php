@@ -54,7 +54,7 @@ class CierreCajero extends Component
 
     //Activar evento
     #[On('watched')]
-    //Mostrar formulario de creación
+    //Mostrar pantalla de impresión
     public function updatedIsWatching()
     {
         $this->is_modify = !$this->is_modify;

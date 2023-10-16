@@ -99,6 +99,9 @@
                                         <i class="fa-brands fa-creative-commons-sa"></i>
                                     </a>
                                 @endcan
+                                <a href="#" wire:click.prevent="show({{$cierre}},{{2}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-solid fa-binoculars"></i>
+                                </a>
                             </th>
                         </tr>
                     @endforeach
@@ -133,6 +136,10 @@
 
     @if ($is_deleting)
         <livewire:financiera.cierre-caja.cierre-cajas-inactivar :elegido="$elegido" />
+    @endif
+
+    @if ($is_watching)
+        <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido"/>
     @endif
 
     @push('js')
