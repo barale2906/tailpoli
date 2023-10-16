@@ -1,107 +1,116 @@
 <div>
     @if (!$print)
-        <form wire:submit.prevent="new">
-            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    @if ($this->agrupado->count()===1)
-                        <h4 class="text-center text-2xl">
-                            Generar cierre para la sede: <strong class="uppercase">{{$unica->sede->name}}</strong>
-                        </h4>
-                    @else
+        @if ($recibos->count()>0)
+            <form wire:submit.prevent="new">
+                <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        @if ($this->agrupado->count()===1)
+                            <h4 class="text-center text-2xl">
+                                Generar cierre para la sede: <strong class="uppercase">{{$unica->sede->name}}</strong>
+                            </h4>
+                        @else
+                            <div class="mb-6">
+                                <select wire:model.live="sede_id" id="sede_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                    <option >Elija sede...</option>
+                                    @foreach ($sedes as $item)
+                                        <option value={{$item['id']}}>{{$item['id']}} - {{$item['name']}}</option>
+                                    @endforeach
+                                </select>
+                                @error('sede_id')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                    </div>
+                                @enderror
+                            </div>
+                        @endif
                         <div class="mb-6">
-                            <select wire:model.live="sede_id" id="sede_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                <option >Elija sede...</option>
-                                @foreach ($sedes as $item)
-                                    <option value={{$item['id']}}>{{$item['id']}} - {{$item['name']}}</option>
-                                @endforeach
-                            </select>
-                            @error('sede_id')
-                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones:</label>
+                            <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Anotaciones importantes" wire:model.blur="observaciones">
+
+                            @error('observaciones')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 m-2" role="alert">
                                     <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                                 </div>
                             @enderror
                         </div>
-                    @endif
-                    <div class="mb-6">
-                        <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones:</label>
-                        <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Anotaciones importantes" wire:model.blur="observaciones">
+                        <div class="mb-6">
+                            <label for="valor_reportado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">efectivo entregado:</label>
+                            <input type="text" id="valor_reportado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor anexado en efectivo" wire:model.blur="valor_reportado">
 
-                        @error('observaciones')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 m-2" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
+                            @error('valor_reportado')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 m-2" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+
+
                     </div>
-                    <div class="mb-6">
-                        <label for="valor_reportado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">efectivo entregado:</label>
-                        <input type="text" id="valor_reportado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor anexado en efectivo" wire:model.blur="valor_reportado">
-
-                        @error('valor_reportado')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 m-2" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
-
-
-                </div>
-                <div>
-                    @if ($sede_id>0)
-                        <h5 class="text-semibold md:text-lg sm:text-sm capitalize m-3">Recibos de caja encontrados</h5>
-                        <table class=" text-sm text-left text-gray-500 dark:text-gray-400 m-2">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3" >
-                                        ID
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Fecha
-                                    </th>
-                                    <th scope="col" class="px-6 py-3" >
-                                        Alumno
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Observaciones
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($recibos as $recibo)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{$recibo->id}}
+                    <div>
+                        @if ($sede_id>0)
+                            <h5 class="text-semibold md:text-lg sm:text-sm capitalize m-3">Recibos de caja encontrados</h5>
+                            <table class=" text-sm text-left text-gray-500 dark:text-gray-400 m-2">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3" >
+                                            ID
                                         </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                            {{$recibo->fecha}}
+                                        <th scope="col" class="px-6 py-3">
+                                            Fecha
                                         </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                            {{$recibo->paga->name}}
+                                        <th scope="col" class="px-6 py-3" >
+                                            Alumno
                                         </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                            {{$recibo->observaciones}}
+                                        <th scope="col" class="px-6 py-3">
+                                            Observaciones
                                         </th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($recibos as $recibo)
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                {{$recibo->id}}
+                                            </th>
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                {{$recibo->fecha}}
+                                            </th>
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                {{$recibo->paga->name}}
+                                            </th>
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                {{$recibo->observaciones}}
+                                            </th>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+                    @if ($sede_id>0)
+                        <button type="submit"
+                        class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
+                        >
+                            Generar Cierre de Caja
+                        </button>
                     @endif
+                    <div>
+                        <a href="#" wire:click.prevent="$dispatch('created')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-2 capitalize">
+                            <i class="fa-solid fa-rectangle-xmark"></i> cancelar
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-                @if ($sede_id>0)
-                    <button type="submit"
-                    class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
-                    >
-                        Generar Cierre de Caja
-                    </button>
-                @endif
-                <div>
-                    <a href="#" wire:click.prevent="$dispatch('created')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-2 capitalize">
-                        <i class="fa-solid fa-rectangle-xmark"></i> cancelar
-                    </a>
-                </div>
-            </div>
-        </form>
+            </form>
+        @else
+            <h2 class="md:text-2xl font-bold text-gray-900 dark:text-white">
+                No tienes recibos registrados para realizar CIERRE
+            </h2>
+            <a href="#" wire:click.prevent="$dispatch('created')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+            </a>
+        @endif
     @else
         <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido" :accion="$accion"/>
     @endif
