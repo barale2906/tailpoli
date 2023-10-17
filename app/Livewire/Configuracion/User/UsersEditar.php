@@ -16,6 +16,7 @@ class UsersEditar extends Component
     public $id = '';
     public $actual;
     public $elegido;
+    public $clase;
 
     public $is_sector = true;
 
@@ -38,11 +39,12 @@ class UsersEditar extends Component
         $this->reset('name', 'email', 'documento', 'password','rol', 'id');
     }
 
-    public function mount($elegido = null)
+    public function mount($elegido = null,$clase)
     {
         $this->name=$elegido['name'];
         $this->id=$elegido['id'];
         $this->email=$elegido['email'];
+        $this->clase=$clase;
         //$this->rol=$elegido['rol'];
         $this->documento=$elegido['documento'];
         $this->rolasig();

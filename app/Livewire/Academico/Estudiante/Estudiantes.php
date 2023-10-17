@@ -21,7 +21,7 @@ class Estudiantes extends Component
     public $is_deleting = false;
 
     public $elegido;
-    public $clase=0;
+    public $clase=1;
 
     public $buscar='';
     public $buscamin='';
