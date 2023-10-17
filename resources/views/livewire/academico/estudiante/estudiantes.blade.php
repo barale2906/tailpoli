@@ -102,6 +102,11 @@
                                             <i class="fa-brands fa-creative-commons-sa"></i>
                                         </a>
                                     @endcan
+                                    @can('co_usersPerfil')
+                                        <a href="#" wire:click.prevent="show({{$usuario}},{{2}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                            <i class="fa-solid fa-address-card fa-beat-fade"></i>
+                                        </a>
+                                    @endcan
                                 </th>
                             </tr>
                         @endforeach

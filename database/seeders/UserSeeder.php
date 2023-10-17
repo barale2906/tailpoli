@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $id=0;
-        while ($id <= 120) {
+        while ($id <= 12000) {
             User::factory()->create()->assignRole('Estudiante');
             $id++;
         }

@@ -54,6 +54,7 @@ class RoleSeeder extends Seeder
                             'name'=>'ac_estudianteEditar',
                             'descripcion'=>'editar estudiantes'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+
         Permission::create([
                             'name'=>'ac_estudianteInactivar',
                             'descripcion'=>'inactivar estudiantes'
@@ -426,6 +427,13 @@ class RoleSeeder extends Seeder
                             'name'=>'co_userInactivar',
                             'descripcion'=>'inactivar usuario'
                             ])->syncRoles([$Superusuario]);
+
+        Permission::create([
+                            'name'=>'co_usersPerfil',
+                            'descripcion'=>'perfil usuarios'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+
+
 
     }
 }
