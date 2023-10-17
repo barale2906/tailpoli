@@ -21,3 +21,7 @@ Route::get('/grupos', function () {
 Route::get('/matriculas', function () {
     return view('academico.matriculas.index');
 })->middleware('can:ac_matriculas')->name('matriculas');
+
+Route::get('/estudiantes', function () {
+    return view('academico.estudiantes.index');
+})->middleware('can:ac_estudiantes')->name('estudiantes');

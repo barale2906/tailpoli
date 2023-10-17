@@ -43,6 +43,24 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
         Permission::create([
+                            'name'=>'ac_estudiantes',
+                            'descripcion'=>'ver cursos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_estudianteCrear',
+                            'descripcion'=>'crear estudiantes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_estudianteEditar',
+                            'descripcion'=>'editar estudiantes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_estudianteInactivar',
+                            'descripcion'=>'inactivar estudiantes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+
+
+        Permission::create([
                             'name'=>'ac_horarios',
                             'descripcion'=>'ver horarios'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);

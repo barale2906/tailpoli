@@ -22,9 +22,9 @@ class MenuSeeder extends Seeder
             ]);
 
             Submenu::create([
-                'permiso'           => 'ac_matriculas',
-                'ruta'              => 'academico.cursos',
-                'identificaRuta'    => 'academico.cursos',
+                'permiso'           => 'ac_estudiantes',
+                'ruta'              => 'academico.estudiantes',
+                'identificaRuta'    => 'academico.estudiantes',
                 'name'              => 'Estudiantes',
                 'icono'             => 'fa-solid fa-book text-gray-500',
                 'menu_id'           => $m1->id
