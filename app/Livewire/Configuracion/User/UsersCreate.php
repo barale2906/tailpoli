@@ -26,6 +26,9 @@ class UsersCreate extends Component
         if($this->clase===1){
             $this->rol="Estudiante";
         }
+        if($this->clase===2){
+            $this->rol="Profesor";
+        }
     }
 
     /**

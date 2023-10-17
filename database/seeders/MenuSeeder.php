@@ -238,9 +238,9 @@ class MenuSeeder extends Seeder
                 ]);
 
                 Submenu::create([
-                    'permiso'           => 'ad_saluds',
-                    'ruta'              => 'admin.saluds',
-                    'identificaRuta'    => 'admin.saluds',
+                    'permiso'           => 'ad_profesores',
+                    'ruta'              => 'admin.profesores',
+                    'identificaRuta'    => 'admin.profesores',
                     'name'              => 'Profesores',
                     'icono'             => 'fa-solid fa-screwdriver text-gray-500',
                     'menu_id'           => $m6->id

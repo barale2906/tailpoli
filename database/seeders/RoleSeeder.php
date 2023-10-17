@@ -294,6 +294,25 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'inactivar regímenes de salud'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
+
+        Permission::create([
+                            'name'=>'ad_profesores',
+                            'descripcion'=>'ver lista de profesores'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_profesoreCrear',
+                            'descripcion'=>'crear profesores'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_profesoreEditar',
+                            'descripcion'=>'editar profesores'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ad_profesoreInactivar',
+                            'descripcion'=>'inactivar profesores'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+
         Permission::create([
                             'name'=>'ad_multis',
                             'descripcion'=>'ver personas multiculturales'
