@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('estados', function (Blueprint $table) {
-            $table->comment('Estado del usuario estudiante');
+            $table->comment('Estado de los usuarios');
             $table->id();
             $table->string('name')->comment('nombre del estado del usuario');
+            $table->string('tipo')->comment('Aplicable a tipos de usuario');
             $table->boolean('status')->default(true)->comment('false Inactivo, true activo');
             $table->timestamps();
         });

@@ -300,7 +300,7 @@ class MenuSeeder extends Seeder
                     'permiso'           => 'co_estados',
                     'ruta'              => 'configuracion.estados',
                     'identificaRuta'    => 'configuracion.estados',
-                    'name'              => 'Estados Estudiantes',
+                    'name'              => 'Estados Usuarios',
                     'icono'             => 'fa-solid fa-wrench text-gray-500',
                     'menu_id'           => $m8->id
                 ]);
