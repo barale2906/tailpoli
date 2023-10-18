@@ -31,4 +31,10 @@ class Sector extends Model
     {
         return $this->hasMany(App\Models\Configuracion\Sede::class);
     }
+
+    //Relación uno a muchos
+    public function perfiles(): HasMany
+    {
+        return $this->hasMany(Perfil::class);
+    }
 }

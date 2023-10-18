@@ -333,15 +333,6 @@ class MenuSeeder extends Seeder
                 ]);
 
                 Submenu::create([
-                    'permiso'           => 'co_estados',
-                    'ruta'              => 'configuracion.estados',
-                    'identificaRuta'    => 'configuracion.estados',
-                    'name'              => 'Estado Usuarios',
-                    'icono'             => 'fa-solid fa-wrench text-gray-500',
-                    'menu_id'           => $m8->id
-                ]);
-
-                Submenu::create([
                     'permiso'           => 'co_rols',
                     'ruta'              => 'configuracion.roles',
                     'identificaRuta'    => 'configuracion.roles',

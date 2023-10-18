@@ -16,7 +16,13 @@ class Country extends Model
     //Relación uno a muchos
     public function sectors(): HasMany
     {
-        return $this->hasMany(App\Models\Configuracion\Sector::class);
+        return $this->hasMany(Sector::class);
+    }
+
+    //Relación uno a muchos
+    public function perfiles(): HasMany
+    {
+        return $this->hasMany(Perfil::class);
     }
 
     /**
@@ -25,6 +31,6 @@ class Country extends Model
      */
     public function states(): HasManyThrough
     {
-        return $this->hasManyThrough(App\Models\Configuracion\Sector::class, App\Models\Configuracion\State::class);
+        return $this->hasManyThrough(Sector::class, State::class);
     }
 }
