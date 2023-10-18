@@ -14,12 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $id=0;
-        while ($id <= 12000) {
-            User::factory()->create()->assignRole('Estudiante');
-            $id++;
-        }
-
         $super = User::factory()->create([
             'name' => 'Ing Alexander Barajas V',
             'email' => 'alexanderbarajas@gmail.com',
@@ -109,5 +103,11 @@ class UserSeeder extends Seeder
             'email' => 'estudiante@gmail.com',
             'password'=>bcrypt('10203040')
         ])->assignRole('Estudiante');
+
+        $id=0;
+        while ($id <= 1200) {
+            User::factory()->create()->assignRole('Estudiante');
+            $id++;
+        }
     }
 }

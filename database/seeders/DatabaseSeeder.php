@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CountrySeeder::class,
             Menuseeder::class,
+            EstadoUsuarioSeeder::class,
             RegimenSaludSeeder::class,
             PersonaMulticulturalSeeder::class,
             EstadoSeeder::class,
@@ -32,7 +33,6 @@ class DatabaseSeeder extends Seeder
             ModuloSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            //Menuseeder::class,
             InventarioSeeder::class,
             GrupoSeeder::class,
             MatriculaSeeder::class,

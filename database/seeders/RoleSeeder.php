@@ -434,6 +434,24 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
 
+        Permission::create([
+                            'name'=>'co_estados',
+                            'descripcion'=>'ver estados de usuarios'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_estadoCrear',
+                            'descripcion'=>'crear estados de usuario'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_estadoEditar',
+                            'descripcion'=>'editar estados de usuario'
+                            ])->syncRoles([$Superusuario]);
+        Permission::create([
+                            'name'=>'co_estadoInactivar',
+                            'descripcion'=>'inactivar estados de usuario'
+                            ])->syncRoles([$Superusuario]);
+
+
 
     }
 }

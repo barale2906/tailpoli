@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Configuracion\Estado;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,31 +13,31 @@ class EstadoSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'activo',
         ]);
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'desertado',
         ]);
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'egresado',
         ]);
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'aplazado',
         ]);
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'retirado',
         ]);
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'reintegro',
         ]);
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'acuerdo de pago',
         ]);
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'por iniciar',
         ]);
-        \App\Models\Configuracion\Estado::create([
+        Estado::create([
             'name' => 'paga cuando retomen las clases',
         ]);
     }
