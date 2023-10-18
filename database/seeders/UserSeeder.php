@@ -45,8 +45,8 @@ class UserSeeder extends Seeder
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
             'documento'=>79844910,
-            'nombre'=>'Alexander',
-            'apellido'=>'Barajas Vargas'
+            'name'=>'Alexander',
+            'lastname'=>'Barajas Vargas'
         ]);
 
         $stephany = User::factory()->create([
@@ -79,8 +79,8 @@ class UserSeeder extends Seeder
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
             'documento'=>1030862596,
-            'nombre'=>'stephany',
-            'apellido'=>'izquierdo ocampo'
+            'name'=>'stephany',
+            'lastname'=>'izquierdo ocampo'
         ]);
 
         $admon = User::factory()->create([
@@ -105,8 +105,8 @@ class UserSeeder extends Seeder
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
             'documento'=>1030862556,
-            'nombre'=>'administrador',
-            'apellido'=>'Barajas V'
+            'name'=>'administrador',
+            'lastname'=>'Barajas V'
         ]);
 
         $coordinador=User::factory()->create([
@@ -123,8 +123,8 @@ class UserSeeder extends Seeder
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
             'documento'=>52314764,
-            'nombre'=>'coordinador',
-            'apellido'=>'Barajas V'
+            'name'=>'coordinador',
+            'lastname'=>'Barajas V'
         ]);
 
         $aux=User::factory()->create([
@@ -149,8 +149,8 @@ class UserSeeder extends Seeder
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
             'documento'=>79844911,
-            'nombre'=>'auxiliar',
-            'apellido'=>'Barajas V'
+            'name'=>'auxiliar',
+            'lastname'=>'Barajas V'
         ]);
 
         $profesor=User::factory()->create([
@@ -167,8 +167,8 @@ class UserSeeder extends Seeder
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
             'documento'=>1233491475,
-            'nombre'=>'profesor',
-            'apellido'=>'Barajas V'
+            'name'=>'profesor',
+            'lastname'=>'Barajas V'
         ]);
 
         $estudiante=User::factory()->create([
@@ -185,8 +185,8 @@ class UserSeeder extends Seeder
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
             'documento'=>41717453,
-            'nombre'=>'estudiante',
-            'apellido'=>'Barajas V'
+            'name'=>'estudiante',
+            'lastname'=>'Barajas V'
         ]);
 
         $id=0;
@@ -203,8 +203,8 @@ class UserSeeder extends Seeder
                 'regimen_salud_id'=>1,
                 'tipo_documento'=>'cédula de ciudadanía',
                 'documento'=>$documento,
-                'nombre'=>'estudiante '.$usu->id,
-                'apellido'=>'apellido '.$usu->id
+                'name'=>'estudiante '.$usu->id,
+                'lastname'=>'apellido '.$usu->id
             ]);
 
             $id++;

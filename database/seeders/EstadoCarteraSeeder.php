@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Financiera\EstadoCartera;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,31 +13,31 @@ class EstadoCarteraSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Financiera\EstadoCartera::create([
+        EstadoCartera::create([
             'name' => 'activa',
         ]);
 
-        \App\Models\Financiera\EstadoCartera::create([
+        EstadoCartera::create([
             'name' => 'abonada',
         ]);
 
-        \App\Models\Financiera\EstadoCartera::create([
+        EstadoCartera::create([
             'name' => 'mora',
         ]);
 
-        \App\Models\Financiera\EstadoCartera::create([
+        EstadoCartera::create([
             'name' => 'castigada',
         ]);
 
-        \App\Models\Financiera\EstadoCartera::create([
+        EstadoCartera::create([
             'name' => 'convenio',
         ]);
 
-        \App\Models\Financiera\EstadoCartera::create([
+        EstadoCartera::create([
             'name' => 'cerrada',
         ]);
 
-        \App\Models\Financiera\EstadoCartera::create([
+        EstadoCartera::create([
             'name' => 'anulada',
         ]);
 

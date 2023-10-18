@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Configuracion\User;
 
+use App\Models\Configuracion\Perfil;
 use App\Models\User;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -9,8 +10,10 @@ use Spatie\Permission\Models\Role;
 class UsersEditar extends Component
 {
     public $name = '';
+    public $lastname = '';
     public $email = '';
     public $documento = '';
+    public $tipo_documento = '';
     public $password = '';
     public $rol = '';
     public $id = '';
@@ -25,8 +28,10 @@ class UsersEditar extends Component
      */
     protected $rules = [
         'name' => 'required|max:100',
+        'lastname' => 'required|max:100',
         'email'=>'required|email',
         'documento'=>'required',
+        'tipo_documento'=>'required',
         'rol'=>'required',
         'id'    => 'required'
     ];
@@ -36,17 +41,13 @@ class UsersEditar extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'email', 'documento', 'password','rol', 'id');
+        $this->reset('name', 'lastname', 'email', 'documento', 'tipo_documento', 'password','rol', 'id');
     }
 
     public function mount($elegido = null,$clase)
     {
-        $this->name=$elegido['name'];
         $this->id=$elegido['id'];
-        $this->email=$elegido['email'];
         $this->clase=$clase;
-        //$this->rol=$elegido['rol'];
-        $this->documento=$elegido['documento'];
         $this->rolasig();
     }
 
@@ -56,6 +57,16 @@ class UsersEditar extends Component
         if($this->actual->roles->count()){
             $this->rol=$this->actual->roles[0]['name'];
         }
+
+        $this->valores();
+    }
+
+    public function valores(){
+        $this->name=$this->actual->perfil->name;
+        $this->lastname=$this->actual->perfil->lastname;
+        $this->documento=$this->actual->documento;
+        $this->tipo_documento=$this->actual->perfil->tipo_documento;
+        $this->email=$this->actual->email;
     }
 
     //Actualizar
@@ -65,14 +76,23 @@ class UsersEditar extends Component
         $this->validate();
 
         //Actualizar registros
+        $completo=$this->name." ".$this->lastname;
         User::whereId($this->id)->update([
-            'name'=>strtolower($this->name),
+            'name'=>strtolower($completo),
             'email'=>strtolower($this->email),
             'documento'=>strtolower($this->documento),
         ]);
 
         //Actualizar Rol
         $this->actual->syncRoles($this->rol);
+
+        Perfil::where('user_id',$this->id)
+                ->update([
+                    'tipo_documento'=>$this->tipo_documento,
+                    'documento'=>$this->documento,
+                    'name'=>strtolower($this->name),
+                    'lastname'=>strtolower($this->lastname)
+                ]);
 
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el Usuario: '.$this->name);

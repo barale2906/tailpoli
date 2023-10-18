@@ -19,6 +19,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -73,9 +74,9 @@ class User extends Authenticatable
     ];
 
     //Relación uno a muchos
-    public function perfil(): HasMany
+    public function perfil(): HasOne
     {
-        return $this->hasMany(Perfil::class);
+        return $this->hasOne(Perfil::class);
     }
 
     //Relación uno a muchos

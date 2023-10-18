@@ -32,8 +32,8 @@ return new class extends Migration
 
             $table->string('tipo_documento')->comment('tipo documento de identidad');
             $table->string('documento')->comment('numero documento de identidad');
-            $table->string('nombre')->comment('nombre del usuario');
-            $table->string('apellido')->comment('apellido del usuario');
+            $table->string('name')->comment('nombre del usuario');
+            $table->string('lastname')->comment('apellido del usuario');
 
             $table->date('fecha_documento')->nullable()->comment('expedición documento de identidad');
             $table->string('lugar_expedicion')->nullable()->comment('lugar expedición documento de identidad');

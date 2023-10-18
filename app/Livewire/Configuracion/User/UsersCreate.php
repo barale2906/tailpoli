@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Configuracion\User;
 
+use App\Models\Configuracion\Perfil;
 use App\Models\User;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -9,8 +10,10 @@ use Spatie\Permission\Models\Role;
 class UsersCreate extends Component
 {
     public $name = '';
+    public $lastname = '';
     public $email = '';
     public $documento = '';
+    public $tipo_documento = '';
     public $password = '';
     public $rol = '';
     public $clase;
@@ -36,8 +39,10 @@ class UsersCreate extends Component
      */
     protected $rules = [
         'name' => 'required|max:100',
+        'lastname' => 'required|max:100',
         'email'=>'required|email',
         'documento'=>'required',
+        'tipo_documento'=>'required',
         'password'=>'required|min:8',
         'rol'=>'required'
     ];
@@ -47,7 +52,7 @@ class UsersCreate extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'email', 'documento', 'password','rol');
+        $this->reset('name', 'lastname', 'email', 'documento', 'tipo_documento', 'password','rol');
     }
 
     // Crear Regimen de Salud
@@ -66,14 +71,28 @@ class UsersCreate extends Component
         } else {
 
             //Crear registro
+            $completo=$this->name." ".$this->lastname;
+
             $nuevoUs=User::create([
-                'name'=>strtolower($this->name),
+                'name'=>strtolower($completo),
                 'email'=>strtolower($this->email),
                 'documento'=>strtolower($this->documento),
                 'password'=>bcrypt($this->password)
             ]);
 
             $nuevoUs->assignRole($this->rol);
+
+            Perfil::create([
+                'user_id'=>$nuevoUs->id,
+                'country_id'=>1,
+                'sector_id'=>4,
+                'estado_id'=>1,
+                'regimen_salud_id'=>1,
+                'tipo_documento'=>$this->tipo_documento,
+                'documento'=>$this->documento,
+                'name'=>strtolower($this->name),
+                'lastname'=>strtolower($this->lastname)
+            ]);
 
             // Notificación
             $this->dispatch('alerta', name:'Se ha creado correctamente el Usuario: '.$this->name);

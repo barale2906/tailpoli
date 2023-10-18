@@ -130,7 +130,7 @@
     @endif
 
     @if ($is_editing)
-        <livewire:configuracion.user.users-editar :elegido="$elegido" />
+        <livewire:configuracion.user.users-editar :elegido="$elegido" :clase="$clase"/>
     @endif
 
     @if ($is_deleting)
