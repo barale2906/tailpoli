@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Inventario\Almacen;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,32 +13,32 @@ class AlmacenSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Inventario\Almacen::create([
+        Almacen::create([
             'name' => 'ropas',
             'sede_id'=> 1
         ]);
 
-        \App\Models\Inventario\Almacen::create([
+        Almacen::create([
             'name' => 'insumos aseo',
             'sede_id'=> 1
         ]);
 
-        \App\Models\Inventario\Almacen::create([
+        Almacen::create([
             'name' => 'papelería',
             'sede_id'=> 1
         ]);
 
-        \App\Models\Inventario\Almacen::create([
+        Almacen::create([
             'name' => 'ropas sede 2',
             'sede_id'=> 2
         ]);
 
-        \App\Models\Inventario\Almacen::create([
+        Almacen::create([
             'name' => 'insumos aseo sede 2',
             'sede_id'=> 2
         ]);
 
-        \App\Models\Inventario\Almacen::create([
+        Almacen::create([
             'name' => 'papelería sede 2',
             'sede_id'=> 2
         ]);

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Inventario\Inventario;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,7 +13,7 @@ class InventarioSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Inventario\Inventario::create([
+        Inventario::create([
             'fecha_movimiento' => now(),
             'cantidad'=> 10,
             'saldo'=>10,
@@ -23,7 +24,7 @@ class InventarioSeeder extends Seeder
             'user_id'=>1
         ]);
 
-        \App\Models\Inventario\Inventario::create([
+        Inventario::create([
             'fecha_movimiento' => now(),
             'cantidad'=> 9,
             'saldo'=>9,
@@ -34,7 +35,7 @@ class InventarioSeeder extends Seeder
             'user_id'=>12
         ]);
 
-        \App\Models\Inventario\Inventario::create([
+        Inventario::create([
             'fecha_movimiento' => now(),
             'cantidad'=> 19,
             'saldo'=>19,
@@ -45,7 +46,7 @@ class InventarioSeeder extends Seeder
             'user_id'=>50
         ]);
 
-        \App\Models\Inventario\Inventario::create([
+        Inventario::create([
             'fecha_movimiento' => now(),
             'cantidad'=> 100,
             'saldo'=>100,
@@ -56,7 +57,7 @@ class InventarioSeeder extends Seeder
             'user_id'=>1
         ]);
 
-        \App\Models\Inventario\Inventario::create([
+        Inventario::create([
             'fecha_movimiento' => now(),
             'cantidad'=> 90,
             'saldo'=>90,
@@ -67,7 +68,7 @@ class InventarioSeeder extends Seeder
             'user_id'=>50
         ]);
 
-        \App\Models\Inventario\Inventario::create([
+        Inventario::create([
             'fecha_movimiento' => now(),
             'cantidad'=> 89,
             'saldo'=>89,

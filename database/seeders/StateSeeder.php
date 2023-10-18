@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Configuracion\State;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,24 +13,24 @@ class StateSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Configuracion\State::create([
+        State::create([
             'name' => 'Cundinamarca',
             'country_id' => 1,
         ]);
 
-        \App\Models\Configuracion\State::create([
+        State::create([
             'name' => 'Bogotá D.C.',
             'country_id' => 1,
         ]);
-        \App\Models\Configuracion\State::create([
+        State::create([
             'name' => 'Risaralda',
             'country_id' => 1,
         ]);
-        \App\Models\Configuracion\State::create([
+        State::create([
             'name' => 'Nariño',
             'country_id' => 1,
         ]);
-        \App\Models\Configuracion\State::create([
+        State::create([
             'name' => 'Santander',
             'country_id' => 1,
         ]);
