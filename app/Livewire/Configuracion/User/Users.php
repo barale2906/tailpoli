@@ -19,9 +19,11 @@ class Users extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $is_perfil=false;
 
     public $elegido;
     public $clase=0;
+    public $perf=0;
 
     public $buscar='';
     public $buscamin='';
@@ -77,16 +79,33 @@ class Users extends Component
         $this->is_editing = !$this->is_editing;
     }
 
+    //Activar evento
+    #[On('Perfilando')]
+    //Mostrar formulario de creación
+    public function updatedIsPerfil()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_perfil = !$this->is_perfil;
+    }
+
     // Mostrar Regimen de Salud
     public function show($esta, $act){
 
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
 
-        if($act===0){
-            $this->is_editing=!$this->is_editing;
-        }else{
-            $this->is_deleting=!$this->is_deleting;
+        switch ($act) {
+            case 0:
+                $this->is_editing=!$this->is_editing;
+                break;
+
+            case 1:
+                $this->is_deleting=!$this->is_deleting;
+                break;
+
+            case 2:
+                $this->is_perfil=!$this->is_perfil;
+                break;
         }
     }
 
