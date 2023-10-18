@@ -8,12 +8,14 @@ use Livewire\Component;
 class EstadoCreate extends Component
 {
     public $name = '';
+    public $tipo='';
 
     /**
      * Reglas de validación
      */
     protected $rules = [
-        'name' => 'required|max:100'
+        'name'  => 'required|max:100',
+        'tipo'  => 'required'
     ];
 
     /**
@@ -21,7 +23,7 @@ class EstadoCreate extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name');
+        $this->reset('name', 'tipo');
     }
 
     // Crear Regimen de Salud
@@ -38,6 +40,7 @@ class EstadoCreate extends Component
             //Crear registro
             Estado::create([
                 'name'=>strtolower($this->name),
+                'tipo'=>strtolower($this->tipo)
             ]);
 
             // Notificación

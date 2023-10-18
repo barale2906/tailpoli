@@ -11,7 +11,7 @@ class Estados extends Component
 {
     use WithPagination;
 
-    public $ordena='id';
+    public $ordena='name';
     public $ordenado='ASC';
     public $pages = 10;
 

@@ -8,6 +8,7 @@ use Livewire\Component;
 class EstadoEditar extends Component
 {
     public $name = '';
+    public $tipo='';
     public $id = '';
     public $elegido;
 
@@ -16,6 +17,7 @@ class EstadoEditar extends Component
      */
     protected $rules = [
         'name'  => 'required|max:100',
+        'tipo'  => 'required',
         'id'    => 'required'
     ];
 
@@ -24,12 +26,13 @@ class EstadoEditar extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'id');
+        $this->reset('name', 'id', 'tipo');
     }
 
     public function mount($elegido = null)
     {
         $this->name=$elegido['name'];
+        $this->tipo=$elegido['tipo'];
         $this->id=$elegido['id'];
     }
 
@@ -41,7 +44,8 @@ class EstadoEditar extends Component
 
         //Actualizar registros
         Estado::whereId($this->id)->update([
-            'name'=>strtolower($this->name)
+            'name'=>strtolower($this->name),
+            'tipo'=>strtolower($this->tipo)
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el estado: '.$this->name);
