@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Configuracion\Perfil;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -36,6 +37,18 @@ class UserSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
+        Perfil::create([
+            'user_id'=>$super->id,
+            'country_id'=>1,
+            'sector_id'=>1,
+            'estado_id'=>1,
+            'regimen_salud_id'=>1,
+            'tipo_documento'=>'cédula de ciudadanía',
+            'documento'=>79844910,
+            'nombre'=>'Alexander',
+            'apellido'=>'Barajas Vargas'
+        ]);
+
         $stephany = User::factory()->create([
                     'name' => 'stephany izquierdo ocampo',
                     'email' => 'direccionsedea@gmail.com',
@@ -58,6 +71,18 @@ class UserSeeder extends Seeder
                             'updated_at'=>now(),
                         ]);
 
+        Perfil::create([
+            'user_id'=>$stephany->id,
+            'country_id'=>1,
+            'sector_id'=>1,
+            'estado_id'=>1,
+            'regimen_salud_id'=>1,
+            'tipo_documento'=>'cédula de ciudadanía',
+            'documento'=>1030862596,
+            'nombre'=>'stephany',
+            'apellido'=>'izquierdo ocampo'
+        ]);
+
         $admon = User::factory()->create([
             'name' => 'Administrador Barajas V',
             'email' => 'administrador@gmail.com',
@@ -72,11 +97,35 @@ class UserSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
-        User::factory()->create([
-            'name' => 'Coordinador Barajas V',
-            'email' => 'coordinador@gmail.com',
-            'password'=>bcrypt('10203040')
-        ])->assignRole('Coordinador');
+        Perfil::create([
+            'user_id'=>$admon->id,
+            'country_id'=>1,
+            'sector_id'=>1,
+            'estado_id'=>1,
+            'regimen_salud_id'=>1,
+            'tipo_documento'=>'cédula de ciudadanía',
+            'documento'=>1030862556,
+            'nombre'=>'administrador',
+            'apellido'=>'Barajas V'
+        ]);
+
+        $coordinador=User::factory()->create([
+                        'name' => 'Coordinador Barajas V',
+                        'email' => 'coordinador@gmail.com',
+                        'password'=>bcrypt('10203040')
+                    ])->assignRole('Coordinador');
+
+        Perfil::create([
+            'user_id'=>$coordinador->id,
+            'country_id'=>1,
+            'sector_id'=>1,
+            'estado_id'=>1,
+            'regimen_salud_id'=>1,
+            'tipo_documento'=>'cédula de ciudadanía',
+            'documento'=>52314764,
+            'nombre'=>'coordinador',
+            'apellido'=>'Barajas V'
+        ]);
 
         $aux=User::factory()->create([
             'name' => 'Auxiliar Barajas V',
@@ -92,22 +141,74 @@ class UserSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
-        User::factory()->create([
-            'name' => 'Profesor Barajas V',
-            'email' => 'profesor@gmail.com',
-            'password'=>bcrypt('10203040')
-        ])->assignRole('Profesor');
+        Perfil::create([
+            'user_id'=>$aux->id,
+            'country_id'=>1,
+            'sector_id'=>1,
+            'estado_id'=>1,
+            'regimen_salud_id'=>1,
+            'tipo_documento'=>'cédula de ciudadanía',
+            'documento'=>79844911,
+            'nombre'=>'auxiliar',
+            'apellido'=>'Barajas V'
+        ]);
 
-        User::factory()->create([
-            'name' => 'Estudiante Barajas V',
-            'email' => 'estudiante@gmail.com',
-            'password'=>bcrypt('10203040')
-        ])->assignRole('Estudiante');
+        $profesor=User::factory()->create([
+                    'name' => 'Profesor Barajas V',
+                    'email' => 'profesor@gmail.com',
+                    'password'=>bcrypt('10203040')
+                ])->assignRole('Profesor');
+
+        Perfil::create([
+            'user_id'=>$profesor->id,
+            'country_id'=>1,
+            'sector_id'=>1,
+            'estado_id'=>1,
+            'regimen_salud_id'=>1,
+            'tipo_documento'=>'cédula de ciudadanía',
+            'documento'=>1233491475,
+            'nombre'=>'profesor',
+            'apellido'=>'Barajas V'
+        ]);
+
+        $estudiante=User::factory()->create([
+                        'name' => 'Estudiante Barajas V',
+                        'email' => 'estudiante@gmail.com',
+                        'password'=>bcrypt('10203040')
+                    ])->assignRole('Estudiante');
+
+        Perfil::create([
+            'user_id'=>$estudiante->id,
+            'country_id'=>1,
+            'sector_id'=>1,
+            'estado_id'=>1,
+            'regimen_salud_id'=>1,
+            'tipo_documento'=>'cédula de ciudadanía',
+            'documento'=>41717453,
+            'nombre'=>'estudiante',
+            'apellido'=>'Barajas V'
+        ]);
 
         $id=0;
+        $documento=1030535000;
         while ($id <= 1200) {
-            User::factory()->create()->assignRole('Estudiante');
+
+            $usu = User::factory()->create()->assignRole('Estudiante');
+
+            Perfil::create([
+                'user_id'=>$usu->id,
+                'country_id'=>1,
+                'sector_id'=>1,
+                'estado_id'=>1,
+                'regimen_salud_id'=>1,
+                'tipo_documento'=>'cédula de ciudadanía',
+                'documento'=>$documento,
+                'nombre'=>'estudiante '.$usu->id,
+                'apellido'=>'apellido '.$usu->id
+            ]);
+
             $id++;
+            $documento++;
         }
     }
 }

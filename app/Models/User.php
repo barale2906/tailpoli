@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Configuracion\Perfil;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\CierreCaja;
@@ -70,6 +71,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    //Relación uno a muchos
+    public function perfil(): HasMany
+    {
+        return $this->hasMany(Perfil::class);
+    }
 
     //Relación uno a muchos
     public function inventarios(): HasMany

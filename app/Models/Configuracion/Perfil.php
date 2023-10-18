@@ -4,6 +4,7 @@ namespace App\Models\Configuracion;
 
 use App\Models\Admin\PersonaMulticultural;
 use App\Models\Admin\RegimenSalud;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,12 @@ class Perfil extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    //Relacion uno a muchos inversa
+    public function user() : BelongsTo
+    {
+        return $this->BelongsTo(User::class);
+    }
 
     //Relacion uno a muchos inversa
     public function estado() : BelongsTo
