@@ -20,6 +20,12 @@ class State extends Model
     }
 
     //Relación uno a muchos
+    public function perfiles(): HasMany
+    {
+        return $this->hasMany(Perfil::class);
+    }
+
+    //Relación uno a muchos
     public function sectors(): HasMany
     {
         return $this->hasMany(Sector::class);

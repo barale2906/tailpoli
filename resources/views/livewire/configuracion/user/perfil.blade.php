@@ -24,9 +24,11 @@
         </div>
         <div></div>
     </div>
-    <div class="bg-blue-50 border-blue-500 mb-3 p-2 rounded-xl">
-        <livewire:configuracion.user.contrasena :elegido="$elegido"/>
-    </div>
+    @if ($perf===0)
+        <div class="bg-blue-50 border-blue-500 mb-3 p-2 rounded-xl">
+            <livewire:configuracion.user.contrasena :elegido="$elegido"/>
+        </div>
+    @endif
     <form wire:submit.prevent="edit">
 
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
@@ -35,7 +37,7 @@
             </div>
             <div class="mb-6">
                 <label for="country_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">País Nacimiento</label>
-                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="country_id">
+                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.live="country_id" wire:change="pais">
                     <option>Seleccione...</option>
                     @foreach ($countries as $item)
                         <option value={{$item->id}}>{{$item->name}}</option>
@@ -43,8 +45,8 @@
                 </select>
             </div>
             <div class="mb-6">
-                <label for="country_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento Nacimiento</label>
-                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="country_id">
+                <label for="state_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento Nacimiento</label>
+                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.live="state_id" wire:change="depto">
                     <option>Seleccione...</option>
                     @foreach ($states as $item)
                         <option value={{$item->id}}>{{$item->name}}</option>
@@ -52,8 +54,8 @@
                 </select>
             </div>
             <div class="mb-6">
-                <label for="country_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad Nacimiento</label>
-                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="country_id">
+                <label for="sector_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad Nacimiento</label>
+                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="sector_id">
                     <option>Seleccione...</option>
                     @foreach ($sectors as $item)
                         <option value={{$item->id}}>{{$item->name}}</option>
@@ -300,11 +302,17 @@
             <button type="submit"
             class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
             >
-                Editar Usuario
+                Editar Ficha
             </button>
-            <a href="#" wire:click.prevent="$dispatch('Perfilando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
-            </a>
+            @if ($perf===0)
+                <a href="" wire:click.prevent="$dispatch('Perfilando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                    <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+                </a>
+            @endif
+
         </div>
     </form>
+    @if ($perf===1)
+        <h3 class="text-3xl font-medium text-center uppercase m-4">administración de la cuenta</h3>
+    @endif
 </div>

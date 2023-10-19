@@ -41,6 +41,12 @@ class Perfil extends Model
     }
 
     //Relacion uno a muchos inversa
+    public function state() : BelongsTo
+    {
+        return $this->BelongsTo(State::class);
+    }
+
+    //Relacion uno a muchos inversa
     public function country() : BelongsTo
     {
         return $this->BelongsTo(Country::class);

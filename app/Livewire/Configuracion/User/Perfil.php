@@ -33,7 +33,9 @@ class Perfil extends Component
     public $estado_civil;
 
     public $country_id;
-    public $sector_id;
+    public $state_id=0;
+    public $sector_id=0;
+
     public $estado_id;
     public $direccion;
     public $barrio;
@@ -88,6 +90,7 @@ class Perfil extends Component
         $this->estado_civil=$this->actual->perfil->estado_civil;
         $this->country_id=$this->actual->perfil->country_id;
         $this->sector_id=$this->actual->perfil->sector_id;
+        $this->state_id=$this->actual->perfil->state_id;
         $this->estado_id=$this->actual->perfil->estado_id;
 
         $this->direccion=$this->actual->perfil->direccion;
@@ -117,6 +120,17 @@ class Perfil extends Component
         $this->carnet=$this->actual->perfil->carnet;
 
         $this->sorteo_usuario=$this->actual->perfil->sorteo_usuario;
+    }
+
+    public function pais(){
+        $this->reset('state_id','sector_id');
+        $this->states();
+        $this->sectors();
+    }
+
+    public function depto(){
+        $this->reset('sector_id');
+        $this->sectors();
     }
 
     /**
@@ -166,6 +180,7 @@ class Perfil extends Component
                     'estado_civil'=>$this->estado_civil,
                     'country_id'=>$this->country_id,
                     'sector_id'=>$this->sector_id,
+                    'state_id'=>$this->state_id,
                     'estado_id'=>$this->estado_id,
 
                     'direccion'=>$this->direccion,
@@ -197,7 +212,10 @@ class Perfil extends Component
 
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el perfil del Usuario: '.$this->actual->name);
-        $this->resetFields();
+        if($this->perf===0){
+            $this->resetFields();
+        }
+
 
         //refresh
         $this->dispatch('refresh');
@@ -218,12 +236,14 @@ class Perfil extends Component
 
     private function states(){
         return State::where('status', true)
+                        ->where('country_id', $this->country_id)
                         ->orderBy('name','ASC')
                         ->get();
     }
 
     private function sectors(){
         return Sector::where('status', true)
+                        ->where('state_id', $this->state_id)
                         ->orderBy('name','ASC')
                         ->get();
     }
