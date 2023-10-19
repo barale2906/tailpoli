@@ -1,34 +1,33 @@
 <div>
-    <form wire:submit.prevent="edit">
-
-        <div class="grid sm:grid-cols-1 md:grid-cols-7 gap-4 m-2">
-            <div></div>
-            <div class="sm:grid-cols-1 md:col-span-5">
-                <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-100 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
-                    <div class="flex items-center">
-                        <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                        </svg>
-                        <span class="sr-only">Info</span>
-                        <h3 class="text-lg font-medium text-center">
-                            Estas visitando el perfil de <strong class="uppercase">{{$actual->name}}</strong> con el rol de: <strong class="uppercase">{{$actual->roles[0]['name']}}</strong> y su estado actual es: <strong class="uppercase">{{$actual->perfil->estado->name}}</strong>
-                        </h3>
-                    </div>
-                    <div class="mt-2 mb-4 text-sm">
-                        Está inscrito(a) en los cursos:
-                    </div>
-                    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-1">
-                        @foreach ($matriculas as $item)
-                            <div>{{$item->curso->name}}</div>
-                        @endforeach
-                    </div>
+    <div class="grid sm:grid-cols-1 md:grid-cols-7 gap-4 m-2">
+        <div></div>
+        <div class="sm:grid-cols-1 md:col-span-5">
+            <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-100 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+                <div class="flex items-center">
+                    <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <h3 class="text-lg font-medium text-center">
+                        Estas visitando el perfil de <strong class="uppercase">{{$actual->name}}</strong> con el rol de: <strong class="uppercase">{{$actual->roles[0]['name']}}</strong> y su estado actual es: <strong class="uppercase">{{$actual->perfil->estado->name}}</strong>
+                    </h3>
+                </div>
+                <div class="mt-2 mb-4 text-sm">
+                    Está inscrito(a) en los cursos:
+                </div>
+                <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-1">
+                    @foreach ($matriculas as $item)
+                        <div>{{$item->curso->name}}</div>
+                    @endforeach
                 </div>
             </div>
-            <div></div>
         </div>
-        <div class="bg-blue-50 border-blue-500 mb-3 p-2 rounded-xl">
-            <livewire:configuracion.user.contrasena :elegido="$elegido"/>
-        </div>
+        <div></div>
+    </div>
+    <div class="bg-blue-50 border-blue-500 mb-3 p-2 rounded-xl">
+        <livewire:configuracion.user.contrasena :elegido="$elegido"/>
+    </div>
+    <form wire:submit.prevent="edit">
 
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
             <div class="sm:grid-cols-1 md:col-span-5">

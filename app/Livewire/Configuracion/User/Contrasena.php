@@ -3,6 +3,7 @@
 namespace App\Livewire\Configuracion\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class Contrasena extends Component
@@ -10,7 +11,7 @@ class Contrasena extends Component
     public $id;
     public $elegido;
     public $actual;
-    public $existente;
+    //public $existente;
     public $nuevo;
     public $valida;
 
@@ -24,7 +25,7 @@ class Contrasena extends Component
      * Reglas de validación
      */
     protected $rules = [
-        'existente' => 'required|min:8',
+        //'existente' => 'required|min:8',
         'nuevo' => 'required|min:8',
         'valida'=>'required|min:8',
     ];
@@ -34,7 +35,8 @@ class Contrasena extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('existente', 'nuevo', 'valida');
+        //$this->reset('existente', 'nuevo', 'valida');
+        $this->reset('nuevo', 'valida');
     }
 
     public function editCont(){
@@ -42,13 +44,17 @@ class Contrasena extends Component
          // validate
         $this->validate();
 
-        $encriptado=bcrypt($this->existente);
+        //$encriptado=bcrypt($this->existente);
         $encripnue=bcrypt($this->nuevo);
-        $encripvali=bcrypt($this->valida);
+        //$encripvali=bcrypt($this->valida);
+
+        //$hasheado=Hash::make($this->existente);
 
         $password=$this->actual->password;
 
-        if($encriptado===$password){
+
+
+        /* if($hasheado===$password){
 
             if($encripnue===$encripvali){
 
@@ -65,8 +71,20 @@ class Contrasena extends Component
 
         }else{
             $this->dispatch('alerta', name:'Debe digitar correctamente la contraseña actual');
-        }
+        } */
 
+        if($this->nuevo===$this->valida){
+
+            User::whereId($this->id)->update([
+                'password'=>$encripnue,
+            ]);
+
+            $this->dispatch('alerta', name:'Ha modificado correctamente la contraseña');
+            $this->resetFields();
+
+        }else{
+            $this->dispatch('alerta', name:'Debe ser igual la nueva contraseña con su validación');
+        }
     }
 
     public function render()
