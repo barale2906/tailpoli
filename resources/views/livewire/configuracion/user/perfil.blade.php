@@ -26,6 +26,9 @@
             </div>
             <div></div>
         </div>
+        <div class="bg-blue-50 border-blue-500 mb-3 p-2 rounded-xl">
+            <livewire:configuracion.user.contrasena :elegido="$elegido"/>
+        </div>
 
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
             <div class="sm:grid-cols-1 md:col-span-5">
