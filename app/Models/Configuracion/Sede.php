@@ -3,8 +3,8 @@
 namespace App\Models\Configuracion;
 
 use App\Models\Academico\Grupo;
+use App\Models\Academico\Matricula;
 use App\Models\Financiera\CierreCaja;
-use App\Models\Financiera\ConfiguracionPago;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Inventario\Almacen;
 use App\Models\User;
@@ -48,6 +48,12 @@ class Sede extends Model
     public function grupos(): HasMany
     {
         return $this->hasMany(Grupo::class);
+    }
+
+    //Relación uno a muchos
+    public function matriculas(): HasMany
+    {
+        return $this->hasMany(Matricula::class);
     }
 
     //Relación uno a muchos

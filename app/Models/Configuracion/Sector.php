@@ -29,7 +29,7 @@ class Sector extends Model
     //Relación uno a muchos
     public function sedes(): HasMany
     {
-        return $this->hasMany(App\Models\Configuracion\Sede::class);
+        return $this->hasMany(Sede::class);
     }
 
     //Relación uno a muchos

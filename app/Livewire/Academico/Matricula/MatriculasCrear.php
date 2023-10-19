@@ -187,6 +187,7 @@ class MatriculasCrear extends Component
                                 'nivel'=>$this->nivel,
                                 'valor'=>$this->valor_curso,
                                 'metodo'=>$this->metodo,
+                                'sede_id'=>$this->sede_id,
                                 'curso_id'=>$this->curso_id,
                                 'alumno_id'=>$this->alumno_id,
                                 'comercial_id'=>$this->comercial_id,

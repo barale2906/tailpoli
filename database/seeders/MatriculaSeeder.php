@@ -24,6 +24,7 @@ class MatriculaSeeder extends Seeder
             'comercial_id'=>'124',
             'creador_id'=>'125',
             'curso_id'=>1,
+            'sede_id'=>1,
             'configpago'=>1
         ]);
 
@@ -38,6 +39,7 @@ class MatriculaSeeder extends Seeder
             'comercial_id'=>'125',
             'creador_id'=>'124',
             'curso_id'=>2,
+            'sede_id'=>2,
             'configpago'=>3
         ]);
     }

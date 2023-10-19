@@ -36,6 +36,9 @@ return new class extends Migration
             $table->unsignedBigInteger('creador_id');
             $table->foreign('creador_id')->references('id')->on('users');
 
+            $table->unsignedBigInteger('sede_id');
+            $table->foreign('sede_id')->references('id')->on('sedes');
+
             $table->timestamps();
         });
     }

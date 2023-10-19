@@ -5,15 +5,12 @@ namespace App\Livewire\Academico\Matricula;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
-use App\Models\Academico\Modulo;
-use App\Models\Financiera\ConfiguracionPago;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class MatriculasAsigna extends Component
 {
     public $matricula;
-    public $config;
     public $curso;
     public $disponibles=[];
     public $grupos=[];
@@ -24,7 +21,6 @@ class MatriculasAsigna extends Component
     {
         $this->id=$elegido['id'];
         $this->matricula=Matricula::find($elegido['id']);
-        $this->config=ConfiguracionPago::find($elegido['configpago']);
         $this->curso=Curso::find($elegido['curso_id']);
         $this->modulos=DB::table('matricula_modulos_aprobacion')
                             ->where('matricula_id', $elegido['id'])
@@ -41,7 +37,7 @@ class MatriculasAsigna extends Component
         foreach ($this->modulos as $value) {
 
             $grupos=Grupo::where('status', true)
-                                    ->where('sede_id', $this->config->sede_id)
+                                    ->where('sede_id', $this->matricula->sede_id)
                                     ->where('modulo_id', $value->modulo_id)
                                     ->where('finish_date', '>=', $hoy)
                                     ->orderBy('name')
