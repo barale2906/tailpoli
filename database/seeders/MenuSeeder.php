@@ -196,6 +196,15 @@ class MenuSeeder extends Seeder
                     'menu_id'           => $m4->id
                 ]);
 
+                Submenu::create([
+                    'permiso'           => 'in_pagoconfig',
+                    'ruta'              => 'inventario.pagoConfig',
+                    'identificaRuta'    => 'inventario.pagoConfig',
+                    'name'              => 'Configura Pago',
+                    'icono'             => 'fa-solid fa-warehouse text-gray-500',
+                    'menu_id'           => $m4->id
+                ]);
+
         $m5=Menu::create([
                     'name'              => 'REPORTES',
                     'identificaRuta'    => 'admin.countries.*',

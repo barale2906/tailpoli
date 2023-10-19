@@ -13,3 +13,7 @@ Route::get('/almacens', function () {
 Route::get('/inventarios', function () {
     return view('inventario.inventarios.index');
 })->middleware('can:in_inventarios')->name('inventarios');
+
+Route::get('/pagoConfig', function () {
+    return view('inventario.pagoconfig.index');
+})->middleware('can:in_pagoconfig')->name('pagoConfig');
