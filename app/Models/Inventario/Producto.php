@@ -4,6 +4,7 @@ namespace App\Models\Inventario;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Producto extends Model
@@ -16,5 +17,11 @@ class Producto extends Model
     public function inventarios(): HasMany
     {
         return $this->hasMany(Inventario::class);
+    }
+
+    //Relacion muchos a muchos
+    public function pagoconfigs() : BelongsToMany
+    {
+        return $this->BelongsToMany(PagoConfig::class);
     }
 }

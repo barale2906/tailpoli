@@ -3,6 +3,6 @@
         Inventarios Configuración Pago
     @endpush
 
-    <livewire:inventario.inventario.inventarios />
+    <livewire:inventario.inventario.pago-config />
 
 </x-admin-layout>
