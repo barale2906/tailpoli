@@ -3,12 +3,14 @@
 namespace App\Livewire\Configuracion\User;
 
 use App\Models\Academico\Matricula;
+use App\Models\Admin\PersonaMulticultural;
 use App\Models\Admin\RegimenSalud;
 use App\Models\Configuracion\Country;
 use App\Models\Configuracion\Perfil as ConfiguracionPerfil;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\State;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Perfil extends Component
@@ -61,6 +63,9 @@ class Perfil extends Component
     public $rh_usuario;
     public $sorteo_usuario;
 
+    public $disponibles=[];
+    public $registro=[];
+
 
 
 
@@ -72,6 +77,8 @@ class Perfil extends Component
         $this->perf=$perf;
 
         $this->valores();
+        $this->personasMulti();
+
     }
 
     public function valores(){
@@ -122,6 +129,93 @@ class Perfil extends Component
         $this->sorteo_usuario=$this->actual->perfil->sorteo_usuario;
     }
 
+    //Carga las personas multi a las que pertenece el usuario
+    public function personasMulti(){
+
+        $personas = DB::table('perfil_persona_multicultural')
+                        ->where('perfil_id', $this->id)
+                        ->get();
+
+        if($personas){
+
+            foreach($personas as $value){
+
+                $esta=PersonaMulticultural::whereId($value->persona_multicultural_id)->first();
+
+                if($esta->count()>0){
+                    $nuevo=[
+                        'id'            =>$esta->id,
+                        'name'          =>$esta->name,
+                    ];
+
+                    if(in_array($nuevo, $this->disponibles)){
+
+                    }else{
+                        array_push($this->disponibles, $nuevo);
+                    }
+                }
+            }
+        }
+
+        $this->multiCarga();
+    }
+
+    //Determina a cuales no pertenece
+    public function multiCarga(){
+
+        $multiperson=PersonaMulticultural::where('status', true)
+                        ->orderBy('name','ASC')
+                        ->get();
+        foreach ($multiperson as $value) {
+            $nuevo=[
+                'id'            =>$value->id,
+                'name'          =>$value->name,
+            ];
+
+            if(in_array($nuevo, $this->disponibles)){
+
+            }else{
+                array_push($this->registro, $nuevo);
+            }
+        }
+    }
+
+    //Elegir los modulos incluidos
+    public function selGrupo($id){
+
+        foreach ($this->registro as $value) {
+
+            if($value['id']===$id){
+                $nuevo=[
+                    'id'=>$id,
+                    'name'=>$value['name']
+                ];
+
+                if(in_array($nuevo, $this->disponibles)){
+
+                }else{
+                    array_push($this->disponibles, $nuevo);
+                }
+
+            };
+
+        }
+    }
+
+    // Eliminar modulo elegido
+    public function elimGrupo($id){
+        foreach ($this->disponibles as $value) {
+            if($value['id']===$id){
+                $nuevo=[
+                    'id'=>$id,
+                    'name'=>$value['name']
+                ];
+            }
+        }
+        $indice=array_search($nuevo,$this->disponibles,true);
+        unset($this->disponibles[$indice]);
+    }
+
     public function pais(){
         $this->reset('state_id','sector_id');
         $this->states();
@@ -166,8 +260,10 @@ class Perfil extends Component
             'documento'=>strtolower($this->documento),
         ]);
 
-        ConfiguracionPerfil::where('user_id',$this->id)
-                ->update([
+        $perfilActual=ConfiguracionPerfil::where('user_id',$this->id)->first();
+
+
+        $perfilActual->update([
                     'tipo_documento'=>$this->tipo_documento,
                     'documento'=>$this->documento,
                     'name'=>strtolower($this->name),
@@ -210,6 +306,21 @@ class Perfil extends Component
                     'sorteo_usuario'=>$this->sorteo_usuario,
                 ]);
 
+        $ids=[];
+
+        $perfilActual->personamulticulturals()->sync($ids);
+
+
+        // Asignar multicultural
+        foreach ($this->disponibles as $value) {
+            DB::table('perfil_persona_multicultural')
+            ->insert([
+                'perfil_id'                 =>$this->id,
+                'persona_multicultural_id'  =>$value['id'],
+                'created_at'                =>now(),
+                'updated_at'                =>now(),
+            ]);
+        }
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el perfil del Usuario: '.$this->actual->name);
         if($this->perf===0){
@@ -248,13 +359,15 @@ class Perfil extends Component
                         ->get();
     }
 
+
+
     public function render()
     {
         return view('livewire.configuracion.user.perfil', [
             'regimenes'=>$this->regimenes(),
             'countries'=>$this->countries(),
             'states'=>$this->states(),
-            'sectors'=>$this->sectors(),
+            'sectors'=>$this->sectors()
         ]);
     }
 }

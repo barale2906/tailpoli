@@ -56,7 +56,7 @@ class Perfil extends Model
      * Relación muchos a muchos.
      * Perfiles con Multicultural
      */
-    public function multicultural(): BelongsToMany
+    public function personamulticulturals(): BelongsToMany
     {
         return $this->belongsToMany(PersonaMulticultural::class);
     }

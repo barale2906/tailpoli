@@ -140,6 +140,30 @@
             </div>
         </div>
 
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
+            <div class="sm:grid-cols-1 md:col-span-2">
+                <h3 class="text-lg font-medium text-center">Persona Multicultural</h3>
+            </div>
+            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+                @foreach ($registro as $item)
+                    <a href="" wire:click.prevent="selGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                        <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
+                    </a>
+                @endforeach
+            </div>
+            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+                @if (count($disponibles))
+                    @foreach ($disponibles as $item)
+                        <a href="" wire:click.prevent="elimGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                            <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item['name']}}
+                        </a>
+                    @endforeach
+                @else
+                    <h3 class="text-md font-medium text-center col-span-3 capitalize">No pertenece a ningún grupo Multicultural</h3>
+                @endif
+            </div>
+        </div>
+
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
             <div class="sm:grid-cols-1 md:col-span-5">
                 <h3 class="text-lg font-medium text-center">Datos de Contacto</h3>
@@ -315,4 +339,21 @@
     @if ($perf===1)
         <h3 class="text-3xl font-medium text-center uppercase m-4">administración de la cuenta</h3>
     @endif
+    @push('js')
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('alerta', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: variable['name'],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+            });
+        </script>
+    @endpush
 </div>
