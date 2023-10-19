@@ -7,6 +7,7 @@ use App\Models\Configuracion\Country;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\State;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -131,6 +132,24 @@ class SedesCreate extends Component
                     'created_at'=>now(),
                     'updated_at'=>now(),
                 ]);
+            }
+
+            //Asignar sedes a los superusuarios
+            $superusuarios = User::where('status', true)
+                                    ->with('roles')->get()->filter(
+                                        fn ($user) => $user->roles->where('name', 'Superusuario')->toArray()
+                                    );
+
+            foreach($superusuarios as $item){
+
+                DB::table('sede_user')
+                ->insert([
+                    'user_id'                   =>$item->id,
+                    'sede_id'                   =>$nueva->id,
+                    'created_at'                =>now(),
+                    'updated_at'                =>now(),
+                ]);
+
             }
 
             // Notificación
