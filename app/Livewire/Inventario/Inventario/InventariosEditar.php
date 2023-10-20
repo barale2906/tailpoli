@@ -21,11 +21,11 @@ class InventariosEditar extends Component
     public $almaceName='';
     public $sedeName='';
     public $producto_id='';
-    public $productoName='';    
+    public $productoName='';
     public $ultimoregistro;
     public $motivo;
 
-    
+
     /**
      * Reset de todos los campos
      * @return void
@@ -47,7 +47,7 @@ class InventariosEditar extends Component
     }
 
     public function mount($elegido = null)
-    {        
+    {
         $this->id=$elegido['id'];
         $this->tipo=$elegido['tipo'];
         $this->fecha_movimiento=$elegido['fecha_movimiento'];
@@ -56,7 +56,7 @@ class InventariosEditar extends Component
         $this->precio=$elegido['precio'];
         $this->almacen_id=$elegido['almacen_id'];
         $this->producto_id=$elegido['producto_id'];
-        $this->descripcion=$elegido['descripcion'];   
+        $this->descripcion=$elegido['descripcion'];
         $this->almaceName=$elegido['almacen']['name'];
         //$this->sedeName=$elegido['sede']['name'];
         $this->productoName=$elegido['producto']['name'];
@@ -81,7 +81,7 @@ class InventariosEditar extends Component
         $this->sedeName=$sedeac->name;
     }
 
-    //Actualizar Regimen de Salud
+    //Actualizar
     public function edit()
     {
         // validate
@@ -92,7 +92,7 @@ class InventariosEditar extends Component
         } else{
             $this->valorSaldos();
         }
-        
+
     }
 
     public function valorSaldos(){
@@ -106,9 +106,9 @@ class InventariosEditar extends Component
         $this->anular();
     }
 
-    public function anular(){        
+    public function anular(){
 
-        // Crear registro inverso        
+        // Crear registro inverso
         $nuevoRegistro=Inventario::create([
                     'tipo'=>$this->tipo,
                     'fecha_movimiento'=>now(),
