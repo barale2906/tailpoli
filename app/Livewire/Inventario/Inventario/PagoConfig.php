@@ -100,8 +100,7 @@ class PagoConfig extends Component
 
     private function configuraciones()
     {
-        return InventarioPagoConfig::where('status', true)
-                                    ->where('descripcion', 'like', "%".$this->buscamin."%")
+        return InventarioPagoConfig::where('descripcion', 'like', "%".$this->buscamin."%")
                                     ->orderBy($this->ordena, $this->ordenado)
                                     ->paginate($this->pages);
     }
