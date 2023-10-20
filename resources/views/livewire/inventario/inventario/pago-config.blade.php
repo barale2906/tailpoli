@@ -95,13 +95,13 @@
                                 {{$configuracione->id}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$configuracione->descripcion}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$configuracione->inicia}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$configuracione->finaliza}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$configuracione->descripcion}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @can('fi_configuracionpagoEditar')
@@ -141,7 +141,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:inventario.inventario.pago-config-crear />
+        <livewire:inventario.inventario.pago-config-create />
     @endif
 
     @if ($is_editing)

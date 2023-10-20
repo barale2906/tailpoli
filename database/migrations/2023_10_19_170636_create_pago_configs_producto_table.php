@@ -15,7 +15,9 @@ return new class extends Migration
             $table->comment('relacion de productos y precio por configuración');
             $table->id();
 
+            $table->string('name')->comment('nombre del producto');
             $table->double('valor')->comment('Valor por unidad');
+
 
             $table->unsignedBigInteger('pago_configs_id');
             $table->foreign('pago_configs_id')->references('id')->on('pago_configs');
