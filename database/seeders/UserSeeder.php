@@ -52,8 +52,8 @@ class UserSeeder extends Seeder
 
         $stephany = User::factory()->create([
                     'name' => 'stephany izquierdo ocampo',
-                    'email' => 'direccionsedea@gmail.com',
-                    'password'=>bcrypt('Poliandino2023*')
+                    'email' => 'direccion@gmail.com',
+                    'password'=>bcrypt('10203040')
                 ])->assignRole('Superusuario');
 
                 DB::table('sede_user')
@@ -217,6 +217,7 @@ class UserSeeder extends Seeder
 
             $id++;
             $documento++;
+
         }
     }
 }
