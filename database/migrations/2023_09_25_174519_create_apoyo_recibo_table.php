@@ -30,6 +30,8 @@ return new class extends Migration
 
             $table->double('saldo')->nullable()->comment('Saldo del concepto o del producto al momento del registro');
             $table->integer('id_cartera')->nullable()->comment('id del registro de cartera');
+
+            $table->boolean('status')->default(true)->comment('false Inactivo, true Activo cambia a false cuando no se pueda gestionar');
         });
     }
 

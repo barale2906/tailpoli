@@ -99,11 +99,17 @@ class PagoConfigCreate extends Component
             $this->dispatch('alerta', name:'La fecha de inicio debe ser menor a la fecha de finalización');
         }else if(count($this->elegidos)>0){
 
+            $status=true;
+            if(now()<$this->inicia){
+                $status=!$status;
+            }
+
             $config=PagoConfig::create([
                 'inicia'        =>$this->inicia,
                 'finaliza'      =>$this->finaliza,
                 'descripcion'   =>$this->descripcion,
-                'sector_id'     =>$this->sector_id
+                'sector_id'     =>$this->sector_id,
+                'status'        =>$status
             ]);
 
             // Cargar productos
