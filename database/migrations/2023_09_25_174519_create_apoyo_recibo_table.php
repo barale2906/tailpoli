@@ -20,8 +20,10 @@ return new class extends Migration
             $table->string('concepto')->nullable()->comment('nombre del concepto del recibo');
 
             $table->double('valor')->comment('valor-precio registrado en el recibo o en el inventario');
-
             $table->double('cantidad')->nullable()->comment('cuantas ingresan o salen del inventario');
+            $table->double('subtotal')->nullable()->comment('Total del registro');
+
+
             $table->integer('id_producto')->nullable()->comment('id del prducto registrado');
             $table->string('producto')->nullable()->comment('nombre del producto');
             $table->integer('id_almacen')->nullable()->comment('id del almacén de donde se hizo el movimiento');

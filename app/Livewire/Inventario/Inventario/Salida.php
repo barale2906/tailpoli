@@ -152,6 +152,7 @@ class Salida extends Component
                 'concepto'=>"Entrada de Inventario",
                 'valor'=>$this->precio,
                 'cantidad'=>$this->cantidad,
+                'subtotal'=>$valor,
                 'id_producto'=>$this->producto->id,
                 'producto'=>$this->producto->name,
                 'id_almacen'=>$this->almacen->id,
@@ -234,21 +235,27 @@ class Salida extends Component
                 $saldoFin=$evaluapoyo->saldo-$value->cantidad;
 
                 if($saldoFin>=0){
-                    Inventario::create([
-                        'tipo'=>0,
-                        'fecha_movimiento'=>now(),
-                        'cantidad'=>$value->cantidad,
-                        'saldo'=>$saldoFin,
-                        'precio'=>$value->valor,
-                        'descripcion'=>$this->descripcion,
-                        'almacen_id'=>$value->id_almacen,
-                        'producto_id'=>$value->id_producto,
-                        'user_id'=>Auth::user()->id
-                    ]);
+                    $inventa = Inventario::create([
+                                            'tipo'=>0,
+                                            'fecha_movimiento'=>now(),
+                                            'cantidad'=>$value->cantidad,
+                                            'saldo'=>$saldoFin,
+                                            'precio'=>$value->valor,
+                                            'descripcion'=>$this->descripcion,
+                                            'almacen_id'=>$value->id_almacen,
+                                            'producto_id'=>$value->id_producto,
+                                            'user_id'=>Auth::user()->id
+                                        ]);
 
                     $evaluapoyo->update([
                         'status'=>false
                     ]);
+
+                    DB::table('apoyo_recibo')
+                    ->whereId($value->id)
+                    ->update([
+                            'id_cartera'=>$inventa->id
+                        ]);
 
 
                 }else{
@@ -304,10 +311,10 @@ class Salida extends Component
 
                 DB::table('concepto_pago_recibo_pago')
                     ->insert([
-                        'valor'=>$value->valor,
+                        'valor'=>$value->subtotal,
                         'tipo'=>$value->tipo,
                         'medio'=>$this->medio,
-                        'id_relacional'=>$this->alumno->id,
+                        'id_relacional'=>$value->id_cartera,
                         'concepto_pago_id'=>$this->conceptopago->id,
                         'recibo_pago_id'=>$this->recibo->id,
                         'created_at'=>now(),
