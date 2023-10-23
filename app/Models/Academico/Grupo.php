@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Grupo extends Model
 {
@@ -40,6 +41,12 @@ class Grupo extends Model
     {
         return $this->belongsToMany(User::class);
 
+    }
+
+    //Relación uno a muchos
+    public function Notas(): HasMany
+    {
+        return $this->hasMany(Nota::class);
     }
 
     //Relacion uno a muchos inversa

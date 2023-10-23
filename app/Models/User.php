@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Academico\Nota;
 use App\Models\Configuracion\Perfil;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
@@ -117,6 +118,18 @@ class User extends Authenticatable
     public function matriculaComercial(): HasMany
     {
         return $this->hasMany(Matricula::class);
+    }
+
+    //Relación uno a muchos
+    public function alumnoNotas(): HasMany
+    {
+        return $this->hasMany(Nota::class);
+    }
+
+    //Relación uno a muchos
+    public function profesorNotas(): HasMany
+    {
+        return $this->hasMany(Nota::class);
     }
 
     //Relación uno a muchos
