@@ -86,6 +86,7 @@ class UsersCreate extends Component
                 'user_id'=>$nuevoUs->id,
                 'country_id'=>1,
                 'sector_id'=>4,
+                'state_id'=>2,
                 'estado_id'=>1,
                 'regimen_salud_id'=>1,
                 'tipo_documento'=>$this->tipo_documento,
