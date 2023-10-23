@@ -1,6 +1,6 @@
 <div>
     <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
-        <h1 class="text-xl uppercase">Saldos de inventario</h1>
+        <h1 class="text-xl uppercase">movimientos de inventario</h1>
     </div>
 
     @if ($is_modify)
