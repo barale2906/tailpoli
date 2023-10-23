@@ -13,11 +13,6 @@ class Nota extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    //Relacion uno a muchos inversa
-    public function alumno() : BelongsTo
-    {
-        return $this->BelongsTo(User::class);
-    }
 
     //Relacion uno a muchos inversa
     public function profesor() : BelongsTo
