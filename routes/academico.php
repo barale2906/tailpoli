@@ -25,3 +25,7 @@ Route::get('/matriculas', function () {
 Route::get('/estudiantes', function () {
     return view('academico.estudiantes.index');
 })->middleware('can:ac_estudiantes')->name('estudiantes');
+
+Route::get('/notas', function () {
+    return view('academico.notas.index');
+})->middleware('can:ac_notas')->name('notas');

@@ -131,6 +131,20 @@ class RoleSeeder extends Seeder
 
 
         Permission::create([
+                            'name'=>'ac_notas',
+                            'descripcion'=>'ver notas'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_notaCrear',
+                            'descripcion'=>'crear notas'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+        Permission::create([
+                            'name'=>'ac_notaEditar',
+                            'descripcion'=>'editar notas'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+
+
+        Permission::create([
                             'name'=>'Cartera',
                             'descripcion'=>'ingreso al menú cartera'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
