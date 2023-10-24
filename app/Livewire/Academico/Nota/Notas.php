@@ -15,10 +15,11 @@ class Notas extends Component
     public $ordenado='DESC';
     public $pages = 10;
 
-    public $is_modify = false;
-    public $is_creating = true;
+    public $is_modify = true;
+    public $is_creating = false;
     public $is_editing = false;
-    public $is_deleting = false;
+    public $act;
+
 
     public $elegido;
 
@@ -77,25 +78,11 @@ class Notas extends Component
     }
 
     // Mostrar Regimen de Salud
-    public function show($esta, $act){
+    public function show($esta){
 
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
-
-        if($act===0){
-            $this->is_editing=!$this->is_editing;
-        }else{
-            $this->is_deleting=!$this->is_deleting;
-        }
-    }
-
-    //Activar evento
-    #[On('Inactivando')]
-    //Mostrar formulario de inactivación
-    public function updatedIsDeleting()
-    {
-        $this->is_modify = !$this->is_modify;
-        $this->is_deleting = !$this->is_deleting;
+        $this->is_editing=!$this->is_editing;
     }
 
     private function notas()

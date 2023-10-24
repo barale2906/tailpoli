@@ -151,13 +151,12 @@ class NotasCrear extends Component
             $nota="nota".$numero;
             $pocen="porcen".$numero;
 
-            //dd($value,"-",$value['nota'],"-",$value['porcentaje']);
-
             if($numero===1){
                 $this->nuevaNota=Nota::create([
                                         'profesor_id'   =>$this->profesor_id,
                                         'grupo_id'      =>$this->grupo_id,
                                         'descripcion'   =>$this->descripcion,
+                                        'registros'     =>count($this->cargados),
                                         'nota1'         =>$value['nota'],
                                         'porcen1'       =>$value['porcentaje']
                                     ]);

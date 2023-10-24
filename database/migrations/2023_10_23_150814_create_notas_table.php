@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Ramsey\Uuid\Type\Integer;
 
 return new class extends Migration
 {
@@ -20,6 +21,10 @@ return new class extends Migration
 
             $table->unsignedBigInteger('grupo_id');
             $table->foreign('grupo_id')->references('id')->on('grupos');
+
+            $table->Integer('registros')->comment('Cantidad de notas que va a sacar');
+
+            $table->longText('descripcion')->nullable();
 
             $table->string('nota1')->nullable()->comment('nombre de la nota');
             $table->double('porcen1')->nullable()->comment('porcentaje de la nota');
@@ -51,7 +56,7 @@ return new class extends Migration
             $table->string('nota10')->nullable()->comment('nombre de la nota');
             $table->double('porcen10')->nullable()->comment('porcentaje de la nota');
 
-            $table->longText('descripcion')->nullable();
+
 
             $table->timestamps();
         });

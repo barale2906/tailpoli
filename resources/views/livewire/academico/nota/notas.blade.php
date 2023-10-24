@@ -35,6 +35,9 @@
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
+                        <th scope="col" class="px-6 py-3">
+
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('id')">
                             ID
                             @if ($ordena != 'id')
@@ -68,14 +71,16 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3">
-
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($notas as $nota)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <a href="" wire:click.prevent="show({{$nota}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </a>
+                            </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$nota->id}}
                             </th>
@@ -90,18 +95,6 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$nota->descripcion}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                @can('ac_notaEditar')
-                                    @if ($nota->status===1)
-                                        <a href="#" wire:click.prevent="show({{$nota}},{{0}})" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                            <i class="fa-solid fa-marker"></i>
-                                        </a>
-                                    @endif
-                                @endcan
-                                <a href="#" wire:click.prevent="show({{$nota}},{{1}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                    <i class="fa-brands fa-creative-commons-sa"></i>
-                                </a>
                             </th>
                         </tr>
                     @endforeach
@@ -131,11 +124,7 @@
     @endif
 
     @if ($is_editing)
-        <livewire:academico.nota.notas-editar :elegido="$elegido" />
-    @endif
-
-    @if ($is_deleting)
-        <livewire:academico.nota.notas-inactivar :elegido="$elegido" />
+        <livewire:academico.nota.notas-editar :elegido="$elegido" :act="$act"/>
     @endif
 
     @push('js')
