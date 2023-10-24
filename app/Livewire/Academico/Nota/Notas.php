@@ -15,8 +15,8 @@ class Notas extends Component
     public $ordenado='DESC';
     public $pages = 10;
 
-    public $is_modify = true;
-    public $is_creating = false;
+    public $is_modify = false;
+    public $is_creating = true;
     public $is_editing = false;
     public $is_deleting = false;
 

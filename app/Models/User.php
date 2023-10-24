@@ -87,7 +87,7 @@ class User extends Authenticatable
     }
 
     //Relación uno a muchos
-    public function grupos(): HasMany
+    public function profesorGrupos(): HasMany
     {
         return $this->hasMany(Grupo::class);
     }

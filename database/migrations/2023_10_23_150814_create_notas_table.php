@@ -21,35 +21,35 @@ return new class extends Migration
             $table->unsignedBigInteger('grupo_id');
             $table->foreign('grupo_id')->references('id')->on('grupos');
 
-            $table->double('nota1')->nullable()->comment('valor de la nota');
-            $table->double('procen1')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota1')->nullable()->comment('nombre de la nota');
+            $table->double('porcen1')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota2')->nullable()->comment('valor de la nota');
-            $table->double('procen2')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota2')->nullable()->comment('nombre de la nota');
+            $table->double('porcen2')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota3')->nullable()->comment('valor de la nota');
-            $table->double('procen3')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota3')->nullable()->comment('nombre de la nota');
+            $table->double('porcen3')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota4')->nullable()->comment('valor de la nota');
-            $table->double('procen4')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota4')->nullable()->comment('nombre de la nota');
+            $table->double('porcen4')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota5')->nullable()->comment('valor de la nota');
-            $table->double('procen5')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota5')->nullable()->comment('nombre de la nota');
+            $table->double('porcen5')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota6')->nullable()->comment('valor de la nota');
-            $table->double('procen6')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota6')->nullable()->comment('nombre de la nota');
+            $table->double('porcen6')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota7')->nullable()->comment('valor de la nota');
-            $table->double('procen7')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota7')->nullable()->comment('nombre de la nota');
+            $table->double('porcen7')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota8')->nullable()->comment('valor de la nota');
-            $table->double('procen8')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota8')->nullable()->comment('nombre de la nota');
+            $table->double('porcen8')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota9')->nullable()->comment('valor de la nota');
-            $table->double('procen9')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota9')->nullable()->comment('nombre de la nota');
+            $table->double('porcen9')->nullable()->comment('porcentaje de la nota');
 
-            $table->double('nota10')->nullable()->comment('valor de la nota');
-            $table->double('procen10')->nullable()->comment('porcentaje de la nota');
+            $table->string('nota10')->nullable()->comment('nombre de la nota');
+            $table->double('porcen10')->nullable()->comment('porcentaje de la nota');
 
             $table->longText('descripcion')->nullable();
 

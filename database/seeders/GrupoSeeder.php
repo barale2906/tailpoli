@@ -19,7 +19,7 @@ class GrupoSeeder extends Seeder
             'finish_date'       => '2023-10-30',
             'quantity_limit'    => 20,
             'sede_id'           => 1,
-            'profesor_id'       => 125,
+            'profesor_id'       => 135,
             'modulo_id'         => 1
         ]);
 
@@ -29,7 +29,7 @@ class GrupoSeeder extends Seeder
             'finish_date'       => '2023-10-30',
             'quantity_limit'    => 20,
             'sede_id'           => 1,
-            'profesor_id'       => 124,
+            'profesor_id'       => 134,
             'modulo_id'         => 2
         ]);
 
@@ -39,7 +39,7 @@ class GrupoSeeder extends Seeder
             'finish_date'       => '2023-10-30',
             'quantity_limit'    => 20,
             'sede_id'           => 2,
-            'profesor_id'       => 125,
+            'profesor_id'       => 136,
             'modulo_id'         => 1
         ]);
 
@@ -49,7 +49,7 @@ class GrupoSeeder extends Seeder
             'finish_date'       => '2023-10-30',
             'quantity_limit'    => 20,
             'sede_id'           => 2,
-            'profesor_id'       => 124,
+            'profesor_id'       => 135,
             'modulo_id'         => 2
         ]);
     }
