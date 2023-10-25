@@ -129,7 +129,7 @@
 
 
     @if ($cargar_estudiante)
-        <livewire:academico.nota.notas-crear :actual="$actual"/>
+        <livewire:academico.nota.notas-alumno :actual="$actual" :contador="$contador"/>
     @endif
 
     @if ($cargar_nota)

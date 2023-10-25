@@ -206,6 +206,17 @@ class MatriculasAsigna extends Component
                         'updated_at'    =>now(),
                     ]);
 
+                //Cargar estudiante al grupo
+                DB::table('grupo_user')
+                    ->insert([
+                        'grupo_id'      =>$value['id'],
+                        'user_id'       =>$this->matricula->alumno->id,
+                        'created_at'    =>now(),
+                        'updated_at'    =>now(),
+                    ]);
+
+
+
                 //Sumar usuario
                 $inscritos=Grupo::find($value['id']);
 

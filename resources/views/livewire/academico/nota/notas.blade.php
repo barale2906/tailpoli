@@ -124,7 +124,7 @@
     @endif
 
     @if ($is_editing)
-        <livewire:academico.nota.notas-editar :elegido="$elegido" :act="$act"/>
+        <livewire:academico.nota.notas-editar :elegido="$elegido"/>
     @endif
 
     @push('js')
