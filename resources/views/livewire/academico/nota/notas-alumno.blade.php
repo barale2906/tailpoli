@@ -33,14 +33,16 @@
                             </th>
 
                             <th scope="col" class="p-1" >
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div class="mb-6">
-                                        <input type="text" id="calificacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nota" wire:model.live="calificacion">
+                                @if ($nota->aprobo===0)
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div class="mb-6">
+                                            <input type="text" id="calificacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nota" wire:model.live="calificacion">
+                                        </div>
+                                        <a href="#" wire:click.prevent="subir({{$nota->id}})"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                                            <i class="fa-solid fa-check"></i>
+                                        </a>
                                     </div>
-                                    <a href="#" wire:click.prevent="subir({{$nota->id}})"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
-                                        <i class="fa-solid fa-check"></i>
-                                    </a>
-                                </div>
+                                @endif
                             </th>
                         </tr>
                     @endforeach

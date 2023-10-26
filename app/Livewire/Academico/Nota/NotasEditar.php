@@ -17,28 +17,12 @@ class NotasEditar extends Component
     public $encabezado=[];
     public $mapaencabe=[];
     public $cargar_nota=false;
-    public $modificar=false;
     public $listado=true;
 
     public $notaenv;
     public $porcenv;
 
     protected $listeners = ['refresh' => '$refresh'];
-
-    //Activar evento
-    #[On('Modif')]
-    //Mostrar formulario de modificación
-    public function updatedModificar()
-    {
-        $this->modificar = !$this->modificar;
-        $this->listado = !$this->listado;
-    }
-
-    public function abremodificar(){
-        $this->modificar = !$this->modificar;
-        $this->listado = !$this->listado;
-        $this->registroNotas();
-    }
 
     public function abrenotas(){
         $this->cargar_nota = !$this->cargar_nota;
