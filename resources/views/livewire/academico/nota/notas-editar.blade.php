@@ -42,46 +42,43 @@
                         {{$actual->descripcion}}
                     </p>
                 </div>
-                <div>
-                    <a href="#" wire:click.prevent="$dispatch('Editando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                        <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
-                    </a>
-                </div>
-                <div class="sm:cols-1 md:col-span-2">
-                    @hasrole('Superusuario')
-                        @can('ac_notaEditar')
-                            <a href="#" wire:click.prevent="estudiante" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                <i class="fa-solid fa-suitcase-rolling"></i> Nuevo(a) Estudiante
-                            </a>
-                        @endcan
-                    @endrole
-                        @if ($actual->profesor_id===Auth::user()->id)
+                @if ($listado)
+                    <div>
+                        <a href="#" wire:click.prevent="$dispatch('Editando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                            <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+                        </a>
+                    </div>
+                    <div>
+                        @hasrole('Profesor')
+                            @if ($actual->profesor_id===Auth::user()->id)
+                                <a href="#" wire:click.prevent="abremodificar" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-solid fa-pen-nib"></i> Modificar
+                                </a>
+                            @endif
+
+                        @else
                             @can('ac_notaEditar')
-                                <a href="#" wire:click.prevent="estudiante" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                    <i class="fa-solid fa-suitcase-rolling"></i> Nuevo(a) Estudiante
+                                <a href="#" wire:click.prevent="abremodificar" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-solid fa-pen-nib"></i> Modificar
                                 </a>
                             @endcan
-                        @endif
+                        @endrole
 
-                </div>
-                <div>
+                    </div>
+                @endif
 
-                    @hasrole('Profesor')
-                        @if ($actual->profesor_id===Auth::user()->id)
-                            <a href="#" wire:click.prevent="abremodificar" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                <i class="fa-solid fa-pen-nib"></i> Modificar
-                            </a>
-                        @endif
+                @if ($cargar_nota)
+                    <a href="" wire:click.prevent="abrenotas" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                        <i class="fa-solid fa-rectangle-xmark"></i> Cancelar
+                    </a>
+                @endif
 
-                    @else
-                        @can('ac_notaEditar')
-                            <a href="#" wire:click.prevent="abremodificar" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                <i class="fa-solid fa-pen-nib"></i> Modificar
-                            </a>
-                        @endcan
-                    @endrole
+                @if ($modificar)
+                    <a href="" wire:click.prevent="abremodificar" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                        <i class="fa-solid fa-rectangle-xmark"></i> Cancelar
+                    </a>
+                @endif
 
-                </div>
             </div>
         </div>
     </div>
@@ -92,14 +89,29 @@
                 <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
+                            <th colspan="2"></th>
+                            @foreach ($mapaencabe as $item)
+                                <th class="bg-slate-300 text-center text-xl m-3 p-3 rounded-2xl hover:bg-yellow-200" colspan="2" style="cursor: pointer;" wire:click="calificacion({{$item['id']}})">
+                                    <i class="fa-solid fa-person-chalkboard"></i>
+                                </th>
+                            @endforeach
+                            <th></th>
+                        </tr>
+                        <tr>
                             <th scope="col" class="px-6 py-3" >
                                 Alumno
                             </th>
+                            <th scope="col" class="px-6 py-3" >
+                                Acumulado
+                            </th>
                             @foreach ($encabezado as $item)
-                                <th scope="col" class="px-6 py-3" >
+                                <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('id')">
                                     {{$actual->$item}}
                                 </th>
                             @endforeach
+                            <th scope="col" class="px-6 py-3" >
+                                Observaciones
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,11 +120,16 @@
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{$nota->alumno}}
                                 </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{$nota->acumulado}}
+                                </th>
                                 @foreach ($encabezado as $item)
                                     <th scope="col" class="px-6 py-3" >
                                         {{$nota->$item}}
                                     </th>
                                 @endforeach
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{$nota->observaciones}}
                                 </th>
                             </tr>
                         @endforeach
@@ -128,16 +145,12 @@
 
 
 
-    @if ($cargar_estudiante)
-        <livewire:academico.nota.notas-alumno :actual="$actual" :contador="$contador"/>
+    @if ($modificar)
+        <livewire:academico.nota.notas-editar :actual="$actual"/>
     @endif
 
     @if ($cargar_nota)
-        <livewire:academico.nota.notas-editar :actual="$actual"/>
-    @endif
-
-    @if ($modificar)
-        <livewire:academico.nota.notas-editar :actual="$actual"/>
+        <livewire:academico.nota.notas-alumno :notaenv="$notaenv" :porcenv="$porcenv" :actual="$actual"/>
     @endif
 
 </div>

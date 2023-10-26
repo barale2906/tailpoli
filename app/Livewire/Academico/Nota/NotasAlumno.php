@@ -4,63 +4,42 @@ namespace App\Livewire\Academico\Nota;
 
 use App\Models\Academico\Nota;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class NotasAlumno extends Component
 {
-    public $grupo_id;
-    public $profesor_id;
-    public $encabezado=[];
-    public $contador;
-    public $alumnos;
+    public $notas;
+    public $notaenv;
+    public $porcenv;
     public $actual;
+    public $calificacion;
 
-    public function mount($actual = null, $contador = null){
 
-        $this->grupo_id=$actual['grupo_id'];
-        $this->profesor_id=$actual['profesor_id'];
-        $this->actual=Nota::find($actual['id']);
-        $this->contador=$contador;
+    public function mount($notaenv = null, $porcenv = null, $actual = null){
 
-        $this->estudiantes();
-        $this->creaEncabezado();
+        $this->notaenv=$notaenv;
+        $this->porcenv=$porcenv;
+        $this->actual=$actual;
 
+        $this->registroNotas();
     }
 
-    public function estudiantes(){
-        $this->alumnos=User::query()
-                            ->with(['alumnosGrupo'])
-                            ->when($this->grupo_id, function($qu){
-                                return $qu->where('status', true)
-                                        ->whereHas('alumnosGrupo', function($q){
-                                            $q->where('grupo_id', $this->grupo_id);
-                                        });
-                            })
-                            ->orderBy('name')
-                            ->get();
+    public function registroNotas(){
+
+        $this->notas=DB::table('notas_detalle')
+                        ->where('nota_id', $this->actual->id)
+                        ->orderBy('alumno')
+                        ->get();
     }
 
-    public function creaEncabezado(){
-
-        $i=1;
-
-        for ($i=1; $i <= $this->contador; $i++) {
-
-            $nota="nota".$i;
-            $porce="porcen".$i;
-
-            $nuevo=[
-                'id'=>$i,
-                $nota=>$this->actual->$nota,
-                $porce=>$this->actual->$porce,
-            ];
-
-            array_push($this->encabezado, $nuevo);
+    public function subir($id){
+        if($this->calificacion===null){
+            $this->dispatch('alerta', name:'Debe registrar nota.');
+        }else{
 
         }
-
     }
-
 
     public function render()
     {

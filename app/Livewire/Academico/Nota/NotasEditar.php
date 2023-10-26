@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Nota;
 
 use App\Models\Academico\Nota;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -14,21 +15,15 @@ class NotasEditar extends Component
     public $notas;
     public $contador;
     public $encabezado=[];
-    public $cargar_estudiante=false;
+    public $mapaencabe=[];
     public $cargar_nota=false;
     public $modificar=false;
     public $listado=true;
 
-    protected $listeners = ['refresh' => '$refresh'];
+    public $notaenv;
+    public $porcenv;
 
-    //Activar evento
-    #[On('Estudiante')]
-    //Mostrar formulario de creación de estudiante
-    public function updatedCargarEstudiante()
-    {
-        $this->cargar_estudiante = !$this->cargar_estudiante;
-        $this->listado = !$this->listado;
-    }
+    protected $listeners = ['refresh' => '$refresh'];
 
     //Activar evento
     #[On('Modif')]
@@ -39,14 +34,25 @@ class NotasEditar extends Component
         $this->listado = !$this->listado;
     }
 
-    public function estudiante(){
-        $this->cargar_estudiante = !$this->cargar_estudiante;
-        $this->listado = !$this->listado;
-    }
-
     public function abremodificar(){
         $this->modificar = !$this->modificar;
         $this->listado = !$this->listado;
+    }
+
+    public function abrenotas(){
+        $this->cargar_nota = !$this->cargar_nota;
+        $this->listado = !$this->listado;
+    }
+
+    public function calificacion($id){
+        foreach($this->mapaencabe as $value){
+            if($value['id']===$id){
+                $this->notaenv=$value['nota'];
+                $this->porcenv=$value['porcen'];
+            }
+        }
+
+        $this->abrenotas();
     }
 
 
@@ -75,7 +81,62 @@ class NotasEditar extends Component
 
             array_push($this->encabezado, $nota);
             array_push($this->encabezado, $porce);
+
+            $nuevo=[
+                'id'    =>$i,
+                'nota'  =>$nota,
+                'porcen'=>$porce
+            ];
+
+            array_push($this->mapaencabe, $nuevo);
         }
+
+        $this->cargarEstudiantes();
+    }
+
+    public function cargarEstudiantes(){
+        if($this->actual->grupo->inscritos!==$this->notas->count()){
+            $alumnos=User::query()
+                            ->with(['alumnosGrupo'])
+                            ->when($this->actual->grupo_id, function($qu){
+                                return $qu->where('status', true)
+                                        ->whereHas('alumnosGrupo', function($q){
+                                            $q->where('grupo_id', $this->actual->grupo_id);
+                                        });
+                            })
+                            ->select('id', 'name')
+                            ->orderBy('name')
+                            ->get();
+
+            foreach ($alumnos as $value) {
+                $esta=DB::table('notas_detalle')
+                            ->where('nota_id', $this->id)
+                            ->where('alumno_id', $value->id)
+                            ->count();
+
+                if($esta===0){
+                    $this->cargaEstudiante($value);
+                }
+            }
+        }
+
+        $this->registroNotas();
+    }
+
+    public function cargaEstudiante($estu){
+        DB::table('notas_detalle')
+            ->insert([
+                'nota_id'       =>$this->actual->id,
+                'alumno_id'     =>$estu->id,
+                'alumno'        =>$estu->name,
+                'profesor_id'   =>$this->actual->profesor_id,
+                'profesor'      =>$this->actual->profesor->name,
+                'grupo_id'      =>$this->actual->grupo_id,
+                'grupo'         =>$this->actual->grupo->name,
+                'observaciones' =>"--",
+                'created_at'    =>now(),
+                'updated_at'    =>now()
+            ]);
     }
 
     public function render()
