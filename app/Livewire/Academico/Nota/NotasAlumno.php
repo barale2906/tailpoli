@@ -43,7 +43,8 @@ class NotasAlumno extends Component
                     ->first();
 
             $porcenta=$this->porcenv;
-            $porcentaje=(floatval($this->calificacion)*$this->actual->$porcenta)/100;
+            $porce=(floatval($this->calificacion)*$this->actual->$porcenta)/100;
+            $porcentaje=round($porce, 2);
             $concepto=$this->notaenv;
             $observaciones=now()." ".Auth::user()->name." cargo la nota de: ".$this->actual->$concepto." --- ".$item->observaciones;
 
@@ -59,7 +60,28 @@ class NotasAlumno extends Component
             $this->dispatch('refresh');
             $this->reset('calificacion');
 
+            $this->promedio($id);
+
         }
+    }
+
+    public function promedio($id){
+        $total=0;
+        for ($i=1; $i <= $this->actual->registros; $i++) {
+            $porcen="porcen".$i;
+            $item=DB::table('notas_detalle')
+                    ->where('id', $id)
+                    ->select($porcen)
+                    ->first();
+
+            $total=$total+$item->$porcen;
+        }
+
+        DB::table('notas_detalle')
+                    ->where('id', $id)
+                    ->update([
+                        'acumulado'=>$total
+                    ]);
     }
 
     public function render()
