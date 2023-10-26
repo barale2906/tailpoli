@@ -4,6 +4,7 @@ namespace App\Livewire\Academico\Nota;
 
 use App\Models\Academico\Nota;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -37,6 +38,26 @@ class NotasAlumno extends Component
         if($this->calificacion===null){
             $this->dispatch('alerta', name:'Debe registrar nota.');
         }else{
+            $item=DB::table('notas_detalle')
+                    ->where('id', $id)
+                    ->first();
+
+            $porcenta=$this->porcenv;
+            $porcentaje=(floatval($this->calificacion)*$this->actual->$porcenta)/100;
+            $concepto=$this->notaenv;
+            $observaciones=now()." ".Auth::user()->name." cargo la nota de: ".$this->actual->$concepto." --- ".$item->observaciones;
+
+            DB::table('notas_detalle')
+                    ->where('id', $id)
+                    ->update([
+                        $concepto       =>$this->calificacion,
+                        $porcenta       =>$porcentaje,
+                        'observaciones' =>$observaciones,
+                    ]);
+
+            $this->registroNotas();
+            $this->dispatch('refresh');
+            $this->reset('calificacion');
 
         }
     }

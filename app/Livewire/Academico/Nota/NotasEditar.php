@@ -37,11 +37,13 @@ class NotasEditar extends Component
     public function abremodificar(){
         $this->modificar = !$this->modificar;
         $this->listado = !$this->listado;
+        $this->registroNotas();
     }
 
     public function abrenotas(){
         $this->cargar_nota = !$this->cargar_nota;
         $this->listado = !$this->listado;
+        $this->registroNotas();
     }
 
     public function calificacion($id){
