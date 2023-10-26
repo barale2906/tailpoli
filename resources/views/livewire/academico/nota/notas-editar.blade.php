@@ -59,6 +59,12 @@
                     </a>
                 @endif
 
+                @if ($aprueba)
+                    <a href="" wire:click.prevent="abrenaprueba" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                        <i class="fa-solid fa-rectangle-xmark"></i> Cancelar
+                    </a>
+                @endif
+
             </div>
         </div>
     </div>
@@ -88,7 +94,7 @@
                                 Aprobo
                             </th>
                             @foreach ($encabezado as $item)
-                                <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('id')">
+                                <th scope="col" class="px-6 py-3" >
                                     {{$actual->$item}}
                                 </th>
                             @endforeach
@@ -106,20 +112,32 @@
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{$nota->acumulado}}
                                 </th>
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    @switch($nota->aprobo)
+
+                                @switch($nota->aprobo)
                                         @case(0)
-                                            CALIFICA
+                                            @if ($nota->acumulado)
+                                                <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white" style="cursor: pointer;" wire:click="finaprueba({{$nota->id}})">
+                                                    Califica
+                                                </th>
+                                            @else
+                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                    --
+                                                </th>
+                                            @endif
+
                                             @break
                                         @case(1)
-                                            APROBADO
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                APROBADO
+                                            </th>
                                             @break
                                         @case(2)
-                                            REPROBADO
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                REPROBADO
+                                            </th>
                                             @break
                                     @endswitch
-                                    {{$nota->acumulado}}
-                                </th>
+
                                 @foreach ($encabezado as $item)
                                     <th scope="col" class="px-6 py-3" >
                                         {{$nota->$item}}
@@ -138,6 +156,10 @@
 
     @if ($cargar_nota)
         <livewire:academico.nota.notas-alumno :notaenv="$notaenv" :porcenv="$porcenv" :actual="$actual"/>
+    @endif
+
+    @if ($aprueba)
+        <livewire:academico.nota.notas-aprobar :idcierra="$idcierra" :actual="$actual"/>
     @endif
 
 </div>

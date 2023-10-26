@@ -17,6 +17,8 @@ class NotasEditar extends Component
     public $encabezado=[];
     public $mapaencabe=[];
     public $cargar_nota=false;
+    public $aprueba=false;
+    public $idcierra;
     public $listado=true;
 
     public $notaenv;
@@ -29,6 +31,19 @@ class NotasEditar extends Component
         $this->listado = !$this->listado;
         $this->registroNotas();
     }
+
+    public function finaprueba($id){
+        $this->idcierra=$id;
+        $this->abrenaprueba();
+    }
+
+    public function abrenaprueba(){
+        $this->aprueba = !$this->aprueba;
+        $this->listado = !$this->listado;
+        $this->registroNotas();
+    }
+
+
 
     public function calificacion($id){
         foreach($this->mapaencabe as $value){

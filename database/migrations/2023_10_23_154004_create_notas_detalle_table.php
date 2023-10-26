@@ -34,7 +34,7 @@ return new class extends Migration
 
             $table->longText('observaciones')->nullable();
 
-            $table->string('aprobo')->default(0)->comment('0 en proceso, 1 aprobado, 2 reprobado');
+            $table->integer('aprobo')->default(0)->comment('0 en proceso, 1 aprobado, 2 reprobado');
 
             $table->double('nota1')->nullable()->comment('valor de la nota');
             $table->double('porcen1')->nullable()->comment('porcentaje de la nota');
