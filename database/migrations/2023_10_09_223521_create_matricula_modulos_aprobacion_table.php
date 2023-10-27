@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('modulo_id')->comment('modulo matriculado');
             $table->string('name')->comment('nombre del modulo');
             $table->boolean('dependencia')->default(false)->comment('false no depende de otros modulos, true depende de otros modulos');
-            $table->longText('observaciones');
             $table->boolean('aprobo')->default(false)->comment('false desaprobado, true aprobado');
+            $table->longText('observaciones');
             $table->timestamps();
         });
     }

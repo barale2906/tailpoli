@@ -60,9 +60,34 @@
                 @endif
 
                 @if ($aprueba)
-                    <a href="" wire:click.prevent="abrenaprueba" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                        <i class="fa-solid fa-rectangle-xmark"></i> Cancelar
-                    </a>
+                    <div class="md:inline-flex rounded-md shadow-sm" role="group">
+                        <button
+                            type="button"
+                            class="inline-flex items-center px-4 py-2 text-sm sm:text-xs font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-red-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
+                            wire:click="abrenaprueba"
+                            >
+                            <i class="fa-solid fa-rectangle-xmark"></i>
+                            CANCELAR
+                        </button>
+
+                        <button
+                            type="button"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-900 bg-green-200 border border-green-900 hover:bg-green-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-green-500 focus:bg-green-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-green-700 dark:focus:bg-green-700"
+                            wire:click="aprobo"
+                            >
+                            <i class="fa-regular fa-face-grin-squint-tears"></i>
+                            APROBO
+                        </button>
+
+                        <button
+                            type="button"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-orange-900 bg-orange-200 border border-orange-900 rounded-r-md hover:bg-orange-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-orange-500 focus:bg-orange-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-orange-700 dark:focus:bg-orange-700"
+                            wire:click="reprobo"
+                            >
+                            <i class="fa-regular fa-face-sad-tear"></i>
+                            REPROBO
+                        </button>
+                    </div>
                 @endif
 
             </div>
@@ -161,5 +186,4 @@
     @if ($aprueba)
         <livewire:academico.nota.notas-aprobar :idcierra="$idcierra" :actual="$actual"/>
     @endif
-
 </div>

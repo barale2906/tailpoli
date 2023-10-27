@@ -4,6 +4,7 @@ namespace App\Livewire\Academico\Nota;
 
 use App\Models\Academico\Nota;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -20,6 +21,7 @@ class NotasEditar extends Component
     public $aprueba=false;
     public $idcierra;
     public $listado=true;
+    public $estudiante;
 
     public $notaenv;
     public $porcenv;
@@ -34,6 +36,9 @@ class NotasEditar extends Component
 
     public function finaprueba($id){
         $this->idcierra=$id;
+        $this->estudiante=DB::table('notas_detalle')
+                            ->where('id', $id)
+                            ->first();
         $this->abrenaprueba();
     }
 
@@ -43,7 +48,54 @@ class NotasEditar extends Component
         $this->registroNotas();
     }
 
+    public function reprobo(){
+        $observa=now()." --- ¡REPROBO! --- ".Auth::user()->name." --- ".$this->estudiante->observaciones;
+            DB::table('notas_detalle')
+                    ->where('id', $this->idcierra)
+                    ->update([
+                        'aprobo'        =>2,
+                        'observaciones' =>$observa,
+                        'updated_at'    =>now(),
+                    ]);
 
+        $this->dispatch('alerta', name:'El(la) estudiante: '.$this->estudiante->alumno." ¡REPROBO!");
+        $this->reset('idcierra');
+        $this->abrenaprueba();
+    }
+
+
+public function aprobo(){
+
+    $moduloAp=DB::table('matricula_modulos_aprobacion')
+                ->where('alumno_id', $this->estudiante->alumno_id)
+                ->where('modulo_id', $this->actual->grupo->modulo_id)
+                ->select('observaciones')
+                ->first();
+
+    $observac=now()." --- ¡APROBO! --- ".Auth::user()->name." --- ".$moduloAp->observaciones;
+
+    DB::table('matricula_modulos_aprobacion')
+                    ->where('alumno_id', $this->estudiante->alumno_id)
+                    ->where('modulo_id', $this->actual->grupo->modulo_id)
+                    ->update([
+                        'aprobo'        =>true,
+                        'updated_at'    =>now(),
+                        'observaciones' =>$observac,
+                    ]);
+
+    $observa=now()." --- ¡APROBO! --- ".Auth::user()->name." --- ".$this->estudiante->observaciones;
+            DB::table('notas_detalle')
+                    ->where('id', $this->idcierra)
+                    ->update([
+                        'aprobo'        =>1,
+                        'observaciones' =>$observa,
+                        'updated_at'    =>now(),
+                    ]);
+
+        $this->dispatch('alerta', name:'El(la) estudiante: '.$this->estudiante->alumno." ¡APROBO!");
+        $this->reset('idcierra');
+        $this->abrenaprueba();
+}
 
     public function calificacion($id){
         foreach($this->mapaencabe as $value){
