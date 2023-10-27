@@ -63,7 +63,7 @@
                     <div class="md:inline-flex rounded-md shadow-sm" role="group">
                         <button
                             type="button"
-                            class="inline-flex items-center px-4 py-2 text-sm sm:text-xs font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-red-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
+                            class="inline-flex items-center px-4 py-2 text-sm sm:text-xs font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-red-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700 mr-10"
                             wire:click="abrenaprueba"
                             >
                             <i class="fa-solid fa-rectangle-xmark"></i>
@@ -72,7 +72,7 @@
 
                         <button
                             type="button"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-900 bg-green-200 border border-green-900 hover:bg-green-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-green-500 focus:bg-green-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-green-700 dark:focus:bg-green-700"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-900 bg-green-200 border border-green-900 hover:bg-green-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-green-500 focus:bg-green-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-green-700 dark:focus:bg-green-700 mr-10"
                             wire:click="aprobo"
                             >
                             <i class="fa-regular fa-face-grin-squint-tears"></i>
@@ -99,15 +99,31 @@
             @if ($notas->count()>0)
                 <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th colspan="3"></th>
-                            @foreach ($mapaencabe as $item)
-                                <th class="bg-slate-300 text-center text-xl m-3 p-3 rounded-2xl hover:bg-yellow-200" colspan="2" style="cursor: pointer;" wire:click="calificacion({{$item['id']}})">
-                                    <i class="fa-solid fa-person-chalkboard"></i>
-                                </th>
-                            @endforeach
-                            <th></th>
-                        </tr>
+                        @can('ac_notaEditar')
+                            @hasrole('Profesor')
+                                @if ($actual->profesor_id===Auth::user()->id)
+                                    <tr>
+                                        <th colspan="3"></th>
+                                        @foreach ($mapaencabe as $item)
+                                            <th class="bg-slate-300 text-center text-xl m-3 p-3 rounded-2xl hover:bg-yellow-200" colspan="2" style="cursor: pointer;" wire:click="calificacion({{$item['id']}})">
+                                                <i class="fa-solid fa-person-chalkboard"></i>
+                                            </th>
+                                        @endforeach
+                                        <th></th>
+                                    </tr>
+                                @endif
+                            @else
+                                <tr>
+                                    <th colspan="3"></th>
+                                    @foreach ($mapaencabe as $item)
+                                        <th class="bg-slate-300 text-center text-xl m-3 p-3 rounded-2xl hover:bg-yellow-200" colspan="2" style="cursor: pointer;" wire:click="calificacion({{$item['id']}})">
+                                            <i class="fa-solid fa-person-chalkboard"></i>
+                                        </th>
+                                    @endforeach
+                                    <th></th>
+                                </tr>
+                            @endhasrole
+                        @endcan
                         <tr>
                             <th scope="col" class="px-6 py-3" >
                                 Alumno
@@ -115,9 +131,11 @@
                             <th scope="col" class="px-6 py-3" >
                                 Acumulado
                             </th>
-                            <th scope="col" class="px-6 py-3" >
-                                Aprobo
-                            </th>
+                            @can('ac_notaEditar')
+                                <th scope="col" class="px-6 py-3" >
+                                    Aprobo
+                                </th>
+                            @endcan
                             @foreach ($encabezado as $item)
                                 <th scope="col" class="px-6 py-3" >
                                     {{$actual->$item}}
@@ -137,13 +155,29 @@
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{$nota->acumulado}}
                                 </th>
-
-                                @switch($nota->aprobo)
+                                @can('ac_notaEditar')
+                                    @switch($nota->aprobo)
                                         @case(0)
                                             @if ($nota->acumulado)
-                                                <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white" style="cursor: pointer;" wire:click="finaprueba({{$nota->id}})">
-                                                    Califica
-                                                </th>
+
+                                                    @hasrole('Profesor')
+                                                        @if ($actual->profesor_id===Auth::user()->id)
+                                                            <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white" style="cursor: pointer;"
+                                                            wire:click="finaprueba({{$nota->id}})"
+                                                                >
+                                                                Califica
+                                                            </th>
+                                                        @else
+                                                            <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white">
+                                                                Califica
+                                                            </th>
+                                                        @endif
+                                                    @else
+                                                        <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white" style="cursor: pointer;" wire:click="finaprueba({{$nota->id}})">
+                                                            Califica
+                                                        </th>
+                                                    @endhasrole
+
                                             @else
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                     --
@@ -162,7 +196,7 @@
                                             </th>
                                             @break
                                     @endswitch
-
+                                @endcan
                                 @foreach ($encabezado as $item)
                                     <th scope="col" class="px-6 py-3" >
                                         {{$nota->$item}}
