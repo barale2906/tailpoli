@@ -42,7 +42,7 @@
                 <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 m-2">
                     <div class="mb-6">
                         <label for="sede_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">A que sede se va a matricular</label>
-                        <select wire:model.live="sede_id" id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                        <select wire:model.live="sede_id" id="sede_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                             <option >Elija sede...</option>
                             @foreach ($sedes as $item)
                                 <option value={{$item->id}}>{{$item->name}} - {{$item->sector->name}}</option>

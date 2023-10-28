@@ -14,7 +14,7 @@ class SedeSeeder extends Seeder
     public function run(): void
     {
         Sede::create([
-            'name'                      => 'SEDE A - PRINCIPAL',
+            'name'                      => 'soacha 1',
             'address'                   => 'Cra. 12A BIS Nro. 22-12 SUR - SAN JOSÉ Localidad Rafael Uribe Uribe',
             'phone'                     => '2627700',
             'nit'                       =>'900656857-5',
@@ -26,7 +26,7 @@ class SedeSeeder extends Seeder
             'sector_id'                 =>1
         ]);
         Sede::create([
-            'name'                      => 'SEDE - BOGOTÁ',
+            'name'                      => 'chía a',
             'address'                   => 'Cerca a la casa',
             'phone'                     => '2627700',
             'nit'                       =>'900656857-5',

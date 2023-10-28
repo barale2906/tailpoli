@@ -209,6 +209,8 @@
                         @endforeach
                     </tbody>
                 </table>
+            @else
+                <h2 class="text-center text-xl uppercase">No hay alumnos inscritos a este grupo</h2>
             @endif
         </div>
     @endif

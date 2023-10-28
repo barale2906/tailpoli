@@ -65,7 +65,7 @@ class MatriculasCrear extends Component
 
         $this->cursos=Curso::query()
                             ->with(['configpagos'])
-                            ->when($this->sede_id, function($query){
+                            ->when($this->sedeele->sector->id, function($query){
                                 return $query->where('status', true)
                                         ->WhereHas('configpagos', function($q){
                                             $q->where('sector_id', $this->sedeele->sector->id);

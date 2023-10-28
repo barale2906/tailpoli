@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Grupo;
 
+use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sede;
@@ -10,24 +11,21 @@ use Livewire\Component;
 
 class GruposCrear extends Component
 {
-    public $name = '';
-    public $start_date='';
-    public $finish_date='';
-    public $quantity_limit='';
-    public $sede_id='';
-    public $profesor_id='';
-    public $modulo_id = '';
+    public $name;
+    public $start_date;
+    public $finish_date;
+    public $quantity_limit;
+    public $sede_id;
+    public $profesor_id;
+    public $modulo_id;
+    public $modulos;
+    public $curso_id;
 
-    public function modulo($item){
-        $this->modulo_id=$item;
-    }
-
-    public function sede($item){
-        $this->sede_id=$item;
-    }
-
-    public function profesor($item){
-        $this->profesor_id=$item;
+    public function updatedCursoId(){
+        $this->modulos=Modulo::where('status', true)
+                            ->where('curso_id', $this->curso_id)
+                            ->orderBy('name', 'ASC')
+                            ->get();
     }
 
     /**
@@ -91,9 +89,9 @@ class GruposCrear extends Component
         }
     }
 
-    private function modulos()
+    private function cursos()
     {
-        return Modulo::where('status', '=', true)
+        return Curso::where('status', '=', true)
                     ->orderBy('name')
                     ->get();
     }
@@ -115,7 +113,7 @@ class GruposCrear extends Component
     public function render()
     {
         return view('livewire.academico.grupo.grupos-crear', [
-            'modulos'   => $this->modulos(),
+            'cursos'   => $this->cursos(),
             'sedes'      => $this->sedes(),
             'profesores'=> $this->profesores()
         ]);
