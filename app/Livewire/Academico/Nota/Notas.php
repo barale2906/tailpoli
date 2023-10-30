@@ -18,6 +18,7 @@ class Notas extends Component
     public $is_modify = true;
     public $is_creating = false;
     public $is_editing = false;
+    public $is_asistencia = false;
     public $act;
 
 
@@ -77,12 +78,29 @@ class Notas extends Component
         $this->is_editing = !$this->is_editing;
     }
 
-    // Mostrar Regimen de Salud
+    //Activar evento
+    #[On('Asistiendo')]
+    //Mostrar formulario de creación
+    public function updatedIsAsistencia()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_asistencia = !$this->is_asistencia;
+    }
+
+    // Mostrar
     public function show($esta){
 
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
         $this->is_editing=!$this->is_editing;
+    }
+
+    // Mostrar
+    public function asistencia($esta){
+
+        $this->elegido=$esta;
+        $this->is_modify = !$this->is_modify;
+        $this->is_asistencia=!$this->is_asistencia;
     }
 
     private function notas()
