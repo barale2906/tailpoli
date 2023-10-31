@@ -32,7 +32,7 @@ class Cartera extends Model
     }
 
     //Relacion uno a muchos inversa
-    public function conceptopago(): BelongsTo
+    public function concepto_pago(): BelongsTo
     {
         return $this->BelongsTo(ConceptoPago::class);
     }

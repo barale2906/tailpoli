@@ -3,6 +3,6 @@
         Carteras
     @endpush
 
-    {{-- <livewire:configuracion.area.areas /> --}}
+    <livewire:cartera.cartera.carteras />
 
 </x-admin-layout>
