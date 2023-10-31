@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Academico\Asistencia;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Nota;
@@ -130,6 +131,18 @@ class User extends Authenticatable
     public function profesorNotas(): HasMany
     {
         return $this->hasMany(Nota::class);
+    }
+
+    //Relación uno a muchos
+    public function alumnoAsistencias(): HasMany
+    {
+        return $this->hasMany(Asistencia::class);
+    }
+
+    //Relación uno a muchos
+    public function profesorAsistencias(): HasMany
+    {
+        return $this->hasMany(Asistencia::class);
     }
 
     //Relación uno a muchos

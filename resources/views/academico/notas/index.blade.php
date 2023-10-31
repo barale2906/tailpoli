@@ -1,6 +1,6 @@
 <x-admin-layout>
     @push('title')
-        Notas
+        Notas - Asistencias
     @endpush
 
     <livewire:academico.nota.notas />

@@ -50,6 +50,12 @@ class Grupo extends Model
         return $this->hasMany(Nota::class);
     }
 
+    //Relación uno a muchos
+    public function asistencias(): HasMany
+    {
+        return $this->hasMany(Asistencia::class);
+    }
+
     //Relacion uno a muchos inversa
     public function sede() : BelongsTo
     {
