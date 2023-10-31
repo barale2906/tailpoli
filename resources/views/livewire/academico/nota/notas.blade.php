@@ -142,7 +142,7 @@
                     const variable = name;
                     console.log(variable['name'])
                     Swal.fire({
-                        position: 'center',
+                        position: 'top-end',
                         icon: 'success',
                         title: variable['name'],
                         showConfirmButton: false,

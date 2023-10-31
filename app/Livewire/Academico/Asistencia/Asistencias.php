@@ -10,11 +10,63 @@ use Livewire\Component;
 class Asistencias extends Component
 {
     public $actual;
+    public $fecha;
     public $asistencias;
     public $grupo_id;
     public $profesor_id;
     public $encabezado=[];
+    public $alumnosPrime;
+    public $llegaron=[];
     public $contador=0;
+
+    public function primerAlumno($item){
+        $nuevo=[
+            'id' => $item['id'],
+            'name'=>$item['name']
+        ];
+
+        if(in_array($nuevo, $this->llegaron)){
+            $this->dispatch('alerta', name:'Ya esta cargado');
+        }else{
+            array_push($this->llegaron, $nuevo);
+            $this->dispatch('alerta', name:'Asisitio');
+        }
+
+    }
+
+    public function primero(){
+
+        $this->actual=Asistencia::create([
+            'profesor_id'       => $this->profesor_id,
+            'grupo_id'          => $this->grupo_id,
+            'registros'         => 1,
+            'fecha1'            => $this->fecha,
+        ]);
+
+        $this->cargaPrimero();
+    }
+
+    public function cargaPrimero(){
+        foreach ($this->llegaron as $value) {
+            DB::table('asistencia_detalle')
+            ->insert([
+                'asistencia_id' =>$this->actual->id,
+                'alumno_id'     =>$value['id'],
+                'alumno'        =>$value['name'],
+                'profesor_id'   =>$this->profesor_id,
+                'profesor'      =>$this->actual->profesor->name,
+                'grupo_id'      =>$this->grupo_id,
+                'grupo'         =>$this->actual->grupo->name,
+                'fecha1'        =>$this->fecha,
+                'created_at'    =>now(),
+                'updated_at'    =>now()
+            ]);
+        }
+
+        $this->reset('fecha', 'llegaron');
+
+        $this->formaencabezado();
+    }
 
 
     public function mount($elegido = null){
@@ -46,6 +98,17 @@ class Asistencias extends Component
             $this->cargarEstudiantes();
         }else{
             $this->dispatch('alerta', name:'Debe Crear Primer Fecha de Registro');
+            $this->alumnosPrime=User::query()
+                                    ->with(['alumnosGrupo'])
+                                    ->when($this->grupo_id, function($qu){
+                                        return $qu->where('status', true)
+                                                ->whereHas('alumnosGrupo', function($q){
+                                                    $q->where('grupo_id', $this->grupo_id);
+                                                });
+                                    })
+                                    ->select('id', 'name')
+                                    ->orderBy('name')
+                                    ->get();
         }
 
 
@@ -68,7 +131,7 @@ class Asistencias extends Component
 
             foreach ($alumnos as $value) {
                 $esta=DB::table('asistencia_detalle')
-                            ->where('asistencia_id', $this->id)
+                            ->where('asistencia_id', $this->actual->id)
                             ->where('alumno_id', $value->id)
                             ->count();
 
@@ -87,7 +150,7 @@ class Asistencias extends Component
         $this->contador=$this->actual->registros;
 
         $this->asistencias=DB::table('asistencia_detalle')
-                        ->where('nota_id', $this->id)
+                        ->where('asistencia_id', $this->actual->id)
                         ->orderBy('alumno')
                         ->get();
     }
