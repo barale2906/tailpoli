@@ -11,6 +11,7 @@ class Asistencias extends Component
 {
     public $actual;
     public $fecha;
+    public $fechap;
     public $asistencias;
     public $grupo_id;
     public $profesor_id;
@@ -18,6 +19,8 @@ class Asistencias extends Component
     public $alumnosPrime;
     public $llegaron=[];
     public $contador=0;
+    public $dia=false;
+    public $titulo;
 
     public function primerAlumno($item){
         $nuevo=[
@@ -32,6 +35,58 @@ class Asistencias extends Component
             $this->dispatch('alerta', name:'Asisitio');
         }
 
+    }
+
+    public function updatedFechap(){
+        $esta=0;
+
+        foreach ($this->encabezado as $value) {
+            if($this->actual->$value===$this->fechap){
+                $esta=1;
+            }
+        }
+
+        if($esta>0){
+            $this->dispatch('alerta', name:'Ya cargo esta fecha');
+        }else{
+            $this->contador=$this->contador+1;
+            $this->asistenciaEncabezado();
+        }
+    }
+
+    public function asistenciaEncabezado(){
+
+        $this->titulo="fecha".$this->contador;
+        Asistencia::whereId($this->actual->id)
+                    ->update([
+                        $this->titulo   =>$this->fechap,
+                        'registros'     =>$this->contador
+                    ]);
+
+        $this->dia=!$this->dia;
+    }
+
+    public function AsistenciaCorriente($item){
+
+        DB::table('asistencia_detalle')
+                ->where('id', $item)
+                ->update([
+                    $this->titulo   =>"X",
+                    'updated_at'    =>now()
+                ]);
+
+        $this->reset('encabezado');
+
+        if($this->contador>0){
+            for ($i=1; $i <= $this->contador; $i++) {
+
+                $fecha="fecha".$i;
+
+                array_push($this->encabezado, $fecha);
+            }
+        }
+
+        $this->registroAsistencias();
     }
 
     public function primero(){
@@ -57,7 +112,7 @@ class Asistencias extends Component
                 'profesor'      =>$this->actual->profesor->name,
                 'grupo_id'      =>$this->grupo_id,
                 'grupo'         =>$this->actual->grupo->name,
-                'fecha1'        =>$this->fecha,
+                'fecha1'        =>"X",
                 'created_at'    =>now(),
                 'updated_at'    =>now()
             ]);
@@ -83,15 +138,16 @@ class Asistencias extends Component
     public function formaencabezado(){
 
         if($this->actual){
+
             $this->contador=$this->actual->registros;
             $this->registroAsistencias();
 
             if($this->contador>0){
                 for ($i=1; $i <= $this->contador; $i++) {
 
-                    $nota="fecha".$i;
+                    $fecha="fecha".$i;
 
-                    array_push($this->encabezado, $nota);
+                    array_push($this->encabezado, $fecha);
                 }
             }
 

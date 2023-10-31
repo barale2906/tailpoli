@@ -30,44 +30,44 @@ return new class extends Migration
             $table->foreign('grupo_id')->references('id')->on('grupos');
             $table->string('grupo');
 
-            $table->date('fecha1')->nullable()->comment('fecha de control');
-            $table->date('fecha2')->nullable()->comment('fecha de control');
-            $table->date('fecha3')->nullable()->comment('fecha de control');
-            $table->date('fecha4')->nullable()->comment('fecha de control');
+            $table->string('fecha1')->nullable()->comment('fecha de control');
+            $table->string('fecha2')->nullable()->comment('fecha de control');
+            $table->string('fecha3')->nullable()->comment('fecha de control');
+            $table->string('fecha4')->nullable()->comment('fecha de control');
 
-            $table->date('fecha5')->nullable()->comment('fecha de control');
-            $table->date('fecha6')->nullable()->comment('fecha de control');
-            $table->date('fecha7')->nullable()->comment('fecha de control');
-            $table->date('fecha8')->nullable()->comment('fecha de control');
+            $table->string('fecha5')->nullable()->comment('fecha de control');
+            $table->string('fecha6')->nullable()->comment('fecha de control');
+            $table->string('fecha7')->nullable()->comment('fecha de control');
+            $table->string('fecha8')->nullable()->comment('fecha de control');
 
-            $table->date('fecha9')->nullable()->comment('fecha de control');
-            $table->date('fecha10')->nullable()->comment('fecha de control');
-            $table->date('fecha11')->nullable()->comment('fecha de control');
-            $table->date('fecha12')->nullable()->comment('fecha de control');
+            $table->string('fecha9')->nullable()->comment('fecha de control');
+            $table->string('fecha10')->nullable()->comment('fecha de control');
+            $table->string('fecha11')->nullable()->comment('fecha de control');
+            $table->string('fecha12')->nullable()->comment('fecha de control');
 
-            $table->date('fecha13')->nullable()->comment('fecha de control');
-            $table->date('fecha14')->nullable()->comment('fecha de control');
-            $table->date('fecha15')->nullable()->comment('fecha de control');
-            $table->date('fecha16')->nullable()->comment('fecha de control');
+            $table->string('fecha13')->nullable()->comment('fecha de control');
+            $table->string('fecha14')->nullable()->comment('fecha de control');
+            $table->string('fecha15')->nullable()->comment('fecha de control');
+            $table->string('fecha16')->nullable()->comment('fecha de control');
 
-            $table->date('fecha17')->nullable()->comment('fecha de control');
-            $table->date('fecha18')->nullable()->comment('fecha de control');
-            $table->date('fecha19')->nullable()->comment('fecha de control');
-            $table->date('fecha20')->nullable()->comment('fecha de control');
+            $table->string('fecha17')->nullable()->comment('fecha de control');
+            $table->string('fecha18')->nullable()->comment('fecha de control');
+            $table->string('fecha19')->nullable()->comment('fecha de control');
+            $table->string('fecha20')->nullable()->comment('fecha de control');
 
-            $table->date('fecha21')->nullable()->comment('fecha de control');
-            $table->date('fecha22')->nullable()->comment('fecha de control');
-            $table->date('fecha23')->nullable()->comment('fecha de control');
-            $table->date('fecha24')->nullable()->comment('fecha de control');
+            $table->string('fecha21')->nullable()->comment('fecha de control');
+            $table->string('fecha22')->nullable()->comment('fecha de control');
+            $table->string('fecha23')->nullable()->comment('fecha de control');
+            $table->string('fecha24')->nullable()->comment('fecha de control');
 
-            $table->date('fecha25')->nullable()->comment('fecha de control');
-            $table->date('fecha26')->nullable()->comment('fecha de control');
-            $table->date('fecha27')->nullable()->comment('fecha de control');
-            $table->date('fecha28')->nullable()->comment('fecha de control');
+            $table->string('fecha25')->nullable()->comment('fecha de control');
+            $table->string('fecha26')->nullable()->comment('fecha de control');
+            $table->string('fecha27')->nullable()->comment('fecha de control');
+            $table->string('fecha28')->nullable()->comment('fecha de control');
 
-            $table->date('fecha29')->nullable()->comment('fecha de control');
-            $table->date('fecha30')->nullable()->comment('fecha de control');
-            $table->date('fecha31')->nullable()->comment('fecha de control');
+            $table->string('fecha29')->nullable()->comment('fecha de control');
+            $table->string('fecha30')->nullable()->comment('fecha de control');
+            $table->string('fecha31')->nullable()->comment('fecha de control');
 
             $table->timestamps();
         });
