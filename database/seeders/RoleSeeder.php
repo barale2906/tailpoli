@@ -154,12 +154,16 @@ class RoleSeeder extends Seeder
 
 
 
-
         Permission::create([
-                            'name'=>'Cartera',
-                            'descripcion'=>'ingreso al menú cartera'
+                            'name'=>'ca_carteras',
+                            'descripcion'=>'visualizar cartera'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
+
+        Permission::create([
+                            'name'=>'ca_convenio',
+                            'descripcion'=>'convenios de pago'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
 
         Permission::create([

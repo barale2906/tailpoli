@@ -78,25 +78,16 @@ class MenuSeeder extends Seeder
 
         $m2=Menu::create([
                     'name'              => 'CARTERA',
-                    'identificaRuta'    => 'admin.countries.*',
-                    'permiso'           => 'Cartera',
+                    'identificaRuta'    => 'cartera.*',
+                    'permiso'           => 'ca_carteras',
                     'icono'             => 'fa-solid fa-cash-register text-gray-500'
                 ]);
 
                 Submenu::create([
                     'permiso'           => 'ac_grupos',
-                    'ruta'              => 'admin.countries.index',
-                    'identificaRuta'    => 'admin.countries.index',
-                    'name'              => 'Ingresos',
-                    'icono'             => 'fa-solid fa-credit-card text-gray-500',
-                    'menu_id'           => $m2->id
-                ]);
-
-                Submenu::create([
-                    'permiso'           => 'ac_grupos',
-                    'ruta'              => 'admin.countries.index',
-                    'identificaRuta'    => 'admin.countries.index',
-                    'name'              => 'Convenios Pago',
+                    'ruta'              => 'cartera.carteras',
+                    'identificaRuta'    => 'cartera.carteras',
+                    'name'              => 'Cartera',
                     'icono'             => 'fa-solid fa-credit-card text-gray-500',
                     'menu_id'           => $m2->id
                 ]);
