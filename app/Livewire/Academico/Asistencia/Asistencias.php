@@ -78,9 +78,11 @@ class Asistencias extends Component
         $this->reset('encabezado');
 
         if($this->contador>0){
+            $a=$this->contador;
             for ($i=1; $i <= $this->contador; $i++) {
 
-                $fecha="fecha".$i;
+                $fecha="fecha".$a;
+                $a--;
 
                 array_push($this->encabezado, $fecha);
             }
@@ -143,9 +145,11 @@ class Asistencias extends Component
             $this->registroAsistencias();
 
             if($this->contador>0){
+                $a=$this->contador;
                 for ($i=1; $i <= $this->contador; $i++) {
 
-                    $fecha="fecha".$i;
+                    $fecha="fecha".$a;
+                    $a--;
 
                     array_push($this->encabezado, $fecha);
                 }
