@@ -7,11 +7,11 @@
                 <dd class="text-gray-500 dark:text-gray-400">HOY</dd>
             </div>
             <div class="flex flex-col items-center justify-center mb-2">
-                <dt class="mb-2 text-3xl font-extrabold text-red-900">$ {{number_format($sesentaMen, 0, ',', '.')}} </dt>
+                <dt class="mb-2 text-3xl font-extrabold text-red-900">$ - {{number_format($sesentaMen, 0, ',', '.')}} </dt>
                 <dd class="text-gray-500 dark:text-gray-400">Vencido mas de 60 días</dd>
             </div>
             <div class="flex flex-col items-center justify-center mb-2">
-                <dt class="mb-2 text-3xl font-extrabold text-red-700">$ {{number_format($treSenMen, 0, ',', '.')}} </dt>
+                <dt class="mb-2 text-3xl font-extrabold text-red-700">$ - {{number_format($treSenMen, 0, ',', '.')}} </dt>
                 <dd class="text-gray-500 dark:text-gray-400">Vencido 31 - 60 días</dd>
             </div>
             <div class="flex flex-col items-center justify-center mb-4">

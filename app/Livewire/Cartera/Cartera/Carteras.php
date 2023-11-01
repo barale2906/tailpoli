@@ -70,7 +70,8 @@ class Carteras extends Component
                             return $query->where('status', true)
                                     ->where('concepto', 'like', "%".$this->buscamin."%")
                                     ->orWhereHas('responsable', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%");
+                                        $q->where('name', 'like', "%".$this->buscamin."%")
+                                            ->orwhere('documento', 'like', "%".$this->buscamin."%");
                                     })
                                     ->orWhereHas('concepto_pago', function($qu){
                                         $qu->where('name', 'like', "%".$this->buscamin."%");

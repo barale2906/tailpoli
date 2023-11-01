@@ -154,8 +154,7 @@
     @endif
 
     @if ($is_creating)
-        {{-- <livewire:academico.cartera.carteras-crear /> --}}
-        Esta es
+        <livewire:cartera.cartera.convenio />
     @endif
 
     @push('js')
