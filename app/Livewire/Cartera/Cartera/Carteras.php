@@ -3,6 +3,7 @@
 namespace App\Livewire\Cartera\Cartera;
 
 use App\Models\Financiera\Cartera;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -32,6 +33,15 @@ class Carteras extends Component
     public function limpiar(){
         $this->reset('buscamin', 'buscar');
         $this->resetPage();
+    }
+
+    //Activar evento
+    #[On('created')]
+    //Mostrar formulario de creación
+    public function updatedIsCreating()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_creating = !$this->is_creating;
     }
 
     // Ordenar Registros

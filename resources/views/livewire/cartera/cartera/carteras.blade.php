@@ -4,6 +4,8 @@
     </div>
 
     @if ($is_modify)
+
+        <livewire:cartera.cartera.consolidado />
         <div class="flex justify-end mb-4 ">
             <div class="w-full">
                 <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
@@ -152,7 +154,8 @@
     @endif
 
     @if ($is_creating)
-        <livewire:academico.cartera.carteras-crear />
+        {{-- <livewire:academico.cartera.carteras-crear /> --}}
+        Esta es
     @endif
 
     @push('js')
