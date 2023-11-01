@@ -3,7 +3,6 @@
 namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Configuracion\Sede;
-use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Inventario\Almacen;
@@ -50,6 +49,11 @@ class Salida extends Component
     public $control=0;
     public $recibo;
 
+
+    public $recargo=0;
+    public $recargo_id;
+    public $recargoValor=0;
+
     public function mount($almacen_id=null, $sede_id=null){
         $id=intval($almacen_id);
         $this->almacen=Almacen::find($id);
@@ -62,6 +66,20 @@ class Salida extends Component
         $this->listaprecios($state);
 
         $this->concepto();
+    }
+
+    public function updatedMedio(){
+        if($this->medio==="tarjeta"){
+            $porc=ConceptoPago::where('status', true)
+                                ->where('name', 'Recargo Tarjeta')
+                                ->first();
+
+            $this->recargo=$porc->valor;
+            $this->recargo_id=$porc->id;
+
+        }else{
+            $this->reset('recargo');
+        }
     }
 
     public function concepto(){
@@ -285,6 +303,12 @@ class Salida extends Component
     public function recibo(){
 
         if($this->Total>0){
+
+            if($this->recargo>0){
+                $this->recargoValor=$this->Total*$this->recargo/100;
+                $this->Total=$this->Total+$this->recargoValor;
+            }
+
             $corregido=strtolower($this->descripcion);
             $comentarios=now()." ".$this->alumno->name." realizo pago por ".number_format($this->Total, 0, ',', '.').". --- ".$corregido;
 
@@ -306,6 +330,19 @@ class Salida extends Component
                             ->where('status', true)
                             ->orderBy('producto')
                             ->get();
+
+            if($this->recargo>0){
+                DB::table('concepto_pago_recibo_pago')
+                    ->insert([
+                        'valor'=>$this->recargoValor,
+                        'tipo'=>"otro",
+                        'medio'=>$this->medio,
+                        'concepto_pago_id'=>$this->recargo_id,
+                        'recibo_pago_id'=>$this->recibo->id,
+                        'created_at'=>now(),
+                        'updated_at'=>now(),
+                    ]);
+            }
 
             foreach ($cargados as $value) {
 

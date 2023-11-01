@@ -248,8 +248,7 @@
                         <option value="efectivo">Efectivo</option>
                         <option value="PSE">PSE</option>
                         <option value="transferencia">Transferencia</option>
-                        <option value="tarjeta credito">Tarjeta Crédito</option>
-                        <option value="tarjeta debito">Tarjeta débito</option>
+                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
                         <option value="cheque">Cheque</option>
                     </select>
                     @error('medio')
@@ -257,6 +256,11 @@
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                         </div>
                     @enderror
+                    @if ($recargo>0)
+                        <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
+                            Tendrá un recargo del <strong>{{$recargo}} %</strong>
+                        </label>
+                    @endif
                 </div>
             </div>
         @endif
