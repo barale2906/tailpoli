@@ -3,7 +3,6 @@
 namespace App\Livewire\Academico\Matricula;
 
 use App\Models\Academico\Curso;
-use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sede;
@@ -28,6 +27,7 @@ class MatriculasCrear extends Component
     public $alumnoName='';
     public $alumnodocumento='';
     public $comercial_id='';
+    public $fecha_inicia;
 
     public $sede_id;
     public $sedeele;
@@ -149,6 +149,7 @@ class MatriculasCrear extends Component
      */
     protected $rules = [
         'medio' => 'required',
+        'fecha_inicia' => 'required',
         'nivel'=>'required',
         'valor_curso'=>'required',
         'valor_matricula'=>'required',
@@ -165,6 +166,7 @@ class MatriculasCrear extends Component
         $this->reset(
                         'medio',
                         'nivel',
+                        'fecha_inicia',
                         'valor',
                         'metodo',
                         'alumno_id',
@@ -184,6 +186,7 @@ class MatriculasCrear extends Component
         //Crear registro
         $this->matricula = Matricula::create([
                                 'medio'=>$this->medio,
+                                'fecha_inicia'=>$this->fecha_inicia,
                                 'nivel'=>$this->nivel,
                                 'valor'=>$this->valor_curso,
                                 'metodo'=>$this->metodo,

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('matriculas', function (Blueprint $table) {
             $table->comment('Matricula de estudiantes para diferentes cursos');
             $table->id();
+            $table->date('fecha_inicia')->comment('fecha que inicia el estudiante');
             $table->string('medio')->comment('Como se enteraron del curso');
             $table->string('nivel')->comment('Nivel de conocimiento sobre el tema');
             $table->string('anula')->nullable()->comment('Motivo de anulación si se presenta');
