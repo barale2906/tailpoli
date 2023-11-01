@@ -24,6 +24,16 @@ class ConceptoPagoSeeder extends Seeder
         ]);
 
         ConceptoPago::create([
+            'name'              =>'Inicial convenio',
+            'tipo'              =>'cartera'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Convenio mes',
+            'tipo'              =>'cartera'
+        ]);
+
+        ConceptoPago::create([
             'name'              =>'Inventario',
             'tipo'              =>'inventario'
         ]);

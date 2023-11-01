@@ -122,7 +122,7 @@ class Matriculas extends Component
     private function matriculas()
     {
         return Matricula::query()
-                        ->with(['alumno', 'grupos'])
+                        ->with(['alumno', 'grupos', 'curso'])
                         ->when($this->buscamin, function($query){
                             return $query->where('status', true)
                                     ->where('metodo', 'like', "%".$this->buscamin."%")
@@ -132,6 +132,9 @@ class Matriculas extends Component
                                             ->orWhere('documento', 'like', "%".$this->buscamin."%");
                                     })
                                     ->orWhereHas('grupos', function($qu){
+                                        $qu->where('name', 'like', "%".$this->buscamin."%");
+                                    })
+                                    ->orWhereHas('curso', function($qu){
                                         $qu->where('name', 'like', "%".$this->buscamin."%");
                                     });
                         })
