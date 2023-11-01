@@ -118,7 +118,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:configuracion.user.users-create :clase="$clase"/>
+        <livewire:configuracion.user.users-create :clase="$clase" :perf="$perf"/>
     @endif
 
     @if ($is_editing)

@@ -17,12 +17,16 @@ class UsersCreate extends Component
     public $password = '';
     public $rol = '';
     public $clase;
+    public $perf;
+    public $nuevoUs;
+    public $vista=true;
 
-    public function mount($clase){
+
+    public function mount($clase=null, $perf=null){
         $this->clase=$clase;
+        $this->perf=$perf;
 
         $this->tipo();
-
     }
 
     public function tipo(){
@@ -73,17 +77,17 @@ class UsersCreate extends Component
             //Crear registro
             $completo=$this->name." ".$this->lastname;
 
-            $nuevoUs=User::create([
+            $this->nuevoUs=User::create([
                 'name'=>strtolower($completo),
                 'email'=>strtolower($this->email),
                 'documento'=>strtolower($this->documento),
                 'password'=>bcrypt($this->password)
             ]);
 
-            $nuevoUs->assignRole($this->rol);
+            $this->nuevoUs->assignRole($this->rol);
 
             Perfil::create([
-                'user_id'=>$nuevoUs->id,
+                'user_id'=>$this->nuevoUs->id,
                 'country_id'=>1,
                 'sector_id'=>4,
                 'state_id'=>2,
@@ -95,13 +99,19 @@ class UsersCreate extends Component
                 'lastname'=>strtolower($this->lastname)
             ]);
 
+
             // Notificación
             $this->dispatch('alerta', name:'Se ha creado correctamente el Usuario: '.$this->name);
             $this->resetFields();
 
-            //refresh
-            $this->dispatch('refresh');
-            $this->dispatch('created');
+            if($this->perf===0){
+                $this->vista=!$this->vista;
+            }else{
+                //refresh
+                $this->dispatch('refresh');
+                $this->dispatch('created');
+            }
+
         }
     }
 

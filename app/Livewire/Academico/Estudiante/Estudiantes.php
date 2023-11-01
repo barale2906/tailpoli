@@ -106,6 +106,12 @@ class Estudiantes extends Component
             case 2:
                 $this->is_perfil=!$this->is_perfil;
                 break;
+
+            case 3:
+                $this->is_perfil=true;
+                $this->is_modify = false;
+                $this->reset('is_editing', 'is_deleting','is_creating');
+                break;
         }
     }
 
