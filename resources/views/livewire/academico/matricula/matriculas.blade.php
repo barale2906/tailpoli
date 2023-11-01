@@ -47,9 +47,9 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('created_at')">
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_inicia')">
                             Fecha
-                            @if ($ordena != 'created_at')
+                            @if ($ordena != 'fecha_inicia')
                                 <i class="fas fa-sort"></i>
                             @else
                                 @if ($ordenado=='ASC')
@@ -124,7 +124,7 @@
                                     @endif
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$matricula->created_at}}
+                                {{$matricula->fecha_inicia}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$matricula->sede->name}}

@@ -27,6 +27,8 @@ class RecibosPagoCrear extends Component
     public $recargo=0;
     public $recargo_id;
     public $recargoValor=0;
+    public $pagoTotal=false;
+    public $totalCartera=0;
 
 
     public $valor=0;
@@ -83,6 +85,10 @@ class RecibosPagoCrear extends Component
                                 ->where('status', true)
                                 ->orderBy('fecha_pago')
                                 ->get();
+
+        $this->totalCartera=Cartera::where('responsable_id', $this->alumno_id)
+                                    ->where('status', true)
+                                    ->sum('saldo');
     }
 
     public function asigOtro($id, $item){
@@ -213,6 +219,10 @@ class RecibosPagoCrear extends Component
         // validate
         $this->validate();
 
+        if($this->pagoTotal){
+            $this->Total=$this->totalCartera;
+        }
+
         if($this->recargo>0){
             $this->recargoValor=$this->Total*$this->recargo/100;
             $this->Total=$this->Total+$this->recargoValor;
@@ -244,45 +254,79 @@ class RecibosPagoCrear extends Component
                 ]);
         }
 
-        foreach ($this->cargados as $value) {
+        if($this->pagoTotal){
 
-            DB::table('concepto_pago_recibo_pago')
-                ->insert([
-                    'valor'=>$value->valor,
-                    'tipo'=>$value->tipo,
-                    'medio'=>$this->medio,
-                    'id_relacional'=>$value->id_cartera,
-                    'concepto_pago_id'=>$value->id_concepto,
-                    'recibo_pago_id'=>$recibo->id,
-                    'created_at'=>now(),
-                    'updated_at'=>now(),
-                ]);
+            $esta=EstadoCartera::where('name', 'cerrada')->first();
+                        $this->estado=$esta->id;
+                        $this->status=false;
 
-            if($value->tipo==="cartera"){
+            foreach ($this->pendientes as $value) {
 
-                $item=Cartera::find($value->id_cartera);
-                $saldo=$item->saldo-$value->valor;
-                $observa=now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
+                DB::table('concepto_pago_recibo_pago')
+                    ->insert([
+                        'valor'=>$value->saldo,
+                        'tipo'=>"cartera",
+                        'medio'=>$this->medio,
+                        'id_relacional'=>$value->id,
+                        'concepto_pago_id'=>$value->concepto_pago_id,
+                        'recibo_pago_id'=>$recibo->id,
+                        'created_at'=>now(),
+                        'updated_at'=>now(),
+                    ]);
 
-                if($saldo>0){
-                    $esta=EstadoCartera::where('name', 'abonada')->first();
-                    $this->estado=$esta->id;
-                    $this->status=true;
-                }else{
-                    $esta=EstadoCartera::where('name', 'cerrada')->first();
-                    $this->estado=$esta->id;
-                    $this->status=false;
-                }
+                $observa=now()." ".$this->alumnoName." realizo pago por ".number_format($value->saldo, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$value->observaciones;
 
-                $item->update([
-                    'fecha_real'=>now(),
-                    'saldo'=>$saldo,
-                    'observaciones'=>$observa,
-                    'status'=>$this->status,
-                    'estado_cartera_id'=>$this->estado
-                ]);
+                Cartera::whereId($value->id)
+                        ->update([
+                            'fecha_real'=>now(),
+                            'saldo'=>0,
+                            'observaciones'=>$observa,
+                            'status'=>$this->status,
+                            'estado_cartera_id'=>$this->estado
+                        ]);
             }
 
+        }else{
+            foreach ($this->cargados as $value) {
+
+                DB::table('concepto_pago_recibo_pago')
+                    ->insert([
+                        'valor'=>$value->valor,
+                        'tipo'=>$value->tipo,
+                        'medio'=>$this->medio,
+                        'id_relacional'=>$value->id_cartera,
+                        'concepto_pago_id'=>$value->id_concepto,
+                        'recibo_pago_id'=>$recibo->id,
+                        'created_at'=>now(),
+                        'updated_at'=>now(),
+                    ]);
+
+                if($value->tipo==="cartera"){
+
+                    $item=Cartera::find($value->id_cartera);
+                    $saldo=$item->saldo-$value->valor;
+                    $observa=now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
+
+                    if($saldo>0){
+                        $esta=EstadoCartera::where('name', 'abonada')->first();
+                        $this->estado=$esta->id;
+                        $this->status=true;
+                    }else{
+                        $esta=EstadoCartera::where('name', 'cerrada')->first();
+                        $this->estado=$esta->id;
+                        $this->status=false;
+                    }
+
+                    $item->update([
+                        'fecha_real'=>now(),
+                        'saldo'=>$saldo,
+                        'observaciones'=>$observa,
+                        'status'=>$this->status,
+                        'estado_cartera_id'=>$this->estado
+                    ]);
+                }
+
+            }
         }
 
         //Eliminar datos de apoyo
