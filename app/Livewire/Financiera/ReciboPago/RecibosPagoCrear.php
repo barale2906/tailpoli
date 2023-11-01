@@ -24,6 +24,9 @@ class RecibosPagoCrear extends Component
     public $id_cartera;
     public $estado;
     public $status;
+    public $recargo=0;
+    public $recargo_id;
+    public $recargoValor=0;
 
 
     public $valor=0;
@@ -168,6 +171,19 @@ class RecibosPagoCrear extends Component
         $this->cargando();
     }
 
+    public function updatedMedio(){
+        if($this->medio==="tarjeta"){
+            $porc=ConceptoPago::where('status', true)
+                                ->where('name', 'Recargo Tarjeta')
+                                ->first();
+
+            $this->recargo=$porc->valor;
+            $this->recargo_id=$porc->id;
+
+        }else{
+            $this->reset('recargo');
+        }
+    }
 
 
 
@@ -197,6 +213,11 @@ class RecibosPagoCrear extends Component
         // validate
         $this->validate();
 
+        if($this->recargo>0){
+            $this->recargoValor=$this->Total*$this->recargo/100;
+            $this->Total=$this->Total+$this->recargoValor;
+        }
+
         //Crear registro
         $recibo= ReciboPago::create([
                                 'fecha'=>now(),
@@ -210,19 +231,32 @@ class RecibosPagoCrear extends Component
 
         //registros
 
+        if($this->recargo>0){
+            DB::table('concepto_pago_recibo_pago')
+                ->insert([
+                    'valor'=>$this->recargoValor,
+                    'tipo'=>"otro",
+                    'medio'=>$this->medio,
+                    'concepto_pago_id'=>$this->recargo_id,
+                    'recibo_pago_id'=>$recibo->id,
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+        }
+
         foreach ($this->cargados as $value) {
 
             DB::table('concepto_pago_recibo_pago')
-            ->insert([
-                'valor'=>$value->valor,
-                'tipo'=>$value->tipo,
-                'medio'=>$this->medio,
-                'id_relacional'=>$value->id_cartera,
-                'concepto_pago_id'=>$value->id_concepto,
-                'recibo_pago_id'=>$recibo->id,
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ]);
+                ->insert([
+                    'valor'=>$value->valor,
+                    'tipo'=>$value->tipo,
+                    'medio'=>$this->medio,
+                    'id_relacional'=>$value->id_cartera,
+                    'concepto_pago_id'=>$value->id_concepto,
+                    'recibo_pago_id'=>$recibo->id,
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
 
             if($value->tipo==="cartera"){
 

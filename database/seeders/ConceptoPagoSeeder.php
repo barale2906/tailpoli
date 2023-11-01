@@ -34,6 +34,18 @@ class ConceptoPagoSeeder extends Seeder
         ]);
 
         ConceptoPago::create([
+            'name'              =>'Recargo Tarjeta',
+            'tipo'              =>'financiero',
+            'valor'             =>3
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Recargo Mora',
+            'tipo'              =>'financiero',
+            'valor'             =>10000
+        ]);
+
+        ConceptoPago::create([
             'name'              =>'Inventario',
             'tipo'              =>'inventario'
         ]);

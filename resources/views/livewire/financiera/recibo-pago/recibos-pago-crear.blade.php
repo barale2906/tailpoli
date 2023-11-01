@@ -242,13 +242,12 @@
                 </div>
                 <div class="mb-6">
                     <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
-                    <select wire:model.blur="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                    <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                         <option >Elija...</option>
                         <option value="efectivo">Efectivo</option>
                         <option value="PSE">PSE</option>
                         <option value="transferencia">Transferencia</option>
-                        <option value="tarjeta credito">Tarjeta Crédito</option>
-                        <option value="tarjeta debito">Tarjeta débito</option>
+                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
                         <option value="cheque">Cheque</option>
                     </select>
                     @error('medio')
@@ -256,6 +255,11 @@
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                         </div>
                     @enderror
+                    @if ($recargo>0)
+                        <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
+                            Tendrá un recargo del <strong>{{$recargo}} %</strong>
+                        </label>
+                    @endif
                 </div>
             </div>
             @if ($Total>0)

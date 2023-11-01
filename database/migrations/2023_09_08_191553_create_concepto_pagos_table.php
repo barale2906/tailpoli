@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->comment('nombre del concepto de pago configurado');
             $table->string('tipo')->comment('que clase de concepto de pago es cartera, inventario, etc');
+            $table->double('valor')->default(0)->comment('valor del concepto de pago cuando aplica');
             $table->boolean('status')->default(true)->comment('false Inactivo, true activo');
             $table->timestamps();
         });
