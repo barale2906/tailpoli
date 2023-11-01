@@ -1,22 +1,37 @@
 <div>
     <form wire:submit.prevent="edit">
-        <div class="mb-6">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Concepto de Pago</label>
-            <input type="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="name">
-        </div>
-        @error('name')
-            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+        @if ($name==="Recargo Tarjeta" || $name==="Recargo Mora")
+            <h3 class="font-semibold text-justify text-2xl capitalize">{{$name}}</h3>
+
+        @else
+            <div class="mb-6">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Concepto de Pago</label>
+                <input type="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="name">
+                @error('name')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
-        @enderror
+            <div class="mb-6">
+                <select wire:model.blur="tipo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                    <option >Elija Tipo...</option>
+                    <option value="cartera">cartera</option>
+                    <option value="inventario">inventario</option>
+                    <option value="otro">otro</option>
+                </select>
+                @error('tipo')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
+            </div>
+        @endif
+
         <div class="mb-6">
-            <select wire:model.blur="tipo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                <option >Elija Tipo...</option>
-                <option value="cartera">cartera</option>
-                <option value="inventario">inventario</option>
-                <option value="otro">otro</option>
-            </select>
-            @error('tipo')
+            <label for="valor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor</label>
+            <input id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="valor">
+            @error('valor')
                 <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                     <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                 </div>

@@ -11,7 +11,7 @@ class ConceptoPago extends Model
 {
     use HasFactory;
 
-    protected $fillable =['name', 'status'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     /**
      * Relación muchos a muchos.

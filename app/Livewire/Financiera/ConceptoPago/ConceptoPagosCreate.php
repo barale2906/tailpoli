@@ -9,13 +9,16 @@ class ConceptoPagosCreate extends Component
 {
     public $name = '';
     public $tipo = '';
+    public $valor;
 
     /**
      * Reglas de validación
      */
     protected $rules = [
         'name' => 'required|max:100',
+        'valor' => 'required',
         'tipo' => 'required'
+
     ];
 
     /**
@@ -23,7 +26,7 @@ class ConceptoPagosCreate extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'tipo');
+        $this->reset('name', 'tipo', 'valor');
     }
 
     // Crear Regimen de Salud
@@ -35,12 +38,13 @@ class ConceptoPagosCreate extends Component
         $existe=ConceptoPago::Where('name', '=',strtolower($this->name))->count();
 
         if($existe>0){
-            $this->dispatch('alerta', name:'Ya existe este concpeto de pago: '.$this->name);
+            $this->dispatch('alerta', name:'Ya existe este concepto de pago: '.$this->name);
         } else {
             //Crear registro
             ConceptoPago::create([
                 'name'=>strtolower($this->name),
                 'tipo'=>strtolower($this->tipo),
+                'valor'=>$this->valor
             ]);
 
             // Notificación

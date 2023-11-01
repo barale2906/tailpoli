@@ -9,6 +9,7 @@ class ConceptoPagosEditar extends Component
 {
     public $name = '';
     public $tipo = '';
+    public $valor;
     public $id = '';
     public $elegido;
 
@@ -18,6 +19,7 @@ class ConceptoPagosEditar extends Component
     protected $rules = [
         'name'  => 'required|max:100',
         'tipo' => 'required',
+        'valor' => 'required',
         'id'    => 'required'
     ];
 
@@ -26,13 +28,14 @@ class ConceptoPagosEditar extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'id', 'tipo');
+        $this->reset('name', 'id', 'tipo', 'valor');
     }
 
     public function mount($elegido = null)
     {
         $this->name=$elegido['name'];
         $this->tipo=$elegido['tipo'];
+        $this->valor=$elegido['valor'];
         $this->id=$elegido['id'];
     }
 
@@ -46,6 +49,7 @@ class ConceptoPagosEditar extends Component
         ConceptoPago::whereId($this->id)->update([
             'name'=>strtolower($this->name),
             'tipo'=>strtolower($this->tipo),
+            'valor'=>$this->valor
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el estado: '.$this->name);
