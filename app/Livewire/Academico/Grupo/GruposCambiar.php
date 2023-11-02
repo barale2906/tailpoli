@@ -28,6 +28,7 @@ class GruposCambiar extends Component
         $this->actual=Grupo::whereId($this->grupo_actual)->first();
 
         $this->grupos=Grupo::where('modulo_id', $this->actual->modulo_id)
+                            ->where('status', true)
                             ->orderBy('sede_id')
                             ->orderBy('name')
                             ->get();
