@@ -66,6 +66,8 @@ return new class extends Migration
             $table->double('nota10')->nullable()->comment('valor de la nota');
             $table->double('porcen10')->nullable()->comment('porcentaje de la nota');
 
+            $table->boolean('status')->default(true)->comment('false Inactivo, true Activo');
+
             $table->timestamps();
         });
     }

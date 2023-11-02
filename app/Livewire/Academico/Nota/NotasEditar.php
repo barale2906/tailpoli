@@ -121,6 +121,7 @@ class NotasEditar extends Component
         $this->contador=$this->actual->registros;
 
         $this->notas=DB::table('notas_detalle')
+                        ->where('status', true)
                         ->where('nota_id', $this->id)
                         ->orderBy('alumno')
                         ->get();

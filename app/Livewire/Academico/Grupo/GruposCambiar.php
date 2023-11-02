@@ -50,6 +50,13 @@ class GruposCambiar extends Component
             ->where('matricula_id', $this->matricula_id)
             ->delete();
 
+        DB::table('notas_detalle')
+            ->where('grupo_id', $this->grupo_actual)
+            ->where('alumno_id', $this->alumno->id)
+            ->update([
+                'status'=>false
+            ]);
+
         $inscritos=$this->actual->inscritos-1;
         Grupo::whereId($this->grupo_actual)
                 ->update([
