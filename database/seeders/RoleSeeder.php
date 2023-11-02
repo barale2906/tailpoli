@@ -22,6 +22,11 @@ class RoleSeeder extends Seeder
         $Estudiante=Role::create(['name'=>'Estudiante']);
 
         Permission::create([
+                    'name'=>'ac_export',
+                    'descripcion'=>'exportar listados en excel'
+                    ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+        Permission::create([
                             'name'=>'Academico',
                             'descripcion'=>'Ingreso al menú Acádemico'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
@@ -153,7 +158,10 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Profesor]);
 
 
-
+        Permission::create([
+                            'name'=>'ca_export',
+                            'descripcion'=>'exportar listados en excel'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'ca_carteras',
                             'descripcion'=>'visualizar cartera'
@@ -166,6 +174,11 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
 
+
+        Permission::create([
+                            'name'=>'fi_export',
+                            'descripcion'=>'exportar listados en excel'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'Financiera',
                             'descripcion'=>'ingreso al menú financiera'
@@ -240,6 +253,11 @@ class RoleSeeder extends Seeder
 
 
 
+
+        Permission::create([
+                            'name'=>'in_export',
+                            'descripcion'=>'exportar listados en excel'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'Inventario',
                             'descripcion'=>'ingreso al menú inventario'
@@ -314,6 +332,11 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
 
 
+
+        Permission::create([
+                            'name'=>'re_export',
+                            'descripcion'=>'exportar listados en excel'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'Reportes',
                             'descripcion'=>'ingreso al menú reportes'
@@ -321,6 +344,11 @@ class RoleSeeder extends Seeder
 
 
 
+
+        Permission::create([
+                            'name'=>'ad_export',
+                            'descripcion'=>'exportar listados en excel'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'Administracion',
                             'descripcion'=>'ingreso al menú administración'
@@ -379,12 +407,22 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
 
+
+        Permission::create([
+                            'name'=>'ar_export',
+                            'descripcion'=>'exportar listados en excel'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'Archivo',
                             'descripcion'=>'ingreso al menú archivo'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
 
+
+        Permission::create([
+                            'name'=>'co_export',
+                            'descripcion'=>'exportar listados en excel'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'Configuracion',
                             'descripcion'=>'ingreso al menú configuración'
