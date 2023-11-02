@@ -24,7 +24,7 @@
                 <select wire:model.live="grupo_nuevo" id="grupo_nuevo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                     <option >Elija Grupo...</option>
                     @foreach ($grupos as $item)
-                        @if ($item->id != $grupo_actual)
+                        @if ($item->id != $grupo_actual && $item->quantity_limit > $item->inscritos)
                             <option value={{$item->id}}>GRUPO: {{$item->name}} - MODULO: {{$item->modulo->name}} - SEDE: {{$item->sede->name}}</option>
                         @endif
                     @endforeach
