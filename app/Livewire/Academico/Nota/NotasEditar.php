@@ -215,7 +215,7 @@ class NotasEditar extends Component
     }
 
     public function exportar(){
-        return new AcaNotaExport($this->id, $this->encabezado, $this->encabezadoxls, $this->contador);
+        return new AcaNotaExport($this->id, $this->encabezadoxls);
     }
 
     public function render()

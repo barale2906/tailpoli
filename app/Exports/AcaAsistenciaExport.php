@@ -15,13 +15,13 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class AcaNotaExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
+class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
 {
     use Exportable;
 
     private $id;
     private $xls;
-    private $fileName = "Notas.xlsx";
+    private $fileName = "Asistencias.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
     public function __construct($id, $xls)
@@ -35,9 +35,8 @@ class AcaNotaExport implements FromCollection, WithCustomStartCell, Responsable,
     */
     public function collection()
     {
-        return DB::table('notas_detalle')
-                    ->where('status', true)
-                    ->where('nota_id', $this->id)
+        return DB::table('asistencia_detalle')
+                    ->where('asistencia_id', $this->id)
                     ->orderBy('alumno')
                     ->get();
     }
@@ -53,34 +52,43 @@ class AcaNotaExport implements FromCollection, WithCustomStartCell, Responsable,
         return $this->xls;
     }
 
-    public function map($nota): array
+    public function map($asistencia): array
     {
         return [
-            $nota->grupo,
-            $nota->profesor,
-            $nota->alumno,
-            $nota->acumulado,
-            $nota->observaciones,
-            $nota->nota1,
-            $nota->porcen1,
-            $nota->nota2,
-            $nota->porcen2,
-            $nota->nota3,
-            $nota->porcen3,
-            $nota->nota4,
-            $nota->porcen4,
-            $nota->nota5,
-            $nota->porcen5,
-            $nota->nota6,
-            $nota->porcen6,
-            $nota->nota7,
-            $nota->porcen7,
-            $nota->nota8,
-            $nota->porcen8,
-            $nota->nota9,
-            $nota->porcen9,
-            $nota->nota10,
-            $nota->porcen10,
+            $asistencia->grupo,
+            $asistencia->profesor,
+            $asistencia->alumno,
+            $asistencia->fecha1,
+            $asistencia->fecha2,
+            $asistencia->fecha3,
+            $asistencia->fecha4,
+            $asistencia->fecha5,
+            $asistencia->fecha6,
+            $asistencia->fecha7,
+            $asistencia->fecha8,
+            $asistencia->fecha9,
+            $asistencia->fecha10,
+            $asistencia->fecha11,
+            $asistencia->fecha12,
+            $asistencia->fecha13,
+            $asistencia->fecha14,
+            $asistencia->fecha15,
+            $asistencia->fecha16,
+            $asistencia->fecha17,
+            $asistencia->fecha18,
+            $asistencia->fecha19,
+            $asistencia->fecha20,
+            $asistencia->fecha21,
+            $asistencia->fecha22,
+            $asistencia->fecha23,
+            $asistencia->fecha24,
+            $asistencia->fecha25,
+            $asistencia->fecha26,
+            $asistencia->fecha27,
+            $asistencia->fecha28,
+            $asistencia->fecha29,
+            $asistencia->fecha30,
+            $asistencia->fecha31,
         ];
     }
 
@@ -105,8 +113,8 @@ class AcaNotaExport implements FromCollection, WithCustomStartCell, Responsable,
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->setTitle('Notas');
-        $sheet->setCellValue('B2', 'LISTADO DE NOTAS A: '.now());
+        $sheet->setTitle('Asistencias');
+        $sheet->setCellValue('B2', 'LISTADO DE ASISTENCIAS A: '.now());
         $sheet->mergeCells('B2:E2');
     }
 }

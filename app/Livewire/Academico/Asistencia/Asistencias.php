@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Asistencia;
 
+use App\Exports\AcaAsistenciaExport;
 use App\Models\Academico\Asistencia;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ class Asistencias extends Component
     public $grupo_id;
     public $profesor_id;
     public $encabezado=[];
+    public $xls=[];
     public $alumnosPrime;
     public $llegaron=[];
     public $contador=0;
@@ -171,6 +173,20 @@ class Asistencias extends Component
                                     ->get();
         }
 
+        $this->encabezadoExcel();
+    }
+
+    public function encabezadoExcel(){
+        $this->reset('xls');
+        array_push($this->xls, "grupo");
+        array_push($this->xls, "profesor");
+        array_push($this->xls, "alumno");
+
+        foreach ($this->encabezado as $value) {
+            $item = $this->actual->$value;
+            array_push($this->xls, $item);
+        }
+
 
     }
 
@@ -205,6 +221,10 @@ class Asistencias extends Component
         $this->registroAsistencias();
     }
 
+    public function exportar(){
+        return new AcaAsistenciaExport($this->actual->id, $this->xls);
+    }
+
     public function registroAsistencias(){
 
         $this->contador=$this->actual->registros;
@@ -214,6 +234,7 @@ class Asistencias extends Component
                         ->orderBy('alumno')
                         ->get();
     }
+
 
     public function cargaEstudiante($estu){
         DB::table('asistencia_detalle')
