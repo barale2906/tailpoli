@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Modulo;
 
+use App\Exports\AcaModuloExport;
 use App\Models\Academico\Modulo;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -98,12 +99,12 @@ class Modulos extends Component
         $this->is_deleting = !$this->is_deleting;
     }
 
+    public function exportar(){
+        return new AcaModuloExport($this->buscamin);
+    }
+
     private function modulos()
     {
-        /* return Modulo::where('name', 'like', "%".$this->buscamin."%")
-                    ->orderBy($this->ordena, $this->ordenado)
-                    ->paginate($this->pages); */
-
         return Modulo::query()
                     ->with(['curso'])
                     ->when($this->buscamin, function($query){
