@@ -88,7 +88,7 @@ class AcaCursoExport implements FromCollection, WithCustomStartCell, Responsable
     public function styles(Worksheet $sheet)
     {
         $sheet->setTitle('Cursos');
-        $sheet->setCellValue('B2', 'LISTADO DE CURSOS');
+        $sheet->setCellValue('B2', 'LISTADO DE CURSOS A: '.now());
         $sheet->mergeCells('B2:D2');
     }
 }

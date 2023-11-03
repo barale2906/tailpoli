@@ -109,7 +109,7 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     public function styles(Worksheet $sheet)
     {
         $sheet->setTitle('matriculas');
-        $sheet->setCellValue('B2', 'LISTADO DE MATRICULAS');
+        $sheet->setCellValue('B2', 'LISTADO DE MATRICULAS A: '.now());
         $sheet->mergeCells('B2:H2');
     }
 }

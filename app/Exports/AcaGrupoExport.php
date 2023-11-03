@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Academico\Modulo;
+use App\Models\Academico\Grupo;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -16,12 +16,12 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class AcaModuloExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
+class AcaGrupoExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
 {
     use Exportable;
 
     private $buscamin;
-    private $fileName = "Modulos.xlsx";
+    private $fileName = "Grupos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
     public function __construct($buscamin)
@@ -29,24 +29,27 @@ class AcaModuloExport implements FromCollection, WithCustomStartCell, Responsabl
         $this->buscamin=$buscamin;
     }
 
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Modulo::query()
-                        ->with(['curso'])
+        return Grupo::query()
+                        ->with(['modulo', 'profesor'])
                         ->when($this->buscamin, function($query){
-                            return $query->where('name', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('curso', function($q){
+                            return $query->where('status', true)
+                                    ->where('name', 'like', "%".$this->buscamin."%")
+                                    ->orWhereHas('modulo', function($q){
                                         $q->where('name', 'like', "%".$this->buscamin."%");
+                                    })
+                                    ->orWhereHas('profesor', function($qu){
+                                        $qu->where('name', 'like', "%".$this->buscamin."%");
                                     });
                         })
                         ->orderBy('name', 'ASC')
                         ->get();
-    }
-
-    public function startCell(): string
+    }public function startCell(): string
     {
         return 'A5';
     }
@@ -55,17 +58,29 @@ class AcaModuloExport implements FromCollection, WithCustomStartCell, Responsabl
     {
         return [
             'Nombre',
+            'Modulo',
             'Curso',
+            'Inicia',
+            'Finaliza',
+            'Máximo Estudiantes',
+            'Inscritos',
+            'Profesor',
             'Fecha de Creación'
         ];
     }
 
-    public function map($modulo): array
+    public function map($grupo): array
     {
         return [
-            $modulo->name,
-            $modulo->curso->name,
-            Date::dateTimeToExcel($modulo->created_at)
+            $grupo->name,
+            $grupo->modulo->name,
+            $grupo->modulo->curso->name,
+            $grupo->start_date,
+            $grupo->finish_date,
+            $grupo->quantity_limit,
+            $grupo->inscritos,
+            $grupo->profesor->name,
+            Date::dateTimeToExcel($grupo->created_at)
         ];
     }
 
@@ -90,8 +105,8 @@ class AcaModuloExport implements FromCollection, WithCustomStartCell, Responsabl
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->setTitle('Modulos');
-        $sheet->setCellValue('B2', 'LISTADO DE MODULOS A: '.now());
-        $sheet->mergeCells('B2:D2');
+        $sheet->setTitle('Grupos');
+        $sheet->setCellValue('B2', 'LISTADO DE GRUPOS A: '.now());
+        $sheet->mergeCells('B2:H2');
     }
 }

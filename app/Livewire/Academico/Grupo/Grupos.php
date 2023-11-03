@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Grupo;
 
+use App\Exports\AcaGrupoExport;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Modulo;
 use Livewire\Attributes\On;
@@ -97,6 +98,10 @@ class Grupos extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_deleting = !$this->is_deleting;
+    }
+
+    public function exportar(){
+        return new AcaGrupoExport($this->buscamin);
     }
 
     private function grupos()

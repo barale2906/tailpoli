@@ -92,7 +92,7 @@ class AcaEstudianteExport implements FromCollection, WithCustomStartCell, Respon
     public function styles(Worksheet $sheet)
     {
         $sheet->setTitle('Estudiantes');
-        $sheet->setCellValue('B2', 'LISTADO DE ESTUDIANTES');
+        $sheet->setCellValue('B2', 'LISTADO DE ESTUDIANTES A: '.now());
         $sheet->mergeCells('B2:D2');
     }
 }
