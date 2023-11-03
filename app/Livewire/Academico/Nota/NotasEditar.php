@@ -154,15 +154,19 @@ class NotasEditar extends Component
     }
 
     public function encabezadoExcel(){
+        $this->reset('encabezadoxls');
+        array_push($this->encabezadoxls, "grupo");
+        array_push($this->encabezadoxls, "profesor");
         array_push($this->encabezadoxls, "alumno");
         array_push($this->encabezadoxls, "acumulado");
+        array_push($this->encabezadoxls, "observaciones");
 
         foreach ($this->encabezado as $value) {
             $item = $this->actual->$value;
             array_push($this->encabezadoxls, $item);
         }
 
-        array_push($this->encabezadoxls, "observaciones");
+
     }
 
     public function cargarEstudiantes(){
@@ -211,7 +215,7 @@ class NotasEditar extends Component
     }
 
     public function exportar(){
-        return new AcaNotaExport($this->id, $this->encabezado, $this->encabezadoxls);
+        return new AcaNotaExport($this->id, $this->encabezado, $this->encabezadoxls, $this->contador);
     }
 
     public function render()

@@ -71,19 +71,38 @@ class AcaNotaExport implements FromCollection, WithCustomStartCell, Responsable,
     public function map($nota): array
     {
         return [
-            $nota->alumno_id,
-            $nota->alumno,
-            $nota->profesor_id,
-            $nota->profesor,
             $nota->grupo,
-            $nota->observaciones
+            $nota->profesor,
+            $nota->alumno,
+            $nota->acumulado,
+            $nota->observaciones,
+            $nota->nota1,
+            $nota->porcen1,
+            $nota->nota2,
+            $nota->porcen2,
+            $nota->nota3,
+            $nota->porcen3,
+            $nota->nota4,
+            $nota->porcen4,
+            $nota->nota5,
+            $nota->porcen5,
+            $nota->nota6,
+            $nota->porcen6,
+            $nota->nota7,
+            $nota->porcen7,
+            $nota->nota8,
+            $nota->porcen8,
+            $nota->nota9,
+            $nota->porcen9,
+            $nota->nota10,
+            $nota->porcen10,
         ];
     }
 
     public function columnFormats(): array
     {
         return [
-            'F' => 'dd/mm/yyyy',
+            //'F' => 'dd/mm/yyyy',
         ];
     }
 
@@ -103,6 +122,6 @@ class AcaNotaExport implements FromCollection, WithCustomStartCell, Responsable,
     {
         $sheet->setTitle('Notas');
         $sheet->setCellValue('B2', 'LISTADO DE NOTAS A: '.now());
-        $sheet->mergeCells('B2:H2');
+        $sheet->mergeCells('B2:E2');
     }
 }
