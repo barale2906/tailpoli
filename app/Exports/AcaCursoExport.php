@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\User;
+use App\Models\Academico\Curso;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -16,33 +16,27 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-
-class AcaEstudianteExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
+class AcaCursoExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
 {
     use Exportable;
 
     private $buscamin;
-    private $fileName = "Estudiantes.xlsx";
+    private $fileName = "Cursos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
     public function __construct($buscamin)
     {
         $this->buscamin=$buscamin;
     }
-
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-
-        return User::where('name', 'like', "%".$this->buscamin."%")
-                    ->orWhere('documento', 'like', "%".$this->buscamin."%")
-                    ->orwhere('email', 'like', "%".$this->buscamin."%")
+        return Curso::where('name', 'like', "%".$this->buscamin."%")
+                    ->orwhere('tipo', 'like', "%".$this->buscamin."%")
                     ->orderBy('name', 'ASC')
-                    ->with('roles')->get()->filter(
-                        fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                    );
+                    ->get();
     }
 
     public function startCell(): string
@@ -54,26 +48,28 @@ class AcaEstudianteExport implements FromCollection, WithCustomStartCell, Respon
     {
         return [
             'Nombre',
-            'Correo Electrónico',
-            'Documento',
+            'Tipo',
+            'Duración Horas',
+            'Duración Meses',
             'Fecha de Creación'
         ];
     }
 
-    public function map($estudiante): array
+    public function map($curso): array
     {
         return [
-            $estudiante->name,
-            $estudiante->email,
-            $estudiante->documento,
-            Date::dateTimeToExcel($estudiante->created_at)
+            $curso->name,
+            $curso->tipo,
+            $curso->duracion_horas,
+            $curso->duracion_meses,
+            Date::dateTimeToExcel($curso->created_at)
         ];
     }
 
     public function columnFormats(): array
     {
         return [
-            'D' => 'dd/mm/yyyy',
+            'E' => 'dd/mm/yyyy',
         ];
     }
 
@@ -91,8 +87,8 @@ class AcaEstudianteExport implements FromCollection, WithCustomStartCell, Respon
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->setTitle('Estudiantes');
-        $sheet->setCellValue('B2', 'LISTADO DE ESTUDIANTES');
+        $sheet->setTitle('Cursos');
+        $sheet->setCellValue('B2', 'LISTADO DE CURSOS');
         $sheet->mergeCells('B2:D2');
     }
 }

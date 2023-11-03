@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Curso;
 
+use App\Exports\AcaCursoExport;
 use App\Models\Academico\Curso;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -96,6 +97,10 @@ class Cursos extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_deleting = !$this->is_deleting;
+    }
+
+    public function exportar(){
+        return new AcaCursoExport($this->buscamin);
     }
 
     private function cursos()
