@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cartera\Cartera;
 
+use App\Exports\CarCarteraExport;
 use App\Models\Financiera\Cartera;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -62,6 +63,11 @@ class Carteras extends Component
         $this->resetPage();
         $this->pages=$valor;
     }
+
+    public function exportar(){
+        return new CarCarteraExport($this->buscamin);
+    }
+
     private function carteras(){
 
         return Cartera::query()
