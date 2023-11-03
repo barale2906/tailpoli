@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Academico\Nota;
 
+use App\Exports\AcaNotaExport;
 use App\Models\Academico\Nota;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 class NotasEditar extends Component
@@ -16,6 +16,7 @@ class NotasEditar extends Component
     public $notas;
     public $contador;
     public $encabezado=[];
+    public $encabezadoxls=[];
     public $mapaencabe=[];
     public $cargar_nota=false;
     public $aprueba=false;
@@ -125,6 +126,10 @@ class NotasEditar extends Component
                         ->where('nota_id', $this->id)
                         ->orderBy('alumno')
                         ->get();
+
+        $this->encabezadoExcel();
+
+
     }
 
     public function formaencabezado(){
@@ -146,6 +151,18 @@ class NotasEditar extends Component
         }
 
         $this->cargarEstudiantes();
+    }
+
+    public function encabezadoExcel(){
+        array_push($this->encabezadoxls, "alumno");
+        array_push($this->encabezadoxls, "acumulado");
+
+        foreach ($this->encabezado as $value) {
+            $item = $this->actual->$value;
+            array_push($this->encabezadoxls, $item);
+        }
+
+        array_push($this->encabezadoxls, "observaciones");
     }
 
     public function cargarEstudiantes(){
@@ -191,6 +208,10 @@ class NotasEditar extends Component
                 'created_at'    =>now(),
                 'updated_at'    =>now()
             ]);
+    }
+
+    public function exportar(){
+        return new AcaNotaExport($this->id, $this->encabezado, $this->encabezadoxls);
     }
 
     public function render()

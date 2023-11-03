@@ -27,6 +27,11 @@ class RoleSeeder extends Seeder
                     ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
         Permission::create([
+                    'name'=>'ac_export_profe',
+                    'descripcion'=>'exportar listados en excel'
+                    ])->syncRoles([$Superusuario,$Administrador,$Coordinador, $Profesor]);
+
+        Permission::create([
                             'name'=>'Academico',
                             'descripcion'=>'Ingreso al menú Acádemico'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);

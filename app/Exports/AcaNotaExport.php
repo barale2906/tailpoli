@@ -2,8 +2,9 @@
 
 namespace App\Exports;
 
-use App\Models\Academico\Grupo;
+use App\Models\Academico\Nota;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -16,39 +17,33 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class AcaGrupoExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
+class AcaNotaExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
 {
     use Exportable;
 
-    private $buscamin;
-    private $fileName = "Grupos.xlsx";
+    private $id;
+    private $encabezado;
+    private $xls;
+    private $fileName = "Notas.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin)
+    public function __construct($id, $encabezado, $xls)
     {
-        $this->buscamin=$buscamin;
+        $this->id=$id;
+        $this->encabezado=$encabezado;
+        $this->xls=$xls;
     }
-
 
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Grupo::query()
-                        ->with(['modulo', 'profesor'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('name', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('modulo', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('profesor', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
-                        ->orderBy('name', 'ASC')
-                        ->get();
+        return DB::table('notas_detalle')
+                    ->where('status', true)
+                    ->where('nota_id', $this->id)
+                    ->orderBy('alumno')
+                    ->get();
     }
 
     public function startCell(): string
@@ -58,7 +53,7 @@ class AcaGrupoExport implements FromCollection, WithCustomStartCell, Responsable
 
     public function headings(): array
     {
-        return [
+        /* return [
             'Nombre',
             'Modulo',
             'Curso',
@@ -68,28 +63,27 @@ class AcaGrupoExport implements FromCollection, WithCustomStartCell, Responsable
             'Inscritos',
             'Profesor',
             'Fecha de Creación'
-        ];
+        ]; */
+
+        return $this->xls;
     }
 
-    public function map($grupo): array
+    public function map($nota): array
     {
         return [
-            $grupo->name,
-            $grupo->modulo->name,
-            $grupo->modulo->curso->name,
-            $grupo->start_date,
-            $grupo->finish_date,
-            $grupo->quantity_limit,
-            $grupo->inscritos,
-            $grupo->profesor->name,
-            Date::dateTimeToExcel($grupo->created_at)
+            $nota->alumno_id,
+            $nota->alumno,
+            $nota->profesor_id,
+            $nota->profesor,
+            $nota->grupo,
+            $nota->observaciones
         ];
     }
 
     public function columnFormats(): array
     {
         return [
-            'C' => 'dd/mm/yyyy',
+            'F' => 'dd/mm/yyyy',
         ];
     }
 
@@ -107,8 +101,8 @@ class AcaGrupoExport implements FromCollection, WithCustomStartCell, Responsable
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->setTitle('Grupos');
-        $sheet->setCellValue('B2', 'LISTADO DE GRUPOS A: '.now());
+        $sheet->setTitle('Notas');
+        $sheet->setCellValue('B2', 'LISTADO DE NOTAS A: '.now());
         $sheet->mergeCells('B2:H2');
     }
 }
