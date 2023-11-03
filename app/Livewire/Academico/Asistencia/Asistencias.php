@@ -23,6 +23,7 @@ class Asistencias extends Component
     public $contador=0;
     public $dia=false;
     public $titulo;
+    public $crt=0;
 
     public function primerAlumno($item){
         $nuevo=[
@@ -39,7 +40,7 @@ class Asistencias extends Component
 
     }
 
-    public function updatedFechap(){
+    public function upFechap(){
         $esta=0;
 
         foreach ($this->encabezado as $value) {
@@ -70,12 +71,16 @@ class Asistencias extends Component
 
     public function AsistenciaCorriente($item){
 
+        $this->reset('crt');
+
         DB::table('asistencia_detalle')
                 ->where('id', $item)
                 ->update([
                     $this->titulo   =>"X",
                     'updated_at'    =>now()
                 ]);
+
+        $this->crt=$this->crt+1;
 
         $this->reset('encabezado');
 
@@ -146,13 +151,19 @@ class Asistencias extends Component
             $this->contador=$this->actual->registros;
             $this->registroAsistencias();
 
+            $this->reset('xls', 'orden');
+            array_push($this->xls, "grupo");
+            array_push($this->xls, "profesor");
+            array_push($this->xls, "alumno");
+
             if($this->contador>0){
                 $a=$this->contador;
                 for ($i=1; $i <= $this->contador; $i++) {
 
                     $fecha="fecha".$a;
+                    $fechaxls="fecha".$i;
                     $a--;
-
+                    array_push($this->xls, $this->actual->$fechaxls);
                     array_push($this->encabezado, $fecha);
                 }
             }
@@ -172,22 +183,6 @@ class Asistencias extends Component
                                     ->orderBy('name')
                                     ->get();
         }
-
-        $this->encabezadoExcel();
-    }
-
-    public function encabezadoExcel(){
-        $this->reset('xls');
-        array_push($this->xls, "grupo");
-        array_push($this->xls, "profesor");
-        array_push($this->xls, "alumno");
-
-        foreach ($this->encabezado as $value) {
-            $item = $this->actual->$value;
-            array_push($this->xls, $item);
-        }
-
-
     }
 
     public function cargarEstudiantes(){
