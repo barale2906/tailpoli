@@ -30,7 +30,7 @@
                     <i class="fa-solid fa-plus"></i> Ingreso
                 </a>
             @endcan
-            @can('ca_export')
+            @can('fi_export')
                 <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
                     <i class="fa-solid fa-file-excel fa-beat"></i>
                 </a>

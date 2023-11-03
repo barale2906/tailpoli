@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Financiera\CierreCaja;
 
+use App\Exports\FinCierreCajaExport;
 use App\Models\Financiera\CierreCaja;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -87,6 +88,10 @@ class CierreCajas extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_watching = !$this->is_watching;
+    }
+
+    public function exportar(){
+        return new FinCierreCajaExport();
     }
 
     private function cierres()
