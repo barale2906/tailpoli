@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Matricula;
 
+use App\Exports\AcaMatriculaExport;
 use App\Models\Academico\Matricula;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -131,6 +132,10 @@ class Matriculas extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_change = !$this->is_change;
+    }
+
+    public function exportar(){
+        return new AcaMatriculaExport($this->buscamin);
     }
 
     private function matriculas()
