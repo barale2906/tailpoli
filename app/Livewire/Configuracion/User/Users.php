@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Configuracion\User;
 
+use App\Exports\ConfUserExport;
 use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -116,6 +117,10 @@ class Users extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_deleting = !$this->is_deleting;
+    }
+
+    public function exportar(){
+        return new ConfUserExport($this->buscamin);
     }
 
     private function usuarios()
