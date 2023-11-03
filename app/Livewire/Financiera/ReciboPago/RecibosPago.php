@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Financiera\ReciboPago;
 
+use App\Exports\FinReciboExport;
 use App\Models\Financiera\ReciboPago;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -100,6 +101,10 @@ class RecibosPago extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_deleting = !$this->is_deleting;
+    }
+
+    public function exportar(){
+        return new FinReciboExport($this->buscamin);
     }
 
     private function recibos()
