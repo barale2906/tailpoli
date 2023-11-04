@@ -122,6 +122,12 @@
                                                 <i class="fa-solid fa-marker"></i> - {{$recibo->id}}
                                             </a>
                                         </span>
+
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                            <a href="/impresiones/imprecibo?r={{$recibo->id}}" wire:navigate class="inline-flex items-center font-medium text-blue-600 dark:texgreen-500 hover:underline">
+                                                <i class="fa-solid fa-print"></i>
+                                            </a>
+                                        </span>
                                     @endcan
                                 @else
                                     {{$recibo->id}}
