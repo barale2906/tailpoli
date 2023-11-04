@@ -26,7 +26,7 @@
 
         @stack('css')
     </head>
-    <body class="font-sans antialiased" onload="window.print()">
+    <body class="font-sans antialiased" {{-- onload="window.print()" --}}>
 
         {{ $slot }}
 
