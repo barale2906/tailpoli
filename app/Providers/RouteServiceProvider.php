@@ -65,6 +65,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('cartera')
                 ->name('cartera.')
                 ->group(base_path('routes/cartera.php'));
+
+            Route::middleware('web', 'auth')
+                ->prefix('impresiones')
+                ->name('impresiones.')
+                ->group(base_path('routes/impresiones.php'));
         });
     }
 }
