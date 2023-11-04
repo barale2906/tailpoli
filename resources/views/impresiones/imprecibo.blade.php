@@ -1,6 +1,5 @@
 <x-imprimir-layout>
-    @push('title')
-        Recibo
-    @endpush
+
+    <livewire:impresiones.imp-recibo-pago />
 
 </x-imprimir-layout>

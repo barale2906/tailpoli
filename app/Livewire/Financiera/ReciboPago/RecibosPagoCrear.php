@@ -341,6 +341,10 @@ class RecibosPagoCrear extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('created');
+
+        $ruta='/impresiones/imprecibo?r='.$recibo->id;
+
+        $this->redirect($ruta);
     }
 
     private function sedes(){
