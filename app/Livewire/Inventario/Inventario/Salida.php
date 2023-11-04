@@ -378,6 +378,11 @@ class Salida extends Component
             $this->resetFields();
             $this->fin=!$this->fin;
             $this->dispatch('mostodo');
+
+            $ruta='/impresiones/imprecibo?r='.$this->recibo->id;
+
+            $this->redirect($ruta);
+
         } else{
             $this->dispatch('borrarMov');
             $this->cargando();
@@ -394,6 +399,10 @@ class Salida extends Component
         $this->dispatch('refresh');
         $this->dispatch('borrarMov');
         $this->dispatch('created');
+
+        $ruta='/impresiones/imprecibo?r='.$this->recibo->id;
+
+        $this->redirect($ruta);
     }
 
 
