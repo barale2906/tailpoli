@@ -22,6 +22,8 @@ class Users extends Component
     public $is_deleting = false;
     public $is_perfil=false;
 
+    public $impresion=1;
+
     public $elegido;
     public $clase=0;
     public $perf=0;

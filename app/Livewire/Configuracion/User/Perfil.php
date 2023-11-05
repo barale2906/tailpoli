@@ -71,15 +71,18 @@ class Perfil extends Component
     public $sedeperte=[];
     public $noperte=[];
 
+    public $impresion;
 
 
 
 
-    public function mount($elegido = null,$perf)
+
+    public function mount($elegido = null,$perf, $impresion)
     {
         $this->id=$elegido;
         $this->actual=User::find($elegido);
         $this->perf=$perf;
+        $this->impresion=$impresion;
 
         $this->valores();
         $this->personasMulti();

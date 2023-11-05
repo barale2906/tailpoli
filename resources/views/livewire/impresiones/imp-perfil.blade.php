@@ -9,11 +9,11 @@
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         @if ($user->profile_photo_path)
-                            <a href="/academico/estudiantes" wire:navigate>
+                            <a href="{{$ruta}}" wire:navigate>
                                 <img class="h-16 w-18 rounded-sm" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" >
                             </a>
                         @else
-                            <a href="/academico/estudiantes" wire:navigate>
+                            <a href="{{$ruta}}" wire:navigate>
                                 <img class="h-16 w-18 rounded-sm" src="{{asset('img/logo.jpeg')}}" alt="{{ $user->name }}">
                             </a>
                         @endif

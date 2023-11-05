@@ -137,7 +137,7 @@
     @endif
 
     @if ($is_perfil)
-        <livewire:configuracion.user.perfil :elegido="$elegido" :perf="$perf"/>
+        <livewire:configuracion.user.perfil :elegido="$elegido" :perf="$perf" :impresion="$impresion"/>
     @endif
 
     @push('js')

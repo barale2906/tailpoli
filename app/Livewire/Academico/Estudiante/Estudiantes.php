@@ -22,6 +22,8 @@ class Estudiantes extends Component
     public $is_deleting = false;
     public $is_perfil=false;
 
+    public $impresion=0;
+
     public $elegido;
     public $clase=1;
     public $perf=0;
