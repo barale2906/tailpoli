@@ -325,6 +325,10 @@ class CierreCajasCrear extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('created');
+
+        $ruta='/impresiones/impcierre?o=0&c='.$cierre->id;
+
+        $this->redirect($ruta);
     }
 
     private function sedes(){

@@ -136,7 +136,7 @@ class CierreCajeroCrear extends Component
                                     ->where('recibo_pagos.creador_id', Auth::user()->id)
                                     ->where('recibo_pagos.status', 0)
                                     ->where('concepto_pago_recibo_pago.tipo', 'cartera')
-                                    ->whereIn('concepto_pago_recibo_pago.medio', ['tarjeta credito', 'tarjeta debito'])
+                                    ->where('concepto_pago_recibo_pago.medio', 'tarjeta')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
         $this->valor_cheque = DB::table('concepto_pago_recibo_pago')
@@ -186,7 +186,7 @@ class CierreCajeroCrear extends Component
                                     ->where('recibo_pagos.creador_id', Auth::user()->id)
                                     ->where('recibo_pagos.status', 0)
                                     ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
-                                    ->whereIn('concepto_pago_recibo_pago.medio', ['tarjeta credito', 'tarjeta debito'])
+                                    ->where('concepto_pago_recibo_pago.medio', 'tarjeta')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
         $this->valor_cheque_o = DB::table('concepto_pago_recibo_pago')
@@ -271,6 +271,10 @@ class CierreCajeroCrear extends Component
         //refresh
         $this->dispatch('refresh');
         $this->print=!$this->print;
+
+        $ruta='/impresiones/impcierre?o=1&c='.$cierre->id;
+
+        $this->redirect($ruta);
 
     }
 
