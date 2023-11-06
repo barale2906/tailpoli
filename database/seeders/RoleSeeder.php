@@ -542,6 +542,15 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario]);
 
 
+        Permission::create([
+                            'name'=>'co_documentos',
+                            'descripcion'=>'Ver los tipos de documentos que se generan'
+                            ])->syncRoles([$Superusuario]);
+
+        Permission::create([
+                            'name'=>'co_documentosCrear',
+                            'descripcion'=>'crear documentos según tipo'
+                            ])->syncRoles([$Superusuario]);
 
     }
 }
