@@ -5,7 +5,7 @@ namespace App\Models\Configuracion;
 use App\Models\Academico\Matricula;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Documento extends Model
 {
@@ -13,9 +13,10 @@ class Documento extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    //Relacion uno a muchos inversa
-    public function matricula() : BelongsTo
+
+    //Relación uno a muchos
+    public function matriculas(): BelongsToMany
     {
-        return $this->BelongsTo(Matricula::class);
+        return $this->BelongsToMany(Matricula::class);
     }
 }

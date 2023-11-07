@@ -21,6 +21,7 @@ return new class extends Migration
 
             $table->string('tipodetalle')->comment('encabezado, clausula, parágrafo, firma');
             $table->longText('contenido')->comment('información a presentar');
+            $table->integer('orden')->comment('orden en que aparecen los contenidos');
 
             $table->timestamps();
         });

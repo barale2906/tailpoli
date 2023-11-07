@@ -2,6 +2,7 @@
 
 namespace App\Models\Academico;
 
+use App\Models\Configuracion\Documento;
 use App\Models\Configuracion\Sede;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -54,8 +55,8 @@ class Matricula extends Model
     }
 
     //Relación uno a muchos
-    public function documentos(): HasMany
+    public function documentos(): BelongsToMany
     {
-        return $this->hasMany(Nota::class);
+        return $this->BelongsToMany(Documento::class);
     }
 }

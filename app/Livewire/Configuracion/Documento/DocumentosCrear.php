@@ -4,7 +4,6 @@ namespace App\Livewire\Configuracion\Documento;
 
 use App\Models\Configuracion\Documento;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class DocumentosCrear extends Component
@@ -61,19 +60,11 @@ class DocumentosCrear extends Component
         $this->detalles=!$this->detalles;
     }
 
-    private function palabras(){
 
-        return DB::table('palabras_clave')
-                    ->where('status', true)
-                    ->orderBy('palabra')
-                    ->get();
-    }
 
     public function render()
     {
 
-        return view('livewire.configuracion.documento.documentos-crear',[
-            'palabras'=>$this->palabras(),
-        ]);
+        return view('livewire.configuracion.documento.documentos-crear');
     }
 }
