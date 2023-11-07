@@ -3,6 +3,6 @@
         Documentos
     @endpush
 
-    {{-- <livewire:configuracion.estado.estados /> --}}
+    <livewire:configuracion.documento.documentos />
 
 </x-admin-layout>

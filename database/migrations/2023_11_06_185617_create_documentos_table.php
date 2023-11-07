@@ -25,10 +25,9 @@ return new class extends Migration
 
             $table->date('fecha')->nullable()->comment('Fecha en que inicia a funcionar el dcoumento');
             $table->string('tipo')->nullable()->comment('tipo de documento contrato, pagare, certificado estudio');
-            $table->string('nombre')->nullable()->comment('nombre del documento');
             $table->string('titulo')->nullable()->comment('titulo del documento');
 
-            $table->boolean('integer')->default(1)->comment('1 Elaboración, 2 aprobado, 3 activo, 4 obsoleto');
+            $table->integer('status')->default(1)->comment('1 Elaboración, 2 aprobado, 3 activo, 4 obsoleto');
             $table->timestamps();
         });
     }

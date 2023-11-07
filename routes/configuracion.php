@@ -27,5 +27,5 @@ Route::get('/users', function () {
 })->middleware('can:co_users')->name('users');
 
 Route::get('/documentos', function () {
-    return view('documentos.index');
-})->name('documentos');
+    return view('configuracion.documentos.index');
+})->middleware('can:co_documentos')->name('documentos');
