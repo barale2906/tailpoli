@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Matricula extends Model
 {
@@ -50,5 +51,11 @@ class Matricula extends Model
     public function grupos() : BelongsToMany
     {
         return $this->BelongsToMany(Grupo::class);
+    }
+
+    //Relación uno a muchos
+    public function documentos(): HasMany
+    {
+        return $this->hasMany(Nota::class);
     }
 }
