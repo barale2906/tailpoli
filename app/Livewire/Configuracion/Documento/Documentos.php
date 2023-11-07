@@ -18,7 +18,6 @@ class Documentos extends Component
     public $is_modify = true;
     public $is_creating = false;
     public $is_editing = false;
-    public $is_deleting = false;
 
     public $elegido;
 
@@ -77,42 +76,19 @@ class Documentos extends Component
     }
 
     // Mostrar Regimen de Salud
-    public function show($esta, $act){
+    public function show($esta){
 
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
-
-        if($act===0){
-            $this->is_editing=!$this->is_editing;
-        }else{
-            $this->is_deleting=!$this->is_deleting;
-        }
-    }
-
-    //Activar evento
-    #[On('Inactivando')]
-    //Mostrar formulario de inactivación
-    public function updatedIsDeleting()
-    {
-        $this->is_modify = !$this->is_modify;
-        $this->is_deleting = !$this->is_deleting;
+        $this->is_editing=!$this->is_editing;
     }
 
     private function documentos(){
-        return Documento::query()
-                        ->with(['sector', 'curso'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('descripcion', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('sector', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('curso', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
+
+        return Documento::where('fecha', 'like', "%".$this->buscamin."%")
+                        ->orwhere('tipo', 'like', "%".$this->buscamin."%")
+                        ->orwhere('titulo', 'like', "%".$this->buscamin."%")
                         ->orderBy($this->ordena, $this->ordenado)
-                        ->orderBy('id', 'DESC')
                         ->paginate($this->pages);
     }
 

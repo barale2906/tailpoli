@@ -16,9 +16,6 @@ return new class extends Migration
             $table->comment('definición de los documentos');
             $table->id();
 
-            $table->unsignedBigInteger('matricula_id');
-            $table->foreign('matricula_id')->references('id')->on('matriculas');
-
             $table->unsignedBigInteger('creador_id');
             $table->foreign('creador_id')->references('id')->on('users');
 
