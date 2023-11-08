@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Matricula;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
+use App\Models\Configuracion\Documento;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
@@ -253,18 +254,29 @@ class MatriculasCrear extends Component
                 ]);
         }
 
+        //Cargar documentos base
+        $documentos=Documento::where('status', 3)
+                                ->whereIn('tipo', ['pagare', 'contrato'])
+                                ->orderBy('titulo')
+                                ->select('id')
+                                ->get();
+
+        //Asignar documentos base
+        foreach ($documentos as $value) {
+            DB::table('documentos_matriculas')
+                    ->insert([
+                        'documento_id'   => $value->id,
+                        'matricula_id'     => $this->matricula->id,
+                        'created_at'    =>now(),
+                        'updated_at'    =>now()
+                    ]);
+        }
+
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
         $this->resetFields();
         $this->vista=!$this->vista;
-
-        //refresh
-        /* $this->dispatch('refresh');
-        $this->dispatch('created'); */
-
-        //Enviar a crear recibo
-        //$this->redirect('/financiera/recibopagos');
 
     }
 
