@@ -19,7 +19,7 @@ class Documentos extends Component
     public $is_creating = false;
     public $is_editing = false;
 
-    public $elegido;
+    public $actual;
 
     public $buscar='';
     public $buscamin='';
@@ -75,10 +75,18 @@ class Documentos extends Component
         $this->is_editing = !$this->is_editing;
     }
 
+    //Activar evento
+    #[On('volver')]
+    //Mostrar formulario de creación
+    public function vuelve()
+    {
+        $this->reset('is_modify', 'is_creating', 'is_editing');
+    }
+
     // Mostrar Regimen de Salud
     public function show($esta){
 
-        $this->elegido=$esta;
+        $this->actual=$esta;
         $this->is_modify = !$this->is_modify;
         $this->is_editing=!$this->is_editing;
     }

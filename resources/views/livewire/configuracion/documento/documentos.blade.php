@@ -166,7 +166,7 @@
     @endif
 
     @if ($is_editing)
-        <livewire:configuracion.documento.documentos-ver :elegido="$elegido" />
+        <livewire:configuracion.documento.documentos-detalle :actual="$actual" />
     @endif
 
     @push('js')

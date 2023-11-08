@@ -15,11 +15,20 @@ class DocumentosDetalle extends Component
     public $orden=1;
     public $modifica;
     public $registrados;
+    public $docuanterior;
+    public $alerta=false;
 
     public function mount($actual=null){
         $this->id=$actual['id'];
         $this->actual=Documento::find($actual['id']);
+        $this->anterior();
         $this->resultado();
+    }
+
+    public function anterior(){
+        $this->docuanterior=Documento::where('status', 2)
+                                        ->where('tipo', $this->actual->tipo)
+                                        ->first();
     }
 
     public function resultado(){
@@ -94,6 +103,25 @@ class DocumentosDetalle extends Component
         $this->tipodetalle=$this->modifica->tipodetalle;
         $this->contenido=$this->modifica->contenido;
         $this->orden=$this->modifica->orden;
+    }
+
+    public function finalizar(){
+        $this->alerta=!$this->alerta;
+    }
+
+    public function culminar(){
+
+        $this->actual->update([
+            'status' => 2
+        ]);
+
+        // Notificación
+        $this->dispatch('alerta', name:'Se ha activado correctamente el documento: '.$this->actual->titulo.', entrará en vigencia el: '.$this->actual->fecha);
+        $this->resetFields();
+
+        //refresh
+        $this->dispatch('refresh');
+        $this->dispatch('volver');
     }
 
     private function palabras(){
