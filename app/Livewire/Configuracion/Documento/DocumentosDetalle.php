@@ -17,6 +17,7 @@ class DocumentosDetalle extends Component
     public $registrados;
     public $docuanterior;
     public $alerta=false;
+    public $ruta;
 
     public function mount($actual=null){
         $this->id=$actual['id'];
@@ -38,6 +39,46 @@ class DocumentosDetalle extends Component
                                 ->get();
         if($this->registrados->count()>0){
             $this->orden = $this->registrados->count()+1;
+        }
+
+        $this->definRuta();
+    }
+
+    public function definRuta(){
+
+        switch ($this->actual->tipo) {
+
+            case 'contrato':
+                $this->ruta="/impresiones/impcontrato?o=1&c=".$this->actual->id;
+                break;
+
+            case 'pagare':
+                $this->ruta="";
+                break;
+
+            case 'certiEstudio':
+                $this->ruta="";
+                break;
+
+            case 'actaPago':
+                $this->ruta="";
+                break;
+
+            case 'comproCredito':
+                $this->ruta="";
+                break;
+
+            case 'comproEntrega':
+                $this->ruta="";
+                break;
+
+            case 'estadoCuenta ':
+                $this->ruta="";
+                break;
+
+            case 'cartaCobro':
+                $this->ruta="";
+                break;
         }
     }
 

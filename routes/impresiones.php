@@ -13,3 +13,7 @@ Route::get('/impperfil', function () {
 Route::get('/impcierre', function () {
     return view('impresiones.impcierre');
 })->name('impcierre');
+
+Route::get('/impcontrato', function () {
+    return view('impresiones.impcontrato');
+})->name('impcontrato');

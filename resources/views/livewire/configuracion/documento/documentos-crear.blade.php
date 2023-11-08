@@ -18,7 +18,12 @@
                         <option >Elija tipo de documento...</option>
                         <option value="contrato">contrato</option>
                         <option value="pagare">pagare</option>
-                        <option value="certificado de estudio">certificado de estudio</option>
+                        <option value="certiEstudio">certificacion de estudio</option>
+                        <option value="actaPago">acta recibos pago</option>
+                        <option value="comproCredito">compromiso crédito</option>
+                        <option value="comproEntrega">compromiso documentación</option>
+                        <option value="estadoCuenta">estado de cuenta</option>
+                        <option value="cartaCobro">carta de cobro</option>
                     </select>
                     @error('tipo')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">

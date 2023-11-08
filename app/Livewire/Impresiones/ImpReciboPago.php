@@ -41,15 +41,16 @@ class ImpReciboPago extends Component
                                 ->where('status', true)
                                 ->get();
 
-        $this->total=$this->matriculas->sum('valor');
-
         $this->obteSaldo();
     }
 
     public function obteSaldo(){
         $this->saldo=Cartera::where('responsable_id', $this->obtener->paga_id)
                         ->where('status', true)
-                        ->sum('saldo');
+                        ->get();
+
+        $this->total=$this->saldo->sum('valor');
+        $this->saldo=$this->saldo->sum('saldo');
 
     }
 

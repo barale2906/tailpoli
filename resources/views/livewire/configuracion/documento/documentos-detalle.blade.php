@@ -39,7 +39,7 @@
                                     <option value="titulo">titulo</option>
                                     <option value="clausula">clausula</option>
                                     <option value="paragrafo">paragráfo</option>
-                                    <option value="paragrafo">paragráfo</option>
+                                    <option value="firma">firma</option>
                                 </select>
                                 @error('tipodetalle')
                                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -156,6 +156,13 @@
                     <div class="relative overflow-x-auto">
                         <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" colspan="3" class="px-6 py-3 text-center" >
+                                        <a href="{{$ruta}}" target="_blank" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 uppercase">
+                                            <i class="fa-solid fa-link"></i> VER documento
+                                        </a>
+                                    </th>
+                                </tr>
                                 <tr>
                                     <th scope="col" class="px-6 py-3" >
                                         tipo de detalle
