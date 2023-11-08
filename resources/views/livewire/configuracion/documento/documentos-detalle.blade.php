@@ -133,6 +133,26 @@
                         </div>
 
                     @endif
+                    @if ($actual->status!==1)
+                        <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+                            <div class="flex items-center">
+                            <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                            </svg>
+                            <span class="sr-only">Info</span>
+                            <h3 class="text-lg font-medium">Utilizar este documento como base</h3>
+                            </div>
+                            <div class="mt-2 mb-4 text-sm">
+                                Puede utilizar los datos de este documento para generar su reemplazo. Si así lo desea de clic en el siguiente botón:
+                            </div>
+                            <div class="flex">
+
+                                <a href="" wire:click.prevent="$parent.usar({{$actual->id}})" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 uppercase">
+                                    <i class="fa-solid fa-check-double"></i> Nuevo Documento
+                                </a>
+                            </div>
+                        </div>
+                    @endif
                     <div class="relative overflow-x-auto">
                         <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

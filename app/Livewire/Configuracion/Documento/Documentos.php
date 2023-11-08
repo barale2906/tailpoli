@@ -91,6 +91,15 @@ class Documentos extends Component
         $this->is_editing=!$this->is_editing;
     }
 
+    //Reutilizar documento
+    public function usar($item){
+
+        $this->actual=$item;
+        $this->vuelve();
+        $this->is_modify = !$this->is_modify;
+        $this->is_creating=!$this->is_creating;
+    }
+
     private function documentos(){
 
         return Documento::where('fecha', 'like', "%".$this->buscamin."%")

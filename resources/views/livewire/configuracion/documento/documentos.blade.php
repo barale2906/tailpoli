@@ -162,7 +162,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:configuracion.documento.documentos-crear />
+        <livewire:configuracion.documento.documentos-crear :actual="$actual" />
     @endif
 
     @if ($is_editing)

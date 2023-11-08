@@ -3,7 +3,9 @@
 namespace App\Livewire\Configuracion\Documento;
 
 use App\Models\Configuracion\Documento;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class DocumentosCrear extends Component
@@ -13,13 +15,32 @@ class DocumentosCrear extends Component
     public $titulo;
     public $detalles=false;
     public $actual;
+    public $hoy;
+
+    public $enviado;
+
+    public function mount($actual=null){
+
+        $this->hoy=Carbon::now();
+
+        if($actual){
+            $this->enviado=Documento::whereId($actual)->first();
+            $this->cargar();
+        }
+    }
+
+    public function cargar(){
+        $this->fecha=$this->enviado->fecha;
+        $this->tipo=$this->enviado->tipo;
+        $this->titulo=$this->enviado->titulo;
+    }
 
 
     /**
      * Reglas de validación
      */
     protected $rules = [
-        'fecha'        => 'required',
+        'fecha'        => 'required|after:hoy',
         'tipo'         => 'required',
         'titulo'       => 'required|unique:documentos|max:255',
     ];
@@ -49,6 +70,26 @@ class DocumentosCrear extends Component
                                     'titulo'    =>$this->titulo,
                                     'creador_id'=>Auth::user()->id,
                                 ]);
+
+        //Cargar detalles si es reutilizado
+        if($this->enviado){
+            $detalles=DB::table('detalle_documento')
+                            ->where('documento_id', $this->enviado->id)
+                            ->orderBy('orden', 'ASC')
+                            ->get();
+
+            foreach ($detalles as $value) {
+                DB::table('detalle_documento')
+                    ->insert([
+                        'tipodetalle'   => $value->tipodetalle,
+                        'contenido'     => $value->contenido,
+                        'orden'         => $value->orden,
+                        'documento_id'  => $this->actual->id,
+                        'created_at'    =>now(),
+                        'updated_at'    =>now()
+                    ]);
+            }
+        }
 
 
         // Notificación
