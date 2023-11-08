@@ -13,6 +13,7 @@ class DocumentosDetalle extends Component
     public $tipodetalle;
     public $contenido;
     public $orden=1;
+    public $modifica;
     public $registrados;
 
     public function mount($actual=null){
@@ -56,7 +57,19 @@ class DocumentosDetalle extends Component
         // validate
         $this->validate();
 
-        DB::table('detalle_documento')
+        if($this->modifica){
+
+            DB::table('detalle_documento')
+                ->whereId($this->modifica->id)
+                ->update([
+                    'tipodetalle'   =>$this->tipodetalle,
+                    'contenido'     =>$this->contenido,
+                    'orden'         =>$this->orden,
+                    'updated_at'    =>now()
+                ]);
+
+        }else{
+            DB::table('detalle_documento')
             ->insert([
                 'tipodetalle'   =>$this->tipodetalle,
                 'contenido'     =>$this->contenido,
@@ -65,10 +78,22 @@ class DocumentosDetalle extends Component
                 'created_at'    =>now(),
                 'updated_at'    =>now()
             ]);
+        }
+
+
 
 
         $this->resetFields();
         $this->resultado();
+    }
+
+    public function editar($item){
+
+        $this->modifica=DB::table('detalle_documento')->whereId($item)->first();
+
+        $this->tipodetalle=$this->modifica->tipodetalle;
+        $this->contenido=$this->modifica->contenido;
+        $this->orden=$this->modifica->orden;
     }
 
     private function palabras(){
