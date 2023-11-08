@@ -9,7 +9,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-3">
 
-                        <a href="{{$ruta}}" wire:navigate>
+                        <a href="" wire:navigate>
                             <img class="h-12 w-16 rounded-sm" src="{{asset('img/logo.jpeg')}}" alt="{{env('APP_NAME')}}">
                         </a>
 
@@ -18,10 +18,6 @@
                         <h1 class="text-center  font-extrabold uppercase">POLIANDINO</h1>
                         <h2 class="text-center  font-extrabold uppercase">nit: 900656857-5</h2>
                         <h2 class="text-center  font-extrabold uppercase">INSTITUTO DE CAPACITACIÓN POLIANDINO CENTRAL</h2>
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        <h1 class="text-center  uppercase">sede:</h1>
-                        <h1 class="text-center  font-extrabold uppercase">{{$obtener->sede->name}}</h1>
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
                         <dd class="text-gray-500 dark:text-gray-400">Cierre N°:</dd>
