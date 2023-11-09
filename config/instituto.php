@@ -8,7 +8,7 @@ return[
     'telefono'              =>('TELEFONO'),
     'resolucion_fact'       =>env('RESOLUCION_FACT'),
     'representante_legal'   =>env('REPRESENTANTE_LEGAL'),
-    'documento_rl'          =>('DOCUMENTO_RL'),
-    'telefono_rol'          =>('TELEFONO_RL')
+    'documento_rl'          =>env('DOCUMENTO_RL'),
+    'telefono_rol'          =>env('TELEFONO_RL')
 
 ];

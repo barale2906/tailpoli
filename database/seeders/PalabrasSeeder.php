@@ -79,6 +79,13 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
+                    'palabra'=>'nitInsti',
+                    'descripcion'=>'NIT del poliandino',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+        DB::table('palabras_clave')
+                ->insert([
                     'palabra'=>'nombreInsti',
                     'descripcion'=>'Nombre del poliandino',
                     'created_at'=>now(),
