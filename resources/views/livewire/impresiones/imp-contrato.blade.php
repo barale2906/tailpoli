@@ -15,7 +15,7 @@
 
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        <h1 class="text-center  font-extrabold uppercase">POLIANDINO</h1>
+                        <h1 class="text-center  font-extrabold uppercase">{{$nombre_empresa}}</h1>
                         <h2 class="text-center  font-extrabold uppercase">nit: 900656857-5</h2>
                         <h2 class="text-center  font-extrabold uppercase">INSTITUTO DE CAPACITACIÓN POLIANDINO CENTRAL</h2>
                     </th>

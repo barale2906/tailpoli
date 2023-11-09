@@ -19,8 +19,13 @@ class ImpContrato extends Component
 
     public $contrato;
     public $matricula;
+    public $nombre_empresa;
+
+
 
     public function mount(){
+
+        $this->nombre_empresa = config('instituto.nombre_empresa');
 
         if($this->ori){
             $this->contrato=Documento::whereId($this->id)->first();
