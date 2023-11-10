@@ -49,7 +49,7 @@ class ImpReciboPago extends Component
                         ->where('status', true)
                         ->get();
 
-        $this->total=$this->saldo->sum('valor');
+        $this->total=$this->matriculas->sum('valor');
         $this->saldo=$this->saldo->sum('saldo');
 
     }
