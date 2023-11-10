@@ -3,7 +3,7 @@
         Contrato N°: {{$id}}
     @endpush
 
-    <div class="relative overflow-x-auto bg-slate-200 m-1">
+    <div class="relative overflow-x-auto bg-slate-200  m-1">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -38,7 +38,7 @@
                         </p>
                         <p class="text-justify text-sm">
                             Lugar:
-                            <strong>
+                            <strong class="capitalize">
                                 {{$docuMatricula->sede->name}} - {{$docuMatricula->sede->sector->name}}
                                 - {{$docuMatricula->sede->sector->state->name}}
                             </strong>
@@ -86,7 +86,7 @@
                                         {{config('instituto.nombre_empresa')}}
                                     </h1>
                                     <h2 class="capitalize text-sm">
-                                        {{config('instituto.nit')}}
+                                        NIT: {{config('instituto.nit')}}
                                     </h2>
                                 </th>
                             </tr>
@@ -95,7 +95,44 @@
                 </div>
                 @break
             @case("formaPago")
-                <h1>aca va la forma</h1>
+                @if ($docuFormaP->cuotas>0)
+                    <div class="relative overflow-x-auto m-1 text-center ring ring-black mt-6 mb-6">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase font-extrabold bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-center text-xs">
+                                        concepto
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-center text-xs">
+                                        fecha de pago
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-center text-xs">
+                                        valor
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($docuCartera as $item)
+                                    <tr class="bg-white dark:bg-gray-800">
+                                        <th scope="row" class="px-3 py-1 text-justify text-gray-900 text-xs  dark:text-white capitalize">
+                                            {{$item->concepto}}
+                                        </th>
+                                        <th scope="row" class="px-3 py-1 text-center text-gray-900 text-xs  dark:text-white capitalize">
+                                            {{$item->fecha_pago}}
+                                        </th>
+                                        <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
+                                            $ {{number_format($item->valor, 0, '.', '.')}}
+                                        </th>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="p-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300" role="alert">
+                        <span class="font-medium">¡Pago de Contado!</span> Según lo especificado al momento de la matricula.
+                    </div>
+                @endif
                 @break
             @default
                 <div class="relative overflow-x-auto bg-slate-200 m-1">
