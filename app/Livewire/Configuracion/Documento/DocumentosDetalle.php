@@ -165,18 +165,8 @@ class DocumentosDetalle extends Component
         $this->dispatch('volver');
     }
 
-    private function palabras(){
-
-        return DB::table('palabras_clave')
-                    ->where('status', true)
-                    ->get();
-    }
-
-
     public function render()
     {
-        return view('livewire.configuracion.documento.documentos-detalle',[
-            'palabras'=>$this->palabras(),
-        ]);
+        return view('livewire.configuracion.documento.documentos-detalle');
     }
 }
