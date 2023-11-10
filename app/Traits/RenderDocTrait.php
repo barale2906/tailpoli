@@ -41,7 +41,7 @@ trait RenderDocTrait
 
         $this->detalles=DB::table('detalle_documento')
                             ->where('documento_id', $this->docuTipo->id)
-                            ->select('contenido')
+                            ->select('contenido','tipodetalle')
                             ->orderBy('orden', 'ASC')
                             ->get();
 
@@ -117,11 +117,14 @@ trait RenderDocTrait
 
             $dato=$value->contenido;
 
-            //dd($dato, $this->palabras, $this->reemplazo);
-
             $datos = str_replace($this->palabras, $this->reemplazo, $dato);
 
-            array_push($this->impresion, $datos);
+            $nuevo=[
+                'contenido' =>$datos,
+                'tipo'      =>$value->tipodetalle,
+            ];
+
+            array_push($this->impresion, $nuevo);
 
         }
     }

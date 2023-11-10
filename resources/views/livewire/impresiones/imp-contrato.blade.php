@@ -59,16 +59,58 @@
         </table>
     </div>
     @foreach ($impresion as $item)
-        <div class="relative overflow-x-auto bg-slate-200 m-1">
-            <table class="w-full text-sm text-gray-500 text-justify dark:text-gray-400">
-                <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col">
-                            {{$item}}
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+        @switch($item['tipo'])
+            @case("firma")
+                <div class="relative overflow-x-auto bg-slate-200 m-1">
+                    <table class="w-full text-sm text-gray-500 text-justify dark:text-gray-400">
+                        <thead class="text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="mt-36 pt-20 font-extrabold">
+                                    _______________________________________________________
+                                </th>
+                                <th scope="col" class="mt-36 pt-20 font-extrabold">
+                                    _______________________________________________________
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    <h1 class="uppercase text-sm font-bold">
+                                        {{$docuMatricula->alumno->name}}
+                                    </h1>
+                                    <h2 class="capitalize text-sm">
+                                        {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}
+                                    </h2>
+                                </th>
+                                <th scope="col">
+                                    <h1 class="uppercase text-sm font-bold">
+                                        {{config('instituto.nombre_empresa')}}
+                                    </h1>
+                                    <h2 class="capitalize text-sm">
+                                        {{config('instituto.nit')}}
+                                    </h2>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                @break
+            @case("formaPago")
+                <h1>aca va la forma</h1>
+                @break
+            @default
+                <div class="relative overflow-x-auto bg-slate-200 m-1">
+                    <table class="w-full text-sm text-gray-500 text-justify dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col">
+                                    {{$item['contenido']}}
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+        @endswitch
     @endforeach
+
+
 </div>
