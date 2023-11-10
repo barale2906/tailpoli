@@ -3,7 +3,7 @@
         Contrato N°: {{$id}}
     @endpush
 
-    <div class="relative overflow-x-auto bg-slate-200 shadow-sm shadow-teal-200 m-1">
+    <div class="relative overflow-x-auto bg-slate-200 m-1">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -25,7 +25,7 @@
             </thead>
         </table>
     </div>
-    <div class="relative overflow-x-auto bg-slate-200 shadow-sm shadow-teal-200 m-1">
+    <div class="relative overflow-x-auto bg-slate-200 mt-2 mb-4 ring ring-black">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -58,4 +58,17 @@
             </thead>
         </table>
     </div>
+    @foreach ($impresion as $item)
+        <div class="relative overflow-x-auto bg-slate-200 m-1">
+            <table class="w-full text-sm text-gray-500 text-justify dark:text-gray-400">
+                <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col">
+                            {{$item}}
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    @endforeach
 </div>

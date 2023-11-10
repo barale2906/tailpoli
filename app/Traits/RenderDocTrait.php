@@ -41,6 +41,7 @@ trait RenderDocTrait
 
         $this->detalles=DB::table('detalle_documento')
                             ->where('documento_id', $this->docuTipo->id)
+                            ->select('contenido')
                             ->orderBy('orden', 'ASC')
                             ->get();
 
@@ -49,17 +50,24 @@ trait RenderDocTrait
 
     public function obtePalabras(){
 
+        $this->palabras=[
 
-
-        $datos= DB::table('palabras_clave')
-                            ->where('status', true)
-                            ->select('palabra')
-                            ->get();
-
-        foreach ($datos as $value) {
-
-            array_push($this->palabras, $value);
-        }
+            'matriculaEstu',
+            'nombreEstu',
+            'documentoEstu',
+            'tipodocuEstu',
+            'direccionEstu',
+            'ciudadEstu',
+            'telefonoEstu',
+            'cursoEstu',
+            'valorMatricula',
+            'nitInsti',
+            'nombreIns',
+            'rlInsti',
+            'rldocInsti',
+            'dirInsti',
+            'telInsti'
+        ];
 
         $this->equivale();
 
@@ -67,18 +75,19 @@ trait RenderDocTrait
 
     public function equivale(){
         $matriculaId=$this->docuMatricula->id; //matriculaEstu	Numero de matricula del estudiante
-        $nombreEstud=$this->docuMatricula->alumno->name; //nombreEstu	Nombre del estudiante
+        $nombreEstud=strtoupper($this->docuMatricula->alumno->name); //nombreEstu	Nombre del estudiante
         $documEstu=$this->docuMatricula->alumno->documento; //documentoEstu	documento del estudiante
-        $tipodocu=$this->docuMatricula->alumno->perfil->tipo_documento; //tipodocuEstu	tipo de documento del estudiante
-        $direEstu=$this->docuMatricula->alumno->perfil->direccion; //direccionEstu	direccion del estudiante
-        $ciudadEstu=$this->docuMatricula->alumno->perfil->state->name; //ciudadEstu	ciudad del estudiante
+        $tipodocu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
+        $direEstu=ucwords($this->docuMatricula->alumno->perfil->direccion); //direccionEstu	direccion del estudiante
+        $ciudadEstu=ucwords($this->docuMatricula->alumno->perfil->state->name); //ciudadEstu	ciudad del estudiante
         $telEstu=$this->docuMatricula->alumno->perfil->celular; //telefonoEstu	teléfono del estudiante
-        $curso=$this->docuMatricula->curso->name; //cursoEstu	Curso al que se inscribio estudiante
+        $curso=strtoupper($this->docuMatricula->curso->name); //cursoEstu	Curso al que se inscribio estudiante
+        $valorMatricula=$this->docuMatricula->valor;
         $nit=config('instituto.nit'); //nitInsti	NIT del poliandino
-        $empresa=config('instituto.nombre_empresa'); //nombreInsti	Nombre del poliandino
-        $rl=config('instituto.representante_legal'); //rlInsti	Representante Legal del poliandino
+        $empresa=strtoupper(config('instituto.nombre_empresa')); //nombreInsti	Nombre del poliandino
+        $rl=strtoupper(config('instituto.representante_legal')); //rlInsti	Representante Legal del poliandino
         $docRl=config('instituto.documento_rl'); //rldocInsti	Documento Representante Legal del poliandino
-        $dirEmp=config('instituto.direccion'); //dirInsti	dirección legal del poliandino
+        $dirEmp=ucwords(config('instituto.direccion')); //dirInsti	dirección legal del poliandino
         $telEmp=config('instituto.telefono'); //telInsti	teléfono legal del poliandino
 
         $this->reemplazo=[
@@ -90,6 +99,7 @@ trait RenderDocTrait
             $ciudadEstu,
             $telEstu,
             $curso,
+            $valorMatricula,
             $nit,
             $empresa,
             $rl,
@@ -105,7 +115,11 @@ trait RenderDocTrait
 
         foreach ($this->detalles as $value) {
 
-            $datos = str_replace($this->palabras, $this->reemplazo, $value);
+            $dato=$value->contenido;
+
+            //dd($dato, $this->palabras, $this->reemplazo);
+
+            $datos = str_replace($this->palabras, $this->reemplazo, $dato);
 
             array_push($this->impresion, $datos);
 
