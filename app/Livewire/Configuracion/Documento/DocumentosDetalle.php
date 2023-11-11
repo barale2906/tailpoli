@@ -56,6 +56,10 @@ class DocumentosDetalle extends Component
                 $this->ruta="/impresiones/imppagare?o=1&p=".$this->actual->id;
                 break;
 
+            case 'cartaPagare':
+                $this->ruta="/impresiones/impcartapagare?o=1&cp=".$this->actual->id;
+                break;
+
             case 'certiEstudio':
                 $this->ruta="";
                 break;

@@ -7,11 +7,11 @@ use Carbon\Carbon;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class ImpPagare extends Component
+class ImpCartaPagare extends Component
 {
     use RenderDocTrait;
 
-    #[Url(as: 'p')]
+    #[Url(as: 'cp')]
     public $id='';
 
     #[Url(as: 'o')]
@@ -24,12 +24,11 @@ class ImpPagare extends Component
 
         $this->fecha=Carbon::now();
 
-        $this->docubase($this->id, 'pagare', $this->ori);
+        $this->docubase($this->id, 'cartaPagare', $this->ori);
 
     }
-
     public function render()
     {
-        return view('livewire.impresiones.imp-pagare');
+        return view('livewire.impresiones.imp-carta-pagare');
     }
 }

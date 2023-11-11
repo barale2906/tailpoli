@@ -18,6 +18,7 @@
                         <option >Elija tipo de documento...</option>
                         <option value="contrato">contrato</option>
                         <option value="pagare">pagare</option>
+                        <option value="cartaPagare">carta pagare</option>
                         <option value="certiEstudio">certificacion de estudio</option>
                         <option value="actaPago">acta recibos pago</option>
                         <option value="comproCredito">compromiso crédito</option>
