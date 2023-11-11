@@ -53,7 +53,7 @@ class DocumentosDetalle extends Component
                 break;
 
             case 'pagare':
-                $this->ruta="";
+                $this->ruta="/impresiones/imppagare?o=1&p=".$this->actual->id;
                 break;
 
             case 'certiEstudio':

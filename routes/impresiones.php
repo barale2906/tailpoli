@@ -17,3 +17,7 @@ Route::get('/impcierre', function () {
 Route::get('/impcontrato', function () {
     return view('impresiones.impcontrato');
 })->name('impcontrato');
+
+Route::get('/imppagare', function () {
+    return view('impresiones.imppagare');
+})->name('imppagare');
