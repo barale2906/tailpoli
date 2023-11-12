@@ -23,6 +23,14 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
+                    'palabra'=>'matriculaInicia',
+                    'descripcion'=>'Fecha de inicio del estudiante',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
                     'palabra'=>'nombreEstu',
                     'descripcion'=>'Nombre del estudiante',
                     'created_at'=>now(),
@@ -41,6 +49,14 @@ class PalabrasSeeder extends Seeder
                 ->insert([
                     'palabra'=>'tipodocuEstu',
                     'descripcion'=>'tipo de documento del estudiante',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'docuExpedi',
+                    'descripcion'=>'Lugar de expedición de la cédula del estudiante',
                     'created_at'=>now(),
                     'updated_at'=>now(),
                 ]);

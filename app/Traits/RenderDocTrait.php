@@ -72,9 +72,11 @@ trait RenderDocTrait
         $this->palabras=[
 
             'matriculaEstu',
+            'matriculaInicia',
             'nombreEstu',
             'documentoEstu',
             'tipodocuEstu',
+            'docuExpedi',
             'direccionEstu',
             'ciudadEstu',
             'telefonoEstu',
@@ -97,9 +99,11 @@ trait RenderDocTrait
         $formatterES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
 
         $matriculaId=$this->docuMatricula->id; //matriculaEstu	Numero de matricula del estudiante
+        $matriculaInicia=$this->docuMatricula->fecha_inicia; //matriculaInicia	Fecha de inicio del estudiante
         $nombreEstud=strtoupper($this->docuMatricula->alumno->name); //nombreEstu	Nombre del estudiante
         $documEstu=number_format($this->docuMatricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
         $tipodocu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
+        $docuExpedi=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //docuExpedi	expedición del documento
         $direEstu=ucwords($this->docuMatricula->alumno->perfil->direccion); //direccionEstu	direccion del estudiante
         $ciudadEstu=ucwords($this->docuMatricula->alumno->perfil->state->name); //ciudadEstu	ciudad del estudiante
         $telEstu=$this->docuMatricula->alumno->perfil->celular; //telefonoEstu	teléfono del estudiante
@@ -115,9 +119,11 @@ trait RenderDocTrait
 
         $this->reemplazo=[
             $matriculaId,
+            $matriculaInicia,
             $nombreEstud,
             $documEstu,
             $tipodocu,
+            $docuExpedi,
             $direEstu,
             $ciudadEstu,
             $telEstu,

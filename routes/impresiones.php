@@ -29,3 +29,7 @@ Route::get('/impcartapagare', function () {
 Route::get('/impcertiestudio', function () {
     return view('impresiones.impcertiestudio');
 })->name('impcertiestudio');
+
+Route::get('/impactapago', function () {
+    return view('impresiones.impactapago');
+})->name('impactapago');

@@ -1,6 +1,6 @@
 <div>
     @push('title')
-        Constancia Estudios
+        Acta Informativa Recibo de Pago
     @endpush
 
     <div class="relative overflow-x-auto bg-slate-200  m-1">
@@ -15,7 +15,7 @@
 
                     </th>
                     <th scope="col" class="px-2 py-1">
-                        <h1 class="text-center  font-extrabold uppercase text-2xl">constancia de estudio</h1>
+                        <h1 class="text-center  font-extrabold uppercase text-2xl">acta informativa recibos de pago</h1>
                     </th>
                     <th scope="col" class="text-justify">
                         <h1 class="text-sm font-bold">Fecha:</h1>
@@ -26,14 +26,16 @@
         </table>
     </div>
 
+    <h1 class="text-lg text-justify mt-24">
+        El departamento de cartera y tesorería del <strong>{{config('instituto.nombre_empresa')}}</strong> informa:
+    </h1>
+
     @foreach ($impresion as $item)
         @switch($item['tipo'])
             @case("firma")
-                <h1 class="text-lg text-justify mt-24">
-                    Fecha de iniciación: {{$docuMatricula->fecha_inicia}}
-                </h1>
 
-                <h1 class="text-lg text-justify mt-24">
+
+                <h1 class="text-lg text-justify">
                     La presente certificación se expide a petición del interesado el: <strong>{{$fecha}}</strong>
                 </h1>
 
@@ -41,19 +43,19 @@
                     <table class="w-full text-sm text-gray-500 text-justify dark:text-gray-400">
                         <thead class="text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="mt-36 pt-20 font-extrabold">
-                                    <h1 class="text-lg text-justify mt-12 mb-12 capitalize">
-                                        cordialmente:
+                                <th scope="col" class="font-extrabold">
+                                    <h1 class="text-lg text-justify mb-12 capitalize">
+                                        ACEPTADO:
                                     </h1>
-                                    <img class="h-32 w-64 rounded-sm" src="{{asset('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
-                                </th>
-                                <th scope="col" class="mt-2 pt-2 font-extrabold">
-
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope="col" class="mt-2 pt-2 text-left text-lg font-extrabold uppercase">
-                                    director(a)
+                                    <h1 class="text-lg text-justify mt-24 capitalize">
+                                        ____________________________________
+                                    </h1>
+                                    <h1 class="text-lg text-justify capitalize">
+                                        nombre: <strong class="uppercase">{{$docuMatricula->alumno->name}}</strong>
+                                    </h1>
+                                    <h1 class="text-lg text-justify capitalize">
+                                        {{$docuMatricula->alumno->perfil->tipo_documento}}: <strong class="uppercase">{{$docuMatricula->alumno->perfil->documento}}</strong>
+                                    </h1>
                                 </th>
                                 <th scope="col" class="mt-2 pt-2 font-extrabold">
 
