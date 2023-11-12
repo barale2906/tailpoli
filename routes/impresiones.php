@@ -25,3 +25,7 @@ Route::get('/imppagare', function () {
 Route::get('/impcartapagare', function () {
     return view('impresiones.impcartapagare');
 })->name('impcartapagare');
+
+Route::get('/impcertiestudio', function () {
+    return view('impresiones.impcertiestudio');
+})->name('impcertiestudio');

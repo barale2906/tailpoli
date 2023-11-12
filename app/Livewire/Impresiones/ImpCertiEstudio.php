@@ -7,11 +7,11 @@ use Carbon\Carbon;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class ImpCartaPagare extends Component
+class ImpCertiEstudio extends Component
 {
     use RenderDocTrait;
 
-    #[Url(as: 'cp')]
+    #[Url(as: 'ce')]
     public $id='';
 
     #[Url(as: 'o')]
@@ -28,9 +28,8 @@ class ImpCartaPagare extends Component
 
     }
 
-
     public function render()
     {
-        return view('livewire.impresiones.imp-carta-pagare');
+        return view('livewire.impresiones.imp-certi-estudio');
     }
 }
