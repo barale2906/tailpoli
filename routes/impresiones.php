@@ -33,3 +33,7 @@ Route::get('/impcertiestudio', function () {
 Route::get('/impactapago', function () {
     return view('impresiones.impactapago');
 })->name('impactapago');
+
+Route::get('/impcomprocredito', function () {
+    return view('impresiones.impcomprocredito');
+})->name('impcomprocredito');

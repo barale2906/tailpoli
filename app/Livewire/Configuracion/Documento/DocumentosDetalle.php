@@ -69,7 +69,7 @@ class DocumentosDetalle extends Component
                 break;
 
             case 'comproCredito':
-                $this->ruta="";
+                $this->ruta="/impresiones/impcomprocredito?o=1&cc=".$this->actual->id;
                 break;
 
             case 'comproEntrega':
