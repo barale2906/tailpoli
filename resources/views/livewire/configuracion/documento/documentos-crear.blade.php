@@ -25,6 +25,8 @@
                         <option value="comproEntrega">compromiso documentación</option>
                         <option value="estadoCuenta">estado de cuenta</option>
                         <option value="cartaCobro">carta de cobro</option>
+                        <option value="gastocertifinal">Gastos certificación final</option>
+                        <option value="formuPractica">Formulario Practicas</option>
                     </select>
                     @error('tipo')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">

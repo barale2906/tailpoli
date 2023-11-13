@@ -83,6 +83,14 @@ class DocumentosDetalle extends Component
             case 'cartaCobro':
                 $this->ruta="/impresiones/impcartacobro?o=1&cco=".$this->actual->id;
                 break;
+
+            case 'gastocertifinal':
+                    $this->ruta="/impresiones/impgastocertifinal?o=1&gcf=".$this->actual->id;
+                    break;
+
+            case 'formuPractica':
+                $this->ruta="/impresiones/impformuPractica?o=1&cco=".$this->actual->id;
+                break;
         }
     }
 

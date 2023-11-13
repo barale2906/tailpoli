@@ -49,3 +49,11 @@ Route::get('/impestadocuenta', function () {
 Route::get('/impcartacobro', function () {
     return view('impresiones.impcartacobro');
 })->name('impcartacobro');
+
+Route::get('/impgastocertifinal', function () {
+    return view('impresiones.impgastocertifinal');
+})->name('impgastocertifinal');
+
+Route::get('/impformuPractica', function () {
+    return view('impresiones.impformuPractica');
+})->name('impformuPractica');
