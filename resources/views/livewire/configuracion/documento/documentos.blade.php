@@ -116,7 +116,35 @@
                                 {{$documento->fecha}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$documento->tipo}}
+
+                                @switch($documento->tipo)
+                                    @case("contrato")
+                                        Contrato
+                                        @break
+                                    @case("pagare")
+                                        Pagaré
+                                        @break
+                                    @case("cartaPagare")
+                                        Carta Pagaré
+                                        @break
+                                    @case("certiEstudio")
+                                        Certificado de Estudio
+                                        @break
+                                    @case("actaPago")
+                                        Acta Recibos de Pago
+                                        @break
+                                    @case("comproCredito")
+                                        Compromiso de Crédito
+                                        @break
+                                    @case("comproEntrega")
+                                        Compromiso Entrega de Documentación.
+                                        @break
+                                    @case("estadoCuenta")
+                                        Estado de Cuenta
+                                        @break
+                                    @default
+                                        Carta de Cobro
+                                @endswitch
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$documento->titulo}}

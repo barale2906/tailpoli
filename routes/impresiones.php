@@ -37,3 +37,7 @@ Route::get('/impactapago', function () {
 Route::get('/impcomprocredito', function () {
     return view('impresiones.impcomprocredito');
 })->name('impcomprocredito');
+
+Route::get('/impcartaentregadoc', function () {
+    return view('impresiones.impcartaentregadoc');
+})->name('impcartaentregadoc');

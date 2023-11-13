@@ -73,7 +73,7 @@ class DocumentosDetalle extends Component
                 break;
 
             case 'comproEntrega':
-                $this->ruta="";
+                $this->ruta="/impresiones/impcartaentregadoc?o=1&ced=".$this->actual->id;
                 break;
 
             case 'estadoCuenta ':
