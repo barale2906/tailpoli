@@ -156,6 +156,14 @@ class PalabrasSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'deuda',
+                    'descripcion'=>'valor en mora',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
 
     }
 }

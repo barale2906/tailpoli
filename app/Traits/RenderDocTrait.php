@@ -6,6 +6,7 @@ use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Documento;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConfiguracionPago;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use NumberFormatter;
 
@@ -20,6 +21,7 @@ trait RenderDocTrait
     public $nombre_empresa;
     public $detalles;
     public $impresion=[];
+    public $deuda;
 
     public function docubase($id, $tipo, $ori=null){
 
@@ -54,6 +56,18 @@ trait RenderDocTrait
     public function financiacion(){
         $this->docuCartera=Cartera::where('matricula_id', $this->docuMatricula->id)
                                     ->get();
+
+        $this->calculo();
+    }
+
+    public function calculo(){
+        $fecha=Carbon::now();
+
+        foreach ($this->docuCartera as $value) {
+            if($value->fecha_pago<$fecha){
+                $this->deuda=$this->deuda+$value->saldo;
+            }
+        }
     }
 
     public function docuDetalle(){
@@ -88,7 +102,8 @@ trait RenderDocTrait
             'rlInsti',
             'rldocInsti',
             'dirInsti',
-            'telInsti'
+            'telInsti',
+            'deuda'
         ];
 
         $this->equivale();
@@ -116,6 +131,7 @@ trait RenderDocTrait
         $docRl=config('instituto.documento_rl'); //rldocInsti	Documento Representante Legal del poliandino
         $dirEmp=ucwords(config('instituto.direccion')); //dirInsti	dirección legal del poliandino
         $telEmp=config('instituto.telefono'); //telInsti	teléfono legal del poliandino
+        $deuda=$this->deuda; // deuda Valor de la mora.
 
         $this->reemplazo=[
             $matriculaId,
@@ -136,6 +152,7 @@ trait RenderDocTrait
             $docRl,
             $dirEmp,
             $telEmp,
+            $deuda
         ];
 
         $this->docFiltra();

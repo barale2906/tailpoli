@@ -81,7 +81,7 @@ class DocumentosDetalle extends Component
                 break;
 
             case 'cartaCobro':
-                $this->ruta="";
+                $this->ruta="/impresiones/impcartacobro?o=1&cco=".$this->actual->id;
                 break;
         }
     }
