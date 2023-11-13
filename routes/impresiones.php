@@ -41,3 +41,7 @@ Route::get('/impcomprocredito', function () {
 Route::get('/impcartaentregadoc', function () {
     return view('impresiones.impcartaentregadoc');
 })->name('impcartaentregadoc');
+
+Route::get('/impestadocuenta', function () {
+    return view('impresiones.impestadocuenta');
+})->name('impestadocuenta');
