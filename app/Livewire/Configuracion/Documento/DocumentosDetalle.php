@@ -89,7 +89,7 @@ class DocumentosDetalle extends Component
                     break;
 
             case 'formuPractica':
-                $this->ruta="/impresiones/impformuPractica?o=1&cco=".$this->actual->id;
+                $this->ruta="/impresiones/impformuPractica?o=1&fp=".$this->actual->id;
                 break;
         }
     }
