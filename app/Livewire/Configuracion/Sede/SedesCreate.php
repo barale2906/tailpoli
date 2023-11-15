@@ -122,9 +122,7 @@ class SedesCreate extends Component
             'finishsab',
             'startdom',
             'finishdom',
-
-
-    );
+        );
     }
 
     // Crear Regimen de Salud
@@ -165,35 +163,76 @@ class SedesCreate extends Component
                 ]);
             }
 
-            //Crear horarios de apertura
-            Horario::create([
-                'sede_id'       =>$nueva->id,
-                'area_id'       =>$this->area,
-                'tipo'          =>true,
-                'periodo'       =>true,
-                'lunes'         =>$this->start,
-                'martes'        =>$this->startmar,
-                'miercoles'     =>$this->startmie,
-                'jueves'        =>$this->startjue,
-                'viernes'       =>$this->startvie,
-                'sabado'        =>$this->startsab,
-                'domingo'       =>$this->startdom,
-            ]);
-
             //Crear horarios de cierre
-            Horario::create([
-                'sede_id'       =>$nueva->id,
-                'area_id'       =>$this->area,
-                'tipo'          =>true,
-                'periodo'       =>false,
-                'lunes'         =>$this->finish,
-                'martes'        =>$this->finishmar,
-                'miercoles'     =>$this->finishmie,
-                'jueves'        =>$this->finishjue,
-                'viernes'       =>$this->finishvie,
-                'sabado'        =>$this->finishsab,
-                'domingo'       =>$this->finishdom,
-            ]);
+            for ($i=1; $i <= 7; $i++) {
+
+                switch ($i) {
+                    case 1:
+                        $dia="lunes";
+                        $horai=$this->start;
+                        $horaf=$this->finish;
+                        break;
+
+                    case 2:
+                        $dia="martes";
+                        $horai=$this->startmar;
+                        $horaf=$this->finishmar;
+                        break;
+
+                    case 3:
+                        $dia="miercoles";
+                        $horai=$this->startmie;
+                        $horaf=$this->finishmie;
+                        break;
+
+                    case 4:
+                        $dia="jueves";
+                        $horai=$this->startjue;
+                        $horaf=$this->finishjue;
+                        break;
+
+                    case 5:
+                        $dia="viernes";
+                        $horai=$this->startvie;
+                        $horaf=$this->finishvie;
+                        break;
+
+                    case 6:
+                        $dia="sabado";
+                        $horai=$this->startsab;
+                        $horaf=$this->finishsab;
+                        break;
+
+                    case 7:
+                        $dia="domingo";
+                        $horai=$this->startdom;
+                        $horaf=$this->finishdom;
+                        break;
+
+                }
+
+                if($horai){
+                    //inicia
+                    Horario::create([
+                        'sede_id'       =>$nueva->id,
+                        'area_id'       =>$this->area,
+                        'tipo'          =>true,
+                        'periodo'       =>true,
+                        'dia'           =>$dia,
+                        'hora'          =>$horai,
+                    ]);
+
+                    //fin
+                    Horario::create([
+                        'sede_id'       =>$nueva->id,
+                        'area_id'       =>$this->area,
+                        'tipo'          =>true,
+                        'periodo'       =>false,
+                        'dia'           =>$dia,
+                        'hora'          =>$horaf,
+                    ]);
+                }
+            }
 
             //Asignar sedes a los superusuarios
             $superusuarios = User::where('status', true)
