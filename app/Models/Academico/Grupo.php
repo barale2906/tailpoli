@@ -25,11 +25,6 @@ class Grupo extends Model
         return $this->belongsTo(Modulo::class);
     }
 
-    public function horarios(): HasMany
-    {
-        return $this->hasMany(Horario::class);
-    }
-
     /**
      * Relación muchos a muchos.
      * Profesores de este grupo

@@ -29,14 +29,4 @@ class Horario extends Model
         return $this->BelongsTo(Sede::class);
     }
 
-    /**
-     * Relación muchos a muchos.
-     * Grupos de este modulo
-     */
-    public function grupo(): BelongsTo
-    {
-        return $this->BelongsTo(Grupo::class);
-    }
-
-
 }

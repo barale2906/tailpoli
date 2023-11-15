@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Configuracion\Sede;
 
+use App\Models\Academico\Horario;
 use App\Models\Configuracion\Area;
 use App\Models\Configuracion\Country;
 use App\Models\Configuracion\Sector;
@@ -22,6 +23,18 @@ class SedesEditar extends Component
     public $portfolio_assistant_email = '';
     public $start = '';
     public $finish = '';
+    public $startmar = '';
+    public $finishmar = '';
+    public $startmie = '';
+    public $finishmie = '';
+    public $startjue = '';
+    public $finishjue = '';
+    public $startvie = '';
+    public $finishvie = '';
+    public $startsab = '';
+    public $finishsab = '';
+    public $startdom = '';
+    public $finishdom = '';
 
     public $pais = '';
     public $depto = '';
@@ -141,7 +154,19 @@ class SedesEditar extends Component
             'portfolio_assistant_phone',
             'portfolio_assistant_email',
             'start',
-            'finish'
+            'finish',
+            'startmar',
+            'finishmar',
+            'startmie',
+            'finishmie',
+            'startjue',
+            'finishjue',
+            'startvie',
+            'finishvie',
+            'startsab',
+            'finishsab',
+            'startdom',
+            'finishdom',
     );
     }
 
@@ -170,7 +195,29 @@ class SedesEditar extends Component
             'finish' => $this->finish,
         ]);
 
-        $this->dispatch('alerta', name:'Se ha modificado correctamente el departamento: '.$this->name);
+        //Actualizar horarios de entrada
+        Horario::where('sede_id', $this->id)->update([
+            'lunes'         =>$this->start,
+            'martes'        =>$this->startmar,
+            'miercoles'     =>$this->startmie,
+            'jueves'        =>$this->startjue,
+            'viernes'       =>$this->startvie,
+            'sabado'        =>$this->startsab,
+            'domingo'       =>$this->startdom,
+        ]);
+
+         //Actualizar horarios de sálida
+        Horario::where('sede_id', $this->id)->update([
+            'lunes'         =>$this->finish,
+            'martes'        =>$this->finishmar,
+            'miercoles'     =>$this->finishmie,
+            'jueves'        =>$this->finishjue,
+            'viernes'       =>$this->finishvie,
+            'sabado'        =>$this->finishsab,
+            'domingo'       =>$this->finishdom,
+        ]);
+
+        $this->dispatch('alerta', name:'Se ha modificado correctamente la sede: '.$this->name);
         $this->resetFields();
 
         //refresh

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Configuracion\Sede;
 
+use App\Models\Academico\Horario;
 use App\Models\Configuracion\Area;
 use App\Models\Configuracion\Country;
 use App\Models\Configuracion\Sector;
@@ -22,10 +23,24 @@ class SedesCreate extends Component
     public $portfolio_assistant_email = '';
     public $start = '';
     public $finish = '';
+    public $startmar = '';
+    public $finishmar = '';
+    public $startmie = '';
+    public $finishmie = '';
+    public $startjue = '';
+    public $finishjue = '';
+    public $startvie = '';
+    public $finishvie = '';
+    public $startsab = '';
+    public $finishsab = '';
+    public $startdom = '';
+    public $finishdom = '';
+
 
     public $pais = '';
     public $depto = '';
     public $pobla = '';
+    public $area;
 
     public $states;
     public $ciudades;
@@ -94,7 +109,21 @@ class SedesCreate extends Component
             'portfolio_assistant_phone',
             'portfolio_assistant_email',
             'start',
-            'finish'
+            'finish',
+            'startmar',
+            'finishmar',
+            'startmie',
+            'finishmie',
+            'startjue',
+            'finishjue',
+            'startvie',
+            'finishvie',
+            'startsab',
+            'finishsab',
+            'startdom',
+            'finishdom',
+
+
     );
     }
 
@@ -123,8 +152,10 @@ class SedesCreate extends Component
                 'finish' => $this->finish,
             ]);
 
+
             //Asignar áreas
             foreach($this->areaSele as $item){
+                $this->area=$item;
                 DB::table('area_sede')
                 ->insert([
                     'area_id'=>$item,
@@ -133,6 +164,36 @@ class SedesCreate extends Component
                     'updated_at'=>now(),
                 ]);
             }
+
+            //Crear horarios de apertura
+            Horario::create([
+                'sede_id'       =>$nueva->id,
+                'area_id'       =>$this->area,
+                'tipo'          =>true,
+                'periodo'       =>true,
+                'lunes'         =>$this->start,
+                'martes'        =>$this->startmar,
+                'miercoles'     =>$this->startmie,
+                'jueves'        =>$this->startjue,
+                'viernes'       =>$this->startvie,
+                'sabado'        =>$this->startsab,
+                'domingo'       =>$this->startdom,
+            ]);
+
+            //Crear horarios de cierre
+            Horario::create([
+                'sede_id'       =>$nueva->id,
+                'area_id'       =>$this->area,
+                'tipo'          =>true,
+                'periodo'       =>false,
+                'lunes'         =>$this->finish,
+                'martes'        =>$this->finishmar,
+                'miercoles'     =>$this->finishmie,
+                'jueves'        =>$this->finishjue,
+                'viernes'       =>$this->finishvie,
+                'sabado'        =>$this->finishsab,
+                'domingo'       =>$this->finishdom,
+            ]);
 
             //Asignar sedes a los superusuarios
             $superusuarios = User::where('status', true)
