@@ -8,6 +8,7 @@ use App\Models\Configuracion\Country;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\State;
+use Database\Seeders\HorarioSeeder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -21,6 +22,7 @@ class SedesEditar extends Component
     public $portfolio_assistant_name = '';
     public $portfolio_assistant_phone = '';
     public $portfolio_assistant_email = '';
+
     public $start = '';
     public $finish = '';
     public $startmar = '';
@@ -68,7 +70,82 @@ class SedesEditar extends Component
         $this->start=$elegido['start'];
         $this->finish=$elegido['finish'];
         $this->ubicacion($elegido['sector_id']);
+        $this->obteHorario();
+    }
 
+    public function obteHorario(){
+        $horarios=Horario::where('sede_id', $this->id)
+                            ->where('status', true)
+                            ->where('tipo', true)
+                            ->orderBy('dia')
+                            ->get();
+
+        foreach ($horarios as $value) {
+
+            if($value->periodo){
+                switch ($value->dia) {
+                    case "lunes":
+                        $this->start=$value->hora;
+                        break;
+
+                    case "martes":
+                        $this->startmar=$value->hora;
+                        break;
+
+                    case "miercoles":
+                        $this->startmie=$value->hora;
+                        break;
+
+                    case "jueves":
+                        $this->startjue=$value->hora;
+                        break;
+
+                    case "viernes":
+                        $this->startvie=$value->hora;
+                        break;
+
+                    case "sabado":
+                        $this->startsab=$value->hora;
+                        break;
+
+                    case "domingo":
+                        $this->startdom=$value->hora;
+                        break;
+
+                }
+            }else{
+                switch ($value->dia) {
+                    case "lunes":
+                        $this->finish=$value->hora;
+                        break;
+
+                    case "martes":
+                        $this->finishmar=$value->hora;
+                        break;
+
+                    case "miercoles":
+                        $this->finishmie=$value->hora;
+                        break;
+
+                    case "jueves":
+                        $this->finishjue=$value->hora;
+                        break;
+
+                    case "viernes":
+                        $this->finishvie=$value->hora;
+                        break;
+
+                    case "sabado":
+                        $this->finishsab=$value->hora;
+                        break;
+
+                    case "domingo":
+                        $this->finishdom=$value->hora;
+                        break;
+
+                }
+            }
+        }
     }
 
     public function ubicacion($id){
@@ -195,27 +272,90 @@ class SedesEditar extends Component
             'finish' => $this->finish,
         ]);
 
-        //Actualizar horarios de entrada
-        Horario::where('sede_id', $this->id)->update([
-            'lunes'         =>$this->start,
-            'martes'        =>$this->startmar,
-            'miercoles'     =>$this->startmie,
-            'jueves'        =>$this->startjue,
-            'viernes'       =>$this->startvie,
-            'sabado'        =>$this->startsab,
-            'domingo'       =>$this->startdom,
-        ]);
+        //Editar horarios
+        //eliminar horarios actuales
+        Horario::where('sede_id', $this->id)
+                ->where('status', true)
+                ->where('tipo', true)
+                ->delete();
 
-         //Actualizar horarios de sálida
-        Horario::where('sede_id', $this->id)->update([
-            'lunes'         =>$this->finish,
-            'martes'        =>$this->finishmar,
-            'miercoles'     =>$this->finishmie,
-            'jueves'        =>$this->finishjue,
-            'viernes'       =>$this->finishvie,
-            'sabado'        =>$this->finishsab,
-            'domingo'       =>$this->finishdom,
-        ]);
+        //Buscar área ejemplo
+        $area=DB::table('area_sede')
+                    ->where('sede_id', $this->id)
+                    ->select('area_id')
+                    ->first();
+
+
+        //Crear horarios de cierre
+        for ($i=1; $i <= 7; $i++) {
+
+            switch ($i) {
+                case 1:
+                    $dia="lunes";
+                    $horai=$this->start;
+                    $horaf=$this->finish;
+                    break;
+
+                case 2:
+                    $dia="martes";
+                    $horai=$this->startmar;
+                    $horaf=$this->finishmar;
+                    break;
+
+                case 3:
+                    $dia="miercoles";
+                    $horai=$this->startmie;
+                    $horaf=$this->finishmie;
+                    break;
+
+                case 4:
+                    $dia="jueves";
+                    $horai=$this->startjue;
+                    $horaf=$this->finishjue;
+                    break;
+
+                case 5:
+                    $dia="viernes";
+                    $horai=$this->startvie;
+                    $horaf=$this->finishvie;
+                    break;
+
+                case 6:
+                    $dia="sabado";
+                    $horai=$this->startsab;
+                    $horaf=$this->finishsab;
+                    break;
+
+                case 7:
+                    $dia="domingo";
+                    $horai=$this->startdom;
+                    $horaf=$this->finishdom;
+                    break;
+
+            }
+
+            if($horai){
+                //inicia
+                Horario::create([
+                    'sede_id'       =>$this->id,
+                    'area_id'       =>$area->area_id,
+                    'tipo'          =>true,
+                    'periodo'       =>true,
+                    'dia'           =>$dia,
+                    'hora'          =>$horai,
+                ]);
+
+                //fin
+                Horario::create([
+                    'sede_id'       =>$this->id,
+                    'area_id'       =>$area->area_id,
+                    'tipo'          =>true,
+                    'periodo'       =>false,
+                    'dia'           =>$dia,
+                    'hora'          =>$horaf,
+                ]);
+            }
+        }
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente la sede: '.$this->name);
         $this->resetFields();
