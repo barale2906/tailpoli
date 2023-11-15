@@ -3,6 +3,7 @@
 namespace App\Models\Configuracion;
 
 use App\Models\Academico\Grupo;
+use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ReciboPago;
@@ -72,5 +73,10 @@ class Sede extends Model
     public function cierres(): HasMany
     {
         return $this->hasMany(CierreCaja::class);
+    }
+
+    public function horarios(): HasMany
+    {
+        return $this->hasMany(Horario::class);
     }
 }

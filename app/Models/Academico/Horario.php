@@ -2,9 +2,11 @@
 
 namespace App\Models\Academico;
 
+use App\Models\Configuracion\Area;
+use App\Models\Configuracion\Sede;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Horario extends Model
 {
@@ -16,18 +18,24 @@ class Horario extends Model
      * Relación muchos a muchos.
      * áreas que componen la sede
      */
-    public function areas(): BelongsToMany
+    public function area(): BelongsTo
     {
-        return $this->belongsToMany(Area::class);
+        return $this->BelongsTo(Area::class);
+    }
+
+    //Relacion uno a muchos inversa
+    public function sede() : BelongsTo
+    {
+        return $this->BelongsTo(Sede::class);
     }
 
     /**
      * Relación muchos a muchos.
      * Grupos de este modulo
      */
-    public function grupos(): BelongsToMany
+    public function grupo(): BelongsTo
     {
-        return $this->belongsToMany(Grupo::class);
+        return $this->BelongsTo(Grupo::class);
     }
 
 
