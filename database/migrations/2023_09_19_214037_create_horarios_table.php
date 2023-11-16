@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('area_id')->references('id')->on('areas');
 
             $table->integer('grupo_id')->nullable()->comment('grupo al que aplica este horario');
+            $table->string('grupo')->nullable()->comment('nombre del grupo asignado');
 
             $table->boolean('tipo')->default(true)->comment('true horario de sede, false horario curso');
             $table->boolean('periodo')->default(true)->comment('true inicia, false termina, aplica para el horario de las sedes');
