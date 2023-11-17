@@ -4,6 +4,7 @@ namespace App\Livewire\Configuracion\User;
 
 use App\Models\Configuracion\Perfil;
 use App\Models\User;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
@@ -21,6 +22,9 @@ class UsersCreate extends Component
     public $nuevoUs;
     public $vista=true;
 
+    public $elegido;
+
+
 
     public function mount($clase=null, $perf=null){
         $this->clase=$clase;
@@ -32,6 +36,7 @@ class UsersCreate extends Component
     public function tipo(){
         if($this->clase===1){
             $this->rol="Estudiante";
+            $this->password=10203040;
         }
         if($this->clase===2){
             $this->rol="Profesor";
@@ -77,6 +82,10 @@ class UsersCreate extends Component
             //Crear registro
             $completo=$this->name." ".$this->lastname;
 
+            if($this->perf===0){
+                $this->password=$this->documento;
+            }
+
             $this->nuevoUs=User::create([
                 'name'=>strtolower($completo),
                 'email'=>strtolower($this->email),
@@ -101,11 +110,12 @@ class UsersCreate extends Component
 
 
             // Notificación
-            $this->dispatch('alerta', name:'Se ha creado correctamente el Usuario: '.$this->name);
+            $this->dispatch('alerta', name:'Se ha creado correctamente el Usuario: '.$this->name.', por favor complete su perfil.');
             $this->resetFields();
 
             if($this->perf===0){
                 $this->vista=!$this->vista;
+                $this->elegido=$this->nuevoUs->id;
             }else{
                 //refresh
                 $this->dispatch('refresh');
@@ -113,6 +123,15 @@ class UsersCreate extends Component
             }
 
         }
+    }
+
+    //Activar evento
+    #[On('visual')]
+    //Mostrar formulario de creación
+    public function updatedVista()
+    {
+        $this->vista = true;
+        $this->dispatch('created');
     }
 
     private function roles(){

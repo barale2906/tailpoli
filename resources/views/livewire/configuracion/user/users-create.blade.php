@@ -60,15 +60,17 @@
                 </div>
             @enderror
 
-            <div class="mb-6">
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-                <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="minimo 8 digitos" wire:model.blur="password">
-            </div>
-            @error('password')
-                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+            @if ($perf!==0)
+                <div class="mb-6">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                    <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="minimo 8 digitos" wire:model.blur="password">
+                    @error('password')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
                 </div>
-            @enderror
+            @endif
 
             @if ($clase===0)
                 <div class="mb-6">
@@ -99,25 +101,8 @@
             </div>
         </form>
     @else
-        <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
-            <div></div>
-            <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white uppercase">{{$nuevoUs->name}}</h5>
-                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-                    CONTINUAR REGISTRO
-                </p>
-                <div class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                    <a href="" wire:click.prevent="$parent.show({{$nuevoUs->id}},{{3}})" class="w-full sm:w-auto bg-cyan-800 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-cyan-700 dark:hover:bg-cyan-600 dark:focus:ring-cyan-700">
-                        <i class="fa-solid fa-address-card fa-beat mr-3"></i>
-                        <div class="text-left">
-                            <div class="mb-1 text-xs"> Crear:</div>
-                            <div class="-mt-1 font-sans text-sm font-semibold"> PERFIL</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div></div>
-        </div>
+
+        <livewire:configuracion.user.perfil :elegido="$elegido" :perf="1" :impresion="0"/>
 
     @endif
 

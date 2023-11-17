@@ -422,14 +422,22 @@ class Perfil extends Component
         }
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el perfil del Usuario: '.$this->actual->name);
-        if($this->perf===0){
-            $this->resetFields();
+
+        if($this->perf===1){
+            $this->dispatch('visual');
+        }else{
+            if($this->perf===0){
+
+                $this->resetFields();
+            }
+
+
+            //refresh
+            $this->dispatch('refresh');
+            $this->dispatch('Perfilando');
         }
 
 
-        //refresh
-        $this->dispatch('refresh');
-        $this->dispatch('Perfilando');
     }
 
     private function regimenes(){
