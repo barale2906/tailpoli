@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             InventarioSeeder::class,
-            //GrupoSeeder::class,
+            GrupoSeeder::class,
             //MatriculaSeeder::class,
             EstadoCarteraSeeder::class,
             ConfiguracioPagoSeeder::class,

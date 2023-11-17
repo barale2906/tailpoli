@@ -97,24 +97,10 @@ class GruposCrear extends Component
                 $finev = $horad->addHours($i);
                 $horafin=$finev->roundMinutes(60)->format('H:i:s');
 
-                $nuevo=[
-                    'id'        =>$this->numerar,
-                    'dia'       =>$this->dia,
-                    'hora'      =>$horafin,
-                    'area_id'   =>$this->area_id,
-                    'area'      =>$this->area->name." desde el pri"
-                ];
-
-                if(in_array($nuevo, $this->seleccionados)){
-
-                }else{
-                    array_push($this->seleccionados, $nuevo);
-                    $this->horas_semanales=$this->horas_semanales+1;
-                    $this->numerar=$this->numerar+1;
-                }
 
                 $esta=Horario::where('sede_id', $this->sede_id)
                             ->where('area_id', $this->area_id)
+                            ->where('dia', $this->dia)
                             ->where('tipo', false)
                             ->where('hora', $horafin)
                             ->count();
@@ -125,9 +111,10 @@ class GruposCrear extends Component
             }
 
             if($this->conteo>0){
-                $this->dispatch('alerta', name:'Revise el horario, área e intensidad horaria, ya esta registrado el valor o se traslapa con otro');
+                $this->dispatch('alerta', name:'Revise el horario, área e intensidad horaria, ya esta registrado el valor o se traslapa con otro'.$this->conteo);
                 $this->reset('conteo');
             }else{
+                $this->reset('conteo');
                 $this->cargaSele();
             }
         }else{

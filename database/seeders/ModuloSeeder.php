@@ -23,24 +23,24 @@ class ModuloSeeder extends Seeder
         $m2=Modulo::create([
                 'name'              =>'sistema de arranque',
                 'curso_id'          =>1,
-                'dependencia'       =>true
+                //'dependencia'       =>true
             ]);
 
-            DB::table('modulos_dependencias')
+            /* DB::table('modulos_dependencias')
                     ->insert([
                         'modulo_id'     =>$m2->id,
                         'modulodep_id'  =>$m1->id,
                         'created_at'    =>now(),
                         'updated_at'    =>now(),
-                    ]);
+                    ]); */
 
         $m3=Modulo::create([
                     'name'              =>'manejo de computadora',
                     'curso_id'          =>1,
-                    'dependencia'       =>true
+                    //'dependencia'       =>true
                 ]);
 
-            DB::table('modulos_dependencias')
+            /* DB::table('modulos_dependencias')
                 ->insert([
                     'modulo_id'     =>$m3->id,
                     'modulodep_id'  =>$m2->id,
@@ -54,7 +54,7 @@ class ModuloSeeder extends Seeder
                     'modulodep_id'  =>$m1->id,
                     'created_at'    =>now(),
                     'updated_at'    =>now(),
-                ]);
+                ]); */
 
         $m4=Modulo::create([
             'name'              =>'transmisión',
@@ -64,16 +64,16 @@ class ModuloSeeder extends Seeder
         $m5=Modulo::create([
                     'name'              =>'diferenciales',
                     'curso_id'          =>2,
-                    'dependencia'       =>true
+                    //'dependencia'       =>true
                 ]);
 
-            DB::table('modulos_dependencias')
+            /* DB::table('modulos_dependencias')
                 ->insert([
                     'modulo_id'     =>$m5->id,
                     'modulodep_id'  =>$m4->id,
                     'created_at'    =>now(),
                     'updated_at'    =>now(),
-                ]);
+                ]); */
 
         $m6=Modulo::create([
             'name'              =>'frenos',
@@ -88,16 +88,16 @@ class ModuloSeeder extends Seeder
         $m8=Modulo::create([
                         'name'              =>'equalizadores',
                         'curso_id'          =>3,
-                        'dependencia'       =>false
+                        //'dependencia'       =>false
                     ]);
 
-                DB::table('modulos_dependencias')
+                /* DB::table('modulos_dependencias')
                     ->insert([
                         'modulo_id'     =>$m8->id,
                         'modulodep_id'  =>$m7->id,
                         'created_at'    =>now(),
                         'updated_at'    =>now(),
-                    ]);
+                    ]); */
 
 
 
@@ -114,29 +114,29 @@ class ModuloSeeder extends Seeder
         $m11=Modulo::create([
                         'name'              =>'tiempos de explosión',
                         'curso_id'          =>4,
-                        'dependencia'       =>true
+                        //'dependencia'       =>true
                     ]);
 
-                DB::table('modulos_dependencias')
+                /* DB::table('modulos_dependencias')
                     ->insert([
                         'modulo_id'     =>$m11->id,
                         'modulodep_id'  =>$m10->id,
                         'created_at'    =>now(),
                         'updated_at'    =>now(),
-                    ]);
+                    ]); */
 
         $m12=Modulo::create([
                         'name'              =>'ajustes de mezcla',
                         'curso_id'          =>4,
-                        'dependencia'       =>true
+                        //'dependencia'       =>true
                     ]);
 
-                DB::table('modulos_dependencias')
+                /* DB::table('modulos_dependencias')
                 ->insert([
                     'modulo_id'     =>$m12->id,
                     'modulodep_id'  =>$m11->id,
                     'created_at'    =>now(),
                     'updated_at'    =>now(),
-                ]);
+                ]); */
     }
 }

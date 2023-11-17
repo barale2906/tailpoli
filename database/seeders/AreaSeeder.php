@@ -13,6 +13,16 @@ class AreaSeeder extends Seeder
      */
     public function run(): void
     {
+
+        Area::create([
+            'name'       => 'Laboratorio Electrónica'
+        ]);
+        Area::create([
+            'name'       => 'Laboratorio Diesel'
+        ]);
+        Area::create([
+            'name'       => 'Aerografía'
+        ]);
         Area::create([
             'name'       => 'Aula 101'
         ]);
@@ -72,18 +82,6 @@ class AreaSeeder extends Seeder
         ]);
         Area::create([
             'name'       => 'Aula 504'
-        ]);
-        Area::create([
-            'name'       => 'Laboratorio Electrónica'
-        ]);
-        Area::create([
-            'name'       => 'Laboratorio Diesel'
-        ]);
-        Area::create([
-            'name'       => 'Aerografía'
-        ]);
-        Area::create([
-            'name'       => 'Almacén'
         ]);
     }
 }
