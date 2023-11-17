@@ -35,6 +35,15 @@ class Grupo extends Model
 
     }
 
+    /**
+     * Relación muchos a muchos.
+     * Grupos de este modulo
+     */
+    public function ciclos(): BelongsToMany
+    {
+        return $this->belongsToMany(Ciclo::class);
+    }
+
     //Relación uno a muchos
     public function Notas(): HasMany
     {

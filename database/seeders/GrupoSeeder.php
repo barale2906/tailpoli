@@ -21,8 +21,8 @@ class GrupoSeeder extends Seeder
 
         $g1=Grupo::create([
             'name'              => 'manteMoto - kit - bogotá a - mañana',
-            'start_date'        => $hoy,
-            'finish_date'       => $fin,
+            //'start_date'        => $hoy,
+            //'finish_date'       => $fin,
             'quantity_limit'    => 20,
             'sede_id'           => 1,
             'profesor_id'       => 6,
@@ -85,8 +85,8 @@ class GrupoSeeder extends Seeder
 
         $g2=Grupo::create([
             'name'              => 'manteMoto - arranque - bogotá a - mañana',
-            'start_date'        => $hoy,
-            'finish_date'       => $fin,
+            //'start_date'        => $hoy,
+            //'finish_date'       => $fin,
             'quantity_limit'    => 20,
             'sede_id'           => 1,
             'profesor_id'       => 6,
@@ -149,8 +149,8 @@ class GrupoSeeder extends Seeder
 
         $g3=Grupo::create([
             'name'              => 'manteMoto - computadora - bogotá a - mañana',
-            'start_date'        => $hoy,
-            'finish_date'       => $fin,
+            //'start_date'        => $hoy,
+            //'//finish_date'       => $fin,
             'quantity_limit'    => 20,
             'sede_id'           => 1,
             'profesor_id'       => 6,
@@ -213,8 +213,8 @@ class GrupoSeeder extends Seeder
 
         $g4=Grupo::create([
             'name'              => 'manteMoto - kit - bogotá a - tarde',
-            'start_date'        => $hoy,
-            'finish_date'       => $fin,
+            //'start_date'        => $hoy,
+            //'finish_date'       => $fin,
             'quantity_limit'    => 20,
             'sede_id'           => 1,
             'profesor_id'       => 6,
@@ -277,8 +277,8 @@ class GrupoSeeder extends Seeder
 
         $g5=Grupo::create([
             'name'              => 'manteMoto - arranque - bogotá a - tarde',
-            'start_date'        => $hoy,
-            'finish_date'       => $fin,
+            //'start_date'        => $hoy,
+            //'finish_date'       => $fin,
             'quantity_limit'    => 20,
             'sede_id'           => 1,
             'profesor_id'       => 6,
@@ -341,8 +341,8 @@ class GrupoSeeder extends Seeder
 
         $g6=Grupo::create([
             'name'              => 'manteMoto - computadora - bogotá a - tarde',
-            'start_date'        => $hoy,
-            'finish_date'       => $fin,
+            //'start_date'        => $hoy,
+            //'finish_date'       => $fin,
             'quantity_limit'    => 20,
             'sede_id'           => 1,
             'profesor_id'       => 6,

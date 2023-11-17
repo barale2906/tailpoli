@@ -30,4 +30,10 @@ class Curso extends Model
     {
         return $this->hasMany(ConfiguracionPago::class);
     }
+
+    //Relación uno a muchos
+    public function ciclos(): HasMany
+    {
+        return $this->hasMany(Ciclo::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Financiera\ConfiguracionPago;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,11 +14,15 @@ class ConfiguracioPagoSeeder extends Seeder
      */
     public function run(): void
     {
+        $hoy=Carbon::now();
+        $hoyo=Carbon::now();
+        $fin=$hoyo->addMonths(6);
+
         ConfiguracionPago::create([
-            'inicia'                =>'2023-10-01',
-            'finaliza'              =>'2023-10-31',
+            'inicia'                =>$hoy,
+            'finaliza'              =>$fin,
             'valor_curso'           =>1350000,
-            'valor_matricula'       =>150000,
+            'valor_matricula'       =>1350000,
             //'valor_cuota_inicial'   =>1200000,
             'cuotas'                =>0,
             'valor_cuota'           =>0,
@@ -27,8 +32,8 @@ class ConfiguracioPagoSeeder extends Seeder
         ]);
 
         ConfiguracionPago::create([
-            'inicia'                =>'2023-10-01',
-            'finaliza'              =>'2023-10-31',
+            'inicia'                =>$hoy,
+            'finaliza'              =>$fin,
             'valor_curso'           =>1650000,
             'valor_matricula'       =>250000,
             //'valor_cuota_inicial'   =>100000,
@@ -40,10 +45,10 @@ class ConfiguracioPagoSeeder extends Seeder
         ]);
 
         ConfiguracionPago::create([
-            'inicia'                =>'2023-10-01',
-            'finaliza'              =>'2023-10-31',
+            'inicia'                =>$hoy,
+            'finaliza'              =>$fin,
             'valor_curso'           =>1650000,
-            'valor_matricula'       =>100000,
+            'valor_matricula'       =>1650000,
             //'valor_cuota_inicial'   =>1550000,
             'cuotas'                =>0,
             'valor_cuota'           =>0,
@@ -53,8 +58,8 @@ class ConfiguracioPagoSeeder extends Seeder
         ]);
 
         ConfiguracionPago::create([
-            'inicia'                =>'2023-10-01',
-            'finaliza'              =>'2023-10-31',
+            'inicia'                =>$hoy,
+            'finaliza'              =>$fin,
             'valor_curso'           =>1700000,
             'valor_matricula'       =>200000,
             //'valor_cuota_inicial'   =>100000,
@@ -68,10 +73,10 @@ class ConfiguracioPagoSeeder extends Seeder
 
 
         ConfiguracionPago::create([
-            'inicia'                =>'2023-10-01',
-            'finaliza'              =>'2023-10-31',
+            'inicia'                =>$hoy,
+            'finaliza'              =>$fin,
             'valor_curso'           =>1600000,
-            'valor_matricula'       =>150000,
+            'valor_matricula'       =>1650000,
             //'valor_cuota_inicial'   =>1450000,
             'cuotas'                =>0,
             'valor_cuota'           =>0,
@@ -81,8 +86,8 @@ class ConfiguracioPagoSeeder extends Seeder
         ]);
 
         ConfiguracionPago::create([
-            'inicia'                =>'2023-10-01',
-            'finaliza'              =>'2023-10-31',
+            'inicia'                =>$hoy,
+            'finaliza'              =>$fin,
             'valor_curso'           =>1650000,
             'valor_matricula'       =>250000,
             //'valor_cuota_inicial'   =>100000,
@@ -94,10 +99,10 @@ class ConfiguracioPagoSeeder extends Seeder
         ]);
 
         ConfiguracionPago::create([
-            'inicia'                =>'2023-10-01',
-            'finaliza'              =>'2023-10-31',
+            'inicia'                =>$hoy,
+            'finaliza'              =>$fin,
             'valor_curso'           =>1950000,
-            'valor_matricula'       =>0,
+            'valor_matricula'       =>1950000,
             //'valor_cuota_inicial'   =>1950000,
             'cuotas'                =>0,
             'valor_cuota'           =>0,
@@ -107,8 +112,8 @@ class ConfiguracioPagoSeeder extends Seeder
         ]);
 
         ConfiguracionPago::create([
-            'inicia'                =>'2023-10-01',
-            'finaliza'              =>'2023-10-31',
+            'inicia'                =>$hoy,
+            'finaliza'              =>$fin,
             'valor_curso'           =>2050000,
             'valor_matricula'       =>250000,
             //'valor_cuota_inicial'   =>150000,

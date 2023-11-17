@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Academico\Asistencia;
+use App\Models\Academico\Ciclo;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Nota;
@@ -155,6 +156,12 @@ class User extends Authenticatable
     public function creadors(): HasMany
     {
         return $this->hasMany(ReciboPago::class);
+    }
+
+    //Relación uno a muchos
+    public function creaciclo(): HasMany
+    {
+        return $this->hasMany(Ciclo::class);
     }
 
     //Relación uno a muchos
