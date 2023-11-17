@@ -3,6 +3,6 @@
         Ciclos
     @endpush
 
-    {{-- <livewire:academico.curso.cursos /> --}}
+    <livewire:academico.ciclo.ciclos />
 
 </x-admin-layout>

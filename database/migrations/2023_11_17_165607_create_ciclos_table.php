@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('inicia')->comment('Fecha inicio del ciclo');
             $table->date('finaliza')->comment('Fecha final del ciclo');
             $table->integer('registrados')->default(0)->comment('Cantidad de registrados al ciclo');
-            $table->integer('tipo')->comment('Tipo 1 Mañana, 2 Tarde, 3 Noche, 4 Fin de semana');
+            $table->integer('jornada')->comment('Jornada 1 Mañana, 2 Tarde, 3 Noche, 4 Fin de semana');
             $table->integer('desertado')->comment('numero de días para determinar si es desertado o no el estudiante según el tipo');
             $table->integer('status')->default(1)->comment('1 elaboración, 2 Aprobado, 3 Activo, 4 Inactivo');
 
