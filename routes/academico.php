@@ -29,3 +29,7 @@ Route::get('/estudiantes', function () {
 Route::get('/notas', function () {
     return view('academico.notas.index');
 })->middleware('can:ac_notas')->name('notas');
+
+Route::get('/ciclos', function () {
+    return view('academico.ciclos.index');
+})->middleware('can:ac_ciclos')->name('ciclos');

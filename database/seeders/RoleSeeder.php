@@ -127,6 +127,29 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
 
         Permission::create([
+                            'name'=>'ac_ciclos',
+                            'descripcion'=>'ver ciclos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+        Permission::create([
+                            'name'=>'ac_cicloCrear',
+                            'descripcion'=>'crear ciclos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+        Permission::create([
+                            'name'=>'ac_cicloEditar',
+                            'descripcion'=>'editar ciclos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+        Permission::create([
+                            'name'=>'ac_cicloAsignar',
+                            'descripcion'=>'asignar ciclos a estudiantes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+        Permission::create([
+                            'name'=>'ac_cicloInactivar',
+                            'descripcion'=>'inactivar ciclos'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+
+
+        Permission::create([
                             'name'=>'ac_matriculas',
                             'descripcion'=>'ver matriculas'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
