@@ -15,8 +15,8 @@ use Livewire\Component;
 class GruposCrear extends Component
 {
     public $name;
-    public $start_date;
-    public $finish_date;
+    //public $start_date;
+    //public $finish_date;
     public $quantity_limit;
     public $sede_id;
     public $sede;
@@ -177,8 +177,8 @@ class GruposCrear extends Component
      */
     protected $rules = [
         'name' => 'required|max:100',
-        'start_date'=>'required',
-        'finish_date'=>'required',
+        //'start_date'=>'required',
+        //'finish_date'=>'required',
         'quantity_limit'=>'required|integer',
         'sede_id'=>'required|integer',
         'modulo_id'=>'required|integer',
@@ -192,8 +192,8 @@ class GruposCrear extends Component
     public function resetFields(){
         $this->reset(
                         'name',
-                        'start_date',
-                        'finish_date',
+                        //'start_date',
+                        //'finish_date',
                         'quantity_limit',
                         'modulo_id',
                         'sede_id',
@@ -210,45 +210,39 @@ class GruposCrear extends Component
         // validate
         $this->validate();
 
-        //Validar fechas
-        if($this->start_date<$this->finish_date){
-            //Crear registro
-            $grupo= Grupo::create([
-                                'name'=>strtolower($this->name),
-                                'start_date'        =>$this->start_date,
-                                'finish_date'       =>$this->finish_date,
-                                'quantity_limit'    =>$this->quantity_limit,
-                                'modulo_id'         =>$this->modulo_id,
-                                'sede_id'           =>$this->sede_id,
-                                'profesor_id'       =>$this->profesor_id
-                            ]);
+       //Crear registro
+        $grupo= Grupo::create([
+            'name'=>strtolower($this->name),
+            //'start_date'        =>$this->start_date,
+            //'finish_date'       =>$this->finish_date,
+            'quantity_limit'    =>$this->quantity_limit,
+            'modulo_id'         =>$this->modulo_id,
+            'sede_id'           =>$this->sede_id,
+            'profesor_id'       =>$this->profesor_id
+            ]);
 
-            //Cargar horarios
-            foreach ($this->seleccionados as $value) {
-                Horario::create([
-                        'sede_id'       =>$this->sede_id,
-                        'area_id'       =>$value['area_id'],
-                        'grupo'         =>$this->name,
-                        'grupo_id'      =>$grupo->id,
-                        'tipo'          =>false,
-                        'periodo'       =>true,
-                        'dia'           =>$value['dia'],
-                        'hora'          =>$value['hora'],
-                ]);
-            }
-
-
-            // Notificación
-            $this->dispatch('alerta', name:'Se ha creado correctamente el grupo: '.$this->name);
-            $this->resetFields();
-
-            //refresh
-            $this->dispatch('refresh');
-            $this->dispatch('created');
-
-        }else{
-            $this->dispatch('alerta', name:'La fecha de inicio debe ser menor a la fecha de finalización.');
+        //Cargar horarios
+        foreach ($this->seleccionados as $value) {
+        Horario::create([
+        'sede_id'       =>$this->sede_id,
+        'area_id'       =>$value['area_id'],
+        'grupo'         =>$this->name,
+        'grupo_id'      =>$grupo->id,
+        'tipo'          =>false,
+        'periodo'       =>true,
+        'dia'           =>$value['dia'],
+        'hora'          =>$value['hora'],
+        ]);
         }
+
+
+        // Notificación
+        $this->dispatch('alerta', name:'Se ha creado correctamente el grupo: '.$this->name);
+        $this->resetFields();
+
+        //refresh
+        $this->dispatch('refresh');
+        $this->dispatch('created');
     }
 
     private function cursos()
