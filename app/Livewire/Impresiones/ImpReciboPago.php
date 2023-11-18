@@ -13,6 +13,11 @@ class ImpReciboPago extends Component
 {
     #[Url(as: 'r')]
     public $recibo='';
+
+    #[Url(as: 'rut')]
+    public $ruta='';
+    public $url;
+
     public $obtener;
     public $detalles;
     public $matriculas;
@@ -23,6 +28,17 @@ class ImpReciboPago extends Component
         $this->obtener=ReciboPago::whereId($this->recibo)->first();
 
         $this->obteDetalles();
+
+        switch ($this->ruta) {
+            case 0:
+                $this->url="/financiera/recibopagos";
+                break;
+
+            case 1:
+                $this->url="/academico/matriculas";
+                break;
+
+        }
     }
 
     public function obteDetalles(){

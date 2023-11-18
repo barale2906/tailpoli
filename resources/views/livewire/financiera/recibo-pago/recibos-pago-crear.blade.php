@@ -1,4 +1,5 @@
 <div>
+    <h1 class="text-xl text-center uppercase">Crear recibos de pago</h1>
     <form wire:submit.prevent="new">
 
         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">

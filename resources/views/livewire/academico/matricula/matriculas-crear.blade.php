@@ -341,7 +341,7 @@
             </div>
         </form>
     @else
-        <livewire:financiera.recibo-pago.recibos-pago-crear />
+        <livewire:financiera.recibo-pago.recibos-pago-crear :ruta="1" />
     @endif
 
 </div>

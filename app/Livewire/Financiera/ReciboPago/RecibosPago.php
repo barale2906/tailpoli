@@ -62,6 +62,20 @@ class RecibosPago extends Component
     }
 
     //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_modify',
+                        'is_creating',
+                        'is_editing',
+                        'is_deleting'
+                    );
+    }
+
+
+    //Activar evento
     #[On('created')]
     //Mostrar formulario de creación
     public function updatedIsCreating()

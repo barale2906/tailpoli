@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Financiera\ReciboPago;
 
+use App\Models\Academico\Control;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
@@ -29,6 +30,8 @@ class RecibosPagoCrear extends Component
     public $recargoValor=0;
     public $pagoTotal=false;
     public $totalCartera=0;
+    public $fecha_pago;
+    public $ruta;
 
 
     public $valor=0;
@@ -47,10 +50,12 @@ class RecibosPagoCrear extends Component
 
     public $pendientes;
 
-    public function mount(){
+    public function mount($ruta=null){
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
             ->delete();
+
+        $this->ruta=$ruta;
     }
 
     #[On('cargados')]
@@ -219,6 +224,8 @@ class RecibosPagoCrear extends Component
         // validate
         $this->validate();
 
+        $this->fecha_pago=now();
+
         if($this->pagoTotal){
             $this->Total=$this->totalCartera;
         }
@@ -230,7 +237,7 @@ class RecibosPagoCrear extends Component
 
         //Crear registro
         $recibo= ReciboPago::create([
-                                'fecha'=>now(),
+                                'fecha'=>$this->fecha_pago,
                                 'valor_total'=>$this->Total,
                                 'medio'=>$this->medio,
                                 'observaciones'=>strtolower($this->observaciones),
@@ -318,7 +325,7 @@ class RecibosPagoCrear extends Component
                     }
 
                     $item->update([
-                        'fecha_real'=>now(),
+                        'fecha_real'=>$this->fecha_pago,
                         'saldo'=>$saldo,
                         'observaciones'=>$observa,
                         'status'=>$this->status,
@@ -328,6 +335,29 @@ class RecibosPagoCrear extends Component
 
             }
         }
+
+        //Cargar fecha de pago y observaciones al control
+        $control=Control::where('estudiante_id', $this->alumno_id)
+                            ->where('status', true)
+                            ->get();
+
+
+        foreach ($control as $value) {
+
+            $observa=now()." ".$this->alumnoName." realizo pago por $".number_format($this->Total, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$value->observaciones;
+
+            Control::whereId($value->id)
+                    ->update([
+                        'observaciones' =>strtolower($observa),
+                        'ultimo_pago'   =>$this->fecha_pago
+                    ]);
+        }
+
+
+
+
+
+
 
         //Eliminar datos de apoyo
         DB::table('apoyo_recibo')
@@ -340,9 +370,9 @@ class RecibosPagoCrear extends Component
 
         //refresh
         $this->dispatch('refresh');
-        $this->dispatch('created');
+        $this->dispatch('cancelando');
 
-        $ruta='/impresiones/imprecibo?r='.$recibo->id;
+        $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$recibo->id;
 
         $this->redirect($ruta);
     }

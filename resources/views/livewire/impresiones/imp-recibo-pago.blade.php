@@ -9,7 +9,7 @@
                     <tr>
                         <th scope="col" class="px-6 py-3">
 
-                            <a href="/financiera/recibopagos" wire:navigate>
+                            <a href="{{$url}}" wire:navigate>
                                 <img class="h-12 w-16 rounded-sm" src="{{asset('img/logo.jpeg')}}" alt="{{env('APP_NAME')}}">
                             </a>
 
