@@ -33,3 +33,7 @@ Route::get('/notas', function () {
 Route::get('/ciclos', function () {
     return view('academico.ciclos.index');
 })->middleware('can:ac_ciclos')->name('ciclos');
+
+Route::get('/gestion', function () {
+    return view('academico.gestion.index');
+})->middleware('can:ac_gestion')->name('gestion');

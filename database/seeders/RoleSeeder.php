@@ -147,6 +147,14 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'inactivar ciclos'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
+        Permission::create([
+                            'name'=>'ac_gestion',
+                            'descripcion'=>'ver gestion'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'ac_gestionCrear',
+                            'descripcion'=>'crear gestion'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
 
         Permission::create([
