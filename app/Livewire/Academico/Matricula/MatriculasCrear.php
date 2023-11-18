@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Academico\Matricula;
 
+use App\Models\Academico\Ciclo;
 use App\Models\Academico\Curso;
+use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Documento;
@@ -28,6 +30,10 @@ class MatriculasCrear extends Component
     public $alumnoName='';
     public $alumnodocumento='';
     public $comercial_id='';
+    public $ciclos;
+    public $ciclo_id;
+    public $ciclosel;
+    public $horarios;
     public $fecha_inicia;
 
     public $sede_id;
@@ -126,6 +132,42 @@ class MatriculasCrear extends Component
                                 ->get();
 
         }
+
+        $this->obtieneciclos();
+    }
+
+    public function obtieneciclos(){
+        $this->ciclos=Ciclo::where('sede_id', $this->sede_id)
+                            ->where('curso_id', $this->curso_id)
+                            ->where('status', 2)
+                            ->orderBy('inicia', 'ASC')
+                            ->get();
+    }
+
+    public function updatedCicloId(){
+        $this->reset('fecha_inicia', 'ciclosel');
+        $this->ciclosel=Ciclo::find($this->ciclo_id);
+        $this->fecha_inicia=$this->ciclosel->inicia;
+
+        $this->obteHorarios();
+    }
+
+    public function obteHorarios(){
+        $ids=[];
+
+        foreach ($this->ciclosel->grupos as $value) {
+
+            if(in_array($value->id, $ids)){
+
+            }else{
+                array_push($ids, $value->id);
+            }
+        }
+
+        $this->horarios=Horario::where('sede_id', $this->sede_id)
+                                ->whereIn('grupo_id', $ids)
+                                ->orderBy('hora', 'ASC')
+                                ->get();
     }
 
     //Buscar Alumno

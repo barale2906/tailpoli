@@ -126,79 +126,205 @@
                     </div>
                 @endif
             @endif
-            @if ($curso_id>0 && $alumno_id>0)
-                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="mb-6">
-                        <label for="fecha_inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio</label>
-                        <input type="date" id="fecha_inicia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="fecha_inicia">
-                        @error('fecha_inicia')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-6">
-                        <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">¿Cómo se entero de nosotros?</label>
-                        <select wire:model.blur="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option >Elija su respuesta...</option>
-                            <option value="Google">Google</option>
-                            <option value="Página Web">Página Web</option>
-                            <option value="Redes Sociales">Redes Sociales</option>
-                            <option value="Referencia">Referencia</option>
-                            <option value="Volante">Volante</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                        @error('medio')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-6">
-                        <label for="nivel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Conocimientos Previos</label>
-                        <select wire:model.blur="nivel" id="nivel" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option >Elija su respuesta...</option>
-                            <option value="Básico">Básico</option>
-                            <option value="Intermedio">Intermedio</option>
-                            <option value="Avanzado">Avanzado</option>
-                            <option value="Ninguno">Ninguno</option>
-                        </select>
-                        @error('nivel')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-6">
-                        <label for="metodo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de Pago</label>
-                        <select wire:model.blur="metodo" id="metodo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option >Elija su respuesta...</option>
-                            <option value="Diferido por Cuotas">Diferido por Cuotas</option>
-                            <option value="Contado">Contado</option>
-                            <option value="Cheque">Cheque</option>
-                            <option value="Cesantías">Cesantías</option>
-                        </select>
-                        @error('metodo')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-6">
-                        <label for="comercial_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asesor Comercial</label>
-                        <select wire:model.blur="comercial_id" id="comercial_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option >Elegir AsesorComercial...</option>
-                            @foreach ($noestudiantes as $item)
-                                <option value={{$item->id}}>{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                        @error('comercial_id')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
+            @if ($curso_id>0 && $alumno_id>0 && $config_id>0)
+                <div class="mb-6">
+                    <label for="ciclo_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Seleccione Fecha de Inicio</label>
+                    <select wire:model.live="ciclo_id" id="ciclo_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                        <option >Elija ...</option>
+                        @foreach ($ciclos as $item)
+                            <option value={{$item->id}}>
+                                @switch($item->jornada)
+                                    @case(1)
+                                        MAÑANA - {{$item->name}}
+                                        @break
+                                    @case(2)
+                                        TARDE - {{$item->name}}
+                                        @break
+                                    @case(3)
+                                        NOCHE - {{$item->name}}
+                                        @break
+                                    @case(4)
+                                        FIN DE SEMANA - {{$item->name}}
+                                        @break
+
+                                @endswitch
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('ciclo_id')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
                 </div>
+
+                @if ($horarios)
+                    <div class="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 sm:grid-cols-1 md:grid-cols-7 bg-white dark:bg-gray-800">
+                        @for ($i = 1; $i <= 7; $i++)
+                            <figure class="flex flex-col items-center p-4 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
+                                <blockquote class="max-w-2xl mx-auto mb-2 text-gray-500 lg:mb-8 dark:text-gray-400">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white uppercase">
+                                        @switch($i)
+                                            @case(1)
+                                                lunes
+                                                @break
+                                            @case(2)
+                                                martes
+                                                @break
+                                            @case(3)
+                                                miércoles
+                                                @break
+                                            @case(4)
+                                                jueves
+                                                @break
+                                            @case(5)
+                                                viernes
+                                                @break
+                                            @case(6)
+                                                sábado
+                                                @break
+                                            @case(7)
+                                                domingo
+                                                @break
+                                        @endswitch
+                                    </h3>
+                                </blockquote>
+                                <figcaption class="flex items-center justify-center ">
+                                    <div class="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
+                                        @foreach ($horarios as $item)
+                                                @switch($i)
+                                                    @case(1)
+                                                        @if ($item->periodo && $item->dia==="lunes")
+                                                            <div>
+                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
+                                                            </div>
+                                                        @endif
+
+                                                        @break
+                                                    @case(2)
+                                                        @if ($item->periodo && $item->dia==="martes")
+                                                            <div>
+                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
+                                                            </div>
+                                                        @endif
+
+                                                        @break
+                                                    @case(3)
+                                                        @if ($item->periodo && $item->dia==="miercoles")
+                                                            <div>
+                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
+                                                            </div>
+                                                        @endif
+
+                                                        @break
+                                                    @case(4)
+                                                        @if ($item->periodo && $item->dia==="jueves")
+                                                            <div>
+                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
+                                                            </div>
+                                                        @endif
+
+                                                        @break
+                                                    @case(5)
+                                                        @if ($item->periodo && $item->dia==="viernes")
+                                                            <div>
+                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
+                                                            </div>
+                                                        @endif
+
+                                                        @break
+                                                    @case(6)
+                                                        @if ($item->periodo && $item->dia==="sabado")
+                                                            <div>
+                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
+                                                            </div>
+                                                        @endif
+
+                                                        @break
+                                                    @case(7)
+                                                        @if ($item->periodo && $item->dia==="domingo")
+                                                            <div>
+                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
+                                                            </div>
+                                                        @endif
+
+                                                        @break
+                                                @endswitch
+
+
+                                        @endforeach
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        @endfor
+                    </div>
+
+                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="mb-6">
+                            <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">¿Cómo se entero de nosotros?</label>
+                            <select wire:model.blur="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option >Elija su respuesta...</option>
+                                <option value="Google">Google</option>
+                                <option value="Página Web">Página Web</option>
+                                <option value="Redes Sociales">Redes Sociales</option>
+                                <option value="Referencia">Referencia</option>
+                                <option value="Volante">Volante</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            @error('medio')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label for="nivel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Conocimientos Previos</label>
+                            <select wire:model.blur="nivel" id="nivel" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option >Elija su respuesta...</option>
+                                <option value="Básico">Básico</option>
+                                <option value="Intermedio">Intermedio</option>
+                                <option value="Avanzado">Avanzado</option>
+                                <option value="Ninguno">Ninguno</option>
+                            </select>
+                            @error('nivel')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label for="metodo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de Pago</label>
+                            <select wire:model.blur="metodo" id="metodo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option >Elija su respuesta...</option>
+                                <option value="Diferido por Cuotas">Diferido por Cuotas</option>
+                                <option value="Contado">Contado</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Cesantías">Cesantías</option>
+                            </select>
+                            @error('metodo')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label for="comercial_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asesor Comercial</label>
+                            <select wire:model.blur="comercial_id" id="comercial_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option >Elegir AsesorComercial...</option>
+                                @foreach ($noestudiantes as $item)
+                                    <option value={{$item->id}}>{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('comercial_id')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                @endif
+
+
             @endif
 
             <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4">
