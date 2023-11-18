@@ -3,6 +3,6 @@
         Gestión Diaria
     @endpush
 
-    {{-- <livewire:academico.grupo.grupos /> --}}
+    <livewire:academico.gestion.gestiones />
 
 </x-admin-layout>

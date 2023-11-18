@@ -16,7 +16,7 @@ class Control extends Model
     //Relacion uno a muchos inversa
     public function ciclo() : BelongsTo
     {
-        return $this->BelongsTo(Sede::class);
+        return $this->BelongsTo(Ciclo::class);
     }
 
     //Relacion uno a muchos inversa
