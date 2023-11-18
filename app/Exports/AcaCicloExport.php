@@ -105,7 +105,7 @@ class AcaCicloExport implements FromCollection, WithCustomStartCell, Responsable
         $sheet->mergeCells('C2:E2');
         $sheet->setCellValue('C3', 'Jornada 1 Mañana, 2 Tarde, 3 Noche, 4 Fin de semana');
         $sheet->mergeCells('C3:E3');
-        $sheet->setCellValue('C4', 'Estado 1 elaboración, 2 Aprobado, 3 Activo, 4 Inactivo');
+        $sheet->setCellValue('C4', 'Estado 1 Aprobado, 2 Activo, 3 Inactivo');
         $sheet->mergeCells('C4:E4');
     }
 }

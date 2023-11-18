@@ -10,5 +10,8 @@ return[
     'representante_legal'   =>env('REPRESENTANTE_LEGAL'),
     'documento_rl'          =>env('DOCUMENTO_RL'),
     'telefono_rol'          =>env('TELEFONO_RL'),
-    'directora'             =>env('DIRECTORA')
+    'directora'             =>env('DIRECTORA'),
+    'desertado_fin'         =>env('DESERTADO_FIN_SEMANA'),
+    'desertado_entresemana' =>env('DESERTADO_ENTRESEMANA')
+
 ];

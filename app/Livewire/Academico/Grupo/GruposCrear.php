@@ -205,7 +205,7 @@ class GruposCrear extends Component
                     );
     }
 
-    // Crear Regimen de Salud
+    // Crear
     public function new(){
         // validate
         $this->validate();

@@ -55,6 +55,12 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3">
+                            Sede
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Curso
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('name')">
                             Ciclo
                             @if ($ordena != 'name')
@@ -153,6 +159,12 @@
                                 {{$ciclo->id}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$ciclo->sede->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$ciclo->curso->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$ciclo->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -167,7 +179,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 @switch($ciclo->jornada)
                                     @case(1)
-                                    Mañana
+                                        Mañana
                                         @break
                                     @case(2)
                                         Tarde
@@ -184,28 +196,24 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 @switch($ciclo->status)
                                     @case(1)
-                                        elaboración
+                                    Aprobado
                                         @break
                                     @case(2)
-                                        Aprobado
-                                        @break
-                                    @case(3)
                                         Activo
                                         @break
-                                    @case(4)
+                                    @case(3)
                                         Inactivo
                                         @break
-
                                 @endswitch
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 @foreach ($ciclo->grupos as $item)
-                                    <button type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <button type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-cyan-700 rounded-lg hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-blue-800 capitalize">
                                             {{$item->name}}
-                                        <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-                                            Inscritos {{$item->inscritos}}
+                                        <span class="inline-flex items-center justify-center p-1 ms-2 text-xs font-semibold text-cyan-800 bg-cyan-200 rounded-full">
+                                            {{$item->inscritos}}
                                         </span>
-                                    </button>
+                                    </button><br>
                                 @endforeach
                             </th>
                         </tr>
@@ -250,11 +258,11 @@
                     const variable = name;
                     console.log(variable['name'])
                     Swal.fire({
-                        position: 'center',
+                        position: 'center-end',
                         icon: 'success',
                         title: variable['name'],
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 2500
                     })
                 });
             });
