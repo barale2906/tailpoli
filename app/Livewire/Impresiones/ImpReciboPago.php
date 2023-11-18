@@ -38,6 +38,10 @@ class ImpReciboPago extends Component
                 $this->url="/academico/matriculas";
                 break;
 
+            case 2:
+                $this->url="/academico/gestion";
+                break;
+
         }
     }
 

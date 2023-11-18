@@ -23,6 +23,8 @@ class Gestiones extends Component
     public $is_grupos=false;
     public $is_change=false;
 
+    public $ruta=2;
+
     public $elegido;
 
     public $buscar='';

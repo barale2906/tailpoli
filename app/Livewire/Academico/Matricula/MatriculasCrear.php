@@ -57,11 +57,17 @@ class MatriculasCrear extends Component
 
     public $vista=true;
 
+    public $ruta=1;
+
 
     public $buscar=null;
     public $buscaestudi='';
 
     public $buscamin='';
+
+    public function mount($ruta=null){
+        $this->ruta=$ruta;
+    }
 
 
 

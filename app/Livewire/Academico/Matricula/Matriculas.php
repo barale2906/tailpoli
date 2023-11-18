@@ -24,6 +24,8 @@ class Matriculas extends Component
     public $is_grupos=false;
     public $is_change=false;
 
+    public $ruta=0;
+
     public $elegido;
 
     public $buscar='';

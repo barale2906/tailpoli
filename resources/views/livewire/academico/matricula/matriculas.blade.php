@@ -191,7 +191,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:academico.matricula.matriculas-crear />
+        <livewire:academico.matricula.matriculas-crear :ruta="$ruta"/>
     @endif
 
     @if ($is_editing)
