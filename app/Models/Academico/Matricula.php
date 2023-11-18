@@ -59,4 +59,10 @@ class Matricula extends Model
     {
         return $this->BelongsToMany(Documento::class);
     }
+
+    //Relación uno a muchos
+    public function controles(): HasMany
+    {
+        return $this->hasMany(Control::class);
+    }
 }

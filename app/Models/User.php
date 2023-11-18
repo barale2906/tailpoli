@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Academico\Asistencia;
 use App\Models\Academico\Ciclo;
+use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Nota;
@@ -126,6 +127,12 @@ class User extends Authenticatable
     public function alumnoNotas(): HasMany
     {
         return $this->hasMany(Nota::class);
+    }
+
+    //Relación uno a muchos
+    public function control(): HasMany
+    {
+        return $this->hasMany(Control::class);
     }
 
     //Relación uno a muchos

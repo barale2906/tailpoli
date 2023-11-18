@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('registrados')->default(0)->comment('Cantidad de registrados al ciclo');
             $table->integer('jornada')->comment('Jornada 1 Mañana, 2 Tarde, 3 Noche, 4 Fin de semana');
             $table->integer('desertado')->comment('numero de días para determinar si es desertado o no el estudiante según el tipo');
-            $table->integer('status')->default(1)->comment('1 Aprobado, 2 Activo, 3 Inactivo');
+            $table->boolean('status')->default(true)->comment('false inactiva, true activa');
 
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');

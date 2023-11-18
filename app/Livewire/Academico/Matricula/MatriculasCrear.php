@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Matricula;
 
 use App\Models\Academico\Ciclo;
+use App\Models\Academico\Control;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
@@ -139,7 +140,7 @@ class MatriculasCrear extends Component
     public function obtieneciclos(){
         $this->ciclos=Ciclo::where('sede_id', $this->sede_id)
                             ->where('curso_id', $this->curso_id)
-                            ->where('status', 2)
+                            ->where('status', true)
                             ->orderBy('inicia', 'ASC')
                             ->get();
     }
@@ -246,6 +247,7 @@ class MatriculasCrear extends Component
         $concepto=ConceptoPago::where('name', 'Matricula')
                                 ->where('status', true)
                                 ->first();
+
         Cartera::create([
             'fecha_pago'=>now(),
             'valor'=>$this->valor_matricula,
@@ -313,6 +315,16 @@ class MatriculasCrear extends Component
                         'updated_at'    =>now()
                     ]);
         }
+
+        //Generar control
+
+        Control::create([
+            'inicia'        =>$this->ciclosel->inicia,
+            'observaciones' =>"Matriculado el día: ".$date,
+            'matricula_id'  =>$this->matricula->id,
+            'ciclo_id'      =>$this->ciclosel->id,
+            'estudiante_id' =>$this->alumno_id
+        ]);
 
 
         // Notificación

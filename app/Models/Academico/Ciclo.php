@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ciclo extends Model
 {
@@ -40,5 +41,11 @@ class Ciclo extends Model
     public function creador() : BelongsTo
     {
         return $this->BelongsTo(User::class);
+    }
+
+    //Relación uno a muchos
+    public function control(): HasMany
+    {
+        return $this->hasMany(Control::class);
     }
 }

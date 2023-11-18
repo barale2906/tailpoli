@@ -25,7 +25,6 @@ class CiclosCrear extends Component
     public $desertado;
     public $contar=0;
     public $maximo;
-    public $status=2;
 
 
     public function updatedCursoId(){
@@ -81,11 +80,6 @@ class CiclosCrear extends Component
         $fin=$ini->addMonths($this->curso->duracion_meses);
         $fin->format('Y-m-d');
         $this->finalizaej=$fin;
-
-        $hoy=Carbon::now();
-        if($this->inicia>$hoy){
-            $this->status=1;
-        }
     }
 
     public function updatedJornada(){
@@ -178,35 +172,40 @@ class CiclosCrear extends Component
         // validate
         $this->validate();
 
-        //Crear ciclo
-        $ciclo=Ciclo::create([
-            'sede_id'       =>$this->sede_id,
-            'curso_id'      =>$this->curso_id,
-            'name'          =>$this->name,
-            'inicia'        =>$this->inicia,
-            'finaliza'      =>$this->finaliza,
-            'jornada'       =>$this->jornada,
-            'desertado'     =>$this->desertado,
-            'status'        =>$this->status
-        ]);
+        if($this->inicia<$this->finaliza){
+            //Crear ciclo
+            $ciclo=Ciclo::create([
+                'sede_id'       =>$this->sede_id,
+                'curso_id'      =>$this->curso_id,
+                'name'          =>$this->name,
+                'inicia'        =>$this->inicia,
+                'finaliza'      =>$this->finaliza,
+                'jornada'       =>$this->jornada,
+                'desertado'     =>$this->desertado
+            ]);
 
-        foreach ($this->seleccionados as $value) {
-            DB::table('ciclo_grupo')
-                ->insert([
-                    'ciclo_id'       =>$ciclo->id,
-                    'grupo_id'       =>$value['id'],
-                    'created_at'     =>now(),
-                    'updated_at'     =>now(),
-                ]);
+            foreach ($this->seleccionados as $value) {
+                DB::table('ciclo_grupo')
+                    ->insert([
+                        'ciclo_id'       =>$ciclo->id,
+                        'grupo_id'       =>$value['id'],
+                        'created_at'     =>now(),
+                        'updated_at'     =>now(),
+                    ]);
+            }
+
+            // Notificación
+            $this->dispatch('alerta', name:'Se ha creado correctamente el ciclo: '.$this->name);
+            $this->resetFields();
+
+            //refresh
+            $this->dispatch('refresh');
+            $this->dispatch('created');
+        }else{
+            $this->dispatch('alerta', name:'La fecha de inicio debe ser inferior a la de finalización');
         }
 
-        // Notificación
-        $this->dispatch('alerta', name:'Se ha creado correctamente el ciclo: '.$this->name);
-        $this->resetFields();
 
-        //refresh
-        $this->dispatch('refresh');
-        $this->dispatch('created');
 
 
     }

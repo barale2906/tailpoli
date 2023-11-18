@@ -135,16 +135,16 @@
                             <option value={{$item->id}}>
                                 @switch($item->jornada)
                                     @case(1)
-                                        MAÑANA - {{$item->name}}
+                                        MAÑANA - {{$item->name}} - Inicia: {{$item->inicia}}
                                         @break
                                     @case(2)
-                                        TARDE - {{$item->name}}
+                                        TARDE - {{$item->name}} - Inicia: {{$item->inicia}}
                                         @break
                                     @case(3)
-                                        NOCHE - {{$item->name}}
+                                        NOCHE - {{$item->name}} - Inicia: {{$item->inicia}}
                                         @break
                                     @case(4)
-                                        FIN DE SEMANA - {{$item->name}}
+                                        FIN DE SEMANA - {{$item->name}} - Inicia: {{$item->inicia}}
                                         @break
 
                                 @endswitch
