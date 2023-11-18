@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Matricula;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Curso;
+use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
@@ -67,7 +68,7 @@ class MatriculasCrear extends Component
     //Cursos por sede
     public function updatedSedeId(){
 
-        $this->reset('curso_id','sedeele');
+        $this->reset('curso_id','sedeele', 'config_id', 'ciclo_id', 'ciclosel', 'horarios');
 
         $this->sedeele=Sede::find($this->sede_id);
 
@@ -85,7 +86,7 @@ class MatriculasCrear extends Component
 
     //Configuraciones por curso
     public function updatedCursoId(){
-        $this->reset('config_id');
+        $this->reset('config_id', 'ciclo_id', 'ciclosel', 'horarios');
         $this->configPago=ConfiguracionPago::where('sector_id', $this->sedeele->sector->id)
                                             ->where('curso_id', $this->curso_id)
                                             ->orderBy('descripcion')
@@ -111,7 +112,10 @@ class MatriculasCrear extends Component
     //Buscar modulos
     public function updatedConfigId(){
         $this->reset(
-            'modulos'
+            'modulos',
+            'ciclo_id',
+            'ciclosel',
+            'horarios'
         );
 
         //Cargar datos de pago
@@ -326,12 +330,56 @@ class MatriculasCrear extends Component
             'estudiante_id' =>$this->alumno_id
         ]);
 
+        //Asignar grupos
+        $this->asignar();
+    }
+
+    //Asignar grupos al estudiante
+    public function asignar(){
+
+        foreach ($this->ciclosel->grupos as $value) {
+
+            DB::table('grupo_matricula')
+            ->insert([
+                'grupo_id'      =>$value->id,
+                'matricula_id'  =>$this->matricula->id,
+                'created_at'    =>now(),
+                'updated_at'    =>now(),
+            ]);
+
+            //Cargar estudiante al grupo
+            DB::table('grupo_user')
+                ->insert([
+                    'grupo_id'      =>$value->id,
+                    'user_id'       =>$this->matricula->alumno->id,
+                    'created_at'    =>now(),
+                    'updated_at'    =>now(),
+                ]);
+
+
+
+            //Sumar usuario al grupo
+            $inscritos=Grupo::find($value->id);
+
+            $tot=$inscritos->inscritos+1;
+
+            $inscritos->update([
+                'inscritos'=>$tot
+            ]);
+        }
+
+        //Sumar usuario al ciclo
+        $tota=$this->ciclosel->registrados+1;
+
+        $this->ciclosel->update([
+            'registrados'=>$tota
+        ]);
+
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
         $this->resetFields();
         $this->vista=!$this->vista;
-
     }
 
     private function estudiantes(){

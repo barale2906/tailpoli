@@ -118,11 +118,11 @@
                                             </span>
                                         @endcan
                                         @can('ac_grupoAsignar')
-                                            <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                            {{-- <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
                                                 <a href="#" wire:click.prevent="show({{$matricula}},{{2}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
                                                     <i class="fa-solid fa-people-roof fa-beat"></i>
                                                 </a>
-                                            </span>
+                                            </span> --}}
                                             <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
                                                 <a href="#" wire:click.prevent="show({{$matricula}},{{3}})" class="inline-flex items-center font-medium text-red-600 dark:text-red-500 hover:underline">
                                                     <i class="fa-solid fa-retweet"></i>

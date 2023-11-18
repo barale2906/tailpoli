@@ -15,10 +15,10 @@ class Matriculas extends Component
 
     public $ordena='id';
     public $ordenado='DESC';
-    public $pages = 10;
+    public $pages = 3;
 
-    public $is_modify = false;
-    public $is_creating = true;
+    public $is_modify = true;
+    public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
     public $is_grupos=false;
@@ -60,6 +60,21 @@ class Matriculas extends Component
     {
         $this->resetPage();
         $this->pages=$valor;
+    }
+
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_modify',
+                        'is_creating',
+                        'is_editing',
+                        'is_deleting',
+                        'is_change',
+                        'is_grupos'
+                    );
     }
 
     //Activar evento
