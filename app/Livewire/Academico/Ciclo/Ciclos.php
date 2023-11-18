@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Ciclo;
 
+use App\Exports\AcaCicloExport;
 use App\Models\Academico\Ciclo;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -99,7 +100,7 @@ class Ciclos extends Component
     }
 
     public function exportar(){
-        //return new AcaGrupoExport($this->buscamin);
+        return new AcaCicloExport($this->buscamin);
     }
 
     public function ciclos()
