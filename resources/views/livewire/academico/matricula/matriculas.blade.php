@@ -147,11 +147,17 @@
                                     {{$matricula->anula}} -por:  {{$matricula->anula_user}}
                                 @else
                                     @foreach ($matricula->grupos as $item)
-                                    <div>
-                                        <a href="#" wire:click.prevent="show({{$item}},{{1}})" class="text-black bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:focus:ring-yellow-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-14 capitalize">
-                                            {{$item->name}}
+                                        <a href="" wire:click.prevent="show({{$item}},{{1}})" class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                            <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
+                                                {{$item->name}}
+                                            </h5>
+                                            <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                                Modulo: {{$item->modulo->name}}
+                                            </p>
+                                            <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                                Profesor: {{$item->profesor->name}}
+                                            </p>
                                         </a>
-                                    </div><br>
                                     @endforeach
                                 @endif
                             </th>
