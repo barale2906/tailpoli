@@ -350,7 +350,7 @@ class Salida extends Component
                 }else{
 
                     $inventa = Inventario::create([
-                        'tipo'=>0,
+                        'tipo'=>2,
                         'fecha_movimiento'=>now(),
                         'cantidad'=>$value->cantidad,
                         'saldo'=>$this->saldoFin,

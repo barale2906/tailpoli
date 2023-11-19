@@ -8,6 +8,7 @@
                     <option >Seleccione...</option>
                     <option value=1>Entrada</option>
                     <option value=0>sálida</option>
+                    <option value=2>Pendientes</option>
                 </select>
                 @error('tipo')
                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -53,11 +54,18 @@
 
 
     @if ($almacen_id>0)
-        @if ($tipo==="1")
-            <livewire:inventario.inventario.entrada :almacen_id="$almacen_id" />
-        @endif
-        @if ($tipo==="0")
-            <livewire:inventario.inventario.salida :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
-        @endif
+        @switch($tipo)
+            @case(1)
+                <livewire:inventario.inventario.entrada :almacen_id="$almacen_id" />
+                @break
+            @case(0)
+                <livewire:inventario.inventario.salida :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
+                @break
+            @case(2)
+                <livewire:inventario.inventario.pendiente :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
+                @break
+
+        @endswitch
     @endif
+
 </div>
