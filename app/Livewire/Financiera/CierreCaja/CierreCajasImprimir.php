@@ -14,12 +14,14 @@ class CierreCajasImprimir extends Component
     public $elegido;
     public $accion;
     public $observaciones;
+    public $ruta;
 
-    public function mount($elegido = null,$accion)
+    public function mount($elegido = null,$accion,$ruta=null)
     {
         $this->cierre=CierreCaja::find($elegido['id']);
         $this->recibos=ReciboPago::where('cierre', $elegido['id'])->get();
         $this->$accion=$accion;
+        $this->ruta=$ruta;
     }
     /**
      * Reglas de validación

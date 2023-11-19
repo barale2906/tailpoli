@@ -36,12 +36,17 @@ class CierreCajeroCrear extends Component
     public $elegido;
     public $accion=2;
 
+    public $ruta=1;
+
+
     public $print=false;
 
-    public function mount (){
+    public function mount ($ruta=null){
         $this->recibos=ReciboPago::where('creador_id', Auth::user()->id)
                                 ->where('status', '!=', 1)
                                 ->get();
+
+        $this->ruta=$ruta;
 
         $this->sedeMas();
     }
@@ -272,7 +277,7 @@ class CierreCajeroCrear extends Component
         $this->dispatch('refresh');
         $this->print=!$this->print;
 
-        $ruta='/impresiones/impcierre?o=1&c='.$cierre->id;
+        $ruta='/impresiones/impcierre?o='.$this->ruta.'&c='.$cierre->id;
 
         $this->redirect($ruta);
 

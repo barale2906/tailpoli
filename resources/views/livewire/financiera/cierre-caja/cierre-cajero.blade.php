@@ -125,7 +125,7 @@
     @endif
 
     @if ($is_watching)
-        <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido" :accion="$accion"/>
+        <livewire:financiera.cierre-caja.cierre-cajas-imprimir :elegido="$elegido" :accion="$accion" :ruta="$ruta"/>
     @endif
 
     @push('js')

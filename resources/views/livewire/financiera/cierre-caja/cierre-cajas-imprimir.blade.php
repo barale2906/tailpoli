@@ -30,24 +30,31 @@
                 </p>
                 <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        @switch($accion)
-                            @case(0)
-                                <a href="#" wire:click.prevent="$dispatch('Inactivando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                    <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
-                                </a>
-                                @break
-                            @case(1)
-                                <a href="#" wire:click.prevent="$dispatch('watched')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                    <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
-                                </a>
-                                @break
+                        @if ($ruta===2)
+                            <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+                            </a>
+                        @else
+                            @switch($accion)
+                                @case(0)
+                                    <a href="#" wire:click.prevent="$dispatch('Inactivando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                        <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+                                    </a>
+                                    @break
+                                @case(1)
+                                    <a href="#" wire:click.prevent="$dispatch('watched')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                        <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+                                    </a>
+                                    @break
 
-                            @case(2)
-                                <a href="#" wire:click.prevent="$dispatch('volver')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                    <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
-                                </a>
-                                @break
-                        @endswitch
+                                @case(2)
+                                    <a href="#" wire:click.prevent="$dispatch('volver')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                        <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+                                    </a>
+                                    @break
+                            @endswitch
+                        @endif
+
                     </div>
                     <div>
                         @if ($accion===0)

@@ -20,6 +20,8 @@ class CierreCajero extends Component
     public $is_creating = false;
     public $is_watching = false;
 
+    public $ruta=1;
+
     public $elegido;
     public $accion=1;
 
@@ -52,6 +54,19 @@ class CierreCajero extends Component
         $this->is_modify = !$this->is_modify;
         $this->is_creating = !$this->is_creating;
     }
+
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_modify',
+                        'is_creating',
+                        'is_watching'
+                    );
+    }
+
 
     //Activar evento
     #[On('watched')]

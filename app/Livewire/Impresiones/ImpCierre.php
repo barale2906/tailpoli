@@ -34,10 +34,24 @@ class ImpCierre extends Component
 
     public function urlruta(){
 
+        switch ($this->ori) {
+            case 0:
+                $this->ruta="/financiera/cierrecaja";
+                break;
+
+            case 1:
+                $this->ruta="/financiera/cajero";
+                break;
+
+            case 2:
+                $this->ruta="/academico/gestion";
+                break;
+        }
+
         if ($this->ori===1) {
-            $this->ruta="/financiera/cajero";
+
         } else if($this->ori===0){
-            $this->ruta="/financiera/cierrecaja";
+
         }
 
     }
