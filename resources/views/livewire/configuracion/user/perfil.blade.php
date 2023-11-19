@@ -364,6 +364,11 @@
                     <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
                 </a>
             @endif
+            @if ($ruta===2)
+                <a href="" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                    <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+                </a>
+            @endif
             <a href="/impresiones/impperfil?o={{$impresion}}&u={{$actual->id}}" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-print"></i> Imprimir
             </a>

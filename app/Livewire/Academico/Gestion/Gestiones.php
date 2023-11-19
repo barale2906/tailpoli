@@ -14,7 +14,7 @@ class Gestiones extends Component
 
     public $ordena='inicia';
     public $ordenado='ASC';
-    public $pages = 15;
+    public $pages = 3;
 
     public $is_modify = true;
     public $is_creating = false;
@@ -142,7 +142,7 @@ class Gestiones extends Component
     }
 
     //Activar evento
-    #[On('cambiagrupo')]
+    #[On('estudiantes')]
     //Mostrar formulario de inactivación
     public function updatedIsChange()
     {

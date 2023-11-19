@@ -21,14 +21,16 @@ class UsersCreate extends Component
     public $perf;
     public $nuevoUs;
     public $vista=true;
+    public $ruta;
 
     public $elegido;
 
 
 
-    public function mount($clase=null, $perf=null){
+    public function mount($clase=null, $perf=null, $ruta=null){
         $this->clase=$clase;
         $this->perf=$perf;
+        $this->ruta=$ruta;
 
         $this->tipo();
     }

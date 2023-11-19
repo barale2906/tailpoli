@@ -27,6 +27,7 @@ class Perfil extends Component
     public $tipo_documento = '';
     public $matriculas;
     public $rol;
+    public $ruta;
 
 
     public $regimen_salud_id;
@@ -77,12 +78,13 @@ class Perfil extends Component
 
 
 
-    public function mount($elegido = null,$perf, $impresion)
+    public function mount($elegido = null,$perf, $impresion=null, $ruta=null)
     {
         $this->id=$elegido;
         $this->actual=User::find($elegido);
         $this->perf=$perf;
         $this->impresion=$impresion;
+        $this->ruta=$ruta;
 
         $this->valores();
         $this->personasMulti();
