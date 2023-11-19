@@ -22,6 +22,7 @@ return new class extends Migration
             $table->double('valor')->comment('valor-precio registrado en el recibo o en el inventario');
             $table->double('cantidad')->nullable()->comment('cuantas ingresan o salen del inventario');
             $table->double('subtotal')->nullable()->comment('Total del registro');
+            $table->boolean('entregado')->default(true)->comment('true entregado false pendiente');
 
 
             $table->integer('id_producto')->nullable()->comment('id del prducto registrado');

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id();
 
             $table->date('inicia')->comment('Fecha cuando inicia clases');
-            $table->string('overol')->default('no')->comment('si, no, pendiente');
             $table->integer('estado_cartera')->default(1)->comment('1 Al día, 2 Verificar transferencia, 3 mora, 4 proximo a vencer, 5 pago total');
             $table->date('ultimo_pago')->nullable()->comment('Fecha ultimo pago registrado');
             $table->date('ultima_asistencia')->nullable()->comment('Fecha ultima asistencia');
@@ -24,6 +23,10 @@ return new class extends Migration
             $table->longText('observaciones')->comment('describe todo lo que ocurra con el estudiante en el proceso');
             $table->integer('status_est')->default(1)->comment('1 activo, 2 finalizado, 3 aplazado, 4 desertado, 5 reingreso');
             $table->boolean('status')->default(true)->comment('false inactiva, true activa');
+
+            $table->string('overol')->default('no')->comment('si, no, pendiente');
+            $table->date('compra')->nullable()->comment('Fecha en que compro el overol');
+            $table->date('entrega')->nullable()->comment('Fecha en que recibio el overol');
 
             $table->unsignedBigInteger('ciclo_id');
             $table->foreign('ciclo_id')->references('id')->on('ciclos');

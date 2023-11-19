@@ -160,15 +160,22 @@
                             @enderror
                         </div>
                     @else
-                        <label for="precio" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white uppercase">
-                            No hay existencias de este producto
+                        <label for="precio" class="block mb-2 text-xl font-medium text-orange-500 dark:text-white uppercase">
+                            No hay existencias de este producto, puede cargarlo y dejarlo pendiente para entrega
                         </label>
+                        <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
+                        <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cantidad" wire:model.live="cantidad">
+                        @error('cantidad')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
                     @endif
 
                     <div>
                         @if ($cantidad>0 && $producto)
                         <label for="temporal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargar</label>
-                            <a href="#" wire:click.prevent="temporal()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                            <a href="" wire:click.prevent="temporal()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
                                 <i class="fa-solid fa-check"></i>
                             </a>
                         @endif

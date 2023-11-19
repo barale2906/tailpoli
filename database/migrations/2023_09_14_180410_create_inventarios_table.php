@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('inventarios', function (Blueprint $table) {
+
             $table->comment('Descripción de movimientos de inventario');
             $table->id();
             $table->integer('tipo')->default(1)->comment('tipo de movimiento, 1 entra 0 sale');
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->boolean('status')->default(true)->comment('false Saldo Inactivo, true Saldo Activo');
 
             $table->integer('compra_id')->nullable()->comment('Sirve para identificar las compras por usuario');
+            $table->boolean('entregado')->default(true)->comment('true entregado false pendiente');
 
             $table->unsignedBigInteger('almacen_id');
             $table->foreign('almacen_id')->references('id')->on('almacens');

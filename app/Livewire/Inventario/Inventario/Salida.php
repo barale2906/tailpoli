@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Inventario\Inventario;
 
+use App\Models\Academico\Control;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
@@ -54,6 +55,11 @@ class Salida extends Component
     public $recargo=0;
     public $recargo_id;
     public $recargoValor=0;
+
+    public $crtSaldo;
+    public $saldoObtenido;
+    public $saldoFin;
+
 
     public function mount($almacen_id=null, $sede_id=null, $ruta=null){
         $id=intval($almacen_id);
@@ -161,10 +167,10 @@ class Salida extends Component
 
         $this->saldo=$this->saldo-$this->cantidad;
 
-        if($this->saldo>=0){
+        $valor=$this->precio*$this->cantidad;
+        $this->Total=$this->Total+$valor;
 
-            $valor=$this->precio*$this->cantidad;
-            $this->Total=$this->Total+$valor;
+        if($this->saldo>=0){
 
             DB::table('apoyo_recibo')->insert([
                 'tipo'=>'inventario',
@@ -174,21 +180,41 @@ class Salida extends Component
                 'valor'=>$this->precio,
                 'cantidad'=>$this->cantidad,
                 'subtotal'=>$valor,
+                'entregado'=>true,
                 'id_producto'=>$this->producto->id,
                 'producto'=>$this->producto->name,
                 'id_almacen'=>$this->almacen->id,
                 'almacen'=>$this->almacen->name,
                 'id_ultimoreg'=>$this->id_ultimo,
-                'saldo'=>$this->saldo
+                'saldo'=>$this->saldo,
             ]);
 
-            $this->reset('cantidad','precio','producto','producto_id', 'saldo');
 
-            $this->cargando();
         }else{
-            $this->dispatch('alerta', name:'¡NO SUFICIENTES, revise cantidad!');
-            $this->reset('cantidad','precio','producto','producto_id', 'saldo');
+
+            DB::table('apoyo_recibo')->insert([
+                'tipo'=>'inventario',
+                'id_creador'=>Auth::user()->id,
+                'id_concepto'=>$this->conceptopago->id,
+                'concepto'=>"Entrada de Inventario",
+                'valor'=>$this->precio,
+                'cantidad'=>$this->cantidad,
+                'subtotal'=>$valor,
+                'entregado'=>false,
+                'id_producto'=>$this->producto->id,
+                'producto'=>$this->producto->name,
+                'id_almacen'=>$this->almacen->id,
+                'almacen'=>$this->almacen->name,
+                'id_ultimoreg'=>$this->id_ultimo,
+                'saldo'=>$this->saldo,
+            ]);
+
+            $this->dispatch('alerta', name:'¡NO SUFICIENTES, PENDIENTE POR ENTREGA!');
+
         }
+
+        $this->reset('cantidad','precio','producto','producto_id', 'saldo');
+        $this->cargando();
 
 
     }
@@ -253,20 +279,62 @@ class Salida extends Component
                                         ->select('id','saldo')
                                         ->first();
 
-                $saldoFin=$evaluapoyo->saldo-$value->cantidad;
+                if($evaluapoyo){
+                    $this->saldoFin=$evaluapoyo->saldo-$value->cantidad;
+                    if($this->saldoFin>=0){
 
-                if($saldoFin>=0){
+                        $this->crtSaldo=1;
+
+                    }else if($this->saldoFin<0){
+
+                        $this->crtSaldo=0;
+                        $this->saldoFin=$evaluapoyo->saldo;
+                    }
+
+                }else{
+                    $this->saldoFin=0;
+                    $this->crtSaldo=0;
+                }
+
+
+
+                if($this->crtSaldo===1){
                     $inventa = Inventario::create([
                                             'tipo'=>0,
                                             'fecha_movimiento'=>now(),
                                             'cantidad'=>$value->cantidad,
-                                            'saldo'=>$saldoFin,
+                                            'saldo'=>$this->saldoFin,
                                             'precio'=>$value->valor,
                                             'descripcion'=>$this->descripcion,
                                             'almacen_id'=>$value->id_almacen,
                                             'producto_id'=>$value->id_producto,
-                                            'user_id'=>Auth::user()->id
+                                            'user_id'=>Auth::user()->id,
+                                            'compra_id'=>$this->alumno_id,
+                                            'entregado'=>true
                                         ]);
+
+                    $con=Control::where('estudiante_id', $this->alumno_id)
+                            ->where('status', true)
+                            ->get();
+
+
+
+                    if($con){
+
+                        foreach ($con as $value) {
+
+                            $observa=now().", Overol (C) --- ".$value->observaciones;
+
+                            Control::whereId($value->id)
+                                    ->update([
+                                        'overol'=>'si',
+                                        'compra'=>now(),
+                                        'entrega'=>now(),
+                                        'observaciones'=>$observa
+                                    ]);
+                        }
+                    }
+
 
                     $evaluapoyo->update([
                         'status'=>false
@@ -280,15 +348,49 @@ class Salida extends Component
 
 
                 }else{
+
+                    $inventa = Inventario::create([
+                        'tipo'=>0,
+                        'fecha_movimiento'=>now(),
+                        'cantidad'=>$value->cantidad,
+                        'saldo'=>$this->saldoFin,
+                        'precio'=>$value->valor,
+                        'descripcion'=>$this->descripcion,
+                        'almacen_id'=>$value->id_almacen,
+                        'producto_id'=>$value->id_producto,
+                        'user_id'=>Auth::user()->id,
+                        'compra_id'=>$this->alumno_id,
+                        'entregado'=>false,
+                        'status'=>false,
+                    ]);
+
+                    $con=Control::where('estudiante_id', $this->alumno_id)
+                            ->where('status', true)
+                            ->get();
+
+                    if($con){
+                        foreach ($con as $value) {
+                            $observa=now().", Overol (P) --- ".$value->observaciones;
+
+                            Control::whereId($value->id)
+                                    ->update([
+                                        'overol'=>'pendiente',
+                                        'compra'=>now(),
+                                        'observaciones'=>$observa
+                                    ]);
+                        }
+                    }
+
                     DB::table('apoyo_recibo')
                         ->whereId($value->id)
                         ->update([
+                                'entregado'=>false,
                                 'status'=>false
                             ]);
 
                     $this->control=$this->control+1;
-                    $costo=$value->cantidad*$value->valor;
-                    $this->Total=$this->Total-$costo;
+                    /* $costo=$value->cantidad*$value->valor;
+                    $this->Total=$this->Total-$costo; */
                 }
 
             }
@@ -416,7 +518,6 @@ class Salida extends Component
         $this->dispatch('borrarMov');
         $this->dispatch('created');
 
-        $ruta='/impresiones/imprecibo?r='.$this->recibo->id;
         $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$this->recibo->id;
 
         $this->redirect($ruta);
