@@ -312,8 +312,21 @@ class Salida extends Component
             $corregido=strtolower($this->descripcion);
             $comentarios=now()." ".$this->alumno->name." realizo pago por ".number_format($this->Total, 0, ',', '.').". --- ".$corregido;
 
+            $ultimo=ReciboPago::where('origen',false)
+                                ->max('numero_recibo');
+
+
+
+            if($ultimo){
+                $recibo=$ultimo+1;
+            }else{
+                $recibo=1;
+            }
+
             //Crear recibo
             $this->recibo= ReciboPago::create([
+                'numero_recibo'=>$recibo,
+                'origen'=>false,
                 'fecha'=>now(),
                 'valor_total'=>$this->Total,
                 'medio'=>$this->medio,
@@ -374,7 +387,7 @@ class Salida extends Component
                                     ->get();
             }
             // Notificación
-            $this->dispatch('alerta', name:'Se ha cargado correctamente el movimiento de inventario y generado el recibo N°: '.$this->recibo->id);
+            $this->dispatch('alerta', name:'Se ha cargado correctamente el movimiento de inventario y generado el recibo N°: '.$this->recibo->numero_recibo);
             $this->resetFields();
             $this->fin=!$this->fin;
             $this->dispatch('mostodo');

@@ -77,6 +77,19 @@ class Inventarios extends Component
         $this->is_editing = !$this->is_editing;
     }
 
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_modify',
+                        'is_creating',
+                        'is_editing',
+                        'is_deleting',
+                    );
+    }
+
     // Mostrar Regimen de Salud
     public function show($esta, $act){
 

@@ -1,6 +1,6 @@
 <div>
     @push('title')
-        Recibo N°: {{$recibo}}
+        Recibo N°: {{$obtener->numero_recibo}}
     @endpush
     <div>
         <div class="relative overflow-x-auto bg-slate-200 shadow-sm shadow-teal-200 m-1">
@@ -25,7 +25,7 @@
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             <dd class="text-gray-500 dark:text-gray-400">Recibo N°:</dd>
-                            <dt class="mb-2 text-xl font-extrabold">{{number_format($recibo, 0, '.', '.')}}</dt>
+                            <dt class="mb-2 text-xl font-extrabold">{{number_format($obtener->numero_recibo, 0, '.', '.')}}</dt>
                         </th>
                     </tr>
                     <tr>
@@ -133,7 +133,7 @@
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             <dd class="text-gray-500 dark:text-gray-400">Recibo N°:</dd>
-                            <dt class="mb-2 text-xl font-extrabold">{{number_format($recibo, 0, '.', '.')}}</dt>
+                            <dt class="mb-2 text-xl font-extrabold">{{number_format($obtener->numero_recibo, 0, '.', '.')}}</dt>
                         </th>
                     </tr>
                     <tr>

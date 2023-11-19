@@ -235,8 +235,20 @@ class RecibosPagoCrear extends Component
             $this->Total=$this->Total+$this->recargoValor;
         }
 
+        $ultimo=ReciboPago::where('origen', true)
+                                ->max('numero_recibo');
+
+
+        if($ultimo){
+            $recibo=$ultimo+1;
+        }else{
+            $recibo=1;
+        }
+
         //Crear registro
         $recibo= ReciboPago::create([
+                                'numero_recibo'=>$recibo,
+                                'origen'=>true,
                                 'fecha'=>$this->fecha_pago,
                                 'valor_total'=>$this->Total,
                                 'medio'=>$this->medio,

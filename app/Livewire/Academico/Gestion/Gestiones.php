@@ -22,6 +22,7 @@ class Gestiones extends Component
     public $is_deleting = false;
     public $is_grupos=false;
     public $is_change=false;
+    public $is_inventario=false;
 
     public $ruta=2;
 
@@ -74,7 +75,8 @@ class Gestiones extends Component
                         'is_editing',
                         'is_deleting',
                         'is_change',
-                        'is_grupos'
+                        'is_grupos',
+                        'is_inventario'
                     );
     }
 
@@ -85,6 +87,15 @@ class Gestiones extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_creating = !$this->is_creating;
+    }
+
+    //Activar evento
+    #[On('inventario')]
+    //Mostrar formulario de creación
+    public function updatedIsInventario()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_inventario = !$this->is_inventario;
     }
 
     //Activar evento

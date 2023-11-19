@@ -56,8 +56,8 @@
                             <i class="fa-solid fa-file-excel"></i> Descargar
                         </a>
                     @endcan
-                    @can('ac_estudianteCrear')
-                        <a href="" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-white via-white to-white hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-white dark:focus:ring-white font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                    @can('in_inventarioCrear')
+                        <a href="" wire:click.prevent="$dispatch('inventario')" class="w-auto text-black bg-gradient-to-r from-white via-white to-white hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-white dark:focus:ring-white font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
                             <i class="fa-solid fa-check"></i>
                         </a>
                     @endcan
@@ -265,6 +265,10 @@
 
     @if ($is_change)
         <livewire:configuracion.user.users-create :clase="1" :perf="0" :ruta="$ruta"/>
+    @endif
+
+    @if ($is_inventario)
+        <livewire:inventario.inventario.inventarios-create />
     @endif
 
     @push('js')

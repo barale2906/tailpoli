@@ -209,7 +209,7 @@ class InventariosCrear extends Component
 
                 //refresh
                 $this->dispatch('refresh');
-                $this->dispatch('created');
+                $this->dispatch('cancelando');
             }
         }
 
