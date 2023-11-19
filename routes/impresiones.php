@@ -57,3 +57,7 @@ Route::get('/impgastocertifinal', function () {
 Route::get('/impformuPractica', function () {
     return view('impresiones.impformuPractica');
 })->name('impformuPractica');
+
+Route::get('/impRemision', function () {
+    return view('impresiones.impRemision');
+})->name('impRemision');

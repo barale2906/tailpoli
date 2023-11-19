@@ -5,6 +5,7 @@ namespace App\Livewire\Inventario\Inventario;
 use App\Models\Academico\Control;
 use App\Models\Inventario\Inventario;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -137,20 +138,14 @@ class Pendiente extends Component
                                     ->first();
 
             if($evaluapoyo){
+
                 $this->saldoFin=$evaluapoyo->saldo-$value['cantidad'];
+
                 if($this->saldoFin>=0){
 
                     $this->crtSaldo=1;
 
-                }else if($this->saldoFin<0){
-
-                    $this->crtSaldo=0;
-                    $this->saldoFin=$evaluapoyo->saldo;
                 }
-
-            }else{
-                $this->saldoFin=0;
-                $this->crtSaldo=0;
             }
 
 
@@ -211,11 +206,14 @@ class Pendiente extends Component
 
         }
 
+        $hoy=Carbon::now();
+        $hoy->format('Y-m-d');
+
         $this->dispatch('alerta', name:'Se registro la entrega correctamente');
 
-        /* $ruta='/impresiones/impremision?rut='.$this->ruta.'&r='.$this->alumno_id;
+        $ruta='/impresiones/impRemision?rut='.$this->ruta.'&r='.$this->alumno_id.'&fecha='.$hoy;
 
-        $this->redirect($ruta); */
+        $this->redirect($ruta);
     }
 
 
