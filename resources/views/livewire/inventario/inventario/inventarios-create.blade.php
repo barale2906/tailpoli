@@ -57,7 +57,7 @@
             <livewire:inventario.inventario.entrada :almacen_id="$almacen_id" />
         @endif
         @if ($tipo==="0")
-            <livewire:inventario.inventario.salida :almacen_id="$almacen_id" :sede_id="$sede_id"/>
+            <livewire:inventario.inventario.salida :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
         @endif
     @endif
 </div>

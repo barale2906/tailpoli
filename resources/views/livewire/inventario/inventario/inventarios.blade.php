@@ -210,7 +210,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:inventario.inventario.inventarios-create />
+        <livewire:inventario.inventario.inventarios-create :ruta="3" />
     @endif
 
     @if ($is_editing)

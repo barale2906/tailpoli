@@ -21,6 +21,7 @@ class Salida extends Component
     public $precio;
     public $conceptopago;
     public $sede_id;
+    public $ruta;
 
     public $descripcion;
     public $medio;
@@ -54,7 +55,7 @@ class Salida extends Component
     public $recargo_id;
     public $recargoValor=0;
 
-    public function mount($almacen_id=null, $sede_id=null){
+    public function mount($almacen_id=null, $sede_id=null, $ruta=null){
         $id=intval($almacen_id);
         $this->almacen=Almacen::find($id);
 
@@ -62,6 +63,8 @@ class Salida extends Component
         $this->sede_id=$ed;
         $idsector=Sede::whereId($ed)->select('id','sector_id')->first();
         $state=$idsector->sector_id;
+
+        $this->ruta=$ruta;
 
         $this->listaprecios($state);
 
@@ -392,7 +395,7 @@ class Salida extends Component
             $this->fin=!$this->fin;
             $this->dispatch('mostodo');
 
-            $ruta='/impresiones/imprecibo?r='.$this->recibo->id;
+            $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$this->recibo->id;
 
             $this->redirect($ruta);
 
@@ -414,6 +417,7 @@ class Salida extends Component
         $this->dispatch('created');
 
         $ruta='/impresiones/imprecibo?r='.$this->recibo->id;
+        $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$this->recibo->id;
 
         $this->redirect($ruta);
     }

@@ -16,9 +16,11 @@ class InventariosCreate extends Component
     public $tipo;
     public $crtAlma=true;
     public $todo=true;
+    public $ruta;
 
-    public function mount(){
+    public function mount($ruta=null){
         $this->borrar();
+        $this->ruta=$ruta;
     }
 
     #[On('borrarMov')]

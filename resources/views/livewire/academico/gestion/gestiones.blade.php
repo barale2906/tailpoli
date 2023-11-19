@@ -268,7 +268,7 @@
     @endif
 
     @if ($is_inventario)
-        <livewire:inventario.inventario.inventarios-create />
+        <livewire:inventario.inventario.inventarios-create :ruta="$ruta"/>
     @endif
 
     @push('js')
