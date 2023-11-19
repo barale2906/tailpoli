@@ -23,6 +23,7 @@ class Gestiones extends Component
     public $is_grupos=false;
     public $is_change=false;
     public $is_inventario=false;
+    public $is_observaciones=false;
 
     public $ruta=2;
 
@@ -76,7 +77,8 @@ class Gestiones extends Component
                         'is_deleting',
                         'is_change',
                         'is_grupos',
-                        'is_inventario'
+                        'is_inventario',
+                        'is_observaciones'
                     );
     }
 
@@ -115,7 +117,7 @@ class Gestiones extends Component
 
         switch ($act) {
             case 0:
-                $this->is_editing=!$this->is_editing;
+                $this->is_observaciones=!$this->is_observaciones;
                 break;
 
             case 1:

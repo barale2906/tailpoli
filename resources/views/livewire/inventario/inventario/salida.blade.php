@@ -253,10 +253,10 @@
                     <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                         <option >Elija...</option>
                         <option value="efectivo">Efectivo</option>
-                        <option value="PSE">PSE</option>
-                        <option value="transferencia">Transferencia</option>
+                        {{-- <option value="PSE">PSE</option>
+                        <option value="transferencia">Transferencia</option> --}}
                         <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
-                        <option value="cheque">Cheque</option>
+                        {{-- <option value="cheque">Cheque</option> --}}
                     </select>
                     @error('medio')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">

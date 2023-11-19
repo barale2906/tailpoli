@@ -70,9 +70,6 @@
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th>
-
-                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('id')">
                             ID
                             @if ($ordena != 'id')
@@ -173,13 +170,10 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-
                                 @can('ac_gestionCrear')
                                     <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
-                                        <a href="#" wire:click.prevent="show({{$controle}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
-                                            <i class="fa-solid fa-marker"></i> - {{$controle->id}}
+                                        <a href="#" wire:click.prevent="show({{$controle->id}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                            <i class="fa-solid fa-marker"></i>
                                         </a>
                                     </span>
                                 @endcan
@@ -269,6 +263,10 @@
 
     @if ($is_inventario)
         <livewire:inventario.inventario.inventarios-create :ruta="$ruta"/>
+    @endif
+
+    @if ($is_observaciones)
+        <livewire:academico.gestion.observaciones :elegido="$elegido"/>
     @endif
 
     @push('js')
