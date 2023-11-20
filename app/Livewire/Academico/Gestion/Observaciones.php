@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Gestion;
 
 use App\Models\Academico\Control;
+use App\Models\Financiera\Cartera;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -10,10 +11,12 @@ class Observaciones extends Component
 {
     public $elegido;
     public $comentarios;
+    public $fecha;
 
     public function mount($elegido=null){
 
         $this->elegido=Control::find($elegido);
+        $this->fecha=now();
 
     }
 
@@ -32,8 +35,16 @@ class Observaciones extends Component
         $this->dispatch('cancelando');
     }
 
+    private function cartera(){
+        return Cartera::where('responsable_id', $this->elegido->estudiante_id)
+                        ->where('status', true)
+                        ->get();
+    }
+
     public function render()
     {
-        return view('livewire.academico.gestion.observaciones');
+        return view('livewire.academico.gestion.observaciones',[
+            'cartera'=>$this->cartera(),
+        ]);
     }
 }

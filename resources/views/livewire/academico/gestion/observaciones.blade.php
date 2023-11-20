@@ -32,4 +32,59 @@
             </div>
         </div>
     </div>
+    <h1 class="text-center text-lg font-semibold rounded-lg bg-cyan-300 uppercase mt-4">estado de cartera</h1>
+    <div class="relative overflow-x-auto m-1 text-center ring ring-black mt-6 mb-6">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase font-extrabold bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center text-xs">
+                        concepto
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center text-xs">
+                        fecha de pago
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center text-xs">
+                        valor
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center text-xs">
+                        Días de retraso
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center text-xs">
+                        Saldo
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($cartera as $item)
+                    <tr class="bg-white dark:bg-gray-800">
+                        <th scope="row" class="px-3 py-1 text-justify text-gray-900 text-xs  dark:text-white capitalize">
+                            {{$item->concepto}}
+                        </th>
+                        <th scope="row" class="px-3 py-1 text-center text-gray-900 text-xs  dark:text-white capitalize">
+                            {{$item->fecha_pago}}
+                        </th>
+                        <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
+                            $ {{number_format($item->valor, 0, '.', '.')}}
+                        </th>
+                        <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
+                            @if ($item->fecha_pago < $fecha)
+                                @php
+                                    $fecha1 = date_create($item->fecha_pago);
+                                    $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                @endphp
+                                {{$dias}} días
+                            @endif
+                        </th>
+                        <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
+                            $ {{number_format($item->saldo, 0, '.', '.')}}
+                        </th>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <h1 class="text-lg text-justify">
+            A la fecha del {{$fecha}}, su deuda es de: <strong>$ {{number_format($cartera->sum('saldo')   , 0, '.', '.')}}</strong>
+        </h1>
+    </div>
 </div>
