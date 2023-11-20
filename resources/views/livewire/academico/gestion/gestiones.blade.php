@@ -205,7 +205,7 @@
                                             <i class="fa-solid fa-magnifying-glass"></i> Notas
                                         </a>
 
-                                        <a href="" wire:click.prevent="asistencia({{$item->id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                        <a href="" wire:click.prevent="asistencia({{$item->id}}, {{$controle->estudiante_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
                                             <i class="fa-regular fa-calendar-days"></i> Asistencia
                                         </a>
                                     </div>
@@ -285,7 +285,8 @@
     @endif
 
     @if ($is_asistencias)
-        <livewire:academico.asistencia.asistencias :elegido="$elegido"/>
+        {{-- <livewire:academico.asistencia.individual :elegido="$elegido" :estudiante_id="$estudiante_id" /> --}}
+        <livewire:academico.asistencia.asistencias :elegido="$elegido" />
     @endif
 
     @push('js')

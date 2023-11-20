@@ -173,11 +173,11 @@ class Gestiones extends Component
         $this->show($notas, 2);
     }
 
-    public function asistencia($item){
+    public function asistencia($item, $id){
 
         $notas=Nota::where('grupo_id', $item)->first();
 
-        $this->show($notas, 1);
+        $this->show($notas, 1, $id);
     }
 
     public function exportar(){
