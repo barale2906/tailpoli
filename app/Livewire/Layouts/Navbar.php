@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class Navbar extends Component
 {
+    protected $listeners = ['refresh' => '$refresh'];
+
     private function menus(){
         return Menu::where('status',true)
                     ->get();

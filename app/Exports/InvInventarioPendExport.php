@@ -15,40 +15,19 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class InvInventarioExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
-{
-    use Exportable;
+class InvInventarioPendExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
+{use Exportable;
 
     private $buscamin;
-    private $fileName = "Inventarios.xlsx";
+    private $fileName = "Inventario_pendiente.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
-
-    public function __construct($buscamin)
-    {
-        $this->buscamin=$buscamin;
-    }
 
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Inventario::query()
-                            ->with(['producto', 'almacen', 'user'])
-                            ->when($this->buscamin, function($query){
-                                return $query->where('status', true)
-                                        ->where('descripcion', 'like', "%".$this->buscamin."%")
-                                        ->orwhere('fecha_movimiento', 'like', "%".$this->buscamin."%")
-                                        ->orWhereHas('producto', function($q){
-                                            $q->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('almacen', function($qu){
-                                            $qu->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('user', function($que){
-                                            $que->where('name', 'like', "%".$this->buscamin."%");
-                                        });
-                            })
+        return Inventario::where('entregado', false)
                             ->orderBy('id', 'DESC')
                             ->get();
     }
@@ -62,13 +41,11 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
     {
         return [
             'Fecha Movimiento',
-            'Tipo',
             'Ciudad',
             'Sede',
             'Almacén',
             'Producto',
             'Cantidad',
-            'Saldo',
             'Precio',
             'Responsable del Movimiento',
             'Descripción'
@@ -79,13 +56,11 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
     {
         return [
             $inventario->fecha_movimiento,
-            $inventario->tipo ? "ENTRADA":"SALIDA",
             $inventario->almacen->sede->sector->name,
             $inventario->almacen->sede->name,
             $inventario->almacen->name,
             $inventario->producto->name,
             $inventario->cantidad,
-            $inventario->saldo,
             $inventario->precio,
             $inventario->user->name,
             $inventario->descripcion
@@ -114,7 +89,7 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
     public function styles(Worksheet $sheet)
     {
         $sheet->setTitle('Inventarios');
-        $sheet->setCellValue('C2', 'MOVIMIENTOS DE INVENTARIO A: '.now());
-        $sheet->mergeCells('C2:J2');
+        $sheet->setCellValue('C2', 'PENDIENTES A: '.now());
+        $sheet->mergeCells('C2:I2');
     }
 }

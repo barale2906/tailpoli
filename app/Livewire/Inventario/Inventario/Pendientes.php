@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Inventario\Inventario;
 
+use App\Exports\InvInventarioPendExport;
 use App\Models\Inventario\Inventario;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -34,14 +35,13 @@ class Pendientes extends Component
     }
 
     public function exportar(){
-        return new InvInventarioExport();
+        return new InvInventarioPendExport();
     }
 
     private function pendInventarios(){
 
         return Inventario::where('entregado', false)
                             ->orderBy($this->ordena, $this->ordenado)
-                            ->orderBy('id', 'DESC')
                             ->paginate($this->pages);
     }
 
