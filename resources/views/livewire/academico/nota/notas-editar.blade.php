@@ -1,5 +1,6 @@
 <div>
     <livewire:academico.matricula.matriculas-grupo :elegido="$grupo" />
+    <h1 class="text-center text-lg bg-cyan-300 font-semibold uppercase rounded-lg">cargar notas</h1>
     <div class="grid sm:grid-cols-1 md:grid-cols-6 gap-4 m-2">
 
             @if ($cargar_nota)

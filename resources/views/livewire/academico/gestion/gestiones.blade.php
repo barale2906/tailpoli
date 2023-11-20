@@ -285,7 +285,7 @@
     @endif
 
     @if ($is_asistencias)
-        <livewire:academico.nota.notas-editar :elegido="$elegido"/>
+        <livewire:academico.asistencia.asistencias :elegido="$elegido"/>
     @endif
 
     @push('js')

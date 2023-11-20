@@ -134,7 +134,7 @@ class Gestiones extends Component
                 break;
 
             case 2:
-                $this->is_asistencias=!$this->is_asistencias;
+                $this->is_notas=!$this->is_notas;
                 break;
         }
     }
@@ -171,6 +171,13 @@ class Gestiones extends Component
         $notas=Nota::where('grupo_id', $item)->first();
 
         $this->show($notas, 2);
+    }
+
+    public function asistencia($item){
+
+        $notas=Nota::where('grupo_id', $item)->first();
+
+        $this->show($notas, 1);
     }
 
     public function exportar(){
