@@ -1,8 +1,8 @@
 <div>
-    <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
+    <div class="bg-blue-200 rounded-lg align-middle p-5 mb-2 text-center">
         <h1 class="text-xl uppercase mb-3">Productos Pendientes por entregar</h1>
         @can('in_export')
-            <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 mt-2 capitalize" >
+            <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-3 mt-2 capitalize" >
                 <i class="fa-solid fa-file-excel fa-beat"></i>
             </a>
         @endcan
