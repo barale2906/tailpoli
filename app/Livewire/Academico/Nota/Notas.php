@@ -79,6 +79,21 @@ class Notas extends Component
     }
 
     //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_modify',
+                        'is_creating',
+                        'is_editing',
+                        'is_deleting',
+                        'is_asistencia'
+                    );
+    }
+
+
+    //Activar evento
     #[On('Asistiendo')]
     //Mostrar formulario de creación
     public function updatedIsAsistencia()

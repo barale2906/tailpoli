@@ -24,6 +24,8 @@ class NotasEditar extends Component
     public $listado=true;
     public $estudiante;
 
+    public $grupo;
+
     public $notaenv;
     public $porcenv;
 
@@ -113,6 +115,7 @@ class NotasEditar extends Component
     public function mount($elegido = null){
         $this->id=$elegido['id'];
         $this->actual=Nota::whereId($elegido['id'])->first();
+        $this->grupo=$this->actual->grupo_id;
         $this->registroNotas();
         $this->formaencabezado();
     }

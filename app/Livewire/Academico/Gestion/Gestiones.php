@@ -3,6 +3,8 @@
 namespace App\Livewire\Academico\Gestion;
 
 use App\Models\Academico\Control;
+use App\Models\Academico\Grupo;
+use App\Models\Academico\Nota;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,6 +26,10 @@ class Gestiones extends Component
     public $is_change=false;
     public $is_inventario=false;
     public $is_observaciones=false;
+    public $is_asistencias=false;
+    public $is_notas=false;
+
+    public $estudiante_id;
 
     public $ruta=2;
 
@@ -78,7 +84,9 @@ class Gestiones extends Component
                         'is_change',
                         'is_grupos',
                         'is_inventario',
-                        'is_observaciones'
+                        'is_observaciones',
+                        'is_asistencias',
+                        'is_notas'
                     );
     }
 
@@ -110,10 +118,11 @@ class Gestiones extends Component
     }
 
     // Mostrar
-    public function show($esta, $act){
+    public function show($esta, $act, $est=null){
 
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
+        $this->estudiante_id=$est;
 
         switch ($act) {
             case 0:
@@ -121,17 +130,11 @@ class Gestiones extends Component
                 break;
 
             case 1:
-                $this->is_deleting=!$this->is_deleting;
+                $this->is_asistencias=!$this->is_asistencias;
                 break;
 
             case 2:
-                $this->is_modify = false;
-                $this->reset('is_editing', 'is_deleting','is_creating');
-                $this->is_grupos=true;
-                break;
-
-            case 3:
-                $this->is_change=!$this->is_change;
+                $this->is_asistencias=!$this->is_asistencias;
                 break;
         }
     }
@@ -161,6 +164,13 @@ class Gestiones extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_change = !$this->is_change;
+    }
+
+    public function notas($item){
+
+        $notas=Nota::where('grupo_id', $item)->first();
+
+        $this->show($notas, 2);
     }
 
     public function exportar(){

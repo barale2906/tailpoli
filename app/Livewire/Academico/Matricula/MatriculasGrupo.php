@@ -16,12 +16,14 @@ class MatriculasGrupo extends Component
     public $horarios;
     public $sede_id;
 
-    public function mount($elegido = null)
+    public function mount($elegido = null, $estudiante_id=null)
     {
-        $this->sede_id=$elegido['sede_id'];
-        $this->grupo=Grupo::find($elegido['id']);
-        $this->ciudad=Sede::find($elegido['sede_id']);
-        $this->modulo=Modulo::find($elegido['modulo_id']);
+        $this->grupo=Grupo::find($elegido);
+
+        $this->sede_id=$this->grupo->sede_id;
+
+        $this->ciudad=Sede::find($this->sede_id);
+        $this->modulo=Modulo::find($this->grupo->modulo_id);
 
         $this->cargaHorarios();
     }

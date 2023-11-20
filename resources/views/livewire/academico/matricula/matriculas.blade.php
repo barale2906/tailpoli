@@ -147,7 +147,7 @@
                                     {{$matricula->anula}} -por:  {{$matricula->anula_user}}
                                 @else
                                     @foreach ($matricula->grupos as $item)
-                                        <a href="" wire:click.prevent="show({{$item}},{{1}})" class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                        <a href="" wire:click.prevent="show({{$item->id}},{{1}})" class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                             <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
                                                 {{$item->name}}
                                             </h5>

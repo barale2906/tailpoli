@@ -38,7 +38,7 @@
         @enderror
 
         <div class="grid grid-cols-3 gap-4">
-            <div>
+            {{-- <div>
                 <div class="mb-6">
                     <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio</label>
                     <input type="date" id="start_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.blur="start_date">
@@ -59,7 +59,7 @@
                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                     </div>
                 @enderror
-            </div>
+            </div> --}}
             <div>
                 <div class="mb-6">
                     <label for="quantity_limit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Límite de Estudiantes</label>

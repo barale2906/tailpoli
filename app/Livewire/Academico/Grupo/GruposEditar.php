@@ -10,9 +10,9 @@ use Livewire\Component;
 
 class GruposEditar extends Component
 {
-    public $name = '';
+    public $name = '';/*
     public $start_date='';
-    public $finish_date='';
+    public $finish_date=''; */
     public $quantity_limit='';
     public $sede_id='';
     public $profesor_id='';
@@ -24,9 +24,9 @@ class GruposEditar extends Component
      * Reglas de validación
      */
     protected $rules = [
-        'name' => 'required|max:100',
+        'name' => 'required|max:100',/*
         'start_date'=>'required',
-        'finish_date'=>'required',
+        'finish_date'=>'required', */
         'quantity_limit'=>'required|integer',
         'sede_id'=>'required|integer',
         'modulo_id'=>'required|integer',
@@ -40,9 +40,9 @@ class GruposEditar extends Component
      */
     public function resetFields(){
         $this->reset(
-                    'name',
+                    'name',/*
                     'start_date',
-                    'finish_date',
+                    'finish_date', */
                     'quantity_limit',
                     'modulo_id',
                     'sede_id',
@@ -54,9 +54,9 @@ class GruposEditar extends Component
     public function mount($elegido = null)
     {
         $this->id=$elegido['id'];
-        $this->name=$elegido['name'];
+        $this->name=$elegido['name'];/*
         $this->start_date=$elegido['start_date'];
-        $this->finish_date=$elegido['finish_date'];
+        $this->finish_date=$elegido['finish_date']; */
         $this->quantity_limit=$elegido['quantity_limit'];
         $this->sede_id=$elegido['sede_id'];
         $this->modulo_id=$elegido['modulo_id'];
@@ -73,9 +73,9 @@ class GruposEditar extends Component
         //Actualizar registros
         if($this->start_date<$this->finish_date){
             Grupo::whereId($this->id)->update([
-                'name'=>strtolower($this->name),
+                'name'=>strtolower($this->name),/*
                 'start_date'        =>$this->start_date,
-                'finish_date'       =>$this->finish_date,
+                'finish_date'       =>$this->finish_date, */
                 'quantity_limit'    =>$this->quantity_limit,
                 'modulo_id'         =>$this->modulo_id,
                 'sede_id'           =>$this->sede_id,

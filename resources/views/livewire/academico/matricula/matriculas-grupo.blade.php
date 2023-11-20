@@ -33,6 +33,12 @@
             <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg capitalize">
                     <li><strong>horarios</strong></li>
             </ul>
+            <div class="sm:cols-1 md:col-span-3">
+                <p class="text text-justify text-lg">
+                    <strong>Descripción:</strong>
+                    {{$grupo->descripcion}}
+                </p>
+            </div>
             <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
             </a>

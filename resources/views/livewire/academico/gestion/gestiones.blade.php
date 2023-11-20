@@ -190,17 +190,28 @@
                             </th>
                             <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize pt-3 pb-3">
                                 @foreach ($controle->ciclo->grupos as $item)
-                                    <a href="" wire:click.prevent="show({{$item}},{{1}})" class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                                    <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                         <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
                                             {{$item->name}}
                                         </h5>
                                         <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
                                             Modulo: {{$item->modulo->name}}
                                         </p>
-                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
                                             Profesor: {{$item->profesor->name}}
                                         </p>
-                                    </a>
+                                        <a href="" wire:click.prevent="notas({{$item->id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-9 capitalize">
+                                            <i class="fa-solid fa-magnifying-glass"></i> Notas
+                                        </a>
+
+                                        <a href="" wire:click.prevent="asistencia({{$item->id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                            <i class="fa-regular fa-calendar-days"></i> Asistencia
+                                        </a>
+                                    </div>
+
+
+
                                 @endforeach
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -267,6 +278,14 @@
 
     @if ($is_observaciones)
         <livewire:academico.gestion.observaciones :elegido="$elegido"/>
+    @endif
+
+    @if ($is_notas)
+        <livewire:academico.nota.notas-editar :elegido="$elegido"/>
+    @endif
+
+    @if ($is_asistencias)
+        <livewire:academico.nota.notas-editar :elegido="$elegido"/>
     @endif
 
     @push('js')
