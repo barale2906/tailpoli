@@ -17,3 +17,7 @@ Route::get('/inventarios', function () {
 Route::get('/pagoConfig', function () {
     return view('inventario.pagoconfig.index');
 })->middleware('can:in_pagoconfig')->name('pagoConfig');
+
+Route::get('/pend', function () {
+    return view('inventario.inventarios.pend');
+})->middleware('can:in_inventarioCrear')->name('pend');

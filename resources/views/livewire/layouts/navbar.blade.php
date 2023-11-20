@@ -18,6 +18,14 @@
                 </div>
                 <div class="flex items-center">
 
+
+                    <a href="{{route('inventario.pend')}}" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                        <span class="bg-red-100 text-red-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                            <i class="fa-solid fa-truck-moving"></i>
+                            {{$pendInventarios}}
+                        </span>
+                    </a>
+
                     <!-- Settings Dropdown -->
                     <div class="ml-3 relative">
                         <x-dropdown align="right" width="48">
