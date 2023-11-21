@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        @if ($rol!=="Estudiante")
+        @if ($rol==="Superusuario")
             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
                 <div class="sm:grid-cols-1 md:col-span-2">
                     <h3 class="text-lg font-medium text-center">Sedes</h3>
@@ -170,30 +170,31 @@
             </div>
         @endif
 
-
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
-            <div class="sm:grid-cols-1 md:col-span-2">
-                <h3 class="text-lg font-medium text-center">Persona Multicultural</h3>
-            </div>
-            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-                @foreach ($registro as $item)
-                    <a href="" wire:click.prevent="selGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                        <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
-                    </a>
-                @endforeach
-            </div>
-            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-                @if (count($disponibles))
-                    @foreach ($disponibles as $item)
-                        <a href="" wire:click.prevent="elimGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                            <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item['name']}}
+        @can('ac_estudianteCrear')
+            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
+                <div class="sm:grid-cols-1 md:col-span-2">
+                    <h3 class="text-lg font-medium text-center">Persona Multicultural</h3>
+                </div>
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+                    @foreach ($registro as $item)
+                        <a href="" wire:click.prevent="selGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                            <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
                         </a>
                     @endforeach
-                @else
-                    <h3 class="text-md font-medium text-center col-span-3 capitalize">No pertenece a ningún grupo Multicultural</h3>
-                @endif
+                </div>
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+                    @if (count($disponibles))
+                        @foreach ($disponibles as $item)
+                            <a href="" wire:click.prevent="elimGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item['name']}}
+                            </a>
+                        @endforeach
+                    @else
+                        <h3 class="text-md font-medium text-center col-span-3 capitalize">No pertenece a ningún grupo Multicultural</h3>
+                    @endif
+                </div>
             </div>
-        </div>
+        @endcan
 
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
             <div class="sm:grid-cols-1 md:col-span-5">
@@ -300,6 +301,7 @@
                     <option value="Sin Información">Sin Información</option>
                 </select>
             </div>
+            {{--
             <div class="mb-6">
                 <label for="talla" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Talla</label>
                 <input type="text" id="talla" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="talla">
@@ -307,7 +309,7 @@
             <div class="mb-6">
                 <label for="calzado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calzado</label>
                 <input type="text" id="calzado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="calzado">
-            </div>
+            </div> --}}
         </div>
 
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">

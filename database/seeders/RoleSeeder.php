@@ -34,36 +34,36 @@ class RoleSeeder extends Seeder
         Permission::create([
                             'name'=>'Academico',
                             'descripcion'=>'Ingreso al menú Acádemico'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
         Permission::create([
                             'name'=>'ac_cursos',
                             'descripcion'=>'ver cursos'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
         Permission::create([
                             'name'=>'ac_cursoCrear',
                             'descripcion'=>'crear cursos'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'ac_cursoEditar',
                             'descripcion'=>'editar cursos'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'ac_cursoInactivar',
                             'descripcion'=>'inactivar cursos'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
         Permission::create([
                             'name'=>'ac_estudiantes',
-                            'descripcion'=>'ver cursos'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            'descripcion'=>'ver listado de estudiantes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
         Permission::create([
                             'name'=>'ac_estudianteCrear',
                             'descripcion'=>'crear estudiantes'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
         Permission::create([
                             'name'=>'ac_estudianteEditar',
                             'descripcion'=>'editar estudiantes'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
         Permission::create([
                             'name'=>'ac_estudianteInactivar',
