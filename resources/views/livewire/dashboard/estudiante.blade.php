@@ -68,6 +68,9 @@
                                     <a href="" wire:click.prevent="notas({{$iteme->id}},{{$iteme->profesor_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
                                         <i class="fa-solid fa-magnifying-glass"></i> Notas
                                     </a>
+                                    <a href="" wire:click.prevent="asistencia({{$item->id}}, {{$controle->estudiante_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                        <i class="fa-regular fa-calendar-days"></i> Asistencia
+                                    </a>
                                 </div>
 
                             @endforeach

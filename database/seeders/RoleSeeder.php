@@ -34,7 +34,7 @@ class RoleSeeder extends Seeder
         Permission::create([
                             'name'=>'Academico',
                             'descripcion'=>'Ingreso al menú Acádemico'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor]);
         Permission::create([
                             'name'=>'ac_cursos',
                             'descripcion'=>'ver cursos'
