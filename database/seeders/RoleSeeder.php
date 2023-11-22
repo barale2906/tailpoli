@@ -187,7 +187,7 @@ class RoleSeeder extends Seeder
         Permission::create([
                             'name'=>'ac_asistenciaCrear',
                             'descripcion'=>'crear asistencias'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor,$Estudiante]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor]);
         Permission::create([
                             'name'=>'ac_asistenciaEditar',
                             'descripcion'=>'editar asistencias'

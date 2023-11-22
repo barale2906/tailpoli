@@ -1,6 +1,12 @@
 <div>
+    <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-6 capitalize">
+        <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+    </a>
     <div class="relative overflow-x-auto mt-5">
         @if ($notas->count()>0)
+            <h1 class="text-center text-lg mt-3">
+                A continuación se presentan las notas para el grupo: <span class="uppercase font-extrabold">{{$actual->grupo->name}}</span>
+            </h1>
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     @can('ac_notaEditar')

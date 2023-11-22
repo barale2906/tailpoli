@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Academico\Asistencia;
 use App\Models\Academico\Control;
 use App\Models\Academico\Nota;
 use App\Models\Financiera\Cartera;
@@ -12,6 +13,7 @@ use Livewire\Component;
 class Estudiante extends Component
 {
     public $is_notas=false;
+    public $is_asistencia=false;
     public $is_modify=true;
     public $nota;
     public $fecha;
@@ -19,6 +21,7 @@ class Estudiante extends Component
 
     public function mount(){
         $this->fecha=now();
+        $this->alumno_id=Auth::user()->id;
     }
 
     //Activar evento
@@ -26,7 +29,7 @@ class Estudiante extends Component
     //Mostrar formulario de creación
     public function updatedIsCreating()
     {
-        $this->reset('is_notas', 'is_modify');
+        $this->reset('is_notas', 'is_modify', 'is_asistencia');
     }
 
     public function show($esta, $act){
@@ -39,12 +42,14 @@ class Estudiante extends Component
             case 0:
                 $this->is_notas=!$this->is_notas;
                 break;
+
+            case 1:
+                $this->is_asistencia=!$this->is_asistencia;
+                break;
         }
     }
 
     public function notas($id,$profesor){
-
-        $this->alumno_id=Auth::user()->id;
 
         $notas=Nota::where('grupo_id', $id)
                     ->where('profesor_id', $profesor)
@@ -57,9 +62,20 @@ class Estudiante extends Component
         }else{
             $this->dispatch('alerta', name:'No se han sacado notas para este grupo');
         }
+    }
 
+    public function asistencia($id, $profesor){
 
+        $asistencia=Asistencia::where('grupo_id', $id)
+                                ->where('profesor_id', $profesor)
+                                ->select('id')
+                                ->first();
 
+        if($asistencia){
+            $this->show($asistencia->id, 1);
+        } else {
+            $this->dispatch('alerta', name:'No se ha registrado asistencia para este grupo');
+        }
     }
 
     private function control(){

@@ -4,6 +4,7 @@
         <strong class="font-extrabold uppercase">
             {{config('instituto.nombre_empresa')}}
         </strong>.
+
     </h1>
 
     @if ($is_modify)
@@ -57,10 +58,10 @@
 
                                 <div class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                     <h5 class="text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
-                                        {{$iteme->name}}
+                                        {{$iteme->modulo->name}}
                                     </h5>
                                     <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
-                                        Modulo: {{$iteme->modulo->name}}
+                                        Grupo: {{$iteme->name}}
                                     </p>
                                     <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
                                         Profesor: {{$iteme->profesor->name}}
@@ -68,7 +69,7 @@
                                     <a href="" wire:click.prevent="notas({{$iteme->id}},{{$iteme->profesor_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
                                         <i class="fa-solid fa-magnifying-glass"></i> Notas
                                     </a>
-                                    <a href="" wire:click.prevent="asistencia({{$item->id}}, {{$controle->estudiante_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                    <a href="" wire:click.prevent="asistencia({{$iteme->id}},{{$iteme->profesor_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
                                         <i class="fa-regular fa-calendar-days"></i> Asistencia
                                     </a>
                                 </div>
@@ -134,8 +135,12 @@
 
     @if ($is_notas)
         <livewire:academico.nota.individual :nota="$nota" :alumno_id="$alumno_id"/>
-
     @endif
+
+    @if ($is_asistencia)
+        <livewire:academico.asistencia.individual :elegido="$nota" :alumno_id="$alumno_id" :crt="true"/>
+    @endif
+
     @push('js')
         <script>
             document.addEventListener('livewire:initialized', function (){
