@@ -233,22 +233,67 @@
                 <label for="fijo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Fijo</label>
                 <input type="text" id="fijo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="fijo">
             </div>
-            <div class="mb-6 sm:grid-cols-1 md:col-span-3">
-                <label for="contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persona de contacto</label>
-                <input type="text" id="contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="contacto">
-            </div>
-            <div class="mb-6">
-                <label for="documento_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Documento Contacto</label>
-                <input type="text" id="documento_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="documento_contacto">
-            </div>
-            <div class="mb-6">
-                <label for="parentesco_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parentesco</label>
-                <input type="text" id="parentesco_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="parentesco_contacto">
-            </div>
-            <div class="mb-6">
-                <label for="telefono_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Contacto</label>
-                <input type="text" id="telefono_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="telefono_contacto">
-            </div>
+
+            @if ($tipo_documento === "tarjeta de identidad" || $tipo_documento ==="registro civil")
+
+                <div class="mb-6 sm:grid-cols-1 md:col-span-3">
+                    <label for="contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persona de contacto</label>
+                    <input type="text" id="contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="contacto" required>
+                    @error('contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="documento_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Documento Contacto</label>
+                    <input type="text" id="documento_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="documento_contacto" required>
+                    @error('documento_contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="parentesco_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parentesco</label>
+                    <input type="text" id="parentesco_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="parentesco_contacto" required>
+                    @error('parentesco_contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="telefono_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Contacto</label>
+                    <input type="text" id="telefono_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="telefono_contacto" required>
+                    @error('telefono_contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+
+            @else
+                <div class="mb-6 sm:grid-cols-1 md:col-span-3">
+                    <label for="contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persona de contacto</label>
+                    <input type="text" id="contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="contacto" >
+                </div>
+                <div class="mb-6">
+                    <label for="documento_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Documento Contacto</label>
+                    <input type="text" id="documento_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="documento_contacto">
+                </div>
+                <div class="mb-6">
+                    <label for="parentesco_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parentesco</label>
+                    <input type="text" id="parentesco_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="parentesco_contacto">
+                </div>
+                <div class="mb-6">
+                    <label for="telefono_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Contacto</label>
+                    <input type="text" id="telefono_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="telefono_contacto">
+                </div>
+
+            @endif
+
+
         </div>
 
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">

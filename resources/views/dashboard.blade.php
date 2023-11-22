@@ -3,7 +3,10 @@
         Tablero de Control
     @endpush
 
-    <h1>Entrando acá se pondran las imagenes de inicio y tareas pendientes</h1>
+    @hasrole('Estudiante')
+        <livewire:dashboard.estudiante />
+    @endhasrole
+
 </x-admin-layout>
 
 {{-- <x-app-layout>

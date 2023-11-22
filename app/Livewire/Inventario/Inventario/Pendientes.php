@@ -11,7 +11,7 @@ class Pendientes extends Component
 {
     use WithPagination;
 
-    public $ordena='status';
+    public $ordena='fecha_movimiento';
     public $ordenado='DESC';
     public $pages = 10;
 
@@ -41,6 +41,7 @@ class Pendientes extends Component
     private function pendInventarios(){
 
         return Inventario::where('entregado', false)
+                            ->join('users', 'inventarios.compra_id', '=', 'users.id')
                             ->orderBy($this->ordena, $this->ordenado)
                             ->paginate($this->pages);
     }
