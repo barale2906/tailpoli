@@ -65,7 +65,7 @@
                                     <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
                                         Profesor: {{$iteme->profesor->name}}
                                     </p>
-                                    <a href="" wire:click.prevent="show({{$iteme->id}},0)" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                    <a href="" wire:click.prevent="notas({{$iteme->id}},{{$iteme->profesor_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
                                         <i class="fa-solid fa-magnifying-glass"></i> Notas
                                     </a>
                                 </div>
@@ -130,7 +130,25 @@
     @endif
 
     @if ($is_notas)
-mmmmmmmmmmmmm
+        <livewire:academico.nota.individual :nota="$nota" :alumno_id="$alumno_id"/>
+
     @endif
+    @push('js')
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('alerta', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: variable['name'],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+            });
+        </script>
+    @endpush
 
 </div>

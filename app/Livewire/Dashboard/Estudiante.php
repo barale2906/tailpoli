@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Academico\Control;
+use App\Models\Academico\Nota;
 use App\Models\Financiera\Cartera;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
@@ -12,8 +13,9 @@ class Estudiante extends Component
 {
     public $is_notas=false;
     public $is_modify=true;
-    public $grupo;
+    public $nota;
     public $fecha;
+    public $alumno_id;
 
     public function mount(){
         $this->fecha=now();
@@ -29,7 +31,7 @@ class Estudiante extends Component
 
     public function show($esta, $act){
 
-        $this->grupo=$esta;
+        $this->nota=$esta;
         $this->is_modify = !$this->is_modify;
 
 
@@ -38,6 +40,26 @@ class Estudiante extends Component
                 $this->is_notas=!$this->is_notas;
                 break;
         }
+    }
+
+    public function notas($id,$profesor){
+
+        $this->alumno_id=Auth::user()->id;
+
+        $notas=Nota::where('grupo_id', $id)
+                    ->where('profesor_id', $profesor)
+                    ->select('id')
+                    ->first();
+
+        if($notas){
+            $this->show($notas->id,0);
+
+        }else{
+            $this->dispatch('alerta', name:'No se han sacado notas para este grupo');
+        }
+
+
+
     }
 
     private function control(){
