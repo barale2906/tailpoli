@@ -43,18 +43,6 @@
                         <th scope="col" class="px-6 py-3">
 
                         </th>
-                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('id')">
-                            ID
-                            @if ($ordena != 'id')
-                                <i class="fas fa-sort"></i>
-                            @else
-                                @if ($ordenado=='ASC')
-                                    <i class="fas fa-sort-up"></i>
-                                @else
-                                    <i class="fas fa-sort-down"></i>
-                                @endif
-                            @endif
-                        </th>
                         <th scope="col" class="px-6 py-3">
                             Sede
                         </th>
@@ -155,10 +143,7 @@
                                     </a>
                                 @endcan
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$ciclo->id}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                                 {{$ciclo->sede->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -207,13 +192,22 @@
                                 @endswitch
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                @foreach ($ciclo->grupos as $item)
-                                    <button type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-cyan-700 rounded-lg hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-blue-800 capitalize">
-                                            {{$item->name}}
-                                        <span class="inline-flex items-center justify-center p-1 ms-2 text-xs font-semibold text-cyan-800 bg-cyan-200 rounded-full">
-                                            {{$item->inscritos}}
-                                        </span>
-                                    </button><br>
+                                @foreach ($ciclo->ciclogrupos as $item)
+
+                                    <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                        <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
+                                            {{$item->grupo->name}}
+                                        </h5>
+                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                            Modulo: {{$item->grupo->modulo->name}}
+                                        </p>
+                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
+                                            Profesor: {{$item->grupo->profesor->name}}
+                                        </p>
+                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
+                                            Inscritos: {{$item->inscritos}}
+                                        </p>
+                                    </div>
                                 @endforeach
                             </th>
                         </tr>

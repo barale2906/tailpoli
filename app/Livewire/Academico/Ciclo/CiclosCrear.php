@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Ciclo;
 
 use App\Models\Academico\Ciclo;
+use App\Models\Academico\Ciclogrupo;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Configuracion\Sede;
@@ -239,14 +240,13 @@ class CiclosCrear extends Component
                 ]);
 
                 foreach ($this->seleccionados as $value) {
-                    DB::table('ciclo_grupo')
-                        ->insert([
-                            'ciclo_id'       =>$ciclo->id,
-                            'grupo_id'       =>$value->id_concepto,
-                            'fecha_inicio'   =>$value->fecha_movimiento,
-                            'created_at'     =>now(),
-                            'updated_at'     =>now(),
-                        ]);
+
+                    Ciclogrupo::create([
+                        'ciclo_id'       =>$ciclo->id,
+                        'grupo_id'       =>$value->id_concepto,
+                        'fecha_inicio'   =>$value->fecha_movimiento,
+                    ]);
+
                 }
 
                 // Notificación

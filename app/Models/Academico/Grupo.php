@@ -32,22 +32,18 @@ class Grupo extends Model
     public function alumnos(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
-
-    }
-
-    /**
-     * Relación muchos a muchos.
-     * Grupos de este modulo
-     */
-    public function ciclos(): BelongsToMany
-    {
-        return $this->belongsToMany(Ciclo::class);
     }
 
     //Relación uno a muchos
     public function Notas(): HasMany
     {
         return $this->hasMany(Nota::class);
+    }
+
+    //Relación uno a muchos
+    public function Ciclogrupo(): HasMany
+    {
+        return $this->hasMany(Ciclogrupo::class);
     }
 
     //Relación uno a muchos

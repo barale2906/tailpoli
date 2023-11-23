@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ciclo_grupo', function (Blueprint $table) {
+        Schema::create('ciclogrupos', function (Blueprint $table) {
+            $table->comment('Crea ciclos de cursos');
             $table->id();
 
             $table->unsignedBigInteger('ciclo_id');
@@ -19,7 +20,9 @@ return new class extends Migration
 
             $table->unsignedBigInteger('grupo_id');
             $table->foreign('grupo_id')->references('id')->on('grupos');
-            $table->date('fecha_inicio')->comment('fecha en que inician las clases del modulo para este ciclo');
+
+            $table->date('fecha_inicio')->comment('Fecha inicio del modulo dentro del ciclo');
+            $table->integer('inscritos')->default(0)->comment('Cantidad de alumnos inscritos a este grupo - ciclo');
 
             $table->timestamps();
         });
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ciclo_grupo');
+        Schema::dropIfExists('ciclogrupos');
     }
 };

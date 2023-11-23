@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ciclo extends Model
@@ -16,14 +15,6 @@ class Ciclo extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    /**
-     * Relación muchos a muchos.
-     * Grupos de este modulo
-     */
-    public function grupos(): BelongsToMany
-    {
-        return $this->belongsToMany(Grupo::class);
-    }
 
     //Relacion uno a muchos inversa
     public function sede() : BelongsTo
@@ -47,5 +38,11 @@ class Ciclo extends Model
     public function control(): HasMany
     {
         return $this->hasMany(Control::class);
+    }
+
+    //Relación uno a muchos
+    public function ciclogrupos(): HasMany
+    {
+        return $this->hasMany(Ciclogrupo::class);
     }
 }
