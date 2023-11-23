@@ -61,6 +61,8 @@ class MatriculasCrear extends Component
 
     public $ruta=1;
 
+    public $is_comercial=false;
+
 
     public $buscar=null;
     public $buscaestudi='';
@@ -193,6 +195,14 @@ class MatriculasCrear extends Component
     //Limpiar variables
     public function limpiar(){
         $this->reset('buscar');
+    }
+
+    //Selecciona Comercial
+    public function updatedComercialId(){
+        $comer=intval($this->comercial_id);
+        if($comer===Auth::user()->id){
+            $this->is_comercial=!$this->is_comercial;
+        }
     }
 
     public function selAlumno($item){
