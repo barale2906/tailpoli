@@ -1,6 +1,6 @@
 <x-admin-layout>
     @push('title')
-        Ciclos
+        Programación
     @endpush
 
     <livewire:academico.ciclo.ciclos />

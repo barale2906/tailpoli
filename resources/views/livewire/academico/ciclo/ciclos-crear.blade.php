@@ -36,7 +36,7 @@
 
                 <div class="mb-6">
                     <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio debe ser posterior a: {{$fechaRegistro}}</label>
-                    <input type="date" id="start_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.live="inicia">
+                    <input type="date" id="inicia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.live="inicia">
                     @error('inicia')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
@@ -90,37 +90,56 @@
             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
                     <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
                         @foreach ($grupos as $item)
-                            <a href="" wire:click.prevent="selGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                            <a href="" wire:click.prevent="activFecha({{$item['id']}},{{$item['modulo']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                 <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
                             </a>
                         @endforeach
                     </div>
+                    @if ($is_date)
+                        <div class="mb-6">
+                            <label for="fechaModulo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio del Modulo</label>
+                            <input type="date" id="fechaModulo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fechaModulo">
 
-                @if (count($seleccionados)>0)
-                    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
-                        @foreach ($seleccionados as $item)
-                            <a href="" wire:click.prevent="elimGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item['name']}}
-                            </a>
-                        @endforeach
-                    </div>
-                @else
-                    <div>
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SI NO ELIGE MODULOS SE ENTENDERA QUE LOS INCLUYO TODOS</label>
-                    </div>
-                @endif
+                            @if ($fechaModulo)
+                                <a href="" wire:click.prevent="selGrupo" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-4 capitalize">
+                                    <i class="fa-solid fa-check-double"></i>
+                                </a>
+                            @endif
+                        </div>
+
+
+                    @else
+                        @if ($seleccionados)
+                            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
+                                @foreach ($seleccionados as $item)
+                                    <a href="" wire:click.prevent="elimGrupo({{$item->id}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                        <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item->tipo}} - {{$item->fecha_movimiento}}
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <div>
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    DEBE ELEGIR LOS {{$maximo}} MODULO(S) QUE FORMAN PARTE DEL CURSO.
+                                </label>
+                            </div>
+                        @endif
+                    @endif
+
             </div>
         @endif
         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
 
-            @if ($jornada>0 && count($seleccionados)>0)
-                <div>
-                    <button type="submit"
-                    class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
-                    >
-                        Nuevo Ciclo
-                    </button>
-                </div>
+            @if ($jornada>0 && $seleccionados)
+                @if ($seleccionados->count()>0)
+                    <div>
+                        <button type="submit"
+                        class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
+                        >
+                            Nuevo Ciclo
+                        </button>
+                    </div>
+                @endif
             @endif
 
             <div>

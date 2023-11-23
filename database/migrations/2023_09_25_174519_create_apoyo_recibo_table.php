@@ -24,6 +24,8 @@ return new class extends Migration
             $table->double('subtotal')->nullable()->comment('Total del registro');
             $table->boolean('entregado')->default(true)->comment('true entregado false pendiente');
 
+            $table->date('fecha_movimiento')->nullable()->comment('fecha en que se registra el movimiento');
+
 
             $table->integer('id_producto')->nullable()->comment('id del prducto registrado');
             $table->string('producto')->nullable()->comment('nombre del producto');

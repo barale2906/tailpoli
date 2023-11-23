@@ -7,6 +7,7 @@ use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Configuracion\Sede;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -16,7 +17,7 @@ class CiclosCrear extends Component
     public $curso_id;
     public $curso;
     public $grupos=[];
-    public $seleccionados=[];
+    public $seleccionados;
     public $name;
     public $inicia;
     public $finaliza;
@@ -28,8 +29,16 @@ class CiclosCrear extends Component
 
     public $fechaRegistro;
 
+    public $is_date=false;
+    public $fechaModulo;
+    public $grupoId;
+    public $moduloId;
+
     public function mount(){
         $this->fechaRegistro=Carbon::now()->subDays(3);
+        DB::table('apoyo_recibo')
+            ->where('id_creador', Auth::user()->id)
+            ->delete();
     }
 
 
@@ -57,7 +66,8 @@ class CiclosCrear extends Component
                         'profesor_id'   =>$value->profesor_id,
                         'profesor'      =>$value->profesor->name,
                         'inscritos'     =>$value->inscritos,
-                        'limit'         =>$value->quantity_limit
+                        'limit'         =>$value->quantity_limit,
+                        'modulo'        =>$value->modulo->id
                     ];
 
                     if(in_array($nuevo, $this->grupos)){
@@ -96,51 +106,83 @@ class CiclosCrear extends Component
         }
     }
 
-    public function selGrupo($id){
+    public function activFecha($id, $mod){
 
-        if(count($this->seleccionados) < $this->maximo){
+        $this->grupoId=$id;
+        $this->moduloId=$mod;
+        $this->is_date=!$this->is_date;
+    }
+
+    public function selGrupo(){
+
+        $esta=DB::table('apoyo_recibo')
+                ->where('id_cartera', $this->moduloId)
+                ->orwhere('fecha_movimiento', $this->fechaModulo)
+                ->count();
+
+        if($esta===0){
             foreach ($this->grupos as $grupo) {
-                if($grupo['id']===$id){
-                    $nuevo=[
+                if($grupo['id']===$this->grupoId){
+                    DB::table('apoyo_recibo')
+                    ->insert([
+                        'id_creador'        =>Auth::user()->id,
+                        'id_concepto'       =>$grupo['id'],
+                        'tipo'              =>$grupo['name'],
+                        'id_producto'       =>$grupo['profesor_id'],
+                        'producto'          =>$grupo['profesor'],
+                        'valor'             =>$grupo['inscritos'],
+                        'id_ultimoreg'      =>$grupo['limit'],
+                        'id_cartera'        =>$grupo['modulo'],
+                        'fecha_movimiento'  =>$this->fechaModulo,
+                    ]);
+                    /* $nuevo=[
                         'id'            =>$grupo['id'],
                         'name'          =>$grupo['name'],
                         'profesor_id'   =>$grupo['profesor_id'],
                         'profesor'      =>$grupo['profesor'],
                         'inscritos'     =>$grupo['inscritos'],
-                        'limit'         =>$grupo['limit']
+                        'limit'         =>$grupo['limit'],
+                        'fecha_Modulo'   =>$this->fechaModulo,
                     ];
 
                     if(in_array($nuevo, $this->seleccionados)){
 
                     }else{
                         array_push($this->seleccionados, $nuevo);
-                    }
+                    } */
                 }
             }
         }else{
-            $this->dispatch('alerta', name:'Recuerde que se registra un grupo por Modulo');
+            $this->dispatch('alerta', name:'modulo ya cargado o fecha ya usada');
         }
 
+        $this->reset('is_date', 'fechaModulo' , 'grupoId');
+        $this->ordenarrender();
+    }
 
+
+    public function ordenarrender(){
+
+        $this->seleccionados=DB::table('apoyo_recibo')
+                                ->where('id_creador', Auth::user()->id)
+                                ->orderBy('fecha_movimiento', 'ASC')
+                                ->get();
+
+
+
+        /* function ordenaModulos($fecha_1,$fecha_2){
+            return $fecha_1['fecha_modulo']-$fecha_2['fecha_modulo'];
+        }
+
+        usort($this->seleccionados, 'ordenamodulos'); */
     }
 
     public function elimGrupo($id){
-        foreach ($this->seleccionados as $grupo) {
-            if($grupo['id']===$id){
+        DB::table('apoyo_recibo')
+            ->where('id', $id)
+            ->delete();
 
-                $nuevo=[
-                    'id'            =>$grupo['id'],
-                    'name'          =>$grupo['name'],
-                    'profesor_id'   =>$grupo['profesor_id'],
-                    'profesor'      =>$grupo['profesor'],
-                    'inscritos'     =>$grupo['inscritos'],
-                    'limit'         =>$grupo['limit']
-                ];
-
-                $indice=array_search($nuevo,$this->seleccionados,true);
-                unset($this->seleccionados[$indice]);
-            }
-        }
+        $this->ordenarrender();
     }
 
     /**
@@ -178,46 +220,57 @@ class CiclosCrear extends Component
         // validate
         $this->validate();
 
-        if($this->inicia<$this->finaliza){
-            //Crear ciclo
-            $ciclo=Ciclo::create([
-                'sede_id'       =>$this->sede_id,
-                'curso_id'      =>$this->curso_id,
-                'name'          =>$this->name,
-                'inicia'        =>$this->inicia,
-                'finaliza'      =>$this->finaliza,
-                'jornada'       =>$this->jornada,
-                'desertado'     =>$this->desertado
-            ]);
+        $primera=DB::table('apoyo_recibo')
+                                ->where('id_creador', Auth::user()->id)
+                                ->orderBy('fecha_movimiento', 'ASC')
+                                ->first();
 
-            foreach ($this->seleccionados as $value) {
-                DB::table('ciclo_grupo')
-                    ->insert([
-                        'ciclo_id'       =>$ciclo->id,
-                        'grupo_id'       =>$value['id'],
-                        'created_at'     =>now(),
-                        'updated_at'     =>now(),
-                    ]);
+        if($primera->fecha_movimiento===$this->inicia){
+            if($this->inicia<$this->finaliza){
+                //Crear ciclo
+                $ciclo=Ciclo::create([
+                    'sede_id'       =>$this->sede_id,
+                    'curso_id'      =>$this->curso_id,
+                    'name'          =>$this->name,
+                    'inicia'        =>$this->inicia,
+                    'finaliza'      =>$this->finaliza,
+                    'jornada'       =>$this->jornada,
+                    'desertado'     =>$this->desertado
+                ]);
+
+                foreach ($this->seleccionados as $value) {
+                    DB::table('ciclo_grupo')
+                        ->insert([
+                            'ciclo_id'       =>$ciclo->id,
+                            'grupo_id'       =>$value->id_concepto,
+                            'fecha_inicio'   =>$value->fecha_movimiento,
+                            'created_at'     =>now(),
+                            'updated_at'     =>now(),
+                        ]);
+                }
+
+                // Notificación
+                $this->dispatch('alerta', name:'Se ha creado correctamente el ciclo: '.$this->name);
+                $this->resetFields();
+
+                //refresh
+                $this->dispatch('refresh');
+                $this->dispatch('cancelando');
+            }else{
+                $this->dispatch('alerta', name:'La fecha de inicio debe ser inferior a la de finalización');
             }
-
-            // Notificación
-            $this->dispatch('alerta', name:'Se ha creado correctamente el ciclo: '.$this->name);
-            $this->resetFields();
-
-            //refresh
-            $this->dispatch('refresh');
-            $this->dispatch('created');
         }else{
-            $this->dispatch('alerta', name:'La fecha de inicio debe ser inferior a la de finalización');
+            $this->dispatch('alerta', name:'La fecha de inicio debe ser igual a la del primer modulo');
         }
+
+
 
 
 
 
     }
 
-    private function cursos()
-    {
+    private function cursos(){
         return Curso::where('status', true)
                     ->orderBy('name')
                     ->get();
@@ -229,8 +282,7 @@ class CiclosCrear extends Component
                     ->get();
     }
 
-    public function render()
-    {
+    public function render(){
         return view('livewire.academico.ciclo.ciclos-crear',[
             'cursos'=>$this->cursos(),
             'sedes'=>$this->sedes(),
