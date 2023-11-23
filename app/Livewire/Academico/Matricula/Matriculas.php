@@ -17,8 +17,8 @@ class Matriculas extends Component
     public $ordenado='DESC';
     public $pages = 3;
 
-    public $is_modify = false;
-    public $is_creating = true;
+    public $is_modify = true;
+    public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
     public $is_grupos=false;

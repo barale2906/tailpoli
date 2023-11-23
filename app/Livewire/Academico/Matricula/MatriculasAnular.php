@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Academico\Matricula;
 
+use App\Models\Academico\Ciclo;
+use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cartera;
@@ -73,6 +75,20 @@ class MatriculasAnular extends Component
                 'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$value->observaciones
             ]);
         }
+
+        //Inactivar control
+        $crt=Control::where('matricula_id', $this->id)->first();
+
+        $crt->update([
+            'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$crt->observaciones,
+            'status'=>false
+        ]);
+
+        //Descontar del ciclo
+        $ciclo=Ciclo::whereId($crt->ciclo_id)->first();
+        $ciclo->update([
+            'registrados'=>$ciclo->registrados-1
+        ]);
 
         $this->dispatch('alerta', name:'Se ha anulado correctamente la matricula');
         $this->resetFields();
