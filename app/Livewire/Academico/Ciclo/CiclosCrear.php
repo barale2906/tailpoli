@@ -26,6 +26,12 @@ class CiclosCrear extends Component
     public $contar=0;
     public $maximo;
 
+    public $fechaRegistro;
+
+    public function mount(){
+        $this->fechaRegistro=Carbon::now()->subDays(3);
+    }
+
 
     public function updatedCursoId(){
 
@@ -144,8 +150,8 @@ class CiclosCrear extends Component
         'sede_id'=>'required|integer',
         'curso_id'=>'required|integer',
         'name' => 'required|max:100',
-        'inicia'=>'required',
-        'finaliza'=>'required',
+        'inicia'=>'required|date|after:fechaRegistro',
+        'finaliza'=>'required|date',
         'jornada'=>'required|integer',
         'desertado'=>'required'
     ];

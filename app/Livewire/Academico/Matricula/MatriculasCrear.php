@@ -38,6 +38,8 @@ class MatriculasCrear extends Component
     public $horarios;
     public $fecha_inicia;
 
+    public $fechaRegistro;
+
     public $sede_id;
     public $sedeele;
     public $cursos;
@@ -67,6 +69,7 @@ class MatriculasCrear extends Component
 
     public function mount($ruta=null){
         $this->ruta=$ruta;
+        $this->fechaRegistro=Carbon::now()->subDays(8);
     }
 
 
@@ -150,6 +153,7 @@ class MatriculasCrear extends Component
     public function obtieneciclos(){
         $this->ciclos=Ciclo::where('sede_id', $this->sede_id)
                             ->where('curso_id', $this->curso_id)
+                            ->where('inicia', '>=', $this->fechaRegistro)
                             ->where('status', true)
                             ->orderBy('inicia', 'ASC')
                             ->get();

@@ -81,7 +81,7 @@ class MenuSeeder extends Seeder
                 'permiso'           => 'ac_grupos',
                 'ruta'              => 'academico.ciclos',
                 'identificaRuta'    => 'academico.ciclos',
-                'name'              => 'Ciclos',
+                'name'              => 'Programación',
                 'icono'             => 'fa-solid fa-book text-gray-500',
                 'menu_id'           => $m1->id
             ]);

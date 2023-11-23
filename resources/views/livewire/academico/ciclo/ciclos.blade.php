@@ -1,6 +1,6 @@
 <div>
     <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
-        <h1 class="text-xl uppercase">Ciclos</h1>
+        <h1 class="text-xl uppercase">Programación</h1>
     </div>
 
     @if ($is_modify)
@@ -62,7 +62,7 @@
                             Curso
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('name')">
-                            Ciclo
+                            Programación
                             @if ($ordena != 'name')
                                 <i class="fas fa-sort"></i>
                             @else
@@ -244,11 +244,11 @@
     @endif
 
     @if ($is_editing)
-        <livewire:academico.ciclo.ciclos-editar :elegido="$elegido" />
+        {{-- <livewire:academico.ciclo.ciclos-editar :elegido="$elegido" /> --}}
     @endif
 
     @if ($is_deleting)
-        <livewire:academico.ciclo.ciclos-inactivar :elegido="$elegido" />
+        {{-- <livewire:academico.ciclo.ciclos-inactivar :elegido="$elegido" /> --}}
     @endif
 
     @push('js')
