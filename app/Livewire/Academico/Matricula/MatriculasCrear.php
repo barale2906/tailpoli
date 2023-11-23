@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Matricula;
 
 use App\Models\Academico\Ciclo;
+use App\Models\Academico\Ciclogrupo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
@@ -62,6 +63,7 @@ class MatriculasCrear extends Component
     public $ruta=1;
 
     public $is_comercial=false;
+    public $primerGrupo;
 
 
     public $buscar=null;
@@ -170,19 +172,11 @@ class MatriculasCrear extends Component
     }
 
     public function obteHorarios(){
-        $ids=[];
 
-        foreach ($this->ciclosel->grupos as $value) {
-
-            if(in_array($value->id, $ids)){
-
-            }else{
-                array_push($ids, $value->id);
-            }
-        }
+        $this->primerGrupo=Ciclogrupo::where('ciclo_id', $this->ciclo_id)->orderBy('fecha_inicio', 'ASC')->first();
 
         $this->horarios=Horario::where('sede_id', $this->sede_id)
-                                ->whereIn('grupo_id', $ids)
+                                ->where('grupo_id', $this->primerGrupo->grupo_id)
                                 ->orderBy('hora', 'ASC')
                                 ->get();
     }
@@ -221,7 +215,7 @@ class MatriculasCrear extends Component
         'nivel'=>'required',
         'valor_curso'=>'required',
         'valor_matricula'=>'required',
-        'metodo'=>'required',
+        //'metodo'=>'required',
         'alumno_id'=>'required|integer',
         'comercial_id'=>'required|integer',
     ];
@@ -244,6 +238,8 @@ class MatriculasCrear extends Component
 
     // Crear Regimen de Salud
     public function new(){
+
+
         // validate
         $this->validate();
 
@@ -357,11 +353,11 @@ class MatriculasCrear extends Component
     //Asignar grupos al estudiante
     public function asignar(){
 
-        foreach ($this->ciclosel->grupos as $value) {
+        foreach ($this->ciclosel->ciclogrupos as $value) {
 
             DB::table('grupo_matricula')
             ->insert([
-                'grupo_id'      =>$value->id,
+                'grupo_id'      =>$value->grupo_id,
                 'matricula_id'  =>$this->matricula->id,
                 'created_at'    =>now(),
                 'updated_at'    =>now(),
@@ -370,7 +366,7 @@ class MatriculasCrear extends Component
             //Cargar estudiante al grupo
             DB::table('grupo_user')
                 ->insert([
-                    'grupo_id'      =>$value->id,
+                    'grupo_id'      =>$value->grupo_id,
                     'user_id'       =>$this->matricula->alumno->id,
                     'created_at'    =>now(),
                     'updated_at'    =>now(),
@@ -379,13 +375,14 @@ class MatriculasCrear extends Component
 
 
             //Sumar usuario al grupo
-            $inscritos=Grupo::find($value->id);
+            $inscritos=Grupo::find($value->grupo_id);
 
             $tot=$inscritos->inscritos+1;
 
             $inscritos->update([
                 'inscritos'=>$tot
             ]);
+
         }
 
         //Sumar usuario al ciclo

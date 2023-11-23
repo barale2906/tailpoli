@@ -159,6 +159,9 @@
                 </div>
 
                 @if ($horarios)
+                    <h1 class="text-center text-lg">
+                        Inicia el <span class="font-extrabold uppercase">{{$primerGrupo->fecha_inicio}}</span> con el modulo <span class="font-extrabold uppercase">{{$primerGrupo->grupo->modulo->name}}</span> en el siguiente horario:
+                    </h1>
                     <div class="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 sm:grid-cols-1 md:grid-cols-7 bg-white dark:bg-gray-800">
                         @for ($i = 1; $i <= 7; $i++)
                             <figure class="flex flex-col items-center p-4 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
