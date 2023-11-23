@@ -50,8 +50,10 @@ class ConfUserExport implements FromCollection, WithCustomStartCell, Responsable
     {
         return [
             'Nombre',
-            'Correo Electrónico',
             'Documento',
+            'Correo Electrónico',
+            'Celular',
+            'WhatsApp',
             'Fecha de Creación'
         ];
     }
@@ -60,8 +62,10 @@ class ConfUserExport implements FromCollection, WithCustomStartCell, Responsable
     {
         return [
             $usuario->name,
-            $usuario->email,
             $usuario->documento,
+            $usuario->email,
+            $usuario->perfil->celular,
+            $usuario->perfil->wa,
             Date::dateTimeToExcel($usuario->created_at)
         ];
     }
