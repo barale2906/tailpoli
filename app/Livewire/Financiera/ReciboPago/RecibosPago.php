@@ -128,6 +128,7 @@ class RecibosPago extends Component
                             ->when($this->buscamin, function($query){
                                 return $query->where('fecha', 'like', "%".$this->buscamin."%")
                                         ->orwhere('medio', 'like', "%".$this->buscamin."%")
+                                        ->orwhere('observaciones', 'like', "%".$this->buscamin."%")
                                         ->orWhereHas('creador', function($q){
                                             $q->where('name', 'like', "%".$this->buscamin."%");
                                         })

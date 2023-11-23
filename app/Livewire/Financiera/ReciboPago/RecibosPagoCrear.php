@@ -18,6 +18,7 @@ class RecibosPagoCrear extends Component
 {
     public $medio='';
     public $observaciones='';
+    public $obser;
     public $sede_id;
     public $cargados;
     public $tipo;
@@ -101,6 +102,14 @@ class RecibosPagoCrear extends Component
             $ya=0;
             $this->saldo=$this->valor;
         }else{
+            //Verificar si el valor mayor a la 1/2
+            $mitad=$item['saldo']/2;
+
+            if($mitad>$this->valor){
+                $this->dispatch('alerta', name:'¡Abono inferior a la mitad!, solo con transferencia.');
+                $this->obser="  ¡IMPORTANTE! Se recibe abono inferior, validar transferencia.";
+            }
+
             //Verificar que no se haya cargado el dato
             $ya= DB::table('apoyo_recibo')->where('id_cartera',$item['id'])->count();
         }
@@ -252,7 +261,7 @@ class RecibosPagoCrear extends Component
                                 'fecha'=>$this->fecha_pago,
                                 'valor_total'=>$this->Total,
                                 'medio'=>$this->medio,
-                                'observaciones'=>strtolower($this->observaciones),
+                                'observaciones'=>strtolower($this->observaciones).$this->obser,
                                 'sede_id'=>$this->sede_id,
                                 'creador_id'=>Auth::user()->id,
                                 'paga_id'=>$this->alumno_id
