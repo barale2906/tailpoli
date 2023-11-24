@@ -4,6 +4,7 @@ namespace App\Livewire\Financiera\CierreCaja;
 
 use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ReciboPago;
+use App\Traits\ComunesTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -11,6 +12,8 @@ use Livewire\Component;
 
 class CierreCajeroCrear extends Component
 {
+    use ComunesTrait;
+
     public $sedes=[];
     public $unica;
     public $sede_id;
@@ -38,9 +41,6 @@ class CierreCajeroCrear extends Component
 
     public $ruta=1;
 
-    public $is_dia=true;
-
-
     public $print=false;
 
     public function mount ($ruta=null){
@@ -52,16 +52,6 @@ class CierreCajeroCrear extends Component
         $this->ruta=$ruta;
 
         $this->sedeMas();
-    }
-
-    public function cierre(){
-        $cerrado=CierreCaja::where('dia', false)
-                            ->where('fecha_cierre', now())
-                            ->count('id');
-
-        if($cerrado>0){
-            $this->is_dia=!$this->is_dia;
-        }
     }
 
     /**
