@@ -5,10 +5,12 @@ namespace App\Livewire\Financiera\ReciboPago;
 use App\Models\Academico\Control;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
+use App\Traits\ComunesTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -16,6 +18,8 @@ use Livewire\Component;
 
 class RecibosPagoCrear extends Component
 {
+    use ComunesTrait;
+
     public $medio='';
     public $observaciones='';
     public $obser;
@@ -57,6 +61,8 @@ class RecibosPagoCrear extends Component
             ->delete();
 
         $this->ruta=$ruta;
+
+        $this->cierre();
     }
 
     #[On('cargados')]

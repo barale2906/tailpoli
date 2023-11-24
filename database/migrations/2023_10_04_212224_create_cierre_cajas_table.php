@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('cierre_cajas', function (Blueprint $table) {
             $table->comment('Detalles de los cierres de caja');
             $table->id();
-            $table->dateTime('fecha_cierre')->comment('Fecha del cierre');
+            $table->dateTime('fecha_cierre')->comment('Fecha y hora del cierre');
+            $table->date('fecha')->comment('Fecha del cierre control');
             $table->double('valor_total')->comment('Valor total del cierre');
             $table->double('valor_reportado')->default(0)->comment('Valor en efectivo reportado por el cajero, sera cero (0) cuando el cierre lo haga coordinador');
             $table->longtext('observaciones')->comment('Observaciones al cierre');
@@ -38,6 +39,7 @@ return new class extends Migration
             $table->double('valor_consignacion_h')->default(0)->comment('Valor recibido en transferencias consignaciones por herramienta'); */
 
             $table->boolean('status')->default(false)->comment('false Precierre, true cierre');
+            $table->boolean('dia')->default(false)->comment('false no autorizado a generar mas ese día, true autorizado');
 
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');

@@ -268,6 +268,7 @@ class CierreCajasCrear extends Component
         //Crear registro
         $cierre=CierreCaja::create([
                         'fecha_cierre'=>now(),
+                        'fecha'=>now(),
                         'valor_total'=>$this->valor_total,
                         'observaciones'=>$this->observaciones,
 
@@ -291,7 +292,8 @@ class CierreCajasCrear extends Component
 
                         'sede_id'=>$this->sede_id,
                         'cajero_id'=>$this->cajero_id,
-                        'coorcaja_id'=>Auth::user()->id
+                        'coorcaja_id'=>Auth::user()->id,
+                        'dia'=>true
                     ]);
 
         //relacionar recibos

@@ -38,10 +38,13 @@ class CierreCajeroCrear extends Component
 
     public $ruta=1;
 
+    public $is_dia=true;
+
 
     public $print=false;
 
     public function mount ($ruta=null){
+        $this->cierre();
         $this->recibos=ReciboPago::where('creador_id', Auth::user()->id)
                                 ->where('status', '!=', 1)
                                 ->get();
@@ -49,6 +52,16 @@ class CierreCajeroCrear extends Component
         $this->ruta=$ruta;
 
         $this->sedeMas();
+    }
+
+    public function cierre(){
+        $cerrado=CierreCaja::where('dia', false)
+                            ->where('fecha_cierre', now())
+                            ->count('id');
+
+        if($cerrado>0){
+            $this->is_dia=!$this->is_dia;
+        }
     }
 
     /**
@@ -221,6 +234,7 @@ class CierreCajeroCrear extends Component
         //Crear registro
         $cierre=CierreCaja::create([
                         'fecha_cierre'=>now(),
+                        'fecha'=>now(),
                         'valor_total'=>$this->valor_total,
                         'valor_reportado'=>$this->valor_reportado,
                         'observaciones'=>$this->observaciones,
