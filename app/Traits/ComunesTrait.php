@@ -13,10 +13,9 @@ trait ComunesTrait
 
     public function cierre(){
 
+        $this->reset('is_dia');
         $fecha=now();
         $fecha=date('Y-m-d');
-
-
 
         $cerrado=CierreCaja::where('dia', false)
                             ->where('fecha', $fecha)

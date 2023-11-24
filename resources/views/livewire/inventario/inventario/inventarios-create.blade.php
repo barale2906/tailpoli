@@ -53,19 +53,25 @@
 
 
 
-    @if ($almacen_id>0)
-        @switch($tipo)
-            @case(1)
-                <livewire:inventario.inventario.entrada :almacen_id="$almacen_id" />
-                @break
-            @case(0)
-                <livewire:inventario.inventario.salida :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
-                @break
-            @case(2)
-                <livewire:inventario.inventario.pendiente :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
-                @break
+        @if ($almacen_id>0)
+            @switch($tipo)
+                @case(1)
+                    <livewire:inventario.inventario.entrada :almacen_id="$almacen_id" />
+                    @break
+                @case(0)
+                    @if ($is_dia)
+                        <livewire:inventario.inventario.salida :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
+                    @else
+                        @include('includes.cajaCerrada')
+                    @endif
+                    @break
+                @case(2)
+                    <livewire:inventario.inventario.pendiente :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
+                    @break
 
-        @endswitch
-    @endif
+            @endswitch
+        @endif
+
+
 
 </div>

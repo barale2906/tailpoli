@@ -3,6 +3,7 @@
 namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Configuracion\Sede;
+use App\Traits\ComunesTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -10,6 +11,8 @@ use Livewire\Component;
 
 class InventariosCreate extends Component
 {
+    use ComunesTrait;
+
     public $sede_id;
     public $sede;
     public $almacen_id;
@@ -36,6 +39,10 @@ class InventariosCreate extends Component
     }
 
     public function updatedTipo(){
+        $tipoes=intval($this->tipo);
+        if($tipoes===0){
+            $this->cierre();
+        }
         $this->reset('sede_id', 'almacen_id', 'crtAlma');
         $this->borrar();
     }
