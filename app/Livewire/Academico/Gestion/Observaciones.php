@@ -12,12 +12,18 @@ class Observaciones extends Component
     public $elegido;
     public $comentarios;
     public $fecha;
+    public $ruta;
+    public $alumno;
 
-    public function mount($elegido=null){
-
+    public function mount($elegido=null, $ruta=null){
+        $this->ruta=$ruta;
         $this->elegido=Control::find($elegido);
         $this->fecha=now();
+        $this->alumn();
+    }
 
+    public function alumn(){
+        $this->alumno=$this->elegido->estudiante_id;
     }
 
     public function guardar(){

@@ -88,13 +88,7 @@
             </h1>
 
             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
-                    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
-                        @foreach ($grupos as $item)
-                            <a href="" wire:click.prevent="activFecha({{$item['id']}},{{$item['modulo']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
-                            </a>
-                        @endforeach
-                    </div>
+
                     @if ($is_date)
                         <div class="mb-6">
                             <label for="fechaModulo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio del Modulo</label>
@@ -106,24 +100,30 @@
                                 </a>
                             @endif
                         </div>
-
-
                     @else
-                        @if ($seleccionados)
-                            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
-                                @foreach ($seleccionados as $item)
-                                    <a href="" wire:click.prevent="elimGrupo({{$item->id}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                        <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item->tipo}} - {{$item->fecha_movimiento}}
-                                    </a>
-                                @endforeach
-                            </div>
-                        @else
-                            <div>
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    DEBE ELEGIR LOS {{$maximo}} MODULO(S) QUE FORMAN PARTE DEL CURSO.
-                                </label>
-                            </div>
-                        @endif
+                        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
+                            @foreach ($grupos as $item)
+                                <a href="" wire:click.prevent="activFecha({{$item['id']}},{{$item['modulo']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    @if ($seleccionados)
+                        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
+                            @foreach ($seleccionados as $item)
+                                <a href="" wire:click.prevent="elimGrupo({{$item->id}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item->tipo}} - {{$item->fecha_movimiento}}
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <div>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                DEBE ELEGIR LOS {{$maximo}} MODULO(S) QUE FORMAN PARTE DEL CURSO.
+                            </label>
+                        </div>
                     @endif
 
             </div>

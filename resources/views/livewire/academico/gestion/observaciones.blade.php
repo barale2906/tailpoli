@@ -86,5 +86,6 @@
         <h1 class="text-lg text-justify">
             A la fecha del {{$fecha}}, su deuda es de: <strong>$ {{number_format($cartera->sum('saldo')   , 0, '.', '.')}}</strong>
         </h1>
+        <livewire:configuracion.user.perfil :elegido="$alumno" :perf="1" :impresion="0" :ruta="$ruta"/>
     </div>
 </div>
