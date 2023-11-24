@@ -59,16 +59,43 @@
                             </div>
                         @enderror
                     </div>
+
+                    <div class="mb-6">
+                        <label for="dia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Día de pago:</label>
+                        <select wire:model.live="dia" id="contado" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                            <option >Elija ...</option>
+                            @foreach ($elegible as $item)
+                                <option value={{$item}}>{{$item}}</option>
+                            @endforeach
+                        </select>
+                        @error('dia')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
+                    </div>
                 @endif
-                <div class="mb-6">
-                    <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Descripción</label>
-                    <input type="text" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Descripción del acuerdo" wire:model.blur="descripcion">
-                    @error('descripcion')
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                        </div>
-                    @enderror
-                </div>
+
+            @endif
+            <div class="mb-6">
+                <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha pago inicial - total:</label>
+                <input type="date" id="fecha" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fecha" required>
+                @error('fecha')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-6">
+                <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Descripción</label>
+                <input type="text" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Descripción del acuerdo" wire:model.live="descripcion">
+                @error('descripcion')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
+            </div>
+            @if ($descripcion && $fecha )
                 <button
                     class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
                     wire:click="crea"
@@ -76,6 +103,7 @@
                     Nuevo Convenio
                 </button>
             @endif
+
         @endif
     </div>
     @if ($responsable_id>0)

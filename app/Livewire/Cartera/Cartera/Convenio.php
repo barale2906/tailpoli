@@ -26,6 +26,11 @@ class Convenio extends Component
     public $descripcion;
     public $matricula_id;
 
+    public $fecha;
+    public $hoy;
+    public $dia;
+    public $elegible=[];
+
     public function mount(){
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
@@ -33,7 +38,17 @@ class Convenio extends Component
         $this->cartera=Cartera::Where('status', true)
                                 ->get();
 
+        $this->hoy=now();
+        $this->hoy=date('Y-m-d');
+
         $this->filtrar();
+        $this->dias();
+    }
+
+    public function dias(){
+        for ($i=1; $i <= 30; $i++) {
+            array_push($this->elegible, $i);
+        }
     }
 
     public function filtrar(){
@@ -78,6 +93,7 @@ class Convenio extends Component
             $this->valor_inicial=$this->total;
             $this->cuotas=0;
             $this->valor_cuota=0;
+            $this->dia=1;
         }
     }
 
@@ -113,7 +129,9 @@ class Convenio extends Component
         'valor_inicial'     => 'required|min:1',
         'cuotas'            => 'required|integer',
         'valor_cuota'       => 'required|min:1',
-        'descripcion'       => 'required'
+        'descripcion'       => 'required',
+        'fecha'             => 'required|date|after_or_equal:hoy',
+        'dia'               => 'required|min:1|max:30'
     ];
 
     /**
@@ -127,7 +145,9 @@ class Convenio extends Component
                         'cuotas',
                         'valor_cuota',
                         'descripcion',
-                        'saldo'
+                        'saldo',
+                        'fecha',
+                        'dia'
                     );
     }
 
@@ -160,7 +180,7 @@ class Convenio extends Component
                                 ->first();
 
         Cartera::create([
-            'fecha_pago'=>now(),
+            'fecha_pago'=>$this->fecha,
             'valor'=>$this->valor_inicial,
             'saldo'=>$this->valor_inicial,
             'observaciones'=>'--- CONVENIO PAGO --- primera cuota de un convenio por: '.$this->total." -- ".$this->descripcion,
@@ -177,7 +197,11 @@ class Convenio extends Component
                                 ->where('status', true)
                                 ->first();
 
-        $date = Carbon::now();
+        $year = now();
+        $year = date('Y');
+        $mes =now();
+        $mes= date('m');
+        $date=Carbon::create($year, $mes, $this->dia);
         if($this->cuotas>0){
             $a=1;
             while ($a <= $this->cuotas) {
