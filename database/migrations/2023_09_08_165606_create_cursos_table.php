@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('tipo')->comment('Técnico o Práctico');
             $table->double('duracion_horas');
             $table->double('duracion_meses');
+            $table->boolean('correo')->default(true)->comment('false no se envia con los pagos, true si se envia con los pagos');
             $table->boolean('status')->default(true)->comment('false Inactivo, true activo');
             $table->timestamps();
         });

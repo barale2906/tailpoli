@@ -13,6 +13,7 @@ class CursoEditar extends Component
     public $duracion_meses='';
     public $id = '';
     public $elegido;
+    public $correo;
 
     /**
      * Reglas de validación
@@ -22,7 +23,8 @@ class CursoEditar extends Component
         'tipo'=>'required',
         'duracion_horas'=>'required|integer|min:1|max:1000',
         'duracion_meses'=>'required|integer|min:1|max:1000',
-        'id'    => 'required'
+        'id'    => 'required',
+        'correo'    =>'required'
     ];
 
     /**
@@ -40,6 +42,7 @@ class CursoEditar extends Component
         $this->duracion_horas=$elegido['duracion_horas'];
         $this->duracion_meses=$elegido['duracion_meses'];
         $this->id=$elegido['id'];
+        $this->correo=$elegido['correo'];
     }
 
     //Actualizar
@@ -53,7 +56,8 @@ class CursoEditar extends Component
             'name'=>strtolower($this->name),
             'tipo'=>strtolower($this->tipo),
             'duracion_horas'=>strtolower($this->duracion_horas),
-            'duracion_meses'=>strtolower($this->duracion_meses)
+            'duracion_meses'=>strtolower($this->duracion_meses),
+            'correo'        =>$this->correo
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el curso: '.$this->name);

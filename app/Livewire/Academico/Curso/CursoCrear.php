@@ -11,6 +11,7 @@ class CursoCrear extends Component
     public $tipo = '';
     public $duracion_horas='';
     public $duracion_meses='';
+    public $correo;
 
     /**
      * Reglas de validación
@@ -19,7 +20,8 @@ class CursoCrear extends Component
         'name' => 'required|max:100',
         'tipo'=>'required',
         'duracion_horas'=>'required|integer|min:1|max:1000',
-        'duracion_meses'=>'required|integer|min:1|max:1000'
+        'duracion_meses'=>'required|integer|min:1|max:1000',
+        'correo'    =>'required'
     ];
 
     /**
@@ -46,7 +48,8 @@ class CursoCrear extends Component
                 'name'=>strtolower($this->name),
                 'tipo'=>strtolower($this->tipo),
                 'duracion_horas'=>strtolower($this->duracion_horas),
-                'duracion_meses'=>strtolower($this->duracion_meses)
+                'duracion_meses'=>strtolower($this->duracion_meses),
+                'correo'        =>$this->correo
             ]);
 
             // Notificación
