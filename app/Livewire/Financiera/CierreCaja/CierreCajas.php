@@ -20,11 +20,27 @@ class CierreCajas extends Component
     public $is_creating = false;
     public $is_deleting = false;
     public $is_watching = false;
+    public $is_desbloqueo=false;
 
     public $elegido;
     public $accion;
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_modify',
+                        'is_creating',
+                        'is_editing',
+                        'is_deleting',
+                        'is_watching',
+                        'is_desbloqueo'
+                    );
+    }
 
     // Ordenar Registros
     public function organizar($campo)
@@ -88,6 +104,15 @@ class CierreCajas extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_watching = !$this->is_watching;
+    }
+
+    //Activar evento
+    #[On('desbloqueando')]
+    //Mostrar pantalla de impresión
+    public function updatedIsDesbloquear()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_desbloqueo = !$this->is_desbloqueo;
     }
 
     public function exportar(){

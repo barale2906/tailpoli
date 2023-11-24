@@ -216,6 +216,10 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'exportar listados en excel'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
+                            'name'=>'fi_activarecibos',
+                            'descripcion'=>'Desbloquea creación de recibos de caja - cierres de caja'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+        Permission::create([
                             'name'=>'Financiera',
                             'descripcion'=>'ingreso al menú financiera'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
@@ -257,7 +261,7 @@ class RoleSeeder extends Seeder
         Permission::create([
                             'name'=>'fi_cierrecajaCrear',
                             'descripcion'=>'crear cierre de caja'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
         Permission::create([
                             'name'=>'fi_cierrecajaAprobar',
                             'descripcion'=>'aprobar cierre de caja'
