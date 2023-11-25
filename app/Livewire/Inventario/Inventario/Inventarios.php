@@ -4,6 +4,8 @@ namespace App\Livewire\Inventario\Inventario;
 
 use App\Exports\InvInventarioExport;
 use App\Models\Inventario\Inventario;
+use App\Traits\FiltroTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +13,7 @@ use Livewire\WithPagination;
 class Inventarios extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='status';
     public $ordenado='DESC';
@@ -25,8 +28,27 @@ class Inventarios extends Component
 
     public $buscar='';
     public $buscamin='';
+    public $filtroCreades;
+    public $filtroCreahas;
+    public $filtrotipo;
+    public $valorFiltrotipo;
+
+    public $tipo=[];
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(5);
+        $this->tipos();
+    }
+
+    public function tipos(){
+        $this->tipo=[
+            ["id"=>"1", "nombre"=>"Sálida"],
+            ["id"=>"2", "nombre"=>"Entrada"],
+            ["id"=>"3", "nombre"=>"Pendiente"]
+        ];
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -90,6 +112,22 @@ class Inventarios extends Component
                     );
     }
 
+    public function updatedFiltrotipo(){
+        switch ($this->filtrotipo) {
+            case '1':
+                $this->valorFiltrotipo=0;
+                break;
+
+            case '2':
+                $this->valorFiltrotipo=1;
+                break;
+
+            case '3':
+                $this->valorFiltrotipo=2;
+                break;
+        }
+    }
+
     // Mostrar Regimen de Salud
     public function show($esta, $act){
 
@@ -118,25 +156,34 @@ class Inventarios extends Component
 
     private function inventarios()
     {
-        return Inventario::query()
-                            ->with(['producto', 'almacen', 'user'])
-                            ->when($this->buscamin, function($query){
-                                return $query->where('status', true)
-                                        ->where('descripcion', 'like', "%".$this->buscamin."%")
-                                        ->orwhere('fecha_movimiento', 'like', "%".$this->buscamin."%")
-                                        ->orWhereHas('producto', function($q){
-                                            $q->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('almacen', function($qu){
-                                            $qu->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('user', function($que){
-                                            $que->where('name', 'like', "%".$this->buscamin."%");
-                                        });
-                            })
-                            ->orderBy($this->ordena, $this->ordenado)
-                            ->orderBy('id', 'DESC')
-                            ->paginate($this->pages);
+        $consulta = Inventario::query();
+
+        if($this->buscamin){
+            $consulta = $consulta->where('descripcion', 'like', "%".$this->buscamin."%")
+            ->orwhere('fecha_movimiento', 'like', "%".$this->buscamin."%")
+            ->orWhereHas('producto', function($q){
+                $q->where('name', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('almacen', function($qu){
+                $qu->where('name', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('user', function($que){
+                $que->where('name', 'like', "%".$this->buscamin."%");
+            });
+        }
+
+        if($this->filtroCreades && $this->filtroCreahas){
+
+            $consulta = $consulta->whereBetween('fecha_movimiento', [$this->filtroCreades , $this->filtroCreahas]);
+        }
+
+        if($this->filtrotipo){
+
+            $consulta = $consulta->where('tipo', $this->valorFiltrotipo);
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
     }
 
     public function render()

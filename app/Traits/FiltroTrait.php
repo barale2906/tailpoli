@@ -16,6 +16,9 @@ trait FiltroTrait
     //Curso
     public $is_curso=false;
 
+    //Inventario
+    public $is_tipo=false;
+
 
     public function filtroMostrar(){
         $this->is_filtro=!$this->is_filtro;
@@ -51,10 +54,18 @@ trait FiltroTrait
                 break;
 
             case 4:
-                $this->txt="Busque por acá: Fecha, observaciones, cajero, y sede";
+                $this->txt="Busque por acá: Fecha, observaciones, cajero y sede";
 
                 //Recibos
                 $this->is_Creades=true;
+                break;
+
+            case 5:
+                $this->txt="Busque por acá: Fecha movimiento, producto, almacén y usuario que registra";
+
+                //Recibos
+                $this->is_Creades=true;
+                $this->is_tipo=true;
                 break;
         }
     }
