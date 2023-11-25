@@ -4,6 +4,8 @@ namespace App\Livewire\Financiera\CierreCaja;
 
 use App\Exports\FinCierreCajaExport;
 use App\Models\Financiera\CierreCaja;
+use App\Traits\FiltroTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +13,7 @@ use Livewire\WithPagination;
 class CierreCajas extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='ASC';
@@ -25,7 +28,28 @@ class CierreCajas extends Component
     public $elegido;
     public $accion;
 
+    public $buscar='';
+    public $buscamin='';
+    public $filtroCreades;
+    public $filtroCreahas;
+
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(4);
+    }
+
+    //Cargar variable
+    public function buscaText(){
+        $this->resetPage();
+        $this->buscamin=strtolower($this->buscar);
+    }
+
+    //Limpiar variables
+    public function limpiar(){
+        $this->reset('buscamin', 'buscar');
+        $this->resetPage();
+    }
 
     //Activar evento
     #[On('cancelando')]
@@ -121,8 +145,25 @@ class CierreCajas extends Component
 
     private function cierres()
     {
-        return CierreCaja::orderBy($this->ordena, $this->ordenado)
-                    ->paginate($this->pages);
+        $consulta = CierreCaja::query();
+
+        if($this->buscamin){
+            $consulta = $consulta->where('fecha', 'like', "%".$this->buscamin."%")
+            ->orwhere('observaciones', 'like', "%".$this->buscamin."%")
+            ->orWhereHas('cajero', function(Builder $q){
+                $q->where('name', 'like', "%".$this->buscamin."%");
+            })->orWhereHas('sede', function($qu){
+                $qu->where('name', 'like', "%".$this->buscamin."%");
+            });
+        }
+
+        if($this->filtroCreades && $this->filtroCreahas){
+
+            $consulta = $consulta->whereBetween('fecha', [$this->filtroCreades , $this->filtroCreahas]);
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
     }
 
     public function render()

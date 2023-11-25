@@ -49,6 +49,13 @@ trait FiltroTrait
                 //Recibos
                 $this->is_Creades=true;
                 break;
+
+            case 4:
+                $this->txt="Busque por acá: Fecha, observaciones, cajero, y sede";
+
+                //Recibos
+                $this->is_Creades=true;
+                break;
         }
     }
 
