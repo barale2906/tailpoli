@@ -42,6 +42,13 @@ trait FiltroTrait
                 //Grupos
                 $this->is_curso=true;
                 break;
+
+            case 3:
+                $this->txt="Busque por acá: Fecha, medio, observaciones, cajero, pagador, concepto y sede";
+
+                //Recibos
+                $this->is_Creades=true;
+                break;
         }
     }
 

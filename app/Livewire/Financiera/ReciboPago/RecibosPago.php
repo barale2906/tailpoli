@@ -4,6 +4,8 @@ namespace App\Livewire\Financiera\ReciboPago;
 
 use App\Exports\FinReciboExport;
 use App\Models\Financiera\ReciboPago;
+use App\Traits\FiltroTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +13,7 @@ use Livewire\WithPagination;
 class RecibosPago extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='DESC';
@@ -27,8 +30,14 @@ class RecibosPago extends Component
 
     public $buscar='';
     public $buscamin='';
+    public $filtroCreades;
+    public $filtroCreahas;
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(3);
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -123,27 +132,33 @@ class RecibosPago extends Component
 
     private function recibos()
     {
-        return ReciboPago::query()
-                            ->with(['creador', 'paga', 'conceptos', 'sede'])
-                            ->when($this->buscamin, function($query){
-                                return $query->where('fecha', 'like', "%".$this->buscamin."%")
-                                        ->orwhere('medio', 'like', "%".$this->buscamin."%")
-                                        ->orwhere('observaciones', 'like', "%".$this->buscamin."%")
-                                        ->orWhereHas('creador', function($q){
-                                            $q->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('paga', function($qu){
-                                            $qu->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('conceptos', function($que){
-                                            $que->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('sede', function($que){
-                                            $que->where('name', 'like', "%".$this->buscamin."%");
-                                        });
-                            })
-                            ->orderBy($this->ordena, $this->ordenado)
-                            ->paginate($this->pages);
+        $consulta = ReciboPago::query()->where('origen', 1);
+
+        if($this->buscamin){
+            $consulta = $consulta->where('fecha', 'like', "%".$this->buscamin."%")
+            ->orwhere('medio', 'like', "%".$this->buscamin."%")
+            ->orwhere('observaciones', 'like', "%".$this->buscamin."%")
+            ->orWhereHas('creador', function(Builder $q){
+                $q->where('name', 'like', "%".$this->buscamin."%");
+            })->orWhereHas('paga', function($qu){
+                $qu->where('name', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('conceptos', function($que){
+                $que->where('name', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('sede', function($que){
+                $que->where('name', 'like', "%".$this->buscamin."%");
+            });
+        }
+
+        if($this->filtroCreades && $this->filtroCreahas){
+
+            $consulta = $consulta->whereBetween('fecha', [$this->filtroCreades , $this->filtroCreahas]);
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+
     }
 
     public function render()
