@@ -4,6 +4,10 @@ namespace App\Livewire\Academico\Matricula;
 
 use App\Exports\AcaMatriculaExport;
 use App\Models\Academico\Matricula;
+use App\Models\User;
+use App\Traits\FiltroTrait;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,6 +16,7 @@ class Matriculas extends Component
 {
 
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='DESC';
@@ -28,8 +33,26 @@ class Matriculas extends Component
 
     public $elegido;
 
+    //Filtrado
+
     public $buscar='';
     public $buscamin='';
+
+    public $filtroCreades;
+    public $filtroCreahas;
+
+    public $filtroInides;
+    public $filtroInihas;
+
+    public $filtromatri;
+    public $filtrocom;
+
+    public $filtroestatumatri;
+    public $estadoMatricula;
+    public $filtroestatualum;
+
+    public $matriculo=[];
+    public $comercial=[];
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -41,8 +64,20 @@ class Matriculas extends Component
 
     //Limpiar variables
     public function limpiar(){
-        $this->reset('buscamin', 'buscar');
+        $this->reset(
+            'buscamin',
+            'buscar',
+            'filtroCreades',
+            'filtroCreahas',
+            'filtroInides',
+            'filtroInihas',
+            'filtromatri',
+            'filtrocom',
+            'filtroestatumatri',
+            'filtroestatualum',
+        );
         $this->resetPage();
+        $this->matriculas();
     }
 
     // Ordenar Registros
@@ -142,6 +177,15 @@ class Matriculas extends Component
         $this->is_grupos = !$this->is_grupos;
     }
 
+    public function updatedEstadoMatricula(){
+        $crt=intval($this->estadoMatricula);
+        if($crt===1){
+            $this->filtroestatumatri=true;
+        }else if($crt===0){
+            $this->filtroestatumatri=false;
+        }
+    }
+
     //Activar evento
     #[On('cambiagrupo')]
     //Mostrar formulario de inactivación
@@ -155,33 +199,97 @@ class Matriculas extends Component
         return new AcaMatriculaExport($this->buscamin);
     }
 
+    public function mount(){
+        $this->claseFiltro(1);
+
+        $creadores=Matricula::select('creador_id')
+                                    ->groupBy('creador_id')
+                                    ->get();
+        foreach ($creadores as $value) {
+            array_push($this->matriculo, $value->creador_id);
+        }
+
+        $this->genComerci();
+    }
+
+    public function genComerci(){
+        $comerciales=Matricula::select('comercial_id')
+        ->groupBy('comercial_id')
+        ->get();
+
+            foreach ($comerciales as $value) {
+            array_push($this->comercial, $value->comercial_id);
+            }
+    }
+
     private function matriculas()
     {
-        return Matricula::query()
-                        ->with(['alumno', 'grupos', 'curso'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('metodo', 'like', "%".$this->buscamin."%")
-                                    ->orWhere('valor', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('alumno', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%")
-                                            ->orWhere('documento', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('grupos', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('curso', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
-                        ->orderBy($this->ordena, $this->ordenado)
+        $consulta = Matricula::query();
+
+        if($this->buscamin){
+            $consulta = $consulta->orWhereHas('alumno', function(Builder $q){
+                $q->where('name', 'like', "%".$this->buscamin."%")
+                    ->orWhere('documento', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('grupos', function($qu){
+                $qu->where('name', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('curso', function($que){
+                $que->where('name', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('sede', function($quer){
+                $quer->where('name', 'like', "%".$this->buscamin."%");
+            });
+        }
+
+        if($this->filtromatri){
+            $consulta = $consulta->where('creador_id', $this->filtromatri);
+        }
+
+        if($this->filtrocom){
+            $consulta = $consulta->where('comercial_id', $this->filtrocom);
+        }
+
+        if($this->filtroestatumatri){
+
+            $consulta = $consulta->where('status', $this->filtroestatumatri);
+        }
+
+        if($this->filtroCreades && $this->filtroCreahas){
+            $fecha1=Carbon::parse($this->filtroCreades);
+            $fecha2=Carbon::parse($this->filtroCreahas);
+            $fecha2->addSeconds(86399);
+            $consulta = $consulta->whereBetween('created_at', [$fecha1 , $fecha2]);
+        }
+
+        if($this->filtroInides && $this->filtroInihas){
+            $consulta = $consulta->whereBetween('fecha_inicia', [$this->filtroInides , $this->filtroInihas]);
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
+    }
+
+    private function usuMatriculo(){
+        //dd($this->matriculo);
+        return User::whereIn('id', $this->matriculo)
+                    ->orderBy('name', 'ASC')
+                    ->get();
+    }
+
+    private function usuComercial(){
+
+        return User::whereIn('id', $this->comercial)
+                    ->orderBy('name', 'ASC')
+                    ->get();
     }
 
     public function render()
     {
         return view('livewire.academico.matricula.matriculas', [
-            'matriculas'=> $this->matriculas(),
+            'matriculas'        => $this->matriculas(),
+            'usuMatriculo'      => $this->usuMatriculo(),
+            'usuComercial'      => $this->usuComercial(),
         ]);
     }
 }
