@@ -9,12 +9,13 @@ trait FiltroTrait
 
     //Matricula
     public $is_Creades=false;
-
     public $is_Inides=false;
-
     public $is_matri=false;
-
     public $is_estatumatri=false;
+
+    //Curso
+    public $is_curso=false;
+
 
     public function filtroMostrar(){
         $this->is_filtro=!$this->is_filtro;
@@ -23,7 +24,7 @@ trait FiltroTrait
     public function claseFiltro($id){
         switch ($id) {
             case 1:
-                $this->txt="Busque por acá: Alumno, Grupo, Curso, Sede";
+                $this->txt="Busque por acá: Alumno (Nombre-Documento), Grupo, Curso, Sede";
 
                 //Matricula
                 $this->is_Creades=true;
@@ -35,8 +36,11 @@ trait FiltroTrait
                 $this->is_estatumatri=true;
                 break;
 
-            default:
-                # code...
+            case 2:
+                $this->txt="Busque por acá: Sede, Profesor, Modulo";
+
+                //Grupos
+                $this->is_curso=true;
                 break;
         }
     }

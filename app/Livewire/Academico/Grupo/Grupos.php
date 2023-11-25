@@ -3,8 +3,11 @@
 namespace App\Livewire\Academico\Grupo;
 
 use App\Exports\AcaGrupoExport;
+use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Modulo;
+use App\Traits\FiltroTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,6 +15,7 @@ use Livewire\WithPagination;
 class Grupos extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='ASC';
@@ -26,8 +30,53 @@ class Grupos extends Component
 
     public $buscar='';
     public $buscamin='';
+    public $filtrocurso;
+
+    public $idsCurso=[];
+    public $idsModulo=[];
+    public $cursos;
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(2);
+
+        $modulos=Grupo::select('modulo_id')
+                        ->groupBy('modulo_id')
+                        ->get();
+
+
+        foreach ($modulos as $value) {
+
+            $curso=Modulo::find($value->modulo_id);
+
+            if(in_array($curso->curso->id, $this->idsCurso)){
+
+            }else{
+                array_push($this->idsCurso, $curso->curso->id);
+            }
+        }
+
+        $this->cursoObten();
+    }
+
+    public function cursoObten(){
+        $this->cursos=Curso::whereIn('id', $this->idsCurso)
+                            ->orderBY('name', 'ASC')
+                            ->get();
+    }
+
+    public function updatedFiltrocurso(){
+        $curso=Curso::find($this->filtrocurso);
+
+        foreach ($curso->modulos as $value) {
+            if(in_array($value->id, $this->idsModulo)){
+
+            }else{
+                array_push($this->idsModulo, $value->id);
+            }
+        }
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -67,6 +116,7 @@ class Grupos extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_creating = !$this->is_creating;
+        $this->mount();
     }
 
     //Activar evento
@@ -106,21 +156,27 @@ class Grupos extends Component
 
     private function grupos()
     {
-        return Grupo::query()
-                        ->with(['modulo', 'profesor'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('name', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('modulo', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('profesor', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
-                        ->orderBy($this->ordena, $this->ordenado)
-                        ->orderBy('id', 'DESC')
+        $consulta = Grupo::query();
+
+        if($this->buscamin){
+            $consulta = $consulta->orWhereHas('modulo', function(Builder $q){
+                $q->where('name', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('profesor', function($qu){
+                $qu->where('name', 'like', "%".$this->buscamin."%");
+            })
+            ->orWhereHas('sede', function($que){
+                $que->where('name', 'like', "%".$this->buscamin."%");
+            });
+        }
+
+        if($this->filtrocurso){
+            $consulta=$consulta->whereIn('modulo_id', $this->idsModulo);
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
+
     }
 
     public function render()
