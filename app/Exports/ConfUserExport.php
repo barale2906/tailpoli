@@ -54,6 +54,7 @@ class ConfUserExport implements FromCollection, WithCustomStartCell, Responsable
             'Correo Electrónico',
             'Celular',
             'WhatsApp',
+            'rol',
             'Fecha de Creación'
         ];
     }
@@ -66,6 +67,7 @@ class ConfUserExport implements FromCollection, WithCustomStartCell, Responsable
             $usuario->email,
             $usuario->perfil->celular,
             $usuario->perfil->wa,
+            $usuario->roles[0]['name'],
             Date::dateTimeToExcel($usuario->created_at)
         ];
     }

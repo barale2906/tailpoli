@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait FiltroTrait
 {
-    public $is_filtro=false;
+    public $is_filtro=true;
     public $txt;
 
     //Matricula
@@ -19,6 +19,9 @@ trait FiltroTrait
     //Inventario
     public $is_tipo=false;
 
+    //Usuarios
+    public $is_rol=false;
+
 
     public function filtroMostrar(){
         $this->is_filtro=!$this->is_filtro;
@@ -31,11 +34,8 @@ trait FiltroTrait
 
                 //Matricula
                 $this->is_Creades=true;
-
                 $this->is_Inides=true;
-
                 $this->is_matri=true;
-
                 $this->is_estatumatri=true;
                 break;
 
@@ -56,16 +56,23 @@ trait FiltroTrait
             case 4:
                 $this->txt="Busque por acá: Fecha, observaciones, cajero y sede";
 
-                //Recibos
+                //cierre caja
                 $this->is_Creades=true;
                 break;
 
             case 5:
                 $this->txt="Busque por acá: Fecha movimiento, producto, almacén y usuario que registra";
 
-                //Recibos
+                //Inventario
                 $this->is_Creades=true;
                 $this->is_tipo=true;
+                break;
+
+            case 6:
+                $this->txt="Busque por acá: Nombre, correo electrónico, número documento";
+
+                //Usuarios
+                $this->is_rol=true;
                 break;
         }
     }

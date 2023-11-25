@@ -4,13 +4,16 @@ namespace App\Livewire\Configuracion\User;
 
 use App\Exports\ConfUserExport;
 use App\Models\User;
+use App\Traits\FiltroTrait;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Spatie\Permission\Models\Role;
 
 class Users extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='ASC';
@@ -30,8 +33,13 @@ class Users extends Component
 
     public $buscar='';
     public $buscamin='';
+    public $filtrorol;
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(6);
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -127,17 +135,42 @@ class Users extends Component
 
     private function usuarios()
     {
-        return User::where('name', 'like', "%".$this->buscamin."%")
-                    ->orwhere('email', 'like', "%".$this->buscamin."%")
-                    ->orwhere('documento', 'like', "%".$this->buscamin."%")
-                    ->orderBy($this->ordena, $this->ordenado)
-                    ->paginate($this->pages);
+        $consulta = User::query();
+
+        if(!$this->filtrorol){
+            if($this->buscamin){
+                $consulta = $consulta->where('name', 'like', "%".$this->buscamin."%")
+                ->orwhere('email', 'like', "%".$this->buscamin."%")
+                ->orwhere('documento', 'like', "%".$this->buscamin."%");
+            }
+
+            return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+
+        }else{
+            return User::where('name', 'like', "%".$this->buscamin."%")
+                        ->orWhere('documento', 'like', "%".$this->buscamin."%")
+                        ->orwhere('email', 'like', "%".$this->buscamin."%")
+                        ->orderBy($this->ordena, $this->ordenado)
+                        ->with('roles')->get()->filter(
+                            fn ($user) => $user->roles->where('name', $this->filtrorol)->toArray()
+                        );
+        }
+
+
+
+
+    }
+
+    private function roles(){
+        return Role::all();
     }
 
     public function render()
     {
         return view('livewire.configuracion.user.users', [
-            'usuarios' => $this->usuarios()
+            'usuarios'  => $this->usuarios(),
+            'roles'     => $this->roles(),
         ]);
     }
 }
