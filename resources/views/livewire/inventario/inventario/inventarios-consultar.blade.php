@@ -5,30 +5,44 @@
         </svg>
         <span class="sr-only">Info</span>
         <div>
-            <span class="font-bold uppercase text-2xl ">Datos seleccionados para: {{$productoName}}.</span>
+            <span class="font-bold uppercase text-2xl ">Datos seleccionados para: {{$actual->producto->name}}.</span>
             <div class="grid grid-cols-3 gap-3 m-3">
                 <div>
                     <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg capitalize">
-                        <li>Almacén: <strong>{{$almaceName}}</strong></li>
-                        <li>Usuario que registro el movimiento: <strong>{{$user}}</strong></li>
+                        <li>Almacén: <strong>{{$actual->almacen->name}}</strong></li>
+                        <li>Usuario que registro el movimiento: <strong>{{$actual->user->name}}</strong></li>
                     </ul>
                 </div>
                 <div>
                     <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg">
-                        <li>Fecha de movimiento: <strong>{{$fecha_movimiento}}</strong></li>
-                        <li>Tipo de movimiento: <strong>{{$tipo===1 ? "ENTRADA" : "SALIDA"}}</strong></li>
+                        <li>Fecha de movimiento: <strong>{{$actual->fecha_movimiento}}</strong></li>
+                        <li>Tipo de movimiento:
+                            <strong>
+                                @switch($actual->tipo)
+                                    @case(0)
+                                        SALIDA
+                                        @break
+                                    @case(1)
+                                        ENTRADA
+                                        @break
+                                    @case(2)
+                                        PENDIENTE
+                                        @break
+                                @endswitch
+                            </strong>
+                        </li>
                     </ul>
                 </div>
                 <div>
                     <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg">
-                        <li>Cantidad: <strong>{{$cantidad}}</strong></li>
-                        <li>Saldo: <strong>{{$saldo}}</strong></li>
-                        <li>Precio: <strong>{{number_format($precio, 0, '.', ' ')}}</strong></li>
+                        <li>Cantidad: <strong>{{$actual->cantidad}}</strong></li>
+                        <li>Saldo: <strong>{{$actual->saldo}}</strong></li>
+                        <li>Precio: <strong>{{number_format($actual->precio, 0, '.', ' ')}}</strong></li>
                     </ul>
                 </div>
             </div>
             <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg">
-                <li>Descripción: <strong>{{$descripcion}}</strong></li>
+                <li>Descripción: <strong>{{$actual->descripcion}}</strong></li>
             </ul>
             <a href="#" wire:click.prevent="$dispatch('Inactivando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-backward-fast fa-beat"></i> Volver

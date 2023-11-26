@@ -165,7 +165,7 @@
                                 {{$inventario->almacen->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                <a href="#" wire:click.prevent="show({{$inventario}},{{1}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                <a href="" wire:click.prevent="show({{$inventario->id}},{{1}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                     {{$inventario->producto->name}}
                                 </a>
                             </th>
