@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class InventariosEditar extends Component
 {
     public $id='';
+    public $movimiento;
     public $tipo='';
     public $fecha_movimiento = '';
     public $cantidad='';
@@ -48,19 +49,23 @@ class InventariosEditar extends Component
 
     public function mount($elegido = null)
     {
-        $this->id=$elegido['id'];
-        $this->tipo=$elegido['tipo'];
-        $this->fecha_movimiento=$elegido['fecha_movimiento'];
-        $this->cantidad=$elegido['cantidad'];
-        $this->saldo=$elegido['saldo'];
-        $this->precio=$elegido['precio'];
-        $this->almacen_id=$elegido['almacen_id'];
-        $this->producto_id=$elegido['producto_id'];
-        $this->descripcion=$elegido['descripcion'];
-        $this->almaceName=$elegido['almacen']['name'];
-        //$this->sedeName=$elegido['sede']['name'];
-        $this->productoName=$elegido['producto']['name'];
-        $this->actual($elegido['almacen']['sede_id']);
+        $this->movimiento=Inventario::find($elegido);
+        $this->variables();
+    }
+
+    public function variables(){
+        $this->id=$this->movimiento->id;
+        $this->tipo=$this->movimiento->tipo;
+        $this->fecha_movimiento=$this->movimiento->fecha_movimiento;
+        $this->cantidad=$this->movimiento->cantidad;
+        $this->saldo=$this->movimiento->saldo;
+        $this->precio=$this->movimiento->precio;
+        $this->almacen_id=$this->movimiento->almacen_id;
+        $this->producto_id=$this->movimiento->producto_id;
+        $this->descripcion=$this->movimiento->descripcion;
+        $this->almaceName=$this->movimiento->name;
+        $this->productoName=$this->movimiento->producto->name;
+        $this->actual();
     }
 
     /**
@@ -71,13 +76,13 @@ class InventariosEditar extends Component
     ];
 
     //Seleccionar registro activo
-    public function actual($sede){
+    public function actual(){
         $this->ultimoregistro= Inventario::where('almacen_id', $this->almacen_id)
                                         ->where('producto_id', $this->producto_id)
                                         ->where('status', true)
                                         ->first();
 
-        $sedeac=Sede::whereId($sede)->select('name')->first();
+        $sedeac=Sede::whereId($this->movimiento->almacen->sede->id)->select('name')->first();
         $this->sedeName=$sedeac->name;
     }
 

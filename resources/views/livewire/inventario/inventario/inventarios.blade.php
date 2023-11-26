@@ -126,11 +126,16 @@
                     @foreach ($inventarios as $inventario)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                @can('in_inventarioAnular')
-                                    <a href="#" wire:click.prevent="show({{$inventario}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-blue-500 hover:underline">
-                                        <i class="fa-solid fa-marker"></i> - {{$inventario->id}}
-                                    </a>
-                                @endcan
+                                @if ($inventario->status)
+                                    @can('in_inventarioAnular')
+                                        <a href="" wire:click.prevent="show({{$inventario->id}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-blue-500 hover:underline">
+                                            <i class="fa-solid fa-marker"></i> - {{$inventario->id}}
+                                        </a>
+                                    @endcan
+                                @else
+                                    {{$inventario->id}}
+                                @endif
+
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @switch($inventario->tipo)
