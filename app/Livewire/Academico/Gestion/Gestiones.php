@@ -168,8 +168,6 @@ class Gestiones extends Component
 
     public function notas($item, $id){
 
-        $this->estudiante_id=$id;
-
         $notas=Nota::where('grupo_id', $item)->first();
 
         if($notas){
@@ -182,9 +180,7 @@ class Gestiones extends Component
 
     public function asistencia($item, $id){
 
-        $notas=Nota::where('grupo_id', $item)->first();
-
-        $this->show($notas->id, 1, $id);
+        $this->show($item, 1, $id); //envío id del grupo
     }
 
     public function exportar(){

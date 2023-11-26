@@ -42,11 +42,11 @@
                                     </h2>
                                 </div>
                                 <div>
-                                    <label for="sede" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tienes Overol:</label>
+                                    <label for="sede" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tienes Kit:</label>
                                     <h2 class="font-bold text-gray-900 dark:text-white uppercase">
                                         {{$item->overol}},
                                         @if ($item->overol!=="si")
-                                            Recuerda comprar tu overol.
+                                            Recuerda adquirir tu kit.
                                         @endif
                                     </h2>
                                 </div>
@@ -133,7 +133,7 @@
     @endif
 
     @if ($is_notas)
-        <livewire:academico.nota.individual :nota="$nota" :alumno_id="$alumno_id"/>
+        <livewire:academico.nota.individual :nota="$nota" :alumno_id="$alumno_id" :crt="true"/>
     @endif
 
     @if ($is_asistencia)

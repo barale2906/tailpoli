@@ -81,7 +81,7 @@
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </a>
 
-                                <a href="" wire:click.prevent="asistencia({{$nota}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                <a href="" wire:click.prevent="asistencia({{$nota->grupo->id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                     <i class="fa-regular fa-calendar-days"></i>
                                 </a>
                             </th>
@@ -132,7 +132,7 @@
     @endif
 
     @if ($is_asistencia)
-        <livewire:academico.asistencia.asistencias :elegido="$elegido"/>
+        <livewire:academico.asistencia.asisgestion :elegido="$elegido"/>
     @endif
 
     @push('js')

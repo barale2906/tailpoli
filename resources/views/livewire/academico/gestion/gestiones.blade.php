@@ -285,8 +285,7 @@
     @endif
 
     @if ($is_asistencias)
-        {{-- <livewire:academico.asistencia.asistencias :elegido="$elegido" /> --}}
-        <livewire:academico.asistencia.individual :elegido="$elegido" :alumno_id="$estudiante_id"/>
+        <livewire:academico.asistencia.asisgestion :elegido="$elegido" :estudiante_id="$estudiante_id"/>
     @endif
 
     @push('js')
