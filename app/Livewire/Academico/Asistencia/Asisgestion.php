@@ -19,7 +19,6 @@ class Asisgestion extends Component
     public $asistencias;
     public $encabezado=[];
     public $xls=[];
-    public $contador;
 
     public function mount($elegido=null, $estudiante_id=null){
 
@@ -102,26 +101,37 @@ class Asisgestion extends Component
 
     public function registroAsistencias(){
 
-        $this->asistencias=DB::table('asistencia_detalle')
-                        ->where('status', true)
-                        ->where('asistencia_id', $this->actual->id)
-                        ->orderBy('alumno')
-                        ->get();
+        $this->reset('asistencias', 'encabezado', 'xls');
+
+        if($this->estudiante){
+            $this->asistencias=DB::table('asistencia_detalle')
+                                    ->where('status', true)
+                                    ->where('asistencia_id', $this->actual->id)
+                                    ->where('alumno_id', $this->estudiante->id)
+                                    ->orderBy('alumno')
+                                    ->first();
+        }else{
+            $this->asistencias=DB::table('asistencia_detalle')
+                                    ->where('status', true)
+                                    ->where('asistencia_id', $this->actual->id)
+                                    ->orderBy('alumno')
+                                    ->get();
+        }
+
+
         $this->formaencabezado();
     }
 
     public function formaencabezado(){
-
-            $this->contador=$this->actual->registros;
 
             $this->reset('xls');
             array_push($this->xls, "grupo");
             array_push($this->xls, "profesor");
             array_push($this->xls, "alumno");
 
-            if($this->contador>0){
-                $a=$this->contador;
-                for ($i=1; $i <= $this->contador; $i++) {
+            if($this->actual->registros>0){
+                $a=$this->actual->registros;
+                for ($i=1; $i <= $this->actual->registros; $i++) {
 
                     $fecha="fecha".$a;
                     $fechaxls="fecha".$i;
@@ -134,12 +144,52 @@ class Asisgestion extends Component
 
     public function registro(){
 
+        //Verifica existencia de la fecha
+        $esta=0;
+
+        foreach ($this->encabezado as $value) {
+            if($this->actual->$value===$this->fecha){
+                $esta=1;
+            }
+        }
+
+        if($esta>0){
+            $this->dispatch('alerta', name:'La fecha ya esta cargada, incluya asistencias');
+        }else{
+            $this->asistenciaEncabezado();
+        }
+    }
+
+    public function asistenciaEncabezado(){
+
+        $titulo="fecha".$this->actual->registros+1;
+        Asistencia::whereId($this->actual->id)
+                    ->update([
+                        $titulo         =>$this->fecha,
+                        'registros'     =>$this->actual->registros+1
+                    ]);
+
+        if($this->estudiante){
+            $this->cargaAsistencia($this->asistencias->id, $titulo);
+        }else{
+            $this->cargarActual();
+            $this->dispatch('alerta', name:'La fecha ha sido cargada, incluya asistencias');
+        }
+
     }
 
 
 
-    public function verificaFecha(){
+    public function cargaAsistencia($asis=null,$campo=null){
 
+        DB::table('asistencia_detalle')
+            ->where('id', $asis)
+            ->update([
+                $campo          =>"X",
+                'updated_at'    =>now()
+            ]);
+
+            $this->cargarActual();
     }
 
     public function exportar(){
