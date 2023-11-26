@@ -113,8 +113,8 @@ class NotasEditar extends Component
 
 
     public function mount($elegido = null){
-        $this->id=$elegido['id'];
-        $this->actual=Nota::whereId($elegido['id'])->first();
+        $this->id=$elegido;
+        $this->actual=Nota::whereId($elegido)->first();
         $this->grupo=$this->actual->grupo_id;
         $this->registroNotas();
         $this->formaencabezado();

@@ -166,18 +166,25 @@ class Gestiones extends Component
         $this->is_change = !$this->is_change;
     }
 
-    public function notas($item){
+    public function notas($item, $id){
+
+        $this->estudiante_id=$id;
 
         $notas=Nota::where('grupo_id', $item)->first();
 
-        $this->show($notas, 2);
+        if($notas){
+            $this->show($notas->id,2);
+
+        }else{
+            $this->dispatch('alerta', name:'No se han sacado notas para este grupo');
+        }
     }
 
     public function asistencia($item, $id){
 
         $notas=Nota::where('grupo_id', $item)->first();
 
-        $this->show($notas, 1, $id);
+        $this->show($notas->id, 1, $id);
     }
 
     public function exportar(){

@@ -69,6 +69,8 @@ return new class extends Migration
             $table->string('fecha30')->nullable()->comment('fecha de control');
             $table->string('fecha31')->nullable()->comment('fecha de control');
 
+            $table->boolean('status')->default(true)->comment('false Inactivo, true Activo');
+
             $table->timestamps();
         });
     }

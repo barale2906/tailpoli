@@ -1,7 +1,12 @@
 <div>
-    <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-6 capitalize">
-        <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
-    </a>
+    @if ($crt)
+        <livewire:academico.matricula.matriculas-grupo :elegido="$grupo_id" />
+    @else
+        <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-6 capitalize">
+            <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+        </a>
+    @endif
+
     <div class="relative overflow-x-auto mt-5">
         @if ($notas->count()>0)
             <h1 class="text-center text-lg mt-3">
@@ -10,19 +15,6 @@
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     @can('ac_notaEditar')
-                        @hasrole('Profesor')
-                            @if ($actual->profesor_id===Auth::user()->id)
-                                <tr>
-                                    <th colspan="3"></th>
-                                    @foreach ($mapaencabe as $item)
-                                        <th class="bg-slate-300 text-center text-xl m-3 p-3 rounded-2xl hover:bg-yellow-200" colspan="2" style="cursor: pointer;" wire:click="calificacion({{$item['id']}})">
-                                            <i class="fa-solid fa-person-chalkboard"></i>
-                                        </th>
-                                    @endforeach
-                                    <th></th>
-                                </tr>
-                            @endif
-                        @else
                             <tr>
                                 <th colspan="3"></th>
                                 @foreach ($mapaencabe as $item)
@@ -32,7 +24,15 @@
                                 @endforeach
                                 <th></th>
                             </tr>
-                        @endhasrole
+                            <tr>
+                                <th colspan="3"></th>
+                                @foreach ($mapaencabe as $item)
+                                    <th class="bg-slate-300 text-center text-xl m-3 p-3 rounded-2xl hover:bg-yellow-200" colspan="2" style="cursor: pointer;" wire:click="calificacion({{$item['id']}})">
+                                        <i class="fa-solid fa-person-chalkboard"></i>
+                                    </th>
+                                @endforeach
+                                <th></th>
+                            </tr>
                     @endcan
                     <tr>
                         <th scope="col" class="px-6 py-3" >

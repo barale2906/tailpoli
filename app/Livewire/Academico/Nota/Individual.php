@@ -13,11 +13,19 @@ class Individual extends Component
     public $notas;
     public $encabezado=[];
     public $mapaencabe=[];
+    public $crt=true;
+    public $grupo_id;
+    public $cargar=true;
 
-    public function mount($nota, $alumno_id){
+    public function mount($nota, $alumno_id, $crt=null){
+
+        if($crt){
+            $this->crt=!$this->crt;
+        }
 
         $this->alumno_id=$alumno_id;
         $this->actual=Nota::whereId($nota)->first();
+        $this->grupo_id=$this->actual->grupo_id;
         $this->notasdetalle();
     }
 

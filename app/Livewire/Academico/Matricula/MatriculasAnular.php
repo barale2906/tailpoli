@@ -9,6 +9,7 @@ use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\EstadoCartera;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class MatriculasAnular extends Component
@@ -89,6 +90,38 @@ class MatriculasAnular extends Component
         $ciclo->update([
             'registrados'=>$ciclo->registrados-1
         ]);
+
+        //Inactivar en notas - Asistencia
+        $esta=DB::table('notas_detalle')
+                    ->where('alumno_id', $this->matricula->alumno_id)
+                    ->get();
+
+        if($esta){
+            foreach ($esta as $value) {
+                DB::table('notas_detalle')
+                    ->where('id', $value->id)
+                    ->update([
+                        'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$value->observaciones,
+                        'status'=>false
+                    ]);
+            }
+        }
+
+        $asis=DB::table('asistencia_detalle')
+                    ->where('alumno_id', $this->matricula->alumno_id)
+                    ->get();
+
+        if($asis){
+            foreach ($asis as $value) {
+                DB::table('aistencia_detalle')
+                    ->where('id', $value->id)
+                    ->update([
+                        'status'=>false
+                    ]);
+            }
+        }
+
+
 
         $this->dispatch('alerta', name:'Se ha anulado correctamente la matricula');
         $this->resetFields();
