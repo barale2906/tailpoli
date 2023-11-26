@@ -9,7 +9,6 @@
 
     @if ($is_modify)
         @foreach ($control as $item)
-
             <section class="bg-cyan-50 dark:bg-gray-900 rounded-xl">
                 <div class="py-2 px-1 mx-auto max-w-screen-xl lg:py-4 grid lg:grid-cols-2 gap-2 lg:gap-2">
                     <div class="flex flex-col justify-center">
@@ -54,22 +53,22 @@
                             </div>
 
                             <h5 class="text-semibold md:text-lg sm:text-sm capitalize m-3">Modulos a los que estas inscrito(a):</h5>
-                            @foreach ($item->ciclo->grupos as $iteme)
+                            @foreach ($item->ciclo->ciclogrupos as $iteme)
 
                                 <div class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                     <h5 class="text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
-                                        {{$iteme->modulo->name}}
+                                        {{$iteme->grupo->modulo->name}}
                                     </h5>
                                     <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
-                                        Grupo: {{$iteme->name}}
+                                        Grupo: {{$iteme->grupo->name}}
                                     </p>
                                     <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
-                                        Profesor: {{$iteme->profesor->name}}
+                                        Profesor: {{$iteme->grupo->profesor->name}}
                                     </p>
-                                    <a href="" wire:click.prevent="notas({{$iteme->id}},{{$iteme->profesor_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                    <a href="" wire:click.prevent="notas({{$iteme->id}},{{$iteme->grupo->profesor->id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
                                         <i class="fa-solid fa-magnifying-glass"></i> Notas
                                     </a>
-                                    <a href="" wire:click.prevent="asistencia({{$iteme->id}},{{$iteme->profesor_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                    <a href="" wire:click.prevent="asistencia({{$iteme->id}},{{$iteme->grupo->profesor->id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
                                         <i class="fa-regular fa-calendar-days"></i> Asistencia
                                     </a>
                                 </div>

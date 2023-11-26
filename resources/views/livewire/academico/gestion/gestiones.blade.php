@@ -201,7 +201,7 @@
                                         <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
                                             Profesor: {{$item->grupo->profesor->name}}
                                         </p>
-                                        <a href="" wire:click.prevent="notas({{$item->grupo->id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-9 capitalize">
+                                        <a href="" wire:click.prevent="notas({{$item->id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-9 capitalize">
                                             <i class="fa-solid fa-magnifying-glass"></i> Notas
                                         </a>
 
@@ -281,12 +281,12 @@
     @endif
 
     @if ($is_notas)
-        <livewire:academico.nota.notas-editar :elegido="$elegido"/>
+    <livewire:academico.nota.individual :nota="$nota" :alumno_id="$alumno_id"/>
     @endif
 
     @if ($is_asistencias)
-        {{-- <livewire:academico.asistencia.individual :elegido="$elegido" :estudiante_id="$estudiante_id" /> --}}
-        <livewire:academico.asistencia.asistencias :elegido="$elegido" />
+        {{-- <livewire:academico.asistencia.asistencias :elegido="$elegido" /> --}}
+        <livewire:academico.asistencia.individual :elegido="$nota" :alumno_id="$alumno_id" :crt="true"/>
     @endif
 
     @push('js')
