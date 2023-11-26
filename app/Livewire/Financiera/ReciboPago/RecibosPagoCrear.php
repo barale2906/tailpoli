@@ -5,7 +5,6 @@ namespace App\Livewire\Financiera\ReciboPago;
 use App\Models\Academico\Control;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
-use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;

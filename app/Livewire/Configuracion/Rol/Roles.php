@@ -19,6 +19,7 @@ class Roles extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $is_permiso=false;
 
     public $elegido;
 
@@ -83,11 +84,38 @@ class Roles extends Component
         $this->is_deleting = !$this->is_deleting;
     }
 
+    //Activar evento
+    #[On('permisos')]
+    //Mostrar formulario de inactivación
+    public function updatedIsPermiso(){
+        $this->is_modify = !$this->is_modify;
+        $this->is_permiso=!$this->is_permiso;
+    }
+
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de inactivación
+    public function volver()
+    {
+        $this->reset(
+            'is_creating',
+            'is_modify',
+            'is_deleting',
+            'is_editing',
+            'is_permiso'
+        );
+
+    }
+
     private function roles()
     {
         return Role::orderBy($this->ordena, $this->ordenado)
                     ->paginate($this->pages);
     }
+
+
+
+
 
     public function render()
     {

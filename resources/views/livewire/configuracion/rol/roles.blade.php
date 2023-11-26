@@ -1,6 +1,6 @@
 <div>
     <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
-        <h1 class="text-xl uppercase">ubicación</h1>
+        <h1 class="text-xl uppercase">roles y permisos</h1>
     </div>
 
     @if ($is_modify)
@@ -8,6 +8,11 @@
             @can('co_rolCrear')
                 <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
                     <i class="fa-solid fa-plus"></i> crear
+                </a>
+            @endcan
+            @can('co_rolCrear')
+                <a href="#" wire:click.prevent="$dispatch('permisos')" class="w-auto text-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                    <i class="fa-solid fa-ship"></i> Asignar Permiso
                 </a>
             @endcan
         </div>
@@ -100,6 +105,10 @@
 
     @if ($is_deleting)
         <livewire:configuracion.rol.roles-inactivar :elegido="$elegido" />
+    @endif
+
+    @if ($is_permiso)
+        <livewire:configuracion.rol.permisos />
     @endif
 
     @push('js')
