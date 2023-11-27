@@ -346,6 +346,10 @@
         <livewire:financiera.configuracion-pago.configuracion-otros-edit :elegido="$elegido"/>
     @endif
 
+    @if ($is_otrosInactivar)
+        <livewire:financiera.configuracion-pago.configuracion-otros-inactivar :elegido="$elegido"/>
+    @endif
+
     @push('js')
         <script>
             document.addEventListener('livewire:initialized', function (){

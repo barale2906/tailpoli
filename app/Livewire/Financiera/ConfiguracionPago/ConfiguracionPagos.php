@@ -22,6 +22,7 @@ class ConfiguracionPagos extends Component
     public $is_deleting = false;
     public $is_otros=false;
     public $is_otrosEdit=false;
+    public $is_otrosInactivar=false;
 
     public $lpstate=true;
     public $otrostate=false;
@@ -38,7 +39,7 @@ class ConfiguracionPagos extends Component
 
     public function cancelar()
     {
-        $this->reset('is_modify','is_creating','is_editing','is_deleting','is_otros', 'is_otrosEdit');
+        $this->reset('is_modify','is_creating','is_editing','is_deleting','is_otros', 'is_otrosEdit', 'is_otrosInactivar');
     }
 
     public function cambiaVista(){
@@ -121,6 +122,10 @@ class ConfiguracionPagos extends Component
 
             case 2:
                 $this->is_otrosEdit=!$this->is_otrosEdit;
+                break;
+
+            case 3:
+                $this->is_otrosInactivar=!$this->is_otrosInactivar;
                 break;
         }
     }

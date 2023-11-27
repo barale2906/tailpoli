@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Financiera\ConfiguracionPago;
 
-use App\Models\Financiera\ConfiguracionPago;
+use App\Models\Financiera\ConfPagOtros;
+use App\Models\Financiera\ConfPagOtrosDet;
 use Livewire\Component;
 
-class ConfiguracionPagosInactivar extends Component
+class ConfiguracionOtrosInactivar extends Component
 {
     public $descripcion = '';
     public $id = '';
@@ -28,7 +29,11 @@ class ConfiguracionPagosInactivar extends Component
     {
 
         //Actualizar registros
-        ConfiguracionPago::whereId($this->id)->update([
+        ConfPagOtros::whereId($this->id)->update([
+            'status'=>!$this->status
+        ]);
+
+        ConfPagOtrosDet::where('conf_pag_otro_id',$this->id)->update([
             'status'=>!$this->status
         ]);
 
@@ -41,6 +46,6 @@ class ConfiguracionPagosInactivar extends Component
 
     public function render()
     {
-        return view('livewire.financiera.configuracion-pago.configuracion-pagos-inactivar');
+        return view('livewire.financiera.configuracion-pago.configuracion-otros-inactivar');
     }
 }
