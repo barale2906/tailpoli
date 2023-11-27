@@ -27,4 +27,9 @@ class ConceptoPago extends Model
         return $this->hasMany(Cartera::class);
     }
 
+    public function otros():HasMany
+    {
+        return $this->hasMany(ConfPagOtrosDet::class);
+    }
+
 }

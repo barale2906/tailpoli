@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('name')->comment('nombre de la lista de precios');
             $table->longText('descripcion')->comment('descripción de la lista de precios');
 
+            $table->boolean('status')->default(true)->comment('false inactiva, true activa');
+
             $table->timestamps();
         });
     }
