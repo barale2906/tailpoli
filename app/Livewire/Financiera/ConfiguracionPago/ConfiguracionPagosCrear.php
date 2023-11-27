@@ -145,7 +145,7 @@ class ConfiguracionPagosCrear extends Component
         unset($this->moduloDepen[$indice]);
     }
 
-    // Crear Regimen de Salud
+    // Crear
     public function new(){
         // validate
         $this->validate();

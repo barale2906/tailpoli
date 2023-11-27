@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('conf_pag_otro_id');
             $table->foreign('conf_pag_otro_id')->references('id')->on('conf_pag_otros');
 
-            $table->double('valor')->comment('valor del producto');
+            $table->double('precio')->comment('valor del concepto');
 
             $table->boolean('status')->default(true)->comment('false inactiva, true activa');
 

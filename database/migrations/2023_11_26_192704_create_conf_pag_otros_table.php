@@ -18,9 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('sector_id');
             $table->foreign('sector_id')->references('id')->on('sectors');
 
-            $table->date('fecha_inicio')->comment('Fecha inicio de la vigencia de la configuracion');
-            $table->date('fecha_fin')->comment('Fecha fin de la vigencia de la configuracion');
-            $table->string('name')->comment('nombre de la lista de precios');
+            $table->date('inicia')->comment('Fecha inicio de la vigencia de la configuracion');
+            $table->date('finaliza')->comment('Fecha fin de la vigencia de la configuracion');
             $table->longText('descripcion')->comment('descripción de la lista de precios');
 
             $table->boolean('status')->default(true)->comment('false inactiva, true activa');
