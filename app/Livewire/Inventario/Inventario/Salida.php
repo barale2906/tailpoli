@@ -11,12 +11,15 @@ use App\Models\Inventario\Inventario;
 use App\Models\Inventario\PagoConfig;
 use App\Models\Inventario\Producto;
 use App\Models\User;
+use App\Traits\MailTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Salida extends Component
 {
+    use MailTrait;
+
     public $almacen;
     public $cantidad;
     public $precio;
@@ -497,7 +500,11 @@ class Salida extends Component
             $this->fin=!$this->fin;
             $this->dispatch('mostodo');
 
+            //Enviar por correo electrónico
+            $this->claseEmail(1,$this->recibo->id);
+
             $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$this->recibo->id;
+
 
             $this->redirect($ruta);
 
