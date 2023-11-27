@@ -58,7 +58,7 @@
                                         @php
                                             $valor="'".$dato."'";
                                         @endphp
-                                        <a href="" wire:click.prevent="cargaAsistencia({{$asistencias->id}},{{$valor}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                        <a href="" wire:click.prevent="cargaAsistencia({{$asistencias->id}},{{$valor}}, {{$asistencias->alumno_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                             <i class="fa-solid fa-plane-arrival"></i>
                                         </a>
                                     @endif
@@ -79,7 +79,7 @@
                                             @php
                                                 $valor="'".$dato."'";
                                             @endphp
-                                            <a href="" wire:click.prevent="cargaAsistencia({{$item->id}},{{$valor}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                            <a href="" wire:click.prevent="cargaAsistencia({{$item->id}},{{$valor}},{{$item->alumno_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                                 <i class="fa-solid fa-plane-arrival"></i>
                                             </a>
                                         @endif

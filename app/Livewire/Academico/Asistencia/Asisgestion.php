@@ -4,6 +4,7 @@ namespace App\Livewire\Academico\Asistencia;
 
 use App\Exports\AcaAsistenciaExport;
 use App\Models\Academico\Asistencia;
+use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -144,6 +145,8 @@ class Asisgestion extends Component
 
     public function registro(){
 
+        $this->cargarActual();
+
         //Verifica existencia de la fecha
         $esta=0;
 
@@ -180,7 +183,7 @@ class Asisgestion extends Component
 
 
 
-    public function cargaAsistencia($asis=null,$campo=null){
+    public function cargaAsistencia($asis=null,$campo=null,$alumno=null){
 
         DB::table('asistencia_detalle')
             ->where('id', $asis)
@@ -189,7 +192,17 @@ class Asisgestion extends Component
                 'updated_at'    =>now()
             ]);
 
-            $this->cargarActual();
+        $this->cargarActual();
+
+
+        $fecha=$this->actual->$campo;
+
+        //Registrar control
+        Control::where('estudiante_id', $alumno)
+                ->where('status', true)
+                ->update([
+                    'ultima_asistencia'=>$fecha,
+                ]);
     }
 
     public function exportar(){
