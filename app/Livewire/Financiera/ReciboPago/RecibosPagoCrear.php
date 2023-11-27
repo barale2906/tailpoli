@@ -12,6 +12,7 @@ use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
 use App\Traits\ComunesTrait;
+use App\Traits\MailTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -20,6 +21,7 @@ use Livewire\Component;
 class RecibosPagoCrear extends Component
 {
     use ComunesTrait;
+    use MailTrait;
 
     public $medio='';
     public $observaciones='';
@@ -396,11 +398,6 @@ class RecibosPagoCrear extends Component
         }
 
 
-
-
-
-
-
         //Eliminar datos de apoyo
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
@@ -413,6 +410,10 @@ class RecibosPagoCrear extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('cancelando');
+
+        //Enviar por correo electrónico
+        $this->claseEmail(1,$recibo->id);
+
 
         $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$recibo->id;
 
