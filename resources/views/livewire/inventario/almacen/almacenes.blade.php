@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
+    <div class="bg-green-200 rounded-lg align-middle p-2 mb-2 text-center">
         <h1 class="text-xl uppercase">almacenes </h1>
     </div>
     @if ($is_modify)
@@ -61,7 +61,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @can('in_almacenEditar')
                                     @if ($almacen->status===1)
-                                        <a href="#" wire:click.prevent="show({{$almacen}},{{0}})" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                        <a href="#" wire:click.prevent="show({{$almacen}},{{0}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                             <i class="fa-solid fa-marker"></i>
                                         </a>
                                     @endif
@@ -76,7 +76,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="mt-2 p-1 w-auto rounded-lg grid grid-cols-2 gap-4 bg-blue-100">
+            <div class="mt-2 p-1 w-auto rounded-lg grid grid-cols-2 gap-4 bg-green-100">
                 <div>
                     <label class="relative inline-flex items-center mb-4 cursor-pointer">
                         <span class="ml-3 mr-3 text-sm font-medium text-gray-900 dark:text-gray-300">Registros:</span>
