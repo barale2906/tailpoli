@@ -19,6 +19,7 @@ class ConfiguracionPagos extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $is_otros=false;
 
     public $elegido;
 
@@ -26,6 +27,23 @@ class ConfiguracionPagos extends Component
     public $buscamin='';
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    //Activar evento
+    #[On('cancelando')]
+
+    public function cancelar()
+    {
+        $this->reset('is_modify','is_creating','is_editing','is_deleting','is_otros');
+    }
+
+    //Activar evento
+    #[On('otros')]
+    //Mostrar formulario de inactivación
+    public function updatedIsOtros()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_otros = !$this->is_otros;
+    }
 
     //Cargar variable
     public function buscaText(){

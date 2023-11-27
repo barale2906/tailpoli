@@ -3,6 +3,7 @@
 namespace App\Models\Configuracion;
 
 use App\Models\Financiera\ConfiguracionPago;
+use App\Models\Financiera\ConfPagOtros;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,12 @@ class Sector extends Model
     public function configpagos(): HasMany
     {
         return $this->hasMany(ConfiguracionPago::class);
+    }
+
+    //Relación uno a muchos
+    public function configotros(): HasMany
+    {
+        return $this->hasMany(ConfPagOtros::class);
     }
 
     //Relación uno a muchos
