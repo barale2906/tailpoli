@@ -3,6 +3,7 @@
 namespace App\Livewire\Financiera\ConfiguracionPago;
 
 use App\Models\Financiera\ConfiguracionPago;
+use App\Models\Financiera\ConfPagOtros;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,11 +16,15 @@ class ConfiguracionPagos extends Component
     public $ordenado='DESC';
     public $pages = 10;
 
-    public $is_modify = false;
+    public $is_modify = true;
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
-    public $is_otros=true;
+    public $is_otros=false;
+    public $is_otrosEdit=false;
+
+    public $lpstate=true;
+    public $otrostate=false;
 
     public $elegido;
 
@@ -33,7 +38,12 @@ class ConfiguracionPagos extends Component
 
     public function cancelar()
     {
-        $this->reset('is_modify','is_creating','is_editing','is_deleting','is_otros');
+        $this->reset('is_modify','is_creating','is_editing','is_deleting','is_otros', 'is_otrosEdit');
+    }
+
+    public function cambiaVista(){
+        $this->lpstate=!$this->lpstate;
+        $this->otrostate=!$this->otrostate;
     }
 
     //Activar evento
@@ -100,10 +110,18 @@ class ConfiguracionPagos extends Component
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
 
-        if($act===0){
-            $this->is_editing=!$this->is_editing;
-        }else{
-            $this->is_deleting=!$this->is_deleting;
+        switch ($act) {
+            case 0:
+                $this->is_editing=!$this->is_editing;
+                break;
+
+            case 1:
+                $this->is_deleting=!$this->is_deleting;
+                break;
+
+            case 2:
+                $this->is_otrosEdit=!$this->is_otrosEdit;
+                break;
         }
     }
 
@@ -135,10 +153,18 @@ class ConfiguracionPagos extends Component
                         ->paginate($this->pages);
     }
 
+    private function otros()
+    {
+        return ConfPagOtros::where('descripcion', 'like', "%".$this->buscamin."%")
+                                    ->orderBy($this->ordena, $this->ordenado)
+                                    ->paginate($this->pages);
+    }
+
     public function render()
     {
         return view('livewire.financiera.configuracion-pago.configuracion-pagos', [
             'configuraciones'=>$this->configuraciones(),
+            'otros'=>$this->otros(),
         ]);
     }
 }

@@ -125,7 +125,9 @@ class ConfiguracionOtros extends Component
             foreach ($this->elegidos as $value) {
                 ConfPagOtrosDet::create([
                     'conf_pag_otro_id'  => $config->id,
-                    'precio'            => $value
+                    'concepto_pago_id'  => $value['id'],
+                    'precio'            => $value['precio'],
+                    'name'              => $value['name']
                 ]);
             }
 
