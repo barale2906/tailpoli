@@ -1,8 +1,8 @@
-<x-admin-layout>
+<x-polidotaciones-layout>
     @push('title')
         Inventarios
     @endpush
 
     <livewire:inventario.inventario.inventarios />
 
-</x-admin-layout>
+</x-polidotaciones-layout>
