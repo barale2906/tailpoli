@@ -6,6 +6,8 @@ use App\Models\Academico\Control;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
+use App\Models\Financiera\ConfPagOtros;
+use App\Models\Financiera\ConfPagOtrosDet;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
@@ -37,6 +39,8 @@ class RecibosPagoCrear extends Component
     public $fecha_pago;
     public $ruta;
 
+    public $listaotros;
+
 
     public $valor=0;
     public $conceptos=0;
@@ -62,6 +66,26 @@ class RecibosPagoCrear extends Component
         $this->ruta=$ruta;
 
         $this->cierre();
+    }
+
+    public function updatedSedeId(){
+        $sede=Sede::find($this->sede_id);
+        $config=ConfPagOtros::where('status', true)
+                                        ->where('sector_id', $sede->sector_id)
+                                        ->select('id')
+                                        ->first();
+
+        if($config){
+            $this->listaotros=ConfPagOtrosDet::where('conf_pag_otro_id', $config->id)
+                                            ->where('status', true)
+                                            ->orderBy('name', 'ASC')
+                                            ->get();
+        }else{
+            $this->dispatch('alerta', name:'No hay lista de precios para esta sede');
+        }
+
+
+
     }
 
     #[On('cargados')]
@@ -102,10 +126,12 @@ class RecibosPagoCrear extends Component
                                     ->sum('saldo');
     }
 
-    public function asigOtro($id, $item){
+    public function asigOtro($id, $item,$conf=null){
+        //dd($conf);
         if($item===0){
             $ya=0;
-            $this->saldo=$this->valor;
+            $this->saldo=$conf['precio'];
+            $this->valor=$conf['precio'];
         }else{
             //Verificar si el valor mayor a la 1/2
             $mitad=$item['saldo']/2;
@@ -144,35 +170,25 @@ class RecibosPagoCrear extends Component
             }
 
             if($this->valor>0){
-                foreach ($this->concep as $value) {
+                DB::table('apoyo_recibo')->insert([
+                    'tipo'=>$this->tipo,
+                    'id_creador'=>Auth::user()->id,
+                    'id_concepto'=>$conf['concepto_pago_id'],
+                    'concepto'=>$conf['name'],
+                    'valor'=>$this->valor,
+                    'saldo'=>$this->saldo,
+                    'id_cartera'=>$conf['id']
+                ]);
 
-                    if($value['id']===intval($this->conceptos)){
+                $this->Total=$this->Total+$this->valor;
 
-                        if($this->saldo<$this->valor){
-                            $this->valor=$this->saldo;
-                        }
+                $this->reset(
+                            'valor' ,
+                            'conceptos',
+                            'name'
+                            );
 
-                        DB::table('apoyo_recibo')->insert([
-                            'tipo'=>$this->tipo,
-                            'id_creador'=>Auth::user()->id,
-                            'id_concepto'=>$this->conceptos,
-                            'concepto'=>$value['name'],
-                            'valor'=>$this->valor,
-                            'saldo'=>$this->saldo,
-                            'id_cartera'=>$this->id_cartera
-                        ]);
-
-                        $this->Total=$this->Total+$this->valor;
-
-                        $this->reset(
-                                    'valor' ,
-                                    'conceptos',
-                                    'name'
-                                    );
-
-                        $this->cargando();
-                    }
-                }
+                $this->cargando();
             }else{
                 $this->dispatch('alerta', name:'VALOR Mayor que cero');
                 $this->reset(
@@ -425,19 +441,10 @@ class RecibosPagoCrear extends Component
                         );
     }
 
-    private function concePagos(){
-        $this->concep=ConceptoPago::where('status', true)
-                            ->orderBy('name')
-                            ->get();
-
-        return $this->concep;
-    }
-
     public function render(){
         return view('livewire.financiera.recibo-pago.recibos-pago-crear',[
             'sedes'=>$this->sedes(),
-            'estudiantes'=>$this->estudiantes(),
-            'concePagos'=>$this->concePagos()
+            'estudiantes'=>$this->estudiantes()
         ]);
     }
 }
