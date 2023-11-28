@@ -173,7 +173,7 @@ class Asisgestion extends Component
                     ]);
 
         if($this->estudiante){
-            $this->cargaAsistencia($this->asistencias->id, $titulo);
+            $this->cargaAsistencia($this->asistencias->id, $titulo, $this->estudiante->id);
         }else{
             $this->cargarActual();
             $this->dispatch('alerta', name:'La fecha ha sido cargada, incluya asistencias');
