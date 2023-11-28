@@ -164,7 +164,7 @@ class MenuSeeder extends Seeder
                 ]);
 
         $m4=Menu::create([
-                    'name'              => 'INVENTARIO',
+                    'name'              => 'POLIDOTACIONES',
                     'identificaRuta'    => 'inventario.*',
                     'permiso'           => 'Inventario',
                     'icono'             => 'fa-solid fa-cart-flatbed text-gray-500'

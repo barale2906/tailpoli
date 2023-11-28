@@ -188,7 +188,7 @@ class Entrada extends Component
             //refresh
             $this->dispatch('refresh');
             $this->dispatch('borrarMov');
-            $this->dispatch('created');
+            $this->dispatch('cancelando');
 
         }else{
             $this->dispatch('alerta', name:'Debe cargar productos');
