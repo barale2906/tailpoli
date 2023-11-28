@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-blue-200 rounded-lg align-middle p-5 mb-2 text-center">
+    <div class="bg-green-200 rounded-lg align-middle p-5 mb-2 text-center">
         <h1 class="text-xl uppercase mb-3">Productos Pendientes por entregar</h1>
         @can('in_export')
             <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-3 mt-2 capitalize" >
@@ -112,11 +112,11 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="mt-2 p-1 w-auto rounded-lg grid grid-cols-2 gap-4 bg-blue-100">
+        <div class="mt-2 p-1 w-auto rounded-lg grid grid-cols-2 gap-4 bg-green-100">
             <div>
                 <label class="relative inline-flex items-center mb-4 cursor-pointer">
                     <span class="ml-3 mr-3 text-sm font-medium text-gray-900 dark:text-gray-300">Registros:</span>
-                    <select wire:click="paginas($event.target.value)" id="countries" class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select wire:click="paginas($event.target.value)" id="countries" class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                         <option value=15>15</option>
                         <option value=20>20</option>
                         <option value=50>50</option>

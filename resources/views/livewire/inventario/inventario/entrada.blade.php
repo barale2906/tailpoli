@@ -4,7 +4,7 @@
             <label for="fecha_movimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Fecha de movimiento:
             </label>
-            <input type="date" id="fecha_movimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="fecha_movimiento">
+            <input type="date" id="fecha_movimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" wire:model.blur="fecha_movimiento">
             @error('fecha_movimiento')
                 <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                     <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
@@ -48,7 +48,7 @@
     @if ($producto)
         <div id="toast-interactive" class="w-full p-4 text-gray-500 bg-gray-100 rounded-lg shadow dark:bg-gray-800 dark:text-gray-400" role="alert">
             <div class="flex">
-                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:text-blue-300 dark:bg-blue-900">
+                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:text-green-300 dark:bg-green-900">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 1v5h-5M2 19v-5h5m10-4a8 8 0 0 1-14.947 3.97M1 10a8 8 0 0 1 14.947-3.97"/>
                     </svg>
@@ -77,15 +77,15 @@
                                 <ul role="list" class="space-y-5 my-7">
                                     <li class="flex space-x-3 items-center">
                                         <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">Cantidad: </span>
-                                        <span class="bg-blue-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{$ultimoregistro->cantidad}}</span>
+                                        <span class="bg-green-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{$ultimoregistro->cantidad}}</span>
                                     </li>
                                     <li class="flex space-x-3 items-center">
                                         <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">Saldo: </span>
-                                        <span class="bg-blue-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-600">{{$ultimoregistro->saldo }}</span>
+                                        <span class="bg-green-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-600">{{$ultimoregistro->saldo }}</span>
                                     </li>
                                     <li class="flex space-x-3 items-center">
                                         <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">Precio: </span>
-                                        <span class="bg-blue-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-600">$ {{ number_format($ultimoregistro->precio, 0, '.', ' ')}}</span>
+                                        <span class="bg-green-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-600">$ {{ number_format($ultimoregistro->precio, 0, '.', ' ')}}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -113,7 +113,7 @@
 
             <div class="mb-6">
                 <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
-                <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cantidad" wire:model.live="cantidad">
+                <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
                 @error('cantidad')
                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
@@ -122,7 +122,7 @@
             </div>
             <div class="mb-6">
                 <label for="precio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio</label>
-                <input type="text" id="precio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Precio de la transacción" wire:model.live="precio">
+                <input type="text" id="precio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Precio de la transacción" wire:model.live="precio">
                 @error('precio')
                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
@@ -197,7 +197,7 @@
 
     <div class="mb-6">
         <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
-        <input type="text" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Datos relevantes" wire:model.blur="descripcion">
+        <input type="text" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Datos relevantes" wire:model.blur="descripcion">
         @error('descripcion')
             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                 <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
@@ -207,7 +207,7 @@
 
     <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 m-2">
         @if ($movimientos)
-            <a href="" wire:click.prevent="new()" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+            <a href="" wire:click.prevent="new()" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-upload"></i> Nuevo Registro
             </a>
         @endif

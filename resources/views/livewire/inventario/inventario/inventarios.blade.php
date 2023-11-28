@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-blue-200 rounded-lg align-middle p-2 mb-2 text-center">
+    <div class="bg-green-200 rounded-lg align-middle p-2 mb-2 text-center">
         <h1 class="text-xl uppercase">movimientos de inventario</h1>
     </div>
 
@@ -128,7 +128,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @if ($inventario->status)
                                     @can('in_inventarioAnular')
-                                        <a href="" wire:click.prevent="show({{$inventario->id}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-blue-500 hover:underline">
+                                        <a href="" wire:click.prevent="show({{$inventario->id}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-green-500 hover:underline">
                                             <i class="fa-solid fa-marker"></i> - {{$inventario->id}}
                                         </a>
                                     @endcan
@@ -165,7 +165,7 @@
                                 {{$inventario->almacen->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                <a href="" wire:click.prevent="show({{$inventario->id}},{{1}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                <a href="" wire:click.prevent="show({{$inventario->id}},{{1}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
                                     {{$inventario->producto->name}}
                                 </a>
                             </th>
@@ -188,11 +188,11 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="mt-2 p-1 w-auto rounded-lg grid grid-cols-2 gap-4 bg-blue-100">
+            <div class="mt-2 p-1 w-auto rounded-lg grid grid-cols-2 gap-4 bg-green-100">
                 <div>
                     <label class="relative inline-flex items-center mb-4 cursor-pointer">
                         <span class="ml-3 mr-3 text-sm font-medium text-gray-900 dark:text-gray-300">Registros:</span>
-                        <select wire:click="paginas($event.target.value)" id="countries" class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select wire:click="paginas($event.target.value)" id="countries" class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                             <option value=15>15</option>
                             <option value=20>20</option>
                             <option value=50>50</option>
