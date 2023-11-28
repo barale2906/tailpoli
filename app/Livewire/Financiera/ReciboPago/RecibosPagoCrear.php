@@ -47,7 +47,7 @@ class RecibosPagoCrear extends Component
     public $valor=0;
     public $conceptos=0;
     public $concep=[];
-    public $nameConcep='';
+    public $nameConcep;
     public $Total=0;
     public $control=[];
 
@@ -134,6 +134,9 @@ class RecibosPagoCrear extends Component
             $ya=0;
             $this->saldo=$conf['precio'];
             $this->valor=$conf['precio'];
+            $this->conceptos=$conf['concepto_pago_id'];
+            $this->nameConcep=$conf['name'];
+            //$this->id_cartera=$conf['id'];
         }else{
             //Verificar si el valor mayor a la 1/2
             $mitad=$item['saldo']/2;
@@ -145,6 +148,17 @@ class RecibosPagoCrear extends Component
 
             //Verificar que no se haya cargado el dato
             $ya= DB::table('apoyo_recibo')->where('id_cartera',$item['id'])->count();
+
+            //Obtener nombre del concepto
+            $this->conceptos=intval($this->conceptos);
+
+            foreach ($this->concep as $value) {
+
+                if($value->id===$this->conceptos){
+                    $this->nameConcep=$value->name;
+                }
+
+            }
         }
 
         if($ya>0){
@@ -171,26 +185,29 @@ class RecibosPagoCrear extends Component
                     break;
             }
 
+
+
             if($this->valor>0){
-                DB::table('apoyo_recibo')->insert([
-                    'tipo'=>$this->tipo,
-                    'id_creador'=>Auth::user()->id,
-                    'id_concepto'=>$conf['concepto_pago_id'],
-                    'concepto'=>$conf['name'],
-                    'valor'=>$this->valor,
-                    'saldo'=>$this->saldo,
-                    'id_cartera'=>$conf['id']
-                ]);
 
-                $this->Total=$this->Total+$this->valor;
+                    DB::table('apoyo_recibo')->insert([
+                        'tipo'=>$this->tipo,
+                        'id_creador'=>Auth::user()->id,
+                        'id_concepto'=>$this->conceptos,
+                        'concepto'=>$this->nameConcep,
+                        'valor'=>$this->valor,
+                        'saldo'=>$this->saldo,
+                        'id_cartera'=>$this->id_cartera
+                    ]);
 
-                $this->reset(
-                            'valor' ,
-                            'conceptos',
-                            'name'
-                            );
+                    $this->Total=$this->Total+$this->valor;
 
-                $this->cargando();
+                    $this->reset(
+                                'valor' ,
+                                'conceptos',
+                                'name'
+                                );
+
+                    $this->cargando();
             }else{
                 $this->dispatch('alerta', name:'VALOR Mayor que cero');
                 $this->reset(
@@ -199,7 +216,10 @@ class RecibosPagoCrear extends Component
                     'name'
                     );
             }
+
         }
+
+
 
     }
 
@@ -442,10 +462,19 @@ class RecibosPagoCrear extends Component
                         );
     }
 
+    private function concePagos(){
+        $this->concep=ConceptoPago::where('status', true)
+                            ->orderBy('name')
+                            ->get();
+
+        return $this->concep;
+    }
+
     public function render(){
         return view('livewire.financiera.recibo-pago.recibos-pago-crear',[
             'sedes'=>$this->sedes(),
-            'estudiantes'=>$this->estudiantes()
+            'estudiantes'=>$this->estudiantes(),
+            'concePagos'=>$this->concePagos()
         ]);
     }
 }

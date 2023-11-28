@@ -71,26 +71,22 @@ class GruposEditar extends Component
         $this->validate();
 
         //Actualizar registros
-        if($this->start_date<$this->finish_date){
-            Grupo::whereId($this->id)->update([
-                'name'=>strtolower($this->name),/*
-                'start_date'        =>$this->start_date,
-                'finish_date'       =>$this->finish_date, */
-                'quantity_limit'    =>$this->quantity_limit,
-                'modulo_id'         =>$this->modulo_id,
-                'sede_id'           =>$this->sede_id,
-                'profesor_id'       =>$this->profesor_id
-            ]);
+        Grupo::whereId($this->id)->update([
+            'name'=>strtolower($this->name),/*
+            'start_date'        =>$this->start_date,
+            'finish_date'       =>$this->finish_date, */
+            'quantity_limit'    =>$this->quantity_limit,
+            'modulo_id'         =>$this->modulo_id,
+            'sede_id'           =>$this->sede_id,
+            'profesor_id'       =>$this->profesor_id
+        ]);
 
-            $this->dispatch('alerta', name:'Se ha modificado correctamente el grupo: '.$this->name);
-            $this->resetFields();
+        $this->dispatch('alerta', name:'Se ha modificado correctamente el grupo: '.$this->name);
+        $this->resetFields();
 
-            //refresh
-            $this->dispatch('refresh');
-            $this->dispatch('Editando');
-        }else{
-            $this->dispatch('alerta', name:'La fecha de inicio debe ser menor a la fecha de finalización.');
-        }
+        //refresh
+        $this->dispatch('refresh');
+        $this->dispatch('Editando');
     }
 
     private function modulos()
