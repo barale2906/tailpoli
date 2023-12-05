@@ -15,6 +15,7 @@ return new class extends Migration
             $table->comment('modulos dentro de cada curso');
             $table->id();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->boolean('dependencia')->default(false)->comment('false no depende de otros modulos, true depende de otros modulos');
             $table->boolean('status')->default(true)->comment('false Inactivo, true activo');
 

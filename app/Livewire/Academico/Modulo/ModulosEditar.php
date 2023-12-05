@@ -10,6 +10,7 @@ use Livewire\Component;
 class ModulosEditar extends Component
 {
     public $name = '';
+    public $slug;
     public $curso_id = '';
     public $id = '';
     public $moduloDepen=[];
@@ -22,6 +23,7 @@ class ModulosEditar extends Component
      */
     protected $rules = [
         'name' => 'required|max:100',
+        'slug' => 'required|max:100',
         'id'    => 'required',
         'curso_id'=>'required'
     ];
@@ -36,6 +38,7 @@ class ModulosEditar extends Component
 
     public function mount($elegido = null){
         $this->name=$elegido['name'];
+        $this->slug=$elegido['slug'];
         $this->curso_id=$elegido['curso_id'];
         $this->dependencia=$elegido['dependencia'];
         $this->id=$elegido['id'];
@@ -89,6 +92,7 @@ class ModulosEditar extends Component
             //Actualizar registro
             Modulo::whereId($this->id)->update([
                                 'name'=>strtolower($this->name),
+                                'slug'=>$this->slug,
                                 'curso_id'=>$this->curso_id,
                                 'dependencia'=>true
                             ]);
@@ -105,6 +109,7 @@ class ModulosEditar extends Component
         }else{
             Modulo::whereId($this->id)->update([
                         'name'=>strtolower($this->name),
+                        'slug'=>$this->slug,
                         'curso_id'=>$this->curso_id,
                         'dependencia'=>false
                     ]);

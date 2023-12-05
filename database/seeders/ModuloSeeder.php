@@ -17,12 +17,14 @@ class ModuloSeeder extends Seeder
 
         $m1=Modulo::create([
             'name'              =>'kit de arrastre',
+            'slug'              =>'KitArra',
             'curso_id'          =>1,
         ]);
 
         $m2=Modulo::create([
                 'name'              =>'sistema de arranque',
                 'curso_id'          =>1,
+                'slug'              =>'SisArra',
                 //'dependencia'       =>true
             ]);
 
@@ -37,6 +39,7 @@ class ModuloSeeder extends Seeder
         $m3=Modulo::create([
                     'name'              =>'manejo de computadora',
                     'curso_id'          =>1,
+                    'slug'              =>'ManCompu',
                     //'dependencia'       =>true
                 ]);
 
@@ -58,12 +61,14 @@ class ModuloSeeder extends Seeder
 
         $m4=Modulo::create([
             'name'              =>'transmisión',
-            'curso_id'          =>2
+            'curso_id'          =>2,
+            'slug'              =>'Trans',
         ]);
 
         $m5=Modulo::create([
                     'name'              =>'diferenciales',
                     'curso_id'          =>2,
+                    'slug'              =>'diferen',
                     //'dependencia'       =>true
                 ]);
 
@@ -77,17 +82,20 @@ class ModuloSeeder extends Seeder
 
         $m6=Modulo::create([
             'name'              =>'frenos',
-            'curso_id'          =>2
+            'curso_id'          =>2,
+            'slug'              =>'frenos',
         ]);
 
         $m7=Modulo::create([
             'name'              =>'bajos',
-            'curso_id'          =>3
+            'curso_id'          =>3,
+            'slug'              =>'bajos',
         ]);
 
         $m8=Modulo::create([
                         'name'              =>'equalizadores',
                         'curso_id'          =>3,
+                        'slug'              =>'equaliz',
                         //'dependencia'       =>false
                     ]);
 
@@ -103,17 +111,20 @@ class ModuloSeeder extends Seeder
 
         $m9=Modulo::create([
             'name'              =>'video',
-            'curso_id'          =>3
+            'curso_id'          =>3,
+            'slug'              =>'vid',
         ]);
 
         $m10=Modulo::create([
             'name'              =>'tiempos de sincronización',
-            'curso_id'          =>4
+            'curso_id'          =>4,
+            'slug'              =>'TiemSinc',
         ]);
 
         $m11=Modulo::create([
                         'name'              =>'tiempos de explosión',
                         'curso_id'          =>4,
+                        'slug'              =>'TiemExplo',
                         //'dependencia'       =>true
                     ]);
 
@@ -128,6 +139,7 @@ class ModuloSeeder extends Seeder
         $m12=Modulo::create([
                         'name'              =>'ajustes de mezcla',
                         'curso_id'          =>4,
+                        'slug'              =>'AjusMez',
                         //'dependencia'       =>true
                     ]);
 

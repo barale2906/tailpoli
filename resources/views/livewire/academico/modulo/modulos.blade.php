@@ -52,6 +52,18 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" style="modulor: pointer;" wire:click="organizar('slug')">
+                            Código modulo
+                            @if ($ordena != 'slug')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
                         <th scope="col" class="px-6 py-3" style="modulor: pointer;" wire:click="organizar('name')">
                             modulo
                             @if ($ordena != 'name')
@@ -90,10 +102,13 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$modulo->id}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                {{$modulo->slug}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$modulo->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$modulo->curso->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">

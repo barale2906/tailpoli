@@ -10,6 +10,7 @@ use Livewire\Component;
 class ModulosCrear extends Component
 {
     public $name = '';
+    public $slug;
     public $curso_id = '';
     public $cursodet;
     public $mostrar=false;
@@ -25,6 +26,7 @@ class ModulosCrear extends Component
      */
     protected $rules = [
         'name' => 'required|max:100',
+        'slug' => 'required|max:100',
         'curso_id'=>'required'
     ];
 
@@ -77,7 +79,9 @@ class ModulosCrear extends Component
         $this->validate();
 
         //Verificar que no exista el registro en la base de datos
-        $existe=Modulo::Where('name', '=',strtolower($this->name))->count();
+        $existe=Modulo::Where('name', '=',strtolower($this->name))
+                        ->OrWhere('slug', $this->slug)
+                        ->count();
 
         if($existe>0){
             $this->dispatch('alerta', name:'Ya existe este modulo: '.$this->name);
@@ -89,6 +93,7 @@ class ModulosCrear extends Component
                 //Crear registro
                 $mod = Modulo::create([
                     'name'=>strtolower($this->name),
+                    'slug'=>$this->slug,
                     'curso_id'=>strtolower($this->curso_id),
                     'dependencia'=>true
                 ]);
@@ -105,6 +110,7 @@ class ModulosCrear extends Component
             }else{
                 Modulo::create([
                     'name'=>strtolower($this->name),
+                    'slug'=>$this->slug,
                     'curso_id'=>strtolower($this->curso_id)
                 ]);
             }

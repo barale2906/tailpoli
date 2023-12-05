@@ -109,6 +109,7 @@ class Modulos extends Component
                     ->with(['curso'])
                     ->when($this->buscamin, function($query){
                         return $query->where('name', 'like', "%".$this->buscamin."%")
+                                ->orwhere('slug', 'like', "%".$this->buscamin."%")
                                 ->orWhereHas('curso', function($q){
                                     $q->where('name', 'like', "%".$this->buscamin."%");
                                 });
