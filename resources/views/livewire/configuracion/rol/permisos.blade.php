@@ -35,22 +35,38 @@
         @endif
     </div>
     @if ($user)
-        <h1 class="text-lg font-medium text-center mb-5">
+        <h1 class="text-lg font-medium text-center mb-5 mt-5">
             A continuación se presentan los permisos con que cuenta <span class="font-extrabold uppercase text-center text-lg">{{$user->name}}</span>
         </h1>
-        <div class="grid sm:grid-cols-1 md:grid-cols-6 gap-4">
-            @foreach ($listaPermisos as $item)
-                <div class="flex items-center mb-4 capitalize">
-                    <input id="default-checkbox" wire:model="permis" type="checkbox" value="{{$item->id}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 " >
-                    <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                        {{$item->descripcion}}
-                    </label>
+        @foreach ($encabezados as $it)
+            <h2 class="text-lg text-justify mb-6">
+                Permisos para el modulo <strong class="font-extrabold uppercase">{{$it->modulo}}</strong>
+            </h2>
+            <div class="grid sm:grid-cols-1 md:grid-cols-6 gap-4">
+                @foreach ($listaPermisos as $item)
+                    @if ($item->modulo===$it->modulo)
+                        <div class="flex items-center mb-4 capitalize">
+                            <input id="default-checkbox" wire:model="permis" type="checkbox" value="{{$item->id}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 " >
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                {{$item->descripcion}}
+                            </label>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="inline-flex items-center justify-center w-full">
+                <hr class="w-64 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700">
+                <div class="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900">
+                    <i class="fa-solid fa-pen-nib"></i>
                 </div>
-            @endforeach
+            </div>
+        @endforeach
+        <div>
+            <a href="#" wire:click.prevent="actualizar" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                <i class="fa-solid fa-arrows-rotate"></i> actualizar
+            </a>
         </div>
-        <a href="#" wire:click.prevent="actualizar" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-            <i class="fa-solid fa-arrows-rotate"></i> actualizar
-        </a>
+
     @endif
 
 </div>

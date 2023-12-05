@@ -55,7 +55,12 @@ class Permisos extends Component
     }
 
     private function listaPermisos(){
-        return Permission::orderBy('name', 'ASC')
+        return Permission::all();
+    }
+
+    private function encabezados(){
+        return Permission::groupBy('modulo')
+                            ->select('modulo')
                             ->get();
     }
 
@@ -64,6 +69,7 @@ class Permisos extends Component
         return view('livewire.configuracion.rol.permisos',[
             'usuarios'=>$this->usuarios(),
             'listaPermisos'=>$this->listaPermisos(),
+            'encabezados'   => $this->encabezados()
         ]);
     }
 }
