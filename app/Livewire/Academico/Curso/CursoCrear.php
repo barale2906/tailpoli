@@ -8,6 +8,7 @@ use Livewire\Component;
 class CursoCrear extends Component
 {
     public $name = '';
+    public $slug;
     public $tipo = '';
     public $duracion_horas='';
     public $duracion_meses='';
@@ -18,6 +19,7 @@ class CursoCrear extends Component
      */
     protected $rules = [
         'name' => 'required|max:100',
+        'slug' => 'required|max:100',
         'tipo'=>'required',
         'duracion_horas'=>'required|integer|min:1|max:1000',
         'duracion_meses'=>'required|integer|min:1|max:1000',
@@ -38,14 +40,17 @@ class CursoCrear extends Component
         $this->validate();
 
         //Verificar que no exista el registro en la base de datos
-        $existe=Curso::Where('name', '=',strtolower($this->name))->count();
+        $existe=Curso::Where('name', '=',strtolower($this->name))
+                        ->orWhere('slug', '=',$this->slug)
+                        ->count();
 
         if($existe>0){
-            $this->dispatch('alerta', name:'Ya existe este curso: '.$this->name);
+            $this->dispatch('alerta', name:'Ya existe este nombre o abreviación de curso: '.$this->name);
         } else {
             //Crear registro
             Curso::create([
                 'name'=>strtolower($this->name),
+                'slug'=>$this->slug,
                 'tipo'=>strtolower($this->tipo),
                 'duracion_horas'=>strtolower($this->duracion_horas),
                 'duracion_meses'=>strtolower($this->duracion_meses),

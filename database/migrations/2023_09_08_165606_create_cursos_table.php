@@ -15,6 +15,7 @@ return new class extends Migration
             $table->comment('Cursos dictados por el instituto');
             $table->id();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->string('tipo')->comment('Técnico o Práctico');
             $table->double('duracion_horas');
             $table->double('duracion_meses');

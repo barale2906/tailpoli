@@ -8,6 +8,7 @@ use Livewire\Component;
 class CursoEditar extends Component
 {
     public $name = '';
+    public $slug;
     public $tipo = '';
     public $duracion_horas='';
     public $duracion_meses='';
@@ -20,6 +21,7 @@ class CursoEditar extends Component
      */
     protected $rules = [
         'name' => 'required|max:100',
+        'slug' => 'required|max:100',
         'tipo'=>'required',
         'duracion_horas'=>'required|integer|min:1|max:1000',
         'duracion_meses'=>'required|integer|min:1|max:1000',
@@ -39,6 +41,7 @@ class CursoEditar extends Component
     {
         $this->name=$elegido['name'];
         $this->tipo=$elegido['tipo'];
+        $this->slug=$elegido['slug'];
         $this->duracion_horas=$elegido['duracion_horas'];
         $this->duracion_meses=$elegido['duracion_meses'];
         $this->id=$elegido['id'];
@@ -55,6 +58,7 @@ class CursoEditar extends Component
         Curso::whereId($this->id)->update([
             'name'=>strtolower($this->name),
             'tipo'=>strtolower($this->tipo),
+            'slug'=>$this->slug,
             'duracion_horas'=>strtolower($this->duracion_horas),
             'duracion_meses'=>strtolower($this->duracion_meses),
             'correo'        =>$this->correo
