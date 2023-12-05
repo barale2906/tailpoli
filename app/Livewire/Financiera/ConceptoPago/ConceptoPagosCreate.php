@@ -9,7 +9,7 @@ class ConceptoPagosCreate extends Component
 {
     public $name = '';
     public $tipo = '';
-    public $valor;
+    public $valor = 0;
 
     /**
      * Reglas de validación
