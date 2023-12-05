@@ -43,6 +43,11 @@
                         <option value={{$item->id}}>{{$item->name}}</option>
                     @endforeach
                 </select>
+                @error('country_id')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="state_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento Nacimiento</label>
@@ -52,6 +57,11 @@
                         <option value={{$item->id}}>{{$item->name}}</option>
                     @endforeach
                 </select>
+                @error('state_id')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="sector_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad Nacimiento</label>
@@ -61,6 +71,11 @@
                         <option value={{$item->id}}>{{$item->name}}</option>
                     @endforeach
                 </select>
+                @error('sector_id')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6 ">
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Usuario</label>
@@ -83,6 +98,11 @@
             <div class="mb-6 ">
                 <label for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento</label>
                 <input type="date" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="fecha_nacimiento">
+                @error('fecha_documento')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="tipo_documento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de documento</label>
@@ -112,10 +132,20 @@
             <div class="mb-6 ">
                 <label for="fecha_documento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Expedición</label>
                 <input type="date" id="fecha_documento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="fecha_documento">
+                @error('fecha_documento')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6 ">
                 <label for="lugar_expedicion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lugar de Expedición</label>
                 <input type="text" id="lugar_expedicion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="lugar_expedicion">
+                @error('lugar_expedicion')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="genero" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genero</label>
@@ -124,6 +154,11 @@
                     <option value="Femenino">Femenino</option>
                     <option value="Masculino">Masculino</option>
                 </select>
+                @error('genero')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="estado_civil" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado Civil</label>
@@ -137,6 +172,11 @@
                     <option value="Viudo">Viudo</option>
                     <option value="Sin Información">Sin Información</option>
                 </select>
+                @error('estado_civil')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
         </div>
 
@@ -203,14 +243,29 @@
             <div class="mb-6 sm:grid-cols-1 md:col-span-3">
                 <label for="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
                 <input type="text" id="direccion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="direccion">
+                @error('direccion')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6 sm:grid-cols-1 md:col-span-2">
                 <label for="barrio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barrio</label>
                 <input type="text" id="barrio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.blur="barrio">
+                @error('barrio')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="estrato" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estrato</label>
                 <input type="text" id="estrato" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="estrato">
+                @error('estrato')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo Electrónico</label>
@@ -224,10 +279,20 @@
             <div class="mb-6">
                 <label for="celular" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Celular</label>
                 <input type="text" id="celular" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="celular">
+                @error('celular')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="wa" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Whats App</label>
                 <input type="text" id="wa" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="wa">
+                @error('wa')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="fijo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Fijo</label>
@@ -277,18 +342,38 @@
                 <div class="mb-6 sm:grid-cols-1 md:col-span-3">
                     <label for="contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persona de contacto</label>
                     <input type="text" id="contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="contacto" >
+                    @error('contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
                 </div>
                 <div class="mb-6">
                     <label for="documento_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Documento Contacto</label>
                     <input type="text" id="documento_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="documento_contacto">
+                    @error('documento_contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
                 </div>
                 <div class="mb-6">
                     <label for="parentesco_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parentesco</label>
                     <input type="text" id="parentesco_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="parentesco_contacto">
+                    @error('parentesco_contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
                 </div>
                 <div class="mb-6">
                     <label for="telefono_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Contacto</label>
                     <input type="text" id="telefono_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="telefono_contacto">
+                    @error('telefono_contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
                 </div>
 
             @endif
@@ -308,6 +393,11 @@
                         <option value={{$item->id}}>{{$item->name}}</option>
                     @endforeach
                 </select>
+                @error('regimen_salud_id')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="discapacidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discapacidad</label>
@@ -322,14 +412,29 @@
                     <option value="Parálisis Cerebral">Parálisis Cerebral</option>
                     <option value="Sordera Profunda">Sordera Profunda</option>
                 </select>
+                @error('discapacidad')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="arl_usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ARL</label>
                 <input type="text" id="arl_usuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="arl_usuario">
+                @error('arl_usuario')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="rh_usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RH / Grupo Sanguíneo</label>
                 <input type="text" id="rh_usuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.blur="rh_usuario">
+                @error('rh_usuario')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="nivel_educativo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel Educativo</label>
@@ -345,6 +450,11 @@
                     <option value="Pregrado">Pregrado</option>
                     <option value="Sin Información">Sin Información</option>
                 </select>
+                @error('nivel_educativo')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             {{--
             <div class="mb-6">
@@ -373,10 +483,20 @@
                     <option value="Pensionado">Pensionado</option>
                     <option value="Sin Información">Sin Información</option>
                 </select>
+                @error('ocupacion')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="empresa_usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa Donde Trabaja</label>
                 <input type="text" id="empresa_usuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="empresa_usuario">
+                @error('empresa_usuario')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="autoriza_imagen" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Autoriza el uso de la imágen</label>
@@ -393,6 +513,11 @@
                     <option value="Si">Si</option>
                     <option value="No">No</option>
                 </select>
+                @error('carnet')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
             <div class="mb-6">
                 <label for="sorteo_usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Ticket (sorteo):</label>

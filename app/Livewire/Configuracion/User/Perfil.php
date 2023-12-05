@@ -323,6 +323,27 @@ class Perfil extends Component
         'email'=>'required|email',
         'documento'=>'required',
         'tipo_documento'=>'required',
+        'country_id'=>'required',
+        'state_id'=>'required',
+        'sector_id'=>'required',
+        'fecha_nacimiento'=>'required',
+        'fecha_documento'=>'required',
+        'genero'=>'required',
+        'estado_civil'=>'required',
+        'direccion'=>'required',
+        'barrio'=>'required',
+        'estrato'=>'required',
+        'celular'=>'required',
+        'wa'=>'required',
+        'contacto'=>'required',
+        'telefono_contacto'=>'required',
+        'regimen_salud_id'=>'required',
+        'discapacidad'=>'required',
+        'rh_usuario'=>'required',
+        'nivel_educativo'=>'required',
+        'ocupacion'=>'required',
+        'empresa_usuario'=>'required',
+        'carnet'=>'required',
         'id'    => 'required'
     ];
 
@@ -331,7 +352,36 @@ class Perfil extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'lastname', 'email', 'documento', 'tipo_documento', 'password', 'id');
+        $this->reset(
+                        'password',
+                        'name',
+                        'lastname',
+                        'email',
+                        'documento',
+                        'tipo_documento',
+                        'country_id',
+                        'state_id',
+                        'sector_id',
+                        'fecha_nacimiento',
+                        'fecha_documento',
+                        'genero',
+                        'estado_civil',
+                        'direccion',
+                        'barrio',
+                        'estrato',
+                        'celular',
+                        'wa',
+                        'contacto',
+                        'telefono_contacto',
+                        'regimen_salud_id',
+                        'discapacidad',
+                        'rh_usuario',
+                        'nivel_educativo',
+                        'ocupacion',
+                        'empresa_usuario',
+                        'carnet',
+                        'id'
+                    );
     }
 
     //Actualizar
@@ -455,6 +505,7 @@ class Perfil extends Component
     }
 
     private function states(){
+
         return State::where('status', true)
                         ->where('country_id', $this->country_id)
                         ->orderBy('name','ASC')
