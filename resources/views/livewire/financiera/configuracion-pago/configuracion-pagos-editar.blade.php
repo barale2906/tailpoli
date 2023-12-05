@@ -20,14 +20,14 @@
                 @enderror
             </div>
             <div class="mb-6">
-                <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Sede donde Aplica</label>
-                <select wire:model.live="sede_id" id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                    <option >Elija sede...</option>
-                    @foreach ($sedes as $item)
-                        <option value={{$item->id}}>{{$item->name}} - {{$item->sector->name}}</option>
+                <label for="sector" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Ciudad donde Aplica</label>
+                <select wire:model.live="sector_id" id="sector" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                    <option >Elija ciudad...</option>
+                    @foreach ($ciudades as $item)
+                        <option value={{$item->id}}>{{$item->name}}</option>
                     @endforeach
                 </select>
-                @error('sede_id')
+                @error('sector_id')
                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                     </div>
@@ -96,17 +96,7 @@
                 @enderror
             </div>
 
-            <div class="mb-6">
-                <label for="valor_cuota_inicial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor cuota inicial</label>
-                <input type="number" id="valor_cuota_inicial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Primer pago" wire:model.blur="valor_cuota_inicial" wire:keydown="calcuCuota()">
-                @error('valor_cuota_inicial')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
-            </div>
-
-            @if ($valor_curso>0 && $valor_cuota_inicial<$valor_curso && $valor_cuota_inicial)
+            @if ($valor_curso>0 && $valor_matricula)
                 <div class="mb-6">
                     <label for="cuotas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Número de cuotas{{$saldo>0 ? " Para: $ ".number_format($saldo, 0, '.', ' '):""}}</label>
                     <input type="number" id="cuotas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número de cuotas" wire:model.blur="cuotas" wire:keydown="calcula()">
@@ -121,7 +111,7 @@
             @if ($cuotas>0)
                 <div class="mb-6">
                     <label for="valor_cuota" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor cuota</label>
-                    <input type="number" step="any" id="valor_cuota" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor de la cuota" wire:model.blur="valor_cuota">
+                    <input type="number" step="any" id="valor_cuota" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor de la cuota" wire:model.blur="valor_cuota" readonly>
                     @error('valor_cuota')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .

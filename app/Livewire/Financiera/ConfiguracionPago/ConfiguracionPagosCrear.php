@@ -105,7 +105,14 @@ class ConfiguracionPagosCrear extends Component
         if($this->cuotas>0 && $this->valor_curso>$this->valor_matricula){
             $saldo = $this->valor_curso-$this->valor_matricula;
             $this->valor_cuota=$saldo/$this->cuotas;
+            $this->redondear();
         }
+    }
+
+    public function redondear(){
+        $this->valor_cuota=intval($this->valor_cuota);
+        $diferencia=$this->valor_cuota % 1000;
+        $this->valor_cuota=$this->valor_cuota-$diferencia;
     }
 
     //Elegir los modulos incluidos
@@ -150,7 +157,7 @@ class ConfiguracionPagosCrear extends Component
         // validate
         $this->validate();
 
-        if($this->valor_matricula===0 && $this->valor_cuota_inicial){
+        if($this->valor_matricula===0){
             $this->valor_matricula=$this->valor_curso;
         }
         // Verifica inclusión
