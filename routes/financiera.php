@@ -21,3 +21,7 @@ Route::get('/cierrecaja', function () {
 Route::get('/cajero', function () {
     return view('financiera.cierrecaja.index');
 })->middleware('can:fi_cierrecajaCajero')->name('cajero');
+
+Route::get('/transacciones', function () {
+    return view('financiera.transaccion.index');
+})->middleware('can:fi_transacciones')->name('transacciones');

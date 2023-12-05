@@ -15,6 +15,7 @@ use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ReciboPago;
+use App\Models\Financiera\Transaccion;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -103,6 +104,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Grupo::class);
 
+    }
+
+    //Relación uno a muchos
+    public function transaCrea(): HasMany
+    {
+        return $this->hasMany(Transaccion::class);
+    }
+
+    //Relación uno a muchos
+    public function transaGest(): HasMany
+    {
+        return $this->hasMany(Transaccion::class);
+    }
+
+    //Relación uno a muchos
+    public function transAlumno(): HasMany
+    {
+        return $this->hasMany(Transaccion::class);
     }
 
     //Relación uno a muchos

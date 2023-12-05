@@ -347,6 +347,23 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
 
         Permission::create([
+                            'name'=>'fi_transacciones',
+                            'descripcion'=>'ver solicitudes de transacción',
+                            'modulo'=>'financiera'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'fi_transaccionesCrear',
+                            'descripcion'=>'crear solicitudes de transacción',
+                            'modulo'=>'financiera'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+        Permission::create([
+                            'name'=>'fi_transaccionesEditar',
+                            'descripcion'=>'editar solicitudes de transacción',
+                            'modulo'=>'financiera'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+
+        Permission::create([
                             'name'=>'fi_export',
                             'descripcion'=>'exportar listados en excel',
                             'modulo'=>'financiera'

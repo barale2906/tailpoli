@@ -128,6 +128,15 @@ class MenuSeeder extends Seeder
                 ]);
 
                 Submenu::create([
+                    'permiso'           => 'fi_transacciones',
+                    'ruta'              => 'financiera.transacciones',
+                    'identificaRuta'    => 'financiera.transacciones',
+                    'name'              => 'Transacciones',
+                    'icono'             => 'fa-solid fa-ranking-star text-gray-500',
+                    'menu_id'           => $m3->id
+                ]);
+
+                Submenu::create([
                     'permiso'           => 'fi_cierrecaja',
                     'ruta'              => 'financiera.cierrecaja',
                     'identificaRuta'    => 'financiera.cierrecaja',

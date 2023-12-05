@@ -8,6 +8,7 @@ use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ReciboPago;
+use App\Models\Financiera\Transaccion;
 use App\Models\Inventario\Almacen;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -85,5 +86,10 @@ class Sede extends Model
     public function horarios(): HasMany
     {
         return $this->hasMany(Horario::class);
+    }
+
+    public function transacciones(): HasMany
+    {
+        return $this->hasMany(Transaccion::class);
     }
 }
