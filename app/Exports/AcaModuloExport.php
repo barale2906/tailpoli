@@ -55,6 +55,7 @@ class AcaModuloExport implements FromCollection, WithCustomStartCell, Responsabl
     {
         return [
             'Nombre',
+            'Código',
             'Curso',
             'Fecha de Creación'
         ];
@@ -64,6 +65,7 @@ class AcaModuloExport implements FromCollection, WithCustomStartCell, Responsabl
     {
         return [
             $modulo->name,
+            $modulo->slug,
             $modulo->curso->name,
             Date::dateTimeToExcel($modulo->created_at)
         ];

@@ -48,6 +48,7 @@ class AcaCursoExport implements FromCollection, WithCustomStartCell, Responsable
     {
         return [
             'Nombre',
+            'Código',
             'Tipo',
             'Duración Horas',
             'Duración Meses',
@@ -59,6 +60,7 @@ class AcaCursoExport implements FromCollection, WithCustomStartCell, Responsable
     {
         return [
             $curso->name,
+            $curso->slug,
             $curso->tipo,
             $curso->duracion_horas,
             $curso->duracion_meses,
