@@ -177,6 +177,13 @@
                                         </a>
                                     </span>
                                 @endcan
+                                @can('fi_transaccionesCrear')
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                        <a href="#" wire:click.prevent="show({{$controle->id}},{{3}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
+                                            <i class="fa-solid fa-camera"></i>
+                                        </a>
+                                    </span>
+                                @endcan
 
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -286,6 +293,10 @@
 
     @if ($is_asistencias)
         <livewire:academico.asistencia.asisgestion :elegido="$elegido" :estudiante_id="$estudiante_id"/>
+    @endif
+
+    @if ($is_transacciones)
+        <livewire:financiera.transaccion.transaccion-crear :elegido="$elegido" />
     @endif
 
     @push('js')
