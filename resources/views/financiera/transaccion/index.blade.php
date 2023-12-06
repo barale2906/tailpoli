@@ -3,6 +3,6 @@
         Control de Transacciones
     @endpush
 
-    {{-- <livewire:financiera.recibo-pago.recibos-pago /> --}}
+    <livewire:financiera.transaccion.transacciones />
 
 </x-admin-layout>

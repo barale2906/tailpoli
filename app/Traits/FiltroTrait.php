@@ -22,6 +22,9 @@ trait FiltroTrait
     //Usuarios
     public $is_rol=false;
 
+    //Transacciones
+    public $is_transaccion=false;
+
 
     public function filtroMostrar(){
         $this->is_filtro=!$this->is_filtro;
@@ -73,6 +76,13 @@ trait FiltroTrait
 
                 //Usuarios
                 $this->is_rol=true;
+                break;
+
+            case 7:
+                $this->txt="Busque por acá: fecha, observaciones, alumno, creador, gestionador, sede";
+
+                //transacciones
+                $this->is_transaccion=true;
                 break;
         }
     }

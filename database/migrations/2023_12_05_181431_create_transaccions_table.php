@@ -27,6 +27,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');
 
+            $table->date('fecha')->comment('fecha de generación');
             $table->string('ruta')->comment('ruta de la imagen');
             $table->double('inventario')->nullable()->comment('registra el valor a descargar por inventario');
             $table->double('academico')->nullable()->comment('registra el valor a descargar por temas academicos');
