@@ -28,7 +28,8 @@ return new class extends Migration
             $table->foreign('sede_id')->references('id')->on('sedes');
 
             $table->date('fecha')->comment('fecha de generación');
-            $table->string('ruta')->comment('ruta de la imagen');
+            $table->string('ruta')->comment('ruta del archivo');
+            $table->string('extension')->comment('extension del archivo');
             $table->double('inventario')->nullable()->comment('registra el valor a descargar por inventario');
             $table->double('academico')->nullable()->comment('registra el valor a descargar por temas academicos');
             $table->longText('observaciones')->comment('Información para la correcta gestión');
