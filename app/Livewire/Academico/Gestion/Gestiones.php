@@ -87,7 +87,8 @@ class Gestiones extends Component
                         'is_inventario',
                         'is_observaciones',
                         'is_asistencias',
-                        'is_notas'
+                        'is_notas',
+                        'is_transacciones'
                     );
     }
 

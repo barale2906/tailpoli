@@ -22,9 +22,9 @@ class TransaccionCrear extends Component
     public $opcion;
     public $url;
 
-    public $inventario;
+    public $otro;
     public $academico;
-    public $is_inventario=false;
+    public $is_otro=false;
     public $is_academico=false;
 
 
@@ -37,25 +37,25 @@ class TransaccionCrear extends Component
         $opc=intval($this->opcion);
         $this->reset(
                         'is_academico',
-                        'is_inventario',
+                        'is_otro',
                         'academico',
-                        'inventario'
+                        'otro'
                     );
 
         switch ($opc) {
             case 1:
                 $this->is_academico=!$this->is_academico;
-                $this->inventario=0;
+                $this->otro=0;
                 break;
 
             case 2:
-                $this->is_inventario=!$this->is_inventario;
+                $this->is_otro=!$this->is_otro;
                 $this->academico=0;
                 break;
 
             case 3:
                 $this->is_academico=!$this->is_academico;
-                $this->is_inventario=!$this->is_inventario;
+                $this->is_otro=!$this->is_otro;
                 break;
         }
     }
@@ -68,7 +68,7 @@ class TransaccionCrear extends Component
         'observaciones' => 'required',
         'sede_id'       => 'required|integer',
         'academico'     => 'required',
-        'inventario'    => 'required',
+        'otro'    => 'required',
     ];
 
     /**
@@ -82,7 +82,7 @@ class TransaccionCrear extends Component
                         'observacion',
                         'sede_id',
                         'academico',
-                        'inventario',
+                        'otro',
                     );
     }
 
@@ -110,7 +110,7 @@ class TransaccionCrear extends Component
             'fecha'=>now(),
             'ruta'=>$nombre,
             'extension'=>$this->soporte->extension(),
-            'inventario'=>$this->inventario,
+            'otro'=>$this->otro,
             'academico'=>$this->academico,
             'observaciones'=>$this->observaciones
         ]);

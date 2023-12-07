@@ -27,16 +27,26 @@
             <div class="mb-6">
                 <label for="academico" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor del pago por acádemico</label>
                 <input  id="academico" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor concepto acádemico" wire:model="academico" required>
+                @error('academico')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
         @endif
 
-        @if ($is_inventario)
+        @if ($is_otro)
             <div class="mb-6">
-                <label for="inventario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor del pago por otros</label>
-                <input  id="inventario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor concepto inventarios" wire:model="inventario" required>
+                <label for="otro" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor del pago por otros</label>
+                <input  id="otro" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor concepto otros" wire:model="otro" required>
+                @error('otro')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
             </div>
         @endif
-        @if ($is_academico || $is_inventario)
+        @if ($is_academico || $is_otro)
             <div class="mb-6">
                 <label for="soporte" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Elija el archivo a enviar</label>
                 <input type="file"  id="soporte" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Foto del soporte" wire:model="soporte">

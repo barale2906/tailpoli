@@ -178,8 +178,8 @@
                                     </span>
                                 @endcan
                                 @can('fi_transaccionesCrear')
-                                    <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-                                        <a href="#" wire:click.prevent="show({{$controle->id}},{{3}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
+                                    <span class="bg-cyan-100 text-cyan-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-cyan-900 dark:text-cyan-300">
+                                        <a href="#" wire:click.prevent="show({{$controle->id}},{{3}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
                                             <i class="fa-solid fa-camera"></i>
                                         </a>
                                     </span>
