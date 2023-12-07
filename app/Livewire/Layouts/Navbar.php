@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Layouts;
 
+use App\Models\Financiera\Transaccion;
 use App\Models\Inventario\Inventario;
 use App\Models\Menu;
 use Livewire\Component;
@@ -21,11 +22,17 @@ class Navbar extends Component
                             ->count('entregado');
     }
 
+    private function transacciones(){
+        return Transaccion::whereIn('status', [1,3,4])
+                            ->count();
+    }
+
     public function render()
     {
         return view('livewire.layouts.navbar', [
             'menus'=>$this->menus(),
-            'pendInventarios'=>$this->pendInventarios()
+            'pendInventarios'=>$this->pendInventarios(),
+            'transacciones'=>$this->transacciones()
         ]);
     }
 }

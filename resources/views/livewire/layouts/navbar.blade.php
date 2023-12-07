@@ -28,6 +28,15 @@
                             </a>
                         @endif
                     @endcan
+                    @can('fi_transaccionesEditar')
+                        @if ($transacciones>0)
+                            <a href="{{route('financiera.transacciones')}}" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm text-center mr-2 mb-2 capitalize">
+                                <span class="bg-red-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                                    <i class="fa-solid fa-money-bill-transfer"></i> - {{$transacciones}}
+                                </span>
+                            </a>
+                        @endif
+                    @endcan
 
                     <!-- Settings Dropdown -->
                     <div class="ml-3 relative">
