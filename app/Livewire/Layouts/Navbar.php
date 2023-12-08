@@ -23,7 +23,7 @@ class Navbar extends Component
     }
 
     private function transacciones(){
-        return Transaccion::whereIn('status', [1,3,4])
+        return Transaccion::whereIn('status', [1,2,3])
                             ->count();
     }
 

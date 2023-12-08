@@ -34,7 +34,7 @@ return new class extends Migration
             $table->double('academico')->nullable()->comment('registra el valor a descargar por temas academicos');
             $table->longText('observaciones')->comment('Información para la correcta gestión');
 
-            $table->integer('status')->default(1)->comment('1 Creada, 2 gestionada, 3 inventario, 4 devuelto');
+            $table->integer('status')->default(1)->comment('1 Creada, 2 inventario, 3 devuelto, 4 gestionada');
             $table->boolean('status_academico')->default(false)->comment('false sin solucionar, true solucionado');
             $table->boolean('status_inventario')->default(false)->comment('false sin solucionar, true solucionado');
             $table->timestamps();

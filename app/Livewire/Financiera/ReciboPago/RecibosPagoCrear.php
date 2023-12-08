@@ -441,11 +441,12 @@ class RecibosPagoCrear extends Component
             if($this->transaccion->inventario>0){
                 $this->status_transa=$this->transaccion->status;
             }else{
-                $this->status_transa=2;
+                $this->status_transa=4;
             }
 
             $this->transaccion->update([
                 'observaciones'=>$observa.$this->transaccion->observaciones,
+                'gestionador_id'=>Auth::user()->id,
                 'status'=>$this->status_transa,
                 'status_academico'=>true
             ]);

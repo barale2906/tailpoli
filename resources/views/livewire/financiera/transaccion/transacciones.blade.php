@@ -82,8 +82,8 @@
                     @foreach ($transacciones as $transaccione)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
 
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                @if ($transaccione->status!==2)
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                @if ($transaccione->status!==4)
                                     @can('fi_transaccionesEditar')
                                         <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
                                             <a href="" wire:click.prevent="show({{$transaccione->id}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
@@ -93,19 +93,19 @@
                                     @endcan
                                 @endif
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$transaccione->fecha}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$transaccione->sede->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$transaccione->alumno->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-right">
                                 $ {{number_format($transaccione->academico, 0, '.', ' ')}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-right">
                                 $ {{number_format($transaccione->inventario, 0, '.', ' ')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">

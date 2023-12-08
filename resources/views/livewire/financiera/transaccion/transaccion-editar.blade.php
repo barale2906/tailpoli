@@ -80,9 +80,14 @@
                 @if ($this->actual->academico>0 && !$this->actual->status_academico)
                     <hr class="w-8 h-8 mx-auto my-2 bg-gray-200 border-0 rounded md:my-2 dark:bg-gray-700">
                     <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-2 mb-4">
-                        <a href="" wire:click.prevent="recibo" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                            <i class="fa-solid fa-file-invoice-dollar"></i> Generar Recibo
-                        </a>
+                        <div>
+                            <h2 class="text-center font-semibold m-2">
+                                Gestión pago acádemico.
+                            </h2>
+                            <a href="" wire:click.prevent="recibo" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                <i class="fa-solid fa-file-invoice-dollar"></i> Generar Recibo
+                            </a>
+                        </div>
                     </div>
                 @endif
             </div>

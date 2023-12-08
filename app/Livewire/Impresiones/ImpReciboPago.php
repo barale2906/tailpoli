@@ -46,6 +46,10 @@ class ImpReciboPago extends Component
                 $this->url="/inventario/inventarios";
                 break;
 
+            case 4:
+                $this->url="/financiera/transacciones";
+                break;
+
         }
     }
 
