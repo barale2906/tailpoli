@@ -146,6 +146,7 @@ class RecibosPagoCrear extends Component
     }
 
     public function asigOtro($id, $item,$conf=null){
+        $this->valoRecargo();
         //dd($conf);
         if($item===0){
             $ya=0;
@@ -161,6 +162,11 @@ class RecibosPagoCrear extends Component
             if($mitad>$this->valor){
                 $this->dispatch('alerta', name:'¡Abono inferior a la mitad!, solo con transferencia.');
                 $this->obser="  ¡IMPORTANTE! Se recibe abono inferior, validar transferencia.";
+            }
+
+            //Verificar que no exceda el saldo
+            if($item['saldo']<$this->valor){
+                $this->valor=$item['saldo'];
             }
 
             //Verificar que no se haya cargado el dato
@@ -202,8 +208,6 @@ class RecibosPagoCrear extends Component
                     break;
             }
 
-
-
             if($this->valor>0){
 
                     DB::table('apoyo_recibo')->insert([
@@ -242,6 +246,8 @@ class RecibosPagoCrear extends Component
 
     public function elimOtro($item, $valor){
 
+        $this->valoRecargo();
+
         DB::table('apoyo_recibo')
             ->where('id', $item)
             ->delete();
@@ -253,15 +259,42 @@ class RecibosPagoCrear extends Component
 
     public function updatedMedio(){
         if($this->medio==="tarjeta"){
+
             $porc=ConceptoPago::where('status', true)
                                 ->where('name', 'Recargo Tarjeta')
                                 ->first();
 
             $this->recargo=$porc->valor;
             $this->recargo_id=$porc->id;
+            $this->recargoValor=$this->Total*$this->recargo/100;
+            $this->Total=$this->Total+$this->recargoValor;
+
+
+            //Cargar valor al recibo
+            DB::table('apoyo_recibo')->insert([
+                'tipo'=>'financiero',
+                'id_creador'=>Auth::user()->id,
+                'id_concepto'=>$porc->id,
+                'concepto'=>$porc->name,
+                'valor'=>$this->recargoValor
+            ]);
+
+            $this->cargando();
 
         }else{
-            $this->reset('recargo');
+            $this->valoRecargo();
+        }
+    }
+
+    public function valoRecargo(){
+        if($this->recargo>0){
+            DB::table('apoyo_recibo')
+                ->where('id_creador', Auth::user()->id)
+                ->where('tipo', 'financiero')
+                ->delete();
+
+            $this->Total=$this->Total-$this->recargoValor;
+            $this->reset('recargoValor', 'recargo', 'recargo_id', 'medio');
         }
     }
 
@@ -299,10 +332,7 @@ class RecibosPagoCrear extends Component
             $this->Total=$this->totalCartera;
         }
 
-        if($this->recargo>0){
-            $this->recargoValor=$this->Total*$this->recargo/100;
-            $this->Total=$this->Total+$this->recargoValor;
-        }
+
 
         $ultimo=ReciboPago::where('origen', true)
                                 ->max('numero_recibo');
@@ -329,7 +359,7 @@ class RecibosPagoCrear extends Component
 
         //registros
 
-        if($this->recargo>0){
+        /* if($this->recargo>0){
             DB::table('concepto_pago_recibo_pago')
                 ->insert([
                     'valor'=>$this->recargoValor,
@@ -340,7 +370,7 @@ class RecibosPagoCrear extends Component
                     'created_at'=>now(),
                     'updated_at'=>now(),
                 ]);
-        }
+        } */
 
         if($this->pagoTotal){
 
