@@ -14,9 +14,9 @@ class Transacciones extends Component
     use WithPagination;
     use FiltroTrait;
 
-    public $ordena='id';
-    public $ordenado='DESC';
-    public $pages = 10;
+    public $ordena='status';
+    public $ordenado='ASC';
+    public $pages = 15;
 
     public $is_modify = true;
     public $is_editing = false;

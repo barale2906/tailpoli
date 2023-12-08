@@ -18,6 +18,7 @@
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
+                        <th scope="col" class="px-6 py-3" ></th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha')">
                             Fecha
                             @if ($ordena != 'fecha')
@@ -82,6 +83,17 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
 
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                @if ($transaccione->status!==2)
+                                    @can('fi_transaccionesEditar')
+                                        <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                            <a href="" wire:click.prevent="show({{$transaccione->id}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                                <i class="fa-solid fa-marker"></i> - {{$transaccione->id}}
+                                            </a>
+                                        </span>
+                                    @endcan
+                                @endif
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$transaccione->fecha}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -126,7 +138,7 @@
     @endif
 
     @if ($is_editing)
-        <livewire:financiera.recibo-pago.recibos-pago-anular :elegido="$elegido" :accion="$accion" />
+        <livewire:financiera.transaccion.transaccion-editar :elegido="$elegido" />
     @endif
 
     @push('js')

@@ -112,6 +112,7 @@ class TransaccionCrear extends Component
             'extension'=>$this->soporte->extension(),
             'otro'=>$this->otro,
             'academico'=>$this->academico,
+            'inventario'=>$this->otro,
             'observaciones'=>$this->observaciones
         ]);
 

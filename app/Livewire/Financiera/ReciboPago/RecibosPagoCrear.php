@@ -408,7 +408,7 @@ class RecibosPagoCrear extends Component
 
         foreach ($control as $value) {
 
-            $observa=now()." ".$this->alumnoName." realizo pago por $".number_format($this->Total, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$value->observaciones;
+            $observa=now()." ".$this->alumnoName." realizo pago por $".number_format($this->Total, 0, ',', '.').", con el recibo N°: ".$recibo->id.". ----- ".$value->observaciones;
 
             Control::whereId($value->id)
                     ->update([

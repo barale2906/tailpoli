@@ -71,7 +71,7 @@ class RecibosPagoAnular extends Component
         //Anular recibo
         ReciboPago::whereId($this->id)->update([
             'status'=>2,
-            'observaciones'=>now()." ¡¡ANULADO!! ".Auth::user()->name." Anulo el recibo por: ".$this->motivo.". --- ".$this->observaciones,
+            'observaciones'=>now()." ¡¡ANULADO!! ".Auth::user()->name." Anulo el recibo por: ".$this->motivo.". ----- ".$this->observaciones,
         ]);
 
         //reversar movimientos cartera - inventario
