@@ -184,6 +184,26 @@
                                         </a>
                                     </span>
                                 @endcan
+                                @if ($controle->transacciones)
+                                    @can('fi_transaccionesCrear')
+                                        @php
+                                            $conteo=0;
+                                            foreach ($controle->transacciones as $value) {
+                                                if($value->status>1 && $value->status<4){
+                                                    $conteo=$conteo+1;
+                                                }
+                                            }
+                                        @endphp
+                                        @if ($conteo>0)
+                                            <span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                                <a href="#" wire:click.prevent="show({{$controle->id}},{{4}})" class="inline-flex items-center font-medium text-red-600 dark:text-cyan-500 hover:underline">
+                                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                                </a>
+                                            </span>
+                                        @endif
+                                    @endcan
+                                @endif
+
 
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

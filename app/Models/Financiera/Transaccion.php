@@ -2,6 +2,7 @@
 
 namespace App\Models\Financiera;
 
+use App\Models\Academico\Control;
 use App\Models\Configuracion\Sede;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,5 +37,11 @@ class Transaccion extends Model
     public function sede() : BelongsTo
     {
         return $this->BelongsTo(Sede::class);
+    }
+
+    //Relacion uno a muchos inversa
+    public function controles() : BelongsTo
+    {
+        return $this->BelongsTo(Control::class);
     }
 }

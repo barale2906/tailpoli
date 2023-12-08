@@ -106,6 +106,7 @@ class TransaccionCrear extends Component
             'creador_id'=>Auth::user()->id,
             'gestionador_id'=>Auth::user()->id,
             'alumno_id'=>$this->actual->estudiante_id,
+            'control_id'=>$this->actual->id,
             'sede_id'=>$this->sede_id,
             'fecha'=>now(),
             'ruta'=>$nombre,
