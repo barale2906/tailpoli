@@ -10,6 +10,7 @@ use App\Models\Financiera\ConfPagOtros;
 use App\Models\Financiera\ConfPagOtrosDet;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
+use App\Models\Financiera\Transaccion;
 use App\Models\User;
 use App\Traits\ComunesTrait;
 use App\Traits\MailTrait;
@@ -58,16 +59,32 @@ class RecibosPagoCrear extends Component
     public $alumnoName='';
     public $alumnodocumento='';
 
+    public $transaccion;
+    public $status_transa;
+
     public $pendientes;
 
-    public function mount($ruta=null){
+    public function mount($ruta=null, $elegido=null){
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
             ->delete();
 
         $this->ruta=$ruta;
 
+        if($elegido){
+            $this->transaccion=Transaccion::find($elegido);
+            $this->variables();
+        }
+
         $this->cierre();
+    }
+
+    public function variables(){
+        $this->alumno_id=$this->transaccion->alumno_id;
+        $this->alumnoName=$this->transaccion->alumno->name;
+        $this->alumnodocumento=$this->transaccion->alumno->documento;
+        $this->sede_id=$this->transaccion->sede_id;
+        $this->obligaciones();
     }
 
     public function updatedSedeId(){
@@ -408,7 +425,7 @@ class RecibosPagoCrear extends Component
 
         foreach ($control as $value) {
 
-            $observa=now()." ".$this->alumnoName." realizo pago por $".number_format($this->Total, 0, ',', '.').", con el recibo N°: ".$recibo->id.". ----- ".$value->observaciones;
+            $observa=now()." ".$this->alumnoName." realizo pago por $".number_format($this->Total, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". ----- ".$value->observaciones;
 
             Control::whereId($value->id)
                     ->update([
@@ -418,13 +435,32 @@ class RecibosPagoCrear extends Component
         }
 
 
+        //Actualiza la transacción
+        if($this->transaccion){
+            $observa=now()." ".Auth::user()->name." GENERO RECIBO DE PAGO N°: ".$recibo->numero_recibo." ----- ";
+            if($this->transaccion->inventario>0){
+                $this->status_transa=$this->transaccion->status;
+            }else{
+                $this->status_transa=2;
+            }
+
+            $this->transaccion->update([
+                'observaciones'=>$observa.$this->transaccion->observaciones,
+                'status'=>$this->status_transa,
+                'status_academico'=>true
+            ]);
+        }
+
+
+
+
         //Eliminar datos de apoyo
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
             ->delete();
 
         // Notificación
-        $this->dispatch('alerta', name:'Se ha creado correctamente el recibo: '.$recibo->id);
+        $this->dispatch('alerta', name:'Se ha creado correctamente el recibo: '.$recibo->numero_recibo);
         $this->resetFields();
 
         //refresh
