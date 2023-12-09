@@ -3,6 +3,7 @@
 namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Configuracion\Sede;
+use App\Models\Financiera\Transaccion;
 use App\Traits\ComunesTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,10 +21,15 @@ class InventariosCreate extends Component
     public $crtAlma=true;
     public $todo=true;
     public $ruta;
+    public $transaccion;
 
-    public function mount($ruta=null){
+    public function mount($ruta=null, $transaccion=null){
         $this->borrar();
         $this->ruta=$ruta;
+        if($transaccion){
+            $this->transaccion=Transaccion::find($transaccion);
+            $this->tipo=0;
+        }
     }
 
     #[On('borrarMov')]

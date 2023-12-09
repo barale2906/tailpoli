@@ -237,8 +237,6 @@
                                         </a>
                                     </div>
 
-
-
                                 @endforeach
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -317,6 +315,10 @@
 
     @if ($is_transacciones)
         <livewire:financiera.transaccion.transaccion-crear :elegido="$elegido" />
+    @endif
+
+    @if ($is_gestransaccion)
+        <livewire:financiera.transaccion.transaccion-gestion :elegido="$elegido" :ruta="$ruta" />
     @endif
 
     @push('js')

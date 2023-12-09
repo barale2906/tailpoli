@@ -1,21 +1,31 @@
 <div>
 
     @if ($todo)
+        @if ($transaccion)
+            <h2 class="text-center text-2xl uppercase font-extrabold">
+                Debe generar un movimiento por $ {{number_format($transaccion->inventario, 0, '.', ' ')}} para {{$transaccion->alumno->name}}
+            </h2>
+        @endif
         <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-            <div class="mb-6">
-                <label for="tipo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Tipo de movimiento</label>
-                <select wire:model.live="tipo" id="tipo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 capitalize">
-                    <option >Seleccione...</option>
-                    <option value=1>Entrada</option>
-                    <option value=0>sálida</option>
-                    <option value=2>Pendientes</option>
-                </select>
-                @error('tipo')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
-            </div>
+            @if ($transaccion)
+                Sálida
+            @else
+                <div class="mb-6">
+                    <label for="tipo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Tipo de movimiento</label>
+                    <select wire:model.live="tipo" id="tipo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 capitalize">
+                        <option >Seleccione...</option>
+                        <option value=1>Entrada</option>
+                        <option value=0>sálida</option>
+                        <option value=2>Pendientes</option>
+                    </select>
+                    @error('tipo')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+            @endif
+
 
             <div class="mb-6">
                 <label for="sede_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Escoja la sede</label>
@@ -53,7 +63,7 @@
 
 
 
-        @if ($almacen_id>0)
+        @if ($almacen_id>0 && !$transaccion)
             @switch($tipo)
                 @case(1)
                     <livewire:inventario.inventario.entrada :almacen_id="$almacen_id" />
@@ -70,6 +80,10 @@
                     @break
 
             @endswitch
+        @endif
+
+        @if ($transaccion && $almacen_id>0)
+            <livewire:inventario.inventario.salida :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" :transaccion="$transaccion->id"/>
         @endif
 
 

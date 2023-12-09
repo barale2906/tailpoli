@@ -1,43 +1,50 @@
 <div>
     @if ($fin)
         @if ($crt)
-            <div class="mb-6">
-                <p class="text-2xl font-semibold leading-normal text-gray-900 dark:text-white">
-                    Seleccione Estudiante:
-                </p>
-                <div class="w-full">
-                    <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar Alumno</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                            </svg>
+            @if ($transaccion)
+                <h2 class="text-center text-xl font-bold uppercase">
+                    Alumno: {{$transaccion->alumno->name}}
+                </h2>
+            @else
+                <div class="mb-6">
+                    <p class="text-2xl font-semibold leading-normal text-gray-900 dark:text-white">
+                        Seleccione Estudiante:
+                    </p>
+                    <div class="w-full">
+                        <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar Alumno</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
+                            </div>
+                            <input
+                                type="search"
+                                id="buscar"
+                                class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="digite nombre o documento del estudiante"
+                                wire:model="buscar"
+                                wire:keydown="buscAlumno()"
+                                autocomplete="off"
+                                >
+                            <button type="button" class="text-white absolute right-2.5 bottom-2.5 bg-green-400 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-100 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-400 dark:hover:bg-green-500 dark:focus:ring-green-600" wire:click="limpiar()">
+                                Limpiar Filtro
+                            </button>
                         </div>
-                        <input
-                            type="search"
-                            id="buscar"
-                            class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="digite nombre o documento del estudiante"
-                            wire:model="buscar"
-                            wire:keydown="buscAlumno()"
-                            autocomplete="off"
-                            >
-                        <button type="button" class="text-white absolute right-2.5 bottom-2.5 bg-green-400 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-100 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-400 dark:hover:bg-green-500 dark:focus:ring-green-600" wire:click="limpiar()">
-                            Limpiar Filtro
-                        </button>
                     </div>
+                    @if ($buscar)
+                        <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                            @foreach ($estudiantes as $item)
+                                <li class="w-full mt-2 mb-2 capitalize">
+                                    {{$item->name}} - {{$item->documento}} <a href="" wire:click.prevent="selAlumno({{$item}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 text-center capitalize">
+                                        <i class="fa-solid fa-check fa-beat"></i> elegir
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
-                @if ($buscar)
-                    <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-                        @foreach ($estudiantes as $item)
-                            <li class="w-full mt-2 mb-2 capitalize">
-                                {{$item->name}} - {{$item->documento}} <a href="" wire:click.prevent="selAlumno({{$item}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 text-center capitalize">
-                                    <i class="fa-solid fa-check fa-beat"></i> elegir
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
+            @endif
+
             @if ($alumno_id)
                 <p class="text-xl font-semibold leading-normal text-gray-900 dark:text-white">
                     Seleccionar producto desde el almacén: <strong class="uppercase">{{$almacen->name}}</strong> de la sede: <strong class="uppercase">{{$almacen->sede->name}} </strong>  para: <strong class="uppercase">{{$alumno->name}}</strong> documento: <strong class="uppercase">{{$alumno->documento}}</strong>
@@ -211,16 +218,16 @@
                                 @foreach ($movimientos as $otros)
 
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                                 {{$otros->producto}}
                                             </th>
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-right">
                                                 $ {{number_format($otros->valor, 0, ',', '.')}}
                                             </th>
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-center">
                                                 {{$otros->cantidad}}
                                             </th>
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-right">
                                                 $ {{number_format($otros->valor*$otros->cantidad, 0, ',', '.')}}
                                             </th>
                                             <th>
@@ -248,27 +255,32 @@
                         </div>
                     @enderror
                 </div>
-                <div class="mb-6">
-                    <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
-                    <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 capitalize">
-                        <option >Elija...</option>
-                        <option value="efectivo">Efectivo</option>
-                        {{-- <option value="PSE">PSE</option>
-                        <option value="transferencia">Transferencia</option> --}}
-                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
-                        {{-- <option value="cheque">Cheque</option> --}}
-                    </select>
-                    @error('medio')
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                        </div>
-                    @enderror
-                    @if ($recargo>0)
-                        <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
-                            Tendrá un recargo del <strong>{{$recargo}} %</strong>
-                        </label>
-                    @endif
-                </div>
+                @if ($transaccion)
+                    Transferencia
+                @else
+                    <div class="mb-6">
+                        <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
+                        <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 capitalize">
+                            <option >Elija...</option>
+                            <option value="efectivo">Efectivo</option>
+                            {{-- <option value="PSE">PSE</option>
+                            <option value="transferencia">Transferencia</option> --}}
+                            <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
+                            {{-- <option value="cheque">Cheque</option> --}}
+                        </select>
+                        @error('medio')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
+                        @if ($recargo>0)
+                            <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
+                                Tendrá un recargo del <strong>{{$recargo}} %</strong>
+                            </label>
+                        @endif
+                    </div>
+                @endif
+
             </div>
         @endif
 

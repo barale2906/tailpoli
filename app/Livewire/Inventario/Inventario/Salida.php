@@ -6,6 +6,7 @@ use App\Models\Academico\Control;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
+use App\Models\Financiera\Transaccion;
 use App\Models\Inventario\Almacen;
 use App\Models\Inventario\Inventario;
 use App\Models\Inventario\PagoConfig;
@@ -63,8 +64,17 @@ class Salida extends Component
     public $saldoObtenido;
     public $saldoFin;
 
+    public $transaccion;
 
-    public function mount($almacen_id=null, $sede_id=null, $ruta=null){
+
+    public function mount($almacen_id=null, $sede_id=null, $ruta=null, $transaccion=null){
+
+        if($transaccion){
+            $this->transaccion=Transaccion::find($transaccion);
+            $this->selAlumno($this->transaccion->alumno_id);
+            $this->medio="transferencia";
+        }
+
         $id=intval($almacen_id);
         $this->almacen=Almacen::find($id);
 
@@ -78,6 +88,8 @@ class Salida extends Component
         $this->listaprecios($state);
 
         $this->concepto();
+
+
     }
 
     public function updatedMedio(){
@@ -121,9 +133,17 @@ class Salida extends Component
     }
 
     public function selAlumno($item){
-        $this->alumno_id=$item['id'];
-        $this->alumno=User::find($item['id']);
-        $this->limpiar();
+        if($this->transaccion){
+
+            $this->alumno_id=$item;
+            $this->alumno=User::find($item);
+
+        }else{
+            $this->alumno_id=$item['id'];
+            $this->alumno=User::find($item['id']);
+            $this->limpiar();
+        }
+
     }
 
     //Buscar producto
@@ -499,6 +519,22 @@ class Salida extends Component
             $this->resetFields();
             $this->fin=!$this->fin;
             $this->dispatch('mostodo');
+
+            //Descargar la transaccion
+            if($this->transaccion){
+                $respuesta=now()." ".Auth::user()->name." GENERO RECIBO POR LOS PRODUCTOS ----- ";
+                $this->transaccion->update([
+                    'observaciones'=>$respuesta.$this->transaccion->observaciones,
+                    'status'=>4
+                ]);
+
+                $actu=Control::whereId($this->transaccion->control_id)->first();
+
+                $actu->update([
+                            'observaciones'=>$respuesta.$actu->observaciones,
+                        ]);
+
+            }
 
             //Enviar por correo electrónico
             $this->claseEmail(1,$this->recibo->id);
