@@ -14,12 +14,18 @@ class Observaciones extends Component
     public $fecha;
     public $ruta;
     public $alumno;
+    public $observaciones=[];
 
     public function mount($elegido=null, $ruta=null){
         $this->ruta=$ruta;
         $this->elegido=Control::find($elegido);
         $this->fecha=now();
         $this->alumn();
+        $this->arraobserva();
+    }
+
+    public function arraobserva(){
+        $this->observaciones=explode("-----", $this->elegido->observaciones);
     }
 
     public function alumn(){

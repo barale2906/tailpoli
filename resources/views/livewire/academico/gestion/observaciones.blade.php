@@ -1,6 +1,6 @@
 <div>
     <h1 class="font-extrabold text-xl text-center capitalize">registrar cambios para: <strong class="uppercase">{{$elegido->estudiante->name}}</strong></h1>
-    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:h-52">
         <div class="mb-6">
             <label for="comentarios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registre Observaciones</label>
             <textarea id="comentarios" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Comentarios de la conversación" wire:model.live="comentarios">
@@ -12,10 +12,13 @@
                 </div>
             @enderror
         </div>
-        <div class="mb-6">
-            <p class="text-justify text-sm">
-                {{$elegido->observaciones}}
-            </p>
+        <div class="mb-6 overflow-y-auto">
+            @for ($i = 0; $i < count($observaciones); $i++)
+                <p class="text-justify text-sm">
+                    {{$observaciones[$i]}}
+                </p>
+            @endfor
+
         </div>
         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
 
