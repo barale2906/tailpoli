@@ -343,6 +343,15 @@ class MenuSeeder extends Seeder
                 ]);
 
                 Submenu::create([
+                    'permiso'           => 'co_areas',
+                    'ruta'              => 'configuracion.ubicacionAreas',
+                    'identificaRuta'    => 'configuracion.ubicacionAreas',
+                    'name'              => 'Áreas',
+                    'icono'             => 'fa-solid fa-wrench text-gray-500',
+                    'menu_id'           => $m8->id
+                ]);
+
+                Submenu::create([
                     'permiso'           => 'co_users',
                     'ruta'              => 'configuracion.users',
                     'identificaRuta'    => 'configuracion.users',
