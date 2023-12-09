@@ -328,34 +328,36 @@ class Salida extends Component
 
             foreach ($this->movimientos as $value) {
 
-                // Verificar el saldo antes de cargar
-                $evaluapoyo=Inventario::where('almacen_id', $this->almacen->id)
-                                        ->where('producto_id', $value->id_producto)
-                                        ->where('status', true)
-                                        ->select('id','saldo')
-                                        ->first();
+                if($value->tipo!=='financiero'){
 
-                if($evaluapoyo){
-                    $this->saldoFin=$evaluapoyo->saldo-$value->cantidad;
-                    if($this->saldoFin>=0){
+                    // Verificar el saldo antes de cargar
+                    $evaluapoyo=Inventario::where('almacen_id', $this->almacen->id)
+                                            ->where('producto_id', $value->id_producto)
+                                            ->where('status', true)
+                                            ->select('id','saldo')
+                                            ->first();
 
-                        $this->crtSaldo=1;
 
-                    }else if($this->saldoFin<0){
+                    if($evaluapoyo){
+                        $this->saldoFin=$evaluapoyo->saldo-$value->cantidad;
+                        if($this->saldoFin>=0){
 
+                            $this->crtSaldo=1;
+
+                        }else if($this->saldoFin<0){
+
+                            $this->crtSaldo=0;
+                            $this->saldoFin=$evaluapoyo->saldo;
+                        }
+
+                    }else{
+                        $this->saldoFin=0;
                         $this->crtSaldo=0;
-                        $this->saldoFin=$evaluapoyo->saldo;
                     }
 
-                }else{
-                    $this->saldoFin=0;
-                    $this->crtSaldo=0;
-                }
+                    if($this->crtSaldo===1){
 
-
-
-                if($this->crtSaldo===1){
-                    $inventa = Inventario::create([
+                        $inventa = Inventario::create([
                                             'tipo'=>0,
                                             'fecha_movimiento'=>now(),
                                             'cantidad'=>$value->cantidad,
@@ -369,84 +371,85 @@ class Salida extends Component
                                             'entregado'=>true
                                         ]);
 
-                    $con=Control::where('estudiante_id', $this->alumno_id)
+                        $con=Control::where('estudiante_id', $this->alumno_id)
                             ->where('status', true)
                             ->get();
 
 
+                        if($con){
 
-                    if($con){
+                            foreach ($con as $value) {
 
-                        foreach ($con as $value) {
+                                $observa=now().", Overol (C) --- ".$value->observaciones;
 
-                            $observa=now().", Overol (C) --- ".$value->observaciones;
-
-                            Control::whereId($value->id)
-                                    ->update([
-                                        'overol'=>'si',
-                                        'compra'=>now(),
-                                        'entrega'=>now(),
-                                        'observaciones'=>$observa
-                                    ]);
+                                Control::whereId($value->id)
+                                        ->update([
+                                            'overol'=>'si',
+                                            'compra'=>now(),
+                                            'entrega'=>now(),
+                                            'observaciones'=>$observa
+                                        ]);
+                            }
                         }
-                    }
 
 
-                    $evaluapoyo->update([
-                        'status'=>false
-                    ]);
-
-                    DB::table('apoyo_recibo')
-                    ->whereId($value->id)
-                    ->update([
-                            'id_cartera'=>$inventa->id
-                        ]);
-
-
-                }else{
-
-                    $inventa = Inventario::create([
-                        'tipo'=>2,
-                        'fecha_movimiento'=>now(),
-                        'cantidad'=>$value->cantidad,
-                        'saldo'=>$this->saldoFin,
-                        'precio'=>$value->valor,
-                        'descripcion'=>$this->descripcion,
-                        'almacen_id'=>$value->id_almacen,
-                        'producto_id'=>$value->id_producto,
-                        'user_id'=>Auth::user()->id,
-                        'compra_id'=>$this->alumno_id,
-                        'entregado'=>false,
-                        'status'=>false,
-                    ]);
-
-                    $con=Control::where('estudiante_id', $this->alumno_id)
-                            ->where('status', true)
-                            ->get();
-
-                    if($con){
-                        foreach ($con as $value) {
-                            $observa=now().", Overol (P) --- ".$value->observaciones;
-
-                            Control::whereId($value->id)
-                                    ->update([
-                                        'overol'=>'pendiente',
-                                        'compra'=>now(),
-                                        'observaciones'=>$observa
-                                    ]);
-                        }
-                    }
-
-                    DB::table('apoyo_recibo')
-                        ->whereId($value->id)
-                        ->update([
-                                'entregado'=>false,
-                                'status'=>false
+                        $evaluapoyo->update([
+                            'status'=>false
                             ]);
 
-                    $this->control=$this->control+1;
-                    /* $costo=$value->cantidad*$value->valor;
-                    $this->Total=$this->Total-$costo; */
+                        DB::table('apoyo_recibo')
+                            ->whereId($value->id)
+                            ->update([
+                                'id_cartera'=>$inventa->id
+                            ]);
+
+
+                    }else{
+
+                        $inventa = Inventario::create([
+                                                'tipo'=>2,
+                                                'fecha_movimiento'=>now(),
+                                                'cantidad'=>$value->cantidad,
+                                                'saldo'=>$this->saldoFin,
+                                                'precio'=>$value->valor,
+                                                'descripcion'=>$this->descripcion,
+                                                'almacen_id'=>$value->id_almacen,
+                                                'producto_id'=>$value->id_producto,
+                                                'user_id'=>Auth::user()->id,
+                                                'compra_id'=>$this->alumno_id,
+                                                'entregado'=>false,
+                                                'status'=>false,
+                                                ]);
+
+                        $con=Control::where('estudiante_id', $this->alumno_id)
+                            ->where('status', true)
+                            ->get();
+
+                        if($con){
+                            foreach ($con as $value) {
+                                $observa=now().", Overol (P) --- ".$value->observaciones;
+
+                                Control::whereId($value->id)
+                                        ->update([
+                                            'overol'=>'pendiente',
+                                            'compra'=>now(),
+                                            'observaciones'=>$observa
+                                        ]);
+                            }
+                        }
+
+                        DB::table('apoyo_recibo')
+                            ->whereId($value->id)
+                            ->update([
+                                    'entregado'=>false,
+                                    'status'=>false
+                                ]);
+
+                            $this->control=$this->control+1;
+                        /* $costo=$value->cantidad*$value->valor;
+                        $this->Total=$this->Total-$costo; */
+                    }
+
                 }
 
             }
@@ -464,11 +467,6 @@ class Salida extends Component
     public function recibo(){
 
         if($this->Total>0){
-
-            if($this->recargo>0){
-                $this->recargoValor=$this->Total*$this->recargo/100;
-                $this->Total=$this->Total+$this->recargoValor;
-            }
 
             $corregido=strtolower($this->descripcion);
             $comentarios=now()." ".$this->alumno->name." realizo pago por ".number_format($this->Total, 0, ',', '.').". --- ".$corregido;
@@ -501,7 +499,7 @@ class Salida extends Component
 
             $cargados=DB::table('apoyo_recibo')
                             ->where('id_creador', Auth::user()->id)
-                            ->where('status', true)
+                            //->where('status', true)
                             ->orderBy('producto')
                             ->get();
 
@@ -525,6 +523,10 @@ class Salida extends Component
                         'valor'=>$value->subtotal,
                         'tipo'=>$value->tipo,
                         'medio'=>$this->medio,
+                        'producto'=>$value->producto,
+                        'cantidad'=>$value->cantidad,
+                        'unitario'=>$value->valor,
+                        'subtotal'=>$value->subtotal,
                         'id_relacional'=>$value->id_cartera,
                         'concepto_pago_id'=>$this->conceptopago->id,
                         'recibo_pago_id'=>$this->recibo->id,

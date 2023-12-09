@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('tipo')->comment('otros, cartera, inventario');
 
             $table->string('medio')->comment('medio de pago');
+            $table->string('producto')->nullable()->comment('producto facturado');
+            $table->double('cantidad')->nullable()->comment('cantidad vendida');
+            $table->double('unitario')->nullable()->comment('valor unitario');
+            $table->double('subtotal')->nullable()->comment('subtotal del item');
             $table->string('id_relacional')->nullable()->comment('muestra el id del movimiento afectado ');
 
             $table->unsignedBigInteger('concepto_pago_id');

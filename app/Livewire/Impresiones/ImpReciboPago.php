@@ -57,7 +57,7 @@ class ImpReciboPago extends Component
         $this->detalles=DB::table('concepto_pago_recibo_pago')
                                     ->where('concepto_pago_recibo_pago.recibo_pago_id',$this->recibo)
                                     ->join('concepto_pagos', 'concepto_pago_recibo_pago.concepto_pago_id', '=', 'concepto_pagos.id')
-                                    ->select('concepto_pagos.name', 'concepto_pago_recibo_pago.valor', 'concepto_pago_recibo_pago.tipo', 'concepto_pago_recibo_pago.id_relacional')
+                                    ->select('concepto_pagos.name', 'concepto_pago_recibo_pago.valor', 'concepto_pago_recibo_pago.tipo', 'concepto_pago_recibo_pago.producto', 'concepto_pago_recibo_pago.cantidad', 'concepto_pago_recibo_pago.unitario', 'concepto_pago_recibo_pago.subtotal', 'concepto_pago_recibo_pago.id_relacional')
                                     ->get();
 
         $this->obteTotal();
