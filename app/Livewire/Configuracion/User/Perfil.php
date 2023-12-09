@@ -51,6 +51,7 @@ class Perfil extends Component
     public $documento_contacto;
     public $parentesco_contacto;
     public $telefono_contacto;
+    public $email_contacto;
 
 
     public $talla;
@@ -122,6 +123,7 @@ class Perfil extends Component
         $this->contacto=$this->actual->perfil->contacto;
         $this->documento_contacto=$this->actual->perfil->documento_contacto;
         $this->parentesco_contacto=$this->actual->perfil->parentesco_contacto;
+        $this->email_contacto=$this->actual->perfil->email_contacto;
         $this->telefono_contacto=$this->actual->perfil->telefono_contacto;
 
 
@@ -337,6 +339,7 @@ class Perfil extends Component
         'wa'=>'required',
         'contacto'=>'required',
         'telefono_contacto'=>'required',
+        'email_contacto'=>'required',
         'regimen_salud_id'=>'required',
         'discapacidad'=>'required',
         'rh_usuario'=>'required',
@@ -359,9 +362,6 @@ class Perfil extends Component
                         'email',
                         'documento',
                         'tipo_documento',
-                        'country_id',
-                        'state_id',
-                        'sector_id',
                         'fecha_nacimiento',
                         'fecha_documento',
                         'genero',
@@ -373,6 +373,7 @@ class Perfil extends Component
                         'wa',
                         'contacto',
                         'telefono_contacto',
+                        'email_contacto',
                         'regimen_salud_id',
                         'discapacidad',
                         'rh_usuario',

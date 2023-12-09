@@ -52,6 +52,7 @@ return new class extends Migration
             $table->string('documento_contacto')->nullable()->comment('documento persona de contacto');
             $table->string('parentesco_contacto')->nullable()->comment('Parentesco persona de contacto');
             $table->string('telefono_contacto')->nullable()->comment('telefono persona de contacto');
+            $table->string('email_contacto')->nullable()->comment('email persona de contacto');
             $table->string('talla')->nullable()->comment('talla usuario');
             $table->string('calzado')->nullable()->comment('talla zapato');
             $table->string('genero')->nullable()->comment('genero usuario');

@@ -320,6 +320,15 @@
                     @enderror
                 </div>
                 <div class="mb-6">
+                    <label for="email_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo Electrónico Contacto</label>
+                    <input type="email" id="email_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Correo Electrónico" wire:model.blur="email_contacto">
+                    @error('email_contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
                     <label for="parentesco_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parentesco</label>
                     <input type="text" id="parentesco_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="parentesco_contacto" required>
                     @error('parentesco_contacto')
@@ -352,6 +361,15 @@
                     <label for="documento_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Documento Contacto</label>
                     <input type="text" id="documento_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="documento_contacto">
                     @error('documento_contacto')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="email_contacto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo Electrónico Contacto</label>
+                    <input type="email" id="email_contacto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Correo Electrónico" wire:model.blur="email_contacto">
+                    @error('email_contacto')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                         </div>
