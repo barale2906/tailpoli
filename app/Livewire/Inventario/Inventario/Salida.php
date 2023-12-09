@@ -93,16 +93,47 @@ class Salida extends Component
     }
 
     public function updatedMedio(){
+
         if($this->medio==="tarjeta"){
+
             $porc=ConceptoPago::where('status', true)
                                 ->where('name', 'Recargo Tarjeta')
                                 ->first();
 
             $this->recargo=$porc->valor;
             $this->recargo_id=$porc->id;
+            $this->recargoValor=$this->Total*$this->recargo/100;
+            $this->Total=$this->Total+$this->recargoValor;
+
+
+            //Cargar valor al recibo
+            DB::table('apoyo_recibo')->insert([
+                'tipo'=>'financiero',
+                'id_creador'=>Auth::user()->id,
+                'id_concepto'=>$porc->id,
+                'concepto'=>$porc->name,
+                'producto'=>'Recargo Tarjeta',
+                'cantidad'=>1,
+                'subtotal'=>$this->recargoValor,
+                'valor'=>$this->recargoValor
+            ]);
+
+            $this->cargando();
 
         }else{
-            $this->reset('recargo');
+            $this->valoRecargo();
+        }
+    }
+
+    public function valoRecargo(){
+        if($this->recargo>0){
+            DB::table('apoyo_recibo')
+                ->where('id_creador', Auth::user()->id)
+                ->where('tipo', 'financiero')
+                ->delete();
+
+            $this->Total=$this->Total-$this->recargoValor;
+            $this->reset('recargoValor', 'recargo', 'recargo_id', 'medio');
         }
     }
 
@@ -159,6 +190,7 @@ class Salida extends Component
     // Cargar producto
     public function selProduc($item){
 
+        $this->valoRecargo();
         $value = DB::table('pago_configs_producto')
                         ->whereId($item)
                         ->first();
@@ -245,6 +277,7 @@ class Salida extends Component
     //Eliminar producto
     public function elimOtro($item){
 
+        $this->valoRecargo();
         $prod=DB::table('apoyo_recibo')->whereId($item)->first();
 
         DB::table('apoyo_recibo')
@@ -472,7 +505,7 @@ class Salida extends Component
                             ->orderBy('producto')
                             ->get();
 
-            if($this->recargo>0){
+            /* if($this->recargo>0){
                 DB::table('concepto_pago_recibo_pago')
                     ->insert([
                         'valor'=>$this->recargoValor,
@@ -483,7 +516,7 @@ class Salida extends Component
                         'created_at'=>now(),
                         'updated_at'=>now(),
                     ]);
-            }
+            } */
 
             foreach ($cargados as $value) {
 
