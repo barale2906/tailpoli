@@ -91,29 +91,35 @@
                     @foreach ($matriculas as $matricula)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    @if ($matricula->status)
-                                        @can('ac_matriculaAnular')
-                                            <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
-                                                <a href="#" wire:click.prevent="show({{$matricula}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
-                                                    <i class="fa-solid fa-marker"></i> - {{$matricula->id}}
-                                                </a>
-                                            </span>
-                                        @endcan
-                                        @can('ac_grupoAsignar')
-                                            {{-- <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-                                                <a href="#" wire:click.prevent="show({{$matricula}},{{2}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
-                                                    <i class="fa-solid fa-people-roof fa-beat"></i>
-                                                </a>
-                                            </span> --}}
-                                            <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
-                                                <a href="#" wire:click.prevent="show({{$matricula}},{{3}})" class="inline-flex items-center font-medium text-red-600 dark:text-red-500 hover:underline">
-                                                    <i class="fa-solid fa-retweet"></i>
-                                                </a>
-                                            </span>
-                                        @endcan
-                                    @else
-                                        {{$matricula->id}}
-                                    @endif
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                    <a href="" wire:click.prevent="show({{$matricula->id}},{{4}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                        <i class="fa-solid fa-book"></i>
+                                    </a>
+                                </span>
+                                @if ($matricula->status)
+                                    @can('ac_matriculaAnular')
+                                        <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                            <a href="#" wire:click.prevent="show({{$matricula}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                                <i class="fa-solid fa-marker"></i> - {{$matricula->id}}
+                                            </a>
+                                        </span>
+                                    @endcan
+                                    @can('ac_grupoAsignar')
+                                        {{-- <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                            <a href="#" wire:click.prevent="show({{$matricula}},{{2}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
+                                                <i class="fa-solid fa-people-roof fa-beat"></i>
+                                            </a>
+                                        </span> --}}
+                                        <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                            <a href="#" wire:click.prevent="show({{$matricula}},{{3}})" class="inline-flex items-center font-medium text-red-600 dark:text-red-500 hover:underline">
+                                                <i class="fa-solid fa-retweet"></i>
+                                            </a>
+                                        </span>
+                                    @endcan
+                                @else
+
+                                    {{$matricula->id}}
+                                @endif
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$matricula->fecha_inicia}}
@@ -196,6 +202,10 @@
 
     @if ($is_change)
         <livewire:academico.grupo.grupos-cambiar :elegido="$elegido" />
+    @endif
+
+    @if ($is_document)
+        <livewire:academico.matricula.documentos :elegido="$elegido" />
     @endif
 
     @push('js')

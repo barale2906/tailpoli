@@ -28,6 +28,7 @@ class Matriculas extends Component
     public $is_deleting = false;
     public $is_grupos=false;
     public $is_change=false;
+    public $is_document=false;
 
     public $ruta=0;
 
@@ -110,7 +111,8 @@ class Matriculas extends Component
                         'is_editing',
                         'is_deleting',
                         'is_change',
-                        'is_grupos'
+                        'is_grupos',
+                        'is_document'
                     );
     }
 
@@ -155,6 +157,10 @@ class Matriculas extends Component
 
             case 3:
                 $this->is_change=!$this->is_change;
+                break;
+
+            case 4:
+                $this->is_document=!$this->is_document;
                 break;
         }
     }

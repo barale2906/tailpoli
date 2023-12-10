@@ -320,14 +320,14 @@ class MatriculasCrear extends Component
 
         //Cargar documentos base
         $documentos=Documento::where('status', 3)
-                                ->whereIn('tipo', ['pagare', 'contrato'])
+                                ->whereIn('tipo', ['pagare', 'contrato', 'cartaPagare'])
                                 ->orderBy('titulo')
                                 ->select('id')
                                 ->get();
 
         //Asignar documentos base
         foreach ($documentos as $value) {
-            DB::table('documentos_matriculas')
+            DB::table('documento_matricula')
                     ->insert([
                         'documento_id'   => $value->id,
                         'matricula_id'     => $this->matricula->id,

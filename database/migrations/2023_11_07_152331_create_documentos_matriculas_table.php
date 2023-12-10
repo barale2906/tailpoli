@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documentos_matriculas', function (Blueprint $table) {
+        Schema::create('documento_matricula', function (Blueprint $table) {
             $table->comment('Relación documentos - matriculas');
             $table->id();
 

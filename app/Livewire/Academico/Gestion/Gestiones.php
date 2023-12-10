@@ -30,6 +30,7 @@ class Gestiones extends Component
     public $is_notas=false;
     public $is_transacciones=false;
     public $is_gestransaccion=false;
+    public $is_document=false;
 
     public $estudiante_id;
 
@@ -90,7 +91,8 @@ class Gestiones extends Component
                         'is_asistencias',
                         'is_notas',
                         'is_transacciones',
-                        'is_gestransaccion'
+                        'is_gestransaccion',
+                        'is_document'
                     );
     }
 
@@ -147,6 +149,10 @@ class Gestiones extends Component
 
             case 4:
                 $this->is_gestransaccion=!$this->is_gestransaccion;
+                break;
+
+            case 5:
+                $this->is_document=!$this->is_document;
                 break;
 
         }
