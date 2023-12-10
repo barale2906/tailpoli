@@ -15,7 +15,10 @@ return new class extends Migration
 
             $table->comment('Descripción de movimientos de inventario');
             $table->id();
-            $table->integer('tipo')->default(1)->comment('tipo de movimiento, 1 entra 0 sale, 2 pendiente');
+            $table->integer('tipo')->default(1)->comment('tipo de movimiento, 1 entra 0 sale, 2 pendiente, 3 traslado, 4 pendiente');
+            $table->integer('traslado')->nullable()->comment('registra el numero del traslado');
+            $table->integer('envia')->nullable()->comment('1 si envia');
+            $table->integer('recibe')->nullable()->comment('1 si recibe');
             $table->date('fecha_movimiento');
             $table->double('cantidad');
             $table->double('saldo')->comment('Suma algebraica de las cantidades luego de este registro');

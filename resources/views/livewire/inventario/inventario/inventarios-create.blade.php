@@ -15,8 +15,9 @@
                     <select wire:model.live="tipo" id="tipo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 capitalize">
                         <option >Seleccione...</option>
                         <option value=1>Entrada</option>
-                        <option value=0>sálida</option>
+                        <option value=0>Sálida</option>
                         <option value=2>Pendientes</option>
+                        <option value=3>Traslado</option>
                     </select>
                     @error('tipo')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -77,6 +78,10 @@
                     @break
                 @case(2)
                     <livewire:inventario.inventario.pendiente :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
+                    @break
+
+                @case(3)
+                    <livewire:inventario.traslado.envia :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
                     @break
 
             @endswitch
