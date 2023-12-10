@@ -186,7 +186,7 @@ class Pendiente extends Component
 
                     foreach ($con as $value) {
 
-                        $observa=now().", Overol entrega (p) --- ".$value->observaciones;
+                        $observa=now().", Kit entrega (p) --- ".$value->observaciones;
 
                         Control::whereId($value->id)
                                 ->update([

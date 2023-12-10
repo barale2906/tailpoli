@@ -380,7 +380,7 @@ class Salida extends Component
 
                             foreach ($con as $value) {
 
-                                $observa=now().", Overol (C) --- ".$value->observaciones;
+                                $observa=now().", Kit (C) --- ".$value->observaciones;
 
                                 Control::whereId($value->id)
                                         ->update([
