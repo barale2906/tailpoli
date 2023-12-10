@@ -69,6 +69,8 @@ return new class extends Migration
             $table->string('rh_usuario')->nullable()->comment('RH usuario');
             $table->string('url_foto_usuario')->nullable()->comment('url foto usuario');
             $table->string('sorteo_usuario')->nullable()->comment('Ticket sorteo usuario');
+
+            $table->longText('habilidades')->nullable()->comment('habilidades del trabajador');
             $table->boolean('status')->default(true)->comment('false inactivo, true activo');
 
             $table->timestamps();

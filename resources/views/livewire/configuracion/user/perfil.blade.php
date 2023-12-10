@@ -180,7 +180,7 @@
             </div>
         </div>
 
-        @if ($rol==="Superusuario")
+        @if ($rol!=="Estudiante")
             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
                 <div class="sm:grid-cols-1 md:col-span-2">
                     <h3 class="text-lg font-medium text-center">Sedes</h3>
@@ -210,31 +210,34 @@
             </div>
         @endif
 
-        @can('ac_estudianteCrear')
-            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
-                <div class="sm:grid-cols-1 md:col-span-2">
-                    <h3 class="text-lg font-medium text-center">Persona Multicultural</h3>
-                </div>
-                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-                    @foreach ($registro as $item)
-                        <a href="" wire:click.prevent="selGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                            <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
-                        </a>
-                    @endforeach
-                </div>
-                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-                    @if (count($disponibles))
-                        @foreach ($disponibles as $item)
-                            <a href="" wire:click.prevent="elimGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item['name']}}
+        @if ($rol==="Estudiante")
+            @can('ac_estudianteCrear')
+                <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
+                    <div class="sm:grid-cols-1 md:col-span-2">
+                        <h3 class="text-lg font-medium text-center">Persona Multicultural</h3>
+                    </div>
+                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+                        @foreach ($registro as $item)
+                            <a href="" wire:click.prevent="selGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
                             </a>
                         @endforeach
-                    @else
-                        <h3 class="text-md font-medium text-center col-span-3 capitalize">No pertenece a ningún grupo Multicultural</h3>
-                    @endif
+                    </div>
+                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+                        @if (count($disponibles))
+                            @foreach ($disponibles as $item)
+                                <a href="" wire:click.prevent="elimGrupo({{$item['id']}})" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-solid fa-trash-can fa-bounce"></i> {{$item['name']}}
+                                </a>
+                            @endforeach
+                        @else
+                            <h3 class="text-md font-medium text-center col-span-3 capitalize">No pertenece a ningún grupo Multicultural</h3>
+                        @endif
+                    </div>
                 </div>
-            </div>
-        @endcan
+            @endcan
+        @endif
+
 
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
             <div class="sm:grid-cols-1 md:col-span-5">
@@ -485,63 +488,86 @@
             </div> --}}
         </div>
 
-        <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
-            <div class="sm:grid-cols-1 md:col-span-5">
-                <h3 class="text-lg font-medium text-center">Datos Laborales</h3>
+        @if ($rol==="Estudiante")
+            <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
+                <div class="sm:grid-cols-1 md:col-span-5">
+                    <h3 class="text-lg font-medium text-center">Datos Laborales</h3>
+                </div>
+                <div class="mb-6">
+                    <label for="ocupacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ocupación</label>
+                    <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="ocupacion">
+                        <option>Seleccione...</option>
+                        <option value="Empleado">Empleado</option>
+                        <option value="Estudiante Básica / Media">Estudiante Básica / Media</option>
+                        <option value="Estudiante Superior">Estudiante Superior</option>
+                        <option value="Desempleado">Desempleado</option>
+                        <option value="Independiente">Independiente</option>
+                        <option value="Pensionado">Pensionado</option>
+                        <option value="Sin Información">Sin Información</option>
+                    </select>
+                    @error('ocupacion')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="empresa_usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa Donde Trabaja</label>
+                    <input type="text" id="empresa_usuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="empresa_usuario">
+                    @error('empresa_usuario')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="autoriza_imagen" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Autoriza el uso de la imágen</label>
+                    <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="autoriza_imagen">
+                        <option>Seleccione...</option>
+                        <option value="Si">Si</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label for="carnet" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Posee Carnet Estudiantil</label>
+                    <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="carnet">
+                        <option>Seleccione...</option>
+                        <option value="Si">Si</option>
+                        <option value="No">No</option>
+                    </select>
+                    @error('carnet')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="sorteo_usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Ticket (sorteo):</label>
+                    <input type="text" id="sorteo_usuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="sorteo_usuario">
+                </div>
             </div>
-            <div class="mb-6">
-                <label for="ocupacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ocupación</label>
-                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="ocupacion">
-                    <option>Seleccione...</option>
-                    <option value="Empleado">Empleado</option>
-                    <option value="Estudiante Básica / Media">Estudiante Básica / Media</option>
-                    <option value="Estudiante Superior">Estudiante Superior</option>
-                    <option value="Desempleado">Desempleado</option>
-                    <option value="Independiente">Independiente</option>
-                    <option value="Pensionado">Pensionado</option>
-                    <option value="Sin Información">Sin Información</option>
-                </select>
-                @error('ocupacion')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
+        @endif
+
+        @if ($rol!=="Estudiante")
+            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
+
+                <div class="mb-6">
+                    <label for="habilidades" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registre habilidades y conocimientos</label>
+                    <textarea id="habilidades" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Habilidades importantes" wire:model.live="habilidades">
+
+                    </textarea>
+                </div>
+                <div class="mb-6">
+                    <h2 class="text-justify text-xl ">
+                        {{$this->actual->perfil->habilidades}}
+                    </h2>
+                </div>
+
+
             </div>
-            <div class="mb-6">
-                <label for="empresa_usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa Donde Trabaja</label>
-                <input type="text" id="empresa_usuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="empresa_usuario">
-                @error('empresa_usuario')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
-            </div>
-            <div class="mb-6">
-                <label for="autoriza_imagen" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Autoriza el uso de la imágen</label>
-                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="autoriza_imagen">
-                    <option>Seleccione...</option>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
-                </select>
-            </div>
-            <div class="mb-6">
-                <label for="carnet" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Posee Carnet Estudiantil</label>
-                <select class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="carnet">
-                    <option>Seleccione...</option>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
-                </select>
-                @error('carnet')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
-            </div>
-            <div class="mb-6">
-                <label for="sorteo_usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Ticket (sorteo):</label>
-                <input type="text" id="sorteo_usuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.blur="sorteo_usuario">
-            </div>
-        </div>
+        @endif
+
+
 
         <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
             <button type="submit"

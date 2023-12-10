@@ -67,6 +67,8 @@ class Perfil extends Component
     public $rh_usuario;
     public $sorteo_usuario;
 
+    public $habilidades;
+
     public $disponibles=[];
     public $registro=[];
 
@@ -387,6 +389,16 @@ class Perfil extends Component
 
     //Actualizar
     public function edit(){
+
+        $perfilActual=ConfiguracionPerfil::where('user_id',$this->id)->first();
+
+        if($this->rol!=="Estudiante"){
+            $this->habilidades=$this->habilidades.", ".$perfilActual->habilidades;
+            $this->empresa_usuario="N.A.";
+            $this->ocupacion="N.A.";
+            $this->carnet="N.A";
+        }
+
         // validate
         $this->validate();
 
@@ -398,7 +410,8 @@ class Perfil extends Component
             'documento'=>strtolower($this->documento),
         ]);
 
-        $perfilActual=ConfiguracionPerfil::where('user_id',$this->id)->first();
+
+
 
 
         $perfilActual->update([
@@ -426,6 +439,7 @@ class Perfil extends Component
                     'contacto'=>$this->contacto,
                     'documento_contacto'=>$this->documento_contacto,
                     'parentesco_contacto'=>$this->parentesco_contacto,
+                    'email_contacto'=>$this->email_contacto,
                     'telefono_contacto'=>$this->telefono_contacto,
 
                     'regimen_salud_id'=>$this->regimen_salud_id,
@@ -440,6 +454,8 @@ class Perfil extends Component
                     'empresa_usuario'=>$this->empresa_usuario,
                     'autoriza_imagen'=>$this->autoriza_imagen,
                     'carnet'=>$this->carnet,
+
+                    'habilidades'=>$this->habilidades,
 
                     'sorteo_usuario'=>$this->sorteo_usuario,
                 ]);
