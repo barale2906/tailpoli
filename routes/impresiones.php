@@ -61,3 +61,7 @@ Route::get('/impformuPractica', function () {
 Route::get('/impRemision', function () {
     return view('impresiones.impRemision');
 })->name('impRemision');
+
+Route::get('/impTraslado', function () {
+    return view('impresiones.impTraslado');
+})->name('impTraslado');

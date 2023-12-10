@@ -238,9 +238,9 @@ class Envia extends Component
 
             $this->dispatch('alerta', name:'Se genero el traslado con el número: '.$this->trasl);
 
-            //$ruta='/impresiones/impTraslado?rut='.$this->ruta.'&tras='.$this->trasl;
+            $ruta='/impresiones/impTraslado?rut='.$this->ruta.'&tras='.$this->trasl;
 
-            //$this->redirect($ruta);
+            $this->redirect($ruta);
 
         }else{
             $this->dispatch('alerta', name:'Debe cargar productos');

@@ -10,14 +10,13 @@
                         <th scope="col" class="px-6 py-3">
 
                             <a href="{{$url}}" wire:navigate>
-                                <img class="h-12 w-16 rounded-sm" src="{{asset('img/logo.jpeg')}}" alt="{{env('APP_NAME')}}">
+                                <img class="h-12 w-16 rounded-sm" src="{{asset('img/logopol.jpg')}}" alt="{{env('APP_NAME')}}">
                             </a>
 
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            <h1 class="text-center  font-extrabold uppercase">POLIANDINO</h1>
-                            <h2 class="text-center  font-extrabold uppercase">nit: 900656857-5</h2>
-                            <h2 class="text-center  font-extrabold uppercase">INSTITUTO DE CAPACITACIÓN POLIANDINO CENTRAL</h2>
+                            <h1 class="text-center  font-extrabold uppercase">POLIDOTACIONES</h1>
+                            <h2 class="text-center  font-extrabold uppercase">XXXXXXXXX</h2>
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  uppercase">sede:</h1>
@@ -79,6 +78,10 @@
                 </tbody>
             </table>
         </div>
+
+        <h3 class="text-justify text-xl">
+            Firma Recibido: ________________________________________________________
+        </h3>
     </div>
 
     <div class="border border-spacing-40 h-1 border-black"></div>
@@ -91,14 +94,13 @@
                         <th scope="col" class="px-6 py-3">
 
                             <a href="{{$url}}" wire:navigate>
-                                <img class="h-12 w-16 rounded-sm" src="{{asset('img/logo.jpeg')}}" alt="{{env('APP_NAME')}}">
+                                <img class="h-12 w-16 rounded-sm" src="{{asset('img/logopol.jpg')}}" alt="{{env('APP_NAME')}}">
                             </a>
 
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            <h1 class="text-center  font-extrabold uppercase">POLIANDINO</h1>
-                            <h2 class="text-center  font-extrabold uppercase">nit: 900656857-5</h2>
-                            <h2 class="text-center  font-extrabold uppercase">INSTITUTO DE CAPACITACIÓN POLIANDINO CENTRAL</h2>
+                            <h1 class="text-center  font-extrabold uppercase">POLIDOTACIONES</h1>
+                            <h2 class="text-center  font-extrabold uppercase">XXXXXXXXX</h2>
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  uppercase">sede:</h1>
@@ -160,6 +162,10 @@
                 </tbody>
             </table>
         </div>
+
+        <h3 class="text-justify text-xl">
+            Firma Recibido: ________________________________________________________
+        </h3>
     </div>
 
 </div>
