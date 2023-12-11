@@ -14,11 +14,13 @@ use Livewire\Component;
 class Envia extends Component
 {
     public $almacen;
+    public $almacen_id;
     public $sede;
     public $ruta;
     public $desede;
     public $almacenes;
     public $dealma;
+    public $accion=0;
 
 
     public $buscapro=null;
@@ -47,10 +49,15 @@ class Envia extends Component
         $id=intval($almacen_id);
         $idsede=intval($sede_id);
         $this->almacen=Almacen::find($id);
+        $this->almacen_id=$id;
         $this->sede=Sede::find($idsede);
         if($ruta){
             $this->ruta=$ruta;
         }
+    }
+
+    public function objetivo($id){
+        $this->accion=$id;
     }
 
     public function updatedDesede(){
