@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
 
             $table->date('inicia')->comment('Fecha cuando inicia clases');
-            $table->integer('estado_cartera')->default(1)->comment('1 Al día, 2 Verificar transferencia, 3 mora, 4 proximo a vencer, 5 pago total');
+            $table->integer('estado_cartera')->default(2)->comment('1 pago total, 2 Al día, 3 Verificar transferencia , 4 proximo a vencer, 5 mora ');
             $table->date('ultimo_pago')->nullable()->comment('Fecha ultimo pago registrado');
             $table->date('ultima_asistencia')->nullable()->comment('Fecha ultima asistencia');
             $table->double('mora')->default(0)->comment('Saldo que tenga en mora el estudiante');
@@ -30,6 +30,9 @@ return new class extends Migration
 
             $table->unsignedBigInteger('ciclo_id');
             $table->foreign('ciclo_id')->references('id')->on('ciclos');
+
+            $table->unsignedBigInteger('sede_id');
+            $table->foreign('sede_id')->references('id')->on('sedes');
 
             $table->unsignedBigInteger('estudiante_id');
             $table->foreign('estudiante_id')->references('id')->on('users');

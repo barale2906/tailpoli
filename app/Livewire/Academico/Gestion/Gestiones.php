@@ -6,6 +6,8 @@ use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Nota;
 use App\Models\Configuracion\Estado;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,8 +17,8 @@ class Gestiones extends Component
 
     use WithPagination;
 
-    public $ordena='inicia';
-    public $ordenado='ASC';
+    public $ordena='estado_cartera';
+    public $ordenado='DESC';
     public $pages = 3;
 
     public $is_modify = true;
@@ -33,6 +35,8 @@ class Gestiones extends Component
     public $is_gestransaccion=false;
     public $is_document=false;
 
+    public $sedes=[];
+
     public $estudiante_id;
 
     public $ruta=2;
@@ -43,6 +47,17 @@ class Gestiones extends Component
     public $buscamin='';
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+
+        foreach (Auth::user()->sedes as $value) {
+            if(in_array($value->id, $this->sedes )){
+
+            }else{
+                array_push($this->sedes, $value->id);
+            }
+        }
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -213,6 +228,7 @@ class Gestiones extends Component
                         ->with(['ciclo', 'estudiante'])
                         ->when($this->buscamin, function($query){
                             return $query->where('status', true)
+                                    ->whereIn('sede_id', $this->sedes)
                                     ->where('observaciones', 'like', "%".$this->buscamin."%")
                                     ->orWhereHas('estudiante', function($q){
                                         $q->where('name', 'like', "%".$this->buscamin."%")

@@ -3,6 +3,7 @@
 namespace App\Models\Configuracion;
 
 use App\Models\Academico\Ciclo;
+use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
@@ -51,6 +52,12 @@ class Sede extends Model
     public function grupos(): HasMany
     {
         return $this->hasMany(Grupo::class);
+    }
+
+    //Relación uno a muchos
+    public function controles(): HasMany
+    {
+        return $this->hasMany(Control::class);
     }
 
     //Relación uno a muchos

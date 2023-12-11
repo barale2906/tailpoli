@@ -98,7 +98,7 @@
                             Estudiante
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
-                            Ciclo
+                            Programación
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                             Grupo(s)

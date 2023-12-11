@@ -343,6 +343,7 @@ class MatriculasCrear extends Component
             'observaciones' =>"Matriculado el día: ".$date,
             'matricula_id'  =>$this->matricula->id,
             'ciclo_id'      =>$this->ciclosel->id,
+            'sede_id'       =>$this->sede_id,
             'estudiante_id' =>$this->alumno_id
         ]);
 

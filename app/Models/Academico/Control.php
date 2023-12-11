@@ -2,6 +2,7 @@
 
 namespace App\Models\Academico;
 
+use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Transaccion;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +32,12 @@ class Control extends Model
     public function matricula() : BelongsTo
     {
         return $this->BelongsTo(Matricula::class);
+    }
+
+    //Relacion uno a muchos inversa
+    public function sede() : BelongsTo
+    {
+        return $this->BelongsTo(Sede::class);
     }
 
     //Relación uno a muchos
