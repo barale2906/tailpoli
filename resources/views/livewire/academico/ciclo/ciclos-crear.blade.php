@@ -97,17 +97,17 @@
                             <label for="fechaFin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Fin del Modulo</label>
                             <input type="date" id="fechaFin" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fechaFin">
 
-                            @if ($fechaModulo && $fechaFin)
+
                                 <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
-                                    <a href="" wire:click.prevent="selGrupo" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-4 capitalize">
-                                        <i class="fa-solid fa-check-double"></i>
-                                    </a>
+                                    @if ($fechaModulo && $fechaFin)
+                                        <a href="" wire:click.prevent="selGrupo" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-4 capitalize">
+                                            <i class="fa-solid fa-check-double"></i>
+                                        </a>
+                                    @endif
                                     <a href="" wire:click.prevent="volver" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-4 capitalize">
                                         Volver
                                     </a>
                                 </div>
-
-                            @endif
                         </div>
                     @else
                         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
