@@ -39,6 +39,7 @@ class Pendiente extends Component
     public function obtieneIds(){
 
         $this->productos=Inventario::Where('entregado', false)
+                                    ->where('tipo', 2)
                                     ->get();
 
         foreach ($this->productos as $value) {

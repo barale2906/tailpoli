@@ -41,6 +41,7 @@ class Pendientes extends Component
     private function pendInventarios(){
 
         return Inventario::where('entregado', false)
+                            ->where('tipo', 2)
                             ->join('users', 'inventarios.compra_id', '=', 'users.id')
                             ->orderBy($this->ordena, $this->ordenado)
                             ->paginate($this->pages);

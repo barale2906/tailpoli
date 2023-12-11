@@ -17,7 +17,8 @@ class Navbarpolidotaciones extends Component
 
     private function pendInventarios(){
 
-        return Inventario::where('entregado', false)
+        return Inventario::where('tipo', 2)
+                            ->where('entregado', false)
                             ->count('entregado');
     }
 
