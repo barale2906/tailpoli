@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('ultima_asistencia')->nullable()->comment('Fecha ultima asistencia');
             $table->double('mora')->default(0)->comment('Saldo que tenga en mora el estudiante');
             $table->longText('observaciones')->comment('describe todo lo que ocurra con el estudiante en el proceso');
-            $table->integer('status_est')->default(1)->comment('1 activo, 2 finalizado, 3 aplazado, 4 desertado, 5 reingreso');
+            $table->integer('status_est')->default(1)->comment('basado en la tabla Estados');
             $table->boolean('status')->default(true)->comment('false inactiva, true activa');
 
             $table->string('overol')->default('no')->comment('si, no, pendiente');

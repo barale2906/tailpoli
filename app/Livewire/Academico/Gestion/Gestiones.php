@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Gestion;
 use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Nota;
+use App\Models\Configuracion\Estado;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -225,10 +226,18 @@ class Gestiones extends Component
                         ->paginate($this->pages);
     }
 
+    private function estados(){
+        return Estado::where('status', true)
+                        ->orderBy('name', 'ASC')
+                        ->get();
+
+    }
+
     public function render()
     {
         return view('livewire.academico.gestion.gestiones',[
             'controles' =>$this->controles(),
+            'estados'    =>$this->estados()
         ]);
     }
 }

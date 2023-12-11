@@ -258,7 +258,11 @@
                                 {{$controle->overol}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$controle->status_est}}
+                                @foreach ($estados as $item)
+                                    @if ($item->id===$controle->status_est)
+                                        {{$item->name}}
+                                    @endif
+                                @endforeach
                             </th>
                         </tr>
                     @endforeach
