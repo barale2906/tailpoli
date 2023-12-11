@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('grupo_id')->references('id')->on('grupos');
 
             $table->date('fecha_inicio')->comment('Fecha inicio del modulo dentro del ciclo');
+            $table->date('fecha_fin')->comment('Fecha final del modulo dentro del ciclo');
             //$table->integer('inscritos')->default(0)->comment('Cantidad de alumnos inscritos a este grupo - ciclo');
 
             $table->timestamps();

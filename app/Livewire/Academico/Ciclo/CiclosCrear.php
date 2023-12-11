@@ -32,6 +32,7 @@ class CiclosCrear extends Component
 
     public $is_date=false;
     public $fechaModulo;
+    public $fechaFin;
     public $grupoId;
     public $moduloId;
 
@@ -114,51 +115,50 @@ class CiclosCrear extends Component
         $this->is_date=!$this->is_date;
     }
 
+    public function volver(){
+        $this->is_date=!$this->is_date;
+        $this->reset('is_date', 'fechaModulo','fechaFin' , 'grupoId');
+    }
+
     public function selGrupo(){
 
-        $esta=DB::table('apoyo_recibo')
-                ->where('id_cartera', $this->moduloId)
-                ->orwhere('fecha_movimiento', $this->fechaModulo)
-                ->count();
+        if($this->fechaModulo<$this->fechaFin){
+            $esta=DB::table('apoyo_recibo')
+                    ->where('id_cartera', $this->moduloId)
+                    ->orwhereBetween('fecha_movimiento', [$this->fechaModulo,$this->fechaFin])
+                    ->orwhereBetween('fecha_fin', [$this->fechaModulo,$this->fechaFin])
+                    ->count();
 
-        if($esta===0){
-            foreach ($this->grupos as $grupo) {
-                if($grupo['id']===$this->grupoId){
-                    DB::table('apoyo_recibo')
-                    ->insert([
-                        'id_creador'        =>Auth::user()->id,
-                        'id_concepto'       =>$grupo['id'],
-                        'tipo'              =>$grupo['name'],
-                        'id_producto'       =>$grupo['profesor_id'],
-                        'producto'          =>$grupo['profesor'],
-                        'valor'             =>$grupo['inscritos'],
-                        'id_ultimoreg'      =>$grupo['limit'],
-                        'id_cartera'        =>$grupo['modulo'],
-                        'fecha_movimiento'  =>$this->fechaModulo,
-                    ]);
-                    /* $nuevo=[
-                        'id'            =>$grupo['id'],
-                        'name'          =>$grupo['name'],
-                        'profesor_id'   =>$grupo['profesor_id'],
-                        'profesor'      =>$grupo['profesor'],
-                        'inscritos'     =>$grupo['inscritos'],
-                        'limit'         =>$grupo['limit'],
-                        'fecha_Modulo'   =>$this->fechaModulo,
-                    ];
-
-                    if(in_array($nuevo, $this->seleccionados)){
-
-                    }else{
-                        array_push($this->seleccionados, $nuevo);
-                    } */
+            if($esta===0){
+                foreach ($this->grupos as $grupo) {
+                    if($grupo['id']===$this->grupoId){
+                        DB::table('apoyo_recibo')
+                        ->insert([
+                            'id_creador'        =>Auth::user()->id,
+                            'id_concepto'       =>$grupo['id'],
+                            'tipo'              =>$grupo['name'],
+                            'id_producto'       =>$grupo['profesor_id'],
+                            'producto'          =>$grupo['profesor'],
+                            'valor'             =>$grupo['inscritos'],
+                            'id_ultimoreg'      =>$grupo['limit'],
+                            'id_cartera'        =>$grupo['modulo'],
+                            'fecha_movimiento'  =>$this->fechaModulo,
+                            'fecha_fin'         =>$this->fechaFin
+                        ]);
+                    }
                 }
+                $this->reset('is_date', 'fechaModulo','fechaFin' , 'grupoId');
+                $this->ordenarrender();
+            }else{
+                $this->dispatch('alerta', name:'modulo ya cargado o traslape de fechas');
             }
+
+
         }else{
-            $this->dispatch('alerta', name:'modulo ya cargado o fecha ya usada');
+            $this->dispatch('alerta', name:'La fecha de inicio debe ser menor a la de finalización');
         }
 
-        $this->reset('is_date', 'fechaModulo' , 'grupoId');
-        $this->ordenarrender();
+
     }
 
 
@@ -168,14 +168,6 @@ class CiclosCrear extends Component
                                 ->where('id_creador', Auth::user()->id)
                                 ->orderBy('fecha_movimiento', 'ASC')
                                 ->get();
-
-
-
-        /* function ordenaModulos($fecha_1,$fecha_2){
-            return $fecha_1['fecha_modulo']-$fecha_2['fecha_modulo'];
-        }
-
-        usort($this->seleccionados, 'ordenamodulos'); */
     }
 
     public function elimGrupo($id){
@@ -245,6 +237,7 @@ class CiclosCrear extends Component
                         'ciclo_id'       =>$ciclo->id,
                         'grupo_id'       =>$value->id_concepto,
                         'fecha_inicio'   =>$value->fecha_movimiento,
+                        'fecha_fin'      =>$value->fecha_fin,
                     ]);
 
                 }

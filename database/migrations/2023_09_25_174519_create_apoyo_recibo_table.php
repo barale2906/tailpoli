@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('entregado')->default(true)->comment('true entregado false pendiente');
 
             $table->date('fecha_movimiento')->nullable()->comment('fecha en que se registra el movimiento');
+            $table->date('fecha_fin')->nullable()->comment('fecha final modulos');
 
 
             $table->integer('id_producto')->nullable()->comment('id del prducto registrado');
