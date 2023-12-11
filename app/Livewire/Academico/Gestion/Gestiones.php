@@ -42,6 +42,7 @@ class Gestiones extends Component
     public $ruta=2;
 
     public $elegido;
+    public $hoy;
 
     public $buscar='';
     public $buscamin='';
@@ -49,6 +50,8 @@ class Gestiones extends Component
     protected $listeners = ['refresh' => '$refresh'];
 
     public function mount(){
+
+        $this->hoy=now();
 
         foreach (Auth::user()->sedes as $value) {
             if(in_array($value->id, $this->sedes )){

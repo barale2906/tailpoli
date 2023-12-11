@@ -222,28 +222,35 @@
                                 {{$controle->ciclo->name}}
                             </th>
                             <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize pt-3 pb-3">
-                                @foreach ($controle->ciclo->ciclogrupos as $item)
 
-                                    <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                        <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
-                                            {{$item->grupo->name}}
-                                        </h5>
-                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
-                                            Modulo: {{$item->grupo->modulo->name}}
-                                        </p>
-                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
-                                            Profesor: {{$item->grupo->profesor->name}}
-                                        </p>
-                                        <a href="" wire:click.prevent="notas({{$item->grupo->id}}, {{$controle->estudiante_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-9 capitalize">
-                                            <i class="fa-solid fa-magnifying-glass"></i> Notas
-                                        </a>
 
-                                        <a href="" wire:click.prevent="asistencia({{$item->grupo->id}}, {{$controle->estudiante_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
-                                            <i class="fa-regular fa-calendar-days"></i> Asistencia
-                                        </a>
-                                    </div>
+                                    @if ($controle->inicia>$hoy)
+                                        Inicia el {{$controle->inicia}}
+                                    @else
+                                        @foreach ($controle->ciclo->ciclogrupos as $item)
+                                            @if ($item->fecha_inicio<=$hoy && $item->fecha_fin>=$hoy)
+                                                <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                                    <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
+                                                        {{$item->grupo->name}}
+                                                    </h5>
+                                                    <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                                        Modulo: {{$item->grupo->modulo->name}}
+                                                    </p>
+                                                    <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize mb-2">
+                                                        Profesor: {{$item->grupo->profesor->name}}
+                                                    </p>
+                                                    <a href="" wire:click.prevent="notas({{$item->grupo->id}}, {{$controle->estudiante_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-9 capitalize">
+                                                        <i class="fa-solid fa-magnifying-glass"></i> Notas
+                                                    </a>
 
-                                @endforeach
+                                                    <a href="" wire:click.prevent="asistencia({{$item->grupo->id}}, {{$controle->estudiante_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                                        <i class="fa-regular fa-calendar-days"></i> Asistencia
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
+
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$controle->ultimo_pago}}
