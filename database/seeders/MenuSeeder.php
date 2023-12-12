@@ -377,5 +377,14 @@ class MenuSeeder extends Seeder
                     'icono'             => 'fa-solid fa-wrench text-gray-500',
                     'menu_id'           => $m8->id
                 ]);
+
+                Submenu::create([
+                    'permiso'           => 'co_impornotas',
+                    'ruta'              => 'importaciones.impornotas',
+                    'identificaRuta'    => 'importaciones.impornotas',
+                    'name'              => 'Importar Notas',
+                    'icono'             => 'fa-solid fa-wrench text-gray-500',
+                    'menu_id'           => $m8->id
+                ]);
     }
 }

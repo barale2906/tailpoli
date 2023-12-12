@@ -743,5 +743,11 @@ class RoleSeeder extends Seeder
                             'modulo'=>'configuracion'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
+        Permission::create([
+                            'name'=>'co_impornotas',
+                            'descripcion'=>'importar notas',
+                            'modulo'=>'configuracion'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
     }
 }
