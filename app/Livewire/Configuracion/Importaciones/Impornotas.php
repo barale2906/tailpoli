@@ -5,11 +5,17 @@ namespace App\Livewire\Configuracion\Importaciones;
 use App\Models\Academico\Grupo;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Impornotas extends Component
 {
+    use WithFileUploads;
+
     public $grupos;
     public $profesor_id;
+    public $grupo_id;
+    public $encabezado;
+    public $registros;
     public $detalle=false;
 
     public function updatedProfesorId(){
@@ -20,7 +26,15 @@ class Impornotas extends Component
                             ->get();
     }
 
-
+    /**
+     * Reglas de validación
+     */
+    protected $rules = [
+        'encabezado'    => 'required|mimes:xls,xlsx',
+        'profesor_id'   => 'required|integer',
+        'grupo_id'      => 'required|integer',
+        'registros'     => 'required|integer',
+    ];
 
     private function profesores()
     {
