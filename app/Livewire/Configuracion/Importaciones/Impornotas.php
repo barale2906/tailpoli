@@ -3,6 +3,7 @@
 namespace App\Livewire\Configuracion\Importaciones;
 
 use App\Models\Academico\Grupo;
+use App\Models\Academico\Nota;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -14,9 +15,9 @@ class Impornotas extends Component
     public $grupos;
     public $profesor_id;
     public $grupo_id;
-    public $encabezado;
-    public $registros;
-    public $detalle=false;
+    public $calificaciones;
+    public $notas;
+    public $esquemas;
 
     public function updatedProfesorId(){
 
@@ -24,6 +25,12 @@ class Impornotas extends Component
                             ->where('status', true)
                             ->orderBy('name', 'ASC')
                             ->get();
+    }
+
+    public function updatedGrupoId(){
+        $this->esquemas=Nota::where('grupo_id', $this->grupo_id)
+                                ->where('profesor_id', $this->profesor_id)
+                                ->get();
     }
 
     /**

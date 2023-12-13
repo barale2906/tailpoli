@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Nota;
 
 use App\Exports\AcaNotaExport;
+use App\Exports\AcaNotaPlantExport;
 use App\Models\Academico\Nota;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class NotasEditar extends Component
     public $idcierra;
     public $listado=true;
     public $estudiante;
+    public $cargar=false;
 
     public $grupo;
 
@@ -112,12 +114,15 @@ class NotasEditar extends Component
     }
 
 
-    public function mount($elegido = null){
+    public function mount($elegido = null, $cargar=null){
         $this->id=$elegido;
         $this->actual=Nota::whereId($elegido)->first();
         $this->grupo=$this->actual->grupo_id;
         $this->registroNotas();
         $this->formaencabezado();
+        if($cargar){
+            $this->cargar=true;
+        }
     }
 
     public function registroNotas(){
@@ -157,18 +162,35 @@ class NotasEditar extends Component
     }
 
     public function encabezadoExcel(){
-        $this->reset('encabezadoxls');
-        array_push($this->encabezadoxls, "grupo");
-        array_push($this->encabezadoxls, "profesor");
-        array_push($this->encabezadoxls, "alumno");
-        array_push($this->encabezadoxls, "acumulado");
-        array_push($this->encabezadoxls, "observaciones");
+        if(!$this->cargar){
+            $this->reset('encabezadoxls');
+            array_push($this->encabezadoxls, "grupo");
+            array_push($this->encabezadoxls, "profesor");
+            array_push($this->encabezadoxls, "alumno");
+            array_push($this->encabezadoxls, "acumulado");
+            array_push($this->encabezadoxls, "observaciones");
 
-        foreach ($this->encabezado as $value) {
-            $item = $this->actual->$value;
-            array_push($this->encabezadoxls, $item);
+            foreach ($this->encabezado as $value) {
+                $item = $this->actual->$value;
+                array_push($this->encabezadoxls, $item);
+            }
+        }else{
+            $this->reset('encabezadoxls');
+            array_push($this->encabezadoxls, "nota_id");
+            array_push($this->encabezadoxls, "alumno_id");
+            array_push($this->encabezadoxls, "alumno");
+            array_push($this->encabezadoxls, "profesor_id");
+            array_push($this->encabezadoxls, "profesor");
+            array_push($this->encabezadoxls, "grupo_id");
+            array_push($this->encabezadoxls, "grupo");
+            array_push($this->encabezadoxls, "acumulado");
+            array_push($this->encabezadoxls, "observaciones");
+
+            foreach ($this->encabezado as $value) {
+                $item = $this->actual->$value;
+                array_push($this->encabezadoxls, $item);
+            }
         }
-
 
     }
 
@@ -219,6 +241,10 @@ class NotasEditar extends Component
 
     public function exportar(){
         return new AcaNotaExport($this->id, $this->encabezadoxls);
+    }
+
+    public function exportarPlantilla(){
+        return new AcaNotaPlantExport($this->id, $this->encabezadoxls);
     }
 
     public function render()
