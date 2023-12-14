@@ -207,6 +207,15 @@ class MenuSeeder extends Seeder
                 ]);
 
                 Submenu::create([
+                    'permiso'           => 'in_recibopago',
+                    'ruta'              => 'inventario.reciboPagoInv',
+                    'identificaRuta'    => 'inventario.reciboPagoInv',
+                    'name'              => 'Recibo Pago',
+                    'icono'             => 'fa-solid fa-warehouse text-gray-500',
+                    'menu_id'           => $m4->id
+                ]);
+
+                Submenu::create([
                     'permiso'           => 'in_pagoconfig',
                     'ruta'              => 'inventario.pagoConfig',
                     'identificaRuta'    => 'inventario.pagoConfig',

@@ -448,6 +448,11 @@ class RoleSeeder extends Seeder
 
 
         Permission::create([
+                            'name'=>'in_recibopago',
+                            'descripcion'=>'ver recibos de pago inventarios',
+                            'modulo'=>'inventario'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,]);
+        Permission::create([
                             'name'=>'in_pagoconfig',
                             'descripcion'=>'ver configuraciones de pago',
                             'modulo'=>'inventario'

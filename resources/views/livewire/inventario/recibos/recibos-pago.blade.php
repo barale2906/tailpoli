@@ -1,0 +1,154 @@
+<div>
+    <div class="bg-green-200 rounded-lg align-middle p-2 mb-2 text-center">
+        <h1 class="text-xl uppercase">recibos de pago</h1>
+    </div>
+    <div>
+        <div class="flex flex-wrap justify-end mb-4 ">
+            @include('includes.filtro')
+        </div>
+        <div class="relative overflow-x-auto">
+            <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('id')">
+                            No
+                            @if ($ordena != 'id')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha')">
+                            Fecha
+                            @if ($ordena != 'fecha')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Alumno
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Sede
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('valor_total')">
+                            Valor
+                            @if ($ordena != 'valor_total')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('medio')">
+                            Medio
+                            @if ($ordena != 'medio')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('observaciones')">
+                            Observaciones
+                            @if ($ordena != 'observaciones')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Creador
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($recibos as $recibo)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{-- @if ($recibo->status===0)
+                                    @can('fi_recibopagoAnular')
+                                        <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                            <a href="#" wire:click.prevent="show({{$recibo}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                                <i class="fa-solid fa-marker"></i> - {{$recibo->numero_recibo}}
+                                            </a>
+                                        </span>
+                                    @endcan
+                                @else --}}
+                                    {{$recibo->numero_recibo}}
+                                {{-- @endif --}}
+                                <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                    <a href="/impresiones/imprecibo?rut=0&r={{$recibo->id}}" class="inline-flex items-center font-medium text-green-600 dark:texgreen-500 hover:underline">
+                                        <i class="fa-solid fa-print"></i>
+                                    </a>
+                                </span>
+                                {{-- <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                    <a href="#" wire:click.prevent="show({{$recibo}},{{2}})" class="inline-flex items-center font-medium text-green-600 dark:texgreen-500 hover:underline">
+                                        <i class="fa-solid fa-binoculars"></i>
+                                    </a>
+                                </span> --}}
+
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$recibo->fecha}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$recibo->paga->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$recibo->sede->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                $ {{number_format($recibo->valor_total, 0, '.', ' ')}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
+                                {{$recibo->medio}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                {{$recibo->observaciones}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$recibo->creador->name}}
+                            </th>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="mt-2 p-1 w-auto rounded-lg grid grid-cols-2 gap-4 bg-green-100">
+                <div>
+                    <label class="relative inline-flex items-center mb-4 cursor-pointer">
+                        <span class="ml-3 mr-3 text-sm font-medium text-gray-900 dark:text-gray-300">Registros:</span>
+                        <select wire:click="paginas($event.target.value)" id="countries" class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                            <option value=15>15</option>
+                            <option value=20>20</option>
+                            <option value=50>50</option>
+                            <option value=100>100</option>
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    {{ $recibos->links() }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

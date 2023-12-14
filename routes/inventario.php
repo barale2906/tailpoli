@@ -21,3 +21,7 @@ Route::get('/pagoConfig', function () {
 Route::get('/pend', function () {
     return view('inventario.inventarios.pend');
 })->middleware('can:in_inventarioCrear')->name('pend');
+
+Route::get('/reciboPagoInv', function () {
+    return view('inventario.recibos.recibos');
+})->middleware('can:in_inventarioCrear')->name('reciboPagoInv');
