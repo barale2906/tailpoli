@@ -97,11 +97,14 @@
                             <th scope="col" class="px-6 py-3" >
                                 Acumulado
                             </th>
-                            @can('ac_notaEditar')
-                                <th scope="col" class="px-6 py-3" >
-                                    Aprobo
-                                </th>
-                            @endcan
+                            @if (!$cargar)
+                                @can('ac_notaEditar')
+                                    <th scope="col" class="px-6 py-3" >
+                                        Aprobo
+                                    </th>
+                                @endcan
+                            @endif
+
                             @foreach ($encabezado as $item)
                                 <th scope="col" class="px-6 py-3" >
                                     {{$actual->$item}}
@@ -121,48 +124,51 @@
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{$nota->acumulado}}
                                 </th>
-                                @can('ac_notaEditar')
-                                    @switch($nota->aprobo)
-                                        @case(0)
-                                            @if ($nota->acumulado)
+                                @if (!$cargar)
+                                    @can('ac_notaEditar')
+                                        @switch($nota->aprobo)
+                                            @case(0)
+                                                @if ($nota->acumulado)
 
-                                                    @hasrole('Profesor')
-                                                        @if ($actual->profesor_id===Auth::user()->id)
-                                                            <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white" style="cursor: pointer;"
-                                                            wire:click="finaprueba({{$nota->id}})"
-                                                                >
-                                                                Califica
-                                                            </th>
+                                                        @hasrole('Profesor')
+                                                            @if ($actual->profesor_id===Auth::user()->id)
+                                                                <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white" style="cursor: pointer;"
+                                                                wire:click="finaprueba({{$nota->id}})"
+                                                                    >
+                                                                    Califica
+                                                                </th>
+                                                            @else
+                                                                <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white">
+                                                                    Califica
+                                                                </th>
+                                                            @endif
                                                         @else
-                                                            <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white">
+                                                            <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white" style="cursor: pointer;" wire:click="finaprueba({{$nota->id}})">
                                                                 Califica
                                                             </th>
-                                                        @endif
-                                                    @else
-                                                        <th scope="row" class="px-6 py-4 rounded-s-sm font-medium hover:bg-orange-200 text-gray-900 whitespace-nowrap dark:text-white" style="cursor: pointer;" wire:click="finaprueba({{$nota->id}})">
-                                                            Califica
-                                                        </th>
-                                                    @endhasrole
+                                                        @endhasrole
 
-                                            @else
+                                                @else
+                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        --
+                                                    </th>
+                                                @endif
+
+                                                @break
+                                            @case(1)
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    --
+                                                    APROBADO
                                                 </th>
-                                            @endif
+                                                @break
+                                            @case(2)
+                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                    REPROBADO
+                                                </th>
+                                                @break
+                                        @endswitch
+                                    @endcan
+                                @endif
 
-                                            @break
-                                        @case(1)
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                APROBADO
-                                            </th>
-                                            @break
-                                        @case(2)
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                REPROBADO
-                                            </th>
-                                            @break
-                                    @endswitch
-                                @endcan
                                 @foreach ($encabezado as $item)
                                     <th scope="col" class="px-6 py-3" >
                                         {{$nota->$item}}

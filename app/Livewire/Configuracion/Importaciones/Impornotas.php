@@ -2,11 +2,14 @@
 
 namespace App\Livewire\Configuracion\Importaciones;
 
+use App\Imports\NotasImport;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Nota;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Impornotas extends Component
 {
@@ -18,6 +21,7 @@ class Impornotas extends Component
     public $calificaciones;
     public $notas;
     public $esquemas;
+    public $alerta=false;
 
     public function updatedProfesorId(){
 
@@ -37,11 +41,36 @@ class Impornotas extends Component
      * Reglas de validación
      */
     protected $rules = [
-        'encabezado'    => 'required|mimes:xls,xlsx',
-        'profesor_id'   => 'required|integer',
-        'grupo_id'      => 'required|integer',
-        'registros'     => 'required|integer',
+        'calificaciones'    => 'required|mimes:xls,xlsx',
+        'profesor_id'       => 'required|integer',
+        'grupo_id'          => 'required|integer',
     ];
+
+    public function importar(){
+
+        // validate
+        $this->validate();
+
+        //Elimnar registros anteriores
+        DB::table('notas_detalle')
+            ->where('grupo_id', $this->grupo_id)
+            ->where('profesor_id', $this->profesor_id)
+            ->delete();
+
+        Excel::import(new NotasImport, $this->calificaciones);
+
+        $this->reset('grupo_id', 'profesor_id', 'notas', 'calificaciones', 'alerta');
+
+        $this->dispatch('alerta', name:'Se importo correctamente el archivo ');
+
+        $ruta='/academico/notas';
+
+        $this->redirect($ruta);
+    }
+
+    public function alarma(){
+        $this->alerta=!$this->alerta;
+    }
 
     private function profesores()
     {
@@ -51,6 +80,7 @@ class Impornotas extends Component
                             fn ($user) => $user->roles->where('name', 'Profesor')->toArray()
                         );
     }
+
     public function render()
     {
         return view('livewire.configuracion.importaciones.impornotas',[

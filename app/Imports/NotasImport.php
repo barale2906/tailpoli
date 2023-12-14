@@ -2,50 +2,74 @@
 
 namespace App\Imports;
 
-use App\Models\Academico\Nota as AcademicoNota;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
-class NotasImport implements ToModel
+class NotasImport implements ToCollection
 {
+    public $registro=0;
+    public $carga=[];
 
     /**
-    * @param array $row
+    * @param array $this->carga
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
 
-    public function model(array $row)
+    public function collection($rows)
     {
-        return new AcademicoNota([
-            'nota_id'       =>$row[0],
-            'alumno_id'     =>$row[1],
-            'alumno'        =>$row[2],
-            'profesor_id'   =>$row[3],
-            'profesor'      =>$row[4],
-            'grupo_id'      =>$row[5],
-            'grupo'         =>$row[6],
-            'acumulado'     =>$row[7],
-            'observaciones' =>$row[8],
-            'nota1'         =>$row[9],
-            'porcen1'       =>$row[10],
-            'nota2'         =>$row[11],
-            'porcen2'       =>$row[12],
-            'nota3'         =>$row[13],
-            'porcen3'       =>$row[14],
-            'nota4'         =>$row[15],
-            'porcen4'       =>$row[16],
-            'nota5'         =>$row[17],
-            'porcen5'       =>$row[18],
-            'nota6'         =>$row[19],
-            'porcen6'       =>$row[20],
-            'nota7'         =>$row[21],
-            'porcen7'       =>$row[22],
-            'nota8'         =>$row[23],
-            'porcen8'       =>$row[24],
-            'nota9'         =>$row[25],
-            'porcen9'       =>$row[26],
-            'nota10'        =>$row[27],
-            'porcen10'      =>$row[28],
-        ]);
+
+        foreach($rows as $row){
+
+                unset($this->carga);
+                $this->carga=array();
+
+                for ($i=0; $i <= 28; $i++) {
+
+                    if(isset($row[$i])){
+                        array_push($this->carga, $row[$i]);
+                    }else{
+                        array_push($this->carga, null);
+                    }
+                }
+
+            DB::table('notas_detalle')
+                ->insert([
+
+                    'nota_id'       =>$this->carga[0],
+                    'alumno_id'     =>$this->carga[1],
+                    'alumno'        =>$this->carga[2],
+                    'profesor_id'   =>$this->carga[3],
+                    'profesor'      =>$this->carga[4],
+                    'grupo_id'      =>$this->carga[5],
+                    'grupo'         =>$this->carga[6],
+                    'acumulado'     =>$this->carga[7],
+                    'observaciones' =>$this->carga[8],
+                    'nota1'         =>$this->carga[9],
+                    'porcen1'       =>$this->carga[10],
+                    'nota2'         =>$this->carga[11],
+                    'porcen2'       =>$this->carga[12],
+                    'nota3'         =>$this->carga[13],
+                    'porcen3'       =>$this->carga[14],
+                    'nota4'         =>$this->carga[15],
+                    'porcen4'       =>$this->carga[16],
+                    'nota5'         =>$this->carga[17],
+                    'porcen5'       =>$this->carga[18],
+                    'nota6'         =>$this->carga[19],
+                    'porcen6'       =>$this->carga[20],
+                    'nota7'         =>$this->carga[21],
+                    'porcen7'       =>$this->carga[22],
+                    'nota8'         =>$this->carga[23],
+                    'porcen8'       =>$this->carga[24],
+                    'nota9'         =>$this->carga[25],
+                    'porcen9'       =>$this->carga[26],
+                    'nota10'        =>$this->carga[27],
+                    'porcen10'      =>$this->carga[28],
+                    'created_at'    =>now(),
+                    'updated_at'    =>now()
+                ]);
+
+        }
+
     }
 }

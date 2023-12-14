@@ -19,19 +19,19 @@
                 <div class="flex items-center">
 
                     <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                        <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i>Matriculas - {{$matriculas}}
+                        <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Matriculas - {{$matriculas}}
                     </span>
 
                     <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                        <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i>Vencidos - {{$vencidos}}
+                        <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Vencidos - {{$vencidos}}
                     </span>
 
                     <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                        <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i>Proximos - {{$proximos}}
+                        <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Proximos - {{$proximos}}
                     </span>
 
                     <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                        <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i>Desertados - {{$desertados}}
+                        <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Desertados - {{$desertados}}
                     </span>
 
                     @can('in_productos')
