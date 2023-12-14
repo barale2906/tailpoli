@@ -282,10 +282,10 @@
                             @if ($ruta===4)
                                 <option value="PSE">PSE</option>
                                 <option value="transferencia">Transferencia</option>
+                                <option value="cheque">Cheque</option>
                             @else
                                 <option value="efectivo">Efectivo</option>
                                 <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
-                                <option value="cheque">Cheque</option>
                             @endif
 
                         </select>
@@ -302,11 +302,31 @@
                     </div>
                 </div>
                 @if ($Total>0 || $pagoTotal)
-                    <button type="submit"
-                    class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
-                    >
-                        Nuevo Recibo
-                    </button>
+                    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-2 mb-4">
+                        <div id="alert-additional-content-2" class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                            <div class="flex items-center">
+                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                </svg>
+                                <span class="sr-only">Info</span>
+                                <h3 class="text-lg font-medium">¡IMPORTANTE!</h3>
+                            </div>
+                            <div class="mt-2 mb-4 text-sm uppercase">
+                                <p>
+                                    Asegurese de recibir el pago antes de generar el recibo.
+                                </p>
+                            </div>
+                            <div class="flex">
+
+                                <button type="submit"
+                                class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
+                                >
+                                    Nuevo Recibo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 @endif
             @endif
             <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
