@@ -95,6 +95,33 @@ class MenuSeeder extends Seeder
                 'menu_id'           => $m1->id
             ]);
 
+        $m11=Menu::create([
+                'name'              => 'CLIENTES',
+                'identificaRuta'    => 'clientes.*',
+                'permiso'           => 'Clientes',
+                'icono'             => 'fa-solid fa-satellite-dish  text-gray-500'
+            ]);
+
+            Submenu::create([
+                'permiso'           => 'cl_crm',
+                'ruta'              => 'clientes.crm',
+                'identificaRuta'    => 'clientes.crm',
+                'name'              => 'CRM',
+                'icono'             => 'fa-solid fa-headphones-simple text-gray-500',
+                'menu_id'           => $m11->id
+
+            ]);
+
+            Submenu::create([
+                'permiso'           => 'cl_pqrs',
+                'ruta'              => 'clientes.pqrs',
+                'identificaRuta'    => 'clientes.pqrs',
+                'name'              => 'Gestión PQRS',
+                'icono'             => 'fa-solid fa-headphones-simple text-gray-500',
+                'menu_id'           => $m11->id
+
+            ]);
+
         $m2=Menu::create([
                     'name'              => 'CARTERA',
                     'identificaRuta'    => 'cartera.*',

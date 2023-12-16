@@ -235,6 +235,45 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador, $Profesor]);
 
 
+        Permission::create([
+                            'name'=>'Clientes',
+                            'descripcion'=>'Ingreso al menú Clientes',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor]);
+        Permission::create([
+                            'name'=>'cl_crm',
+                            'descripcion'=>'ver crm',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'cl_clientesCrear',
+                            'descripcion'=>'crear nuevo cliente',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+        Permission::create([
+                            'name'=>'cl_clientesEditar',
+                            'descripcion'=>'registrar gestión clientes',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+
+        Permission::create([
+                            'name'=>'cl_pqrs',
+                            'descripcion'=>'ver Preguntas, quejas, reclamos, sugerencias',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+        Permission::create([
+                            'name'=>'cl_pqrsCrear',
+                            'descripcion'=>'crear nueva PQRS',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+        Permission::create([
+                            'name'=>'cl_pqrsEditar',
+                            'descripcion'=>'gestión PQRS',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+
 
         Permission::create([
                             'name'=>'ca_carteras',

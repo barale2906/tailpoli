@@ -75,6 +75,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('importaciones')
                 ->name('importaciones.')
                 ->group(base_path('routes/importaciones.php'));
+
+            Route::middleware('web', 'auth')
+                ->prefix('clientes')
+                ->name('clientes.')
+                ->group(base_path('routes/clientes.php'));
         });
     }
 }
