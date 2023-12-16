@@ -3,6 +3,7 @@
 namespace App\Livewire\Financiera\ReciboPago;
 
 use App\Models\Academico\Control;
+use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
@@ -50,6 +51,7 @@ class RecibosPagoCrear extends Component
     public $concep=[];
     public $nameConcep;
     public $Total=0;
+    public $subtotal;
     public $control=[];
 
     public $buscar=null;
@@ -146,21 +148,38 @@ class RecibosPagoCrear extends Component
     }
 
     public function asigOtro($id, $item,$conf=null){
+
         $this->valoRecargo();
         //dd($conf);
         if($item===0){
+            //obtener Matricula
+            $matr=Matricula::where('alumno_id', $this->alumno_id)
+                            ->orderBy('id', 'DESC')
+                            ->first();
+
             $ya=0;
-            $this->saldo=$conf['precio'];
-            $this->valor=$conf['precio'];
+            $this->subtotal=$conf['precio'];
             $this->conceptos=$conf['concepto_pago_id'];
             $this->nameConcep=$conf['name'];
-            //$this->id_cartera=$conf['id'];
+            if($this->subtotal<=$this->valor){
+                $this->valor=$this->subtotal;
+            }
+
+            $this->saldo=$this->subtotal-$this->valor;
+
+            if($this->saldo>0 && $matr){
+                $this->id_cartera=$matr->id;
+            }else if($this->saldo>0 && !$matr){
+                $this->dispatch('alerta', name:'¡Debe cancelar completo, no tiene matriculas registradas!');
+                $ya=-1;
+            }
+
         }else{
             //Verificar si el valor mayor a la 1/2
             $mitad=$item['saldo']/2;
 
             if($mitad>$this->valor){
-                $this->dispatch('alerta', name:'¡Abono inferior a la mitad!, solo con transferencia.');
+                $this->dispatch('alerta', name:'¡Abono inferior a la mitad!, solo con transferencia!');
                 $this->obser="  ¡IMPORTANTE! Se recibe abono inferior, validar transferencia.";
             }
 
@@ -191,7 +210,7 @@ class RecibosPagoCrear extends Component
                 'conceptos',
                 'name'
                 );
-        }else{
+        }else if($ya===0){
             switch ($id) {
                 case 0:
                     $this->tipo="otro";
@@ -217,7 +236,8 @@ class RecibosPagoCrear extends Component
                         'concepto'=>$this->nameConcep,
                         'valor'=>$this->valor,
                         'saldo'=>$this->saldo,
-                        'id_cartera'=>$this->id_cartera
+                        'id_cartera'=>$this->id_cartera,
+                        'subtotal'=>$this->subtotal
                     ]);
 
                     $this->Total=$this->Total+$this->valor;
@@ -441,6 +461,20 @@ class RecibosPagoCrear extends Component
                         'observaciones'=>$observa,
                         'status'=>$this->status,
                         'estado_cartera_id'=>$this->estado
+                    ]);
+                }
+
+                if($value->tipo==="otro" && $value->saldo>0){
+                    Cartera::create([
+                        'fecha_pago'=>now(),
+                        'valor'=>$value->subtotal,
+                        'saldo'=>$value->saldo,
+                        'observaciones'=>now()." , abono para: ".$value->concepto,
+                        'matricula_id'=>$value->id_cartera,
+                        'concepto_pago_id'=>$value->id_concepto,
+                        'concepto'=>$value->concepto,
+                        'responsable_id'=>$this->alumno_id,
+                        'estado_cartera_id'=>1
                     ]);
                 }
 
