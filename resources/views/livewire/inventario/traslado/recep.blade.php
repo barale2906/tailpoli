@@ -10,7 +10,7 @@
                 <select wire:model.live="tras" id="tras" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 capitalize">
                     <option >Elija documento...</option>
                     @foreach ($documentos as $item)
-                            <option value={{$item['traslado']}}>{{$item['traslado']}} - {{$item['fecha_movimiento']}}</option>
+                            <option value={{$item['traslado']}}>Remite: {{$item['remitente']}} - Almacén: {{$item['almacen']}} - traslado N°: {{$item['traslado']}} - Fecha: {{$item['fecha_movimiento']}}</option>
                     @endforeach
                 </select>
             </div>
@@ -65,5 +65,23 @@
             No hay remisiones pendientes para esta sede.
         </p>
     @endif
+
+    @push('js')
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('alerta', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: variable['name'],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+            });
+        </script>
+    @endpush
 
 </div>

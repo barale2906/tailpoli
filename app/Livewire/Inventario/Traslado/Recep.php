@@ -31,9 +31,13 @@ class Recep extends Component
         $this->reset('documentos');
 
         foreach ($this->traslados as $value) {
+            $crt=Inventario::where('id',$value->compra_id)->first();
+
             $nuevo=[
                 'traslado'          =>$value->traslado,
                 'fecha_movimiento'  =>$value->fecha_movimiento,
+                'remitente'         =>$crt->almacen->sede->name,
+                'almacen'           =>$crt->almacen->name
             ];
 
 
