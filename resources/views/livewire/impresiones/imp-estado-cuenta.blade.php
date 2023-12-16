@@ -36,6 +36,10 @@
         {{$docuMatricula->alumno->perfil->tipo_documento}}: {{number_format($docuMatricula->alumno->documento, 0, '.', '.')}}
     </h1>
 
+    <h1 class="text-lg mb-5 text-justify capitalize">
+        Estimado(s) Señor(es):
+    </h1>
+
     @foreach ($impresion as $item)
         @switch($item['tipo'])
             @case("firma")

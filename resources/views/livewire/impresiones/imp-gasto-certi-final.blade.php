@@ -26,6 +26,10 @@
         </table>
     </div>
 
+    <h1 class=" text-center text-lg font-extrabold uppercase">
+        Compromiso conocimiento de gastos de certificación y/o constancia final
+    </h1>
+
     @foreach ($impresion as $item)
         @switch($item['tipo'])
             @case("firma")
