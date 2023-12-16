@@ -2,6 +2,7 @@
 
 namespace App\Models\Configuracion;
 
+use App\Models\Clientes\Crm;
 use App\Models\Financiera\ConfiguracionPago;
 use App\Models\Financiera\ConfPagOtros;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,12 @@ class Sector extends Model
     public function state() : BelongsTo
     {
         return $this->BelongsTo(State::class);
+    }
+
+    //Relación uno a muchos
+    public function crms(): HasMany
+    {
+        return $this->hasMany(Crm::class);
     }
 
     //Relación uno a muchos

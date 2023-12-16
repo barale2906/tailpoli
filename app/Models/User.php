@@ -10,12 +10,14 @@ use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Nota;
+use App\Models\Clientes\Crm;
 use App\Models\Configuracion\Perfil;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
+use App\Models\Inventario\Inventario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -88,6 +90,12 @@ class User extends Authenticatable
     public function inventarios(): HasMany
     {
         return $this->hasMany(Inventario::class);
+    }
+
+    //Relación uno a muchos
+    public function gestionas(): HasMany
+    {
+        return $this->hasMany(Crm::class);
     }
 
     //Relación uno a muchos
