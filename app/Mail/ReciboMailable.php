@@ -8,12 +8,14 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class ReciboMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $recibo;
+    public $detalles;
 
     /**
      * Create a new message instance.
@@ -21,6 +23,12 @@ class ReciboMailable extends Mailable
     public function __construct($recibo)
     {
         $this->recibo=$recibo;
+
+        $this->detalles=DB::table('concepto_pago_recibo_pago')
+                                    ->where('concepto_pago_recibo_pago.recibo_pago_id',$this->recibo->id)
+                                    ->join('concepto_pagos', 'concepto_pago_recibo_pago.concepto_pago_id', '=', 'concepto_pagos.id')
+                                    ->select('concepto_pagos.name', 'concepto_pago_recibo_pago.valor', 'concepto_pago_recibo_pago.tipo', 'concepto_pago_recibo_pago.producto', 'concepto_pago_recibo_pago.cantidad', 'concepto_pago_recibo_pago.unitario', 'concepto_pago_recibo_pago.subtotal', 'concepto_pago_recibo_pago.id_relacional')
+                                    ->get();
     }
 
     /**
@@ -42,6 +50,7 @@ class ReciboMailable extends Mailable
             markdown: 'mails.recibo',
             with:[
                 'recibo'=>$this->recibo,
+                'detalles'=>$this->detalles
             ],
         );
     }

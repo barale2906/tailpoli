@@ -50,7 +50,7 @@
                             @endif
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('inventario')">
-                            Inventario
+                            Otros
                             @if ($ordena != 'inventario')
                                 <i class="fas fa-sort"></i>
                             @else

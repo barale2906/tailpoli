@@ -23,7 +23,7 @@
 
                 @if ($this->actual->inventario>0)
                     <p class="mb-3 text-sm text-gray-700 dark:text-gray-400">
-                        Inventario: $ {{number_format($this->actual->inventario, 0, '.', ' ')}}
+                        Otros: $ {{number_format($this->actual->inventario, 0, '.', ' ')}}
                     </p>
                 @endif
                 <p class="mb-3 text-xs text-gray-700 dark:text-gray-400 capitalize">

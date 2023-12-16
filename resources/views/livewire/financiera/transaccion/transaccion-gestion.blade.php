@@ -17,7 +17,7 @@
                                 Acádemico: $ {{number_format($item->academico, 0, '.', ' ')}} -
                             @endif
                             @if ($item->inventario>0)
-                                Inventario: $ {{number_format($item->inventario, 0, '.', ' ')}}
+                                Otros: $ {{number_format($item->inventario, 0, '.', ' ')}}
                             @endif
                         </p>
                     </div>
@@ -50,7 +50,7 @@
 
                     @if ($transaccion->inventario>0)
                         <p class="mb-3 text-sm text-gray-700 dark:text-gray-400">
-                            Inventario: $ {{number_format($transaccion->inventario, 0, '.', ' ')}}
+                            Otros: $ {{number_format($transaccion->inventario, 0, '.', ' ')}}
                         </p>
                     @endif
                     <p class="mb-3 text-xs text-gray-700 dark:text-gray-400 capitalize">
