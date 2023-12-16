@@ -2,7 +2,12 @@
     @push('title')
         CRM
     @endpush
+    @can('cl_crm')
+        <livewire:cliente.crm.crms />
+    @endcan
+    @can('cl_crmunit')
+        <livewire:cliente.crm.crmsuni />
+    @endcan
 
-    <livewire:configuracion.area.areas />
 
 </x-admin-layout>

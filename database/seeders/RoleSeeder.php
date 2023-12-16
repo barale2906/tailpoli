@@ -244,7 +244,12 @@ class RoleSeeder extends Seeder
                             'name'=>'cl_crm',
                             'descripcion'=>'ver crm',
                             'modulo'=>'clientes'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+                            ])->syncRoles([$Superusuario,$Administrador]);
+        Permission::create([
+                            'name'=>'cl_crmunit',
+                            'descripcion'=>'ver crm solo usuario',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Coordinador,$Auxiliar]);
         Permission::create([
                             'name'=>'cl_clientesCrear',
                             'descripcion'=>'crear nuevo cliente',
@@ -255,6 +260,12 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'registrar gestión clientes',
                             'modulo'=>'clientes'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+        Permission::create([
+                            'name'=>'cl_clientesCargar',
+                            'descripcion'=>'Carga excel con clientes',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador]);
 
 
         Permission::create([
