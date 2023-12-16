@@ -34,7 +34,7 @@
                             NOMBRE DEL CURSO: <strong>{{$docuMatricula->curso->name}}</strong>
                         </p>
                         <p class="text-justify text-sm">
-                            Duración del curso: <strong>{{$docuMatricula->curso->duracion_horas}} horas / {{$docuMatricula->curso->duracion_meses}} meses</strong>
+                            Duración del curso: <strong>{{-- {{$docuMatricula->curso->duracion_horas}} horas /  --}}{{$docuMatricula->curso->duracion_meses}} meses</strong>
                         </p>
                         <p class="text-justify text-sm">
                             Lugar:

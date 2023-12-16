@@ -20,6 +20,7 @@ class DocumentosCrear extends Component
     public $enviado;
 
     public function mount($actual=null){
+        $this->reset('fecha', 'tipo', 'titulo');
 
         $this->hoy=Carbon::now();
 

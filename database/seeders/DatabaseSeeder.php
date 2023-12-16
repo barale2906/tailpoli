@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             EstadoCarteraSeeder::class,
             ConfiguracioPagoSeeder::class,
             PalabrasSeeder::class,
+            DocumentoSeeder::class,
         ]);
     }
 }

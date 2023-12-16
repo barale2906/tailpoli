@@ -130,6 +130,8 @@ class DocumentosDetalle extends Component
                     'updated_at'    =>now()
                 ]);
 
+            $this->reset('modifica');
+
         }else{
             DB::table('detalle_documento')
             ->insert([

@@ -27,19 +27,14 @@
     </div>
 
     <h1 class="text-lg text-justify mt-24">
-        El departamento de cartera y tesorería del <strong>{{config('instituto.nombre_empresa')}}</strong> informa:
+        El departamento de cartera y tesorería del <strong class="uppercase">{{config('instituto.nombre_empresa')}}</strong> informa:
     </h1>
 
     @foreach ($impresion as $item)
         @switch($item['tipo'])
             @case("firma")
 
-
-                <h1 class="text-lg text-justify">
-                    La presente certificación se expide a petición del interesado el: <strong>{{$fecha}}</strong>
-                </h1>
-
-                <div class="relative overflow-x-auto bg-slate-200">
+                <div class="relative overflow-x-auto bg-slate-200 text-center mt-4">
                     <table class="w-full text-sm text-gray-500 text-justify dark:text-gray-400">
                         <thead class="text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -107,7 +102,7 @@
                 @endif
                 @break
             @default
-                <div class="relative overflow-x-auto bg-slate-200 mt-16">
+                <div class="relative overflow-x-auto bg-slate-200 mt-3">
                     <table class="w-full text-lg text-gray-500 text-justify dark:text-gray-400">
                         <thead class="text-lg text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
