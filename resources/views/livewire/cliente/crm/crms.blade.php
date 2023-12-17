@@ -263,7 +263,7 @@
     @endif
 
     @if ($is_editing)
-        <livewire:financiera.recibo-pago.recibos-pago-crear  :elegido="$elegido" />
+        <livewire:cliente.crm.crm-crear :elegido="$elegido" />
     @endif
 
     @if ($is_charge)

@@ -11,7 +11,7 @@ class Crms extends Component
 {
     use WithPagination;
 
-    public $ordena='fecha';
+    public $ordena='status';
     public $ordenado='ASC';
     public $pages = 15;
 

@@ -17,6 +17,34 @@ class CrmCrear extends Component
     public $sector_id;
     public $fecha;
     public $mes;
+    public $actual;
+    public $editar=false;
+    public $status;
+    public $observaciones=[];
+
+    public function mount($elegido=null){
+        if($elegido){
+            $this->resetFields();
+            $this->editar=true;
+            $this->actual=Crm::whereId($elegido)->first();
+            $this->datos();
+        }
+    }
+
+    public function datos(){
+
+        $this->name=$this->actual->name;
+        $this->telefono=$this->actual->telefono;
+        $this->email=$this->actual->email;
+        $this->curso=$this->actual->curso;
+        $this->sector_id=$this->actual->sector_id;
+        $this->status=$this->actual->status;
+        $this->arraobserva();
+    }
+
+    public function arraobserva(){
+        $this->observaciones=explode("-----", $this->actual->historial);
+    }
 
     /**
      * Reglas de validación
@@ -42,6 +70,8 @@ class CrmCrear extends Component
             'historial',
             'sector_id',
             'curso',
+            'actual',
+            'editar'
         );
     }
 
@@ -63,10 +93,35 @@ class CrmCrear extends Component
             'curso'=>strtolower($this->curso),
             'mes'=>$this->fecha,
             'gestiona_id'=>Auth::user()->id,
+
         ]);
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente el cliente: '.$this->name);
+        $this->resetFields();
+
+        //refresh
+        $this->dispatch('refresh');
+        $this->dispatch('cancelando');
+    }
+
+    public function edit(){
+
+        // validate
+        $this->validate();
+
+        $this->actual->update([
+            'name' => strtolower($this->name),
+            'telefono'=>$this->telefono,
+            'email'=>$this->email,
+            'historial'=>now()." ".Auth::user()->name.": ".strtolower($this->historial)." ----- ".$this->actual->historial,
+            'sector_id'=>$this->sector_id,
+            'curso'=>strtolower($this->curso),
+            'status'=>$this->status
+        ]);
+
+        // Notificación
+        $this->dispatch('alerta', name:'Se ha actualizado correctamente el cliente: '.$this->name);
         $this->resetFields();
 
         //refresh
