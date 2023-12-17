@@ -3,6 +3,6 @@
         PQRS
     @endpush
 
-    <livewire:configuracion.area.areas />
+    <livewire:cliente.pqrs.pqrss />
 
 </x-admin-layout>
