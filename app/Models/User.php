@@ -11,6 +11,7 @@ use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Nota;
 use App\Models\Clientes\Crm;
+use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Perfil;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
@@ -96,6 +97,18 @@ class User extends Authenticatable
     public function gestionas(): HasMany
     {
         return $this->hasMany(Crm::class);
+    }
+
+    //Relación uno a muchos
+    public function gestionpqrs(): HasMany
+    {
+        return $this->hasMany(Pqrs::class);
+    }
+
+    //Relación uno a muchos
+    public function estudiantepqrs(): HasMany
+    {
+        return $this->hasMany(Pqrs::class);
     }
 
     //Relación uno a muchos
