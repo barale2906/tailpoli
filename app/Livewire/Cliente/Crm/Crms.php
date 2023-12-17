@@ -94,7 +94,7 @@ class Crms extends Component
 
         $this->elegido=$esta;
         $this->is_modify = !$this->is_modify;
-
+        $this->is_editing = !$this->is_editing;
 
     }
 

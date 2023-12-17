@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('telefono')->comment('telefono alumno');
             $table->string('email')->comment('email alumno');
             $table->longText('historial')->comment('registro de gestión');
-            $table->integer('status')->comment('1 creado, 2 interesado, 3 pendiente por matricular, 4 declinado');
+            $table->integer('status')->default(1)->comment('1 creado, 2 interesado, 3 pendiente por matricular, 4 declinado');
 
             $table->timestamps();
         });
