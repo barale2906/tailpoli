@@ -122,11 +122,11 @@ class Crms extends Component
                         ->with(['sector'])
                         ->when($this->buscamin, function($query){
                             return $query->where('fecha', 'like', "%".$this->buscamin."%")
-                                    ->where('mes', 'like', "%".$this->buscamin."%")
-                                    ->where('curso', 'like', "%".$this->buscamin."%")
-                                    ->where('name', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('mes', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('curso', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('name', 'like', "%".$this->buscamin."%")
                                     ->where('gestiona_id', Auth::user()->id)
-                                    ->where('historial', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('historial', 'like', "%".$this->buscamin."%")
                                     ->orWhereHas('sector', function($qu){
                                         $qu->where('name', 'like', "%".$this->buscamin."%");
                                     });
@@ -138,10 +138,10 @@ class Crms extends Component
                         ->with(['sector', 'gestiona'])
                         ->when($this->buscamin, function($query){
                             return $query->where('fecha', 'like', "%".$this->buscamin."%")
-                                    ->where('mes', 'like', "%".$this->buscamin."%")
-                                    ->where('curso', 'like', "%".$this->buscamin."%")
-                                    ->where('name', 'like', "%".$this->buscamin."%")
-                                    ->where('historial', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('mes', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('curso', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('name', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('historial', 'like', "%".$this->buscamin."%")
                                     ->orWhereHas('gestiona', function($q){
                                         $q->where('name', 'like', "%".$this->buscamin."%");
                                     })

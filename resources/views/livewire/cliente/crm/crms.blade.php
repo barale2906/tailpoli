@@ -269,7 +269,7 @@
     @endif
 
     @if ($is_charge)
-        <livewire:configuracion.user.users-create />
+        <livewire:cliente.crm.crm-importar />
     @endif
 
     @push('js')
