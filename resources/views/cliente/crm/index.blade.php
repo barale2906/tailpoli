@@ -6,7 +6,7 @@
         <livewire:cliente.crm.crms />
     @endcan
     @can('cl_crmunit')
-        <livewire:cliente.crm.crmsuni />
+        <livewire:cliente.crm.crms :todo="1"/>
     @endcan
 
 

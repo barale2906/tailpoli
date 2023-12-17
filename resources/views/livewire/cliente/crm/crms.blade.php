@@ -140,7 +140,7 @@
                 </thead>
                 <tbody>
                     @foreach ($crms as $crm)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 ">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @can('cl_clientesEditar')
                                     <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
@@ -209,8 +209,10 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$crm->email}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
-                                {{$crm->historial}}
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize md:h-52 ">
+                                <div class="overflow-auto hover:overflow-scroll">
+                                    {{$crm->historial}}
+                                </div>
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$crm->gestiona->name}}

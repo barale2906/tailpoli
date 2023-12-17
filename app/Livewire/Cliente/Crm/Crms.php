@@ -3,6 +3,7 @@
 namespace App\Livewire\Cliente\Crm;
 
 use App\Models\Clientes\Crm;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,8 +25,15 @@ class Crms extends Component
 
     public $buscar='';
     public $buscamin='';
+    public $todo=false;
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount($todo=null){
+        if($todo){
+            $this->todo=true;
+        }
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -109,7 +117,24 @@ class Crms extends Component
 
     public function crms()
     {
-        return Crm::query()
+        if($this->todo){
+            return Crm::query()
+                        ->with(['sector'])
+                        ->when($this->buscamin, function($query){
+                            return $query->where('fecha', 'like', "%".$this->buscamin."%")
+                                    ->where('mes', 'like', "%".$this->buscamin."%")
+                                    ->where('curso', 'like', "%".$this->buscamin."%")
+                                    ->where('name', 'like', "%".$this->buscamin."%")
+                                    ->where('gestiona_id', Auth::user()->id)
+                                    ->where('historial', 'like', "%".$this->buscamin."%")
+                                    ->orWhereHas('sector', function($qu){
+                                        $qu->where('name', 'like', "%".$this->buscamin."%");
+                                    });
+                        })
+                        ->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+        }else{
+            return Crm::query()
                         ->with(['sector', 'gestiona'])
                         ->when($this->buscamin, function($query){
                             return $query->where('fecha', 'like', "%".$this->buscamin."%")
@@ -126,6 +151,8 @@ class Crms extends Component
                         })
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
+        }
+
     }
 
     public function render()
