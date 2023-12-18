@@ -15,7 +15,7 @@
         <div class="mb-6 overflow-y-auto">
             @foreach ($historialAlumno as $item)
                 <p class="text-justify text-sm">
-                    {{$item->fecha}}: {{$item->$observaciones}}
+                    {{$item->fecha}}: {{$item->observaciones}}
                 </p>
             @endforeach
         </div>
