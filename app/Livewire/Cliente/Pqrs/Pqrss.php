@@ -28,6 +28,7 @@ class Pqrss extends Component
     public $origen=1;
 
     public function mount($origen=null){
+
         if($origen){
             $this->origen=$origen;
         }

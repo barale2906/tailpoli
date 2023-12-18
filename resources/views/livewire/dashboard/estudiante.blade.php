@@ -132,6 +132,11 @@
                 </tbody>
             </table>
         </div>
+        <div>
+            <a href="#" wire:click.prevent="show(2,2)" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                <i class="fa-solid fa-marker"></i>PQRS
+            </a>
+        </div>
     @endif
 
     @if ($is_notas)
@@ -140,6 +145,10 @@
 
     @if ($is_asistencia)
         <livewire:academico.asistencia.individual :elegido="$nota" :alumno_id="$alumno_id" :crt="true"/>
+    @endif
+
+    @if ($is_pqrs)
+        <livewire:cliente.pqrs.pqrss :origen="3"  />
     @endif
 
     @push('js')

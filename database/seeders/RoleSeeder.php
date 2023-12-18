@@ -277,7 +277,7 @@ class RoleSeeder extends Seeder
                             'name'=>'cl_pqrsCrear',
                             'descripcion'=>'crear nueva PQRS',
                             'modulo'=>'clientes'
-                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Estudiante,$Auxiliar]);
         Permission::create([
                             'name'=>'cl_pqrsEditar',
                             'descripcion'=>'gestiónar PQRS',

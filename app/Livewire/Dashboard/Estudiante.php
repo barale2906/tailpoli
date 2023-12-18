@@ -15,6 +15,7 @@ class Estudiante extends Component
     public $is_notas=false;
     public $is_asistencia=false;
     public $is_modify=true;
+    public $is_pqrs=false;
     public $nota;
     public $fecha;
     public $alumno_id;
@@ -29,7 +30,7 @@ class Estudiante extends Component
     //Mostrar formulario de creación
     public function updatedIsCreating()
     {
-        $this->reset('is_notas', 'is_modify', 'is_asistencia');
+        $this->reset('is_notas', 'is_modify', 'is_asistencia', 'is_pqrs');
     }
 
     public function show($esta, $act){
@@ -45,6 +46,10 @@ class Estudiante extends Component
 
             case 1:
                 $this->is_asistencia=!$this->is_asistencia;
+                break;
+
+            case 2:
+                $this->is_pqrs=!$this->is_pqrs;
                 break;
         }
     }
