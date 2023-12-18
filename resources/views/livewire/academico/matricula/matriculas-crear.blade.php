@@ -350,7 +350,55 @@
             </div>
         </form>
     @else
-        <livewire:financiera.recibo-pago.recibos-pago-crear :ruta="$ruta" />
-    @endif
 
+
+        <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+                Se genero la matricula de: {{$alumnoName}}
+            </h5>
+            <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
+                Por favor genere los documentos respectivos para su firma y el recibo de caja para registar el pago.
+            </p>
+            <div class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
+                <a href=""  class="w-full sm:w-auto bg-orange-800 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-orange-700 dark:hover:bg-orange-600 dark:focus:ring-orange-700">
+                    <i class="fa-solid fa-file-pdf mr-2"></i>
+                    <div class="text-left rtl:text-right">
+                        <div class="mb-1 text-xs">Descargar documentos</div>
+                        <div class="-mt-1 font-sans text-sm font-semibold">PDF</div>
+                    </div>
+                </a>
+                @if ($genrecibo && $finrecibo)
+                    <a href="" wire:click.prevent="transferencia()" class="w-full sm:w-auto bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-blue-700 dark:hover:bg-blue-600 dark:focus:ring-blue-700">
+                        <i class="fa-solid fa-floppy-disk mr-2"></i>
+                        <div class="text-left rtl:text-right">
+                            <div class="mb-1 text-xs">Guardar observación</div>
+                            <div class="-mt-1 font-sans text-sm font-semibold">Transferencia</div>
+                        </div>
+                    </a>
+                    <a href="" wire:click.prevent="recibo()" class="w-full sm:w-auto bg-green-800 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-green-700 dark:hover:bg-green-600 dark:focus:ring-green-700">
+                        <i class="fa-solid fa-file-invoice-dollar mr-2"></i>
+                        <div class="text-left rtl:text-right">
+                            <div class="mb-1 text-xs">Generar</div>
+                            <div class="-mt-1 font-sans text-sm font-semibold">Recibo de Caja</div>
+                        </div>
+                    </a>
+                @endif
+                @if ($genrecibo && !$finrecibo)
+                    <a href="" wire:click.prevent="$dispatch('cancelando')" class="w-full sm:w-auto bg-cyan-800 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-cyan-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-cyan-700 dark:hover:bg-cyan-600 dark:focus:ring-cyan-700">
+                        <i class="fa-solid fa-backward mr-2"></i>
+                        <div class="text-left rtl:text-right">
+                            <div class="mb-1 text-xs">Volver al listado</div>
+                            <div class="-mt-1 font-sans text-sm font-semibold">Finalizar</div>
+                        </div>
+                    </a>
+                @endif
+
+
+            </div>
+        </div>
+        @if (!$genrecibo)
+            <livewire:financiera.recibo-pago.recibos-pago-crear :ruta="$ruta" :estudiante="$alumno_id"/>
+        @endif
+
+    @endif
 </div>

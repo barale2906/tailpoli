@@ -60,6 +60,8 @@ class MatriculasCrear extends Component
     public $matricula;
 
     public $vista=true;
+    public $genrecibo=true;
+    public $finrecibo=true;
 
     public $ruta=1;
 
@@ -405,8 +407,26 @@ class MatriculasCrear extends Component
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
-        $this->resetFields();
         $this->vista=!$this->vista;
+    }
+
+    //Registrar Pago por transferencia
+    public function transferencia(){
+        Pqrs::create([
+            'estudiante_id' =>$this->alumno_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>2,
+            'observaciones' =>'PAGO: el estudiante realizará el pago por transferencia ----- ',
+            'status'        =>4
+        ]);
+        $this->dispatch('alerta', name:'Se registro el no pago aún de la matricula.');
+        $this->resetFields();
+        $this->finrecibo=!$this->finrecibo;
+    }
+
+    public function recibo(){
+        $this->genrecibo=!$this->genrecibo;
     }
 
     private function estudiantes(){

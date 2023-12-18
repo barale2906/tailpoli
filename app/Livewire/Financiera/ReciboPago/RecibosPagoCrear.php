@@ -67,7 +67,7 @@ class RecibosPagoCrear extends Component
 
     public $pendientes;
 
-    public function mount($ruta=null, $elegido=null){
+    public function mount($ruta=null, $elegido=null, $estudiante=null){
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
             ->delete();
@@ -77,6 +77,14 @@ class RecibosPagoCrear extends Component
         if($elegido){
             $this->transaccion=Transaccion::find($elegido);
             $this->variables();
+        }
+
+        if($estudiante){
+            $alum=User::find($estudiante);
+            $this->alumno_id=$alum->id;
+            $this->alumnoName=$alum->name;
+            $this->alumnodocumento=$alum->documento;
+            $this->obligaciones();
         }
 
         $this->cierre();
