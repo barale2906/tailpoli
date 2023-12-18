@@ -64,6 +64,7 @@ class MatriculasCrear extends Component
     public $finrecibo=true;
 
     public $ruta=1;
+    public $url;
 
     public $is_comercial=false;
     public $primerGrupo;
@@ -408,6 +409,8 @@ class MatriculasCrear extends Component
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
         $this->vista=!$this->vista;
+
+        $this->url='/pdfs/matricular?id='.$this->matricula->id;
     }
 
     //Registrar Pago por transferencia
@@ -428,6 +431,8 @@ class MatriculasCrear extends Component
     public function recibo(){
         $this->genrecibo=!$this->genrecibo;
     }
+
+
 
     private function estudiantes(){
         return User::where('status', true)

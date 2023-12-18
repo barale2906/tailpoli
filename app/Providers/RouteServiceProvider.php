@@ -80,6 +80,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('clientes')
                 ->name('clientes.')
                 ->group(base_path('routes/clientes.php'));
+
+            Route::middleware('web', 'auth')
+                ->prefix('pdfs')
+                ->name('pdfs.')
+                ->group(base_path('routes/pdfs.php'));
         });
     }
 }
