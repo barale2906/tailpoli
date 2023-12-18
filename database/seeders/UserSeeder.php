@@ -196,9 +196,33 @@ class UserSeeder extends Seeder
             'lastname'=>'Barajas V'
         ]);
 
+        $is=0;
+        $documento=1020535000;
+        while ($is <= 80) {
+
+            $usu = User::factory()->create()->assignRole('Profesor');
+
+            Perfil::create([
+                'user_id'=>$usu->id,
+                'country_id'=>1,
+                'sector_id'=>1,
+                'state_id'=>1,
+                'estado_id'=>1,
+                'regimen_salud_id'=>1,
+                'tipo_documento'=>'cédula de ciudadanía',
+                'documento'=>$documento,
+                'name'=>'profesor '.$usu->id,
+                'lastname'=>'profesor '.$usu->id
+            ]);
+
+            $is++;
+            $documento++;
+
+        }
+
         $id=0;
         $documento=1030535000;
-        while ($id <= 120) {
+        while ($id <= 1000) {
 
             $usu = User::factory()->create()->assignRole('Estudiante');
 
@@ -220,28 +244,6 @@ class UserSeeder extends Seeder
 
         }
 
-        $is=0;
-        $documento=1050535000;
-        while ($is <= 20) {
 
-            $usu = User::factory()->create()->assignRole('Profesor');
-
-            Perfil::create([
-                'user_id'=>$usu->id,
-                'country_id'=>1,
-                'sector_id'=>1,
-                'state_id'=>1,
-                'estado_id'=>1,
-                'regimen_salud_id'=>1,
-                'tipo_documento'=>'cédula de ciudadanía',
-                'documento'=>$documento,
-                'name'=>'profesor '.$usu->id,
-                'lastname'=>'profesor '.$usu->id
-            ]);
-
-            $is++;
-            $documento++;
-
-        }
     }
 }

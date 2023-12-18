@@ -280,7 +280,13 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
         Permission::create([
                             'name'=>'cl_pqrsEditar',
-                            'descripcion'=>'gestión PQRS',
+                            'descripcion'=>'gestiónar PQRS',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+        Permission::create([
+                            'name'=>'cl_pqrsAsig',
+                            'descripcion'=>'Asignar responsable PQRS',
                             'modulo'=>'clientes'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 

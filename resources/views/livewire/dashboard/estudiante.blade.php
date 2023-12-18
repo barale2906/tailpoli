@@ -44,9 +44,11 @@
                                 <div>
                                     <label for="sede" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tienes Kit:</label>
                                     <h2 class="font-bold text-gray-900 dark:text-white uppercase">
-                                        {{$item->overol}},
+
                                         @if ($item->overol!=="si")
                                             Recuerda adquirir tu kit.
+                                        @else
+                                            {{$item->overol}}
                                         @endif
                                     </h2>
                                 </div>

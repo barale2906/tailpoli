@@ -25,6 +25,13 @@ class Pqrss extends Component
     public $todo=false;
 
     public $elegido;
+    public $origen=1;
+
+    public function mount($origen=null){
+        if($origen){
+            $this->origen=$origen;
+        }
+    }
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -99,20 +106,27 @@ class Pqrss extends Component
     }
 
     private function registros(){
-        return Pqrs::query()
-                    ->with(['estudiante','gestion'])
-                    ->when($this->buscamin, function($query){
-                        return $query->where('fecha', 'like', "%".$this->buscamin."%")
-                                ->orWhere('observaciones', 'like', "%".$this->buscamin."%")
-                                ->orWhereHas('estudiante', function($qu){
-                                    $qu->where('name', 'like', "%".$this->buscamin."%");
-                                })
-                                ->orWhereHas('gestion', function($qu){
-                                    $qu->where('name', 'like', "%".$this->buscamin."%");
-                                });
-                    })
-                    ->orderBy($this->ordena, $this->ordenado)
-                    ->paginate($this->pages);
+        if($this->origen===3){
+            return Pqrs::where('estudiante_id', Auth::user()->id)
+                        ->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+        }else{
+            return Pqrs::query()
+                        ->with(['estudiante','gestion'])
+                        ->when($this->buscamin, function($query){
+                            return $query->where('fecha', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('observaciones', 'like', "%".$this->buscamin."%")
+                                    ->orWhereHas('estudiante', function($qu){
+                                        $qu->where('name', 'like', "%".$this->buscamin."%");
+                                    })
+                                    ->orWhereHas('gestion', function($qu){
+                                        $qu->where('name', 'like', "%".$this->buscamin."%");
+                                    });
+                        })
+                        ->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+        }
+
     }
 
     public function render()

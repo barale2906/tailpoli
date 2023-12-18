@@ -75,11 +75,11 @@
 
                     <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                         Observaciones
-                    </th>
+                    </th>{{--
 
                     <th scope="col" class="px-6 py-3" >
                         Soporte
-                    </th>
+                    </th> --}}
                     <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('status')">
                         Estado
                         @if ($ordena != 'status')
@@ -98,13 +98,22 @@
                 @foreach ($registros as $registro)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 ">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            @can('cl_pqrsEditar')
-                                <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
-                                    <a href="#" wire:click.prevent="show({{$registro->id}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
-                                        <i class="fa-solid fa-marker"></i>
+                            @if ($registro->status!==4)
+                                @can('cl_pqrsEditar')
+                                    <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                        <a href="#" wire:click.prevent="show({{$registro->id}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                            <i class="fa-solid fa-marker"></i>Editar
+                                        </a>
+                                    </span>
+                                @endcan
+                            @else
+                                <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                    <a href="#" wire:click.prevent="show({{$registro->id}})" class="inline-flex items-center font-medium text-green-600 dark:text-orange-500 hover:underline">
+                                        <i class="fa-solid fa-binoculars"></i>Ver
                                     </a>
                                 </span>
-                            @endcan
+                            @endif
+
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{$registro->fecha}}
@@ -147,12 +156,12 @@
                         <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize pt-3 pb-3">
                             {{$registro->gestion->name}}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                             {{$registro->observaciones}}
-                        </th>
+                        </th>{{--
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             {{$registro->ruta}}
-                        </th>
+                        </th> --}}
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             @switch($registro->status)
                                 @case(1)
@@ -193,11 +202,11 @@
     @endif
 
     @if ($is_creating)
-        <livewire:cliente.pqrs.pqrss-crear  />
+        <livewire:cliente.pqrs.pqrss-crear :origen="$origen" />
     @endif
 
     @if ($is_editing)
-        <livewire:cliente.pqrs.pqrss-crear :elegido="$elegido" />
+        <livewire:cliente.pqrs.pqrss-crear :elegido="$elegido" :origen="2" />
     @endif
 
     @push('js')

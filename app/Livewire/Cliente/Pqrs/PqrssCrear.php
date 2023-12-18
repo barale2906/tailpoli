@@ -18,14 +18,52 @@ class PqrssCrear extends Component
     public $origen=false; //Define si lo crea el usuario o desde la gestión
     public $editar=false;
     public $ruta=null;
+    public $actual;
+    public $status=2;
+    public $ver=true;
+    public $estudiantes;
+    public $empleados;
 
     public function mount($origen=null,$elegido=null){
-        $this->gestion_id=Auth::user()->id;
-        if($origen){
-            $this->origen=true;
-        }
-        if($elegido){
+        $this->origen=$origen;
+        switch ($origen) {
+            case 1: //Crea PQRS desde la gestión
+                $this->estud();
+                $this->noestudiantes();
+                break;
 
+            case 2: // Edita PQRS
+                $this->noestudiantes();
+                break;
+
+            case 3: // crea PQRS estudiante
+                $this->origen=true;
+                $this->estudiante_id=Auth::user()->id;
+                $this->gestion_id=Auth::user()->id;
+                $this->status=1;
+                break;
+        }
+
+        if($elegido){
+            $this->actual=Pqrs::find($elegido);
+            $this->resp();
+        }
+    }
+
+    public function resp(){
+        $this->estudiante_id=$this->actual->estudiante_id;
+        $this->gestion_id=$this->actual->gestion_id;
+        $this->tipo=$this->actual->tipo;
+        $this->status=$this->actual->status;
+        $this->editar=true;
+
+        $this->estado();
+    }
+
+    public function estado(){
+
+        if($this->actual->status===4){
+            $this->ver=false;
         }
     }
 
@@ -100,7 +138,8 @@ class PqrssCrear extends Component
             'fecha'=>now(),
             'tipo'=>$this->tipo,
             'observaciones'=>Auth::user()->name." ".$this->introtipo.$this->observaciones,
-            'ruta'=>$this->ruta
+            'ruta'=>$this->ruta,
+            'status'=>$this->status
         ]);
 
         // Notificación
@@ -112,27 +151,47 @@ class PqrssCrear extends Component
         $this->dispatch('cancelando');
     }
 
-    private function estudiantes(){
-        return User::where('status', true)
-                    ->orderBy('name', 'ASC')
-                    ->with('roles')->get()->filter(
-                        fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                    );
+    public function edit(){
+
+        // validate
+        $this->validate();
+
+        $obs=now()." ".Auth::user()->name.$this->introtipo." ".$this->observaciones." ----- ".$this->actual->observaciones;
+
+        $this->actual->update([
+            'gestion_id'=>$this->gestion_id,
+            'tipo'=>$this->tipo,
+            'observaciones'=>$obs,
+            'status'=>$this->status
+        ]);
+
+        // Notificación
+        $this->dispatch('alerta', name:'Se ha actualizado correctamente la PQRS: ');
+        $this->resetFields();
+
+        //refresh
+        $this->dispatch('refresh');
+        $this->dispatch('cancelando');
+    }
+
+    private function estud(){
+        $this->estudiantes= User::where('status', true)
+                                ->orderBy('name', 'ASC')
+                                ->with('roles')->get()->filter(
+                                    fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
+                                );
     }
 
     private function noestudiantes(){
-        return User::where('status', true)
-                        ->orderBy('name')
-                        ->with('roles')->get()->filter(
-                            fn ($user) => $user->roles->where('name', '!=', 'Estudiante')->toArray()
-                        );
+        $this->empleados=User::where('status', true)
+                                ->orderBy('name')
+                                ->with('roles')->get()->filter(
+                                    fn ($user) => $user->roles->where('name', '!=', 'Estudiante')->toArray()
+                                );
     }
 
     public function render()
     {
-        return view('livewire.cliente.pqrs.pqrss-crear',[
-            'estudiantes'=>$this->estudiantes(),
-            'noestudiantes'=>$this->noestudiantes()
-        ]);
+        return view('livewire.cliente.pqrs.pqrss-crear');
     }
 }
