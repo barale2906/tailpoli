@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('gestion_id');
             $table->foreign('gestion_id')->references('id')->on('users');
 
-            $table->date('fecha')->comment('fecha de generación');
+            $table->dateTime('fecha')->comment('fecha de generación');
             $table->integer('tipo')->comment('1 gestión, 2 pagos, 3 notas, 4 acádemico, 5 Profesor, 6 Planta, 7 Talleres, 8 Administración, 9 Observador');
             $table->longText('observaciones')->comment('observaciones');
             $table->string('ruta')->nullable()->comment('ruta de los archivos adjuntos');

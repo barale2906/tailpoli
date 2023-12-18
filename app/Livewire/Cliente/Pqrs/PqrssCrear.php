@@ -19,10 +19,13 @@ class PqrssCrear extends Component
     public $editar=false;
     public $ruta=null;
 
-    public function mount($origen=null,$editar=null){
+    public function mount($origen=null,$elegido=null){
         $this->gestion_id=Auth::user()->id;
         if($origen){
             $this->origen=true;
+        }
+        if($elegido){
+
         }
     }
 

@@ -100,14 +100,14 @@ class Pqrss extends Component
 
     private function registros(){
         return Pqrs::query()
-                    ->with(['estudiante','gestiona'])
+                    ->with(['estudiante','gestion'])
                     ->when($this->buscamin, function($query){
                         return $query->where('fecha', 'like', "%".$this->buscamin."%")
                                 ->orWhere('observaciones', 'like', "%".$this->buscamin."%")
                                 ->orWhereHas('estudiante', function($qu){
                                     $qu->where('name', 'like', "%".$this->buscamin."%");
                                 })
-                                ->orWhereHas('gestiona', function($qu){
+                                ->orWhereHas('gestion', function($qu){
                                     $qu->where('name', 'like', "%".$this->buscamin."%");
                                 });
                     })

@@ -20,7 +20,7 @@ class Pqrs extends Model
     }
 
     //Relacion uno a muchos inversa
-    public function gestiona() : BelongsTo
+    public function gestion() : BelongsTo
     {
         return $this->BelongsTo(User::class);
     }

@@ -145,7 +145,7 @@
                             {{$registro->estudiante->name}}
                         </th>
                         <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize pt-3 pb-3">
-                            {{-- {{$registro->gestiona->name}} --}}
+                            {{$registro->gestion->name}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             {{$registro->observaciones}}
