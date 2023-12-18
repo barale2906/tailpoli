@@ -10,6 +10,7 @@ use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
+use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Documento;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
@@ -336,11 +337,19 @@ class MatriculasCrear extends Component
                     ]);
         }
 
-        //Generar control
+        //Generar historial
+        Pqrs::create([
+            'estudiante_id' =>$this->alumno_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>4,
+            'observaciones' =>'ACÁDEMICO: Matriculado ----- ',
+            'status'        =>4
+        ]);
 
         Control::create([
             'inicia'        =>$this->ciclosel->inicia,
-            'observaciones' =>"Matriculado el día: ".$date,
+            //'observaciones' =>"Matriculado el día: ".$date,
             'matricula_id'  =>$this->matricula->id,
             'ciclo_id'      =>$this->ciclosel->id,
             'sede_id'       =>$this->sede_id,

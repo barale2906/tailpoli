@@ -3,6 +3,7 @@
 namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Academico\Control;
+use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
@@ -371,23 +372,34 @@ class Salida extends Component
                                             'entregado'=>true
                                         ]);
 
+                        Pqrs::create([
+                                'estudiante_id' =>$this->alumno_id,
+                                'gestion_id'    =>Auth::user()->id,
+                                'fecha'         =>now(),
+                                'tipo'          =>1,
+                                'observaciones' =>'GESTIÓN:  Kit (C) ----- ',
+                                'status'        =>4
+                            ]);
+
                         $con=Control::where('estudiante_id', $this->alumno_id)
                             ->where('status', true)
                             ->get();
+
+
 
 
                         if($con){
 
                             foreach ($con as $value) {
 
-                                $observa=now().", Kit (C) --- ".$value->observaciones;
+                                //$observa=now().", Kit (C) --- ".$value->observaciones;
 
                                 Control::whereId($value->id)
                                         ->update([
                                             'overol'=>'si',
                                             'compra'=>now(),
                                             'entrega'=>now(),
-                                            'observaciones'=>$observa
+                                            //'observaciones'=>$observa
                                         ]);
                             }
                         }
@@ -425,18 +437,28 @@ class Salida extends Component
                             ->where('status', true)
                             ->get();
 
+                        Pqrs::create([
+                            'estudiante_id' =>$this->alumno_id,
+                            'gestion_id'    =>Auth::user()->id,
+                            'fecha'         =>now(),
+                            'tipo'          =>1,
+                            'observaciones' =>'GESTIÓN: Overol (P) -----',
+                            'status'        =>4
+                        ]);
+
                         if($con){
                             foreach ($con as $value) {
-                                $observa=now().", Overol (P) --- ".$value->observaciones;
+                                //$observa=now().", Overol (P) --- ".$value->observaciones;
 
                                 Control::whereId($value->id)
                                         ->update([
                                             'overol'=>'pendiente',
                                             'compra'=>now(),
-                                            'observaciones'=>$observa
+                                            //'observaciones'=>$observa
                                         ]);
                             }
                         }
+
 
                         DB::table('apoyo_recibo')
                             ->whereId($value->id)
@@ -563,11 +585,20 @@ class Salida extends Component
                     'status'=>4
                 ]);
 
-                $actu=Control::whereId($this->transaccion->control_id)->first();
+                Pqrs::create([
+                    'estudiante_id' =>$this->alumno_id,
+                    'gestion_id'    =>Auth::user()->id,
+                    'fecha'         =>now(),
+                    'tipo'          =>1,
+                    'observaciones' =>'GESTIÓN: GENERO RECIBO POR LOS PRODUCTOS ----- ',
+                    'status'        =>4
+                ]);
+
+                /* $actu=Control::whereId($this->transaccion->control_id)->first();
 
                 $actu->update([
                             'observaciones'=>$respuesta.$actu->observaciones,
-                        ]);
+                        ]); */
 
             }
 

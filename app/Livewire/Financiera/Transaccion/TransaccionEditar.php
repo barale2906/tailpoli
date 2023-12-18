@@ -3,6 +3,7 @@
 namespace App\Livewire\Financiera\Transaccion;
 
 use App\Models\Academico\Control;
+use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Transaccion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -43,10 +44,10 @@ class TransaccionEditar extends Component
     }
 
     public function searchcontrol(){
-        $this->control=Control::where('status', true)
+        /* $this->control=Control::where('status', true)
                                 ->where('estudiante_id', $this->actual->alumno_id)
                                 ->select('id')
-                                ->get();
+                                ->get(); */
     }
 
     public function recibo(){
@@ -78,12 +79,21 @@ class TransaccionEditar extends Component
         ]);
 
         //Actualiza la gestión del estudiante
-        foreach ($this->control as $value) {
+       /*  foreach ($this->control as $value) {
             $opc=Control::find($value->id);
             $opc->update([
                 'observaciones'=>$this->observa.$opc->observaciones,
             ]);
-        }
+        } */
+
+        Pqrs::create([
+            'estudiante_id' =>$this->actual->alumno_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>2,
+            'observaciones' =>'PAGO: '.$this->observa,
+            'status'        =>4
+        ]);
 
         // Notificación
         $this->resetFields();

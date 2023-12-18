@@ -4,6 +4,7 @@ namespace App\Livewire\Financiera\ReciboPago;
 
 use App\Models\Academico\Control;
 use App\Models\Academico\Matricula;
+use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
@@ -482,6 +483,15 @@ class RecibosPagoCrear extends Component
         }
 
         //Cargar fecha de pago y observaciones al control
+        Pqrs::create([
+            'estudiante_id' =>$this->alumno_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>2,
+            'observaciones' =>'PAGOS: '." realizo pago por $".number_format($this->Total, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". ----- ",
+            'status'        =>4
+        ]);
+
         $control=Control::where('estudiante_id', $this->alumno_id)
                             ->where('status', true)
                             ->get();
@@ -489,11 +499,9 @@ class RecibosPagoCrear extends Component
 
         foreach ($control as $value) {
 
-            $observa=now()." ".$this->alumnoName." realizo pago por $".number_format($this->Total, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". ----- ".$value->observaciones;
-
             Control::whereId($value->id)
                     ->update([
-                        'observaciones' =>strtolower($observa),
+                        //'observaciones' =>strtolower($observa),
                         'ultimo_pago'   =>$this->fecha_pago
                     ]);
         }

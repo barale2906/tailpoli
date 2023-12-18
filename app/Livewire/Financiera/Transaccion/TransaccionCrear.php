@@ -3,6 +3,7 @@
 namespace App\Livewire\Financiera\Transaccion;
 
 use App\Models\Academico\Control;
+use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Transaccion;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class TransaccionCrear extends Component
 
     public function mount($elegido){
         $this->actual=Control::find($elegido);
-        $this->observacion=now()." ".Auth::user()->name." Cargo soporte de consignación. ----- ".$this->actual->observaciones;
+        //$this->observacion=now()." ".Auth::user()->name." Cargo soporte de consignación. ----- ".$this->actual->observaciones;
     }
 
     public function updatedOpcion(){
@@ -118,8 +119,17 @@ class TransaccionCrear extends Component
         ]);
 
         //Actualizar control
-        $this->actual->update([
+       /*  $this->actual->update([
             'observaciones'=>$this->observacion,
+        ]); */
+
+        Pqrs::create([
+            'estudiante_id' =>$this->actual->estudiante_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>2,
+            'observaciones' =>'PAGO: Cargo soporte de consignación. ----- ',
+            'status'        =>4
         ]);
 
         $this->dispatch('alerta', name:'Se cargo soporte de pago para: '.$this->actual->estudiante->name);

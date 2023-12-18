@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Gestion;
 
 use App\Models\Academico\Control;
+use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Cartera;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -14,18 +15,26 @@ class Observaciones extends Component
     public $fecha;
     public $ruta;
     public $alumno;
-    public $observaciones=[];
+    //public $observaciones=[];
+    public $historialAlumno;
 
     public function mount($elegido=null, $ruta=null){
         $this->ruta=$ruta;
         $this->elegido=Control::find($elegido);
         $this->fecha=now();
         $this->alumn();
-        $this->arraobserva();
+        //$this->arraobserva();
+        $this->historial();
+    }
+
+    public function historial(){
+        $this->historialAlumno=Pqrs::where('estudiante_id', $this->elegido->estudiante_id)
+                                    ->orderBy('fecha', 'DESC')
+                                    ->get();
     }
 
     public function arraobserva(){
-        $this->observaciones=explode("-----", $this->elegido->observaciones);
+        //$this->observaciones=explode("-----", $this->elegido->observaciones);
     }
 
     public function alumn(){
@@ -34,10 +43,13 @@ class Observaciones extends Component
 
     public function guardar(){
 
-        $comen=now()." ".Auth::user()->name." escribio: ".$this->comentarios." ----- ".$this->elegido->observaciones;
-
-        $this->elegido->update([
-            'observaciones'=>$comen
+        Pqrs::create([
+            'estudiante_id' =>$this->elegido->estudiante_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>1,
+            'observaciones' =>'GESTIÓN: '.Auth::user()->name." escribio: ".$this->comentarios." ----- ",
+            'status'        =>4
         ]);
 
         $this->dispatch('alerta', name:'Comentario guardado satisfactoriamente');

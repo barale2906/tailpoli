@@ -13,12 +13,11 @@
             @enderror
         </div>
         <div class="mb-6 overflow-y-auto">
-            @for ($i = 0; $i < count($observaciones); $i++)
+            @foreach ($historialAlumno as $item)
                 <p class="text-justify text-sm">
-                    {{$observaciones[$i]}}
+                    {{$item->fecha}}: {{$item->$observaciones}}
                 </p>
-            @endfor
-
+            @endforeach
         </div>
         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
 

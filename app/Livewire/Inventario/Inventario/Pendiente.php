@@ -3,6 +3,7 @@
 namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Academico\Control;
+use App\Models\Clientes\Pqrs;
 use App\Models\Inventario\Inventario;
 use App\Models\User;
 use Carbon\Carbon;
@@ -181,19 +182,28 @@ class Pendiente extends Component
                         ->where('status', true)
                         ->get();
 
+                Pqrs::create([
+                    'estudiante_id' =>$this->alumno_id,
+                    'gestion_id'    =>Auth::user()->id,
+                    'fecha'         =>now(),
+                    'tipo'          =>1,
+                    'observaciones' =>'GESTIÓN:  Kit entrega (p) ----- ',
+                    'status'        =>4
+                ]);
+
 
 
                 if($con){
 
                     foreach ($con as $value) {
 
-                        $observa=now().", Kit entrega (p) --- ".$value->observaciones;
+                        //$observa=now().", Kit entrega (p) --- ".$value->observaciones;
 
                         Control::whereId($value->id)
                                 ->update([
                                     'overol'=>'si',
                                     'entrega'=>now(),
-                                    'observaciones'=>$observa
+                                    //'observaciones'=>$observa
                                 ]);
                     }
                 }

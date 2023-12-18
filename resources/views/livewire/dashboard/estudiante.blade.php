@@ -134,7 +134,7 @@
         </div>
         <div>
             <a href="#" wire:click.prevent="show(2,2)" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
-                <i class="fa-solid fa-marker"></i>PQRS
+                <i class="fa-solid fa-marker"></i>PQRS - Historial
             </a>
         </div>
     @endif

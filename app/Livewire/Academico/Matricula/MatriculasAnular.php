@@ -6,6 +6,7 @@ use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\EstadoCartera;
 use Illuminate\Support\Facades\Auth;
@@ -81,8 +82,17 @@ class MatriculasAnular extends Component
         $crt=Control::where('matricula_id', $this->id)->first();
 
         $crt->update([
-            'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$crt->observaciones,
+            //'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$crt->observaciones,
             'status'=>false
+        ]);
+
+        Pqrs::create([
+            'estudiante_id' =>$this->crt->estudiante_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>4,
+            'observaciones' =>'ACÁDEMICO: '."Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." ----- ",
+            'status'        =>4
         ]);
 
         //Descontar del ciclo

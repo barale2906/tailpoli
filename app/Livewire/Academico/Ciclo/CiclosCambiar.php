@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Ciclo;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
+use App\Models\Clientes\Pqrs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -43,13 +44,21 @@ class CiclosCambiar extends Component
     public function aprobar(){
 
         //control
-        $obser=now()." ".Auth::user()->name." TRASLADO A LA PROGRAMACIÓN: ".$this->ciclo->name."-----";
 
         $this->control->update([
             'ciclo_id'      =>$this->ciclo->id,
             'inicia'        =>$this->ciclo->inicia,
             'sede_id'       =>$this->ciclo->sede_id,
-            'observaciones' =>$obser.$this->control->observaciones
+            //'observaciones' =>$obser.$this->control->observaciones
+        ]);
+
+        Pqrs::create([
+            'estudiante_id' =>$this->control->estudiante_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>4,
+            'observaciones' =>'ACÁDEMICO: '.Auth::user()->name." TRASLADO A LA PROGRAMACIÓN: ".$this->ciclo->name."-----",
+            'status'        =>4
         ]);
 
         //Elimina registro anterior

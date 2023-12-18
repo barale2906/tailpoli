@@ -3,6 +3,7 @@
 namespace App\Livewire\Financiera\Transaccion;
 
 use App\Models\Academico\Control;
+use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Transaccion;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -27,6 +28,15 @@ class TransaccionGestion extends Component
         $this->transaccion->update([
             'observaciones'=>$respuesta.$this->transaccion->observaciones,
             'status'=>1
+        ]);
+
+        Pqrs::create([
+            'estudiante_id' =>$this->transaccion->alumno_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>2,
+            'observaciones' =>'PAGO: '.Auth::user()->name." CONTESTO A LA TRANSACCIÓN N° ".$this->transaccion->id.": ".$this->observaciones." ----- ",
+            'status'        =>4
         ]);
 
         $this->actual->update([
