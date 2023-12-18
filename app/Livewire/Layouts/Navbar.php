@@ -35,51 +35,63 @@ class Navbar extends Component
     }
 
     private function pendInventarios(){
+        if(Auth::user()->roles[0]['name']!=="Estudiante"){
+            return Inventario::where('tipo', 2)
+                                ->where('entregado', false)
+                                ->count('entregado');
+        }
 
-        return Inventario::where('tipo', 2)
-                            ->where('entregado', false)
-                            ->count('entregado');
     }
 
     private function transacciones(){
-        return Transaccion::whereIn('status', [1,2,3])
-                            ->count();
+        if(Auth::user()->roles[0]['name']!=="Estudiante"){
+            return Transaccion::whereIn('status', [1,2,3])
+                                ->count();
+        }
     }
 
     private function matriculas(){
 
-        $fecha=Carbon::today();
+        if(Auth::user()->roles[0]['name']!=="Estudiante"){
 
-        return Matricula::where('creador_id', Auth::user()->id)
-                            ->where('created_at', '>=',$fecha)
-                            ->count();
+            $fecha=Carbon::today();
+
+            return Matricula::where('creador_id', Auth::user()->id)
+                                ->where('created_at', '>=',$fecha)
+                                ->count();
+        }
     }
 
     private function proximos(){
-        return Control::where('status', true)
-                        ->whereIn('sede_id', $this->sedes)
-                        ->where('estado_cartera', 4)
-                        ->count();
+        if(Auth::user()->roles[0]['name']!=="Estudiante"){
+            return Control::where('status', true)
+                            ->whereIn('sede_id', $this->sedes)
+                            ->where('estado_cartera', 4)
+                            ->count();
+        }
     }
 
     private function vencidos(){
-        return Control::where('status', true)
-                        ->whereIn('sede_id', $this->sedes)
-                        ->where('estado_cartera', 5)
-                        ->count();
+        if(Auth::user()->roles[0]['name']!=="Estudiante"){
+            return Control::where('status', true)
+                            ->whereIn('sede_id', $this->sedes)
+                            ->where('estado_cartera', 5)
+                            ->count();
+        }
     }
 
     private function desertados(){
+        if(Auth::user()->roles[0]['name']!=="Estudiante"){
+            $estado=Estado::where('status', true)
+                            ->where('name', 'desertado')
+                            ->select('id')
+                            ->first();
 
-        $estado=Estado::where('status', true)
-                        ->where('name', 'desertado')
-                        ->select('id')
-                        ->first();
-
-        return Control::where('status', true)
-                        ->whereIn('sede_id', $this->sedes)
-                        ->where('status_est', $estado->id)
-                        ->count();
+            return Control::where('status', true)
+                            ->whereIn('sede_id', $this->sedes)
+                            ->where('status_est', $estado->id)
+                            ->count();
+        }
     }
 
     public function render()
