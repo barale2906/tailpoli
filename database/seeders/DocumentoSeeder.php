@@ -854,20 +854,9 @@ class DocumentoSeeder extends Seeder
 
                         DB::table('detalle_documento')
                                 ->insert([
-                                    'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'En Constancia de lo anterior, y declarando que estoy en acuerdo con todas las clausulas aquí establecidas, siendo así, se suscribe
-                                                        este documento en la ciudad de Valle del Cauca el día 16 del mes diciembre del año 2023.',
-                                    'orden'         => 6,
-                                    'documento_id'  => $comproCredito->id,
-                                    'created_at'    =>now(),
-                                    'updated_at'    =>now()
-                                ]);
-
-                        DB::table('detalle_documento')
-                                ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => 'o',
-                                    'orden'         => 7,
+                                    'orden'         => 6,
                                     'documento_id'  => $comproCredito->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -1157,19 +1146,9 @@ class DocumentoSeeder extends Seeder
 
                 DB::table('detalle_documento')
                                 ->insert([
-                                    'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'Se firma a los 16 días del mes de diciembre del año 2023',
-                                    'orden'         => 3,
-                                    'documento_id'  => $comproEntrega->id,
-                                    'created_at'    =>now(),
-                                    'updated_at'    =>now()
-                                ]);
-
-                DB::table('detalle_documento')
-                                ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => '0',
-                                    'orden'         => 4,
+                                    'orden'         => 3,
                                     'documento_id'  => $comproEntrega->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
