@@ -24,7 +24,7 @@ class ImpEstadoCuenta extends Component
 
         $this->fecha=Carbon::now();
 
-        $this->docubase($this->id, 'estadoCuenta', $this->ori);
+        $this->docubase($this->id, ['estadoCuenta'], $this->ori);
 
     }
 

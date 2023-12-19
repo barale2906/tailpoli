@@ -19,7 +19,7 @@ class ImpGastoCertiFinal extends Component
 
     public function mount(){
 
-        $this->docubase($this->id, 'gastocertifinal', $this->ori);
+        $this->docubase($this->id, ['gastocertifinal'], $this->ori);
 
     }
 

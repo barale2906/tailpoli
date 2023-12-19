@@ -35,8 +35,8 @@ trait RenderDocTrait
         }else{
 
             $this->docuTipo=Documento::where('status', 3)
-                                        ->where('tipo', $tipo)
-                                        ->first();
+                                        ->whereIn('tipo', $tipo)
+                                        ->get();
 
             $this->docuMatricula=Matricula::whereId($id)->first();
         }
@@ -73,8 +73,7 @@ trait RenderDocTrait
     public function docuDetalle(){
 
         $this->detalles=DB::table('detalle_documento')
-                            ->where('documento_id', $this->docuTipo->id)
-                            ->select('contenido','tipodetalle')
+                            ->select('contenido','tipodetalle','documento_id')
                             ->orderBy('orden', 'ASC')
                             ->get();
 
@@ -167,8 +166,9 @@ trait RenderDocTrait
             $datos = str_replace($this->palabras, $this->reemplazo, $dato);
 
             $nuevo=[
-                'contenido' =>$datos,
-                'tipo'      =>$value->tipodetalle,
+                'contenido'     =>$datos,
+                'tipo'          =>$value->tipodetalle,
+                'documento_id'  =>$value->documento_id
             ];
 
             array_push($this->impresion, $nuevo);

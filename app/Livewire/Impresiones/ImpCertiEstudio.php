@@ -24,7 +24,7 @@ class ImpCertiEstudio extends Component
 
         $this->fecha=Carbon::now();
 
-        $this->docubase($this->id, 'cartaPagare', $this->ori);
+        $this->docubase($this->id, ['cartaPagare'], $this->ori);
 
     }
 

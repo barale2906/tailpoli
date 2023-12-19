@@ -19,7 +19,11 @@
                     </th>
                     <th scope="col" class="text-justify">
                         <h1 class="text-sm font-bold">Fecha:</h1>
-                        <h1 class="text-sm font-bold">{{$docuTipo->fecha}}</h1>
+                        <h1 class="text-sm font-bold">
+                            @foreach ($docuTipo as $item)
+                                {{$item->fecha}}
+                            @endforeach
+                        </h1>
                     </th>
                 </tr>
             </thead>

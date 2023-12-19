@@ -19,7 +19,7 @@ class ImpFormularioPractica extends Component
 
     public function mount(){
 
-        $this->docubase($this->id, 'formuPractica', $this->ori);
+        $this->docubase($this->id, ['formuPractica'], $this->ori);
 
     }
 

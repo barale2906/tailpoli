@@ -24,7 +24,7 @@ class ImpCartaEntregaDoc extends Component
 
         $this->fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
 
-        $this->docubase($this->id, 'comproEntrega', $this->ori);
+        $this->docubase($this->id, ['comproEntrega'], $this->ori);
 
     }
 

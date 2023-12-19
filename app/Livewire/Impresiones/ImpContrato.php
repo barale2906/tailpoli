@@ -21,7 +21,7 @@ class ImpContrato extends Component
 
     public function mount(){
 
-        $this->docubase($this->id, 'contrato', $this->ori);
+        $this->docubase($this->id, ['contrato'], $this->ori);
 
     }
 

@@ -19,7 +19,7 @@ class ImpComproCredito extends Component
 
     public function mount(){
 
-        $this->docubase($this->id, 'comproCredito', $this->ori);
+        $this->docubase($this->id, ['comproCredito'], $this->ori);
 
     }
 

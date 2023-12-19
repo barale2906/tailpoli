@@ -24,7 +24,7 @@ class ImpPagare extends Component
 
         $this->fecha=Carbon::now();
 
-        $this->docubase($this->id, 'pagare', $this->ori);
+        $this->docubase($this->id, ['pagare'], $this->ori);
 
     }
 
