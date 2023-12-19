@@ -651,10 +651,11 @@
                                         <p class="justificado font-sm uppercase mt-1">
                                             Cordialmente:
                                         </p>
+
                                         <p class="justificado font-sm capitalize mt-1">
-                                            Firma: _________________________________________________
+                                            Firma:
                                         </p>
-                                        <img class="rounded-sm" src="{{asset('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
+                                        <img class="imgfirma" src="{{public_path('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
                                         <p class="justificado font-sm uppercase">
                                             director(a)
                                         </p>
