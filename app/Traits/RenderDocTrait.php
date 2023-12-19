@@ -72,7 +72,15 @@ trait RenderDocTrait
 
     public function docuDetalle(){
 
+        $ids=[];
+
+        foreach ($this->docuTipo as $value) {
+            array_push($ids, $value->id);
+        }
+
         $this->detalles=DB::table('detalle_documento')
+                            ->where('status', true)
+                            ->whereIn('documento_id', $ids)
                             ->select('contenido','tipodetalle','documento_id')
                             ->orderBy('orden', 'ASC')
                             ->get();

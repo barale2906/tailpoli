@@ -23,6 +23,8 @@ return new class extends Migration
             $table->longText('contenido')->comment('información a presentar');
             $table->integer('orden')->comment('orden en que aparecen los contenidos');
 
+            $table->boolean('status')->default(true)->comment('false Inactivo, true Activo');
+
             $table->timestamps();
         });
     }

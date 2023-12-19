@@ -10,24 +10,33 @@
 
 </head>
 <body>
-    @foreach ($matr as $mat)
+
         <div id="head">
             <img class="imgheader" src="{{public_path('img/logo.jpeg')}}" alt="{{env('APP_NAME')}}">
             <div class="infoHeader">
-                documento base
+
             </div>
         </div>
-        {{$mat->titulo}} N°: {{$id}}
+    @foreach ($matr as $mat)
         @foreach ($detalles as $item)
             @if ($item['documento_id']===$mat->id)
-                <p class="justificado">
-                    {{$item['contenido']}}
-                </p>
+                @switch($item['tipo'])
+                    @case('titulo')
+                        <h1 class="centrado">
+                            {{$item['contenido']}}
+                        </h1>
+                        @break
+                    @case('parrafo')
+                        <p class="justificado">
+                            {{$item['contenido']}}
+                        </p>
+                        @break
+                @endswitch
+
                 @if ($item['tipo']==='firma')
                     <div class="salto"></div>
                 @endif
             @endif
-
         @endforeach
 
     @endforeach

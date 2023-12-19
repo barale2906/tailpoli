@@ -24,6 +24,16 @@ class DocumentoSeeder extends Seeder
 
                             DB::table('detalle_documento')
                                 ->insert([
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'contrato de prestación de servicios educativos N°: matriculaEstu',
+                                    'orden'         => 1,
+                                    'documento_id'  => $contrato->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+
+                            DB::table('detalle_documento')
+                                ->insert([
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'Entre los suscritos, nombreInsti identificado
                                                         con NIT. nitInsti, representado legalmente por el señor rlInsti, y
@@ -32,7 +42,7 @@ class DocumentoSeeder extends Seeder
                                                         ACUDIENTE DEL ESTUDIANTE, nombreEstu, por medio del presente
                                                         documento hemos decidido celebrar el presente Contrato de Prestación de Servicios Educativos, el cual se
                                                         regirá por las siguientes clausulas y/o normas',
-                                    'orden'         => 1,
+                                    'orden'         => 2,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -46,7 +56,7 @@ class DocumentoSeeder extends Seeder
                                                         oferta educativa, según fechas, horarios, duración, con profesionales y/o instructores aptos para asegurar la
                                                         calidad del programa de preparación y demás deberes establecidos en el reglamento estudiantil del Instituto,
                                                         formando al estudiante con las metodologías necesarias para recibir de forma idónea el conocimiento teóricopráctico en el curso cursoEstu.',
-                                    'orden'         => 2,
+                                    'orden'         => 3,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -70,7 +80,7 @@ class DocumentoSeeder extends Seeder
                                                         la filosofía institucional acatando las normas contenidas en el Reglamento estudiantil vigente, así como en los
                                                         procesos, procedimientos y reglamentos internos del nombreInsti g). El estudiante, padre de Familia y/o acudiente declaran tener solvencia económica
                                                         necesaria para cumplir oportunamente con los compromisos económicos adquiridos en este contrato.',
-                                    'orden'         => 3,
+                                    'orden'         => 4,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -116,7 +126,7 @@ class DocumentoSeeder extends Seeder
                                                         procedimiento necesario para el reporte a Centrales de Riesgo e iniciar las acciones legales pertinentes para la
                                                         ejecución de los valores adeudados.
                                                         ',
-                                    'orden'         => 4,
+                                    'orden'         => 5,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -133,7 +143,7 @@ class DocumentoSeeder extends Seeder
                                                         presente Contrato, el pago respecto al precio pactado por la prestación del servicio. 2. Cerrar o fusionar
                                                         modalidades de cursos, que no cuenten con la población mínima de (10) estudiantes establecidas por la
                                                         INSTITUCIÓN, otorgando en todo caso a los estudiantes de estos grupos, diferentes alternativas de horarios para asegurar la prestación del servicio.',
-                                    'orden'         => 5,
+                                    'orden'         => 6,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -155,7 +165,7 @@ class DocumentoSeeder extends Seeder
                                                         3( ) Cheque: __________ Entidad Bancaria: __________
                                                         4( ) Desembolso de Cesantías: __________ Fondo Pensiones y Cesantías: __________
                                                         ',
-                                    'orden'         => 6,
+                                    'orden'         => 7,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -168,7 +178,7 @@ class DocumentoSeeder extends Seeder
                                                         existe mora frente al pago y, en consecuencia, comenzarán a regir el monto correspondiente a los intereses
                                                         moratorios según la tasa máxima legal permitida en Colombia, y la INSTITUCIÓN procederá con el
                                                         respectivo cobro y las acciones legales y/o judiciales que correspondan por incumplimiento del contrato.',
-                                    'orden'         => 7,
+                                    'orden'         => 8,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -182,7 +192,7 @@ class DocumentoSeeder extends Seeder
                                                         fecha máxima de vencimiento, la cual se encuentra programada para el día ____ de cada mes. Este descuento
                                                         se hará efectivo dentro de sus cuotas y/o mensualidades del programa por un valor de 50.000(cincuenta mil
                                                         pesos m/cte).',
-                                    'orden'         => 8,
+                                    'orden'         => 9,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -205,7 +215,7 @@ class DocumentoSeeder extends Seeder
                                                         medio legal. Igualmente autorizo al nombreInsti, a consultar, reportar y divulgar en las Centrales de Riesgo e Información Comercial y Financiera o
                                                         cualquier entidad que maneje bases de datos de información comercial o crediticia que tengan los mismos propósitos, sobre la acusación, modificación, manejo y extinción de obligaciones contraídas con anterioridad
                                                         o en desarrollo del presente contrato.',
-                                    'orden'         => 9,
+                                    'orden'         => 10,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -219,7 +229,7 @@ class DocumentoSeeder extends Seeder
                                                         matrícula, y el cual se incrementará anualmente conforme a los establecido por el ministerio de educación
                                                         para tal fin.
                                                         ',
-                                    'orden'         => 10,
+                                    'orden'         => 11,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -230,7 +240,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'Adicionalmente el estudiante cancelará el kit de seguridad y overol, valores que se establecen dependiendo de
                                                         la talla de cada uniforme, este valor está establecido en el Reglamento estudiantil de la INSTITUCIÓN.',
-                                    'orden'         => 11,
+                                    'orden'         => 12,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -245,7 +255,7 @@ class DocumentoSeeder extends Seeder
                                                         INSTITUCIÓN podrá suspender total o parcialmente las lecciones presenciales adquiridas por el estudiante
                                                         y permitirá nuevamente el ingreso del estudiante a las lecciones presenciales, una vez el estudiante haya
                                                         efectuado el pago de sus obligaciones pendientes.',
-                                    'orden'         => 12,
+                                    'orden'         => 13,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -261,7 +271,7 @@ class DocumentoSeeder extends Seeder
                                                         adquiridas en el presente Contrato, según lo establecido en la Cláusula Quinta del Contrato, se considera mora
                                                         un día después de la fecha de pago de cada cuota. 3. Por el incumplimiento del estudiante frente a alguna de
                                                         las obligaciones establecidas en el Reglamento estudiantil.',
-                                    'orden'         => 13,
+                                    'orden'         => 14,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -278,7 +288,7 @@ class DocumentoSeeder extends Seeder
                                                         fechas y horarios para el inicio o continuidad del programa educativo, todo a fin de que se le garantice al
                                                         estudiante la prestación del servicio educativo adquirido por él.
                                                         ',
-                                    'orden'         => 14,
+                                    'orden'         => 15,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -301,7 +311,7 @@ class DocumentoSeeder extends Seeder
                                                         conocer, actualizar, rectificar, entre otros, para lo cual podrá dirigirse al siguiente correo electrónico:
                                                         poliandinocentral@gmail.com
                                                         ',
-                                    'orden'         => 15,
+                                    'orden'         => 16,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -329,7 +339,7 @@ class DocumentoSeeder extends Seeder
                                                         de riesgo a la cual se hayan suministrado los datos, que la información suministrada es veraz, completa,
                                                         exacta y actualizada, y en caso de que no lo sea, a que se deje constancia de su desacuerdo, a exigir la
                                                         rectificación y a ser informado sobre las correcciones efectuadas.',
-                                    'orden'         => 16,
+                                    'orden'         => 17,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -343,7 +353,7 @@ class DocumentoSeeder extends Seeder
                                                         Los datos que representan validez para el presente contrato del estudiante, padre de familia y/o acudiente, son
                                                         aquellos diligenciados en el proceso de Inscripción.
                                                         ',
-                                    'orden'         => 17,
+                                    'orden'         => 18,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -354,7 +364,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'CLÁUSULA DÉCIMA SEGUNDA - MODIFICACIONES: Toda modificación de este Contrato o sus
                                                         Anexos deberá constar por escrito en Otrosí que deberá estar suscrito por las partes.',
-                                    'orden'         => 18,
+                                    'orden'         => 19,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -367,7 +377,7 @@ class DocumentoSeeder extends Seeder
                                                         Familia y/o Acudiente recibirá notificaciones en: direccionEstu,
                                                         Y el nombreInsti: dirInsti
                                                         ',
-                                    'orden'         => 19,
+                                    'orden'         => 20,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -380,7 +390,7 @@ class DocumentoSeeder extends Seeder
                                                         mérito ejecutivo, incorporada una Obligación, Clara, Expresa y Exigible, según lo determina el Artículo 422
                                                         del Código General del Proceso, y será prueba como documento auténtico según lo determina el artículo 244
                                                         del Código General del Proceso.',
-                                    'orden'         => 20,
+                                    'orden'         => 21,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -392,7 +402,7 @@ class DocumentoSeeder extends Seeder
                                     'contenido'     => 'CLAUSULA DÉCIMA QUINTA: Autorizo a entregar información sobre asistencias, notas, proceso
                                                         académico, estado de cartera e información general a:
                                                         Nombre: nombreEstu C.C.: ____________________ Número de contacto: telefonoEstu',
-                                    'orden'         => 21,
+                                    'orden'         => 22,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -404,7 +414,7 @@ class DocumentoSeeder extends Seeder
                                     'contenido'     => 'Para constancia se firma por las Partes en la ciudad de ciudadEstu, a los 15 días del mes de diciembre del año
                                                         2023, en dos ejemplares de igual tenor y valor.
                                                         ',
-                                    'orden'         => 22,
+                                    'orden'         => 23,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -414,7 +424,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => 'firma',
-                                    'orden'         => 23,
+                                    'orden'         => 24,
                                     'documento_id'  => $contrato->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -431,8 +441,8 @@ class DocumentoSeeder extends Seeder
 
                         DB::table('detalle_documento')
                                 ->insert([
-                                    'tipodetalle'   => 'parrafo',
-                                        'contenido'     => 'PRIMERA. OBJETO: Que por medio del presente PAGARÉ, nos obligamos a pagar cumplida, incondicional y solidariamente a nombreInsti. , con NIT nitInsti, ubicado en la la ciudad Bogotá D.C.,o a su orden, ó a quien represente sus derechos, la suma de ____________________________________________________ moneda legal colombiana, ($___________________)',
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'Pagaré N°: matriculaEstu',
                                     'orden'         => 1,
                                     'documento_id'  => $pagare->id,
                                     'created_at'    =>now(),
@@ -442,7 +452,7 @@ class DocumentoSeeder extends Seeder
                         DB::table('detalle_documento')
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'SEGUNDA. INTERESES: Nos obligamos a reconocer y pagar a favor del nombreInsti. los intereses de mora, en caso de mora en el pago de una o varias cuotas de capital, a la tasa ( %) mensual, la cual es la máxima permitida por la Ley; liquidados sobre las cuotas de capital pactadas y adeudadas, sin perjuicio de las acciones legales que el nombreInsti. pueda adelantar para el cobro judicial y/o extrajudicial de la obligación, caso en el cual, serán de nuestro cargo exclusivo los gastos y las costas de la cobranza, incluyendo los honorarios del abogado, a  quien se confíe las gestiones de cobro que serán equivalentes al 20% del total de la deuda por capital e intereses.',
+                                    'contenido'     => 'PRIMERA. OBJETO: Que por medio del presente PAGARÉ, nos obligamos a pagar cumplida, incondicional y solidariamente a nombreInsti. , con NIT nitInsti, ubicado en la la ciudad Bogotá D.C.,o a su orden, ó a quien represente sus derechos, la suma de ____________________________________________________ moneda legal colombiana, ($___________________)',
                                     'orden'         => 2,
                                     'documento_id'  => $pagare->id,
                                     'created_at'    =>now(),
@@ -452,7 +462,7 @@ class DocumentoSeeder extends Seeder
                         DB::table('detalle_documento')
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'TERCERA. CLAUSULA ACELERATORIA: En el evento de la mora frente al pago de las obligaciones aquí adquiridas y a que se refiere el presente pagaré, cancelaremos al nombreInsti. , la totalidad de la suma global adeudada. El tenedor del presente pagaré podrá declarar vencidos la totalidad de los plazos de esta obligación o de las cuotas que constituyan el saldo de lo debido y exigir su pago inmediato ya sea judicial o extrajudicialmente, cuando los deudores entren en mora o incumplan una cualquiera de las obligaciones derivadas del presente documento.',
+                                    'contenido'     => 'SEGUNDA. INTERESES: Nos obligamos a reconocer y pagar a favor del nombreInsti. los intereses de mora, en caso de mora en el pago de una o varias cuotas de capital, a la tasa ( %) mensual, la cual es la máxima permitida por la Ley; liquidados sobre las cuotas de capital pactadas y adeudadas, sin perjuicio de las acciones legales que el nombreInsti. pueda adelantar para el cobro judicial y/o extrajudicial de la obligación, caso en el cual, serán de nuestro cargo exclusivo los gastos y las costas de la cobranza, incluyendo los honorarios del abogado, a  quien se confíe las gestiones de cobro que serán equivalentes al 20% del total de la deuda por capital e intereses.',
                                     'orden'         => 3,
                                     'documento_id'  => $pagare->id,
                                     'created_at'    =>now(),
@@ -462,7 +472,7 @@ class DocumentoSeeder extends Seeder
                         DB::table('detalle_documento')
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'CUARTA. Expresamente declaramos excusado el protesto del presente pagaré y los requerimientos judiciales o extrajudiciales para la constitución en mora.',
+                                    'contenido'     => 'TERCERA. CLAUSULA ACELERATORIA: En el evento de la mora frente al pago de las obligaciones aquí adquiridas y a que se refiere el presente pagaré, cancelaremos al nombreInsti. , la totalidad de la suma global adeudada. El tenedor del presente pagaré podrá declarar vencidos la totalidad de los plazos de esta obligación o de las cuotas que constituyan el saldo de lo debido y exigir su pago inmediato ya sea judicial o extrajudicialmente, cuando los deudores entren en mora o incumplan una cualquiera de las obligaciones derivadas del presente documento.',
                                     'orden'         => 4,
                                     'documento_id'  => $pagare->id,
                                     'created_at'    =>now(),
@@ -472,8 +482,18 @@ class DocumentoSeeder extends Seeder
                         DB::table('detalle_documento')
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'Para garantizar el cumplimiento de las obligaciones, EL DEUDOR Y/O DEUDORES aceptamos firmar libremente el presente pagaré y autorizamos expresamente al nombreInsti. , para que llene los espacios en blanco del citado pagaré, según lo establecido en el parágrafo de la cláusula número quinta del contrato del contrato de prestación de servicios educativos suscrito el día ______________________________________________________',
+                                    'contenido'     => 'CUARTA. Expresamente declaramos excusado el protesto del presente pagaré y los requerimientos judiciales o extrajudiciales para la constitución en mora.',
                                     'orden'         => 5,
+                                    'documento_id'  => $pagare->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+
+                        DB::table('detalle_documento')
+                                ->insert([
+                                    'tipodetalle'   => 'parrafo',
+                                    'contenido'     => 'Para garantizar el cumplimiento de las obligaciones, EL DEUDOR Y/O DEUDORES aceptamos firmar libremente el presente pagaré y autorizamos expresamente al nombreInsti. , para que llene los espacios en blanco del citado pagaré, según lo establecido en el parágrafo de la cláusula número quinta del contrato del contrato de prestación de servicios educativos suscrito el día ______________________________________________________',
+                                    'orden'         => 6,
                                     'documento_id'  => $pagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -488,7 +508,7 @@ class DocumentoSeeder extends Seeder
                                     sentencia de condena proferida por juez o tribunal de cualquier jurisdicción, o de otra providencia judicial, o de las providencias que en procesos de policía
                                     aprueben liquidación de costas o señalen honorarios de auxiliares de la justicia, y los demás documentos que señale la ley..”
                                     ',
-                                    'orden'         => 6,
+                                    'orden'         => 7,
                                     'documento_id'  => $pagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -500,7 +520,7 @@ class DocumentoSeeder extends Seeder
                                     'contenido'     => 'IMPORTANTE: El cumplimiento de este acuerdo no depende de la asistencia del estudiante a clases, se entiende como un compromiso contractual,
                                     el cual debe ser cumplido y cancelado en su totalidad ya que es producto de un préstamo a nombre del DEUDOR.
                                     En constancia de lo anterior, se suscribe este documento el día , del mes de de 2021',
-                                    'orden'         => 7,
+                                    'orden'         => 8,
                                     'documento_id'  => $pagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -526,6 +546,16 @@ class DocumentoSeeder extends Seeder
 
                         DB::table('detalle_documento')
                                 ->insert([
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'Carta de Instrucciones',
+                                    'orden'         => 1,
+                                    'documento_id'  => $cartapagare->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+
+                        DB::table('detalle_documento')
+                                ->insert([
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'De conformidad con lo establecido en el artículo 622 del Código de Comercio Colombiano, que establece:
                                         “Lleno de espacios en blanco y títulos en blanco – validez Si en el título se dejan espacios en blanco
@@ -541,7 +571,7 @@ class DocumentoSeeder extends Seeder
                                         blanco que se han dejado en el pagaré que aparece al respaldo, para lo cual deberá ceñirse a las
                                         siguientes instrucciones:
                                         ',
-                                    'orden'         => 1,
+                                    'orden'         => 2,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -550,7 +580,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => '1. La fecha de vencimiento será la del día en que sea llenado.',
-                                    'orden'         => 2,
+                                    'orden'         => 3,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -563,7 +593,7 @@ class DocumentoSeeder extends Seeder
                                     de nombreInsti y/o quien represente sus derechos, que existan al momento
                                     de ser llenados los espacios para lo cual se tendrán en cuenta los compromisos que por todo
                                     concepto haya (mos) asumido para con nombreInsti',
-                                    'orden'         => 3,
+                                    'orden'         => 4,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -576,7 +606,7 @@ class DocumentoSeeder extends Seeder
                                     POLIANDINO CENTRAL y/o quien represente sus derechos y consignada en el correspondiente
                                     espacio en blanco del pagaré desde el momento en que se produzca el desembolso del crédito. Así
                                     mismo llenará el espacio correspondiente a la tasa remuneratoria.',
-                                    'orden'         => 4,
+                                    'orden'         => 5,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -587,7 +617,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => '4. Los espacios en blanco podrán llenarse además cuando ocurra una cualquiera de las circunstancias
                                     estipulad',
-                                    'orden'         => 5,
+                                    'orden'         => 6,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -598,7 +628,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'a) Si fuere (mos) demandado(s) ante cualquier autoridad y por cualquier persona.
                                     ',
-                                    'orden'         => 6,
+                                    'orden'         => 7,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -611,7 +641,7 @@ class DocumentoSeeder extends Seeder
                                     favor del acreedor resultaren insuficientes, se depreciaren a juicio del acreedor, carezcan de
                                     los correspondientes seguros, o si fueren perseguidas judicialmente por terceros.
                                     ',
-                                    'orden'         => 7,
+                                    'orden'         => 8,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -623,7 +653,7 @@ class DocumentoSeeder extends Seeder
                                     'contenido'     => 'c) Por mora en el pago, cualquiera que sea la causa, de una o más de las obligaciones periódicas
                                     pactadas con el acreedor, aun cuando las mismas sólo comprendan intereses o cuotas de
                                     seguro.',
-                                    'orden'         => 8,
+                                    'orden'         => 9,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -633,7 +663,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'd) Por la muerte del deudor (o cualquiera de los deudores).',
-                                    'orden'         => 9,
+                                    'orden'         => 10,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -643,7 +673,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => 'firma',
-                                    'orden'         => 10,
+                                    'orden'         => 11,
                                     'documento_id'  => $cartapagare->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -659,11 +689,8 @@ class DocumentoSeeder extends Seeder
 
                         DB::table('detalle_documento')
                                 ->insert([
-                                    'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'El nombreInsti certifica que el(la) señor(a) nombreEstu identificado(a) con tipodocuEstu documentoEstu expedida en docuExpedi, se encuentra
-                                                        matriculado(a) en el curso cursoEstu en el horario Domingos (8:00am -12:00 am) con una
-                                                        duración total del curso de meses.
-                                                        ',
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'Constancia de Estudio',
                                     'orden'         => 1,
                                     'documento_id'  => $certiEstudio->id,
                                     'created_at'    =>now(),
@@ -673,8 +700,21 @@ class DocumentoSeeder extends Seeder
                         DB::table('detalle_documento')
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'Fecha de iniciación: matriculaInicia.',
+                                    'contenido'     => 'El nombreInsti certifica que el(la) señor(a) nombreEstu identificado(a) con tipodocuEstu documentoEstu expedida en docuExpedi, se encuentra
+                                                        matriculado(a) en el curso cursoEstu en el horario Domingos (8:00am -12:00 am) con una
+                                                        duración total del curso de meses.
+                                                        ',
                                     'orden'         => 2,
+                                    'documento_id'  => $certiEstudio->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+
+                        DB::table('detalle_documento')
+                                ->insert([
+                                    'tipodetalle'   => 'parrafo',
+                                    'contenido'     => 'Fecha de iniciación: matriculaInicia.',
+                                    'orden'         => 3,
                                     'documento_id'  => $certiEstudio->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -684,7 +724,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => 'j',
-                                    'orden'         => 3,
+                                    'orden'         => 4,
                                     'documento_id'  => $certiEstudio->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -702,9 +742,18 @@ class DocumentoSeeder extends Seeder
 
                     DB::table('detalle_documento')
                                 ->insert([
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'Acta Informativa Recibos de Pago',
+                                    'orden'         => 1,
+                                    'documento_id'  => $actaPago->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+                    DB::table('detalle_documento')
+                                ->insert([
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'Toda entrega de dinero que se realice por concepto de matrículas mensualidades, certificaciones de estudios, certificaciones académicas, derechos de grado, certificado de notas, kit de seguridad o cualquier dinero independiente del método de pago, para su validez debe estar soportado por recibo de caja emitido únicamente en la sede autorizada. ',
-                                    'orden'         => 1,
+                                    'orden'         => 2,
                                     'documento_id'  => $actaPago->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -715,7 +764,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'El estudiante nombreEstu identificado con CC: documentoEstu de docuExpedi, inscrito en el curso cursoEstu, con fecha de iniciación matriculaInicia; mediante el presente documento afirma que conoce y acepta esta información.
                                     ',
-                                    'orden'         => 2,
+                                    'orden'         => 3,
                                     'documento_id'  => $actaPago->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -725,7 +774,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => '1',
-                                    'orden'         => 3,
+                                    'orden'         => 4,
                                     'documento_id'  => $actaPago->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -741,13 +790,23 @@ class DocumentoSeeder extends Seeder
 
                         DB::table('detalle_documento')
                                 ->insert([
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'Compromiso de crédito Estudiantil',
+                                    'orden'         => 1,
+                                    'documento_id'  => $comproCredito->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+
+                        DB::table('detalle_documento')
+                                ->insert([
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'Yo, nombreEstu identificado con documento de identidad N° documentoEstu Declaro que ACEPTO el Crédito Estudiantil
                                                         que me concedió el nombreInsti; para realizar el curso de cursoEstu, el cual tiene una duración
                                                         de meses, por valor total del crédito, el cual me comprometo a cancelar en 6 cuotas mensuales por valor de Cuatrocientos Mil
                                                         Pesos 00/100 M.N. ($ 400.000,00) en las siguientes fechas:
                                                         ',
-                                    'orden'         => 1,
+                                    'orden'         => 2,
                                     'documento_id'  => $comproCredito->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -757,7 +816,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'formaPago',
                                     'contenido'     => '',
-                                    'orden'         => 2,
+                                    'orden'         => 3,
                                     'documento_id'  => $comproCredito->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -768,7 +827,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'ESTE COMPROMISO DE PAGO SE RIGE POR LAS SIGUIENTES CLAUSULAS
                                     ',
-                                    'orden'         => 3,
+                                    'orden'         => 4,
                                     'documento_id'  => $comproCredito->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -787,7 +846,7 @@ class DocumentoSeeder extends Seeder
                                                         de incumplimiento con el pago puntual de las mensualidades, el nombreInsti; hará efectivas las
                                                         cláusulas del contrato firmado por las partes.
                                                         ',
-                                    'orden'         => 4,
+                                    'orden'         => 5,
                                     'documento_id'  => $comproCredito->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -798,7 +857,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'En Constancia de lo anterior, y declarando que estoy en acuerdo con todas las clausulas aquí establecidas, siendo así, se suscribe
                                                         este documento en la ciudad de Valle del Cauca el día 16 del mes diciembre del año 2023.',
-                                    'orden'         => 5,
+                                    'orden'         => 6,
                                     'documento_id'  => $comproCredito->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -808,7 +867,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => 'o',
-                                    'orden'         => 6,
+                                    'orden'         => 7,
                                     'documento_id'  => $comproCredito->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -826,11 +885,21 @@ class DocumentoSeeder extends Seeder
 
                     DB::table('detalle_documento')
                                 ->insert([
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'Estado de cuenta: nombreEstu',
+                                    'orden'         => 1,
+                                    'documento_id'  => $estadoCuenta->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+
+                    DB::table('detalle_documento')
+                                ->insert([
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'Nuestro departamento de Cartera tiene como política mantener informado a nuestros clientes
                                                         acerca de los saldos de cartera que tiene con el nombreInsti, por lo cual detallamos
                                                         el saldo por concepto de Convenio de Pago Nro. matriculaEstu a continuación:',
-                                    'orden'         => 1,
+                                    'orden'         => 2,
                                     'documento_id'  => $estadoCuenta->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -840,7 +909,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'formaPago',
                                     'contenido'     => '0',
-                                    'orden'         => 2,
+                                    'orden'         => 3,
                                     'documento_id'  => $estadoCuenta->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -851,7 +920,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'A continuación, relacionamos los medios de comunicación que puede utilizar para contactarse con
                                                         nosotros en caso de cualquier aclaración:',
-                                    'orden'         => 3,
+                                    'orden'         => 4,
                                     'documento_id'  => $estadoCuenta->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -862,7 +931,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'Correo electrónico: cobranzasycarterapoliandino@gmail.com
                                                         Número telefónico: 314-5490446',
-                                    'orden'         => 4,
+                                    'orden'         => 5,
                                     'documento_id'  => $estadoCuenta->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -873,7 +942,7 @@ class DocumentoSeeder extends Seeder
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'Le invitamos a realizar su pago mediante consignación en alguna de las siguientes cuentas:
                                     ',
-                                    'orden'         => 5,
+                                    'orden'         => 6,
                                     'documento_id'  => $estadoCuenta->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -885,7 +954,7 @@ class DocumentoSeeder extends Seeder
                                     'contenido'     => 'Banco: Colpatria. Cuenta de ahorros: 4622029160.
                                                         Banco: Cuenta convenio de Davivienda. Nro. 002100140975 A nombre de nombreInsti.
                                                         ',
-                                    'orden'         => 6,
+                                    'orden'         => 7,
                                     'documento_id'  => $estadoCuenta->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -895,7 +964,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => 'o',
-                                    'orden'         => 6,
+                                    'orden'         => 8,
                                     'documento_id'  => $estadoCuenta->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -926,7 +995,7 @@ class DocumentoSeeder extends Seeder
                                     'updated_at'    =>now()
                                 ]);
 
-                                DB::table('detalle_documento')
+                DB::table('detalle_documento')
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
                                     'contenido'     => 'EL nombreInsti les informa con suficiente anticipación a nuestros deudores sobre la mora de
@@ -995,9 +1064,8 @@ class DocumentoSeeder extends Seeder
 
                 DB::table('detalle_documento')
                                 ->insert([
-                                    'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'Yo _______________________________ identificado con documento de identidad número _________
-                                    de __________, tengo conocimiento de que se debe cancelar finalizada mi formación académica el certificado y/o constancia final la cual tiene un costo de ______________, para así poder recibir la certificación de ____________ en _________________________________________________.',
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'Compromiso conocimiento de gastos de certificación y/o constancia final',
                                     'orden'         => 1,
                                     'documento_id'  => $gastocertifinal->id,
                                     'created_at'    =>now(),
@@ -1007,8 +1075,19 @@ class DocumentoSeeder extends Seeder
                 DB::table('detalle_documento')
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'Se firma a los _____ días del mes de __________ del año 202__',
+                                    'contenido'     => 'Yo _______________________________ identificado con documento de identidad número _________
+                                    de __________, tengo conocimiento de que se debe cancelar finalizada mi formación académica el certificado y/o constancia final la cual tiene un costo de ______________, para así poder recibir la certificación de ____________ en _________________________________________________.',
                                     'orden'         => 2,
+                                    'documento_id'  => $gastocertifinal->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+
+                DB::table('detalle_documento')
+                                ->insert([
+                                    'tipodetalle'   => 'parrafo',
+                                    'contenido'     => 'Se firma a los _____ días del mes de __________ del año 202__',
+                                    'orden'         => 3,
                                     'documento_id'  => $gastocertifinal->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -1018,7 +1097,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => '0',
-                                    'orden'         => 3,
+                                    'orden'         => 4,
                                     'documento_id'  => $gastocertifinal->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -1052,14 +1131,8 @@ class DocumentoSeeder extends Seeder
 
                 DB::table('detalle_documento')
                                 ->insert([
-                                    'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'Yo nombreEstu identificado con documento de identidad número documentoEstu de
-                                    docuExpedi, me comprometo a entregar la siguiente documentación
-                                    _______________________________________, _____________________________________,
-                                    ________________________________________, ______________________________________, que
-                                    me ha sido informado debe ser entregada para poder recibir la certificación de cursoEstu
-                                    , máximo hasta el día __________________________________.
-                                    ',
+                                    'tipodetalle'   => 'titulo',
+                                    'contenido'     => 'Carta de compromiso entrega de documentación',
                                     'orden'         => 1,
                                     'documento_id'  => $comproEntrega->id,
                                     'created_at'    =>now(),
@@ -1069,8 +1142,24 @@ class DocumentoSeeder extends Seeder
                 DB::table('detalle_documento')
                                 ->insert([
                                     'tipodetalle'   => 'parrafo',
-                                    'contenido'     => 'Se firma a los 16 días del mes de diciembre del año 2023',
+                                    'contenido'     => 'Yo nombreEstu identificado con documento de identidad número documentoEstu de
+                                    docuExpedi, me comprometo a entregar la siguiente documentación
+                                    _______________________________________, _____________________________________,
+                                    ________________________________________, ______________________________________, que
+                                    me ha sido informado debe ser entregada para poder recibir la certificación de cursoEstu
+                                    , máximo hasta el día __________________________________.
+                                    ',
                                     'orden'         => 2,
+                                    'documento_id'  => $comproEntrega->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now()
+                                ]);
+
+                DB::table('detalle_documento')
+                                ->insert([
+                                    'tipodetalle'   => 'parrafo',
+                                    'contenido'     => 'Se firma a los 16 días del mes de diciembre del año 2023',
+                                    'orden'         => 3,
                                     'documento_id'  => $comproEntrega->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
@@ -1080,7 +1169,7 @@ class DocumentoSeeder extends Seeder
                                 ->insert([
                                     'tipodetalle'   => 'firma',
                                     'contenido'     => '0',
-                                    'orden'         => 3,
+                                    'orden'         => 4,
                                     'documento_id'  => $comproEntrega->id,
                                     'created_at'    =>now(),
                                     'updated_at'    =>now()
