@@ -1,7 +1,6 @@
 <?php
 
+use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/matricular', function () {
-    return view('pdfs.matricular');
-})->name('matricular');
+Route::get('/matricular/{id}', [PdfController::class, 'matri']);

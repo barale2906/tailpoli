@@ -410,7 +410,7 @@ class MatriculasCrear extends Component
         $this->dispatch('alerta', name:'Se ha creado correctamente la matricula.');
         $this->vista=!$this->vista;
 
-        $this->url='/pdfs/matricular?id='.$this->matricula->id;
+        $this->url='/pdfs/matricular/'.$this->matricula->id;
     }
 
     //Registrar Pago por transferencia
