@@ -324,7 +324,7 @@ class MatriculasCrear extends Component
 
         //Cargar documentos base
         $documentos=Documento::where('status', 3)
-                                ->whereIn('tipo', ['pagare', 'contrato', 'cartaPagare'])
+                                ->whereIn('tipo', ['contrato','pagare','cartapagare','actaPago','comproCredito','comproEntrega','gastocertifinal','matricula'])
                                 ->orderBy('titulo')
                                 ->select('id')
                                 ->get();

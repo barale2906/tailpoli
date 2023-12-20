@@ -14,6 +14,13 @@ class DocumentoSeeder extends Seeder
      */
     public function run(): void
     {
+        $estadoCuenta=Documento::create([
+                                'fecha'     =>now(),
+                                'tipo'      =>"matricula",
+                                'titulo'    =>"matricula",
+                                'status'    =>3,
+                                'creador_id'=>1,
+                            ]);
         $contrato=Documento::create([
                                 'fecha'     =>now(),
                                 'tipo'      =>"contrato",
