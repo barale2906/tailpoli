@@ -15,34 +15,42 @@ class SectorSeeder extends Seeder
     {
         Sector::create([
             'name' => 'Soacha',
+            'slug' => 'soac',
             'state_id' => 1,
         ]);
         Sector::create([
             'name' => 'Chía',
+            'slug' => 'chia',
             'state_id' => 1,
         ]);
         Sector::create([
             'name' => 'Cajicá',
+            'slug' => 'caji',
             'state_id' => 1,
         ]);
         Sector::create([
             'name' => 'Bogotá',
+            'slug' => 'bta',
             'state_id' => 2,
         ]);
         Sector::create([
             'name' => 'Pereira',
+            'slug' => 'pere',
             'state_id' => 3,
         ]);
         Sector::create([
             'name' => 'Pasto',
+            'slug' => 'past',
             'state_id' => 4,
         ]);
         Sector::create([
             'name' => 'Bucaramanga',
+            'slug' => 'buca',
             'state_id' => 5,
         ]);
         Sector::create([
             'name' => 'Malaga',
+            'slug' => 'malag',
             'state_id' => 5,
         ]);
     }

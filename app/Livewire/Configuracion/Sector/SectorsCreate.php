@@ -8,6 +8,7 @@ use Livewire\Component;
 class SectorsCreate extends Component
 {
     public $name = '';
+    public $slug='';
     public $idDep = '';
     public $elegido = '';
 
@@ -20,7 +21,8 @@ class SectorsCreate extends Component
      * Reglas de validación
      */
     protected $rules = [
-        'name' => 'required|max:100',
+        'name' => 'unique:sectors,name|required|max:100',
+        'slug' => 'unique:sectors,slug|required|max:100',
     ];
 
     /**
@@ -28,7 +30,7 @@ class SectorsCreate extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name');
+        $this->reset('name', 'slug');
     }
 
     // Crear Regimen de Salud
@@ -47,6 +49,7 @@ class SectorsCreate extends Component
             Sector::create([
                 'state_id'=>$this->idDep,
                 'name'=>strtolower($this->name),
+                'slug'=>strtolower($this->slug),
             ]);
 
             // Notificación

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->comment('Ciudades dentro de cada departamento');
             $table->id();
             $table->string('name')->unique()->comment('Nombre de las poblaciones del departamento');
+            $table->string('slug')->unique();
             $table->boolean('status')->default(true)->comment('false Inactivo, true activo');
 
             $table->unsignedBigInteger('state_id');

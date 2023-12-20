@@ -15,6 +15,7 @@ use Livewire\Component;
 class SedesCreate extends Component
 {
     public $name = '';
+    public $slug='';
     public $address = '';
     public $phone = '';
     public $nit = '';
@@ -84,6 +85,7 @@ class SedesCreate extends Component
      */
     protected $rules = [
         'name' => 'unique:sedes,name|required|max:100',
+        'slug' => 'unique:sedes,slug|required|max:100',
         'address' => 'required|max:150',
         'phone' => 'required|max:50',
         'nit' => 'unique:sedes,nit|required|max:50',
@@ -102,6 +104,7 @@ class SedesCreate extends Component
     public function resetFields(){
         $this->reset(
             'name',
+            'slug',
             'address',
             'phone',
             'nit',
@@ -140,6 +143,7 @@ class SedesCreate extends Component
             $nueva = Sede::create([
                 'sector_id'=>$this->pobla,
                 'name'=>strtolower($this->name),
+                'slug'=>strtolower($this->slug),
                 'address' => strtolower($this->address),
                 'phone' => strtolower($this->phone),
                 'nit' => strtolower($this->nit),

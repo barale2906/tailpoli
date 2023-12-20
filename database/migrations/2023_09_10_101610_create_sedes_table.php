@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('name')->unique()->comment('nombre de la sede, debe ser única');
+            $table->string('slug')->unique();
             $table->string('address');
             $table->string('phone');
             $table->string('nit');

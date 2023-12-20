@@ -8,6 +8,7 @@ use Livewire\Component;
 class SectorsEditar extends Component
 {
     public $name = '';
+    public $slug='';
     public $id = '';
     public $elegido;
 
@@ -30,6 +31,7 @@ class SectorsEditar extends Component
     public function mount($elegido = null)
     {
         $this->name=$elegido['name'];
+        $this->slug=$elegido['slug'];
         $this->id=$elegido['id'];
     }
 
@@ -42,6 +44,7 @@ class SectorsEditar extends Component
         //Actualizar registros
         Sector::whereId($this->id)->update([
             'name'=>strtolower($this->name),
+            'slug'=>strtolower($this->slug),
         ]);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el departamento: '.$this->name);

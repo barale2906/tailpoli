@@ -17,6 +17,7 @@ class SedeSeeder extends Seeder
     {
         $s1=Sede::create([
             'name'                      => 'bogotá 1',
+            'slug'                      => 'bta1',
             'address'                   => 'Cra. 12A BIS Nro. 22-12 SUR - SAN JOSÉ Localidad Rafael Uribe Uribe',
             'phone'                     => '2627700',
             'nit'                       =>'900656857-5',
@@ -107,6 +108,7 @@ class SedeSeeder extends Seeder
 
         $s2=Sede::create([
             'name'                      => 'chía a',
+            'slug'                      => 'chiaa',
             'address'                   => 'Cerca a la casa',
             'phone'                     => '2627700',
             'nit'                       =>'900656857-5',

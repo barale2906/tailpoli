@@ -62,6 +62,16 @@
                     </div>
 
                     <div class="mb-6">
+                        <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código</label>
+                        <input type="text" id="slug" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="slug">
+                        @error('slug')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-6">
                         <label for="address class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección de la sede</label>
                         <input type="text" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="dirección" wire:model.blur="address">
                         @error('address')

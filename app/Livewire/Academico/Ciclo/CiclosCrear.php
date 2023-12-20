@@ -6,6 +6,7 @@ use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
+use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +47,7 @@ class CiclosCrear extends Component
 
     public function updatedCursoId(){
 
-        $this->reset('grupos', 'seleccionados', 'curso', 'contar', 'jornada');
+        $this->reset('grupos', 'seleccionados', 'curso', 'contar', 'jornada', 'name');
 
         $this->curso=Curso::find($this->curso_id);
 
@@ -106,6 +107,39 @@ class CiclosCrear extends Component
         }else{
             $this->desertado=config('instituto.desertado_fin');
         }
+
+        $this->nombrar();
+    }
+
+    public function nombrar(){
+        $sede=Sede::where('id', $this->sede_id)
+                    ->select('slug','id','sector_id')
+                    ->first();
+
+        $sector=Sector::where('id', $sede->sector_id)
+                        ->select('slug')
+                        ->first();
+
+        switch ($this->jornada) {
+            case "1":
+                $jor="Mañana";
+                break;
+
+            case "2":
+                $jor="Tarde";
+                break;
+
+            case "3":
+                $jor="Noche";
+                break;
+
+            case "4":
+                $jor="Fin Semana";
+                break;
+        }
+
+
+        $this->name=$sector->slug." ".$sede->slug." ".$this->curso->slug." ".$jor;
     }
 
     public function activFecha($id, $mod){

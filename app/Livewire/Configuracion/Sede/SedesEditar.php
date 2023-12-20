@@ -16,6 +16,7 @@ class SedesEditar extends Component
 {
     public $id = '';
     public $name = '';
+    public $slug='';
     public $address = '';
     public $phone = '';
     public $nit = '';
@@ -60,6 +61,7 @@ class SedesEditar extends Component
     public function mount($elegido = null)
     {
         $this->name=$elegido['name'];
+        $this->slug=$elegido['slug'];
         $this->id=$elegido['id'];
         $this->address=$elegido['address'];
         $this->phone=$elegido['phone'];
@@ -207,6 +209,7 @@ class SedesEditar extends Component
      */
     protected $rules = [
         'name' => 'required|max:100',
+        'slug' => 'required|max:100',
         'address' => 'required|max:150',
         'phone' => 'required|max:50',
         'nit' => 'required|max:50',
@@ -224,6 +227,7 @@ class SedesEditar extends Component
     public function resetFields(){
         $this->reset(
             'name',
+            'slug',
             'address',
             'phone',
             'nit',
@@ -262,6 +266,7 @@ class SedesEditar extends Component
         Sede::whereId($this->id)->update([
             'sector_id'=>$this->pobla,
             'name'=>strtolower($this->name),
+            'slug'=>strtolower($this->slug),
             'address' => strtolower($this->address),
             'phone' => strtolower($this->phone),
             'nit' => strtolower($this->nit),
