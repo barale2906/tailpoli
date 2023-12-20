@@ -336,6 +336,25 @@
             </p>
 
         @endif
+        @if ($mat->tipo==='estadoCuenta')
+            <p class="justificado font-sm">
+                Bogotá,
+                <strong class="uppercase">
+                    {{$fechaMes}}
+                </strong>
+            </p>
+            <p class="justificado font-sm">
+                Señor(a):<br>
+                <strong class="uppercase">
+                    {{$docuMatricula->alumno->name}}<br>
+                    {{$docuMatricula->alumno->perfil->tipo_documento}}: {{number_format($docuMatricula->alumno->documento, 0, '.', '.')}}
+                </strong>
+            </p>
+            <p class="justificado font-sm">
+                Estimado(s) Señor(es):
+            </p>
+
+        @endif
         @foreach ($detalles as $item)
             @if ($item['documento_id']===$mat->id && $item['tipo']==='titulo')
                 <h1 class="centrado uppercase">
@@ -457,6 +476,58 @@
                                 ¡Pago de Contado!, Según lo especificado al momento de la matricula.
                             </p>
                         @endif
+                        @break
+
+                    @case('cartera')
+
+                        <table>
+                            <thead class="font-sm  uppercase ">
+                                <tr>
+                                    <th scope="col" class="centrado font-sm">
+                                        concepto
+                                    </th>
+                                    <th scope="col" class="centrado font-sm">
+                                        fecha de pago
+                                    </th>
+                                    <th scope="col" class="centrado font-sm">
+                                        valor
+                                    </th>
+                                    <th scope="col" class="centrado font-sm">
+                                        Días de retraso
+                                    </th>
+                                    <th scope="col" class="centrado font-sm">
+                                        Saldo
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($docuCartera as $item)
+                                    <tr>
+                                        <th scope="row" class="justificado capitalize font-sm">
+                                            {{$item->concepto}}
+                                        </th>
+                                        <th scope="row" class=" centrado capitalize font-sm">
+                                            {{$item->fecha_pago}}
+                                        </th>
+                                        <th scope="row" class="derecha capitalize font-sm">
+                                            $ {{number_format($item->valor, 0, '.', '.')}}
+                                        </th>
+                                        <th scope="row" class="derecha capitalize font-sm">
+                                            @if ($item->fecha_pago < $fecha)
+                                                @php
+                                                    $fecha1 = date_create($item->fecha_pago);
+                                                    $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                @endphp
+                                                {{$dias}} días
+                                            @endif
+                                        </th>
+                                        <th scope="row" class="derecha capitalize font-sm">
+                                            $ {{number_format($item->saldo, 0, '.', '.')}}
+                                        </th>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                         @break
                 @endswitch
             @endif
@@ -692,7 +763,28 @@
                         @break
 
                     @case('cartaCobro')
+                        <table >
+                            <thead >
+                                <tr>
+                                    <th scope="col" >
+                                        <p class="justificado font-sm uppercase mt-1">
+                                            Cordialmente:
+                                        </p>
 
+                                        <p class="justificado font-sm capitalize mt-1">
+                                            Departamento de Cartera
+                                        </p>
+                                    </th>
+                                    <th scope="col" >
+
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="salto"></div>
+                        @break
+
+                    @case('estadoCuenta')
                         <table >
                             <thead >
                                 <tr>

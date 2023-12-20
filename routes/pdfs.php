@@ -6,3 +6,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/matricular/{id}', [PdfController::class, 'matri']);
 Route::get('/certificado/{id}', [PdfController::class, 'certificado']);
 Route::get('/cobro/{id}', [PdfController::class, 'cobro']);
+Route::get('/estado/{id}', [PdfController::class, 'estado']);
