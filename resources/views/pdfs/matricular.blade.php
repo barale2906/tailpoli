@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Documentos Matricula</title>
+    <title>impresión</title>
     <link rel="stylesheet" href="{{public_path('css/pdf.css')}}">
 
 
@@ -315,6 +315,25 @@
                 </thead>
             </table>
             <div class="salto"></div>
+
+        @endif
+        @if ($mat->tipo==='cartaCobro')
+            <p class="justificado font-sm">
+                Bogotá,
+                <strong class="uppercase">
+                    {{$fechaMes}}
+                </strong>
+            </p>
+            <p class="justificado font-sm">
+                Señor(a):<br>
+                <strong class="uppercase">
+                    {{$docuMatricula->alumno->name}}<br>
+                    {{$docuMatricula->alumno->perfil->tipo_documento}}: {{number_format($docuMatricula->alumno->documento, 0, '.', '.')}}
+                </strong>
+            </p>
+            <p class="justificado font-sm">
+                Asunto: Notificación de mora de su Crédito educativo
+            </p>
 
         @endif
         @foreach ($detalles as $item)
@@ -655,9 +674,35 @@
                                         <p class="justificado font-sm capitalize mt-1">
                                             Firma:
                                         </p>
-                                        <img class="imgfirma" src="{{public_path('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
+                                        <div class="justificado">
+                                            <img class="imgfirma" src="{{public_path('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
+                                        </div>
+
                                         <p class="justificado font-sm uppercase">
                                             director(a)
+                                        </p>
+                                    </th>
+                                    <th scope="col" >
+
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="salto"></div>
+                        @break
+
+                    @case('cartaCobro')
+
+                        <table >
+                            <thead >
+                                <tr>
+                                    <th scope="col" >
+                                        <p class="justificado font-sm uppercase mt-1">
+                                            Cordialmente:
+                                        </p>
+
+                                        <p class="justificado font-sm capitalize mt-1">
+                                            Departamento de Cartera
                                         </p>
                                     </th>
                                     <th scope="col" >

@@ -896,7 +896,7 @@ class DocumentoSeeder extends Seeder
 
                     DB::table('detalle_documento')
                                 ->insert([
-                                    'tipodetalle'   => 'formaPago',
+                                    'tipodetalle'   => 'cartera',
                                     'contenido'     => '0',
                                     'orden'         => 3,
                                     'documento_id'  => $estadoCuenta->id,

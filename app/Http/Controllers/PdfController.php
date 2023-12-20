@@ -53,5 +53,22 @@ class PdfController extends Controller
 
     }
 
+    public function cobro($id){
+
+        $this->docubase($id,$this->cartaCobro);
+        $matr=$this->docuTipo;
+        $detalles=$this->impresion;
+        $id=$id;
+        $docuMatricula=$this->docuMatricula;
+        $fecha=Carbon::now();
+        $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
+        $docuFormaP=$this->docuFormaP;
+        $docuCartera=$this->docuCartera;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+
+        return $pdf->stream();
+
+    }
+
 
 }
