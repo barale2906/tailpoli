@@ -52,7 +52,13 @@ class CasoEspecial extends Component
                                 ->where('alumno_id', $this->actual->id)
                                 ->whereIn('grupo_id', $ids)
                                 ->get();
+
+            $this->ciclosGr();
         }
+    }
+
+    public function ciclosGr(){
+
     }
 
     public function render()

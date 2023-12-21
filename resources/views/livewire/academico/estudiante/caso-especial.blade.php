@@ -63,4 +63,12 @@
             @endif
         </div>
     </div>
+    @if ($registro && $elegido)
+
+        @foreach ($elegido->grupos as $item)
+            @foreach ($item->Ciclogrupo as $value)
+                {{$value->id}} - {{$value->fecha_inicio}} - {{$value->fecha_fin}}<br>
+            @endforeach
+        @endforeach
+    @endif
 </div>
