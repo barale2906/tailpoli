@@ -1,6 +1,12 @@
 <div>
     <h1 class="text-justify font-normal ">
-        Este estudiante es un caso especial por: @switch($actual->caso_especial)
+        @if ($registro)
+            <span class="uppercase">
+                {{$actual->name}}
+            </span>
+        @endif
+        Este estudiante es un caso especial por:
+        @switch($actual->caso_especial)
             @case(1)
                 <strong>
                     REPROBO MODULO,

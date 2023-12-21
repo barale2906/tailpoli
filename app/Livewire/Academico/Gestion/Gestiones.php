@@ -34,6 +34,7 @@ class Gestiones extends Component
     public $is_transacciones=false;
     public $is_gestransaccion=false;
     public $is_document=false;
+    public $is_especiales=false;
 
     public $sedes=[];
 
@@ -111,7 +112,8 @@ class Gestiones extends Component
                         'is_notas',
                         'is_transacciones',
                         'is_gestransaccion',
-                        'is_document'
+                        'is_document',
+                        'is_especiales'
                     );
     }
 
@@ -202,6 +204,15 @@ class Gestiones extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_change = !$this->is_change;
+    }
+
+    //Activar evento
+    #[On('especia')]
+    //Mostrar formulario de creación
+    public function updatedIsEspeciales()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_especiales = !$this->is_especiales;
     }
 
     public function notas($item, $id){

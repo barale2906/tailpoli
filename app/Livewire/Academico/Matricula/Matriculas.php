@@ -29,6 +29,7 @@ class Matriculas extends Component
     public $is_grupos=false;
     public $is_change=false;
     public $is_document=false;
+    public $is_especiales=false;
 
     public $ruta=0;
 
@@ -112,8 +113,17 @@ class Matriculas extends Component
                         'is_deleting',
                         'is_change',
                         'is_grupos',
-                        'is_document'
+                        'is_document',
+                        'is_especiales'
                     );
+    }
+    //Activar evento
+    #[On('especia')]
+    //Mostrar formulario de creación
+    public function updatedIsEspeciales()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_especiales = !$this->is_especiales;
     }
 
     //Activar evento
