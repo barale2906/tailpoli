@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Nota;
 use App\Exports\AcaNotaExport;
 use App\Exports\AcaNotaPlantExport;
 use App\Models\Academico\Nota;
+use App\Models\Clientes\Pqrs;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,6 +64,30 @@ class NotasEditar extends Component
                         'updated_at'    =>now(),
                     ]);
 
+            DB::table('matricula_modulos_aprobacion')
+                    ->where('alumno_id', $this->estudiante->alumno_id)
+                    ->where('modulo_id', $this->actual->grupo->modulo_id)
+                    ->update([
+                        'updated_at'    =>now(),
+                        'observaciones' =>now()." --- ¡REPROBO! ".Auth::user()->name." --- ",
+                    ]);
+
+
+
+            $estudent=User::find($this->estudiante->alumno_id);
+            $estudent->update([
+                'caso_especial'=>1
+            ]);
+
+            Pqrs::create([
+                'estudiante_id' =>$this->estudiante->alumno_id,
+                'gestion_id'    =>Auth::user()->id,
+                'fecha'         =>now(),
+                'tipo'          =>4,
+                'observaciones' =>'ACÁDEMICO: '." --- ¡REPROBO! --- ".$this->estudiante->grupo." --- ".Auth::user()->name." ----- ",
+                'status'        =>4
+            ]);
+
         $this->dispatch('alerta', name:'El(la) estudiante: '.$this->estudiante->alumno." ¡REPROBO!");
         $this->reset('idcierra');
         $this->abrenaprueba();
@@ -96,6 +121,15 @@ class NotasEditar extends Component
                             'observaciones' =>$observa,
                             'updated_at'    =>now(),
                         ]);
+
+        Pqrs::create([
+            'estudiante_id' =>$this->estudiante->alumno_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>4,
+            'observaciones' =>'ACÁDEMICO: '." --- ¡APROBO! ".$this->estudiante->grupo." --- ".Auth::user()->name." ----- ",
+            'status'        =>4
+        ]);
 
             $this->dispatch('alerta', name:'El(la) estudiante: '.$this->estudiante->alumno." ¡APROBO!");
             $this->reset('idcierra');

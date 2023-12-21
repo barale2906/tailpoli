@@ -36,6 +36,11 @@
             </div>
         </div>
     </div>
+    @if ($elegido->estudiante->caso_especial>0)
+    <div class="rounded-lg bg-slate-200 p-2">
+        <livewire:academico.estudiante.caso-especial :id="$elegido->estudiante->id" />
+    </div>
+    @endif
     <h1 class="text-center text-lg font-semibold rounded-lg bg-cyan-300 uppercase mt-4">estado de cartera</h1>
     <div class="relative overflow-x-auto m-1 text-center ring ring-black mt-6 mb-6">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

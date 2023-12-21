@@ -21,6 +21,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->integer('caso_especial')->default(0)->comment('0 normal, 1 reprobo modulo, 2 reintegrado');
             $table->boolean('status')->default(true)->comment('false Saldo Inactivo, true Saldo Activo');
             $table->timestamps();
         });

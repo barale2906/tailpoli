@@ -49,6 +49,7 @@ class User extends Authenticatable
         'email',
         'documento',
         'password',
+        'caso_especial'
     ];
 
     /**
