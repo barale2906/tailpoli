@@ -2,9 +2,12 @@
 
 namespace App\Livewire\Academico\Estudiante;
 
+use App\Models\Academico\Ciclo;
+use App\Models\Academico\Ciclogrupo;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Modulo;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -15,12 +18,16 @@ class CasoEspecial extends Component
     public $elegido;
     public $registro=false;
     public $eleGrupo;
+    public $fecha;
+    public $ciclos;
+    public $cicloEle;
 
     public function mount($id, $registro=null){
         $this->actual=User::find($id);
         if($registro){
             $this->registro=true;
         }
+        $this->fecha=Carbon::today();
         $this->obteModulos();
 
     }
@@ -59,6 +66,25 @@ class CasoEspecial extends Component
 
     public function ciclosGr(){
 
+        $feinicio=$this->fecha->subDays(5);
+        $ids=[];
+        foreach ($this->elegido->grupos as $value) {
+            array_push($ids,$value->id);
+        }
+
+        $this->ciclos=Ciclogrupo::whereIn('grupo_id', $ids)
+                                    ->where('fecha_inicio', '>=', $feinicio)
+                                    ->orderBy('fecha_inicio', 'ASC')
+                                    ->get();
+
+    }
+
+    public function elegirCiclo($id){
+        $this->cicloEle=Ciclo::find($id);
+    }
+
+    public function inscribe($id){
+        $this->dispatch('alerta', name:'Inscribe al estudiante en la nueva programación');
     }
 
     public function render()

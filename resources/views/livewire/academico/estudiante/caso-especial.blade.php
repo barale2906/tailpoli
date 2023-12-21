@@ -64,11 +64,44 @@
         </div>
     </div>
     @if ($registro && $elegido)
+        <h1 class="text-center text-lg font-semibold">
+            A continuación se presentan los grupos disponibles para este modulo en las diferentes sedes.
+        </h1>
+        <div class="grid sm:grid-cols-1 md:grid-cols-6 gap-4 m-2 bg-slate-300 rounded-lg p-2">
 
-        @foreach ($elegido->grupos as $item)
-            @foreach ($item->Ciclogrupo as $value)
-                {{$value->id}} - {{$value->fecha_inicio}} - {{$value->fecha_fin}}<br>
-            @endforeach
-        @endforeach
+            <div class="sm:col-span-1 md:col-span-2">
+                    @foreach ($ciclos as $item)
+                        <div style="cursor: pointer;" wire:click.prevent="elegirCiclo({{$item->ciclo_id}})" class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white uppercase">
+                                {{$item->grupo->name}}
+                            </h5>
+                            <p class="font-normal text-xs text-gray-700 dark:text-gray-400">
+                                Inscritos: {{$item->grupo->inscritos}}
+                            </p>
+                            <p class="text-xs text-gray-700 dark:text-gray-400 uppercase font-extrabold">
+                                Capacidad: {{$item->grupo->quantity_limit}}
+                            </p>
+                        </div>
+                    @endforeach
+            </div>
+            <div class="sm:col-span-1 md:col-span-4">
+                @if ($cicloEle)
+                    <div style="cursor: pointer;" wire:click.prevent="inscribe({{$cicloEle->id}})" class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white uppercase">
+                            Programación: {{$cicloEle->name}}
+                        </h5>
+                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400">
+                            Grupos:
+                            @foreach ($cicloEle->ciclogrupos as $item)
+                                <span class="uppercase"> Grupo: {{$item->grupo->name}} - Inicia: {{$item->fecha_inicio}} - Finaliza: {{$item->fecha_fin}} </span><br>
+                            @endforeach
+                        </p>
+                        <p class="text-xs text-gray-700 dark:text-gray-400 uppercase font-extrabold">
+                            Estudiantes registrados: {{$cicloEle->registrados}}
+                        </p>
+                    </div>
+                @endif
+            </div>
+        </div>
     @endif
 </div>
