@@ -205,7 +205,7 @@ class UserSeeder extends Seeder
 
         $is=0;
         $documento=10215307;
-        while ($is <= 300) {
+        while ($is <= 30) {
 
             $usu = User::factory()->create()->assignRole('Profesor');
 
@@ -229,7 +229,7 @@ class UserSeeder extends Seeder
 
         $id=0;
         $documento=10315300;
-        while ($id <= 10000) {
+        while ($id <= 100) {
 
             $usu = User::factory()->create()->assignRole('Estudiante');
 
