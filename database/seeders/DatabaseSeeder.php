@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CountrySeeder::class,
-            Menuseeder::class,
+            MenuSeeder::class,
             RegimenSaludSeeder::class,
             PersonaMulticulturalSeeder::class,
             EstadoSeeder::class,

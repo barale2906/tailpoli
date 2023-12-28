@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
         $super = User::factory()->create([
             'name' => 'Ing Alexander Barajas V',
             'email' => 'alexanderbarajas@gmail.com',
+            'documento'=>10215300,
             'password'=>bcrypt('10203040')
         ])->assignRole('Superusuario');
 
@@ -45,7 +46,7 @@ class UserSeeder extends Seeder
             'estado_id'=>1,
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
-            'documento'=>79844910,
+            'documento'=>10215300,
             'name'=>'Alexander',
             'lastname'=>'Barajas Vargas'
         ]);
@@ -53,6 +54,7 @@ class UserSeeder extends Seeder
         $stephany = User::factory()->create([
                     'name' => 'stephany izquierdo ocampo',
                     'email' => 'direccion@gmail.com',
+                    'documento'=>10215301,
                     'password'=>bcrypt('10203040')
                 ])->assignRole('Superusuario');
 
@@ -80,7 +82,7 @@ class UserSeeder extends Seeder
             'estado_id'=>1,
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
-            'documento'=>1030862596,
+            'documento'=>10215301,
             'name'=>'stephany',
             'lastname'=>'izquierdo ocampo'
         ]);
@@ -88,6 +90,7 @@ class UserSeeder extends Seeder
         $admon = User::factory()->create([
             'name' => 'Administrador Barajas V',
             'email' => 'administrador@gmail.com',
+            'documento'=>10215302,
             'password'=>bcrypt('10203040')
         ])->assignRole('Administrador');
 
@@ -107,7 +110,7 @@ class UserSeeder extends Seeder
             'estado_id'=>1,
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
-            'documento'=>1030862556,
+            'documento'=>10215302,
             'name'=>'administrador',
             'lastname'=>'Barajas V'
         ]);
@@ -115,6 +118,7 @@ class UserSeeder extends Seeder
         $coordinador=User::factory()->create([
                         'name' => 'Coordinador Barajas V',
                         'email' => 'coordinador@gmail.com',
+                        'documento'=>10215303,
                         'password'=>bcrypt('10203040')
                     ])->assignRole('Coordinador');
 
@@ -126,7 +130,7 @@ class UserSeeder extends Seeder
             'estado_id'=>1,
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
-            'documento'=>52314764,
+            'documento'=>10215303,
             'name'=>'coordinador',
             'lastname'=>'Barajas V'
         ]);
@@ -134,6 +138,7 @@ class UserSeeder extends Seeder
         $aux=User::factory()->create([
             'name' => 'Auxiliar Barajas V',
             'email' => 'auxiliar@gmail.com',
+            'documento'=>10215304,
             'password'=>bcrypt('10203040')
         ])->assignRole('Auxiliar');
 
@@ -153,7 +158,7 @@ class UserSeeder extends Seeder
             'estado_id'=>1,
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
-            'documento'=>79844911,
+            'documento'=>10215304,
             'name'=>'auxiliar',
             'lastname'=>'Barajas V'
         ]);
@@ -161,6 +166,7 @@ class UserSeeder extends Seeder
         $profesor=User::factory()->create([
                     'name' => 'Profesor Barajas V',
                     'email' => 'profesor@gmail.com',
+                    'documento'=>10215305,
                     'password'=>bcrypt('10203040')
                 ])->assignRole('Profesor');
 
@@ -172,7 +178,7 @@ class UserSeeder extends Seeder
             'estado_id'=>1,
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
-            'documento'=>1233491475,
+            'documento'=>10215305,
             'name'=>'profesor',
             'lastname'=>'Barajas V'
         ]);
@@ -180,6 +186,7 @@ class UserSeeder extends Seeder
         $estudiante=User::factory()->create([
                         'name' => 'Estudiante Barajas V',
                         'email' => 'estudiante@gmail.com',
+                        'documento'=>10215306,
                         'password'=>bcrypt('10203040')
                     ])->assignRole('Estudiante');
 
@@ -191,14 +198,14 @@ class UserSeeder extends Seeder
             'estado_id'=>1,
             'regimen_salud_id'=>1,
             'tipo_documento'=>'cédula de ciudadanía',
-            'documento'=>41717453,
+            'documento'=>10215306,
             'name'=>'estudiante',
             'lastname'=>'Barajas V'
         ]);
 
         $is=0;
-        $documento=1020535000;
-        while ($is <= 8) {
+        $documento=10215307;
+        while ($is <= 300) {
 
             $usu = User::factory()->create()->assignRole('Profesor');
 
@@ -221,8 +228,8 @@ class UserSeeder extends Seeder
         }
 
         $id=0;
-        $documento=1030535000;
-        while ($id <= 50) {
+        $documento=10315300;
+        while ($id <= 10000) {
 
             $usu = User::factory()->create()->assignRole('Estudiante');
 
