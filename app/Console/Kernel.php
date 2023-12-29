@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('inspire')->everyMinute()->appendOutputTo("motiva.log");
         $schedule->command('Ciclo:vencimiento')->everyMinute();
         $schedule->command('Control:vencimiento')->everyMinute();
+        $schedule->command('Documento:vigencia')->everyMinute();
     }
 
     /**
