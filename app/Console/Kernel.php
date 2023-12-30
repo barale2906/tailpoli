@@ -12,7 +12,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        //$schedule->command('inspire')->everyMinute()->appendOutputTo("motiva.log");
         $schedule->command('Ciclo:vencimiento')->timezone('America/Bogota')->everyMinute();
         $schedule->command('Control:vencimiento')->timezone('America/Bogota')->everyMinute();
         $schedule->command('Documento:vigencia')->timezone('America/Bogota')->everyMinute();

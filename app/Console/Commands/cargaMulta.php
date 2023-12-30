@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 
 class cargaMulta extends Command
 {
+    public $multa;
     /**
      * The name and signature of the console command.
      *
@@ -28,25 +29,23 @@ class cargaMulta extends Command
      */
     public function handle()
     {
-
-        Cartera::where('fecha_pago', Carbon::today()->subDay())
-                ->each(function($cart){
-
-                    $multa=ConceptoPago::where('name', 'Recargo Mora')
+        $this->multa=ConceptoPago::where('name', 'Recargo Mora')
                             ->where('tipo', 'financiero')
                             ->where('status', true)
                             ->select('valor','id','name')
                             ->first();
 
+        Cartera::where('fecha_pago', Carbon::today()->subDay())
+                ->each(function($cart){
 
                     Cartera::create([
-                        'fecha_pago'=>now(),
-                        'valor'=>$multa->valor,
-                        'saldo'=>$multa->valor,
+                        'fecha_pago'=>$cart->fecha_pago,
+                        'valor'=>$this->multa->valor,
+                        'saldo'=>$this->multa->valor,
                         'observaciones'=>'Se carga multa por no pago de la cuota del: '.$cart->fecha_pago.', por $'.number_format($cart->saldo, 0, '.', ' '),
                         'matricula_id'=>$cart->matricula_id,
-                        'concepto_pago_id'=>$multa->id,
-                        'concepto'=>$multa->name,
+                        'concepto_pago_id'=>$this->multa->id,
+                        'concepto'=>$this->multa->name,
                         'responsable_id'=>$cart->responsable_id,
                         'estado_cartera_id'=>1
                     ]);
