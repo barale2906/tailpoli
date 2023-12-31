@@ -36,6 +36,7 @@ class cargaMulta extends Command
                             ->first();
 
         Cartera::where('fecha_pago', Carbon::today()->subDay())
+                ->where('saldo', '>', 0)
                 ->each(function($cart){
 
                     Cartera::create([
