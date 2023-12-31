@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('Documento:vigencia')->timezone('America/Bogota')->everyMinute();
         $schedule->command('Cartera:cargaMulta')->timezone('America/Bogota')->everyMinute();
         $schedule->command('Cartera:cargaMora')->timezone('America/Bogota')->everyMinute();
+        $schedule->command('Academico:aprobo-reprobo')->timezone('America/Bogota')->everyMinute();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
 use Carbon\Carbon;
@@ -49,6 +50,15 @@ class cargaMulta extends Command
                         'concepto'=>$this->multa->name,
                         'responsable_id'=>$cart->responsable_id,
                         'estado_cartera_id'=>1
+                    ]);
+
+                    Pqrs::create([
+                        'estudiante_id' =>$cart->responsable_id,
+                        'gestion_id'    =>$cart->matricula->creador_id,
+                        'fecha'         =>now(),
+                        'tipo'          =>2,
+                        'observaciones' =>'PAGO: Se carga multa por no pago en la fecha establecida. ----- ',
+                        'status'        =>4
                     ]);
                 });
 
