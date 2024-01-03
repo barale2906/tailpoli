@@ -38,6 +38,7 @@ class AcaNotaPlantExport implements FromCollection, WithCustomStartCell, Respons
         return DB::table('notas_detalle')
                     ->where('status', true)
                     ->where('nota_id', $this->id)
+                    ->where('aprobo', 0)
                     ->orderBy('alumno')
                     ->get();
     }
@@ -62,9 +63,9 @@ class AcaNotaPlantExport implements FromCollection, WithCustomStartCell, Respons
             $nota->profesor_id,
             $nota->profesor,
             $nota->grupo_id,
-            $nota->grupo,            
-            $nota->observaciones,
+            $nota->grupo,
             $nota->acumulado,
+            $nota->observaciones,
             $nota->nota1,
             $nota->porcen1,
             $nota->nota2,
