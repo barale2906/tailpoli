@@ -30,6 +30,9 @@
                             ID de la ciudad
                         </th>
                         <th scope="col" class="px-6 py-3" >
+                            Fecha de registro del usuario (aaaa-mm-dd)
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
                             nombre del curso
                         </th>
                         <th scope="col" class="px-6 py-3" >

@@ -21,7 +21,9 @@ return new class extends Migration
             $table->unsignedBigInteger('sector_id');
             $table->foreign('sector_id')->references('id')->on('sectors');
 
-            $table->date('fecha')->comment('fecha de generación');
+            $table->date('fecha_carga')->comment('fecha de carga al sistema');
+            $table->date('fecha_registro')->comment('fecha de registro del usuario como lead');
+            $table->date('fecha_gestion')->comment('última fecha de gestión');
             $table->integer('mes')->comment('mes de asignación');
             $table->string('curso')->comment('curso al cuál esta interesado');
             $table->string('name')->comment('nombre del alumno');

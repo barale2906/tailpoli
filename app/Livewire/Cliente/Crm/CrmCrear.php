@@ -85,7 +85,9 @@ class CrmCrear extends Component
 
         Crm::create([
             'name' => strtolower($this->name),
-            'fecha'=>now(),
+            'fecha_gestion'=>now(),
+            'fecha_registro'=>now(),
+            'fecha_carga'=>now(),
             'telefono'=>$this->telefono,
             'email'=>$this->email,
             'historial'=>now()." ".Auth::user()->name."Creo el cliente con ests observaciones: ".strtolower($this->historial)." ----- ",

@@ -48,9 +48,33 @@
                         <th scope="col" class="px-6 py-3" >
 
                         </th>
-                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha')">
-                            Fecha
-                            @if ($ordena != 'fecha')
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_carga')">
+                            Fecha Carga Datos
+                            @if ($ordena != 'fecha_carga')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_registro')">
+                            Fecha Registro
+                            @if ($ordena != 'fecha_registro')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_gestion')">
+                            Fecha Última Gestión
+                            @if ($ordena != 'fecha_gestion')
                                 <i class="fas fa-sort"></i>
                             @else
                                 @if ($ordenado=='ASC')
@@ -151,7 +175,13 @@
                                 @endcan
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$crm->fecha}}
+                                {{$crm->fecha_carga}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{$crm->fecha_registro}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{$crm->fecha_gestion}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
 
