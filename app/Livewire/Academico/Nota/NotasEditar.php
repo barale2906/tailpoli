@@ -217,8 +217,8 @@ class NotasEditar extends Component
             array_push($this->encabezadoxls, "profesor");
             array_push($this->encabezadoxls, "grupo_id");
             array_push($this->encabezadoxls, "grupo");
-            array_push($this->encabezadoxls, "acumulado");
             array_push($this->encabezadoxls, "observaciones");
+            array_push($this->encabezadoxls, "acumulado");
 
             foreach ($this->encabezado as $value) {
                 $item = $this->actual->$value;

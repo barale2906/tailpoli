@@ -36,30 +36,34 @@ class NotasAlumno extends Component
         if($this->calificacion===null){
             $this->dispatch('alerta', name:'Debe registrar nota.');
         }else{
-            $item=DB::table('notas_detalle')
-                    ->where('id', $id)
-                    ->first();
+            if($this->calificacion<=5 && $this->calificacion>=0){
+                    
+                $item=DB::table('notas_detalle')
+                            ->where('id', $id)
+                            ->first();
 
-            $porcenta=$this->porcenv;
-            $porce=(floatval($this->calificacion)*$this->actual->$porcenta)/100;
-            $porcentaje=round($porce, 2);
-            $concepto=$this->notaenv;
-            $observaciones=now()." ".Auth::user()->name." cargo la nota de: ".$this->actual->$concepto." --- ".$item->observaciones;
+                    $porcenta=$this->porcenv;
+                    $porce=(floatval($this->calificacion)*$this->actual->$porcenta)/100;
+                    $porcentaje=round($porce, 2);
+                    $concepto=$this->notaenv;
+                    $observaciones=now()." ".Auth::user()->name." cargo la nota de: ".$this->actual->$concepto." --- ".$item->observaciones;
 
-            DB::table('notas_detalle')
-                    ->where('id', $id)
-                    ->update([
-                        $concepto       =>$this->calificacion,
-                        $porcenta       =>$porcentaje,
-                        'observaciones' =>$observaciones,
-                    ]);
+                    DB::table('notas_detalle')
+                            ->where('id', $id)
+                            ->update([
+                                $concepto       =>$this->calificacion,
+                                $porcenta       =>$porcentaje,
+                                'observaciones' =>$observaciones,
+                            ]);
 
-            $this->registroNotas();
-            $this->dispatch('refresh');
-            $this->reset('calificacion');
+                    $this->registroNotas();
+                    $this->dispatch('refresh');
+                    $this->reset('calificacion');
 
-            $this->promedio($id);
-
+                    $this->promedio($id);
+            }else{
+                $this->dispatch('alerta', name:'La calificación debe estar entre 0 y 5');
+            }
         }
     }
 

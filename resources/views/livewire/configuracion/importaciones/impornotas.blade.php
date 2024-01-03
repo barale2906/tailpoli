@@ -73,7 +73,10 @@
                     <span class="sr-only">Info</span>
                     <h3 class="text-lg font-medium">¡ACCIÓN IRREVERSIBLE!</h3>
                 </div>
-                <div class="mt-2 mb-4 text-sm">
+                <div class="mt-2 mb-4 text-lg">
+                    <p class="text-red font-bold uppercase">
+                        Recuerde que las notas deben estar entre 0 y 5, de lo contrario generará errores el registro.
+                    </p>
                     <p>
                         Al aceptar esta acción se borraran los registros de notas ya existentes de esta lista de notas para el grupo, profesor y esquema elegidos.
                     </p>

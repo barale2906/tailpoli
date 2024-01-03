@@ -27,7 +27,17 @@ class NotasImport implements ToCollection
                 for ($i=0; $i <= 28; $i++) {
 
                     if(isset($row[$i])){
-                        array_push($this->carga, $row[$i]);
+
+                        if($i<8){
+                            array_push($this->carga, $row[$i]);
+                        }else if($i>=8){
+                            if( $row[$i]>=5){
+                                array_push($this->carga,5);
+                            }
+                            if( $row[$i]<=0){
+                                array_push($this->carga,0);
+                            }
+                        }
                     }else{
                         array_push($this->carga, null);
                     }
@@ -35,7 +45,6 @@ class NotasImport implements ToCollection
 
             DB::table('notas_detalle')
                 ->insert([
-
                     'nota_id'       =>$this->carga[0],
                     'alumno_id'     =>$this->carga[1],
                     'alumno'        =>$this->carga[2],
@@ -43,8 +52,8 @@ class NotasImport implements ToCollection
                     'profesor'      =>$this->carga[4],
                     'grupo_id'      =>$this->carga[5],
                     'grupo'         =>$this->carga[6],
-                    'acumulado'     =>$this->carga[7],
-                    'observaciones' =>$this->carga[8],
+                    'observaciones' =>$this->carga[7],
+                    'acumulado'     =>$this->carga[8],
                     'nota1'         =>$this->carga[9],
                     'porcen1'       =>$this->carga[10],
                     'nota2'         =>$this->carga[11],
