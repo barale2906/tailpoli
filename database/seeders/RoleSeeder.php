@@ -262,6 +262,12 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
         Permission::create([
+                            'name'=>'cl_clientesresponsable',
+                            'descripcion'=>'Cambiar responsable de la gestión del cliente',
+                            'modulo'=>'clientes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+        Permission::create([
                             'name'=>'cl_clientesCargar',
                             'descripcion'=>'Carga excel con clientes',
                             'modulo'=>'clientes'

@@ -142,7 +142,7 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('historial')">
+                        {{-- <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('historial')">
                             Gestión
                             @if ($ordena != 'historial')
                                 <i class="fas fa-sort"></i>
@@ -153,7 +153,7 @@
                                     <i class="fas fa-sort-down"></i>
                                 @endif
                             @endif
-                        </th>
+                        </th> --}}
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                             Encargado(a)
                         </th>
@@ -239,11 +239,11 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$crm->email}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize md:h-52 ">
+                            {{-- <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize md:h-52 ">
                                 <div class="overflow-auto hover:overflow-scroll">
                                     {{$crm->historial}}
                                 </div>
-                            </th>
+                            </th> --}}
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$crm->gestiona->name}}
                             </th>

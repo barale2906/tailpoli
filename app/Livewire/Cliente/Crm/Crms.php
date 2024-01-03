@@ -121,10 +121,11 @@ class Crms extends Component
             return Crm::query()
                         ->with(['sector'])
                         ->when($this->buscamin, function($query){
-                            return $query->where('fecha', 'like', "%".$this->buscamin."%")
+                            return $query->where('fecha_gestion', 'like', "%".$this->buscamin."%")
                                     ->orWhere('mes', 'like', "%".$this->buscamin."%")
                                     ->orWhere('curso', 'like', "%".$this->buscamin."%")
                                     ->orWhere('name', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('email', 'like', "%".$this->buscamin."%")
                                     ->where('gestiona_id', Auth::user()->id)
                                     ->orWhere('historial', 'like', "%".$this->buscamin."%")
                                     ->orWhereHas('sector', function($qu){
@@ -137,10 +138,11 @@ class Crms extends Component
             return Crm::query()
                         ->with(['sector', 'gestiona'])
                         ->when($this->buscamin, function($query){
-                            return $query->where('fecha', 'like', "%".$this->buscamin."%")
+                            return $query->where('fecha_gestion', 'like', "%".$this->buscamin."%")
                                     ->orWhere('mes', 'like', "%".$this->buscamin."%")
                                     ->orWhere('curso', 'like', "%".$this->buscamin."%")
                                     ->orWhere('name', 'like', "%".$this->buscamin."%")
+                                    ->orWhere('email', 'like', "%".$this->buscamin."%")
                                     ->orWhere('historial', 'like', "%".$this->buscamin."%")
                                     ->orWhereHas('gestiona', function($q){
                                         $q->where('name', 'like', "%".$this->buscamin."%");

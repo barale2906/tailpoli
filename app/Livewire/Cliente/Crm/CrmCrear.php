@@ -4,6 +4,7 @@ namespace App\Livewire\Cliente\Crm;
 
 use App\Models\Clientes\Crm;
 use App\Models\Configuracion\Sector;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -11,6 +12,7 @@ class CrmCrear extends Component
 {
     public $name;
     public $telefono;
+    public $gestiona_id;
     public $email;
     public $historial;
     public $curso;
@@ -28,6 +30,8 @@ class CrmCrear extends Component
             $this->editar=true;
             $this->actual=Crm::whereId($elegido)->first();
             $this->datos();
+        }else{
+            $this->gestiona_id=Auth::user()->id;
         }
     }
 
@@ -35,6 +39,7 @@ class CrmCrear extends Component
 
         $this->name=$this->actual->name;
         $this->telefono=$this->actual->telefono;
+        $this->gestiona_id=$this->actual->gestiona_id;
         $this->email=$this->actual->email;
         $this->curso=$this->actual->curso;
         $this->sector_id=$this->actual->sector_id;
@@ -94,7 +99,7 @@ class CrmCrear extends Component
             'sector_id'=>$this->sector_id,
             'curso'=>strtolower($this->curso),
             'mes'=>$this->fecha,
-            'gestiona_id'=>Auth::user()->id,
+            'gestiona_id'=>$this->gestiona_id,
 
         ]);
 
@@ -114,11 +119,13 @@ class CrmCrear extends Component
 
         $this->actual->update([
             'name' => strtolower($this->name),
+            'fecha_gestion'=>now(),
             'telefono'=>$this->telefono,
             'email'=>$this->email,
             'historial'=>now()." ".Auth::user()->name.": ".strtolower($this->historial)." ----- ".$this->actual->historial,
             'sector_id'=>$this->sector_id,
             'curso'=>strtolower($this->curso),
+            'gestiona_id'=>$this->gestiona_id,
             'status'=>$this->status
         ]);
 
@@ -131,6 +138,14 @@ class CrmCrear extends Component
         $this->dispatch('cancelando');
     }
 
+    private function noestudiantes(){
+        return User::where('status', true)
+                        ->orderBy('name')
+                        ->with('roles')->get()->filter(
+                            fn ($user) => $user->roles->where('name', '!=', 'Estudiante')->toArray()
+                        );
+    }
+
     private function ciudades(){
         return Sector::where('status', true)
                         ->orderBy('name', 'ASC')
@@ -140,7 +155,8 @@ class CrmCrear extends Component
     public function render()
     {
         return view('livewire.cliente.crm.crm-crear', [
-            'ciudades'=>$this->ciudades()
+            'ciudades'=>$this->ciudades(),
+            'noestudiantes'=>$this->noestudiantes()
         ]);
     }
 }
