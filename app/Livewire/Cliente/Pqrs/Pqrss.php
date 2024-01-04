@@ -109,6 +109,7 @@ class Pqrss extends Component
     private function registros(){
         if($this->origen===3){
             return Pqrs::where('estudiante_id', Auth::user()->id)
+                        ->where('opcion', '>', 1)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
         }else{

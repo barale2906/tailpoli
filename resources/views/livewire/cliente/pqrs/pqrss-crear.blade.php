@@ -45,6 +45,28 @@
 
                 @if ($estudiante_id)
                     <div class="mb-6">
+                        <label for="opcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opción</label>
+                        <select wire:model.live="opcion" id="opcion" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option >Elegir...</option>
+                            @if (!$origen)
+                                <option value=1>Gestión</option>
+                            @endif
+                            <option value=2>Petición</option>
+                            <option value=3>Queja</option>
+                            <option value=4>Reclamo</option>
+                            <option value=5>Sugenrencia</option>
+                            <option value=6>Felicitación</option>
+                        </select>
+                        @error('opcion')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
+                    </div>
+                @endif
+
+                @if ($opcion)
+                    <div class="mb-6">
                         <label for="tipo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de requerimiento</label>
                         <select wire:model.live="tipo" id="tipo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option >Elegir...</option>
@@ -55,7 +77,9 @@
                             <option value=6>Planta</option>
                             <option value=7>Talleres </option>
                             <option value=8>Administración</option>
-                            <option value=9>Observador</option>
+                            @if (!$origen)
+                                <option value=9>Observador</option>
+                            @endif
                             <option value=10>Prácticas Empresariales</option>
                         </select>
                         @error('tipo')
@@ -95,18 +119,42 @@
                         @enderror
                     </div>
                 @endif
-                {{-- @if ($observaciones)
+                @if ($observaciones && !$editar)
                     <div class="mb-6">
-                        <label for="archivo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargue Archvivo soporte</label>
-                        <input type="file" id="archivo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full m-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.live="archivo">
+                        <label for="archivo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargue Archivo soporte</label>
+                        <input type="file" id="archivo" accept="image/jpg, image/bmp, image/png, image/jpeg, .pdf" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full m-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.live="archivo">
+                        @error('archivo')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
+                        <div wire:loading wire:target="archivo" class="text-center text-xl font-extrabold text-orange-500 uppercase">Cargando</div>
                     </div>
-                @endif --}}
+
+                @endif
+                @if ($editar)
+                    <div class="mb-6">
+                        <label for="respuesta" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargue Archivo respuesta</label>
+                        <input type="file" accept="image/jpg, image/bmp, image/png, image/jpeg, .pdf" id="respuesta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full m-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.live="respuesta">
+                        @error('respuesta')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
+                        <div wire:loading wire:target="archivo" class="text-center text-xl font-extrabold text-orange-500 uppercase">Cargando</div>
+                    </div>
+                @endif
             </div>
             <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
                 @if ($editar)
                     <a href="" wire:click.prevent="edit()" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                         <i class="fa-solid fa-upload"></i> Actualizar
                     </a>
+                    @if ($actual->ruta_solicita)
+                        <a href="{{Storage::url($actual->ruta_solicita)}}" target="_blank" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                            <i class="fa-solid fa-binoculars"></i> Ver soporte de solicitud
+                        </a>
+                    @endif
                 @else
                     <a href="" wire:click.prevent="new()" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                         <i class="fa-solid fa-upload"></i> Crear
@@ -135,6 +183,18 @@
             <h2 class="text-justify text-lg font-semibold">
                 {{$this->actual->observaciones}}
             </h2>
+            @if ($actual->ruta_solicita)
+                <a href="{{Storage::url($actual->ruta_solicita)}}" target="_blank" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                    <i class="fa-solid fa-binoculars"></i> Ver soporte de solicitud
+                </a>
+            @endif
+            @if ($actual->ruta_respuesta)
+                <a href="{{Storage::url($actual->ruta_respuesta)}}" target="_blank" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                    <i class="fa-solid fa-binoculars"></i> ver soporte de respuesta
+                </a>
+            @endif
+
+
             <a href="" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-upload"></i> Volver
             </a>

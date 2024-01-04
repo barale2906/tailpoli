@@ -58,6 +58,18 @@
                             @endif
                         @endif
                     </th>
+                    <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('opcion')">
+                        Opción
+                        @if ($ordena != 'opcion')
+                            <i class="fas fa-sort"></i>
+                        @else
+                            @if ($ordenado=='ASC')
+                                <i class="fas fa-sort-up"></i>
+                            @else
+                                <i class="fas fa-sort-down"></i>
+                            @endif
+                        @endif
+                    </th>
                     <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('tipo')">
                         Tipo
                         @if ($ordena != 'tipo')
@@ -80,11 +92,13 @@
 
                     <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                         Observaciones
-                    </th>{{--
-
+                    </th>
                     <th scope="col" class="px-6 py-3" >
-                        Soporte
-                    </th> --}}
+                        Soporte Solicitud
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Soporte Respuesta
+                    </th>
                     <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('status')">
                         Estado
                         @if ($ordena != 'status')
@@ -128,6 +142,29 @@
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
 
+                            @switch($registro->opcion)
+                                @case(1)
+                                    Gestión
+                                    @break
+                                @case(2)
+                                    Petición
+                                    @break
+                                @case(3)
+                                    Queja
+                                    @break
+                                @case(4)
+                                    Reclamo
+                                    @break
+                                @case(5)
+                                    Sugerencia
+                                    @break
+                                @case(6)
+                                    Felicitación
+                                    @break
+                            @endswitch
+
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             @switch($registro->tipo)
                                 @case(1)
                                     Gestión
@@ -169,10 +206,24 @@
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                             {{$registro->observaciones}}
-                        </th>{{--
+                        </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                            {{$registro->ruta}}
-                        </th> --}}
+
+                            @if ($registro->ruta_solicita)
+                                <a href="{{Storage::url($registro->ruta_solicita)}}" target="_blank">
+                                    <i class="fa-solid fa-binoculars"></i>
+                                </a>
+                            @endif
+                        </th>
+
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+
+                            @if ($registro->ruta_respuesta)
+                                <a href="{{Storage::url($registro->ruta_respuesta)}}" target="_blank">
+                                    <i class="fa-solid fa-binoculars"></i>
+                                </a>
+                            @endif
+                        </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             @switch($registro->status)
                                 @case(1)

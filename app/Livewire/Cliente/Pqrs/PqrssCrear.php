@@ -6,18 +6,24 @@ use App\Models\Clientes\Pqrs;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class PqrssCrear extends Component
 {
+    use WithFileUploads;
+
     public $estudiante_id;
+    public $opcion;
     public $gestion_id;
     public $tipo;
     public $introtipo;
     public $observaciones;
     public $archivo;
+    public $respuesta;
     public $origen=false; //Define si lo crea el usuario o desde la gestión
     public $editar=false;
     public $ruta=null;
+    public $rutares=null;
     public $actual;
     public $status=2;
     public $ver=true;
@@ -54,6 +60,7 @@ class PqrssCrear extends Component
         $this->estudiante_id=$this->actual->estudiante_id;
         $this->gestion_id=$this->actual->gestion_id;
         $this->tipo=$this->actual->tipo;
+        $this->opcion=$this->actual->opcion;
         $this->status=$this->actual->status;
         $this->editar=true;
 
@@ -110,7 +117,10 @@ class PqrssCrear extends Component
     protected $rules = [
         'estudiante_id'=>'required|integer',
         'tipo' => 'required',
+        'opcion' => 'required',
         'observaciones'=>'required',
+        'archivo'       => 'nullable|mimes:jpg,bmp,png,pdf,jpeg',
+        'respuesta'       => 'nullable|mimes:jpg,bmp,png,pdf,jpeg',
     ];
 
     /**
@@ -132,13 +142,24 @@ class PqrssCrear extends Component
         // validate
         $this->validate();
 
+        if($this->archivo){
+
+            $this->ruta='pqrs/'.$this->estudiante_id."-".uniqid().".".$this->archivo->extension();
+            $this->archivo->storeAs($this->ruta);
+        }
+
+        //dd($this->estudiante_id, $this->gestion_id, $this->opcion, $this->tipo, $this->observaciones, $this->archivo, $this->ruta, $this->status);
+
+
+
         Pqrs::create([
             'estudiante_id'=>$this->estudiante_id,
             'gestion_id'=>$this->gestion_id,
             'fecha'=>now(),
+            'opcion'=>$this->opcion,
             'tipo'=>$this->tipo,
             'observaciones'=>Auth::user()->name." ".$this->introtipo.$this->observaciones,
-            'ruta'=>$this->ruta,
+            'ruta_solicita'=>$this->ruta,
             'status'=>$this->status
         ]);
 
@@ -156,13 +177,20 @@ class PqrssCrear extends Component
         // validate
         $this->validate();
 
+        if($this->respuesta){
+
+            $this->rutares='pqrs/'.$this->estudiante_id."-".uniqid().".".$this->respuesta->extension();
+            $this->respuesta->storeAs($this->rutares);
+        }
+
         $obs=now()." ".Auth::user()->name.$this->introtipo." ".$this->observaciones." ----- ".$this->actual->observaciones;
 
         $this->actual->update([
             'gestion_id'=>$this->gestion_id,
             'tipo'=>$this->tipo,
             'observaciones'=>$obs,
-            'status'=>$this->status
+            'status'=>$this->status,
+            'ruta_respuesta'=>$this->rutares
         ]);
 
         // Notificación
