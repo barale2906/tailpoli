@@ -139,7 +139,7 @@ class CiclosCrear extends Component
         }
 
 
-        $this->name=$sector->slug." ".$sede->slug." ".$this->curso->slug." ".$jor;
+        $this->name=$sector->slug." ".$sede->slug." ".$this->curso->slug." ".$jor." ".$this->inicia;
     }
 
     public function activFecha($id, $mod){

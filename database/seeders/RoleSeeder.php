@@ -167,6 +167,12 @@ class RoleSeeder extends Seeder
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
         Permission::create([
+                            'name'=>'ac_cicloReutilizar',
+                            'descripcion'=>'reutilizar ciclos de programación',
+                            'modulo'=>'academico'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+        Permission::create([
                             'name'=>'ac_gestion',
                             'descripcion'=>'ver gestion',
                             'modulo'=>'academico'
