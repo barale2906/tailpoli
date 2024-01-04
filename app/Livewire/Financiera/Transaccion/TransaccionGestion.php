@@ -6,6 +6,7 @@ use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Transaccion;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class TransaccionGestion extends Component
@@ -14,14 +15,18 @@ class TransaccionGestion extends Component
     public $ruta;
     public $transaccion;
     public $observaciones;
+    public $url;
 
     public function mount($elegido, $ruta=null){
         $this->actual=Control::find($elegido);
-        $this->ruta=$ruta;
+        if($ruta){
+            $this->ruta=$ruta;
+        }
     }
 
     public function elegida($id){
         $this->transaccion=Transaccion::find($id);
+        $this->url=Storage::url($this->transaccion->ruta);
     }
     public function responder(){
         $respuesta=now()." ".Auth::user()->name." CONTESTO A LA TRANSACCIÓN N° ".$this->transaccion->id.": ".$this->observaciones." ----- ";

@@ -39,8 +39,7 @@ class TransaccionEditar extends Component
     }
 
     public function obteUrl(){
-        $this->url=Storage::url('public/'.$this->actual->ruta);
-       // dd($this->url);
+        $this->url=Storage::url($this->actual->ruta);
     }
 
     public function searchcontrol(){
