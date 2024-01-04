@@ -22,9 +22,10 @@ return new class extends Migration
             $table->foreign('gestion_id')->references('id')->on('users');
 
             $table->dateTime('fecha')->comment('fecha de generación');
-            $table->integer('tipo')->comment('1 gestión, 2 pagos, 3 notas, 4 acádemico, 5 Profesor, 6 Planta, 7 Talleres, 8 Administración, 9 Observador');
+            $table->integer('tipo')->comment('1 gestión, 2 pagos, 3 notas, 4 acádemico, 5 Profesor, 6 Planta, 7 Talleres, 8 Administración, 9 Observador, 10 Practicas empresariales');
             $table->longText('observaciones')->comment('observaciones');
-            $table->string('ruta')->nullable()->comment('ruta de los archivos adjuntos');
+            $table->string('ruta_solicita')->nullable()->comment('ruta de los archivos adjuntos de solicitud');
+            $table->string('ruta_respuesta')->nullable()->comment('ruta de los archivos adjuntos de respuesta');
             $table->integer('status')->default(1)->comment('1 creado, 2 asignado, 3 en gestión, 4 cerrado');
 
             $table->timestamps();

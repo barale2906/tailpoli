@@ -156,6 +156,9 @@
                                 @case(9)
                                     Observador
                                     @break
+                                @case(10)
+                                    Prácticas Empresariales
+                                    @break
                             @endswitch
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">

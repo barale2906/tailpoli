@@ -56,6 +56,7 @@
                             <option value=7>Talleres </option>
                             <option value=8>Administración</option>
                             <option value=9>Observador</option>
+                            <option value=10>Prácticas Empresariales</option>
                         </select>
                         @error('tipo')
                             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
