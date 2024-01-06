@@ -12,7 +12,7 @@ class Especiales extends Component
     use WithPagination;
     use FiltroTrait;
 
-    public $elegido;
+    public $estudiante_id;
     public $ordena='name';
     public $ordenado='ASC';
     public $pages = 15;
@@ -58,7 +58,7 @@ class Especiales extends Component
     public function elegir($id){
 
         $this->reset('buscar');
-        $this->elegido=User::find($id);
+        $this->estudiante_id=$id;
     }
 
 

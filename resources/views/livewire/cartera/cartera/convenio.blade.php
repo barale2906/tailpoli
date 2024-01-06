@@ -1,14 +1,22 @@
-<div>
+<div class="mt-3 mb-3">
+    @if ($especiales)
+        <h1 class="text-center text-xl font-semibold">
+            A continuación se presenta la información para <strong class=" uppercase font-extrabold">{{$actual->name}}</strong>, con documento: <strong class=" font-extrabold">{{$actual->documento}}</strong>
+        </h1>
+    @endif
+
     <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-        <div class="mb-6">
-            <label for="responsable_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Elija alumno</label>
-            <select wire:model.live="responsable_id" id="responsable_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                <option >Elija alumno...</option>
-                @foreach ($responsables as $item)
-                    <option value={{$item->id_producto}}>{{$item->producto}} - {{$item->almacen}}</option>
-                @endforeach
-            </select>
-        </div>
+        @if (!$especiales)
+            <div class="mb-6">
+                <label for="responsable_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Elija alumno</label>
+                <select wire:model.live="responsable_id" id="responsable_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                    <option >Elija alumno...</option>
+                    @foreach ($responsables as $item)
+                        <option value={{$item->id_producto}}>{{$item->producto}} - {{$item->almacen}}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
         @if ($responsable_id>0)
             <div class="flex flex-col items-center justify-center mb-4">
                 <dt class="mb-2 text-3xl font-extrabold text-cyan-700">$ {{number_format($total, 0, ',', '.')}}</dt>

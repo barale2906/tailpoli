@@ -5,6 +5,7 @@ namespace App\Livewire\Cartera\Cartera;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\EstadoCartera;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,8 @@ class Convenio extends Component
     public $total;
 
     public $contado=true;
+    public $especiales=false;
+    public $actual;
     public $valor_inicial;
     public $saldo;
     public $cuotas;
@@ -31,7 +34,13 @@ class Convenio extends Component
     public $dia;
     public $elegible=[];
 
-    public function mount(){
+    public function mount($id=null){
+        if($id){
+            $this->responsable_id=$id;
+            $this->updatedResponsableId();
+            $this->especiales=true;
+            $this->datos();
+        }
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
             ->delete();
@@ -43,6 +52,10 @@ class Convenio extends Component
 
         $this->filtrar();
         $this->dias();
+    }
+
+    public function datos(){
+        $this->actual=User::find($this->responsable_id);
     }
 
     public function dias(){
@@ -117,8 +130,15 @@ class Convenio extends Component
     public function calcula(){
         if($this->cuotas>0 && $this->total>$this->valor_inicial){
             $saldo = $this->total-$this->valor_inicial;
-            $this->valor_cuota=round($saldo/$this->cuotas, 2);
+            $this->valor_cuota=$saldo/$this->cuotas;
+            $this->redondear();
         }
+    }
+
+    public function redondear(){
+        $this->valor_cuota=intval($this->valor_cuota);
+        $diferencia=$this->valor_cuota % 1000;
+        $this->valor_cuota=$this->valor_cuota-$diferencia;
     }
 
     /**
@@ -228,8 +248,8 @@ class Convenio extends Component
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente el convenio de pago.');
         $this->resetFields();
-
-        $this->redirect('/financiera/recibopagos');
+        $this->updatedResponsableId();
+        $this->dispatch('cancelando');
     }
 
     public function render(){

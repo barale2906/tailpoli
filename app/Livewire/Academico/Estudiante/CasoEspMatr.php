@@ -3,22 +3,34 @@
 namespace App\Livewire\Academico\Estudiante;
 
 use App\Models\User;
+use App\Traits\FiltroTrait;
+use Carbon\Carbon;
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 
 class CasoEspMatr extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $estudiante_id;
 
-    public $ordena='id';
-    public $ordenado='DESC';
-    public $pages = 3;
+    public $ordena='name';
+    public $ordenado='ASC';
+    public $pages = 15;
+
 
     public $buscar='';
     public $buscamin='';
+    public $fechareferencia;
+
+    public function mount(){
+        $this->claseFiltro(8);
+        $fecha=Carbon::today()->subMonths(12)->subDay();
+        $this->fechareferencia=$fecha;
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -28,11 +40,8 @@ class CasoEspMatr extends Component
 
     //Limpiar variables
     public function limpiar(){
-        $this->reset(
-            'buscamin',
-            'buscar',
-            'estudiante_id'
-        );
+        $this->reset('buscamin', 'buscar');
+        $this->resetPage();
     }
 
     // Ordenar Registros
@@ -55,19 +64,36 @@ class CasoEspMatr extends Component
     }
 
     public function elegir($id){
-        $this->estudiante_id=$id;
+        $this->reset('buscar');
+        $ultima=DB::table('asistencia_detalle')
+                    ->where('alumno_id', $id)
+                    ->orderBy('updated_at', 'DESC')
+                    ->first();
+
+        if($ultima){
+
+            if($ultima<$this->fechareferencia){
+                $this->dispatch('alerta', name:'última asistencia hace mas de un año, debe ir a coordinación.');
+            }else{
+                $this->estudiante_id=$id;
+            }
+
+        }else{
+            $this->dispatch('alerta', name:'No registra asistencia, debe ir a coordinación');
+        }
     }
 
-    private function especiales(){
+    private function usuarios(){
 
-        $consulta = User::query()
-                        ->where('caso_especial', '>', 0);
+        $consulta = User::query();
 
         if($this->buscamin){
-            $consulta = $consulta->Where('documento', 'like', "%".$this->buscamin."%");
+            $consulta = $consulta->where('name', 'like', "%".$this->buscamin."%")
+                                ->orWhere('documento', 'like', "%".$this->buscamin."%");
         }
 
-        return $consulta->orderBy($this->ordena, $this->ordenado)
+        return $consulta->where('caso_especial', '>', 0)
+                        ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 
     }
@@ -75,7 +101,7 @@ class CasoEspMatr extends Component
     public function render()
     {
         return view('livewire.academico.estudiante.caso-esp-matr',[
-            'especiales'=>$this->especiales()
+            'usuarios'=>$this->usuarios()
         ]);
     }
 }

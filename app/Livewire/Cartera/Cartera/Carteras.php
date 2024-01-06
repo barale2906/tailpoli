@@ -45,6 +45,17 @@ class Carteras extends Component
         $this->is_creating = !$this->is_creating;
     }
 
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_modify',
+                        'is_creating'
+                    );
+    }
+
     // Ordenar Registros
     public function organizar($campo)
     {

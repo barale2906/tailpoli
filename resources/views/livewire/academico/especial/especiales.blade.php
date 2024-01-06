@@ -121,10 +121,30 @@
 
         </div>
     @endif
+    @if ($estudiante_id)
+    <div class=" bg-green-100 mt-2 mb-2 rounded-lg p-2">
+        <livewire:cartera.cartera.convenio :id="$estudiante_id" />
+    </div>
+    <div class=" bg-cyan-100 mt-2 mb-2 rounded-lg p-2">
+        <livewire:academico.estudiante.caso-especial :id="$estudiante_id" :registro="2" />
+    </div>
 
-    @if ($elegido)
-        <h1 class="text-center text-lg font-semibold">
-            A continuación se presenta la información para <strong class="uppercase font-extrabold">{{$elegido->name}}</strong>, documento: <strong class="uppercase font-extrabold">{{$elegido->documento}}</strong>
-        </h1>
     @endif
+    @push('js')
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('alerta', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: variable['name'],
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                });
+            });
+        </script>
+    @endpush
 </div>
