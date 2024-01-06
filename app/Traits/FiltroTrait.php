@@ -25,6 +25,9 @@ trait FiltroTrait
     //Transacciones
     public $is_transaccion=false;
 
+    //Casos Especiales
+    public $is_verfiltro=true;
+
 
     public function filtroMostrar(){
         $this->is_filtro=!$this->is_filtro;
@@ -83,6 +86,13 @@ trait FiltroTrait
 
                 //transacciones
                 $this->is_transaccion=true;
+                break;
+
+            case 8:
+                $this->txt="Busque por acá: nombre o documento del alumno";
+
+                //transacciones
+                $this->is_verfiltro=false;
                 break;
         }
     }

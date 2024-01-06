@@ -3,6 +3,6 @@
         Casos Especiales
     @endpush
 
-    {{-- <livewire:academico.ciclo.ciclos /> --}}
+    <livewire:academico.especial.especiales />
 
 </x-admin-layout>
