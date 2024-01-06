@@ -29,6 +29,11 @@ class RoleSeeder extends Seeder
                             'modulo'=>'academico'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar,$Profesor]);
         Permission::create([
+                            'name'=>'ac_casoespecial',
+                            'descripcion'=>'Gestiona todos los casos especiales de matriculas',
+                            'modulo'=>'academico'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+        Permission::create([
                             'name'=>'ac_cursos',
                             'descripcion'=>'ver cursos',
                             'modulo'=>'academico'

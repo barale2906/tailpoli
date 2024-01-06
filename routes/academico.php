@@ -37,3 +37,7 @@ Route::get('/ciclos', function () {
 Route::get('/gestion', function () {
     return view('academico.gestion.index');
 })->middleware('can:ac_gestion')->name('gestion');
+
+Route::get('/especial', function () {
+    return view('academico.especial.index');
+})->middleware('can:ac_gestion')->name('especial');
