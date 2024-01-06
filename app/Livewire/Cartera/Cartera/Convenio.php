@@ -248,6 +248,15 @@ class Convenio extends Component
 
         }
 
+        Pqrs::create([
+            'estudiante_id' =>$this->responsable_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>2,
+            'observaciones' =>'PAGO: Se genero acuerdo de pago ----- ',
+            'status'        =>4
+        ]);
+
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente el convenio de pago.');
         $this->resetFields();
