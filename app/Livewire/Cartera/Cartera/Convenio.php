@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cartera\Cartera;
 
+use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\EstadoCartera;
@@ -21,6 +22,8 @@ class Convenio extends Component
 
     public $contado=true;
     public $especiales=false;
+    public $id_elimina;
+    public $observaciones;
     public $actual;
     public $valor_inicial;
     public $saldo;
@@ -250,6 +253,35 @@ class Convenio extends Component
         $this->resetFields();
         $this->updatedResponsableId();
         $this->dispatch('cancelando');
+    }
+
+    public function eliminar($id){
+        $this->id_elimina=$id;
+    }
+
+    public function anular(){
+
+        $dato=Cartera::find($this->id_elimina);
+
+        $obser=now()." ".Auth::user()->name." --- ANULADO --- ".$this->observaciones." ----- ".$dato->observaciones;
+
+        $dato->update([
+            'status'            => false,
+            'observaciones'     => $obser
+        ]);
+
+        Pqrs::create([
+            'estudiante_id' =>$this->responsable_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>2,
+            'observaciones' =>'PAGO: Se anulo un cobro ----- ',
+            'status'        =>4
+        ]);
+
+        $this->dispatch('alerta', name:'Se ha ANULADO correctamente el pago.');
+        $this->updatedResponsableId();
+        $this->reset('id_elimina', 'observaciones');
     }
 
     public function render(){
