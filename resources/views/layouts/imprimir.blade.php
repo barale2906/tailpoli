@@ -21,7 +21,9 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Sweetalert2 -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+        <link href="{{ asset('build/assets/app-c1e3116c.css') }}" rel="stylesheet">
+        <script src="{{ asset('build/assets/app-d509820f.js') }}" defer></script>
         @livewireStyles
 
         @stack('css')
