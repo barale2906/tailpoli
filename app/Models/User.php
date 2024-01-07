@@ -49,7 +49,8 @@ class User extends Authenticatable
         'email',
         'documento',
         'password',
-        'caso_especial'
+        'caso_especial',
+        'rol_id'
     ];
 
     /**

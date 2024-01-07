@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->integer('caso_especial')->default(0)->comment('0 normal, 1 reprobo modulo, 2 reintegrado');
             $table->boolean('status')->default(true)->comment('false Saldo Inactivo, true Saldo Activo');
+            $table->integer('rol_id')->comment('1 Superusuario, 2 Administrador, 3 Coordinador, 4 Auxiliar, 5 Profesor, 6 Estudiante');
             $table->timestamps();
         });
     }

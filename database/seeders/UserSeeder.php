@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             'name' => 'Ing Alexander Barajas V',
             'email' => 'alexanderbarajas@gmail.com',
             'documento'=>10215300,
-            'password'=>bcrypt('10203040')
+            'password'=>bcrypt('10203040'),
+            'rol_id'=>1
         ])->assignRole('Superusuario');
 
         DB::table('sede_user')
@@ -55,7 +56,8 @@ class UserSeeder extends Seeder
                     'name' => 'stephany izquierdo ocampo',
                     'email' => 'direccion@gmail.com',
                     'documento'=>10215301,
-                    'password'=>bcrypt('10203040')
+                    'password'=>bcrypt('10203040'),
+                    'rol_id'=>1
                 ])->assignRole('Superusuario');
 
                 DB::table('sede_user')
@@ -91,7 +93,8 @@ class UserSeeder extends Seeder
             'name' => 'Administrador Barajas V',
             'email' => 'administrador@gmail.com',
             'documento'=>10215302,
-            'password'=>bcrypt('10203040')
+            'password'=>bcrypt('10203040'),
+            'rol_id'=>2
         ])->assignRole('Administrador');
 
         DB::table('sede_user')
@@ -119,7 +122,8 @@ class UserSeeder extends Seeder
                         'name' => 'Coordinador Barajas V',
                         'email' => 'coordinador@gmail.com',
                         'documento'=>10215303,
-                        'password'=>bcrypt('10203040')
+                        'password'=>bcrypt('10203040'),
+                        'rol_id'=>3
                     ])->assignRole('Coordinador');
 
         Perfil::create([
@@ -139,7 +143,8 @@ class UserSeeder extends Seeder
             'name' => 'Auxiliar Barajas V',
             'email' => 'auxiliar@gmail.com',
             'documento'=>10215304,
-            'password'=>bcrypt('10203040')
+            'password'=>bcrypt('10203040'),
+            'rol_id'=>4
         ])->assignRole('Auxiliar');
 
         DB::table('sede_user')
@@ -167,7 +172,8 @@ class UserSeeder extends Seeder
                     'name' => 'Profesor Barajas V',
                     'email' => 'profesor@gmail.com',
                     'documento'=>10215305,
-                    'password'=>bcrypt('10203040')
+                    'password'=>bcrypt('10203040'),
+                    'rol_id'=>5
                 ])->assignRole('Profesor');
 
         Perfil::create([
@@ -187,7 +193,8 @@ class UserSeeder extends Seeder
                         'name' => 'Estudiante Barajas V',
                         'email' => 'estudiante@gmail.com',
                         'documento'=>10215306,
-                        'password'=>bcrypt('10203040')
+                        'password'=>bcrypt('10203040'),
+                        'rol_id'=>6
                     ])->assignRole('Estudiante');
 
         Perfil::create([
@@ -204,10 +211,13 @@ class UserSeeder extends Seeder
         ]);
 
         $is=0;
-        $documento=10215307;
+        $documento=9000000;
         while ($is <= 30) {
 
-            $usu = User::factory()->create()->assignRole('Profesor');
+            $usu = User::factory()->create([
+                'documento'=>$documento,
+                'rol_id'=>5
+            ])->assignRole('Profesor');
 
             Perfil::create([
                 'user_id'=>$usu->id,
@@ -228,10 +238,13 @@ class UserSeeder extends Seeder
         }
 
         $id=0;
-        $documento=10315300;
+        $docu=10000000;
         while ($id <= 100) {
 
-            $usu = User::factory()->create()->assignRole('Estudiante');
+            $usu = User::factory()->create([
+                'documento'=>$docu,
+                'rol_id'=>6
+            ])->assignRole('Estudiante');
 
             Perfil::create([
                 'user_id'=>$usu->id,
@@ -241,13 +254,13 @@ class UserSeeder extends Seeder
                 'estado_id'=>1,
                 'regimen_salud_id'=>1,
                 'tipo_documento'=>'cédula de ciudadanía',
-                'documento'=>$documento,
+                'documento'=>$docu,
                 'name'=>'estudiante '.$usu->id,
                 'lastname'=>'apellido '.$usu->id
             ]);
 
             $id++;
-            $documento++;
+            $docu++;
 
         }
 

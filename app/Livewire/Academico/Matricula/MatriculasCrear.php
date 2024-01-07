@@ -75,6 +75,10 @@ class MatriculasCrear extends Component
 
     public $buscamin='';
 
+    public $ordena='name';
+    public $ordenado='ASC';
+    public $pages = 20;
+
     public function mount($ruta=null){
         $this->ruta=$ruta;
         $this->fechaRegistro=Carbon::now()->subDays(8);
@@ -435,21 +439,39 @@ class MatriculasCrear extends Component
 
 
     private function estudiantes(){
-        return User::where('status', true)
+
+        $consulta = User::query();
+
+        if($this->buscaestudi){
+            $consulta = $consulta->where('name', 'like', "%".$this->buscaestudi."%")
+            ->orwhere('email', 'like', "%".$this->buscaestudi."%")
+            ->orwhere('documento', 'like', "%".$this->buscaestudi."%");
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+
+        /* return User::where('status', true)
                         ->where('name', 'like', "%".$this->buscaestudi."%")
                         ->orWhere('documento', 'like', "%".$this->buscaestudi."%")
                         ->orderBy('name')
                         ->with('roles')->get()->filter(
                             fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                        );
+                        ); */
     }
 
     private function noestudiantes(){
+
         return User::where('status', true)
+                    ->whereBetween('rol_id', [1,4])
+                    ->oderBy('name', 'ASC')
+                    ->get();
+
+        /* return User::where('status', true)
                         ->orderBy('name')
                         ->with('roles')->get()->filter(
                             fn ($user) => $user->roles->where('name', '!=', 'Estudiante')->toArray()
-                        );
+                        ); */
     }
 
     private function sedes(){

@@ -17,6 +17,7 @@ class UsersCreate extends Component
     public $tipo_documento = '';
     public $password = '';
     public $rol = '';
+    public $rol_id=6;
     public $clase;
     public $perf;
     public $nuevoUs;
@@ -38,7 +39,7 @@ class UsersCreate extends Component
     public function tipo(){
         if($this->clase===1){
             $this->rol="Estudiante";
-            $this->password=10203040;
+            $this->password="10203040";
         }
         if($this->clase===2){
             $this->rol="Profesor";
@@ -81,6 +82,8 @@ class UsersCreate extends Component
             $this->dispatch('alerta', name:'Ya existe este Usuario: '.$this->name);
         } else {
 
+
+
             //Crear registro
             $completo=$this->name." ".$this->lastname;
 
@@ -88,11 +91,20 @@ class UsersCreate extends Component
                 $this->password=$this->documento;
             }
 
+            if($this->rol==="Estudiante"){
+                $this->password=$this->documento;
+            }
+
+            //id del rol
+            $rolelegido=Role::where('name', $this->rol)
+                                ->first();
+
             $this->nuevoUs=User::create([
+                'rol_id'=>$rolelegido->id,
                 'name'=>strtolower($completo),
                 'email'=>strtolower($this->email),
                 'documento'=>strtolower($this->documento),
-                'password'=>bcrypt($this->password)
+                'password'=>bcrypt($this->password),
             ]);
 
             $this->nuevoUs->assignRole($this->rol);
