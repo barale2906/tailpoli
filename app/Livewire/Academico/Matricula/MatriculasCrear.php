@@ -464,7 +464,7 @@ class MatriculasCrear extends Component
 
         return User::where('status', true)
                     ->whereBetween('rol_id', [1,4])
-                    ->oderBy('name', 'ASC')
+                    ->orderBy('name', 'ASC')
                     ->get();
 
         /* return User::where('status', true)

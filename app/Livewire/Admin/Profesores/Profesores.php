@@ -14,7 +14,7 @@ class Profesores extends Component
 
     public $ordena='name';
     public $ordenado='ASC';
-    public $pages = 15;
+    public $pages = 20;
 
     public $is_modify = true;
     public $is_creating = false;
@@ -26,6 +26,7 @@ class Profesores extends Component
 
     public $buscar='';
     public $buscamin='';
+
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -106,13 +107,24 @@ class Profesores extends Component
 
     private function usuarios()
     {
-        return User::where('name', 'like', "%".$this->buscamin."%")
+        $consulta = User::query();
+
+        if($this->buscamin){
+            $consulta = $consulta->where('name', 'like', "%".$this->buscamin."%")
+            ->orwhere('email', 'like', "%".$this->buscamin."%")
+            ->orwhere('documento', 'like', "%".$this->buscamin."%");
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+
+        /* return User::where('name', 'like', "%".$this->buscamin."%")
                         ->orWhere('documento', 'like', "%".$this->buscamin."%")
                         ->orwhere('email', 'like', "%".$this->buscamin."%")
                         ->orderBy($this->ordena, $this->ordenado)
                         ->with('roles')->get()->filter(
                             fn ($user) => $user->roles->where('name', 'Profesor')->toArray()
-                        );
+                        ); */
                         //->paginate($this->pages);
     }
 
