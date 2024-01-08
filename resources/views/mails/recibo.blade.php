@@ -97,6 +97,9 @@
                 </table>
             </div>
         </div>
+        <h1 class=" text-lg">
+            Tu nuevo saldo de cartera es: $ {{number_format($saldo, 0, '.', '.')}}.
+        </h1>
     @else
         <div>
             <div class="relative overflow-x-auto bg-slate-200 shadow-sm shadow-teal-200 m-1">

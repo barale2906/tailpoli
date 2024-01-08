@@ -16,13 +16,16 @@ class ReciboMailable extends Mailable
 
     public $recibo;
     public $detalles;
+    public $saldo;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($recibo)
+    public function __construct($recibo, $saldo)
     {
         $this->recibo=$recibo;
+
+        $this->saldo=$saldo;
 
         $this->detalles=DB::table('concepto_pago_recibo_pago')
                                     ->where('concepto_pago_recibo_pago.recibo_pago_id',$this->recibo->id)
@@ -50,7 +53,8 @@ class ReciboMailable extends Mailable
             markdown: 'mails.recibo',
             with:[
                 'recibo'=>$this->recibo,
-                'detalles'=>$this->detalles
+                'detalles'=>$this->detalles,
+                'saldo'=>$this->saldo,
             ],
         );
     }
