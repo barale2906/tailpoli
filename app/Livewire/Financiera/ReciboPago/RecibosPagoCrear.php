@@ -20,9 +20,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class RecibosPagoCrear extends Component
 {
+    use WithPagination;
     use ComunesTrait;
     use MailTrait;
 
@@ -61,6 +63,10 @@ class RecibosPagoCrear extends Component
     public $alumno_id='';
     public $alumnoName='';
     public $alumnodocumento='';
+
+    public $ordena='name';
+    public $ordenado='ASC';
+    public $pages = 20;
 
     public $transaccion;
     public $status_transa;
@@ -571,12 +577,22 @@ class RecibosPagoCrear extends Component
     }
 
     private function estudiantes(){
-        return User::where('name', 'like', "%".$this->buscaestudi."%")
+        $consulta = User::query();
+
+        if($this->buscaestudi){
+            $consulta = $consulta->where('name', 'like', "%".$this->buscaestudi."%")
+            ->orwhere('email', 'like', "%".$this->buscaestudi."%")
+            ->orwhere('documento', 'like', "%".$this->buscaestudi."%");
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+        /* return User::where('name', 'like', "%".$this->buscaestudi."%")
                         ->orWhere('documento', 'like', "%".$this->buscaestudi."%")
                         ->orderBy('name')
                         ->with('roles')->get()->filter(
                             fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                        );
+                        ); */
     }
 
     private function concePagos(){

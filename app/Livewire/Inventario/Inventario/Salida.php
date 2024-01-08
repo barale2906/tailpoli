@@ -17,10 +17,12 @@ use App\Traits\MailTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Salida extends Component
 {
     use MailTrait;
+    use WithPagination;
 
     public $almacen;
     public $cantidad;
@@ -44,6 +46,10 @@ class Salida extends Component
     public $buscapro=null;
     public $buscaproducto=0;
     public $ultimoregistro;
+
+    public $ordena='name';
+    public $ordenado='ASC';
+    public $pages = 20;
 
     public $buscar=null;
     public $buscaestudi='';
@@ -648,13 +654,25 @@ class Salida extends Component
 
 
     private function estudiantes(){
-        return User::where('status', true)
+
+        $consulta = User::query();
+
+        if($this->buscaestudi){
+            $consulta = $consulta->where('name', 'like', "%".$this->buscaestudi."%")
+            ->orwhere('email', 'like', "%".$this->buscaestudi."%")
+            ->orwhere('documento', 'like', "%".$this->buscaestudi."%");
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+
+        /* return User::where('status', true)
                         ->where('name', 'like', "%".$this->buscaestudi."%")
                         ->orWhere('documento', 'like', "%".$this->buscaestudi."%")
                         ->orderBy('name')
                         ->with('roles')->get()->filter(
                             fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                        );
+                        ); */
     }
 
     public function render()

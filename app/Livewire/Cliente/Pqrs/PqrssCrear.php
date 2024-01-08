@@ -7,10 +7,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class PqrssCrear extends Component
 {
+    use WithPagination;
     use WithFileUploads;
+
 
     public $estudiante_id;
     public $opcion;
@@ -30,11 +33,38 @@ class PqrssCrear extends Component
     public $estudiantes;
     public $empleados;
 
+    public $buscar=null;
+    public $buscaestudi='';
+
+    public $buscamin='';
+
+    public $ordena='name';
+    public $ordenado='ASC';
+    public $pages = 20;
+
+    public $alumnoName;
+
+    //Buscar Alumno
+    public function buscAlumno(){
+        $this->buscaestudi=strtolower($this->buscar);
+    }
+
+    //Limpiar variables
+    public function limpiar(){
+        $this->reset('buscar');
+    }
+
+    public function selAlumno($item){
+        $this->estudiante_id=$item['id'];
+        $this->alumnoName=$item['name'];
+        $this->limpiar();
+    }
+
     public function mount($origen=null,$elegido=null){
         $this->origen=$origen;
         switch ($origen) {
             case 1: //Crea PQRS desde la gestión
-                $this->estud();
+                //$this->estud();
                 $this->noestudiantes();
                 break;
 
@@ -181,6 +211,9 @@ class PqrssCrear extends Component
 
             $this->rutares='pqrs/'.$this->estudiante_id."-".uniqid().".".$this->respuesta->extension();
             $this->respuesta->storeAs($this->rutares);
+            $this->status=4;
+        }else{
+            $this->rutares=$this->actual->ruta_respuesta;
         }
 
         $obs=now()." ".Auth::user()->name.$this->introtipo." ".$this->observaciones." ----- ".$this->actual->observaciones;
@@ -202,24 +235,42 @@ class PqrssCrear extends Component
         $this->dispatch('cancelando');
     }
 
-    private function estud(){
+    private function estudents(){
+        $consulta = User::query();
+
+        if($this->buscaestudi){
+            $consulta = $consulta->where('name', 'like', "%".$this->buscaestudi."%")
+            ->orwhere('email', 'like', "%".$this->buscaestudi."%")
+            ->orwhere('documento', 'like', "%".$this->buscaestudi."%");
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                                        ->paginate($this->pages);
+        /*
         $this->estudiantes= User::where('status', true)
                                 ->orderBy('name', 'ASC')
                                 ->with('roles')->get()->filter(
                                     fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                                );
+                                ); */
     }
 
     private function noestudiantes(){
         $this->empleados=User::where('status', true)
+                                ->whereBetween('rol_id', [1,4])
+                                ->orderBy('name', 'ASC')
+                                ->get();
+
+        /* User::where('status', true)
                                 ->orderBy('name')
                                 ->with('roles')->get()->filter(
                                     fn ($user) => $user->roles->where('name', '!=', 'Estudiante')->toArray()
-                                );
+                                ); */
     }
 
     public function render()
     {
-        return view('livewire.cliente.pqrs.pqrss-crear');
+        return view('livewire.cliente.pqrs.pqrss-crear', [
+            'estudents' => $this->estudents()
+        ]);
     }
 }

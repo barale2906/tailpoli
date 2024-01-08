@@ -133,13 +133,24 @@ class Estudiantes extends Component
 
     private function usuarios()
     {
-        return User::where('name', 'like', "%".$this->buscamin."%")
+        $consulta = User::query();
+
+        if($this->buscamin){
+            $consulta = $consulta->where('name', 'like', "%".$this->buscamin."%")
+            ->orwhere('email', 'like', "%".$this->buscamin."%")
+            ->orwhere('documento', 'like', "%".$this->buscamin."%");
+        }
+
+        return $consulta->orderBy($this->ordena, $this->ordenado)
+                        ->paginate($this->pages);
+
+        /* return User::where('name', 'like', "%".$this->buscamin."%")
                         ->orWhere('documento', 'like', "%".$this->buscamin."%")
                         ->orwhere('email', 'like', "%".$this->buscamin."%")
                         ->orderBy($this->ordena, $this->ordenado)
                         ->with('roles')->get()->filter(
                             fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                        );
+                        ); */
                         //->paginate($this->pages);
     }
 

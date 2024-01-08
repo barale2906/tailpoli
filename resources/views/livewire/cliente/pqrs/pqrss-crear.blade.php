@@ -1,21 +1,49 @@
 <div>
     @if ($ver)
         <div>
+            @if ($estudiante_id && $origen===1)
+                <h1 class=" text-center">
+                    Va a generar un PQRS para <strong class=" text-lg uppercase font-extrabold">{{$alumnoName}}</strong>
+                </h1>
+            @endif
             <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 md:h-60">
-                @if ($origen===1)
+                @if ($origen===1 && $estudents)
                     <div class="mb-6">
-                        <label for="estudiante_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estudiante</label>
-                        <select wire:model.live="estudiante_id" id="estudiante_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option >Elegir...</option>
-                            @foreach ($estudiantes as $item)
-                                <option value={{$item->id}}>{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                        @error('estudiante_id')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        <div class="w-full">
+                            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar Alumno</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                    </svg>
+                                </div>
+                                <input
+                                    type="search"
+                                    id="buscar"
+                                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="digite nombre o documento del estudiante"
+                                    wire:model="buscar"
+                                    wire:keydown="buscAlumno()"
+                                    autocomplete="off"
+                                    >
+                                <button type="button" class="text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600" wire:click="limpiar()">
+                                    Limpiar Filtro
+                                </button>
                             </div>
-                        @enderror
+                        </div>
+                        @if ($buscar)
+                            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                                @foreach ($estudents as $item)
+                                    @if ($item->rol_id===6)
+                                        <li class="w-full mt-2 mb-2 capitalize">
+                                            {{$item->name}} - {{$item->documento}} <a href="#" wire:click.prevent="selAlumno({{$item}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 text-center capitalize">
+                                                <i class="fa-solid fa-check fa-beat"></i> elegir
+                                            </a>
+                                        </li>
+                                    @endif
+
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
                 @endif
 
@@ -141,7 +169,7 @@
                                 <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                             </div>
                         @enderror
-                        <div wire:loading wire:target="archivo" class="text-center text-xl font-extrabold text-orange-500 uppercase">Cargando</div>
+                        <div wire:loading wire:target="respuesta" class="text-center text-xl font-extrabold text-orange-500 uppercase">Cargando</div>
                     </div>
                 @endif
             </div>
