@@ -49,12 +49,13 @@
         @if ($is_academico || $is_otro)
             <div class="mb-6">
                 <label for="soporte" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Elija el archivo a enviar</label>
-                <input type="file"  id="soporte" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Foto del soporte" wire:model="soporte">
+                <input type="file"  id="soporte" accept="image/jpg, image/bmp, image/png, image/jpeg, .pdf" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Foto del soporte" wire:model="soporte">
                 @error('soporte')
                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                     </div>
                 @enderror
+                <div wire:loading wire:target="soporte" class="text-center text-xl font-extrabold text-orange-500 uppercase">Cargando</div>
             </div>
         @endif
 

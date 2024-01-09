@@ -212,7 +212,7 @@ class UserSeeder extends Seeder
 
         $is=0;
         $documento=9000000;
-        while ($is <= 30) {
+        while ($is <= 300) {
 
             $usu = User::factory()->create([
                 'documento'=>$documento,
@@ -239,7 +239,7 @@ class UserSeeder extends Seeder
 
         $id=0;
         $docu=10000000;
-        while ($id <= 100) {
+        while ($id <= 18000) {
 
             $usu = User::factory()->create([
                 'documento'=>$docu,
