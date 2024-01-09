@@ -23,7 +23,7 @@
         <script src="{{ asset('build/assets/app-d509820f.js') }}" defer></script>
 
         <!-- Sweetalert2 -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
         @livewireStyles
 
         @stack('css')
