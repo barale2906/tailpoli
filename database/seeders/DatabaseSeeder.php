@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             EstadoCarteraSeeder::class,
             //ConfiguracioPagoSeeder::class,
             PalabrasSeeder::class,
-            DocumentoSeeder::class,
+            //DocumentoSeeder::class, //se carga depués de cargar las sedes y usuarios
         ]);
     }
 }
