@@ -14,10 +14,12 @@ class RegimenSaludSeeder extends Seeder
     public function run(): void
     {
         RegimenSalud::create([
-            'name' => 'Sisben !',
+            'name' => 'sisben v2 nivel 1',
+            'created_at'=>'2019-05-17 09:16:08',
+            'updated_at'=>'2019-05-17 09:16:08',
         ]);
 
-        RegimenSalud::create([
+        /* RegimenSalud::create([
             'name' => 'Sisben 1',
         ]);
 
@@ -31,6 +33,6 @@ class RegimenSaludSeeder extends Seeder
 
         RegimenSalud::create([
             'name' => 'Sisben 4',
-        ]);
+        ]); */
     }
 }

@@ -16,17 +16,19 @@ class SedeSeeder extends Seeder
     public function run(): void
     {
         $s1=Sede::create([
-            'name'                      => 'bogotá 1',
+            'name'                      => 'bogotá Sede a Principal',
             'slug'                      => 'bta1',
             'address'                   => 'Cra. 12A BIS Nro. 22-12 SUR - SAN JOSÉ Localidad Rafael Uribe Uribe',
-            'phone'                     => '2627700',
+            'phone'                     => '--',
             'nit'                       =>'900656857-5',
             'portfolio_assistant_name'  =>'Marcela Quiceno',
             'portfolio_assistant_phone' =>'314-5490446',
             'portfolio_assistant_email' =>'cobranzasycarterapoliandino@gmail.com',
             'start'                     =>'06:00',
             'finish'                    =>'22:00',
-            'sector_id'                 =>4
+            'sector_id'                 =>1,
+            'created_at'=>'2019-05-31 09:16:08',
+            'updated_at'=>'2019-05-31 09:16:08',
         ]);
 
         //Asignar áreas
@@ -106,7 +108,7 @@ class SedeSeeder extends Seeder
         }
 
 
-        $s2=Sede::create([
+        /* $s2=Sede::create([
             'name'                      => 'chía a',
             'slug'                      => 'chiaa',
             'address'                   => 'Cerca a la casa',
@@ -194,6 +196,6 @@ class SedeSeeder extends Seeder
                 'dia'           =>$dia,
                 'hora'          =>$finaliza,
             ]);
-        }
+        } */
     }
 }

@@ -14,10 +14,13 @@ class SectorSeeder extends Seeder
     public function run(): void
     {
         Sector::create([
-            'name' => 'Soacha',
-            'slug' => 'soac',
+            'name' => '11001 BOGOTA-BOGOTA, D.C.',
+            'slug' => 'bta',
             'state_id' => 1,
+            'created_at'=>'2019-05-31 09:16:08',
+            'updated_at'=>'2019-05-31 09:16:08',
         ]);
+        /*
         Sector::create([
             'name' => 'Chía',
             'slug' => 'chia',
@@ -52,6 +55,6 @@ class SectorSeeder extends Seeder
             'name' => 'Malaga',
             'slug' => 'malag',
             'state_id' => 5,
-        ]);
+        ]); */
     }
 }

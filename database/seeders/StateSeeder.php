@@ -14,11 +14,13 @@ class StateSeeder extends Seeder
     public function run(): void
     {
         State::create([
-            'name' => 'Cundinamarca',
+            'name' => 'Bogotá',
             'country_id' => 1,
+            'created_at'=>'2019-05-16 20:58:16',
+            'updated_at'=>'2019-05-16 20:58:16',
         ]);
 
-        State::create([
+        /* State::create([
             'name' => 'Bogotá D.C.',
             'country_id' => 1,
         ]);
@@ -33,6 +35,6 @@ class StateSeeder extends Seeder
         State::create([
             'name' => 'Santander',
             'country_id' => 1,
-        ]);
+        ]); */
     }
 }

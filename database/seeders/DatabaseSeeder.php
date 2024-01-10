@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CountrySeeder::class,
             MenuSeeder::class,
-            //RegimenSaludSeeder::class,
+            RegimenSaludSeeder::class,
             PersonaMulticulturalSeeder::class,
             EstadoSeeder::class,
             //ProductoSeeder::class,
@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
             ConceptoPagoSeeder::class,
             AreaSeeder::class,
             //HorarioSeeder::class,
-            //StateSeeder::class,
-            //SectorSeeder::class,
-            //SedeSeeder::class,
+            StateSeeder::class,
+            SectorSeeder::class,
+            SedeSeeder::class,
             //AlmacenSeeder::class, //inventory whirehouses
             //ModuloSeeder::class,
             RoleSeeder::class,
-            //UserSeeder::class, //Solo se carga el superusuario
+            UserSeeder::class, //Solo se carga el superusuario
             //InventarioSeeder::class,
             //GrupoSeeder::class,
             //MatriculaSeeder::class,
