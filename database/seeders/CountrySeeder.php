@@ -20,6 +20,11 @@ class CountrySeeder extends Seeder
         Country::create([
             'name' => 'Venezuela',
         ]);
+
+        Country::create([
+            'name' => 'Otros',
+        ]);
+
         Country::create([
             'name' => 'Chile',
         ]);
@@ -27,7 +32,7 @@ class CountrySeeder extends Seeder
             'name' => 'Haiti',
         ]);
         Country::create([
-            'name' => 'Otros',
+            'name' => 'Alemania',
         ]);
     }
 }

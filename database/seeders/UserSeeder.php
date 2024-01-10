@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
             'lastname'=>'Barajas Vargas'
         ]);
 
-        $stephany = User::factory()->create([
+        /* $stephany = User::factory()->create([
                     'name' => 'stephany izquierdo ocampo',
                     'email' => 'direccion@gmail.com',
                     'documento'=>10215301,
@@ -262,8 +262,7 @@ class UserSeeder extends Seeder
             $id++;
             $docu++;
 
-        }
-
+        } */
 
     }
 }
