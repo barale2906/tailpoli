@@ -432,5 +432,14 @@ class MenuSeeder extends Seeder
                     'icono'             => 'fa-solid fa-wrench text-gray-500',
                     'menu_id'           => $m8->id
                 ]);
+
+                Submenu::create([
+                    'permiso'           => 'co_imporDB',
+                    'ruta'              => 'importaciones.imporbds',
+                    'identificaRuta'    => 'importaciones.imporbds',
+                    'name'              => 'Importar Base de datos',
+                    'icono'             => 'fa-solid fa-wrench text-gray-500',
+                    'menu_id'           => $m8->id
+                ]);
     }
 }
