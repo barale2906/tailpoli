@@ -28,10 +28,10 @@ class DatabaseSeeder extends Seeder
             //StateSeeder::class,
             //SectorSeeder::class,
             //SedeSeeder::class,
-            //AlmacenSeeder::class, inventory whirehouses
+            //AlmacenSeeder::class, //inventory whirehouses
             //ModuloSeeder::class,
             RoleSeeder::class,
-            //UserSeeder::class, Solo se carga el superusuario
+            //UserSeeder::class, //Solo se carga el superusuario
             //InventarioSeeder::class,
             //GrupoSeeder::class,
             //MatriculaSeeder::class,
