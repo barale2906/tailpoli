@@ -15,7 +15,6 @@ class RegimenSaludImport implements ToCollection
     */
     public function collection($rows)
     {
-        DB::table('regimen_saluds')->where('id', '>', 1)->delete();
 
         foreach($rows as $row){
 
