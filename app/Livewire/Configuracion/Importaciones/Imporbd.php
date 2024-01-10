@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Configuracion\Importaciones;
 
+use App\Imports\ProductosImport;
 use App\Imports\RegimenSaludImport;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -38,6 +39,10 @@ class Imporbd extends Component
             case 8:
                 Excel::import(new RegimenSaludImport, $this->archivo);
                 //return Excel::toCollection(new RegimenSaludImport, $this->archivo);
+                break;
+
+            case 11:
+                Excel::import(new ProductosImport, $this->archivo);
                 break;
         }
 
