@@ -58,4 +58,22 @@
 
         @endif
     </div>
+
+    @push('js')
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('alerta', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: variable['name'],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+            });
+        </script>
+    @endpush
 </div>

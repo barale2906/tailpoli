@@ -37,10 +37,11 @@ class Imporbd extends Component
         switch ($id) {
             case 8:
                 Excel::import(new RegimenSaludImport, $this->archivo);
+                //return Excel::toCollection(new RegimenSaludImport, $this->archivo);
                 break;
         }
 
-        $this->reset('archivo', 'tabla');
+        $this->reset('archivo', 'tabla', 'alerta');
         $this->dispatch('alerta', name:'Se importo correctamente el archivo ');
 
         //refresh

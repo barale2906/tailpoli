@@ -1,6 +1,6 @@
 <x-admin-layout>
     @push('title')
-        Importar Notas
+        Importar Base de datos
     @endpush
 
     <div class="py-12">
