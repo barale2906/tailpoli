@@ -31,13 +31,13 @@ class UserSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
-        DB::table('sede_user')
+        /* DB::table('sede_user')
                 ->insert([
                     'user_id'=>$super->id,
                     'sede_id'=>2,
                     'created_at'=>now(),
                     'updated_at'=>now(),
-                ]);
+                ]); */
 
         Perfil::create([
             'user_id'=>$super->id,
