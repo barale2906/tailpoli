@@ -5,6 +5,7 @@ namespace App\Livewire\Configuracion\Importaciones;
 use App\Imports\CursosImport;
 use App\Imports\ProductosImport;
 use App\Imports\RegimenSaludImport;
+use App\Imports\StatesImport;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -48,6 +49,10 @@ class Imporbd extends Component
 
             case 12:
                 Excel::import(new CursosImport, $this->archivo);
+                break;
+
+            case 15:
+                Excel::import(new StatesImport, $this->archivo);
                 break;
         }
 
