@@ -5,6 +5,7 @@ namespace App\Livewire\Configuracion\Importaciones;
 use App\Imports\AlamcenesImnport;
 use App\Imports\CursosImport;
 use App\Imports\EstudianteImport;
+use App\Imports\GruposImport;
 use App\Imports\ModulosImport;
 use App\Imports\ProductosImport;
 use App\Imports\RegimenSaludImport;
@@ -84,6 +85,10 @@ class Imporbd extends Component
 
             case 20:
                 Excel::import(new ModulosImport, $this->archivo);
+                break;
+
+            case 23:
+                Excel::import(new GruposImport, $this->archivo);
                 break;
         }
 
