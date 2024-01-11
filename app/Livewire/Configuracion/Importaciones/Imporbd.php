@@ -3,6 +3,7 @@
 namespace App\Livewire\Configuracion\Importaciones;
 
 use App\Imports\CursosImport;
+use App\Imports\EstudianteImport;
 use App\Imports\ProductosImport;
 use App\Imports\RegimenSaludImport;
 use App\Imports\SectorsImport;
@@ -19,7 +20,7 @@ class Imporbd extends Component
     use WithFileUploads;
 
     public $archivo;
-    public $tabla;
+    public $tabla="a";
     public $alerta=false;
 
     public function alarma(){
@@ -41,6 +42,11 @@ class Imporbd extends Component
         $id=intval($this->tabla);
 
         switch ($id) {
+
+            case 0:
+                Excel::import(new EstudianteImport, $this->archivo);
+                break;
+
             case 1:
                 Excel::import(new UsersImport, $this->archivo);
                 break;

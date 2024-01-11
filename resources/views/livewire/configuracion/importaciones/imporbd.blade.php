@@ -3,13 +3,14 @@
         <label for="tabla" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Tabla:</label>
         <select wire:model.live="tabla" id="tabla" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
             <option >Elija Tabla...</option>
+            <option value=0>0 - Importar estudiantes</option>
             @foreach ($tablas as $item)
                 <option value={{$item->id}}>{{$item->id}} - {{$item->migration}}</option>
             @endforeach
         </select>
     </div>
     <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-        @if ($tabla)
+        @if ($tabla>=0)
             <div class="mb-6">
                 <label for="archivo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargar datos para la tabla</label>
                 <input type="file" id="archivo" accept=".xls, .xlsx" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model.live="archivo">

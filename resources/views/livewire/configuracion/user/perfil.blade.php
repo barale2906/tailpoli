@@ -465,10 +465,10 @@
                     <option value="Pre-Escolar">Pre-Escolar</option>
                     <option value="Básica Primaria">Básica Primaria</option>
                     <option value="Básica Secundaria">Básica Secundaria</option>
-                    <option value="Básica Secundaria">Básica Secundaria</option>
                     <option value="Media">Media</option>
                     <option value="Técnico Laboral">Técnico Laboral</option>
                     <option value="Pregrado">Pregrado</option>
+                    <option value="Post-Grado">Post-grado</option>
                     <option value="Sin Información">Sin Información</option>
                 </select>
                 @error('nivel_educativo')
