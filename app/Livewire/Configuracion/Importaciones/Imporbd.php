@@ -8,6 +8,7 @@ use App\Imports\RegimenSaludImport;
 use App\Imports\SectorsImport;
 use App\Imports\SedesImport;
 use App\Imports\StatesImport;
+use App\Imports\UsersImport;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -40,6 +41,10 @@ class Imporbd extends Component
         $id=intval($this->tabla);
 
         switch ($id) {
+            case 1:
+                Excel::import(new UsersImport, $this->archivo);
+                break;
+
             case 8:
                 Excel::import(new RegimenSaludImport, $this->archivo);
                 //return Excel::toCollection(new RegimenSaludImport, $this->archivo);
