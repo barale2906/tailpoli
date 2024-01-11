@@ -27,7 +27,7 @@ class UsersImport implements ToCollection
             DB::table('users')->insert([
                     'id'            => intval($row[0]),
                     'name'          => strtolower($name),
-                    'email'         => $email,
+                    'email'         => strtolower($email),
                     'documento'     => strtolower($row[3]),
                     'password'      => $password,
                     'status'        => intval($row[4]),
