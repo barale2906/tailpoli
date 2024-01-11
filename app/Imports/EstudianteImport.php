@@ -78,19 +78,6 @@ class EstudianteImport implements ToCollection
                 'arl_usuario'=>strtolower($row[37]),
                 'rh_usuario'=>$row[38],
             ]);
-
-            if($row[13]){
-                $per->update([
-
-                ]);
-
-            }
-
-            if($row[16]){
-                $per->update([
-
-                ]);
-            }
         }
     }
 }
