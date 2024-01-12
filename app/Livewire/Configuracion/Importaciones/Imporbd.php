@@ -6,6 +6,7 @@ use App\Imports\AlamcenesImnport;
 use App\Imports\CursosImport;
 use App\Imports\EstudianteImport;
 use App\Imports\GruposImport;
+use App\Imports\MatriculaImport;
 use App\Imports\ModulosImport;
 use App\Imports\ProductosImport;
 use App\Imports\RegimenSaludImport;
@@ -89,6 +90,10 @@ class Imporbd extends Component
 
             case 23:
                 Excel::import(new GruposImport, $this->archivo);
+                break;
+
+            case 27:
+                Excel::import(new MatriculaImport, $this->archivo);
                 break;
         }
 
