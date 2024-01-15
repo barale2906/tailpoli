@@ -3,6 +3,7 @@
 namespace App\Livewire\Configuracion\Importaciones;
 
 use App\Imports\AlamcenesImnport;
+use App\Imports\CarteraImport;
 use App\Imports\CursosImport;
 use App\Imports\EstudianteImport;
 use App\Imports\GruposImport;
@@ -94,6 +95,10 @@ class Imporbd extends Component
 
             case 27:
                 Excel::import(new MatriculaImport, $this->archivo);
+                break;
+
+            case 30:
+                Excel::import(new CarteraImport, $this->archivo);
                 break;
         }
 
