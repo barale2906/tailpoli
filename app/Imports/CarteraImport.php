@@ -15,6 +15,8 @@ class CarteraImport implements ToCollection
     */
     public function collection($rows)
     {
+        set_time_limit(600);
+
         foreach($rows as $row){
             DB::table('carteras')->insert([
                 'id'                    => intval($row[0]),
