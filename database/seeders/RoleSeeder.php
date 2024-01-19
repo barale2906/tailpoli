@@ -827,5 +827,11 @@ class RoleSeeder extends Seeder
                             'modulo'=>'configuracion'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
+        Permission::create([
+                            'name'=>'co_imporDB',
+                            'descripcion'=>'importar base de datos',
+                            'modulo'=>'configuracion'
+                            ])->syncRoles([$Superusuario]);
+
     }
 }
