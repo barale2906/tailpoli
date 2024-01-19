@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             //CursoSeeder::class,
             ConceptoPagoSeeder::class,
             AreaSeeder::class,
-            //HorarioSeeder::class,
+            //HorarioSeeder::class, //Este se bloquea cuando se hacen seeders completos.
             StateSeeder::class,
             SectorSeeder::class,
             SedeSeeder::class,
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class, //Solo se carga el superusuario
             //InventarioSeeder::class,
             //GrupoSeeder::class,
-            //MatriculaSeeder::class,
+            //MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
             EstadoCarteraSeeder::class,
             //ConfiguracioPagoSeeder::class,
             PalabrasSeeder::class,

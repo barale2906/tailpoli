@@ -260,10 +260,9 @@ class GruposCrear extends Component
 
     private function profesores(){
         return User::where('status', true)
+                    ->where('rol_id', 5)
                     ->orderBy('name')
-                    ->with('roles')->get()->filter(
-                        fn ($user) => $user->roles->where('name', 'Profesor')->toArray()
-                    );
+                    ->get();
     }
 
     public function render()

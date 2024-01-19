@@ -34,13 +34,12 @@ class AdmProfesorExport implements FromCollection, WithCustomStartCell, Responsa
     */
     public function collection()
     {
-        return User::where('name', 'like', "%".$this->buscamin."%")
+        return User::where('rol_id', 5)
+                    ->where('name', 'like', "%".$this->buscamin."%")
                     ->orWhere('documento', 'like', "%".$this->buscamin."%")
                     ->orwhere('email', 'like', "%".$this->buscamin."%")
                     ->orderBy('name', 'ASC')
-                    ->with('roles')->get()->filter(
-                        fn ($user) => $user->roles->where('name', 'Profesor')->toArray()
-                    );;
+                    ->get();
     }
 
     public function startCell(): string
