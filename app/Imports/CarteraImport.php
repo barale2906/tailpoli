@@ -15,9 +15,10 @@ class CarteraImport implements ToCollection
     */
     public function collection($rows)
     {
-        set_time_limit(600);
+
 
         foreach($rows as $row){
+            set_time_limit(600);
             DB::table('carteras')->insert([
                 'id'                    => intval($row[0]),
                 'fecha_pago'            => Carbon::instance(Date::excelToDateTimeObject($row[1])),

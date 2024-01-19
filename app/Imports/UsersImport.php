@@ -20,6 +20,7 @@ class UsersImport implements ToCollection
 
         foreach($rows as $row){
 
+            set_time_limit(600);
             $password=bcrypt($row[3]);
             $email=$row[3]."@poliandinovirtual.com";
             $name=$row[1]." ".$row[2];

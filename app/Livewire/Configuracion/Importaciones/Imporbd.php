@@ -27,6 +27,7 @@ class Imporbd extends Component
     public $archivo;
     public $tabla="a";
     public $alerta=false;
+    public $is_botones=false;
 
     public function alarma(){
         $this->alerta=!$this->alerta;
@@ -40,6 +41,8 @@ class Imporbd extends Component
     ];
 
     public function importar(){
+
+        $this->is_botones=true;
 
         // validate
         $this->validate();
@@ -102,7 +105,7 @@ class Imporbd extends Component
                 break;
         }
 
-        $this->reset('archivo', 'tabla', 'alerta');
+        $this->reset('archivo', 'tabla', 'alerta','is_botones');
         $this->dispatch('alerta', name:'Se importo correctamente el archivo ');
 
         //refresh

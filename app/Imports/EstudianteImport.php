@@ -20,6 +20,7 @@ class EstudianteImport implements ToCollection
     {
         foreach($rows as $row){
 
+            set_time_limit(600);
             $password=bcrypt($row[3]);
             $name=$row[1]." ".$row[2];
 
@@ -39,11 +40,23 @@ class EstudianteImport implements ToCollection
 
             $sector=Sector::where('state_id', intval($row[9]))->first();
 
-            $per=Perfil::create([
+            if($sector){
+                $sec=$sector->id;
+            }else{
+                $sec=1;
+            }
+
+            if(intval($row[9])){
+                $state=intval($row[9]);
+            }else{
+                $state=1;
+            }
+
+            Perfil::create([
                 'user_id'=>$usu->id,
                 'country_id'=>intval($row[8]),
-                'state_id'=>intval($row[9]),
-                'sector_id'=>$sector->id,
+                'state_id'=>$state,
+                'sector_id'=>$sec,
                 'estado_id'=>1,
                 'regimen_salud_id'=>intval($row[11]),
                 'tipo_documento'=>strtolower($row[12]),
