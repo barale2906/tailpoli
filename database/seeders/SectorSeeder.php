@@ -14,7 +14,7 @@ class SectorSeeder extends Seeder
     public function run(): void
     {
         Sector::create([
-            'name' => '11001 BOGOTA-BOGOTA, D.C.',
+            'name' => 'BOGOTA-BOGOTA, D.C. 11001',
             'slug' => 'bta',
             'state_id' => 1,
             'created_at'=>'2019-05-31 09:16:08',
