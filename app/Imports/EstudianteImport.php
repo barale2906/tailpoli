@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class EstudianteImport implements ToCollection
 {
@@ -37,6 +38,8 @@ class EstudianteImport implements ToCollection
                 ]);
 
             $usu=User::orderBy('id', 'DESC')->first();
+            $role=Role::whereId(intval($row[5]))->select('name')->first();
+            $usu->assignRole($role->name);
 
             $sector=Sector::where('state_id', intval($row[9]))->first();
 

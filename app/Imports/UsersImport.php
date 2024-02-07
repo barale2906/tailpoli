@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UsersImport implements ToCollection
 {
@@ -38,6 +39,8 @@ class UsersImport implements ToCollection
                 ]);
 
             $usu=User::orderBy('id', 'DESC')->first();
+            $role=Role::whereId(intval($row[5]))->select('name')->first();
+            $usu->assignRole($role->name);
 
             DB::table('sede_user')
                 ->insert([
