@@ -44,24 +44,24 @@ class UsersImport implements ToCollection
 
             DB::table('sede_user')
                 ->insert([
-                    'user_id'=>$usu->id,
-                    'sede_id'=>$row[8],
-                    'created_at'=>now(),
-                    'updated_at'=>now(),
+                    'user_id'       =>$usu->id,
+                    'sede_id'       =>$row[8],
+                    'created_at'    => Carbon::instance(Date::excelToDateTimeObject($row[6])),
+                    'updated_at'    => Carbon::instance(Date::excelToDateTimeObject($row[7]))
                 ]);
 
             Perfil::create([
-                'user_id'=>$usu->id,
-                'country_id'=>1,
-                'state_id'=>1,
-                'sector_id'=>1,
-                'estado_id'=>1,
-                'regimen_salud_id'=>1,
-                'tipo_documento'=>'cédula de ciudadanía',
-                'documento'=>strtolower($row[3]),
-                'name'=>strtolower($row[1]),
-                'lastname'=>strtolower($row[2])
-            ]);
+                        'user_id'=>$usu->id,
+                        'country_id'=>1,
+                        'state_id'=>1,
+                        'sector_id'=>1,
+                        'estado_id'=>1,
+                        'regimen_salud_id'=>1,
+                        'tipo_documento'=>'cédula de ciudadanía',
+                        'documento'=>strtolower($row[3]),
+                        'name'=>strtolower($row[1]),
+                        'lastname'=>strtolower($row[2])
+                    ]);
         }
     }
 }
