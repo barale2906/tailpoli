@@ -10,6 +10,7 @@ use App\Imports\GruposImport;
 use App\Imports\MatriculaImport;
 use App\Imports\ModulosImport;
 use App\Imports\ProductosImport;
+use App\Imports\RecibopagoImport;
 use App\Imports\RegimenSaludImport;
 use App\Imports\SectorsImport;
 use App\Imports\SedesImport;
@@ -102,6 +103,10 @@ class Imporbd extends Component
 
             case 30:
                 Excel::import(new CarteraImport, $this->archivo);
+                break;
+
+            case 31:
+                Excel::import(new RecibopagoImport, $this->archivo);
                 break;
         }
 
