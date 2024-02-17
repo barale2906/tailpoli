@@ -17,6 +17,9 @@ class RecibopagoImport implements ToCollection
     public function collection($rows)
     {
         foreach ($rows as $row) {
+
+            //Cargar recibo y detalle desde el mismo archivo para academico e inventarios
+
             DB::table('recibo_pagos')->insert([
 
                 'numero_recibo'     =>intval($row[0]),
