@@ -64,5 +64,46 @@ class ConceptoPagoSeeder extends Seeder
             'name'              =>'Ceremonia de Grado',
             'tipo'              =>'otro'
         ]);
+
+        ConceptoPago::create([
+            'name'              =>'Supletorio Modulo',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Certificado o Constancia Final',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Convalidación',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Descuento',
+            'tipo'              =>'financiero',
+            'valor'             =>2
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Exámenes Médicos',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Clase Téorica',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Sábana de Notas',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Recuperación',
+            'tipo'              =>'otro'
+        ]);
     }
 }
