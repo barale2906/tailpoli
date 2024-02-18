@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             ModuloSeeder::class,
             RoleSeeder::class,
             UserSeeder::class, //Solo se carga el superusuario
+            EstudianteSeeder::class,
             //InventarioSeeder::class,
             GrupoSeeder::class,
             //MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
