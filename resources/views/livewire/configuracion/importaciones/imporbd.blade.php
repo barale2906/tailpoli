@@ -27,7 +27,7 @@
                 <i class="fa-solid fa-upload"></i> Cargar Archivo
             </a>
         @endif
-        @if ($alerta)
+        @if ($alerta && $is_botones===false)
 
             <div id="alert-additional-content-2" class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
                 <div class="flex items-center">

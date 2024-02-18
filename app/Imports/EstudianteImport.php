@@ -19,11 +19,18 @@ class EstudianteImport implements ToCollection
     */
     public function collection($rows)
     {
+        $hoy=Carbon::now();
+        $nue=Carbon::now();
+
         foreach($rows as $row){
 
             set_time_limit(600);
             $password=bcrypt($row[3]);
             $name=$row[1]." ".$row[2];
+            $creado=$hoy->subDays(intval($row[6]));
+            $actua=$nue->subDays(intval($row[7]));
+            $creado= date('Y-m-d H:i:s');
+            $actua= date('Y-m-d H:i:s');
 
             DB::table('users')->insert([
                     'id'            => intval($row[0]),
@@ -33,13 +40,13 @@ class EstudianteImport implements ToCollection
                     'password'      => $password,
                     'status'        => intval($row[4]),
                     'rol_id'        => intval($row[5]),
-                    'created_at'    => Carbon::instance(Date::excelToDateTimeObject($row[6])),
-                    'updated_at'    => Carbon::instance(Date::excelToDateTimeObject($row[7]))
+                    'created_at'    => $creado,
+                    'updated_at'    => $actua,
                 ]);
 
             $usu=User::orderBy('id', 'DESC')->first();
-            $role=Role::whereId(intval($row[5]))->select('name')->first();
-            $usu->assignRole($role->name);
+            //$role=Role::where('id', intval($row[5]))->select('name')->first();
+            $usu->assignRole('Estudiante');
 
             $sector=Sector::where('state_id', intval($row[9]))->first();
 

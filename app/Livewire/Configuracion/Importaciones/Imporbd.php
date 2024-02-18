@@ -42,8 +42,11 @@ class Imporbd extends Component
     ];
 
     public function importar(){
-
         $this->is_botones=true;
+        $this->importare();
+    }
+
+    public function importare(){
 
         // validate
         $this->validate();
