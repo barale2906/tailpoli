@@ -5,8 +5,11 @@ namespace Database\Seeders;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class GrupoSeeder extends Seeder
 {
@@ -15,7 +18,37 @@ class GrupoSeeder extends Seeder
      */
     public function run(): void
     {
-        $hoy=Carbon::now();
+        $row = 0;
+
+        if(($handle = fopen(public_path() . '/csv/10-grupos-23.csv', 'r')) !== false) {
+
+                while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+
+                    $row++;
+
+                    try {
+
+                        DB::table('grupos')->insert([
+                            'id'                => intval($data[0]),
+                            'name'              => strtolower($data[1]),
+                            'quantity_limit'    => intval($data[2]),
+                            'status'            => intval($data[3]),
+                            'sede_id'           => intval($data[4]),
+                            'profesor_id'       => intval($data[5]),
+                            'modulo_id'         => intval($data[6]),
+                            'created_at'        => $data[7],
+                            'updated_at'        => $data[8]
+                        ]);
+
+                    }catch(Exception $exception){
+                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    }
+                }
+        }
+
+        fclose($handle);
+
+        /* $hoy=Carbon::now();
         $hoyo=Carbon::now();
         $fin=$hoyo->addMonths(6);
 
@@ -401,6 +434,6 @@ class GrupoSeeder extends Seeder
                 'dia'           =>$dia,
                 'hora'          =>$inicia,
             ]);
-        }
+        } */
     }
 }

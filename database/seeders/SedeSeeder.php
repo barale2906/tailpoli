@@ -160,9 +160,9 @@ class SedeSeeder extends Seeder
                         Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
                     }
                 }
-            }
+        }
 
-            fclose($handle);
+        fclose($handle);
 
         /*$s1=Sede::create([
             'name'                      => 'bogotá Sede a Principal',

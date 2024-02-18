@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Inventario\Almacen;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AlmacenSeeder extends Seeder
 {
@@ -13,7 +16,34 @@ class AlmacenSeeder extends Seeder
      */
     public function run(): void
     {
-        Almacen::create([
+        $row = 0;
+
+        if(($handle = fopen(public_path() . '/csv/9-almacenes-19.csv', 'r')) !== false) {
+
+                while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+
+                    $row++;
+
+                    try {
+
+                        DB::table('almacens')->insert([
+                            'id'            => intval($data[0]),
+                            'name'          => strtolower($data[1]),
+                            'status'        => intval($data[2]),
+                            'sede_id'       => intval($data[3]),
+                            'created_at'    => $data[4],
+                            'updated_at'    => $data[5]
+                        ]);
+
+                    }catch(Exception $exception){
+                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    }
+                }
+        }
+
+        fclose($handle);
+
+        /* Almacen::create([
             'name' => 'ropas',
             'sede_id'=> 1
         ]);
@@ -41,6 +71,6 @@ class AlmacenSeeder extends Seeder
         Almacen::create([
             'name' => 'papelería sede 2',
             'sede_id'=> 2
-        ]);
+        ]); */
     }
 }
