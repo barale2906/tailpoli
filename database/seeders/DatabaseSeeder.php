@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             RegimenSaludSeeder::class,
             PersonaMulticulturalSeeder::class,
             EstadoSeeder::class,
-            //ProductoSeeder::class,
-            //CursoSeeder::class,
+            ProductoSeeder::class,
+            CursoSeeder::class,
             ConceptoPagoSeeder::class,
             AreaSeeder::class,
             //HorarioSeeder::class, //Este se bloquea cuando se hacen seeders completos.
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             SectorSeeder::class,
             SedeSeeder::class,
             //AlmacenSeeder::class, //inventory whirehouses
-            //ModuloSeeder::class,
+            ModuloSeeder::class,
             RoleSeeder::class,
             UserSeeder::class, //Solo se carga el superusuario
             //InventarioSeeder::class,

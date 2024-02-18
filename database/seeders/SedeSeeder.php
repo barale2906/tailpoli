@@ -4,9 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Academico\Horario;
 use App\Models\Configuracion\Sede;
+use App\Models\User;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SedeSeeder extends Seeder
 {
@@ -15,7 +18,153 @@ class SedeSeeder extends Seeder
      */
     public function run(): void
     {
-        $s1=Sede::create([
+        $row = 0;
+
+        if(($handle = fopen(public_path() . '/csv/7-sedes-17.csv', 'r')) !== false) {
+
+                while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+
+                    $row++;
+
+                    try {
+
+                        DB::table('sedes')->insert([
+                            'id'                        => intval($data[0]),
+                            'sector_id'                 => strtolower($data[1]),
+                            'name'                      => strtolower($data[2]),
+                            'slug'                      => strtolower($data[3]),
+                            'address'                   => strtolower($data[4]),
+                            'nit'                       => strtolower($data[5]),
+                            'phone'                     => strtolower($data[6]),
+                            'portfolio_assistant_name'  => strtolower($data[7]),
+                            'portfolio_assistant_phone' => strtolower($data[8]),
+                            'portfolio_assistant_email' => strtolower($data[9]),
+                            'start'                     => '06:00:00',
+                            'finish'                    => '22:00:00',
+                            'status'                    => intval($data[10]),
+                            'created_at'                => $data[11],
+                            'updated_at'                => $data[12]
+                        ]);
+
+                        $sede=Sede::orderBy('id', 'DESC')->first();
+                        DB::table('area_sede')
+                            ->insert([
+                                'area_id'=>4,
+                                'sede_id'=>$sede->id,
+                                'created_at'=>$data[11],
+                                'updated_at'=>$data[12],
+                            ]);
+
+                        DB::table('area_sede')
+                            ->insert([
+                                'area_id'=>5,
+                                'sede_id'=>$sede->id,
+                                'created_at'=>$data[11],
+                                'updated_at'=>$data[12],
+                            ]);
+
+                            $start='06:00:00';
+                            $finish='22:00:00';
+
+                            //Crear horarios de cierre
+                        for ($i=1; $i <= 7; $i++) {
+
+                            switch ($i) {
+                                case 1:
+                                    $dia="lunes";
+                                    $horai=$start;
+                                    $horaf=$finish;
+                                    break;
+
+                                case 2:
+                                    $dia="martes";
+                                    $horai=$start;
+                                    $horaf=$finish;
+                                    break;
+
+                                case 3:
+                                    $dia="miercoles";
+                                    $horai=$start;
+                                    $horaf=$finish;
+                                    break;
+
+                                case 4:
+                                    $dia="jueves";
+                                    $horai=$start;
+                                    $horaf=$finish;
+                                    break;
+
+                                case 5:
+                                    $dia="viernes";
+                                    $horai=$start;
+                                    $horaf=$finish;
+                                    break;
+
+                                case 6:
+                                    $dia="sabado";
+                                    $horai=$start;
+                                    $horaf=$finish;
+                                    break;
+
+                                case 7:
+                                    $dia="domingo";
+                                    $horai=$start;
+                                    $horaf=$finish;
+                                    break;
+
+                            }
+
+                            if($horai){
+                                //inicia
+                                Horario::create([
+                                    'sede_id'       =>$sede->id,
+                                    'area_id'       =>4,
+                                    'tipo'          =>true,
+                                    'periodo'       =>true,
+                                    'dia'           =>$dia,
+                                    'hora'          =>$horai,
+                                ]);
+
+                                //fin
+                                Horario::create([
+                                    'sede_id'       =>$sede->id,
+                                    'area_id'       =>4,
+                                    'tipo'          =>true,
+                                    'periodo'       =>false,
+                                    'dia'           =>$dia,
+                                    'hora'          =>$horaf,
+                                ]);
+                            }
+                        }
+
+                        //Asignar sedes a los superusuarios
+                        $superusuarios = User::where('status', true)
+                                                ->with('roles')->get()->filter(
+                                                    fn ($user) => $user->roles->where('name', 'Superusuario')->toArray()
+                                                );
+
+                        foreach($superusuarios as $item){
+
+                            DB::table('sede_user')
+                            ->insert([
+                                'user_id'                   =>$item->id,
+                                'sede_id'                   =>$sede->id,
+                                'created_at'                =>$data[11],
+                                'updated_at'                =>$data[12],
+                            ]);
+
+                        }
+
+
+                    }catch(Exception $exception){
+                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    }
+                }
+            }
+
+            fclose($handle);
+
+        /*$s1=Sede::create([
             'name'                      => 'bogotá Sede a Principal',
             'slug'                      => 'bta1',
             'address'                   => 'Cra. 12A BIS Nro. 22-12 SUR - SAN JOSÉ Localidad Rafael Uribe Uribe',
@@ -108,7 +257,7 @@ class SedeSeeder extends Seeder
         }
 
 
-        /* $s2=Sede::create([
+        $s2=Sede::create([
             'name'                      => 'chía a',
             'slug'                      => 'chiaa',
             'address'                   => 'Cerca a la casa',

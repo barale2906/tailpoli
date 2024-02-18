@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Academico\Modulo;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ModuloSeeder extends Seeder
 {
@@ -14,8 +15,35 @@ class ModuloSeeder extends Seeder
      */
     public function run(): void
     {
+        $row = 0;
 
-        $m1=Modulo::create([
+        if(($handle = fopen(public_path() . '/csv/4-modules-20.csv', 'r')) !== false) {
+
+                while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+
+                    $row++;
+
+                    try {
+
+                        DB::table('modulos')->insert([
+                            'id'            => intval($data[0]),
+                            'name'          => strtolower($data[1]),
+                            'slug'          => strtolower($data[2]),
+                            'status'        => intval($data[3]),
+                            'curso_id'      => intval($data[4]),
+                            'created_at'    => $data[5],
+                            'updated_at'    => $data[6]
+                        ]);
+
+                    }catch(Exception $exception){
+                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    }
+                }
+            }
+
+            fclose($handle);
+
+        /*$m1=Modulo::create([
             'name'              =>'kit de arrastre',
             'slug'              =>'KitArra',
             'curso_id'          =>1,
@@ -34,7 +62,7 @@ class ModuloSeeder extends Seeder
                         'modulodep_id'  =>$m1->id,
                         'created_at'    =>now(),
                         'updated_at'    =>now(),
-                    ]); */
+                    ]);
 
         $m3=Modulo::create([
                     'name'              =>'manejo de computadora',
@@ -57,7 +85,7 @@ class ModuloSeeder extends Seeder
                     'modulodep_id'  =>$m1->id,
                     'created_at'    =>now(),
                     'updated_at'    =>now(),
-                ]); */
+                ]);
 
         $m4=Modulo::create([
             'name'              =>'transmisión',
@@ -78,7 +106,7 @@ class ModuloSeeder extends Seeder
                     'modulodep_id'  =>$m4->id,
                     'created_at'    =>now(),
                     'updated_at'    =>now(),
-                ]); */
+                ]);
 
         $m6=Modulo::create([
             'name'              =>'frenos',
@@ -105,7 +133,7 @@ class ModuloSeeder extends Seeder
                         'modulodep_id'  =>$m7->id,
                         'created_at'    =>now(),
                         'updated_at'    =>now(),
-                    ]); */
+                    ]);
 
 
 
@@ -134,7 +162,7 @@ class ModuloSeeder extends Seeder
                         'modulodep_id'  =>$m10->id,
                         'created_at'    =>now(),
                         'updated_at'    =>now(),
-                    ]); */
+                    ]);
 
         $m12=Modulo::create([
                         'name'              =>'ajustes de mezcla',
