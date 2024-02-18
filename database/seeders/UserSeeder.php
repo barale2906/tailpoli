@@ -4,9 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Configuracion\Perfil;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -30,6 +33,66 @@ class UserSeeder extends Seeder
                     'created_at'=>now(),
                     'updated_at'=>now(),
                 ]);
+
+
+                $row = 0;
+
+                if(($handle = fopen(public_path() . '/csv/8-empleados.csv', 'r')) !== false) {
+
+                        while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+
+                            $row++;
+
+                            try {
+
+                                $password=bcrypt($data[3]);
+                                $email=$data[3]."@poliandinovirtual.com";
+                                $name=$data[1]." ".$data[2];
+
+                                DB::table('users')->insert([
+                                        'id'            => intval($data[0]),
+                                        'name'          => strtolower($name),
+                                        'email'         => strtolower($email),
+                                        'documento'     => strtolower($data[3]),
+                                        'password'      => $password,
+                                        'status'        => intval($data[4]),
+                                        'rol_id'        => intval($data[5]),
+                                        'created_at'    => $data[6],
+                                        'updated_at'    => $data[7]
+                                    ]);
+
+                                $usu=User::orderBy('id', 'DESC')->first();
+                                $role=Role::whereId(intval($data[5]))->select('name')->first();
+                                $usu->assignRole($role->name);
+
+                                DB::table('sede_user')
+                                    ->insert([
+                                        'user_id'       =>$usu->id,
+                                        'sede_id'       =>$data[8],
+                                        'created_at'    => $data[6],
+                                        'updated_at'    => $data[7]
+                                    ]);
+
+                                Perfil::create([
+                                            'user_id'=>$usu->id,
+                                            'country_id'=>1,
+                                            'state_id'=>1,
+                                            'sector_id'=>1,
+                                            'estado_id'=>1,
+                                            'regimen_salud_id'=>1,
+                                            'tipo_documento'=>'cédula de ciudadanía',
+                                            'documento'=>strtolower($data[3]),
+                                            'name'=>strtolower($data[1]),
+                                            'lastname'=>strtolower($data[2])
+                                ]);
+
+                            }catch(Exception $exception){
+                                Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                            }
+                        }
+                    }
+
+                    fclose($handle);
 
         /* DB::table('sede_user')
                 ->insert([

@@ -61,7 +61,7 @@ class UsersImport implements ToCollection
                         'documento'=>strtolower($row[3]),
                         'name'=>strtolower($row[1]),
                         'lastname'=>strtolower($row[2])
-                    ]);
+            ]);
         }
     }
 }
