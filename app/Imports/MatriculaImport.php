@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Livewire\Academico\Modulo\Modulos;
 use App\Models\Academico\Grupo;
+use App\Models\Academico\Modulo;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Documento;
 use App\Models\User;
@@ -43,7 +43,7 @@ class MatriculaImport implements ToCollection
             $creador=User::where('id',intval($row[16]))->select('id', 'name')->first();
 
             // Cargar modulos
-            $modulos=Modulos::where('curso_id', intval($row[9]))
+            $modulos=Modulo::where('curso_id', intval($row[9]))
                                 ->orderBy('name')
                                 ->get();
 

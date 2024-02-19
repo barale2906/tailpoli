@@ -2,9 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
+use App\Models\Academico\Modulo;
+use App\Models\Clientes\Pqrs;
+use App\Models\Configuracion\Documento;
+use App\Models\User;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MatriculaSeeder extends Seeder
 {
@@ -13,7 +21,157 @@ class MatriculaSeeder extends Seeder
      */
     public function run(): void
     {
-        Matricula::create([
+        $row = 0;
+
+        if(($handle = fopen(public_path() . '/csv/10-grupos-23.csv', 'r')) !== false) {
+
+                while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+
+                    $row++;
+
+                    try {
+
+                        DB::table('matriculas')->insert([
+                            'id'            => intval($data[0]),
+                            'fecha_inicia'  => $data[1],
+                            'medio'         => strtolower($data[2]),
+                            'nivel'         => strtolower($data[3]),
+                            'valor'         => $data[4],
+                            'metodo'        => strtolower($data[5]),
+                            'status'        => intval($data[6]),
+                            'configpago'    => intval($data[7]),
+                            'alumno_id'     => intval($data[8]),
+                            'curso_id'      => intval($data[9]),
+                            'comercial_id'  => intval($data[10]),
+                            'creador_id'    => intval($data[11]),
+                            'sede_id'       => intval($data[12]),
+                            'created_at'    => $data[13],
+                            'updated_at'    => $data[14]
+                        ]);
+
+                        $modCar=Grupo::find(intval($data[15]));
+                        $creador=User::where('id',intval($data[16]))->select('id', 'name')->first();
+
+                        // Cargar modulos
+                        $modulos=Modulo::where('curso_id', intval($data[9]))
+                                            ->orderBy('name')
+                                            ->get();
+
+                        foreach ($modulos as $value) {
+                            DB::table('matricula_modulos_aprobacion')
+                                ->insert([
+                                    'matricula_id'  =>intval($data[0]),
+                                    'alumno_id'     =>intval($data[8]),
+                                    'modulo_id'     =>$value->id,
+                                    'name'          =>$value->name,
+                                    'dependencia'   =>$value->dependencia,
+                                    'observaciones' =>$data[13]." ".$creador->name." Genera el registro.",
+                                    'created_at'    =>$data[13],
+                                    'updated_at'    =>$data[14]
+                                ]);
+
+                                //Identificar y cargar los grupos por modulo
+
+                                if($value->id===$modCar->modulo_id){
+
+                                    DB::table('grupo_matricula')
+                                        ->insert([
+                                            'grupo_id'      =>intval($data[15]),
+                                            'matricula_id'  =>intval($data[0]),
+                                            'created_at'    =>$data[13],
+                                            'updated_at'    =>$data[14]
+                                        ]);
+
+
+                                    //Cargar estudiante al grupo
+                                    DB::table('grupo_user')
+                                        ->insert([
+                                            'grupo_id'      =>intval($data[15]),
+                                            'user_id'       =>intval($data[8]),
+                                            'created_at'    =>$data[13],
+                                            'updated_at'    =>$data[14]
+                                        ]);
+
+
+
+                                    //Sumar usuario al grupo
+
+                                    $tot=$modCar->inscritos+1;
+
+                                    $modCar->update([
+                                        'inscritos'=>$tot
+                                    ]);
+
+                                }else{
+
+                                    //Sumar usuario al grupo
+                                    $inscritos=Grupo::where('modulo_id', $value->id)
+                                                    ->inRandomOrder()
+                                                    ->first();
+
+                                    DB::table('grupo_matricula')
+                                        ->insert([
+                                            'grupo_id'      =>$inscritos->id,
+                                            'matricula_id'  =>intval($data[0]),
+                                            'created_at'    =>$data[13],
+                                            'updated_at'    =>$data[14]
+                                        ]);
+
+                                    //Cargar estudiante al grupo
+                                    DB::table('grupo_user')
+                                        ->insert([
+                                            'grupo_id'      =>$inscritos->id,
+                                            'user_id'       =>intval($data[8]),
+                                            'created_at'    =>$data[13],
+                                            'updated_at'    =>$data[14]
+                                        ]);
+
+                                    $tot=$inscritos->inscritos+1;
+
+                                    $inscritos->update([
+                                        'inscritos'=>$tot
+                                    ]);
+                                }
+                        }
+
+                        // Cargar documentos
+                        $documentos=Documento::where('status', 3)
+                                            ->whereIn('tipo', ['contrato','pagare','cartapagare','actaPago','comproCredito','comproEntrega','gastocertifinal','matricula'])
+                                            ->orderBy('titulo')
+                                            ->select('id')
+                                            ->get();
+
+                        //Asignar documentos base
+                        foreach ($documentos as $value) {
+                            DB::table('documento_matricula')
+                                    ->insert([
+                                        'documento_id'   =>$value->id,
+                                        'matricula_id'   =>intval($data[0]),
+                                        'created_at'     =>$data[13],
+                                        'updated_at'     =>$data[14]
+                                    ]);
+                        }
+
+                        // Cargar PQRS
+                        Pqrs::create([
+                            'estudiante_id' =>intval($data[8]),
+                            'gestion_id'    =>$creador->id,
+                            'fecha'         =>$data[13],
+                            'tipo'          =>4,
+                            'observaciones' =>'ACÁDEMICO: Matriculado ----- ',
+                            'status'        =>4
+                        ]);
+
+                    }catch(Exception $exception){
+                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    }
+                }
+        }
+
+        fclose($handle);
+
+
+        /* Matricula::create([
             'medio' => 'google',
             'nivel'=>'pre grado',
             'anula'=>'',
@@ -41,6 +199,6 @@ class MatriculaSeeder extends Seeder
             'curso_id'=>2,
             'sede_id'=>2,
             'configpago'=>3
-        ]);
+        ]); */
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Livewire\Configuracion\User\Perfil;
+use App\Models\Configuracion\Perfil;
 use App\Models\Configuracion\Sector;
 use App\Models\User;
 use Exception;
@@ -10,6 +10,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 class EstudianteSeeder extends Seeder
 {
@@ -20,9 +21,9 @@ class EstudianteSeeder extends Seeder
     {
         $row = 0;
 
-        if(($handle = fopen(public_path() . '/csv/10-grupos-23.csv', 'r')) !== false) {
+        if(($handle = fopen(public_path() . '/csv/11-students-completo.csv', 'r')) !== false) {
 
-                while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+                while(($data = fgetcsv($handle, 90000, ';')) !== false) {
 
                     $row++;
 
@@ -39,13 +40,14 @@ class EstudianteSeeder extends Seeder
                                 'password'      => $password,
                                 'status'        => intval($data[4]),
                                 'rol_id'        => intval($data[5]),
-                                'created_at'    => intval($data[6]),
-                                'updated_at'    => intval($data[7]),
+                                'created_at'    => $data[6],
+                                'updated_at'    => $data[7],
                             ]);
 
                         $usu=User::orderBy('id', 'DESC')->first();
-                        //$role=Role::where('id', intval($data[5]))->select('name')->first();
-                        $usu->assignRole('Estudiante');
+                        $role=Role::where('id', intval($data[5]))->select('name')->first();
+                        //$usu->assignRole('Estudiante');
+                        $usu->assignRole($role->name);
 
                         $sector=Sector::where('state_id', intval($data[9]))->first();
 
