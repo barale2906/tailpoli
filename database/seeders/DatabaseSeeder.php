@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             EstudianteSeeder::class,
             //InventarioSeeder::class,
             GrupoSeeder::class,
-            //MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
+            MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
             EstadoCarteraSeeder::class,
             //ConfiguracioPagoSeeder::class,
             PalabrasSeeder::class,
