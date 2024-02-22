@@ -33,13 +33,14 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class, //Solo se carga el superusuario
             EstudianteSeeder::class,
+            PalabrasSeeder::class,
+            DocumentoSeeder::class, //se carga depués de cargar las sedes y usuarios
             //InventarioSeeder::class,
             GrupoSeeder::class,
             MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
             EstadoCarteraSeeder::class,
+            CarteraSeeder::class,
             //ConfiguracioPagoSeeder::class,
-            PalabrasSeeder::class,
-            DocumentoSeeder::class, //se carga depués de cargar las sedes y usuarios
         ]);
     }
 }
