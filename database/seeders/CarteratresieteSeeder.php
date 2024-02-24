@@ -10,7 +10,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class CarteraSeeder extends Seeder
+class CarteratresieteSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,16 +18,15 @@ class CarteraSeeder extends Seeder
     public function run(): void
     {
         $row = 0;
-        $observaciones=" ----- ".now()." Creado por ERP POLIANDINO"." ----- ";
+        $observaciones=" ----- ".now()." Creado por ERP POLIANDINO ----- ";
 
-        if(($handle = fopen(public_path() . '/csv/13-cartera-700k.csv', 'r')) !== false) {
+        if(($handle = fopen(public_path() . '/csv/13-cartera-375.csv', 'r')) !== false) {
 
                 while(($data = fgetcsv($handle, 26000, ';')) !== false) {
 
                     $row++;
 
                     try {
-
                         //Mirar estado cartera
                         $cartera=EstadoCartera::where('name', strtolower($data[6]))->select('id')->first();
                         $concepto=ConceptoPago::where('name', strtolower($data[7]))->select('id')->first();

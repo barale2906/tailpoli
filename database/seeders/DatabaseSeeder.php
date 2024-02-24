@@ -40,6 +40,8 @@ class DatabaseSeeder extends Seeder
             MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
             EstadoCarteraSeeder::class,
             CarteraSeeder::class,
+            CarteraEspSeeder::class,
+            CarteratresieteSeeder::class,
             //ConfiguracioPagoSeeder::class,
         ]);
     }
