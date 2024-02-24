@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             CarteraSeeder::class,
             CarteraEspSeeder::class,
             CarteratresieteSeeder::class,
+            CarterafinSeeder::class,
             //ConfiguracioPagoSeeder::class,
         ]);
     }
