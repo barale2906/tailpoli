@@ -34,6 +34,16 @@ class ConceptoPagoSeeder extends Seeder
         ]);
 
         ConceptoPago::create([
+            'name'              =>'Interés',
+            'tipo'              =>'cartera'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Saldo Total',
+            'tipo'              =>'cartera'
+        ]);
+
+        ConceptoPago::create([
             'name'              =>'Recargo Tarjeta',
             'tipo'              =>'financiero',
             'valor'             =>3
@@ -52,6 +62,21 @@ class ConceptoPagoSeeder extends Seeder
 
         ConceptoPago::create([
             'name'              =>'Proyecto Grado',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Kit de Seguridad',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'PIN CEA',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Transversales',
             'tipo'              =>'otro'
         ]);
 
@@ -76,7 +101,17 @@ class ConceptoPagoSeeder extends Seeder
         ]);
 
         ConceptoPago::create([
+            'name'              =>'Certificado o Constancia Académico',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
             'name'              =>'Convalidación',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Diferencia Conciliar',
             'tipo'              =>'otro'
         ]);
 
@@ -103,6 +138,16 @@ class ConceptoPagoSeeder extends Seeder
 
         ConceptoPago::create([
             'name'              =>'Recuperación',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Novedades',
+            'tipo'              =>'otro'
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Anteriores',
             'tipo'              =>'otro'
         ]);
     }
