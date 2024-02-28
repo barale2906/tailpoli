@@ -36,7 +36,7 @@ class AlmacenSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 9-almacenes-19 with error: ' . $exception->getMessage());
                     }
                 }
         }

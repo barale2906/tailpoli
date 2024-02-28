@@ -164,7 +164,7 @@ class MatriculaSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 12-enrollments-27 with error: ' . $exception->getMessage());
                     }
                 }
         }

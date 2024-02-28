@@ -36,7 +36,7 @@ class ModuloSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 4-modules-20 with error: ' . $exception->getMessage());
                     }
                 }
             }

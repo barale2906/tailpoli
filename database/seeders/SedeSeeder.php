@@ -157,7 +157,7 @@ class SedeSeeder extends Seeder
 
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 7-sedes-17 with error: ' . $exception->getMessage());
                     }
                 }
         }

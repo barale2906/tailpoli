@@ -39,7 +39,7 @@ class CursoSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 3-courses-12 with error: ' . $exception->getMessage());
                     }
                 }
             }

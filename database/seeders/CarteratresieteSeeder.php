@@ -49,7 +49,7 @@ class CarteratresieteSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera-375 with error: ' . $exception->getMessage());
                     }
                 }
         }

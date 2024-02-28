@@ -50,7 +50,7 @@ class CarteraSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera-700k with error: ' . $exception->getMessage());
                     }
                 }
         }

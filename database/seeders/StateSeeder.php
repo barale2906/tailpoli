@@ -35,7 +35,7 @@ class StateSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 5-states-5 with error: ' . $exception->getMessage());
                     }
                 }
             }

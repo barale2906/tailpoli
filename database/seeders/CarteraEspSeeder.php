@@ -49,7 +49,7 @@ class CarteraEspSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera-especial with error: ' . $exception->getMessage());
                     }
                 }
         }

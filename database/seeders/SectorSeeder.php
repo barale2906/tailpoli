@@ -36,7 +36,7 @@ class SectorSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 6-sectors-16 with error: ' . $exception->getMessage());
                     }
                 }
             }

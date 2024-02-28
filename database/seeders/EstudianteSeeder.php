@@ -104,7 +104,7 @@ class EstudianteSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 11-students-completo with error: ' . $exception->getMessage());
                     }
                 }
         }

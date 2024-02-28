@@ -45,6 +45,8 @@ class DatabaseSeeder extends Seeder
             CarterafinSeeder::class,
             RecibopagoSeeder::class,
             RecibopagodetalleSeeder::class,
+            RecibopagoinvSeeder::class,
+            RecibopagodetalleinvSeeder::class,
             //ConfiguracioPagoSeeder::class,
         ]);
     }

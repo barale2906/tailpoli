@@ -37,7 +37,7 @@ class ProductoSeeder extends Seeder
                     ]);
 
                 }catch(Exception $exception){
-                    Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    Log::info('Line: ' . $row . ' 2-inventory_products-11 with error: ' . $exception->getMessage());
                 }
             }
         }

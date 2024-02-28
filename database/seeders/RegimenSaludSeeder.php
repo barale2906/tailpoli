@@ -57,7 +57,7 @@ class RegimenSaludSeeder extends Seeder
                     ]);
 
                 }catch(Exception $exception){
-                    Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    Log::info('Line: ' . $row . ' 1-health_regimes-8 with error: ' . $exception->getMessage());
                 }
             }
         }

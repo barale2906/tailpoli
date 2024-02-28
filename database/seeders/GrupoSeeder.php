@@ -41,7 +41,7 @@ class GrupoSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 10-grupos-23 with error: ' . $exception->getMessage());
                     }
                 }
         }

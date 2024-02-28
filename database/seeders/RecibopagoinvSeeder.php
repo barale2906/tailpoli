@@ -43,7 +43,7 @@ class RecibopagoinvSeeder extends Seeder
                     ]);
 
                 }catch(Exception $exception){
-                    Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    Log::info('Line: ' . $row . ' 15-recibosinv with error: ' . $exception->getMessage());
                 }
             }
         }

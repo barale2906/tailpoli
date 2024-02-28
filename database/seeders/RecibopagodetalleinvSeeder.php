@@ -42,7 +42,7 @@ class RecibopagodetalleinvSeeder extends Seeder
                     ]);
 
                 }catch(Exception $exception){
-                    Log::info('Line: ' . $row . ' with error: ' . $exception->getMessage());
+                    Log::info('Line: ' . $row . ' 15-recibos-detallesinv with error: ' . $exception->getMessage());
                 }
             }
         }
