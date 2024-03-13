@@ -32,6 +32,10 @@ class EstudianteSeeder extends Seeder
                         $password=bcrypt($data[3]);
                         $name=$data[1]." ".$data[2];
 
+                        //fechas
+                        $data[6]=date("Y-m-d H:i:s");
+                        $data[7]=date("Y-m-d H:i:s");
+
                         DB::table('users')->insert([
                                 'id'            => intval($data[0]),
                                 'name'          => strtolower($name),
@@ -62,6 +66,9 @@ class EstudianteSeeder extends Seeder
                         }else{
                             $state=1;
                         }
+
+                        $data[13]=date("Y-m-d");
+                        $data[16]=date("Y-m-d");
 
                         Perfil::create([
                             'user_id'=>$usu->id,

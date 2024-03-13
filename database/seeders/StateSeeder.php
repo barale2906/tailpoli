@@ -25,6 +25,9 @@ class StateSeeder extends Seeder
 
                     try {
 
+                        $data[4]=date("Y-m-d H:i:s");
+                        $data[5]=date("Y-m-d H:i:s");
+
                         DB::table('states')->insert([
                             'id'            => intval($data[0]),
                             'country_id'    => strtolower($data[1]),

@@ -25,6 +25,10 @@ class SectorSeeder extends Seeder
 
                     try {
 
+
+                        $data[5]=date("Y-m-d H:i:s");
+                        $data[6]=date("Y-m-d H:i:s");
+
                         DB::table('sectors')->insert([
                             'id'            => intval($data[0]),
                             'state_id'      => strtolower($data[1]),

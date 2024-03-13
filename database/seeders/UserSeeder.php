@@ -49,6 +49,9 @@ class UserSeeder extends Seeder
                                 $email=$data[3]."@poliandinovirtual.com";
                                 $name=$data[1]." ".$data[2];
 
+                                $data[6]=date("Y-m-d H:i:s");
+                                $data[7]=date("Y-m-d H:i:s");
+
                                 DB::table('users')->insert([
                                         'id'            => intval($data[0]),
                                         'name'          => strtolower($name),

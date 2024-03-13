@@ -27,6 +27,10 @@ class ProductoSeeder extends Seeder
 
                 try {
 
+
+                    $data[4]=date("Y-m-d H:i:s");
+                    $data[5]=date("Y-m-d H:i:s");
+
                     DB::table('productos')->insert([
                         'id'            => intval($data[0]),
                         'name'          => strtolower($data[1]),

@@ -27,6 +27,11 @@ class CarteraEspSeeder extends Seeder
                     $row++;
 
                     try {
+
+                        $data[1]=date("Y-m-d");
+                        $data[11]=date("Y-m-d");
+                        $data[9]=date("Y-m-d H:i:s");
+                        $data[10]=date("Y-m-d H:i:s");
                         //Mirar estado cartera
                         $cartera=EstadoCartera::where('name', strtolower($data[6]))->select('id')->first();
                         $concepto=ConceptoPago::where('name', strtolower($data[7]))->select('id')->first();

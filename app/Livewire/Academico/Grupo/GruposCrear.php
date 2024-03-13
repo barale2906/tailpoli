@@ -223,16 +223,16 @@ class GruposCrear extends Component
 
         //Cargar horarios
         foreach ($this->seleccionados as $value) {
-        Horario::create([
-        'sede_id'       =>$this->sede_id,
-        'area_id'       =>$value['area_id'],
-        'grupo'         =>$this->name,
-        'grupo_id'      =>$grupo->id,
-        'tipo'          =>false,
-        'periodo'       =>true,
-        'dia'           =>$value['dia'],
-        'hora'          =>$value['hora'],
-        ]);
+            Horario::create([
+                    'sede_id'       =>$this->sede_id,
+                    'area_id'       =>$value['area_id'],
+                    'grupo'         =>$this->name,
+                    'grupo_id'      =>$grupo->id,
+                    'tipo'          =>false,
+                    'periodo'       =>true,
+                    'dia'           =>$value['dia'],
+                    'hora'          =>$value['hora'],
+            ]);
         }
 
 

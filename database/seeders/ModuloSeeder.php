@@ -25,6 +25,9 @@ class ModuloSeeder extends Seeder
 
                     try {
 
+                        $data[5]=date("Y-m-d H:i:s");
+                        $data[6]=date("Y-m-d H:i:s");
+
                         DB::table('modulos')->insert([
                             'id'            => intval($data[0]),
                             'name'          => strtolower($data[1]),

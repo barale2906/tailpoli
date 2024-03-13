@@ -32,6 +32,10 @@ class MatriculaSeeder extends Seeder
 
                     try {
 
+                        $data[1]=date("Y-m-d");
+                        $data[11]=date("Y-m-d H:i:s");
+                        $data[12]=date("Y-m-d H:i:s");
+
                         DB::table('matriculas')->insert([
                             'id'            => intval($data[0]),
                             'fecha_inicia'  => $data[1],
@@ -50,11 +54,12 @@ class MatriculaSeeder extends Seeder
                             'updated_at'    => $data[12]
                         ]);
 
-                        $modCar=Grupo::find(intval($data[13]));
+                        $modCar=Grupo::where('id', intval($data[13]))->first();
                         $creador=User::where('id',intval($data[9]))->select('id', 'name')->first();
 
                         // Cargar modulos
                         $modulos=Modulo::where('curso_id', intval($data[7]))
+                                            ->where('status', true)
                                             ->orderBy('name')
                                             ->get();
 
@@ -88,7 +93,7 @@ class MatriculaSeeder extends Seeder
                                     DB::table('grupo_user')
                                         ->insert([
                                             'grupo_id'      =>intval($data[13]),
-                                            'user_id'       =>intval($data[9]),
+                                            'user_id'       =>intval($data[6]),
                                             'created_at'    =>$data[11],
                                             'updated_at'    =>$data[12]
                                         ]);
@@ -107,7 +112,6 @@ class MatriculaSeeder extends Seeder
 
                                     //Sumar usuario al grupo
                                     $inscritos=Grupo::where('modulo_id', $value->id)
-                                                    ->inRandomOrder()
                                                     ->first();
 
                                     DB::table('grupo_matricula')
@@ -122,7 +126,7 @@ class MatriculaSeeder extends Seeder
                                     DB::table('grupo_user')
                                         ->insert([
                                             'grupo_id'      =>$inscritos->id,
-                                            'user_id'       =>intval($data[9]),
+                                            'user_id'       =>intval($data[6]),
                                             'created_at'    =>$data[11],
                                             'updated_at'    =>$data[12]
                                         ]);

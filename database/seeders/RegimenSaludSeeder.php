@@ -48,6 +48,9 @@ class RegimenSaludSeeder extends Seeder
 
                 try {
 
+                    $data[3]=date("Y-m-d H:i:s");
+                    $data[4]=date("Y-m-d H:i:s");
+
                     DB::table('regimen_saluds')->insert([
                         'id'            => intval($data[0]),
                         'name'          => strtolower($data[1]),

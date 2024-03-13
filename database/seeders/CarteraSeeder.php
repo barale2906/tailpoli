@@ -32,6 +32,11 @@ class CarteraSeeder extends Seeder
                         $cartera=EstadoCartera::where('name', strtolower($data[6]))->select('id')->first();
                         $concepto=ConceptoPago::where('name', strtolower($data[7]))->select('id')->first();
 
+                        $data[1]=date("Y-m-d");
+                        $data[11]=date("Y-m-d");
+                        $data[9]=date("Y-m-d H:i:s");
+                        $data[10]=date("Y-m-d H:i:s");
+
                         DB::table('carteras')->insert([
                             'id'                    => intval($data[0]),
                             'fecha_pago'            => $data[1],

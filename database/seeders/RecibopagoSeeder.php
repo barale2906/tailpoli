@@ -27,6 +27,10 @@ class RecibopagoSeeder extends Seeder
 
                     $observaciones=strtolower($data[4])." ----- ".now()." Creado por ERP POLIANDINO. ----- ";
 
+                    $data[1]=date("Y-m-d");
+                    $data[9]=date("Y-m-d H:i:s");
+                    $data[10]=date("Y-m-d H:i:s");
+
                     DB::table('recibo_pagos')->insert([
                         'numero_recibo'     =>intval($data[0]),
                         'origen'            =>true,

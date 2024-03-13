@@ -28,6 +28,9 @@ class GrupoSeeder extends Seeder
 
                     try {
 
+                        $data[7]=date("Y-m-d H:i:s");
+                        $data[8]=date("Y-m-d H:i:s");
+
                         DB::table('grupos')->insert([
                             'id'                => intval($data[0]),
                             'name'              => strtolower($data[1]),

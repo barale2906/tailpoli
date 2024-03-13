@@ -28,6 +28,9 @@ class SedeSeeder extends Seeder
 
                     try {
 
+                        $data[11]=date("Y-m-d H:i:s");
+                        $data[12]=date("Y-m-d H:i:s");
+
                         DB::table('sedes')->insert([
                             'id'                        => intval($data[0]),
                             'sector_id'                 => strtolower($data[1]),
