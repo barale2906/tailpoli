@@ -27,7 +27,7 @@ class RecibopagodetalleinvSeeder extends Seeder
 
                 try {
 
-                    $recibo=ReciboPago::where('id', intval($data[4]))->where('origen', false)->first();
+                    $recibo=ReciboPago::where('id', intval($data[3]))->where('origen', false)->first();
                     $concepto=ConceptoPago::where('name', 'Inventario')->first();
 
                     $data[2]=date("Y-m-d H:i:s");
@@ -36,8 +36,8 @@ class RecibopagodetalleinvSeeder extends Seeder
                     DB::table('concepto_pago_recibo_pago')
                     ->insert([
                         'valor'             =>intval($data[0]),
-                        'created_at'        =>$data[2],
-                        'updated_at'        =>$data[3],
+                        'created_at'        =>$data[1],
+                        'updated_at'        =>$data[2],
                         'tipo'              =>$concepto->tipo,
                         'medio'             =>$recibo->medio,
                         'concepto_pago_id'  =>$concepto->id,
