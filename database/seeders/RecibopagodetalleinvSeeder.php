@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -30,14 +31,17 @@ class RecibopagodetalleinvSeeder extends Seeder
                     $recibo=ReciboPago::where('id', intval($data[3]))->where('origen', false)->first();
                     $concepto=ConceptoPago::where('name', 'Inventario')->first();
 
-                    $data[2]=date("Y-m-d H:i:s");
-                    $data[3]=date("Y-m-d H:i:s");
+                    $creado=new Carbon($data[1]);
+                    $crea=$creado->format('Y-m-d H:i:s');
+
+                    $actualiza=new Carbon($data[2]);
+                    $actua=$actualiza->format('Y-m-d H:i:s');
 
                     DB::table('concepto_pago_recibo_pago')
                     ->insert([
                         'valor'             =>intval($data[0]),
-                        'created_at'        =>$data[1],
-                        'updated_at'        =>$data[2],
+                        'created_at'        =>$crea,
+                        'updated_at'        =>$actua,
                         'tipo'              =>$concepto->tipo,
                         'medio'             =>$recibo->medio,
                         'concepto_pago_id'  =>$concepto->id,

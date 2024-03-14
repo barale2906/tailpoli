@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,14 +28,19 @@ class RecibopagoinvSeeder extends Seeder
 
                     $observaciones=strtolower($data[4])." ----- ".now()." Creado por ERP POLIDOTACIONES. ----- ";
 
-                    $data[1]=date("Y-m-d");
-                    $data[9]=date("Y-m-d H:i:s");
-                    $data[10]=date("Y-m-d H:i:s");
+                    $creado=new Carbon($data[9]);
+                    $crea=$creado->format('Y-m-d H:i:s');
+
+                    $actualiza=new Carbon($data[10]);
+                    $actua=$actualiza->format('Y-m-d H:i:s');
+
+                    $fecha=new Carbon($data[1]);
+                    $fech=$fecha->format('Y-m-d');
 
                     DB::table('recibo_pagos')->insert([
                         'numero_recibo'     =>intval($data[0]),
                         'origen'            =>false,
-                        'fecha'             =>$data[1],
+                        'fecha'             =>$fech,
                         'valor_total'       =>$data[2],
                         'medio'             =>strtolower($data[3]),
                         'observaciones'     =>$observaciones,
@@ -42,8 +48,8 @@ class RecibopagoinvSeeder extends Seeder
                         'creador_id'        =>intval($data[6]),
                         'paga_id'           =>intval($data[7]),
                         'status'            =>intval($data[8]),
-                        'created_at'        =>$data[9],
-                        'updated_at'        =>$data[10],
+                        'created_at'        =>$crea,
+                        'updated_at'        =>$actua,
                     ]);
 
                 }catch(Exception $exception){

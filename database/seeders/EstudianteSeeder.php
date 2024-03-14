@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Configuracion\Perfil;
 use App\Models\Configuracion\Sector;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -33,8 +34,11 @@ class EstudianteSeeder extends Seeder
                         $name=$data[1]." ".$data[2];
 
                         //fechas
-                        $data[6]=date("Y-m-d H:i:s");
-                        $data[7]=date("Y-m-d H:i:s");
+                        $creado=new Carbon($data[6]);
+                        $crea=$creado->format('Y-m-d H:i:s');
+
+                        $actualiza=new Carbon($data[7]);
+                        $actua=$actualiza->format('Y-m-d H:i:s');
 
                         DB::table('users')->insert([
                                 'id'            => intval($data[0]),
@@ -44,8 +48,8 @@ class EstudianteSeeder extends Seeder
                                 'password'      => $password,
                                 'status'        => intval($data[4]),
                                 'rol_id'        => intval($data[5]),
-                                'created_at'    => $data[6],
-                                'updated_at'    => $data[7],
+                                'created_at'    => $crea,
+                                'updated_at'    => $actua,
                             ]);
 
                         $usu=User::orderBy('id', 'DESC')->first();
@@ -67,8 +71,11 @@ class EstudianteSeeder extends Seeder
                             $state=1;
                         }
 
-                        $data[13]=date("Y-m-d");
-                        $data[16]=date("Y-m-d");
+                        $fecha=new Carbon($data[13]);
+                        $fech=$fecha->format('Y-m-d');
+
+                        $fechaa=new Carbon($data[16]);
+                        $fechb=$fechaa->format('Y-m-d');
 
                         Perfil::create([
                             'user_id'=>$usu->id,
@@ -81,10 +88,10 @@ class EstudianteSeeder extends Seeder
                             'documento'=>strtolower($data[3]),
                             'name'=>strtolower($data[1]),
                             'lastname'=>strtolower($data[2]),
-                            'fecha_documento'=>$data[13],
+                            'fecha_documento'=>$fech,
                             'lugar_expedicion'=>strtolower($data[14]),
                             'direccion'=>strtolower($data[15]),
-                            'fecha_nacimiento'=>$data[16],
+                            'fecha_nacimiento'=>$fechb,
                             'barrio'=>strtolower($data[17]),
                             'celular'=>strtolower($data[18]),
                             'wa'=>strtolower($data[19]),

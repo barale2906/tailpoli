@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Academico\Ciclogrupo;
 use App\Models\Academico\Grupo;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,8 +28,11 @@ class CicloSeeder extends Seeder
 
                     try {
 
-                        $data[4]=date("Y-m-d");
-                        $data[5]=date("Y-m-d");
+                        $fecha=new Carbon($data[4]);
+                        $fech=$fecha->format('Y-m-d');
+
+                        $fechaa=new Carbon($data[5]);
+                        $fechb=$fechaa->format('Y-m-d');
 
                         //Crear ciclo
                         DB::table('ciclos')->insert([
@@ -36,8 +40,8 @@ class CicloSeeder extends Seeder
                             'sede_id'       => $data[1],
                             'curso_id'      => $data[2],
                             'name'          => strtolower($data[3]),
-                            'inicia'        => $data[4],
-                            'finaliza'      => $data[5],
+                            'inicia'        => $fech,
+                            'finaliza'      => $fechb,
                             'jornada'       => $data[6],
                             'desertado'     => $data[7],
                             'created_at'    => now(),
@@ -52,8 +56,8 @@ class CicloSeeder extends Seeder
                             Ciclogrupo::create([
                                 'ciclo_id'       => $data[0],
                                 'grupo_id'       => $value->id,
-                                'fecha_inicio'   => $data[4],
-                                'fecha_fin'      => $data[5],
+                                'fecha_inicio'   => $fech,
+                                'fecha_fin'      => $fechb,
                             ]);
                         }
 

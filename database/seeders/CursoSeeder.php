@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Academico\Curso;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -26,8 +27,11 @@ class CursoSeeder extends Seeder
 
                     try {
 
-                        $data[7]=date("Y-m-d H:i:s");
-                        $data[8]=date("Y-m-d H:i:s");
+                        $creado=new Carbon($data[7]);
+                        $crea=$creado->format('Y-m-d H:i:s');
+
+                        $actualiza=new Carbon($data[8]);
+                        $actua=$actualiza->format('Y-m-d H:i:s');
 
                         DB::table('cursos')->insert([
                             'id'            => intval($data[0]),
@@ -37,8 +41,8 @@ class CursoSeeder extends Seeder
                             'duracion_horas'=> $data[4],
                             'duracion_meses'=> $data[5],
                             'status'        => intval($data[6]),
-                            'created_at'    => $data[7],
-                            'updated_at'    => $data[8]
+                            'created_at'    => $crea,
+                            'updated_at'    => $actua
                         ]);
 
                     }catch(Exception $exception){

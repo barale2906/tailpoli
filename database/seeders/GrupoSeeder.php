@@ -28,8 +28,11 @@ class GrupoSeeder extends Seeder
 
                     try {
 
-                        $data[7]=date("Y-m-d H:i:s");
-                        $data[8]=date("Y-m-d H:i:s");
+                        $creado=new Carbon($data[7]);
+                        $crea=$creado->format('Y-m-d H:i:s');
+
+                        $actualiza=new Carbon($data[8]);
+                        $actua=$actualiza->format('Y-m-d H:i:s');
 
                         DB::table('grupos')->insert([
                             'id'                => intval($data[0]),
@@ -39,8 +42,8 @@ class GrupoSeeder extends Seeder
                             'sede_id'           => intval($data[4]),
                             'profesor_id'       => intval($data[5]),
                             'modulo_id'         => intval($data[6]),
-                            'created_at'        => $data[7],
-                            'updated_at'        => $data[8]
+                            'created_at'        => $crea,
+                            'updated_at'        => $actua
                         ]);
 
                     }catch(Exception $exception){

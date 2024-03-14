@@ -8,6 +8,7 @@ use App\Models\Academico\Modulo;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Documento;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -32,13 +33,18 @@ class MatriculaSeeder extends Seeder
 
                     try {
 
-                        $data[1]=date("Y-m-d");
-                        $data[11]=date("Y-m-d H:i:s");
-                        $data[12]=date("Y-m-d H:i:s");
+                        $creado=new Carbon($data[11]);
+                        $crea=$creado->format('Y-m-d H:i:s');
+
+                        $actualiza=new Carbon($data[12]);
+                        $actua=$actualiza->format('Y-m-d H:i:s');
+
+                        $fecha=new Carbon($data[1]);
+                        $fech=$fecha->format('Y-m-d');
 
                         DB::table('matriculas')->insert([
                             'id'            => intval($data[0]),
-                            'fecha_inicia'  => $data[1],
+                            'fecha_inicia'  => $fech,
                             'medio'         => strtolower($data[2]),
                             'nivel'         => strtolower($data[3]),
                             'valor'         => $data[4],
@@ -50,8 +56,8 @@ class MatriculaSeeder extends Seeder
                             'comercial_id'  => intval($data[8]),
                             'creador_id'    => intval($data[9]),
                             'sede_id'       => intval($data[10]),
-                            'created_at'    => $data[11],
-                            'updated_at'    => $data[12]
+                            'created_at'    => $crea,
+                            'updated_at'    => $actua
                         ]);
 
                         $modCar=Grupo::where('id', intval($data[13]))->first();

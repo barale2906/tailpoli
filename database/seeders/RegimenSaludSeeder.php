@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin\RegimenSalud;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -48,15 +49,18 @@ class RegimenSaludSeeder extends Seeder
 
                 try {
 
-                    $data[3]=date("Y-m-d H:i:s");
-                    $data[4]=date("Y-m-d H:i:s");
+                    $creado=new Carbon($data[3]);
+                    $crea=$creado->format('Y-m-d H:i:s');
+
+                    $actualiza=new Carbon($data[4]);
+                    $actua=$actualiza->format('Y-m-d H:i:s');
 
                     DB::table('regimen_saluds')->insert([
                         'id'            => intval($data[0]),
                         'name'          => strtolower($data[1]),
                         'status'        => intval($data[2]),
-                        'created_at'    => $data[3],
-                        'updated_at'    => $data[4]
+                        'created_at'    => $crea,
+                        'updated_at'    => $actua
                     ]);
 
                 }catch(Exception $exception){

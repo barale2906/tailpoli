@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Academico\Horario;
 use App\Models\Configuracion\Sede;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,8 +29,11 @@ class SedeSeeder extends Seeder
 
                     try {
 
-                        $data[11]=date("Y-m-d H:i:s");
-                        $data[12]=date("Y-m-d H:i:s");
+                        $creado=new Carbon($data[11]);
+                        $crea=$creado->format('Y-m-d H:i:s');
+
+                        $actualiza=new Carbon($data[12]);
+                        $actua=$actualiza->format('Y-m-d H:i:s');
 
                         DB::table('sedes')->insert([
                             'id'                        => intval($data[0]),
@@ -45,8 +49,8 @@ class SedeSeeder extends Seeder
                             'start'                     => '06:00:00',
                             'finish'                    => '22:00:00',
                             'status'                    => intval($data[10]),
-                            'created_at'                => $data[11],
-                            'updated_at'                => $data[12]
+                            'created_at'                => $crea,
+                            'updated_at'                => $actua
                         ]);
 
                         $sede=Sede::orderBy('id', 'DESC')->first();
@@ -54,16 +58,16 @@ class SedeSeeder extends Seeder
                             ->insert([
                                 'area_id'=>4,
                                 'sede_id'=>$sede->id,
-                                'created_at'=>$data[11],
-                                'updated_at'=>$data[12],
+                                'created_at'=>$crea,
+                                'updated_at'=>$actua,
                             ]);
 
                         DB::table('area_sede')
                             ->insert([
                                 'area_id'=>5,
                                 'sede_id'=>$sede->id,
-                                'created_at'=>$data[11],
-                                'updated_at'=>$data[12],
+                                'created_at'=>$crea,
+                                'updated_at'=>$actua,
                             ]);
 
                             $start='06:00:00';
@@ -152,8 +156,8 @@ class SedeSeeder extends Seeder
                             ->insert([
                                 'user_id'                   =>$item->id,
                                 'sede_id'                   =>$sede->id,
-                                'created_at'                =>$data[11],
-                                'updated_at'                =>$data[12],
+                                'created_at'                =>$crea,
+                                'updated_at'                =>$actua,
                             ]);
 
                         }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Inventario\Producto;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,16 +29,20 @@ class ProductoSeeder extends Seeder
                 try {
 
 
-                    $data[4]=date("Y-m-d H:i:s");
-                    $data[5]=date("Y-m-d H:i:s");
+                    $creado=new Carbon($data[4]);
+                    $crea=$creado->format('Y-m-d H:i:s');
+
+                    $actualiza=new Carbon($data[5]);
+                    $actua=$actualiza->format('Y-m-d H:i:s');
+
 
                     DB::table('productos')->insert([
                         'id'            => intval($data[0]),
                         'name'          => strtolower($data[1]),
                         'descripcion'   => strtolower($data[2]),
                         'status'        => intval($data[3]),
-                        'created_at'    => $data[4],
-                        'updated_at'    => $data[5]
+                        'created_at'    => $crea,
+                        'updated_at'    => $actua
                     ]);
 
                 }catch(Exception $exception){

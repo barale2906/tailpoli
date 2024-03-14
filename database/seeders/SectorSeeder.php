@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -26,8 +27,11 @@ class SectorSeeder extends Seeder
                     try {
 
 
-                        $data[5]=date("Y-m-d H:i:s");
-                        $data[6]=date("Y-m-d H:i:s");
+                        $creado=new Carbon($data[5]);
+                        $crea=$creado->format('Y-m-d H:i:s');
+
+                        $actualiza=new Carbon($data[6]);
+                        $actua=$actualiza->format('Y-m-d H:i:s');
 
                         DB::table('sectors')->insert([
                             'id'            => intval($data[0]),
@@ -35,8 +39,8 @@ class SectorSeeder extends Seeder
                             'name'          => strtolower($data[2]),
                             'slug'          => strtolower($data[3]),
                             'status'        => intval($data[4]),
-                            'created_at'    => $data[5],
-                            'updated_at'    => $data[6]
+                            'created_at'    => $crea,
+                            'updated_at'    => $actua
                         ]);
 
                     }catch(Exception $exception){
