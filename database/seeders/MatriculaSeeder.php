@@ -44,7 +44,7 @@ class MatriculaSeeder extends Seeder
 
                         DB::table('matriculas')->insert([
                             'id'            => intval($data[0]),
-                            'fecha_inicia'  => $fech,
+                            'fecha_inicia'  => $data[1],
                             'medio'         => strtolower($data[2]),
                             'nivel'         => strtolower($data[3]),
                             'valor'         => $data[4],
@@ -56,8 +56,8 @@ class MatriculaSeeder extends Seeder
                             'comercial_id'  => intval($data[8]),
                             'creador_id'    => intval($data[9]),
                             'sede_id'       => intval($data[10]),
-                            'created_at'    => $crea,
-                            'updated_at'    => $actua
+                            'created_at'    => $data[11],
+                            'updated_at'    => $data[12]
                         ]);
 
                         $modCar=Grupo::where('id', intval($data[13]))->first();

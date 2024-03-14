@@ -42,8 +42,8 @@ class GrupoSeeder extends Seeder
                             'sede_id'           => intval($data[4]),
                             'profesor_id'       => intval($data[5]),
                             'modulo_id'         => intval($data[6]),
-                            'created_at'        => $crea,
-                            'updated_at'        => $actua
+                            'created_at'        => $data[7],
+                            'updated_at'        => $data[8]
                         ]);
 
                     }catch(Exception $exception){

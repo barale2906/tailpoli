@@ -64,8 +64,8 @@ class UserSeeder extends Seeder
                                         'password'      => $password,
                                         'status'        => intval($data[4]),
                                         'rol_id'        => intval($data[5]),
-                                        'created_at'    => $crea,
-                                        'updated_at'    => $actua
+                                        'created_at'    => $data[6],
+                                        'updated_at'    => $data[7]
                                     ]);
 
                                 $usu=User::orderBy('id', 'DESC')->first();
@@ -76,8 +76,8 @@ class UserSeeder extends Seeder
                                     ->insert([
                                         'user_id'       =>$usu->id,
                                         'sede_id'       =>$data[8],
-                                        'created_at'    => $crea,
-                                        'updated_at'    => $actua
+                                        'created_at'    => $data[6],
+                                        'updated_at'    => $data[7]
                                     ]);
 
                                 Perfil::create([

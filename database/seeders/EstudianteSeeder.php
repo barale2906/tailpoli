@@ -48,8 +48,8 @@ class EstudianteSeeder extends Seeder
                                 'password'      => $password,
                                 'status'        => intval($data[4]),
                                 'rol_id'        => intval($data[5]),
-                                'created_at'    => $crea,
-                                'updated_at'    => $actua,
+                                'created_at'    => $data[6],
+                                'updated_at'    => $data[7],
                             ]);
 
                         $usu=User::orderBy('id', 'DESC')->first();
@@ -88,10 +88,10 @@ class EstudianteSeeder extends Seeder
                             'documento'=>strtolower($data[3]),
                             'name'=>strtolower($data[1]),
                             'lastname'=>strtolower($data[2]),
-                            'fecha_documento'=>$fech,
+                            'fecha_documento'=>$data[13],
                             'lugar_expedicion'=>strtolower($data[14]),
                             'direccion'=>strtolower($data[15]),
-                            'fecha_nacimiento'=>$fechb,
+                            'fecha_nacimiento'=>$data[16],
                             'barrio'=>strtolower($data[17]),
                             'celular'=>strtolower($data[18]),
                             'wa'=>strtolower($data[19]),

@@ -49,8 +49,8 @@ class SedeSeeder extends Seeder
                             'start'                     => '06:00:00',
                             'finish'                    => '22:00:00',
                             'status'                    => intval($data[10]),
-                            'created_at'                => $crea,
-                            'updated_at'                => $actua
+                            'created_at'                => $data[11],
+                            'updated_at'                => $data[12]
                         ]);
 
                         $sede=Sede::orderBy('id', 'DESC')->first();
@@ -58,16 +58,16 @@ class SedeSeeder extends Seeder
                             ->insert([
                                 'area_id'=>4,
                                 'sede_id'=>$sede->id,
-                                'created_at'=>$crea,
-                                'updated_at'=>$actua,
+                                'created_at'=>$data[11],
+                                'updated_at'=>$data[12],
                             ]);
 
                         DB::table('area_sede')
                             ->insert([
                                 'area_id'=>5,
                                 'sede_id'=>$sede->id,
-                                'created_at'=>$crea,
-                                'updated_at'=>$actua,
+                                'created_at'=>$data[11],
+                                'updated_at'=>$data[12],
                             ]);
 
                             $start='06:00:00';
@@ -156,8 +156,8 @@ class SedeSeeder extends Seeder
                             ->insert([
                                 'user_id'                   =>$item->id,
                                 'sede_id'                   =>$sede->id,
-                                'created_at'                =>$crea,
-                                'updated_at'                =>$actua,
+                                'created_at'                =>$data[11],
+                                'updated_at'                =>$data[12],
                             ]);
 
                         }

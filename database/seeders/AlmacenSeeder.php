@@ -38,8 +38,8 @@ class AlmacenSeeder extends Seeder
                             'name'          => strtolower($data[1]),
                             'status'        => intval($data[2]),
                             'sede_id'       => intval($data[3]),
-                            'created_at'    => $crea,
-                            'updated_at'    => $actua
+                            'created_at'    => $data[4],
+                            'updated_at'    => $data[5]
                         ]);
 
                     }catch(Exception $exception){

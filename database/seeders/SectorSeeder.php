@@ -39,8 +39,8 @@ class SectorSeeder extends Seeder
                             'name'          => strtolower($data[2]),
                             'slug'          => strtolower($data[3]),
                             'status'        => intval($data[4]),
-                            'created_at'    => $crea,
-                            'updated_at'    => $actua
+                            'created_at'    => $data[5],
+                            'updated_at'    => $data[6]
                         ]);
 
                     }catch(Exception $exception){

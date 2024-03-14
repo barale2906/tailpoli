@@ -41,8 +41,8 @@ class RecibopagodetalleSeeder extends Seeder
                     ->insert([
                         'valor'             =>intval($data[0]),
                         'id_relacional'     =>intval($data[1]),
-                        'created_at'        =>$crea,
-                        'updated_at'        =>$actua,
+                        'created_at'        =>$data[2],
+                        'updated_at'        =>$data[3],
                         'tipo'              =>$concepto->tipo,
                         'medio'             =>$recibo->medio,
                         'concepto_pago_id'  =>$concepto->id,

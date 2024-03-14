@@ -40,7 +40,7 @@ class RecibopagoinvSeeder extends Seeder
                     DB::table('recibo_pagos')->insert([
                         'numero_recibo'     =>intval($data[0]),
                         'origen'            =>false,
-                        'fecha'             =>$fech,
+                        'fecha'             =>$data[1],
                         'valor_total'       =>$data[2],
                         'medio'             =>strtolower($data[3]),
                         'observaciones'     =>$observaciones,
@@ -48,8 +48,8 @@ class RecibopagoinvSeeder extends Seeder
                         'creador_id'        =>intval($data[6]),
                         'paga_id'           =>intval($data[7]),
                         'status'            =>intval($data[8]),
-                        'created_at'        =>$crea,
-                        'updated_at'        =>$actua,
+                        'created_at'        =>$data[9],
+                        'updated_at'        =>$data[10],
                     ]);
 
                 }catch(Exception $exception){

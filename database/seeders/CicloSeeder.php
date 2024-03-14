@@ -56,8 +56,8 @@ class CicloSeeder extends Seeder
                             Ciclogrupo::create([
                                 'ciclo_id'       => $data[0],
                                 'grupo_id'       => $value->id,
-                                'fecha_inicio'   => $fech,
-                                'fecha_fin'      => $fechb,
+                                'fecha_inicio'   => $data[4],
+                                'fecha_fin'      => $data[5],
                             ]);
                         }
 

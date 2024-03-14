@@ -39,8 +39,8 @@ class ModuloSeeder extends Seeder
                             'slug'          => strtolower($data[2]),
                             'status'        => intval($data[3]),
                             'curso_id'      => intval($data[4]),
-                            'created_at'    => $crea,
-                            'updated_at'    => $actua
+                            'created_at'    => $data[5],
+                            'updated_at'    => $data[6]
                         ]);
 
                     }catch(Exception $exception){

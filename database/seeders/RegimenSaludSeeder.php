@@ -59,8 +59,8 @@ class RegimenSaludSeeder extends Seeder
                         'id'            => intval($data[0]),
                         'name'          => strtolower($data[1]),
                         'status'        => intval($data[2]),
-                        'created_at'    => $crea,
-                        'updated_at'    => $actua
+                        'created_at'    => $data[3],
+                        'updated_at'    => $data[4]
                     ]);
 
                 }catch(Exception $exception){

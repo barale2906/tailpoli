@@ -41,8 +41,8 @@ class CursoSeeder extends Seeder
                             'duracion_horas'=> $data[4],
                             'duracion_meses'=> $data[5],
                             'status'        => intval($data[6]),
-                            'created_at'    => $crea,
-                            'updated_at'    => $actua
+                            'created_at'    => $data[7],
+                            'updated_at'    => $data[8]
                         ]);
 
                     }catch(Exception $exception){

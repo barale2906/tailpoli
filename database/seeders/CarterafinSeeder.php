@@ -46,8 +46,8 @@ class CarterafinSeeder extends Seeder
 
                         DB::table('carteras')->insert([
                             'id'                    => intval($data[0]),
-                            'fecha_pago'            => $fech,
-                            'fecha_real'            => $fechb,
+                            'fecha_pago'            => $data[1],
+                            'fecha_real'            => $data[11],
                             'valor'                 => intval($data[2]),
                             'saldo'                 => intval($data[3]),
                             'observaciones'         => $observaciones,
@@ -57,8 +57,8 @@ class CarterafinSeeder extends Seeder
                             'concepto_pago_id'      => $concepto->id,
                             'concepto'              => strtolower($data[7]),
                             'responsable_id'        => intval($data[8]),
-                            'created_at'            => $crea,
-                            'updated_at'            => $actua
+                            'created_at'            => $data[9],
+                            'updated_at'            => $data[10]
                         ]);
 
                     }catch(Exception $exception){
