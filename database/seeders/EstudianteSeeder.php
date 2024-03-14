@@ -77,6 +77,12 @@ class EstudianteSeeder extends Seeder
                         $fechaa=new Carbon($data[16]);
                         $fechb=$fechaa->format('Y-m-d');
 
+                        if($data[13]===null){
+                            $fedocumento=$data[13];
+                        }else{
+                            $fedocumento=null;
+                        }
+
                         Perfil::create([
                             'user_id'=>$usu->id,
                             'country_id'=>intval($data[8]),
@@ -88,7 +94,7 @@ class EstudianteSeeder extends Seeder
                             'documento'=>strtolower($data[3]),
                             'name'=>strtolower($data[1]),
                             'lastname'=>strtolower($data[2]),
-                            'fecha_documento'=>$data[13],
+                            'fecha_documento'=>$fedocumento,
                             'lugar_expedicion'=>strtolower($data[14]),
                             'direccion'=>strtolower($data[15]),
                             'fecha_nacimiento'=>$data[16],
