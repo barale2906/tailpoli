@@ -4,6 +4,7 @@ namespace App\Livewire\Cartera\Cartera;
 
 use App\Exports\CarCarteraExport;
 use App\Models\Financiera\Cartera;
+use App\Traits\FiltroTrait;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +12,7 @@ use Livewire\WithPagination;
 class Carteras extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='DESC';
@@ -22,7 +24,26 @@ class Carteras extends Component
     public $buscar='';
     public $buscamin='';
 
+    public $filtroVendes;
+    public $filtroVenhas;
+    public $filtroven=[];
+
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(9);
+    }
+
+    public function updatedFiltroVenhas(){
+        if($this->filtroVendes<=$this->filtroVenhas){
+            $crea=array();
+            array_push($crea, $this->filtroVendes);
+            array_push($crea, $this->filtroVenhas);
+            $this->filtroven=$crea;
+        }else{
+            $this->reset('filtroVendes','filtroVenhas');
+        }
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -81,22 +102,9 @@ class Carteras extends Component
 
     private function carteras(){
 
-        return Cartera::query()
-                        ->with(['responsable', 'concepto_pago', 'estadoCartera'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('concepto', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('responsable', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%")
-                                            ->orwhere('documento', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('concepto_pago', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('estadoCartera', function($que){
-                                        $que->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
+        return Cartera::where('status',true)
+                        ->buscar($this->buscamin)
+                        ->vencido($this->filtroven)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 

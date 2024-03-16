@@ -28,6 +28,9 @@ trait FiltroTrait
     //Casos Especiales
     public $is_verfiltro=true;
 
+    //Cartera
+    public $is_vencimiento=false;
+
 
     public function filtroMostrar(){
         $this->is_filtro=!$this->is_filtro;
@@ -93,6 +96,13 @@ trait FiltroTrait
 
                 //transacciones
                 $this->is_verfiltro=false;
+                break;
+
+            case 9:
+                $this->txt="Busque por acá: concepto, responsable, concepto pago, estado cartera";
+
+                //transacciones
+                $this->is_vencimiento=true;
                 break;
         }
     }
