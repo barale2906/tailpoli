@@ -23,6 +23,9 @@
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
+                        <th>
+
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_pago')">
                             Fecha Programada
                             @if ($ordena != 'fecha_pago')
@@ -94,6 +97,11 @@
                 <tbody>
                     @foreach ($carteras as $cartera)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
+                            <th>
+                                <a href="" wire:click.prevent="show({{$cartera->responsable_id}})" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                                    <i class="fa-regular fa-lightbulb"></i>
+                                </a>
+                            </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$cartera->fecha_pago}}
                             </th>
@@ -103,7 +111,6 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 $ {{number_format($cartera->valor, 0, ',', '.')}}
                             </th>
-
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 $ {{number_format($cartera->saldo, 0, ',', '.')}}
                             </th>
@@ -141,6 +148,10 @@
 
     @if ($is_creating)
         <livewire:cartera.cartera.convenio />
+    @endif
+
+    @if ($is_cartera)
+        <livewire:cartera.cartera.detalle :alumno="$alumno" />
     @endif
 
     @push('js')

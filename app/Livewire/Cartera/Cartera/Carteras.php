@@ -18,8 +18,11 @@ class Carteras extends Component
     public $ordenado='DESC';
     public $pages = 10;
 
+    public $alumno;
+
     public $is_modify = true;
     public $is_creating = false;
+    public $is_cartera=false;
 
     public $buscar='';
     public $buscamin='';
@@ -98,6 +101,12 @@ class Carteras extends Component
 
     public function exportar(){
         return new CarCarteraExport($this->buscamin);
+    }
+
+    public function show($alumno){
+        $this->alumno=$alumno;
+        $this->is_modify=!$this->is_modify;
+        $this->is_cartera=!$this->is_cartera;
     }
 
     private function carteras(){

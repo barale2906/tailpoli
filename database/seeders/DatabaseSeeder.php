@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             DocumentoSeeder::class, //se carga depués de cargar las sedes y usuarios
             //InventarioSeeder::class,
 
-            MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
+            //MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
             EstadoCarteraSeeder::class,
             CarteraSeeder::class,
             CarteraEspSeeder::class,
