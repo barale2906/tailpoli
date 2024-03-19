@@ -22,7 +22,7 @@
                 </div>
             @endif
 
-            @if ($sede_id>0 && $curso_id>0 && $contar===0)
+            @if ($sede_id>0 && $curso_id>0 && $contar>0)
 
                 <div class="mb-6">
                     <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio debe ser posterior a: {{$fechaRegistro}}</label>

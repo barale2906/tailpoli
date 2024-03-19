@@ -77,17 +77,16 @@ class CiclosCrear extends Component
 
                     }else{
                         array_push($this->grupos, $nuevo);
+                        $this->contar=$this->contar+1;
                     }
                 }
 
-            }else{
-                $this->contar=$this->contar+1;
             }
 
 
         }
 
-        if($this->contar>0){
+        if($this->contar===0){
             $this->dispatch('alerta', name:'No hay grupos para el curso: '.$this->curso->name.', generelos antes.');
         }
 

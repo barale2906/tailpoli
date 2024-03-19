@@ -3,11 +3,14 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
             <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
-                <h1 class="text-gray-900 dark:text-white text-3xl md:text-5xl font-extrabold mb-2">
+                <h1 class="text-gray-900 dark:text-white text-xl md:text-2xl font-extrabold mb-2">
                     A continuación se presenta el estado de cartera de: {{$actual->name}}.
                 </h1>
                 <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-6">
-                    Celular: {{$actual->perfil->}} Correo Elecrónico: {{$actual->email}}
+                    Celular: {{$actual->perfil->celular}} Correo Elecrónico: {{$actual->email}}
+                </p>
+                <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-6">
+                    Total Cartera: $ {{number_format($total->saldo, 0, ',', '.')}} de una cartera inicial de $ {{number_format($total->valor, 0, ',', '.')}}
                 </p>
             </div>
             <div class="grid md:grid-cols-2 gap-8">
