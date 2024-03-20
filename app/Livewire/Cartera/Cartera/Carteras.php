@@ -30,6 +30,8 @@ class Carteras extends Component
     public $filtroVendes;
     public $filtroVenhas;
     public $filtroven=[];
+    public $filtroCiudad;
+    public $filtroSede;
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -118,6 +120,8 @@ class Carteras extends Component
                         ->groupBy('matricula_id','responsable_id')
                         ->buscar($this->buscamin)
                         ->vencido($this->filtroven)
+                        ->sede($this->filtroSede)
+                        ->ciudad($this->filtroCiudad)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 
@@ -127,15 +131,33 @@ class Carteras extends Component
         return Cartera::where('status', true)
                         ->buscar($this->buscamin)
                         ->vencido($this->filtroven)
+                        ->sede($this->filtroSede)
+                        ->ciudad($this->filtroCiudad)
                         ->sum('saldo');
 
+    }
+
+    private function sedes(){
+        return Cartera::where('status', true)
+                        ->select('sede_id')
+                        ->groupBy('sede_id')
+                        ->get();
+    }
+
+    private function ciudades(){
+        return Cartera::where('status', true)
+                        ->select('sector_id')
+                        ->groupBy('sector_id')
+                        ->get();
     }
 
     public function render()
     {
         return view('livewire.cartera.cartera.carteras', [
             'carteras'  =>$this->carteras(),
-            'total'     =>$this->total()
+            'total'     =>$this->total(),
+            'sedes'     =>$this->sedes(),
+            'ciudades'  =>$this->ciudades(),
         ]);
     }
 }

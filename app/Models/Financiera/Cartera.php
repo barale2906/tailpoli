@@ -79,4 +79,16 @@ class Cartera extends Model
         });
     }
 
+    public function scopeSede($query, $sede){
+        $query->when($sede ?? null, function($query, $sede){
+            $query->where('sede_id', $sede);
+        });
+    }
+
+    public function scopeCiudad($query, $ciudad){
+        $query->when($ciudad ?? null, function($query, $ciudad){
+            $query->where('sector_id', $ciudad);
+        });
+    }
+
 }
