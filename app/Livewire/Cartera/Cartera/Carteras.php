@@ -14,7 +14,7 @@ class Carteras extends Component
     use WithPagination;
     use FiltroTrait;
 
-    public $ordena='id';
+    public $ordena='responsable_id';
     public $ordenado='DESC';
     public $pages = 10;
 
@@ -61,22 +61,15 @@ class Carteras extends Component
     }
 
     //Activar evento
-    #[On('created')]
-    //Mostrar formulario de creación
-    public function updatedIsCreating()
-    {
-        $this->is_modify = !$this->is_modify;
-        $this->is_creating = !$this->is_creating;
-    }
-
-    //Activar evento
     #[On('cancelando')]
     //Mostrar formulario de creación
-    public function cancela()
-    {
+    public function cancela(){
+
         $this->reset(
                         'is_modify',
-                        'is_creating'
+                        'is_creating',
+                        'is_cartera',
+                        'alumno'
                     );
     }
 
@@ -103,15 +96,26 @@ class Carteras extends Component
         return new CarCarteraExport($this->buscamin);
     }
 
-    public function show($alumno){
+    public function show($alumno,$est){
         $this->alumno=$alumno;
         $this->is_modify=!$this->is_modify;
-        $this->is_cartera=!$this->is_cartera;
+        switch ($est) {
+            case 0:
+                $this->is_cartera=!$this->is_cartera;
+                break;
+
+            case 1:
+                $this->is_creating = !$this->is_creating;
+                break;
+        }
+
     }
 
     private function carteras(){
 
         return Cartera::where('status',true)
+                        ->selectRaw('sum(saldo) as saldo, matricula_id, responsable_id')
+                        ->groupBy('matricula_id','responsable_id')
                         ->buscar($this->buscamin)
                         ->vencido($this->filtroven)
                         ->orderBy($this->ordena, $this->ordenado)

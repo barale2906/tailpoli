@@ -43,7 +43,8 @@ class Cartera extends Model
             $query->where('concepto', 'like', "%".$item."%")
 
                     ->orwherehas('responsable', function($query) use($item){
-                        $query->where('users.name', 'like', "%".$item."%");
+                        $query->where('users.name', 'like', "%".$item."%")
+                                ->orwhere('users.documento', 'like', "%".$item."%");
                     })
 
                     ->orwherehas('concepto_pago', function($query) use($item){
