@@ -89,7 +89,7 @@
     @endif
 
     @if ($is_creating)
-        <livewire:cartera.cartera.convenio />
+        <livewire:cartera.cartera.convenio :id="$alumno"/>
     @endif
 
     @if ($is_cartera)
