@@ -21,13 +21,17 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
 
     private $buscamin;
     private $periodo;
+    private $ciudad;
+    private $sede;
     private $fileName = "Carteras.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin, $periodo)
+    public function __construct($buscamin, $periodo,$ciudad,$sede)
     {
         $this->buscamin=$buscamin;
         $this->periodo=$periodo;
+        $this->ciudad=$ciudad;
+        $this->sede=$sede;
     }
 
     /**
@@ -38,7 +42,9 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
         return Cartera::where('status',true)
                         ->buscar($this->buscamin)
                         ->vencido($this->periodo)
-                        ->orderBy('fecha_pago', 'ASC')
+                        ->sede($this->sede)
+                        ->ciudad($this->ciudad)
+                        ->orderBy('matricula_id', 'ASC')
                         ->get();
     }
 
@@ -50,36 +56,51 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
     public function headings(): array
     {
         return [
-            'Estudiante',
+            'Tipo identificación',
+            'Número identificación',
+            'Nombre Estudiante',
+            'Matricula',
+            'Fecha matricula',
             'Curso',
-            'Concepto',
             'Fecha Programada',
             'Fecha Real de Pago',
             'Valor Inicial',
+            'Valor pagado',
             'Saldo',
-            'Observaciones'
+            'Concepto',
+            'Ciudad',
+            'Sede',
+            'Observaciones',
         ];
     }
 
     public function map($cartera): array
     {
         return [
+            $cartera->responsable->perfil->tipo_documento,
+            $cartera->responsable->documento,
             $cartera->responsable->name,
+            $cartera->matricula_id,
+            $cartera->matricula->created_at,
             $cartera->matricula->curso->name,
-            $cartera->concepto,
             $cartera->fecha_pago,
             $cartera->fecha_real,
             $cartera->valor,
+            $cartera->valor-$cartera->saldo,
             $cartera->saldo,
-            $cartera->observaciones
+            $cartera->concepto,
+            $cartera->sector->name,
+            $cartera->sede->name,
+            $cartera->observaciones,
         ];
     }
 
     public function columnFormats(): array
     {
         return [
-            'D' => 'dd/mm/yyyy',
             'E' => 'dd/mm/yyyy',
+            'G' => 'dd/mm/yyyy',
+            'H' => 'dd/mm/yyyy',
         ];
     }
 
