@@ -50,6 +50,7 @@ class MatriculasCrear extends Component
     public $config_id;
     public $configElegida;
     public $configPago;
+    public $configSeleccionada;
     public $modulos;
 
     public $valor_curso;
@@ -140,14 +141,14 @@ class MatriculasCrear extends Component
         );
 
         //Cargar datos de pago
-        $pagos=ConfiguracionPago::find($this->config_id);
+        $this->configSeleccionada=ConfiguracionPago::find($this->config_id);
 
-        $this->valor_curso=$pagos->valor_curso;
-        $this->valor_matricula=$pagos->valor_matricula;
-        $this->cuotas=$pagos->cuotas;
-        $this->valor_cuota=$pagos->valor_cuota;
+        $this->valor_curso=$this->configSeleccionada->valor_curso;
+        $this->valor_matricula=$this->configSeleccionada->valor_matricula;
+        $this->cuotas=$this->configSeleccionada->cuotas;
+        $this->valor_cuota=$this->configSeleccionada->valor_cuota;
 
-        if($pagos->incluye){
+        if($this->configSeleccionada->incluye){
             $this->modulos=Modulo::where('curso_id', $this->curso_id)
                                     ->where('status', true)
                                     ->orderBy('name')
@@ -254,7 +255,7 @@ class MatriculasCrear extends Component
         $curso=Curso::find($this->curso_id);
         $this->cursoName=$curso->name;
 
-        $date = Carbon::now();
+        $date = Carbon::parse($this->ciclosel->inicia);
         //Crear registro
         $this->matricula = Matricula::create([
                                 'medio'=>$this->medio,
@@ -271,7 +272,7 @@ class MatriculasCrear extends Component
                             ]);
 
 
-        //matricula
+        //cartera
         $concepto=ConceptoPago::where('name', 'Matricula')
                                 ->where('status', true)
                                 ->first();
