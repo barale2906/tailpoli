@@ -123,10 +123,19 @@ class Carteras extends Component
 
     }
 
+    private function total(){
+        return Cartera::where('status', true)
+                        ->buscar($this->buscamin)
+                        ->vencido($this->filtroven)
+                        ->sum('saldo');
+
+    }
+
     public function render()
     {
         return view('livewire.cartera.cartera.carteras', [
-            'carteras'=>$this->carteras()
+            'carteras'  =>$this->carteras(),
+            'total'     =>$this->total()
         ]);
     }
 }

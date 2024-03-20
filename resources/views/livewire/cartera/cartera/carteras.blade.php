@@ -15,6 +15,9 @@
             @endcan
         </div>
         <div class="relative overflow-x-auto">
+            <h2 class=" text-center font-semibold text-lg">
+                Cartera según parámetros: $ {{number_format($total, 0, ',', '.')}}
+            </h2>
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>

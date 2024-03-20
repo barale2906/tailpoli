@@ -99,7 +99,7 @@ trait FiltroTrait
                 break;
 
             case 9:
-                $this->txt="Busque por acá: concepto, responsable, concepto pago, estado cartera";
+                $this->txt="Busque por acá: Responsable (documento, nombre), concepto pago.";
 
                 //transacciones
                 $this->is_vencimiento=true;
