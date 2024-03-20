@@ -31,6 +31,8 @@ class Convenio extends Component
     public $valor_cuota;
     public $descripcion;
     public $matricula_id;
+    public $sede_id;
+    public $sector_id;
 
     public $fecha;
     public $hoy;
@@ -98,6 +100,13 @@ class Convenio extends Component
         $this->deudas=Cartera::where('responsable_id', $this->responsable_id)
                             ->where('status', true)
                             ->get();
+
+        $crt=Cartera::where('responsable_id', $this->responsable_id)
+                    ->where('status', true)
+                    ->first();
+
+        $this->sede_id=$crt->sede_id;
+        $this->sector_id=$crt->sector_id;
 
         $this->total=Cartera::where('responsable_id', $this->responsable_id)
                             ->where('status', true)
@@ -211,7 +220,9 @@ class Convenio extends Component
             'concepto_pago_id'=>$concepto->id,
             'concepto'=>$concepto->name,
             'responsable_id'=>$this->responsable_id,
-            'estado_cartera_id'=>1
+            'estado_cartera_id'=>1,
+            'sede_id'=>$this->sede_id,
+            'sector_id'=>$this->sector_id
         ]);
 
         //Cargar nueva cartera
@@ -240,7 +251,9 @@ class Convenio extends Component
                     'concepto_pago_id'=>$concepto->id,
                     'concepto'=>$concepto->name,
                     'responsable_id'=>$this->responsable_id,
-                    'estado_cartera_id'=>1
+                    'estado_cartera_id'=>1,
+                    'sede_id'=>$this->sede_id,
+                    'sector_id'=>$this->sector_id
                 ]);
 
                 $a++;

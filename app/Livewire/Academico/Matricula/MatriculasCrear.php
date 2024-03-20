@@ -276,6 +276,8 @@ class MatriculasCrear extends Component
                                 ->where('status', true)
                                 ->first();
 
+        $sede=Sede::find($this->sede_id);
+
         Cartera::create([
             'fecha_pago'=>now(),
             'valor'=>$this->valor_matricula,
@@ -285,7 +287,9 @@ class MatriculasCrear extends Component
             'concepto_pago_id'=>$concepto->id,
             'concepto'=>$concepto->name,
             'responsable_id'=>$this->alumno_id,
-            'estado_cartera_id'=>1
+            'estado_cartera_id'=>1,
+            'sede_id'=>$sede->id,
+            'sector_id'=>$sede->sector_id
         ]);
 
         //Cuotas
@@ -305,7 +309,9 @@ class MatriculasCrear extends Component
                     'concepto_pago_id'=>$concepto->id,
                     'concepto'=>$concepto->name,
                     'responsable_id'=>$this->alumno_id,
-                    'estado_cartera_id'=>1
+                    'estado_cartera_id'=>1,
+                    'sede_id'=>$sede->id,
+                    'sector_id'=>$sede->sector_id
                 ]);
                 $a++;
             }

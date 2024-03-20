@@ -20,12 +20,14 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
     use Exportable;
 
     private $buscamin;
+    private $periodo;
     private $fileName = "Carteras.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin)
+    public function __construct($buscamin, $periodo)
     {
         $this->buscamin=$buscamin;
+        $this->periodo=$periodo;
     }
 
     /**
@@ -33,22 +35,9 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
     */
     public function collection()
     {
-        return Cartera::query()
-                        ->with(['responsable', 'concepto_pago', 'estadoCartera'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('concepto', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('responsable', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%")
-                                            ->orwhere('documento', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('concepto_pago', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('estadoCartera', function($que){
-                                        $que->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
+        return Cartera::where('status',true)
+                        ->buscar($this->buscamin)
+                        ->vencido($this->periodo)
                         ->orderBy('fecha_pago', 'ASC')
                         ->get();
     }

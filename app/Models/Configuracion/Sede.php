@@ -7,6 +7,7 @@ use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
+use App\Models\Financiera\Cartera;
 use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
@@ -98,5 +99,11 @@ class Sede extends Model
     public function transacciones(): HasMany
     {
         return $this->hasMany(Transaccion::class);
+    }
+
+    //Relación uno a muchos
+    public function carteras(): HasMany
+    {
+        return $this->hasMany(Cartera::class);
     }
 }

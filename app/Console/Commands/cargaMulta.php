@@ -49,7 +49,9 @@ class cargaMulta extends Command
                         'concepto_pago_id'=>$this->multa->id,
                         'concepto'=>$this->multa->name,
                         'responsable_id'=>$cart->responsable_id,
-                        'estado_cartera_id'=>1
+                        'estado_cartera_id'=>1,
+                        'sede_id'=>$cart->sede_id,
+                        'sector_id'=>$cart->sector_id
                     ]);
 
                     Pqrs::create([

@@ -93,7 +93,7 @@ class Carteras extends Component
     }
 
     public function exportar(){
-        return new CarCarteraExport($this->buscamin);
+        return new CarCarteraExport($this->buscamin,$this->filtroven);
     }
 
     public function show($alumno,$est){

@@ -3,6 +3,8 @@
 namespace App\Models\Financiera;
 
 use App\Models\Academico\Matricula;
+use App\Models\Configuracion\Sector;
+use App\Models\Configuracion\Sede;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,6 +38,18 @@ class Cartera extends Model
     public function concepto_pago(): BelongsTo
     {
         return $this->BelongsTo(ConceptoPago::class);
+    }
+
+    //Relacion uno a muchos inversa
+    public function sector() : BelongsTo
+    {
+        return $this->BelongsTo(Sector::class);
+    }
+
+    //Relacion uno a muchos inversa
+    public function sede() : BelongsTo
+    {
+        return $this->BelongsTo(Sede::class);
     }
 
     public function scopeBuscar($query, $item){

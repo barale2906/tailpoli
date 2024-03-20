@@ -3,6 +3,7 @@
 namespace App\Models\Configuracion;
 
 use App\Models\Clientes\Crm;
+use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConfiguracionPago;
 use App\Models\Financiera\ConfPagOtros;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,5 +51,11 @@ class Sector extends Model
     public function perfiles(): HasMany
     {
         return $this->hasMany(Perfil::class);
+    }
+
+    //Relación uno a muchos
+    public function carteras(): HasMany
+    {
+        return $this->hasMany(Cartera::class);
     }
 }

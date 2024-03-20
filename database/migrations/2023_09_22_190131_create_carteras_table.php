@@ -24,6 +24,12 @@ return new class extends Migration
             $table->unsignedBigInteger('matricula_id');
             $table->foreign('matricula_id')->references('id')->on('matriculas');
 
+            $table->unsignedBigInteger('sector_id');
+            $table->foreign('sector_id')->references('id')->on('sectors');
+
+            $table->unsignedBigInteger('sede_id');
+            $table->foreign('sede_id')->references('id')->on('sedes');
+
             $table->unsignedBigInteger('estado_cartera_id');
             $table->foreign('estado_cartera_id')->references('id')->on('estado_carteras');
 

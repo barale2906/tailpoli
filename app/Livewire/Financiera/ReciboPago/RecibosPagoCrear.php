@@ -392,6 +392,8 @@ class RecibosPagoCrear extends Component
                                 'paga_id'=>$this->alumno_id
                             ]);
 
+        $sede=Sede::find($this->sede_id);
+
         //registros
 
         /* if($this->recargo>0){
@@ -489,7 +491,9 @@ class RecibosPagoCrear extends Component
                         'concepto_pago_id'=>$value->id_concepto,
                         'concepto'=>$value->concepto,
                         'responsable_id'=>$this->alumno_id,
-                        'estado_cartera_id'=>1
+                        'estado_cartera_id'=>1,
+                        'sede_id'=>$sede->id,
+                        'sector_id'=>$sede->sector_id
                     ]);
                 }
 
