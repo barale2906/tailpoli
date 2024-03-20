@@ -560,7 +560,7 @@
                                 @else
                                     <tr>
                                         <th scope="col" class="celdafirma centrado uppercase">
-                                            {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                            ACUDIENTE: {{$docuMatricula->alumno->perfil->contacto}}<br>
                                             CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
                                         </th>
                                         <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
@@ -648,7 +648,7 @@
                                 @else
                                     <tr>
                                         <th scope="col" class="celdafirma centrado uppercase">
-                                            {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                            ACUDIENTE: {{$docuMatricula->alumno->perfil->contacto}}<br>
                                             CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
                                         </th>
                                         <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
@@ -687,7 +687,7 @@
                                                 Firma: _________________________________________________
                                             </p>
                                             <p class="justificado font-sm capitalize">
-                                                {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                                ACUDIENTE: {{$docuMatricula->alumno->perfil->contacto}}<br>
                                                 CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
                                                 Célular: {{$docuMatricula->alumno->perfil->celular}} - Acudiente: {{$docuMatricula->alumno->perfil->telefono_contacto}}<br>
                                                 Dirección: {{$docuMatricula->alumno->perfil->direccion}}
@@ -733,7 +733,7 @@
                                             </p>
                                         @else
                                             <p class="justificado font-sm capitalize">
-                                                {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                                ACUDIENTE: {{$docuMatricula->alumno->perfil->contacto}}<br>
                                                 CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
                                                 Célular: {{$docuMatricula->alumno->perfil->celular}} - Acudiente: {{$docuMatricula->alumno->perfil->telefono_contacto}}<br>
                                                 Correo Electrónico: {{$docuMatricula->alumno->email}} - Acudiente: {{$docuMatricula->alumno->perfil->email_contacto}}
@@ -771,7 +771,7 @@
                                             </p>
                                         @else
                                             <p class="justificado font-sm capitalize">
-                                                {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                                ACUDIENTE: {{$docuMatricula->alumno->perfil->contacto}}<br>
                                                 CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}<br>
                                                 Célular: {{$docuMatricula->alumno->perfil->celular}} - Acudiente: {{$docuMatricula->alumno->perfil->telefono_contacto}}<br>
                                                 Correo Electrónico: {{$docuMatricula->alumno->email}} - Acudiente: {{$docuMatricula->alumno->perfil->email_contacto}}
