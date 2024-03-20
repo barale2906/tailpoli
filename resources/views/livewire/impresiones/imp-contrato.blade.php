@@ -15,7 +15,7 @@
 
                     </th>
                     <th scope="col" class="px-2 py-1">
-                        <h1 class="text-center  font-extrabold uppercase text-xl">contrato de prestación de servicios educativos n°: {{$docuMatricula->id}}</h1>
+                        <h1 class="text-center  font-extrabold uppercase text-xl">contrato de prestación de servicios educativos n°: {{$docuMatricula->id}} </h1>
                     </th>
                     <th scope="col" class="text-justify">
                         <h1 class="text-sm font-bold">Fecha:</h1>
@@ -55,7 +55,7 @@
                         </p>
 
                         <p class="text-justify text-sm">
-                            Pagaré Autorizado N°: {{$docuMatricula->id}}
+                            Pagaré Autorizado N°: {{$docuMatricula->id}} - Edad: {{$edad}}
                         </p>
                     </th>
                 </tr>

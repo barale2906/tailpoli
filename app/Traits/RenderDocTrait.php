@@ -22,6 +22,7 @@ trait RenderDocTrait
     public $detalles;
     public $impresion=[];
     public $deuda;
+    public $edad;
 
     public function docubase($id, $tipo, $ori=null){
 
@@ -62,6 +63,15 @@ trait RenderDocTrait
 
     public function calculo(){
         $fecha=Carbon::now();
+        $nacio=$this->docuMatricula->alumno->perfil->fecha_nacimiento;
+
+        if($nacio){
+            $this->edad=$fecha->diffInYears($nacio);
+        }else{
+            $this->edad=18;
+        }
+
+
 
         foreach ($this->docuCartera as $value) {
             if($value->fecha_pago<$fecha){

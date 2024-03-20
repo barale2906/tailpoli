@@ -546,16 +546,30 @@
                                         ____________________________________
                                     </th>
                                 </tr>
-                                <tr>
-                                    <th scope="col" class="celdafirma centrado uppercase">
-                                        {{$docuMatricula->alumno->name}}<br>
-                                        {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}
-                                    </th>
-                                    <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
-                                        {{config('instituto.nombre_empresa')}}<br>
-                                        NIT: {{config('instituto.nit')}}
-                                    </th>
-                                </tr>
+                                @if ($edad>=18)
+                                    <tr>
+                                        <th scope="col" class="celdafirma centrado uppercase">
+                                            {{$docuMatricula->alumno->name}}<br>
+                                            {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}
+                                        </th>
+                                        <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                            {{config('instituto.nombre_empresa')}}<br>
+                                            NIT: {{config('instituto.nit')}}
+                                        </th>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <th scope="col" class="celdafirma centrado uppercase">
+                                            {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                            CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
+                                        </th>
+                                        <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                            {{config('instituto.nombre_empresa')}}<br>
+                                            NIT: {{config('instituto.nit')}}
+                                        </th>
+                                    </tr>
+                                @endif
+
                             </thead>
                         </table>
                         <div class="salto"></div>
@@ -621,15 +635,27 @@
 
                                     </th>
                                 </tr>
-                                <tr>
-                                    <th scope="col" class="celdafirma centrado uppercase">
-                                        {{$docuMatricula->alumno->name}}<br>
-                                        {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}
-                                    </th>
-                                    <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                @if ($edad>=18)
+                                    <tr>
+                                        <th scope="col" class="celdafirma centrado uppercase">
+                                            {{$docuMatricula->alumno->name}}<br>
+                                            {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}
+                                        </th>
+                                        <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
 
-                                    </th>
-                                </tr>
+                                        </th>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <th scope="col" class="celdafirma centrado uppercase">
+                                            {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                            CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
+                                        </th>
+                                        <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+
+                                        </th>
+                                    </tr>
+                                @endif
                             </thead>
                         </table>
                         <div class="salto"></div>
@@ -643,17 +669,32 @@
                         <table >
                             <thead >
                                 <tr>
-                                    <th scope="col" >
-                                        <p class="justificado font-sm capitalize mt-1">
-                                            Firma: _________________________________________________
-                                        </p>
-                                        <p class="justificado font-sm capitalize">
-                                            {{$docuMatricula->alumno->name}}<br>
-                                            {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}<br>
-                                            Célular: {{$docuMatricula->alumno->perfil->celular}}<br>
-                                            Dirección: {{$docuMatricula->alumno->perfil->direccion}}
-                                        </p>
-                                    </th>
+                                    @if ($edad>=18)
+                                        <th scope="col" >
+                                            <p class="justificado font-sm capitalize mt-1">
+                                                Firma: _________________________________________________
+                                            </p>
+                                            <p class="justificado font-sm capitalize">
+                                                {{$docuMatricula->alumno->name}}<br>
+                                                {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}<br>
+                                                Célular: {{$docuMatricula->alumno->perfil->celular}}<br>
+                                                Dirección: {{$docuMatricula->alumno->perfil->direccion}}
+                                            </p>
+                                        </th>
+                                    @else
+                                        <th scope="col" >
+                                            <p class="justificado font-sm capitalize mt-1">
+                                                Firma: _________________________________________________
+                                            </p>
+                                            <p class="justificado font-sm capitalize">
+                                                {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                                CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
+                                                Célular: {{$docuMatricula->alumno->perfil->celular}} - Acudiente: {{$docuMatricula->alumno->perfil->telefono_contacto}}<br>
+                                                Dirección: {{$docuMatricula->alumno->perfil->direccion}}
+                                            </p>
+                                        </th>
+                                    @endif
+
                                     <th scope="col" >
 
                                         <p class="justificado font-l bg-gris capitalize mt-1 border">
@@ -683,12 +724,22 @@
                                         <p class="justificado font-sm capitalize mt-1">
                                             Firma: _________________________________________________
                                         </p>
-                                        <p class="justificado font-sm capitalize">
-                                            {{$docuMatricula->alumno->name}}<br>
-                                            {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}<br>
-                                            Célular: {{$docuMatricula->alumno->perfil->celular}}<br>
-                                            Correo Electrónico: {{$docuMatricula->alumno->email}}
-                                        </p>
+                                        @if ($edad>=18)
+                                            <p class="justificado font-sm capitalize">
+                                                {{$docuMatricula->alumno->name}}<br>
+                                                {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}<br>
+                                                Célular: {{$docuMatricula->alumno->perfil->celular}}<br>
+                                                Correo Electrónico: {{$docuMatricula->alumno->email}}
+                                            </p>
+                                        @else
+                                            <p class="justificado font-sm capitalize">
+                                                {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                                CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
+                                                Célular: {{$docuMatricula->alumno->perfil->celular}} - Acudiente: {{$docuMatricula->alumno->perfil->telefono_contacto}}<br>
+                                                Correo Electrónico: {{$docuMatricula->alumno->email}} - Acudiente: {{$docuMatricula->alumno->perfil->email_contacto}}
+                                            </p>
+                                        @endif
+
                                     </th>
                                     <th scope="col" >
 
@@ -711,12 +762,22 @@
                                         <p class="justificado font-sm capitalize mt-1">
                                             Firma: _________________________________________________
                                         </p>
-                                        <p class="justificado font-sm capitalize">
-                                            {{$docuMatricula->alumno->name}}<br>
-                                            {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}<br>
-                                            Célular: {{$docuMatricula->alumno->perfil->celular}}<br>
-                                            Correo Electrónico: {{$docuMatricula->alumno->email}}
-                                        </p>
+                                        @if ($edad>=18)
+                                            <p class="justificado font-sm capitalize">
+                                                {{$docuMatricula->alumno->name}}<br>
+                                                {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}<br>
+                                                Célular: {{$docuMatricula->alumno->perfil->celular}}<br>
+                                                Correo Electrónico: {{$docuMatricula->alumno->email}}
+                                            </p>
+                                        @else
+                                            <p class="justificado font-sm capitalize">
+                                                {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                                CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}<br>
+                                                Célular: {{$docuMatricula->alumno->perfil->celular}} - Acudiente: {{$docuMatricula->alumno->perfil->telefono_contacto}}<br>
+                                                Correo Electrónico: {{$docuMatricula->alumno->email}} - Acudiente: {{$docuMatricula->alumno->perfil->email_contacto}}
+                                            </p>
+                                        @endif
+
                                     </th>
                                     <th scope="col" >
 

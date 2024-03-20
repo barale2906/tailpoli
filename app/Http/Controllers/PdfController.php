@@ -38,7 +38,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -55,7 +56,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -72,7 +74,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -89,7 +92,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -106,7 +110,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -123,7 +128,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -140,7 +146,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -157,7 +164,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -174,7 +182,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -191,7 +200,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -208,7 +218,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
@@ -225,7 +236,8 @@ class PdfController extends Controller
         $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera'));
+        $edad=$this->edad;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
 
         return $pdf->stream();
 
