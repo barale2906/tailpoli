@@ -73,8 +73,8 @@ public function enMora($dif, $saldo){
 }
 
 public function porCobrar($dif, $saldo){
-    $superior=60;
-    $medio=30;
+    $superior=61;
+    $medio=31;
 
     if($dif>=$superior){
         $this->sesentaMas=$this->sesentaMas+$saldo;

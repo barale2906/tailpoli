@@ -1,6 +1,6 @@
 <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
     <div class="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-        <dl class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto sm:grid-cols-3 xl:grid-cols-4 dark:text-white sm:p-8">
+        <dl class="grid max-w-screen-xl grid-cols-1 gap-8 p-4 mx-auto sm:grid-cols-3 xl:grid-cols-4 dark:text-white sm:p-8">
 
             <div class="flex flex-col items-center justify-center mb-4">
                 <dt class="mb-2 text-3xl font-extrabold text-cyan-700">$ {{number_format($cobrohoy, 0, ',', '.')}}</dt>
