@@ -20,31 +20,30 @@ class AcaCicloExport implements FromCollection, WithCustomStartCell, Responsable
 {
     use Exportable;
 
+    private $sede;
+    private $curso;
+    private $inicia;
     private $buscamin;
     private $fileName = "Ciclos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin)
+    public function __construct($buscamin,$sede,$curso,$inicia)
     {
         $this->buscamin=$buscamin;
+        $this->sede=$sede;
+        $this->curso=$curso;
+        $this->inicia=$inicia;
     }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Ciclo::query()
-                    ->with(['sede', 'curso'])
-                    ->when($this->buscamin, function($query){
-                        return $query->where('status', true)
-                                ->where('name', 'like', "%".$this->buscamin."%")
-                                ->orWhereHas('sede', function($q){
-                                    $q->where('name', 'like', "%".$this->buscamin."%");
-                                })
-                                ->orWhereHas('curso', function($qu){
-                                    $qu->where('name', 'like', "%".$this->buscamin."%");
-                                });
-                    })
+        return Ciclo::where('status', true)
+                    ->buscar($this->buscamin)
+                    ->sede($this->sede)
+                    ->curso($this->curso)
+                    ->inicia($this->inicia)
                     ->orderBy('name', 'ASC')
                     ->get();
     }
@@ -62,19 +61,26 @@ class AcaCicloExport implements FromCollection, WithCustomStartCell, Responsable
             'Finaliza',
             'Registrados',
             'Jornada',
-            'Estado'
+            'Estado',
+            'grupos',
         ];
     }
 
     public function map($ciclo): array
     {
+        $grupos=array();
+
+        foreach ($ciclo->ciclogrupos as $value) {
+            array_push($grupos,$value->grupo->name);
+        }
         return [
             $ciclo->name,
             $ciclo->inicia,
             $ciclo->finaliza,
             $ciclo->registrados,
             $ciclo->jornada,
-            $ciclo->status
+            $ciclo->status,
+            $grupos
         ];
     }
 

@@ -4,6 +4,8 @@ namespace App\Livewire\Academico\Ciclo;
 
 use App\Exports\AcaCicloExport;
 use App\Models\Academico\Ciclo;
+use App\Models\Academico\Curso;
+use App\Traits\FiltroTrait;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +13,7 @@ use Livewire\WithPagination;
 class Ciclos extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='DESC';
@@ -22,11 +25,23 @@ class Ciclos extends Component
     public $is_deleting = false;
 
     public $elegido;
+    public $cursos;
 
     public $buscar='';
     public $buscamin='';
+    public $filtrocurso;
+    public $filtroSede;
+    public $filtroInides;
+    public $filtroInihas;
+    public $filtroinicia=[];
+
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(10);
+        $this->cursillos();
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -113,31 +128,70 @@ class Ciclos extends Component
     }
 
     public function exportar(){
-        return new AcaCicloExport($this->buscamin);
+        return new AcaCicloExport(
+                                    $this->buscamin,
+                                    $this->filtroSede,
+                                    $this->filtrocurso,
+                                    $this->filtroinicia
+                                );
     }
 
-    public function ciclos()
+    public function updatedFiltroInihas(){
+        if($this->filtroInides<=$this->filtroInihas){
+            $crea=array();
+            array_push($crea, $this->filtroInides);
+            array_push($crea, $this->filtroInihas);
+            $this->filtroinicia=$crea;
+        }else{
+            $this->reset('filtroInides','filtroInihas');
+        }
+    }
+
+    private function ciclos()
     {
-        return Ciclo::query()
-                        ->with(['sede', 'curso'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('name', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('sede', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('curso', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
+        return Ciclo::where('status', true)
+                        ->buscar($this->buscamin)
+                        ->sede($this->filtroSede)
+                        ->curso($this->filtrocurso)
+                        ->inicia($this->filtroinicia)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
+
+    }
+
+    private function sedes(){
+        return Ciclo::select('sede_id')
+                        ->groupBy('sede_id')
+                        ->get();
+    }
+
+    private function cursillos(){
+        $registros = Ciclo::select('curso_id')
+                            ->groupBy('curso_id')
+                            ->get();
+
+        $array=array();
+
+        foreach ($registros as $value) {
+            array_push($array,$value->curso_id);
+        }
+
+        $this->carga($array);
+
+
+    }
+
+    public function carga($array){
+        $this->cursos=Curso::whereIn('id',$array)
+                            ->orderBy('name')
+                            ->get();
     }
 
     public function render()
     {
         return view('livewire.academico.ciclo.ciclos', [
             'ciclos'=> $this->ciclos(),
+            'sedes'=>$this->sedes(),
         ]);
     }
 }

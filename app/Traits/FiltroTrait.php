@@ -103,9 +103,18 @@ trait FiltroTrait
             case 9:
                 $this->txt="Busque por acá: Responsable (documento, nombre), concepto pago.";
 
-                //transacciones
+                //Cartera
                 $this->is_vencimiento=true;
                 $this->is_sede=true;
+                break;
+
+            case 10:
+                $this->txt="Busque por acá: Nombre de la programación.";
+
+                //Cartera
+                $this->is_Inides=true;
+                $this->is_sede=true;
+                $this->is_curso=true;
                 break;
         }
     }
