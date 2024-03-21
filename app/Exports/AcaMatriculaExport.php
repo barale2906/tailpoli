@@ -19,12 +19,23 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     use Exportable;
 
     private $buscamin;
+    private $sede;
+    private $matriculo;
+    private $comercial;
+    private $crea;
+    private $inicia;
     private $fileName = "Matriculas.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin)
+    public function __construct($buscamin,$sede,$matriculo,$comercial,$crea,$inicia)
     {
         $this->buscamin=$buscamin;
+        $this->sede=$sede;
+        $this->matriculo=$matriculo;
+        $this->comercial=$comercial;
+        $this->crea=$crea;
+        $this->inicia=$inicia;
+
     }
 
     /**
@@ -32,23 +43,12 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     */
     public function collection()
     {
-        return Matricula::query()
-                        ->with(['alumno', 'grupos', 'curso'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('metodo', 'like', "%".$this->buscamin."%")
-                                    ->orWhere('valor', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('alumno', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%")
-                                            ->orWhere('documento', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('grupos', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('curso', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
+        return Matricula::buscar($this->buscamin)
+                        ->sede($this->sede)
+                        ->creador($this->matriculo)
+                        ->comercial($this->comercial)
+                        ->crea($this->crea)
+                        ->inicia($this->inicia)
                         ->orderBy('fecha_inicia', 'ASC')
                         ->get();
     }
@@ -63,12 +63,15 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             'Fecha Inicia',
             'Sede',
             'Curso',
+            'Programación',
             'Estudiante',
+            'Documento',
             '¿Cómo se entero?',
             'Conocimientos Previos',
             'valor',
-            'Método de Pago',
-            'Matriculo'
+            'Matriculo',
+            'Comercial',
+            'Estado (0 inactiva, 1 activa)'
         ];
     }
 
@@ -78,12 +81,15 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             $matricula->fecha_inicia,
             $matricula->sede->name,
             $matricula->curso->name,
+            $matricula->control->ciclo->name,
             $matricula->alumno->name,
+            $matricula->alumno->documento,
             $matricula->medio,
             $matricula->nivel,
             $matricula->valor,
-            $matricula->metodo,
-            $matricula->creador->name
+            $matricula->creador->name,
+            $matricula->comercial->name,
+            $matricula->status
         ];
     }
 

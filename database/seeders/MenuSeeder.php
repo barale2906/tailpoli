@@ -261,7 +261,7 @@ class MenuSeeder extends Seeder
                     'menu_id'           => $m4->id
                 ]);
 
-        $m5=Menu::create([
+        /* $m5=Menu::create([
                     'name'              => 'REPORTES',
                     'identificaRuta'    => 'admin.countries.*',
                     'permiso'           => 'Reportes',
@@ -293,7 +293,7 @@ class MenuSeeder extends Seeder
                     'name'              => 'De Cartera',
                     'icono'             => 'fa-solid fa-book text-gray-500',
                     'menu_id'           => $m5->id
-                ]);
+                ]); */
 
         $m6=Menu::create([
                     'name'              => 'ADMINISTRACIÓN',

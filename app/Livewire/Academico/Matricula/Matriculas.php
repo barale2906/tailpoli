@@ -6,8 +6,6 @@ use App\Exports\AcaMatriculaExport;
 use App\Models\Academico\Matricula;
 use App\Models\User;
 use App\Traits\FiltroTrait;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -52,7 +50,9 @@ class Matriculas extends Component
     public $filtroestatumatri;
     public $estadoMatricula;
     public $filtroestatualum;
-
+    public $filtrocrea=[];
+    public $filtroinicia=[];
+    public $filtroSede;
     public $matriculo=[];
     public $comercial=[];
 
@@ -196,9 +196,9 @@ class Matriculas extends Component
     public function updatedEstadoMatricula(){
         $crt=intval($this->estadoMatricula);
         if($crt===1){
-            $this->filtroestatumatri=true;
+            $this->filtroestatumatri=1;
         }else if($crt===0){
-            $this->filtroestatumatri=false;
+            $this->filtroestatumatri=0;
         }
     }
 
@@ -212,7 +212,14 @@ class Matriculas extends Component
     }
 
     public function exportar(){
-        return new AcaMatriculaExport($this->buscamin);
+        return new AcaMatriculaExport(
+                                        $this->buscamin,
+                                        $this->filtroSede,
+                                        $this->filtromatri,
+                                        $this->filtrocom,
+                                        $this->filtrocrea,
+                                        $this->filtroinicia
+                                    );
     }
 
     public function mount(){
@@ -238,52 +245,40 @@ class Matriculas extends Component
             }
     }
 
+    public function updatedFiltroCreahas(){
+        if($this->filtroCreades<=$this->filtroCreahas){
+            $crea=array();
+            array_push($crea, $this->filtroCreades);
+            array_push($crea, $this->filtroCreahas);
+            $this->filtrocrea=$crea;
+        }else{
+            $this->reset('filtroCreades','filtroCreahas');
+        }
+    }
+
+    public function updatedFiltroInihas(){
+        if($this->filtroInides<=$this->filtroInihas){
+            $crea=array();
+            array_push($crea, $this->filtroInides);
+            array_push($crea, $this->filtroInihas);
+            $this->filtroinicia=$crea;
+        }else{
+            $this->reset('filtroInides','filtroInihas');
+        }
+    }
+
     private function matriculas()
     {
-        $consulta = Matricula::query();
+        return Matricula::buscar($this->buscamin)
+                            ->sede($this->filtroSede)
+                            ->creador($this->filtromatri)
+                            ->comercial($this->filtrocom)
+                            ->status($this->filtroestatumatri)
+                            ->crea($this->filtrocrea)
+                            ->inicia($this->filtroinicia)
+                            ->orderBy($this->ordena, $this->ordenado)
+                            ->paginate($this->pages);
 
-        if($this->buscamin){
-            $consulta = $consulta->orWhereHas('alumno', function(Builder $q){
-                $q->where('name', 'like', "%".$this->buscamin."%")
-                    ->orWhere('documento', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('grupos', function($qu){
-                $qu->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('curso', function($que){
-                $que->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('sede', function($quer){
-                $quer->where('name', 'like', "%".$this->buscamin."%");
-            });
-        }
-
-        if($this->filtromatri){
-            $consulta = $consulta->where('creador_id', $this->filtromatri);
-        }
-
-        if($this->filtrocom){
-            $consulta = $consulta->where('comercial_id', $this->filtrocom);
-        }
-
-        if($this->filtroestatumatri){
-
-            $consulta = $consulta->where('status', $this->filtroestatumatri);
-        }
-
-        if($this->filtroCreades && $this->filtroCreahas){
-            $fecha1=Carbon::parse($this->filtroCreades);
-            $fecha2=Carbon::parse($this->filtroCreahas);
-            $fecha2->addSeconds(86399);
-            $consulta = $consulta->whereBetween('created_at', [$fecha1 , $fecha2]);
-        }
-
-        if($this->filtroInides && $this->filtroInihas){
-            $consulta = $consulta->whereBetween('fecha_inicia', [$this->filtroInides , $this->filtroInihas]);
-        }
-
-        return $consulta->orderBy($this->ordena, $this->ordenado)
-                        ->paginate($this->pages);
     }
 
     private function usuMatriculo(){
@@ -300,12 +295,19 @@ class Matriculas extends Component
                     ->get();
     }
 
+    private function sedes(){
+        return Matricula::select('sede_id')
+                        ->groupBy('sede_id')
+                        ->get();
+    }
+
     public function render()
     {
         return view('livewire.academico.matricula.matriculas', [
             'matriculas'        => $this->matriculas(),
             'usuMatriculo'      => $this->usuMatriculo(),
             'usuComercial'      => $this->usuComercial(),
+            'sedes'             =>$this->sedes(),
         ]);
     }
 }

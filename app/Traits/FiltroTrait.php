@@ -12,6 +12,7 @@ trait FiltroTrait
     public $is_Inides=false;
     public $is_matri=false;
     public $is_estatumatri=false;
+    public $is_sede=false;
 
     //Curso
     public $is_curso=false;
@@ -46,6 +47,7 @@ trait FiltroTrait
                 $this->is_Inides=true;
                 $this->is_matri=true;
                 $this->is_estatumatri=true;
+                $this->is_sede=true;
                 break;
 
             case 2:
@@ -103,6 +105,7 @@ trait FiltroTrait
 
                 //transacciones
                 $this->is_vencimiento=true;
+                $this->is_sede=true;
                 break;
         }
     }

@@ -26,7 +26,7 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
     private $fileName = "Carteras.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin, $periodo,$ciudad,$sede)
+    public function __construct($buscamin,$periodo,$ciudad,$sede)
     {
         $this->buscamin=$buscamin;
         $this->periodo=$periodo;

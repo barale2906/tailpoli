@@ -13,7 +13,7 @@
                 id="buscar"
                 class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="ingrese datos"
-                wire:model="buscar"
+                wire:model.live="buscar"
                 wire:keydown="buscaText()"
                 >
             <a href="">
@@ -44,7 +44,7 @@
                         type="search"
                         id="buscar"
                         class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ingrese datos"
-                        wire:model="buscar"
+                        wire:model.live="buscar"
                         wire:keydown="buscaText()"
                         >
                         <a href="">
@@ -94,7 +94,9 @@
                         @endforeach
                     </select>
                 </div>
+            @endif
 
+            @if ($is_sede)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
                     <label for="filtroSede" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sede</label>
@@ -187,7 +189,7 @@
             @endif
 
 
-            @if ($is_estatumatri)
+            {{-- @if ($is_estatumatri)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
                     <label for="estadoMatricula" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado</label>
@@ -197,14 +199,9 @@
                         <option value="1">Activa</option>
                         <option value="0">Anulada</option>
                     </select>
-
-                    <select wire:model.live="filtroestatualum" id="filtroestatualum"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
-                        <option >Estudiante</option>
-                        <option value="">//</option>
-                    </select>
+                    {{$filtroestatumatri}}
                 </div>
-            @endif
+            @endif --}}
 
             @if ($is_transaccion)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
