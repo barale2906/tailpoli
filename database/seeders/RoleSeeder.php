@@ -553,11 +553,26 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'exportar listados en excel',
                             'modulo'=>'inventario'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
+
+
         Permission::create([
                             'name'=>'Reportes',
                             'descripcion'=>'ingreso al menú reportes',
-                            'modulo'=>'inventario'
+                            'modulo'=>'reportes'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+
+        Permission::create([
+                            'name'=>'re_academicos',
+                            'descripcion'=>'Ver reportes acádemicos',
+                            'modulo'=>'reportes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+        Permission::create([
+                            'name'=>'re_financieros',
+                            'descripcion'=>'Ver reportes financieros',
+                            'modulo'=>'reportes'
+                            ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
         Permission::create([
                             'name'=>'in_export',
@@ -644,8 +659,6 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'exportar listados en excel',
                             'modulo'=>'Administracion'
                             ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
-
-
 
 
         Permission::create([

@@ -261,39 +261,30 @@ class MenuSeeder extends Seeder
                     'menu_id'           => $m4->id
                 ]);
 
-        /* $m5=Menu::create([
+        $m5=Menu::create([
                     'name'              => 'REPORTES',
-                    'identificaRuta'    => 'admin.countries.*',
+                    'identificaRuta'    => 'reportes.*',
                     'permiso'           => 'Reportes',
                     'icono'             => 'fa-solid fa-headset text-gray-500'
                 ]);
 
                 Submenu::create([
-                    'permiso'           => 'in_almacens',
-                    'ruta'              => 'admin.countries.index',
-                    'identificaRuta'    => 'admin.countries.index',
-                    'name'              => 'De Matricula',
+                    'permiso'           => 're_academicos',
+                    'ruta'              => 'reportes.academicos',
+                    'identificaRuta'    => 'reportes.academicos',
+                    'name'              => 'Acádemicos',
                     'icono'             => 'fa-solid fa-book text-gray-500',
                     'menu_id'           => $m5->id
                 ]);
 
                 Submenu::create([
-                    'permiso'           => 'in_almacens',
-                    'ruta'              => 'admin.countries.index',
-                    'identificaRuta'    => 'admin.countries.index',
-                    'name'              => 'De Ingresos',
+                    'permiso'           => 're_financieros',
+                    'ruta'              => 'reportes.financieros',
+                    'identificaRuta'    => 'reportes.financieros',
+                    'name'              => 'Financieros',
                     'icono'             => 'fa-solid fa-book text-gray-500',
                     'menu_id'           => $m5->id
                 ]);
-
-                Submenu::create([
-                    'permiso'           => 'in_almacens',
-                    'ruta'              => 'admin.countries.index',
-                    'identificaRuta'    => 'admin.countries.index',
-                    'name'              => 'De Cartera',
-                    'icono'             => 'fa-solid fa-book text-gray-500',
-                    'menu_id'           => $m5->id
-                ]); */
 
         $m6=Menu::create([
                     'name'              => 'ADMINISTRACIÓN',
