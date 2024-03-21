@@ -34,25 +34,25 @@ class HorarionSeeder extends Seeder
 
                         $dias=array();
 
-                        if($data[7]==="1"){
+                        if($data[6]==="1"){
                             array_push($dias,'lunes');
                         }
-                        if($data[11]==="1"){
+                        if($data[7]==="1"){
                             array_push($dias,'martes');
                         }
-                        if($data[12]==="1"){
+                        if($data[8]==="1"){
                             array_push($dias,'miercoles');
                         }
-                        if($data[13]==="1"){
+                        if($data[9]==="1"){
                             array_push($dias,'jueves');
                         }
-                        if($data[14]==="1"){
+                        if($data[10]==="1"){
                             array_push($dias,'viernes');
                         }
-                        if($data[15]==="1"){
+                        if($data[11]==="1"){
                             array_push($dias,'sabado');
                         }
-                        if($data[16]==="1"){
+                        if($data[12]==="1"){
                             array_push($dias,'domingo');
                         }
 
@@ -62,8 +62,8 @@ class HorarionSeeder extends Seeder
                             foreach ($dias as $val) {
 
                                 //Calcular horas
-                                $cant=intval($data[9]);
-                                $ini=new Carbon($data[8]);;
+                                $cant=intval($data[4]);
+                                $ini=new Carbon($data[3]);;
 
                                 for ($i=0; $i < $cant; $i++) {
                                     $horac=$ini->addHours($i);

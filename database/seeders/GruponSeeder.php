@@ -37,9 +37,9 @@ class GruponSeeder extends Seeder
 
                         //Cargar los demás modulos
                         foreach ($modulos as $value) {
+
                             $name=strtolower($data[1])." --- ".$value->name;
                             if($value->id === intval($data[3])){
-
 
                                 DB::table('grupos')->insert([
                                     'id'                => $numero,
@@ -54,7 +54,7 @@ class GruponSeeder extends Seeder
 
                             }
                             if($value->id !== intval($data[3])){
-                                    //Cargar primer modulo
+
                                     DB::table('grupos')->insert([
                                         'id'                => $numero,
                                         'name'              => $name,

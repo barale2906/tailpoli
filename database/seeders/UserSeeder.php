@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Configuracion\Perfil;
+use App\Models\Configuracion\Sede;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -27,13 +28,18 @@ class UserSeeder extends Seeder
             'rol_id'=>1
         ])->assignRole('Superusuario');
 
-        DB::table('sede_user')
-                ->insert([
-                    'user_id'=>$super->id,
-                    'sede_id'=>1,
-                    'created_at'=>now(),
-                    'updated_at'=>now(),
-                ]);
+        Perfil::create([
+            'user_id'=>$super->id,
+            'country_id'=>1,
+            'state_id'=>1,
+            'sector_id'=>1,
+            'estado_id'=>1,
+            'regimen_salud_id'=>1,
+            'tipo_documento'=>'cédula de ciudadanía',
+            'documento'=>10215300,
+            'name'=>'Alexander',
+            'lastname'=>'Barajas Vargas'
+        ]);
 
 
                 $row = 0;
@@ -72,13 +78,15 @@ class UserSeeder extends Seeder
                                 $role=Role::whereId(intval($data[5]))->select('name')->first();
                                 $usu->assignRole($role->name);
 
-                                DB::table('sede_user')
-                                    ->insert([
-                                        'user_id'       =>$usu->id,
-                                        'sede_id'       =>$data[8],
-                                        'created_at'    => $data[6],
-                                        'updated_at'    => $data[7]
+                                if(intval($data[5])>1){
+                                    DB::table('sede_user')
+                                        ->insert([
+                                            'user_id'       =>$usu->id,
+                                            'sede_id'       =>$data[8],
+                                            'created_at'    => $data[6],
+                                            'updated_at'    => $data[7]
                                     ]);
+                                }
 
                                 Perfil::create([
                                             'user_id'=>$usu->id,
@@ -101,6 +109,24 @@ class UserSeeder extends Seeder
 
                     fclose($handle);
 
+                    //Cargar sedes a los superusuarios
+                    $superusuarios=User::where('rol_id', 1)->get();
+
+                    $sedes=Sede::all();
+
+                    foreach ($sedes as $value) {
+                        foreach ($superusuarios as $item) {
+                            DB::table('sede_user')
+                                        ->insert([
+                                            'user_id'       =>$item->id,
+                                            'sede_id'       =>$value->id,
+                                            'created_at'    => now(),
+                                            'updated_at'    => now()
+                                    ]);
+                        }
+                    }
+
+
         /* DB::table('sede_user')
                 ->insert([
                     'user_id'=>$super->id,
@@ -109,18 +135,7 @@ class UserSeeder extends Seeder
                     'updated_at'=>now(),
                 ]); */
 
-        Perfil::create([
-            'user_id'=>$super->id,
-            'country_id'=>1,
-            'state_id'=>1,
-            'sector_id'=>1,
-            'estado_id'=>1,
-            'regimen_salud_id'=>1,
-            'tipo_documento'=>'cédula de ciudadanía',
-            'documento'=>10215300,
-            'name'=>'Alexander',
-            'lastname'=>'Barajas Vargas'
-        ]);
+
 
         /* $stephany = User::factory()->create([
                     'name' => 'stephany izquierdo ocampo',
