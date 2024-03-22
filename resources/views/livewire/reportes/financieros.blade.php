@@ -44,11 +44,11 @@
     @endif
 
     @if ($is_pagos)
-        <livewire:financiera.recibo-pago.recibos-pago />
+        <livewire:financiera.recibo-pago.recibos-pago :reporte="2"/>
     @endif
 
     @if ($is_crm)
-        <livewire:cliente.crm.crms />
+        <livewire:cliente.crm.crms :reporte="3"/>
     @endif
 
 

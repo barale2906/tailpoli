@@ -58,10 +58,11 @@ trait FiltroTrait
                 break;
 
             case 3:
-                $this->txt="Busque por acá: Fecha, medio, observaciones, cajero, pagador, concepto y sede";
+                $this->txt="Busque por acá: Número de recibo, Fecha, medio, observaciones, cajero, pagador, concepto y sede";
 
                 //Recibos
                 $this->is_Creades=true;
+                $this->is_sede=true;
                 break;
 
             case 4:
