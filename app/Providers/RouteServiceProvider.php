@@ -52,8 +52,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/inventario.php'));
 
             Route::middleware('web', 'auth')
-                ->prefix('reporte')
-                ->name('reporte.')
+                ->prefix('reportes')
+                ->name('reportes.')
                 ->group(base_path('routes/reporte.php'));
 
             Route::middleware('web', 'auth')

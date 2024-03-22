@@ -3,6 +3,6 @@
         Reportes Financieros
     @endpush
 
-    {{-- <livewire:configuracion.area.areas /> --}}
+    <livewire:reportes.financieros />
 
 </x-admin-layout>
