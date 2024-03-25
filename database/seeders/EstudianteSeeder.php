@@ -94,7 +94,7 @@ class EstudianteSeeder extends Seeder
                             'documento'=>strtolower($data[3]),
                             'name'=>strtolower($data[1]),
                             'lastname'=>strtolower($data[2]),
-                            'fecha_documento'=>$fedocumento,
+                            'fecha_documento'=>$data[13],
                             'lugar_expedicion'=>strtolower($data[14]),
                             'direccion'=>strtolower($data[15]),
                             'fecha_nacimiento'=>$data[16],

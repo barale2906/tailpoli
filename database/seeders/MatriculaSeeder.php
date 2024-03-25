@@ -60,10 +60,12 @@ class MatriculaSeeder extends Seeder
                             'updated_at'    => $data[12]
                         ]);
 
+                        //OJO LOS QUE TENGAN EL CAMPO $DATA[13] aplicaran los siguientes, nadie mas.
+
                         $modCar=Grupo::where('id', intval($data[13]))->first();
                         $creador=User::where('id',intval($data[9]))->select('id', 'name')->first();
 
-                        // Cargar modulos
+                        /* // Cargar modulos
                         $modulos=Modulo::where('curso_id', intval($data[7]))
                                             ->where('status', true)
                                             ->orderBy('name')
@@ -161,7 +163,7 @@ class MatriculaSeeder extends Seeder
                                         'created_at'     =>$data[11],
                                         'updated_at'     =>$data[12]
                                     ]);
-                        }
+                        } */
 
                         // Cargar PQRS
                         Pqrs::create([

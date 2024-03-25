@@ -21,7 +21,7 @@ class CarteraEspSeeder extends Seeder
         $row = 0;
         $observaciones=" ----- ".now()." Creado por ERP POLIANDINO, Ajuste de registros del 642988 al 1306220 - 1307047 al 1500000 - 2057749 al 2307749 payment_agreement_id = 14204,14345,14354,14468,14469,14470, 13948 de la BD SWIP"." ----- ";
 
-        if(($handle = fopen(public_path() . '/csv/13-cartera-especial.csv', 'r')) !== false) {
+        if(($handle = fopen(public_path() . '/csv/13-cartera-2022-ene-mar.csv', 'r')) !== false) {
 
                 while(($data = fgetcsv($handle, 26000, ';')) !== false) {
 
@@ -60,11 +60,13 @@ class CarteraEspSeeder extends Seeder
                             'concepto'              => strtolower($data[7]),
                             'responsable_id'        => intval($data[8]),
                             'created_at'            => $data[9],
-                            'updated_at'            => $data[10]
+                            'updated_at'            => $data[10],
+                            'sector_id'             => intval($data[11]),
+                            'sede_id'               => intval($data[12]),
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 13-cartera-especial with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera-2022-ene-mar with error: ' . $exception->getMessage());
                     }
                 }
         }

@@ -38,12 +38,12 @@ class GrupoSeeder extends Seeder
                             'id'                => intval($data[0]),
                             'name'              => strtolower($data[1]),
                             'quantity_limit'    => intval($data[2]),
-                            'status'            => intval($data[3]),
-                            'sede_id'           => intval($data[4]),
-                            'profesor_id'       => intval($data[5]),
-                            'modulo_id'         => intval($data[6]),
-                            'created_at'        => $data[7],
-                            'updated_at'        => $data[8]
+                            'sede_id'           => intval($data[3]),
+                            'profesor_id'       => intval($data[4]),
+                            'modulo_id'         => intval($data[5]),
+                            'status'            => 0,
+                            'created_at'        => $data[6],
+                            'updated_at'        => $data[7]
                         ]);
 
                     }catch(Exception $exception){

@@ -21,7 +21,7 @@ class CarteraSeeder extends Seeder
         $row = 0;
         $observaciones=" ----- ".now()." Creado por ERP POLIANDINO"." ----- ";
 
-        if(($handle = fopen(public_path() . '/csv/13-cartera-700k.csv', 'r')) !== false) {
+        if(($handle = fopen(public_path() . '/csv/13-cartera_2021_Atras.csv', 'r')) !== false) {
 
                 while(($data = fgetcsv($handle, 26000, ';')) !== false) {
 
@@ -59,11 +59,13 @@ class CarteraSeeder extends Seeder
                             'concepto'              => strtolower($data[7]),
                             'responsable_id'        => intval($data[8]),
                             'created_at'            => $data[9],
-                            'updated_at'            => $data[10]
+                            'updated_at'            => $data[10],
+                            'sector_id'             => intval($data[11]),
+                            'sede_id'               => intval($data[12]),
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 13-cartera-700k with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera_2021_Atras with error: ' . $exception->getMessage());
                     }
                 }
         }

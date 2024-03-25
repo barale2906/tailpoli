@@ -40,8 +40,8 @@ class RecibopagodetalleinvSeeder extends Seeder
                     DB::table('concepto_pago_recibo_pago')
                     ->insert([
                         'valor'             =>intval($data[0]),
-                        'created_at'        =>$crea,
-                        'updated_at'        =>$actua,
+                        'created_at'        =>$data[1],
+                        'updated_at'        =>$data[2],
                         'tipo'              =>$concepto->tipo,
                         'medio'             =>$recibo->medio,
                         'concepto_pago_id'  =>$concepto->id,

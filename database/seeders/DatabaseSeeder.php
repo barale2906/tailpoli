@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CountrySeeder::class,
+            EstadoCarteraSeeder::class,
             MenuSeeder::class,
             RegimenSaludSeeder::class,
             PersonaMulticulturalSeeder::class,
@@ -41,8 +42,8 @@ class DatabaseSeeder extends Seeder
             DocumentoSeeder::class, //se carga depués de cargar las sedes y usuarios
             //InventarioSeeder::class,
 
-            //MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
-            EstadoCarteraSeeder::class,
+            MatriculaSeeder::class, //Este se bloquea cuando se hacen seeders completos.
+
             CarteraSeeder::class,
             CarteraEspSeeder::class,
             CarteratresieteSeeder::class,
