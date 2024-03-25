@@ -47,7 +47,7 @@ class CarteratresieteSeeder extends Seeder
                         DB::table('carteras')->insert([
                             'id'                    => intval($data[0]),
                             'fecha_pago'            => $data[1],
-                            'fecha_real'            => $data[11],
+                            'fecha_real'            => $data[9],
                             'valor'                 => intval($data[2]),
                             'saldo'                 => intval($data[3]),
                             'observaciones'         => $observaciones,

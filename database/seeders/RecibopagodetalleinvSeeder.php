@@ -28,7 +28,7 @@ class RecibopagodetalleinvSeeder extends Seeder
 
                 try {
 
-                    $recibo=ReciboPago::where('id', intval($data[3]))->where('origen', false)->first();
+                    $recibo=ReciboPago::where('numero_recibo', intval($data[3]))->where('origen', false)->first();
                     $concepto=ConceptoPago::where('name', 'Inventario')->first();
 
                     $creado=new Carbon($data[1]);

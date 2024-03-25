@@ -28,7 +28,7 @@ class RecibopagodetalleSeeder extends Seeder
 
                 try {
 
-                    $recibo=ReciboPago::where('id', intval($data[4]))->where('origen', true)->first();
+                    $recibo=ReciboPago::where('numero_recibo', intval($data[4]))->where('origen', true)->first();
                     $concepto=ConceptoPago::where('name', $data[5])->first();
 
                     $creado=new Carbon($data[2]);
