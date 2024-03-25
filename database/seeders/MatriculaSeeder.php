@@ -146,6 +146,7 @@ class MatriculaSeeder extends Seeder
                                     ]);
                                 }
                         }
+                        */
 
                         // Cargar documentos
                         $documentos=Documento::where('status', 3)
@@ -163,13 +164,13 @@ class MatriculaSeeder extends Seeder
                                         'created_at'     =>$data[11],
                                         'updated_at'     =>$data[12]
                                     ]);
-                        } */
+                        }
 
                         // Cargar PQRS
                         Pqrs::create([
                             'estudiante_id' =>intval($data[6]),
-                            'gestion_id'    =>$creador->id,
-                            'fecha'         =>$data[11],
+                            'gestion_id'    =>intval($data[9]),
+                            'fecha'         =>$data[1],
                             'tipo'          =>4,
                             'observaciones' =>'ACÁDEMICO: Matricula N°: '.intval($data[0]).' ----- ',
                             'status'        =>4

@@ -20,7 +20,7 @@ class GruponSeeder extends Seeder
         $row = 0;
         $numero=6000;
 
-        if(($handle = fopen(public_path() . '/csv/10-grupos-nuevos-23.csv', 'r')) !== false) {
+        if(($handle = fopen(public_path() . '/csv/16-grupos-finales.csv', 'r')) !== false) {
 
                 while(($data = fgetcsv($handle, 26000, ';')) !== false) {
 
@@ -28,37 +28,36 @@ class GruponSeeder extends Seeder
 
                     try {
                         //Obtener los modulos del curso
-                        $modulo=Modulo::where('id', intval($data[3]))->first();
-                        $modulos=Modulo::where('curso_id', $modulo->curso_id)
+                        $modulos=Modulo::where('curso_id', intval($data[0]))
                                         ->where('status', true)
-                                        ->orderBy('name')
+                                        ->inRandomOrder()
                                         ->get();
+
+                        $primero=strtolower($data[3])." --- ".strtolower($data[2]);
+
+                        DB::table('grupos')->insert([
+                            'id'                => $numero,
+                            'name'              => $primero,
+                            'quantity_limit'    => 100,
+                            'modulo_id'         => intval($data[1]),
+                            'sede_id'           => intval($data[4]),
+                            'profesor_id'       => intval($data[5]),
+                            'created_at'        => now(),
+                            'updated_at'        => now(),
+                        ]);
 
 
                         //Cargar los demás modulos
                         foreach ($modulos as $value) {
 
-                            $name=strtolower($data[1])." --- ".$value->name;
-                            if($value->id === intval($data[3])){
+                            $name=strtolower($data[3])." --- ".$value->slug;
 
-                                DB::table('grupos')->insert([
-                                    'id'                => $numero,
-                                    'name'              => $name,
-                                    'quantity_limit'    => intval($data[2]),
-                                    'modulo_id'         => intval($data[3]),
-                                    'sede_id'           => intval($data[4]),
-                                    'profesor_id'       => intval($data[5]),
-                                    'created_at'        => now(),
-                                    'updated_at'        => now(),
-                                ]);
-
-                            }
-                            if($value->id !== intval($data[3])){
+                            if($value->id !== intval($data[1])){
 
                                     DB::table('grupos')->insert([
                                         'id'                => $numero,
                                         'name'              => $name,
-                                        'quantity_limit'    => intval($data[2]),
+                                        'quantity_limit'    => 100,
                                         'modulo_id'         => $value->id,
                                         'sede_id'           => intval($data[4]),
                                         'profesor_id'       => intval($data[5]),
@@ -70,7 +69,7 @@ class GruponSeeder extends Seeder
                         }
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 10-grupos-nuevos-23.csv with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 16-grupos-finales with error: ' . $exception->getMessage());
                     }
 
 

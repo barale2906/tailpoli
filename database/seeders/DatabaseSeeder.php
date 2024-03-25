@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             //GruponSeeder::class,
             //HorarionSeeder::class,
             //CicloSeeder::class,
+            //ConfiguracioPagoSeeder::class,
             EstudianteSeeder::class,
             PalabrasSeeder::class,
             DocumentoSeeder::class, //se carga depués de cargar las sedes y usuarios
@@ -52,7 +53,6 @@ class DatabaseSeeder extends Seeder
             RecibopagodetalleSeeder::class,
             RecibopagoinvSeeder::class,
             RecibopagodetalleinvSeeder::class,
-            //ConfiguracioPagoSeeder::class,
         ]);
     }
 }
