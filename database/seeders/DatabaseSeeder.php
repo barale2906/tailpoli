@@ -34,8 +34,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class, //Solo se carga el superusuario
             GrupoSeeder::class,
-            //GruponSeeder::class,
-            //HorarionSeeder::class,
+            GruponSeeder::class,
+            HorarionSeeder::class,
             //CicloSeeder::class,
             //ConfiguracioPagoSeeder::class,
             EstudianteSeeder::class,
