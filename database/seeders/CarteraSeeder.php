@@ -65,7 +65,7 @@ class CarteraSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 13-cartera_2021_Atras with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera_2021_Atras with error: ' . $exception->getMessage().' real: '.$data[13]);
                     }
                 }
         }

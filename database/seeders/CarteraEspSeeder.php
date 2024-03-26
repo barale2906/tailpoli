@@ -65,7 +65,7 @@ class CarteraEspSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 13-cartera-2022-ene-mar with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera-2022-ene-mar with error: ' . $exception->getMessage().' real: '.$data[13]);
                     }
                 }
         }

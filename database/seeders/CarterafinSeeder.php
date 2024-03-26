@@ -64,7 +64,7 @@ class CarterafinSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 13-cartera-2023-2024 with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera-2023-2024 with error: ' . $exception->getMessage().' real: '.$data[13]);
                     }
                 }
         }

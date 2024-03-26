@@ -64,7 +64,7 @@ class CarteratresieteSeeder extends Seeder
                         ]);
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 13-cartera-2022-abr-dic with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 13-cartera-2022-abr-dic with error: ' . $exception->getMessage().' real: '.$data[13]);
                     }
                 }
         }
