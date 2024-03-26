@@ -20,7 +20,7 @@ class CicloSeeder extends Seeder
     {
         $row = 0;
 
-        if(($handle = fopen(public_path() . '/csv/10a-ciclos.csv', 'r')) !== false) {
+        if(($handle = fopen(public_path() . '/csv/18-ciclos.csv', 'r')) !== false) {
 
                 while(($data = fgetcsv($handle, 26000, ';')) !== false) {
 
@@ -28,11 +28,8 @@ class CicloSeeder extends Seeder
 
                     try {
 
-                        $fecha=new Carbon($data[4]);
-                        $fech=$fecha->format('Y-m-d');
-
-                        $fechaa=new Carbon($data[5]);
-                        $fechb=$fechaa->format('Y-m-d');
+                        $ini=new Carbon($data[4]);
+                        $fin=$ini->addMonths($data[5]);
 
                         //Crear ciclo
                         DB::table('ciclos')->insert([
@@ -40,8 +37,8 @@ class CicloSeeder extends Seeder
                             'sede_id'       => $data[1],
                             'curso_id'      => $data[2],
                             'name'          => strtolower($data[3]),
-                            'inicia'        => $fech,
-                            'finaliza'      => $fechb,
+                            'inicia'        => $data[4],
+                            'finaliza'      => $fin,
                             'jornada'       => $data[6],
                             'desertado'     => $data[7],
                             'created_at'    => now(),
@@ -57,12 +54,12 @@ class CicloSeeder extends Seeder
                                 'ciclo_id'       => $data[0],
                                 'grupo_id'       => $value->id,
                                 'fecha_inicio'   => $data[4],
-                                'fecha_fin'      => $data[5],
+                                'fecha_fin'      => $fin,
                             ]);
                         }
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 10a-ciclos.csv with error: ' . $exception->getMessage());
+                        Log::info('Line: ' . $row . ' 18-ciclos with error: ' . $exception->getMessage());
                     }
 
                 }
