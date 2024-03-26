@@ -31,6 +31,7 @@ class CicloSeeder extends Seeder
                         $ini=new Carbon($data[4]);
                         $fin=$ini->addMonths($data[5]);
 
+
                         //Crear ciclo
                         DB::table('ciclos')->insert([
                             'id'            => $data[0],
@@ -45,7 +46,16 @@ class CicloSeeder extends Seeder
                             'updated_at'    => now(),
                         ]);
 
+                        $mod=$data[2];
+
                         $grupos=Grupo::where('name','like', "%".strtolower($data[3])."%")
+                                    ->where('sede_id', $data[1])
+                                    ->where('profesor_id', $data[8])
+                                    ->wherehas('modulo', function($query) use($mod){
+                                            $query->wherehas('curso', function($que) use($mod){
+                                                        $que->where('cursos.id', $mod);
+                                                    });
+                                        })
                                     ->get();
 
                         foreach ($grupos as $value) {
