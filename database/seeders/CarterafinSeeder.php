@@ -29,8 +29,8 @@ class CarterafinSeeder extends Seeder
 
                     try {
                         //Mirar estado cartera
-                        $cartera=EstadoCartera::where('name', strtolower($data[6]))->select('id')->first();
-                        $concepto=ConceptoPago::where('name', strtolower($data[7]))->select('id')->first();
+                        $cartera=EstadoCartera::where('name', $data[6])->select('id')->first();
+                        $concepto=ConceptoPago::where('name', $data[7])->select('id')->first();
 
                         $creado=new Carbon($data[9]);
                         $crea=$creado->format('Y-m-d H:i:s');
@@ -46,8 +46,8 @@ class CarterafinSeeder extends Seeder
 
                         DB::table('carteras')->insert([
                             'id'                    => intval($data[0]),
-                            'fecha_pago'            => $data[1],
-                            'fecha_real'            => $data[9],
+                            'fecha_pago'            => Carbon::createFromFormat('Y-m-d H:i:s', $data[1])->toDateTimeString(),
+                            'fecha_real'            => Carbon::createFromFormat('Y-m-d H:i:s', $data[9])->toDateTimeString(),
                             'valor'                 => intval($data[2]),
                             'saldo'                 => intval($data[3]),
                             'observaciones'         => $observaciones,
@@ -57,8 +57,8 @@ class CarterafinSeeder extends Seeder
                             'concepto_pago_id'      => $concepto->id,
                             'concepto'              => strtolower($data[7]),
                             'responsable_id'        => intval($data[8]),
-                            'created_at'            => $data[9],
-                            'updated_at'            => $data[10],
+                            'created_at'            => Carbon::createFromFormat('Y-m-d H:i:s', $data[9])->toDateTimeString(),
+                            'updated_at'            => Carbon::createFromFormat('Y-m-d H:i:s', $data[10])->toDateTimeString(),
                             'sector_id'             => intval($data[11]),
                             'sede_id'               => intval($data[12]),
                         ]);

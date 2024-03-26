@@ -27,6 +27,7 @@ class GruponSeeder extends Seeder
                     $row++;
 
                     try {
+
                         //Obtener los modulos del curso
                         $modulos=Modulo::where('curso_id', intval($data[0]))
                                         ->where('status', true)
@@ -35,6 +36,7 @@ class GruponSeeder extends Seeder
 
                         $primero=strtolower($data[3])." --- ".strtolower($data[2]);
 
+                        $numero++;
                         DB::table('grupos')->insert([
                             'id'                => $numero,
                             'name'              => $primero,
@@ -49,6 +51,7 @@ class GruponSeeder extends Seeder
 
                         //Cargar los demás modulos
                         foreach ($modulos as $value) {
+                            $numero++;
 
                             $name=strtolower($data[3])." --- ".$value->slug;
 
@@ -65,7 +68,7 @@ class GruponSeeder extends Seeder
                                         'updated_at'        => now(),
                                     ]);
                             }
-                            $numero++;
+
                         }
 
                     }catch(Exception $exception){
