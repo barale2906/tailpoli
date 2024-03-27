@@ -3,10 +3,8 @@
 namespace App\Livewire\Academico\Gestion;
 
 use App\Models\Academico\Control;
-use App\Models\Academico\Grupo;
 use App\Models\Academico\Nota;
 use App\Models\Configuracion\Estado;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -238,20 +236,9 @@ class Gestiones extends Component
 
     private function controles()
     {
-        return Control::query()
-                        ->with(['ciclo', 'estudiante'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->whereIn('sede_id', $this->sedes)
-                                    ->where('observaciones', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('estudiante', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%")
-                                            ->orWhere('documento', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('ciclo', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
+        return Control::where('status', true)
+                        ->whereIn('sede_id', $this->sedes)
+                        ->buscar($this->buscamin)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
     }

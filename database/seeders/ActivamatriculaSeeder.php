@@ -74,7 +74,9 @@ class ActivamatriculaSeeder extends Seeder
                     //Obtener mora
                     $ayer=Carbon::today()->subDay();
 
-                    $mora=Cartera::where('fecha_pago', '<=', $ayer)
+                    $mora=Cartera::where('responsable_id', $matricula->alumno_id)
+                                    ->where('status', true)
+                                    ->where('fecha_pago', '<=', $ayer)
                                     ->where('saldo', '>', 0)
                                     ->sum('saldo');
 
@@ -91,13 +93,10 @@ class ActivamatriculaSeeder extends Seeder
                         'ciclo_id'      =>$ciclo->id,
                         'sede_id'       =>$ciclo->sede_id,
                         'estudiante_id' =>$matricula->alumno_id,
-                        'ultimo_pago'   =>$ultimopago,
+                        'ultimo_pago'   =>$ultimopago->fecha,
                         'mora'          =>$mora,
                         'estado_cartera'=>$estadomora,
                     ]);
-
-
-
 
 
                 }catch(Exception $exception){

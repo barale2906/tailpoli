@@ -45,4 +45,19 @@ class Control extends Model
     {
         return $this->hasMany(Transaccion::class);
     }
+
+    public function scopeBuscar($query, $item){
+        $query->when($item ?? null, function($query, $item){
+            $query->where('observaciones', 'like', "%".$item."%")
+
+                    ->orwherehas('estudiante', function($query) use($item){
+                        $query->where('users.name', 'like', "%".$item."%")
+                                ->orwhere('users.documento', 'like', "%".$item."%");
+                    })
+
+                    ->orwherehas('ciclo', function($query) use($item){
+                        $query->where('ciclos.name', 'like', "%".$item."%");
+                    });
+        });
+    }
 }
