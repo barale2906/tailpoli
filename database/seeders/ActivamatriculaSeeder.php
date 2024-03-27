@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
+use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
 use App\Models\Financiera\Cartera;
@@ -97,6 +98,39 @@ class ActivamatriculaSeeder extends Seeder
                         'mora'          =>$mora,
                         'estado_cartera'=>$estadomora,
                     ]);
+
+                    // Cargar grupos
+                    foreach ($ciclo->ciclogrupos as $value) {
+
+                        DB::table('grupo_matricula')
+                        ->insert([
+                            'grupo_id'      =>$value->grupo_id,
+                            'matricula_id'  =>$matricula->id,
+                            'created_at'    =>now(),
+                            'updated_at'    =>now(),
+                        ]);
+
+                        //Cargar estudiante al grupo
+                        DB::table('grupo_user')
+                            ->insert([
+                                'grupo_id'      =>$value->grupo_id,
+                                'user_id'       =>$matricula->alumno->id,
+                                'created_at'    =>now(),
+                                'updated_at'    =>now(),
+                            ]);
+
+
+
+                        //Sumar usuario al grupo
+                        $inscritos=Grupo::find($value->grupo_id);
+
+                        $tot=$inscritos->inscritos+1;
+
+                        $inscritos->update([
+                            'inscritos'=>$tot
+                        ]);
+
+                    }
 
 
                 }catch(Exception $exception){

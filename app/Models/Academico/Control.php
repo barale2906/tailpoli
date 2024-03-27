@@ -48,7 +48,7 @@ class Control extends Model
 
     public function scopeBuscar($query, $item){
         $query->when($item ?? null, function($query, $item){
-            $query->orwherehas('estudiante', function($query) use($item){
+            $query->wherehas('estudiante', function($query) use($item){
                         $query->where('users.name', 'like', "%".$item."%")
                                 ->orwhere('users.documento', 'like', "%".$item."%");
                     })
@@ -59,3 +59,4 @@ class Control extends Model
         });
     }
 }
+
