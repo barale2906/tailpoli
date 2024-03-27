@@ -31,7 +31,6 @@ class GruponSeeder extends Seeder
                         //Obtener los modulos del curso
                         $modulos=Modulo::where('curso_id', intval($data[0]))
                                         ->where('status', true)
-                                        ->inRandomOrder()
                                         ->get();
 
                         $primero=strtolower($data[3])." --- ".strtolower($data[2]);

@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
             RecibopagodetalleSeeder::class,
             RecibopagoinvSeeder::class,
             RecibopagodetalleinvSeeder::class,
+            ActivamatriculaSeeder::class,
         ]);
     }
 }
