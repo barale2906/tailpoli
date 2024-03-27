@@ -172,7 +172,7 @@ class User extends Authenticatable
     }
 
     //Relación uno a muchos
-    public function control(): HasMany
+    public function controls(): HasMany
     {
         return $this->hasMany(Control::class);
     }
