@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Gestion;
 use App\Models\Academico\Control;
 use App\Models\Academico\Nota;
 use App\Models\Configuracion\Estado;
+use App\Traits\FiltroTrait;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -14,6 +15,7 @@ class Gestiones extends Component
 {
 
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='estado_cartera';
     public $ordenado='DESC';
@@ -50,6 +52,8 @@ class Gestiones extends Component
 
     public function mount(){
 
+        $this->claseFiltro(11);
+
         $this->hoy=now();
 
         foreach (Auth::user()->sedes as $value) {
@@ -71,6 +75,7 @@ class Gestiones extends Component
     public function limpiar(){
         $this->reset('buscamin', 'buscar');
         $this->resetPage();
+        $this->controles();
     }
 
     // Ordenar Registros

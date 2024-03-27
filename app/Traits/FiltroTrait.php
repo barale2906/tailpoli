@@ -117,6 +117,10 @@ trait FiltroTrait
                 $this->is_sede=true;
                 $this->is_curso=true;
                 break;
+
+            case 11:
+                $this->txt="Busque por acá: Nombre - documento del estudiante";
+                break;
         }
     }
 
