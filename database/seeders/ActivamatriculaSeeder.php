@@ -61,7 +61,8 @@ class ActivamatriculaSeeder extends Seeder
                     //Actualizar status de la matricula
 
                     $matricula->update([
-                        'status'=>true
+                        'status'=>true,
+                        'configpago'=>1
                     ]);
 
 
