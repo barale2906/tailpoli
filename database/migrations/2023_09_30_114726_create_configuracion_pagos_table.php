@@ -21,7 +21,7 @@ return new class extends Migration
             //$table->double('valor_cuota_inicial')->comment('Valor cuota inicial');
             $table->integer('cuotas')->comment('numero de cuotas');
             $table->double('valor_cuota')->comment('Valor por cuota');
-            $table->double('valor_cuota')->nullable()->comment('descuento aplicable');
+            $table->double('descuento')->nullable()->comment('descuento aplicable');
             $table->longText('descripcion');
             $table->boolean('status')->default(true)->comment('false Inactivo, true Activo');
             $table->boolean('incluye')->default(true)->comment('false incluye algunos modulos, true incluye todos los modulos');
