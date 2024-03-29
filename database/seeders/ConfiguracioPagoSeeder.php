@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Financiera\ConfiguracionPago;
-use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ConfiguracioPagoSeeder extends Seeder
 {
@@ -14,7 +15,45 @@ class ConfiguracioPagoSeeder extends Seeder
      */
     public function run(): void
     {
-        $hoy=Carbon::now();
+
+        $row = 0;
+
+        if(($handle = fopen(public_path() . '/csv/20-config-pago.csv', 'r')) !== false) {
+
+                while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+
+                    $row++;
+
+                    try {
+
+                        DB::table('configuracion_pagos')->insert([
+                            'id'                => intval($data[0]),
+                            'inicia'            => $data[1],
+                            'finaliza'          => $data[2],
+                            'valor_curso'       => intval($data[3]),
+                            'valor_matricula'   => intval($data[4]),
+                            'cuotas'            => intval($data[5]),
+                            'valor_cuota'       => intval($data[6]),
+                            'descripcion'       => strtolower($data[7]),
+                            'sector_id'         => intval($data[8]),
+                            'curso_id'          => intval($data[9]),
+                            'status'            => intval($data[10]),
+                            'created_at'        => $data[11],
+                            'updated_at'        => $data[12],
+
+                        ]);
+
+
+                    }catch(Exception $exception){
+                        Log::info('Line: ' . $row . ' 20-config-pago with error: ' . $exception->getMessage());
+                    }
+                }
+        }
+
+        fclose($handle);
+
+
+        /* $hoy=Carbon::now();
         $hoyo=Carbon::now();
         $fin=$hoyo->addMonths(6);
 
@@ -122,6 +161,6 @@ class ConfiguracioPagoSeeder extends Seeder
             'descripcion'           =>'Curso 2 Sede 2 crédito',
             'sector_id'             =>2,
             'curso_id'              =>2
-        ]);
+        ]); */
     }
 }

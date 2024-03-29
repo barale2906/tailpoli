@@ -8,6 +8,7 @@ use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\ConfiguracionPago;
 use App\Models\Financiera\ReciboPago;
 use Carbon\Carbon;
 use Exception;
@@ -58,13 +59,27 @@ class ActivamatriculaSeeder extends Seeder
                             ]);
                     }
 
+                    //obtener configuracion de pago
+                    $config=ConfiguracionPago::where('inicia', '>=', $matricula->fecha_inicia)
+                                                ->where('curso_id', $matricula->curso_id)
+                                                ->where('sector_id', $matricula->sede->sector->id)
+                                                ->select('id')
+                                                ->first();
+
+
                     //Actualizar status de la matricula
 
                     $matricula->update([
                         'status'=>true,
-                        'configpago'=>1
+                        'configpago'=>$config->id
                     ]);
 
+                    //Actualizar fechas de pago reales cartera
+                    Cartera::where('matricula_id', $matricula->id)
+                                ->where('status', 1)
+                                ->update([
+                                    'fecha_real'=>null
+                                ]);
 
                     //Actualizar registro de último pago
                     $ultimopago=ReciboPago::where('paga_id', $matricula->alumno_id)

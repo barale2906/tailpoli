@@ -36,8 +36,8 @@ class DatabaseSeeder extends Seeder
             GrupoSeeder::class,
             GruponSeeder::class,
             HorarionSeeder::class,
-            //CicloSeeder::class,
-            //ConfiguracioPagoSeeder::class,
+            CicloSeeder::class,
+            ConfiguracioPagoSeeder::class,
             EstudianteSeeder::class,
             PalabrasSeeder::class,
             DocumentoSeeder::class, //se carga depués de cargar las sedes y usuarios
