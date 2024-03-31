@@ -224,7 +224,7 @@ class Perfil extends Component
     public function personasMulti(){
 
         $personas = DB::table('perfil_persona_multicultural')
-                        ->where('perfil_id', $this->id)
+                        ->where('perfil_id', $this->actual->perfil->id)
                         ->get();
 
         if($personas){
