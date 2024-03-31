@@ -50,6 +50,7 @@ class Convenio extends Component
             ->where('id_creador', Auth::user()->id)
             ->delete();
         $this->cartera=Cartera::Where('status', true)
+                                ->where('responsable_id', $this->responsable_id)
                                 ->get();
 
         $this->hoy=now();
