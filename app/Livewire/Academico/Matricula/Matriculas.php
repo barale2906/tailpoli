@@ -28,6 +28,7 @@ class Matriculas extends Component
     public $is_change=false;
     public $is_document=false;
     public $is_especiales=false;
+    public $reportes=true;
 
     public $ruta=0;
 
@@ -222,7 +223,11 @@ class Matriculas extends Component
                                     );
     }
 
-    public function mount(){
+    public function mount($crt=null){
+
+        if($crt){
+            $this->reportes=false;
+        }
         $this->claseFiltro(1);
 
         $creadores=Matricula::select('creador_id')

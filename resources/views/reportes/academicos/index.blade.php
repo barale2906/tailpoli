@@ -3,6 +3,6 @@
         Reportes Acádemicos
     @endpush
 
-    {{-- <livewire:configuracion.area.areas /> --}}
+    <livewire:reportes.academicos />
 
 </x-admin-layout>

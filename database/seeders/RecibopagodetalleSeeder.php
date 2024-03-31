@@ -29,7 +29,7 @@ class RecibopagodetalleSeeder extends Seeder
                 try {
 
                     $recibo=ReciboPago::where('numero_recibo', intval($data[4]))->where('origen', true)->first();
-                    $concepto=ConceptoPago::where('name', $data[5])->first();
+                    $concepto=ConceptoPago::where('name', 'like', '%'.$data[5].'%')->first();
 
                     $creado=new Carbon($data[2]);
                     $crea=$creado->format('Y-m-d H:i:s');

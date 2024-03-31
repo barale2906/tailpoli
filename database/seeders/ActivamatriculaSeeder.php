@@ -66,12 +66,17 @@ class ActivamatriculaSeeder extends Seeder
                                                 ->select('id')
                                                 ->first();
 
+                    if($config){
+                        $pagoconf=$config->id;
+                    }else{
+                        $pagoconf=0;
+                    }
+
 
                     //Actualizar status de la matricula
-
                     $matricula->update([
                         'status'=>true,
-                        'configpago'=>$config->id
+                        'configpago'=>$pagoconf
                     ]);
 
                     //Actualizar fechas de pago reales cartera
@@ -88,13 +93,18 @@ class ActivamatriculaSeeder extends Seeder
                                             ->orderBy('fecha', 'DESC')
                                             ->first();
 
+                    if($ultimopago){
+                        $fechaultimo=$ultimopago->fecha;
+                    }else{
+                        $fechaultimo=null;
+                    }
                     //Obtener mora
                     $ayer=Carbon::today()->subDay();
 
                     $mora=Cartera::where('responsable_id', $matricula->alumno_id)
                                     ->where('status', true)
                                     ->where('fecha_pago', '<=', $ayer)
-                                    ->where('saldo', '>', 0)
+                                    ->where('saldo', '>', 10000)
                                     ->sum('saldo');
 
 
@@ -110,7 +120,7 @@ class ActivamatriculaSeeder extends Seeder
                         'ciclo_id'      =>$ciclo->id,
                         'sede_id'       =>$ciclo->sede_id,
                         'estudiante_id' =>$matricula->alumno_id,
-                        'ultimo_pago'   =>$ultimopago->fecha,
+                        'ultimo_pago'   =>$fechaultimo,
                         'mora'          =>$mora,
                         'estado_cartera'=>$estadomora,
                     ]);
@@ -155,7 +165,7 @@ class ActivamatriculaSeeder extends Seeder
 
 
             }
-    }
+        }
 
     fclose($handle);
     }
