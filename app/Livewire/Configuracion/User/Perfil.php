@@ -469,7 +469,7 @@ class Perfil extends Component
         foreach ($this->disponibles as $value) {
             DB::table('perfil_persona_multicultural')
             ->insert([
-                'perfil_id'                 =>$this->id,
+                'perfil_id'                 =>$perfilActual->id,
                 'persona_multicultural_id'  =>$value['id'],
                 'created_at'                =>now(),
                 'updated_at'                =>now(),
