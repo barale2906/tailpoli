@@ -303,7 +303,7 @@ class RecibosPagoCrear extends Component
 
     }
 
-    public function elimOtro($item, $valor, $concepto){
+    public function elimOtro($item,$valor,$concepto){
 
         $this->valoRecargo();
 
