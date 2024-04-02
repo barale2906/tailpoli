@@ -518,6 +518,16 @@ class RecibosPagoCrear extends Component
 
                     //Aplicar descuento desde el mas antiguo
                     $this->descuento=$value->valor;
+
+                    Pqrs::create([
+                        'estudiante_id' =>$this->alumno_id,
+                        'gestion_id'    =>Auth::user()->id,
+                        'fecha'         =>now(),
+                        'tipo'          =>2,
+                        'observaciones' =>'PAGOS: '." recibio descuento por $".number_format($this->descuento, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". ----- ",
+                        'status'        =>4
+                    ]);
+
                     $deudas=Cartera::where('responsable_id', $this->alumno_id)
                                     ->where('status', true)
                                     ->orderBy('fecha_pago')
@@ -548,6 +558,8 @@ class RecibosPagoCrear extends Component
                                 'status'=>$this->status,
                                 'estado_cartera_id'=>$this->estado
                             ]);
+
+
                         }
                         $this->reset('saldo');
                     }
@@ -557,6 +569,7 @@ class RecibosPagoCrear extends Component
         }
 
         //Cargar fecha de pago y observaciones al control
+
         Pqrs::create([
             'estudiante_id' =>$this->alumno_id,
             'gestion_id'    =>Auth::user()->id,
