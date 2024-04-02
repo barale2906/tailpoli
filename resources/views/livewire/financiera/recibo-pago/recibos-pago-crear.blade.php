@@ -249,7 +249,7 @@
                                 </table>
 
                                 <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                    Obligaciones de Cartera
+                                    Obligaciones de Cartera - Descuentos
                                 </h5>
                                 <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -274,7 +274,7 @@
                                                         $ {{number_format($otros->valor, 0, '.', ' ')}}
                                                     </th>
                                                     <th>
-                                                        <a href="#" wire:click.prevent="elimOtro({{$otros->id}}, {{$otros->valor}})"  class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                                                        <a href="#" wire:click.prevent="elimOtro({{$otros->id}}, {{$otros->valor}} , {{$otros->concepto}})"  class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
                                                             <i class="fa-solid fa-trash-can"></i>
                                                         </a>
                                                     </th>

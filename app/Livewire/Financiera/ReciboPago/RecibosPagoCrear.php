@@ -170,6 +170,9 @@ class RecibosPagoCrear extends Component
         $ya= DB::table('apoyo_recibo')->where('id_concepto', $this->concepdescuento)->count();
 
         if($ya>0){
+            $this->dispatch('alerta', name:'Ya cargo descuentos.');
+        }else{
+
             // Cargar descuento a la tabla temporal
             DB::table('apoyo_recibo')->insert([
                 'tipo'=>'financiero',
@@ -178,8 +181,6 @@ class RecibosPagoCrear extends Component
                 'concepto'=>'Descuento',
                 'valor'=>$this->descuento,
             ]);
-        }else{
-            $this->dispatch('alerta', name:'Ya cargo un descuento.');
         }
 
         $this->cargando();
@@ -418,21 +419,6 @@ class RecibosPagoCrear extends Component
                             ]);
 
         $sede=Sede::find($this->sede_id);
-
-        //registros
-
-        /* if($this->recargo>0){
-            DB::table('concepto_pago_recibo_pago')
-                ->insert([
-                    'valor'=>$this->recargoValor,
-                    'tipo'=>"otro",
-                    'medio'=>$this->medio,
-                    'concepto_pago_id'=>$this->recargo_id,
-                    'recibo_pago_id'=>$recibo->id,
-                    'created_at'=>now(),
-                    'updated_at'=>now(),
-                ]);
-        } */
 
         if($this->pagoTotal){
 
