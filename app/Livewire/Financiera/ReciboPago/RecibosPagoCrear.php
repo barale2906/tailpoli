@@ -181,6 +181,8 @@ class RecibosPagoCrear extends Component
                 'concepto'=>'Descuento',
                 'valor'=>$this->descuento,
             ]);
+
+            $this->reset('descuento', 'concepdescuento');
         }
 
         $this->cargando();
@@ -515,36 +517,42 @@ class RecibosPagoCrear extends Component
                 if($value->tipo==='financiero' && $value->concepto==='Descuento'){
 
                     //Aplicar descuento desde el mas antiguo
-                    $vrdescuento=$value->valor;
+                    $this->descuento=$value->valor;
+                    $deudas=Cartera::where('responsable_id', $this->alumno_id)
+                                    ->where('status', true)
+                                    ->orderBy('fecha_pago')
+                                    ->get();
 
-                    foreach ($this->pendientes as $val) {
-                        if($vrdescuento>0){
+                    foreach ($deudas as $val) {
+                        if($this->descuento>0){
 
-                            $sald=$val->saldo-$vrdescuento;
+                            $this->saldo=$val->saldo-$this->descuento;
                             $observa=now()." ".$this->alumnoName." recibio descuento por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$val->observaciones;
-                            if($sald>0){
+                            if($this->saldo>0){
                                 $esta=EstadoCartera::where('name', 'abonada')->first();
                                 $this->estado=$esta->id;
                                 $this->status=true;
-                                $vrdescuento=0;
+                                $this->descuento=0;
                             }else{
                                 $esta=EstadoCartera::where('name', 'cerrada')->first();
                                 $this->estado=$esta->id;
                                 $this->status=false;
-                                $vrdescuento=$vrdescuento-$sald;
-                                $sald=0;
+                                $this->descuento=$this->descuento-$this->saldo;
+                                $this->saldo=0;
                             }
 
                             $val->update([
                                 'fecha_real'=>$this->fecha_pago,
-                                'saldo'=>$sald,
+                                'saldo'=>$this->saldo,
                                 'observaciones'=>$observa,
                                 'status'=>$this->status,
                                 'estado_cartera_id'=>$this->estado
                             ]);
                         }
+                        $this->reset('saldo');
                     }
                 }
+                $this->reset('estado', 'status');
             }
         }
 
