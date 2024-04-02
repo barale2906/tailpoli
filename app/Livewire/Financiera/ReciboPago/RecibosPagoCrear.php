@@ -303,17 +303,21 @@ class RecibosPagoCrear extends Component
 
     }
 
-    public function elimOtro($item,$valor,$concepto){
+    public function elimOtro($item){
+
+        $reg=DB::table('apoyo_recibo')
+                ->where('id', $item)
+                ->first();
 
         $this->valoRecargo();
+
+        if($reg->concepto!=='Descuento'){
+            $this->Total=$this->Total-$reg->valor;
+        }
 
         DB::table('apoyo_recibo')
             ->where('id', $item)
             ->delete();
-
-        if($concepto!=='Descuento'){
-            $this->Total=$this->Total-$valor;
-        }
 
         $this->cargando();
     }
