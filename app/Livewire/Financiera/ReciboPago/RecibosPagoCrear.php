@@ -46,6 +46,9 @@ class RecibosPagoCrear extends Component
     public $fecha_pago;
     public $ruta;
 
+    public $concepdescuento;
+    public $descuento;
+
     public $listaotros;
 
 
@@ -160,6 +163,26 @@ class RecibosPagoCrear extends Component
         $this->totalCartera=Cartera::where('responsable_id', $this->alumno_id)
                                     ->where('status', true)
                                     ->sum('saldo');
+    }
+
+    public function cargaDescuento(){
+        //Verificar que no se haya cargado descuentos
+        $ya= DB::table('apoyo_recibo')->where('id_concepto', $this->concepdescuento)->count();
+
+        if($ya>0){
+            // Cargar descuento a la tabla temporal
+            DB::table('apoyo_recibo')->insert([
+                'tipo'=>'financiero',
+                'id_creador'=>Auth::user()->id,
+                'id_concepto'=>$this->concepdescuento,
+                'concepto'=>'Descuento',
+                'valor'=>$this->descuento,
+            ]);
+        }else{
+            $this->dispatch('alerta', name:'Ya cargo un descuento.');
+        }
+
+        $this->cargando();
     }
 
     public function asigOtro($id, $item,$conf=null){
@@ -279,7 +302,7 @@ class RecibosPagoCrear extends Component
 
     }
 
-    public function elimOtro($item, $valor){
+    public function elimOtro($item, $valor, $concepto){
 
         $this->valoRecargo();
 
@@ -287,7 +310,9 @@ class RecibosPagoCrear extends Component
             ->where('id', $item)
             ->delete();
 
-        $this->Total=$this->Total-$valor;
+        if($concepto!=='Descuento'){
+            $this->Total=$this->Total-$valor;
+        }
 
         $this->cargando();
     }
@@ -497,6 +522,39 @@ class RecibosPagoCrear extends Component
                     ]);
                 }
 
+                if($value->tipo==='financiero' && $value->concepto==='Descuento'){
+
+                    //Aplicar descuento desde el mas antiguo
+                    $vrdescuento=$value->valor;
+
+                    foreach ($this->pendientes as $val) {
+                        if($vrdescuento>0){
+
+                            $sald=$val->saldo-$vrdescuento;
+                            $observa=now()." ".$this->alumnoName." recibio descuento por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$val->observaciones;
+                            if($sald>0){
+                                $esta=EstadoCartera::where('name', 'abonada')->first();
+                                $this->estado=$esta->id;
+                                $this->status=true;
+                                $vrdescuento=0;
+                            }else{
+                                $esta=EstadoCartera::where('name', 'cerrada')->first();
+                                $this->estado=$esta->id;
+                                $this->status=false;
+                                $vrdescuento=$vrdescuento-$sald;
+                                $sald=0;
+                            }
+
+                            $val->update([
+                                'fecha_real'=>$this->fecha_pago,
+                                'saldo'=>$sald,
+                                'observaciones'=>$observa,
+                                'status'=>$this->status,
+                                'estado_cartera_id'=>$this->estado
+                            ]);
+                        }
+                    }
+                }
             }
         }
 

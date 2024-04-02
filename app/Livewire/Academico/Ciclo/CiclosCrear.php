@@ -58,11 +58,13 @@ class CiclosCrear extends Component
             $grupo=Grupo::where('modulo_id', $value->id)
                         ->where('sede_id', $this->sede_id)
                         ->where('status', true)
+                        ->orderBy('modulo_id')
                         ->get();
 
             if($grupo->count()>0){
 
                 foreach ($grupo as $value) {
+
                     $nuevo=[
                         'id'            =>$value->id,
                         'name'          =>$value->name,
