@@ -7,6 +7,10 @@
         <livewire:dashboard.estudiante />
     @endhasrole
 
+    @if (Auth::user()->id_rol<4)
+        <livewire:cartera.cartera.consolidado />
+    @endif
+
 </x-admin-layout>
 
 {{-- <x-app-layout>

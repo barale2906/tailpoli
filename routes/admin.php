@@ -20,5 +20,9 @@ Route::get('/profesores', function () {
     return view('admin.profesores.index');
 })->middleware('can:ad_profesores')->name('profesores');
 
+Route::get('/ayuda', function () {
+    return view('admin.ayuda');
+})->name('ayuda');
+
 
 Route::resource('/countries', CountryController::class)->except('show');
