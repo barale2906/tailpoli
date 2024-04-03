@@ -74,6 +74,12 @@ class RecibosPagoCrear extends Component
     public $transaccion;
     public $status_transa;
 
+    public $is_transac=false;
+    public $is_recibo=true;
+    public $is_inventa=false;
+    public $controle_id=0;
+    public $controlcrt;
+
     public $pendientes;
 
     public function mount($ruta=null, $elegido=null, $estudiante=null){
@@ -163,6 +169,16 @@ class RecibosPagoCrear extends Component
         $this->totalCartera=Cartera::where('responsable_id', $this->alumno_id)
                                     ->where('status', true)
                                     ->sum('saldo');
+
+        $this->identiControl();
+    }
+
+    public function identiControl(){
+        $this->controlcrt=Control::where('estudiante_id', $this->alumno_id)
+                                    ->where('status', true)
+                                    ->first();
+
+        $this->controle_id=$this->controlcrt->id;
     }
 
     public function cargaDescuento(){
@@ -381,7 +397,7 @@ class RecibosPagoCrear extends Component
                     );
     }
 
-    // Crear Regimen de Salud
+    // Crear REcibo de Pago
     public function new(){
         // validate
         $this->validate();
@@ -627,6 +643,20 @@ class RecibosPagoCrear extends Component
         $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$recibo->id;
 
         $this->redirect($ruta);
+    }
+
+    //Mostrar componente de transacciones
+    public function generatransaccion(){
+        $this->is_transac=true;
+        $this->is_inventa=false;
+        $this->is_recibo=false;
+    }
+
+    //Mostrar mov inventario
+    public function generaInventario(){
+        $this->is_transac=false;
+        $this->is_inventa=true;
+        $this->is_recibo=false;
     }
 
     private function sedes(){
