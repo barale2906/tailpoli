@@ -3,6 +3,7 @@
 namespace App\Livewire\Financiera\CierreCaja;
 
 use App\Models\Financiera\CierreCaja;
+use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
 use App\Traits\ComunesTrait;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,8 @@ class CierreCajeroCrear extends Component
     public $valor_tarjeta_o=0;
     public $valor_cheque_o=0;
     public $valor_consignacion_o=0;
+    public $descuentosT=0;
+    public $id_concepto;
 
     public $elegido;
     public $accion=2;
@@ -45,6 +48,7 @@ class CierreCajeroCrear extends Component
 
     public function mount ($ruta=null){
         $this->cierre();
+        $this->id_concepto=ConceptoPago::where('name', 'Descuento')->first();
         $this->recibos=ReciboPago::where('creador_id', Auth::user()->id)
                                 ->where('status', '!=', 1)
                                 ->get();
@@ -176,6 +180,7 @@ class CierreCajeroCrear extends Component
                                     ->where('recibo_pagos.creador_id', Auth::user()->id)
                                     ->where('recibo_pagos.status', 0)
                                     ->where('concepto_pago_recibo_pago.tipo','!=', 'cartera')
+                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
                                     //->where('concepto_pago_recibo_pago.medio', 'efectivo')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
@@ -185,6 +190,7 @@ class CierreCajeroCrear extends Component
                                     ->where('recibo_pagos.creador_id', Auth::user()->id)
                                     ->where('recibo_pagos.status', 0)
                                     ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
+                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
                                     ->where('concepto_pago_recibo_pago.medio', 'efectivo')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
@@ -194,6 +200,7 @@ class CierreCajeroCrear extends Component
                                     ->where('recibo_pagos.creador_id', Auth::user()->id)
                                     ->where('recibo_pagos.status', 0)
                                     ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
+                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
                                     ->where('concepto_pago_recibo_pago.medio', 'tarjeta')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
@@ -203,6 +210,7 @@ class CierreCajeroCrear extends Component
                                     ->where('recibo_pagos.creador_id', Auth::user()->id)
                                     ->where('recibo_pagos.status', 0)
                                     ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
+                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
                                     ->where('concepto_pago_recibo_pago.medio', 'cheque')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
@@ -212,6 +220,7 @@ class CierreCajeroCrear extends Component
                                     ->where('recibo_pagos.creador_id', Auth::user()->id)
                                     ->where('recibo_pagos.status', 0)
                                     ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
+                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
                                     ->whereIn('concepto_pago_recibo_pago.medio', ['consignacion', 'PSE', ])
                                     ->sum('concepto_pago_recibo_pago.valor');
     }

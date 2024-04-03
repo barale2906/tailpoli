@@ -114,6 +114,12 @@
                                 {{$cierre->sede->name}}
                             </h2>
                         </div>
+                        <div>
+                            <label for="sede" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descuentos aplicados:</label>
+                            <h2 class="md:text-xl font-bold text-gray-900 dark:text-white">
+                                $ {{number_format($descuentosT, 0, ',', '.')}}
+                            </h2>
+                        </div>
                     </div>
 
                     <h5 class="text-semibold md:text-lg sm:text-sm capitalize m-3">Recibos de caja encontrados</h5>
@@ -151,17 +157,17 @@
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                             {{$recibo->fecha}}
                                         </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                             {{$recibo->paga->name}}
                                         </th>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                             {{$recibo->observaciones}}
                                         </th>
                                         @if ($cierre->status || $accion===0)
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                                 {{$recibo->medio}}
                                             </th>
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                                 $ {{number_format($recibo->valor_total, 0, ',', '.')}}
                                             </th>
                                         @endif

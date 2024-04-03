@@ -166,24 +166,17 @@ class RecibosPagoCrear extends Component
     }
 
     public function cargaDescuento(){
-        //Verificar que no se haya cargado descuentos
-        $ya= DB::table('apoyo_recibo')->where('id_concepto', $this->concepdescuento)->count();
 
-        if($ya>0){
-            $this->dispatch('alerta', name:'Ya cargo descuentos.');
-        }else{
+        // Cargar descuento a la tabla temporal
+        DB::table('apoyo_recibo')->insert([
+            'tipo'=>'financiero',
+            'id_creador'=>Auth::user()->id,
+            'id_concepto'=>$this->concepdescuento,
+            'concepto'=>'Descuento',
+            'valor'=>abs($this->descuento),
+        ]);
 
-            // Cargar descuento a la tabla temporal
-            DB::table('apoyo_recibo')->insert([
-                'tipo'=>'financiero',
-                'id_creador'=>Auth::user()->id,
-                'id_concepto'=>$this->concepdescuento,
-                'concepto'=>'Descuento',
-                'valor'=>$this->descuento,
-            ]);
-
-            $this->reset('descuento', 'concepdescuento');
-        }
+        $this->reset('descuento', 'concepdescuento');
 
         $this->cargando();
     }

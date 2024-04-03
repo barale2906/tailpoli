@@ -42,7 +42,7 @@
                     </div>
                 @enderror
             </div>
-            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 bg-slate-300">
+            <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 bg-slate-300">
                 <div class="mb-6">
                     <div class="flex flex-col items-center justify-center">
                         <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($valor_total, 0, ',', '.')}}</dt>
@@ -59,6 +59,12 @@
                     <div class="flex flex-col items-center justify-center">
                         <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($valor_efectivoT, 0, ',', '.')}}</dt>
                         <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor efectivo</dd>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($descuentosT, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor descuentos</dd>
                     </div>
                 </div>
             </div>

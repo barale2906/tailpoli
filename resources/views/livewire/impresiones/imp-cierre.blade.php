@@ -83,6 +83,28 @@
             <thead class="text-xs text-gray-700 uppercase bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
                 <tr>
                     <th scope="col" colspan="2" class="px-6 py-3 text-justify text-xl uppercase">
+                        DESCUENTOS APLICADOS
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="dark:bg-gray-800 bg-gray-400">
+                    <th scope="row" class="px-3 py-1 text-justify font-semibold text-lg text-gray-900 whitespace-nowrap dark:text-white">
+                        TOTAL DESCUENTO:
+                    </th>
+                    <th scope="row" class="px-3 py-1 text-right font-semibold  text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                        $ {{number_format($descuentosT, 0, '.', '.')}}
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="relative overflow-x-auto m-1 shadow-sm shadow-teal-300">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
+                <tr>
+                    <th scope="col" colspan="2" class="px-6 py-3 text-justify text-xl uppercase">
                         INGRESOS POR PENSIONES
                     </th>
                 </tr>
@@ -193,6 +215,8 @@
             </tbody>
         </table>
     </div>
+
+
 
     <div class="relative overflow-x-auto m-1 shadow-sm shadow-teal-300">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

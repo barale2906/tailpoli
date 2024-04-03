@@ -3,8 +3,10 @@
 namespace App\Livewire\Financiera\CierreCaja;
 
 use App\Models\Financiera\CierreCaja;
+use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CierreCajasImprimir extends Component
@@ -15,13 +17,31 @@ class CierreCajasImprimir extends Component
     public $accion;
     public $observaciones;
     public $ruta;
+    public $descuentosT=0;
+    public $id_concepto;
 
     public function mount($elegido = null,$accion,$ruta=null)
     {
+        $this->id_concepto=ConceptoPago::where('name', 'Descuento')->first();
         $this->cierre=CierreCaja::find($elegido['id']);
-        $this->recibos=ReciboPago::where('cierre', $elegido['id'])->get();
+        $this->recibos=ReciboPago::where('cierre', $elegido['id'])->orderBy('fecha', 'ASC')->get();
         $this->$accion=$accion;
         $this->ruta=$ruta;
+        $this->descuenTotal();
+    }
+
+    public function descuenTotal(){
+        $ids=array();
+
+        foreach ($this->recibos as $value) {
+            array_push($ids, $value->id);
+        }
+
+        $this->descuentosT = DB::table('concepto_pago_recibo_pago')
+                                    ->where('concepto_pago_id', $this->id_concepto->id)
+                                    ->whereIn('recibo_pago_id', $ids)
+                                    ->sum('concepto_pago_recibo_pago.valor');
+
     }
     /**
      * Reglas de validación
