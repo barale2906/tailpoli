@@ -18,7 +18,7 @@ class Grupos extends Component
     use FiltroTrait;
 
     public $ordena='id';
-    public $ordenado='ASC';
+    public $ordenado='DESC';
     public $pages = 10;
 
     public $is_modify = true;

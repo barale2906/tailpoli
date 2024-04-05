@@ -10,11 +10,13 @@ use App\Models\Configuracion\Area;
 use App\Models\Configuracion\Sede;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class GruposCrear extends Component
 {
     public $name;
+    public $namebase;
     //public $start_date;
     //public $finish_date;
     public $quantity_limit;
@@ -26,6 +28,7 @@ class GruposCrear extends Component
     public $modulo_id;
     public $modulos;
     public $curso_id;
+    public $curso;
 
     public $seleccionados=[];
     public $area_id;
@@ -42,13 +45,41 @@ class GruposCrear extends Component
 
 
     public function updatedCursoId(){
+        $this->reset(
+            'sede_id',
+            'modulo_id',
+            'seleccionados',
+            'profesor_id',
+            'name',
+            'namebase'
+        );
+
+        $this->curso=Curso::find($this->curso_id);
+
         $this->modulos=Modulo::where('status', true)
                             ->where('curso_id', $this->curso_id)
                             ->orderBy('name', 'ASC')
                             ->get();
     }
 
+    public function updatedModuloId(){
+        $this->reset(
+            'sede_id',
+            'seleccionados',
+            'profesor_id',
+            'name',
+            'namebase'
+        );
+    }
+
+
     public function updatedSedeId(){
+        $this->reset(
+            'seleccionados',
+            'name',
+            'profesor_id',
+            'namebase'
+        );
 
         $this->sede=Sede::find($this->sede_id);
 
@@ -57,16 +88,52 @@ class GruposCrear extends Component
                                         ->where('status', true)
                                         ->get();
 
-        $this->ocupacion=Horario::where('sede_id', $this->sede_id)
-                                    ->where('tipo', false)
-                                    ->where('status', true)
-                                    ->orderBy('hora', 'ASC')
-                                    ->get();
+        $this->slugCrear();
 
     }
 
-    public function updatedAreaId(){
-        $this->area=Area::find($this->area_id);
+    public function slugCrear(){
+        $curso=explode(" ",$this->curso->name);
+        $sede=explode(" ",$this->sede->name);
+
+            $sedeBase="";
+
+            for ($i=0; $i < count($sede); $i++) {
+
+                $lon=strlen($sede[$i]);
+
+
+                if($lon>3){
+                    $text=substr($sede[$i], 0, 4);
+                    $sedeBase=$sedeBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }else{
+                    $text=substr($sede[$i], 0, $lon);
+                    $sedeBase=$sedeBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }
+            }
+
+            $cursoBase="";
+
+            for ($i=0; $i < count($curso); $i++) {
+
+                $lon=strlen($curso[$i]);
+
+
+                if($lon>3){
+                    $text=substr($curso[$i], 0, 4);
+                    $cursoBase=$cursoBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }else{
+                    $text=substr($curso[$i], 0, $lon);
+                    $cursoBase=$cursoBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }
+            }
+
+            $this->namebase=$sedeBase.$cursoBase;
+
     }
 
     public function updatedDia(){
@@ -78,6 +145,18 @@ class GruposCrear extends Component
                 $this->cierra=$value->hora;
             }
         }
+    }
+
+    public function updatedAreaId(){
+        $this->area=Area::find($this->area_id);
+
+        $this->ocupacion=Horario::where('sede_id', $this->sede_id)
+                                    ->where('tipo', false)
+                                    ->where('status', true)
+                                    ->where('dia', $this->dia)
+                                    ->where('area_id', $this->area_id)
+                                    ->orderBy('hora', 'ASC')
+                                    ->get();
     }
 
     //Cargar datos de horario para el grupo
@@ -99,9 +178,11 @@ class GruposCrear extends Component
 
 
                 $esta=Horario::where('sede_id', $this->sede_id)
+                            ->where('status', true)
                             ->where('area_id', $this->area_id)
                             ->where('dia', $this->dia)
                             ->where('tipo', false)
+                            ->whereNot('grupo', 'like', "%".$this->namebase."%")
                             ->where('hora', $horafin)
                             ->count();
 
@@ -111,7 +192,7 @@ class GruposCrear extends Component
             }
 
             if($this->conteo>0){
-                $this->dispatch('alerta', name:'Revise el horario, área e intensidad horaria, ya esta registrado el valor o se traslapa con otro'.$this->conteo);
+                $this->dispatch('alerta', name:'Revise el horario, área e intensidad horaria, ya esta registrado el valor o se traslapa con otro grupo');
                 $this->reset('conteo');
             }else{
                 $this->reset('conteo');
@@ -209,6 +290,7 @@ class GruposCrear extends Component
     public function new(){
         // validate
         $this->validate();
+        $this->name=$this->name.$this->namebase;
 
        //Crear registro
         $grupo= Grupo::create([

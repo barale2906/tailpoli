@@ -15,9 +15,9 @@ class Ciclos extends Component
     use WithPagination;
     use FiltroTrait;
 
-    public $ordena='id';
+    public $ordena='inicia';
     public $ordenado='DESC';
-    public $pages = 10;
+    public $pages = 15;
 
     public $is_modify = true;
     public $is_creating = false;
