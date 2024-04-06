@@ -49,6 +49,9 @@ class RecibosPagoCrear extends Component
     public $concepdescuento;
     public $descuento;
 
+    public $concepotro;
+    public $otro;
+
     public $listaotros;
 
 
@@ -113,7 +116,7 @@ class RecibosPagoCrear extends Component
         $this->obligaciones();
     }
 
-    public function updatedSedeId(){
+    /* public function updatedSedeId(){
         $sede=Sede::find($this->sede_id);
         $config=ConfPagOtros::where('status', true)
                                         ->where('sector_id', $sede->sector_id)
@@ -131,7 +134,7 @@ class RecibosPagoCrear extends Component
 
 
 
-    }
+    } */
 
     #[On('cargados')]
     //obtener itemes cargados
@@ -178,7 +181,29 @@ class RecibosPagoCrear extends Component
                                     ->where('status', true)
                                     ->first();
 
-        $this->controle_id=$this->controlcrt->id;
+        if($this->controlcrt){
+            $this->controle_id=$this->controlcrt->id;
+        }
+    }
+
+    public function cargaOtro(){
+
+        $ite=ConceptoPago::find($this->concepotro);
+
+        // Cargar descuento a la tabla temporal
+        DB::table('apoyo_recibo')->insert([
+            'tipo'=>'otro',
+            'id_creador'=>Auth::user()->id,
+            'id_concepto'=>$this->concepotro,
+            'concepto'=>$ite->name,
+            'valor'=>abs($this->otro),
+        ]);
+
+        $this->Total=$this->Total+abs($this->otro);
+
+        $this->reset('otro', 'concepotro');
+
+        $this->cargando();
     }
 
     public function cargaDescuento(){
