@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Ayuda;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -10,7 +11,9 @@ class Detalle extends Component
 {
     public $crt;
     public $is_video=false;
+    public $seleccionado;
     public $ruta;
+
 
     public function mount($crt){
         $this->crt=$crt;
@@ -25,15 +28,29 @@ class Detalle extends Component
     }
 
     public function ver($id){
-        $this->reset('ruta');
+        $this->volver();
 
-        $sel=DB::table('ayudas')
-                    ->where('id', $id)
-                    ->first();
+        $this->seleccionado=DB::table('ayudas')
+                            ->where('id', $id)
+                            ->first();
 
-        $this->ruta=Storage::url($sel->ruta);
+        // cargar visita
+        DB::table('ayudavisitas')
+            ->insert([
+                'visitante'         =>Auth::user()->id,
+                'nombre_visitante'  =>Auth::user()->name,
+                'tema'              =>$this->seleccionado->titulo,
+                'created_at'        =>now(),
+                'updated_at'        =>now(),
+            ]);
+
+        $this->ruta=Storage::url($this->seleccionado->ruta);
 
         $this->is_video=true;
+    }
+
+    public function volver(){
+        $this->reset('ruta','is_video', 'seleccionado');
     }
 
     public function render()
