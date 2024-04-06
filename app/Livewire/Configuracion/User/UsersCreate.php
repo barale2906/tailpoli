@@ -73,8 +73,7 @@ class UsersCreate extends Component
         $this->validate();
 
         //Verificar que no exista el registro en la base de datos
-        $existe=User::Where('name', '=',strtolower($this->name))
-                    ->orWhere('email','=',strtolower($this->email))
+        $existe=User::Where('email','=',strtolower($this->email))
                     ->orWhere('documento','=',strtolower($this->documento))
                     ->count();
 

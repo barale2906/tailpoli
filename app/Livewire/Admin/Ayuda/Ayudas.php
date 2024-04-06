@@ -7,11 +7,11 @@ use Livewire\Component;
 class Ayudas extends Component
 {
     public $crt;
-    public $is_video=false;
+    public $is_detalle=false;
 
     public function buscar($item){
         $this->crt=$item;
-        $this->is_video=true;
+        $this->is_detalle=true;
     }
 
     public function render()

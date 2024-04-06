@@ -35,8 +35,8 @@
         </button>
     </div>
 
-    @if ($is_video)
-        se ve {{$crt}}
+    @if ($is_detalle)
+        <livewire:admin.ayuda.detalle :crt="$crt" />
     @endif
 
 </div>

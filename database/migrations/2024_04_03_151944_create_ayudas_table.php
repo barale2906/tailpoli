@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('titulo')->comment('tema a tratar en la ayuda');
             $table->longText('descripcion')->comment('detalle del tema de ayuda');
             $table->string('ruta')->comment('url del video respectio');
+            $table->string('youtube')->comment('link de youtube');
             $table->integer('status')->default(1)->comment('vigencia de la ayuda, 1 Vigente, 2 Obsoleta');
             $table->timestamps();
         });
