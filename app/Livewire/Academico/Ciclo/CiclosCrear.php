@@ -113,12 +113,12 @@ class CiclosCrear extends Component
     }
 
     public function nombrar(){
-        $sede=Sede::where('id', $this->sede_id)
-                    ->select('slug','id','sector_id')
+        $sedesel=Sede::where('id', $this->sede_id)
+                    ->select('name','id','sector_id')
                     ->first();
 
-        $sector=Sector::where('id', $sede->sector_id)
-                        ->select('slug')
+        $sectorsel=Sector::where('id', $sedesel->sector_id)
+                        ->select('name')
                         ->first();
 
         switch ($this->jornada) {
@@ -140,7 +140,65 @@ class CiclosCrear extends Component
         }
 
 
-        $this->name=$sector->slug." ".$sede->slug." ".$this->curso->slug." ".$jor." ".$this->inicia;
+        $sede=explode(" ",$sedesel->name);
+        $ciudad=explode(" ",$sectorsel->name);
+        //$curso=explode(" ",$this->curso->name);
+
+            $sedeBase="";
+
+            for ($i=0; $i < count($sede); $i++) {
+
+                $lon=strlen($sede[$i]);
+
+
+                if($lon>3){
+                    $text=substr($sede[$i], 0, 4);
+                    $sedeBase=$sedeBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }else{
+                    $text=substr($sede[$i], 0, $lon);
+                    $sedeBase=$sedeBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }
+            }
+
+            $ciudadBase="";
+
+            for ($i=0; $i < count($ciudad); $i++) {
+
+                $lon=strlen($ciudad[$i]);
+
+
+                if($lon>3){
+                    $text=substr($ciudad[$i], 0, 4);
+                    $ciudadBase=$ciudadBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }else{
+                    $text=substr($ciudad[$i], 0, $lon);
+                    $ciudadBase=$ciudadBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }
+            }
+
+            /* $cursoBase="";
+
+            for ($i=0; $i < count($curso); $i++) {
+
+                $lon=strlen($curso[$i]);
+
+
+                if($lon>3){
+                    $text=substr($curso[$i], 0, 4);
+                    $cursoBase=$cursoBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }else{
+                    $text=substr($curso[$i], 0, $lon);
+                    $cursoBase=$cursoBase."-".$text;
+                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                }
+            } */
+
+        $this->name=$this->curso->name." -- ".$jor." -- ".$this->inicia." -- ".$sedeBase." -- ".$ciudadBase;
     }
 
     public function activFecha($id, $mod){
