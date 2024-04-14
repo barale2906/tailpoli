@@ -61,7 +61,8 @@ class RolesEditar extends Component
         ]);
 
         //Actualizar permisos
-        $this->rolEleg->permissions()->sync($this->permis);
+        //$this->rolEleg->permissions()->sync($this->permis);
+        $this->rolEleg->syncPermissions($this->permis);
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el Rol: '.$this->name);
         $this->resetFields();
