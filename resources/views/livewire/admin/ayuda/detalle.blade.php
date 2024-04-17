@@ -1,6 +1,9 @@
 <div>
-    <h1 class=" text-center text-xl">
+    <h1 class=" text-center text-xl m-4">
         A continuación se presenta el menú de ayuda para el modulo <span class=" font-extrabold uppercase">{{$crt}}</span>
+        <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm text-center mr-2 p-2 capitalize">
+            <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
+        </a>.
     </h1>
     @if ($is_video)
 

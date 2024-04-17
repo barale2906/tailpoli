@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $super = User::factory()->create([
+        /* $super = User::factory()->create([
             'name' => 'Ing Alexander Barajas V',
             'email' => 'alexanderbarajas@gmail.com',
             'documento'=>10215300,
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             'documento'=>10215300,
             'name'=>'Alexander',
             'lastname'=>'Barajas Vargas'
-        ]);
+        ]); */
 
 
                 $row = 0;

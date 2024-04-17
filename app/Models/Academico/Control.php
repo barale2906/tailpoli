@@ -58,5 +58,13 @@ class Control extends Model
                     });
         });
     }
+
+    public function scopeEstado($query,$item){
+        $query->when($item ?? null, function($query) use($item){
+
+            $query->where('status_est', $item);
+
+        });
+    }
 }
 

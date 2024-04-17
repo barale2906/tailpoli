@@ -13,14 +13,24 @@ class Detalle extends Component
     public $is_video=false;
     public $seleccionado;
     public $ruta;
+    public $modulos;
 
 
     public function mount($crt){
-        $this->crt=$crt;
+        $this->reset('crt','is_video','seleccionado','modulos');
+
+        $this->inicia($crt);
+
     }
 
-    private function modulos(){
-        return DB::table('ayudas')
+    public function inicia($item){
+
+        $this->crt=$item;
+        $this->modul();
+    }
+
+    public function modul(){
+        $this->modulos = DB::table('ayudas')
                     ->where('modulo', $this->crt)
                     ->where('status', true)
                     ->orderBy('titulo')
@@ -55,8 +65,6 @@ class Detalle extends Component
 
     public function render()
     {
-        return view('livewire.admin.ayuda.detalle',[
-            'modulos'=>$this->modulos(),
-        ]);
+        return view('livewire.admin.ayuda.detalle');
     }
 }
