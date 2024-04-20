@@ -56,14 +56,13 @@
                 <livewire:academico.matricula.matriculas :crt="1" />
                 @break
             @case(2)
-
+                <livewire:academico.ciclo.ciclos />
                 @break
-
             @case(3)
-
+                <livewire:academico.nota.notas />
                 @break
             @case(4)
-
+                <livewire:reportes.activos />
                 @break
 
         @endswitch

@@ -19,6 +19,7 @@ class Academicos extends Component
     public function show($id){
         $this->cancelando();
         $this->clase=$id;
+        $this->is_reporte=true;
     }
 
     public function render()

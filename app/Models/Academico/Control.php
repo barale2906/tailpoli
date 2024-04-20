@@ -61,9 +61,13 @@ class Control extends Model
 
     public function scopeEstado($query,$item){
         $query->when($item ?? null, function($query) use($item){
-
             $query->where('status_est', $item);
+        });
+    }
 
+    public function scopeSede($query, $sede){
+        $query->when($sede ?? null, function($query, $sede){
+            $query->where('sede_id', $sede);
         });
     }
 }

@@ -37,9 +37,9 @@
                         </a>
                     @endcan
                     @can('ac_export')
-                        <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        {{-- <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  text-sm p-2 text-center mr-1 mb-2 capitalize" >
                             <i class="fa-solid fa-file-excel"></i> Descargar
-                        </a>
+                        </a> --}}
                     @endcan
                     @can('in_inventarioCrear')
                         <a href="" wire:click.prevent="$dispatch('inventario')" class="w-auto text-black bg-gradient-to-r from-white via-white to-white hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-white dark:focus:ring-white font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
