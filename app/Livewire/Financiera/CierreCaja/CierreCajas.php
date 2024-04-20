@@ -3,6 +3,7 @@
 namespace App\Livewire\Financiera\CierreCaja;
 
 use App\Exports\FinCierreCajaExport;
+use App\Exports\FinInfContabExport;
 use App\Models\Financiera\CierreCaja;
 use App\Traits\FiltroTrait;
 use Illuminate\Database\Eloquent\Builder;
@@ -160,12 +161,19 @@ class CierreCajas extends Component
     }
 
     public function exportar(){
-        return new FinCierreCajaExport();
+        return new FinCierreCajaExport($this->buscamin,$this->filtroSede,$this->filtrocrea);
+    }
+
+    public function exportRecibos(){
+        $this->exportar();
+        $this->exportcontab();
     }
 
     public function exportcontab(){
-        return new FinCierreCajaExport();
+        return new FinInfContabExport($this->buscamin,$this->filtroSede,$this->filtrocrea);
     }
+
+
 
     private function cierres()
     {

@@ -20,14 +20,26 @@ class FinCierreCajaExport implements FromCollection, WithCustomStartCell, Respon
     use Exportable;
 
     private $buscamin;
+    private $filtroSede;
+    private $filtrocrea;
     private $fileName = "Cierres.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
+
+    public function __construct($buscamin,$filtroSede,$filtrocrea)
+    {
+        $this->buscamin=$buscamin;
+        $this->filtroSede=$filtroSede;
+        $this->filtrocrea=$filtrocrea;
+    }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return CierreCaja::orderBy('id', 'DESC')
+        return CierreCaja::buscar($this->buscamin)
+                            ->sede($this->filtroSede)
+                            ->crea($this->filtrocrea)
+                            ->orderBy('id', 'DESC')
                             ->get();
     }
 
