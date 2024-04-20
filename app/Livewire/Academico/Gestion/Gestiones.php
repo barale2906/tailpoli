@@ -235,10 +235,6 @@ class Gestiones extends Component
         $this->show($item, 1, $id); //envío id del grupo
     }
 
-    public function exportar(){
-        //return new AcaMatriculaExport($this->buscamin);
-    }
-
     private function controles()
     {
         return Control::where('status', true)

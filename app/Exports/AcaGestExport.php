@@ -2,7 +2,8 @@
 
 namespace App\Exports;
 
-use App\Models\Academico\Matricula;
+use App\Models\Academico\Control;
+use App\Models\Configuracion\Estado;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -15,28 +16,26 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
+
+class AcaGestExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
 {
     use Exportable;
 
     private $buscamin;
+    private $estado;
     private $sede;
-    private $matriculo;
-    private $comercial;
-    private $crea;
-    private $inicia;
-    private $fileName = "Matriculas.xlsx";
+    private $fileName = "EstadoEstudiantes.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
+    private $estados;
 
-    public function __construct($buscamin,$sede,$matriculo,$comercial,$crea,$inicia)
+    public function __construct($buscamin,$sede,$estado)
     {
         $this->buscamin=$buscamin;
         $this->sede=$sede;
-        $this->matriculo=$matriculo;
-        $this->comercial=$comercial;
-        $this->crea=$crea;
-        $this->inicia=$inicia;
-
+        $this->estado=$estado;
+        $this->estados=Estado::where('status', true)
+                                ->orderBy('name', 'ASC')
+                                ->get();
     }
 
     /**
@@ -44,15 +43,12 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     */
     public function collection()
     {
-        return Matricula::buscar($this->buscamin)
+        return Control::estado($this->estado)
+                        ->buscar($this->buscamin)
                         ->sede($this->sede)
-                        ->creador($this->matriculo)
-                        ->comercial($this->comercial)
-                        ->crea($this->crea)
-                        ->inicia($this->inicia)
-                        ->orderBy('fecha_inicia', 'ASC')
                         ->get();
     }
+
     public function startCell(): string
     {
         return 'A5';
@@ -61,36 +57,39 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     public function headings(): array
     {
         return [
-            'Fecha Inicia',
+            'Fecha Inicio',
             'Sede',
             'Curso',
             'Programación',
             'Estudiante',
             'Documento',
-            '¿Cómo se entero?',
-            'Conocimientos Previos',
-            'valor',
-            'Matriculo',
-            'Comercial',
-            'Estado (0 inactiva, 1 activa)'
+            'Último pago',
+            'Última asistencia',
+            'Mora',
+            'Kit',
+            'Estatus estudiante'
         ];
     }
 
-    public function map($matricula): array
+    public function map($activo): array
     {
+        foreach ($this->estados as $value) {
+            if($activo->status_est===$value->id){
+                $estatus_est=$value->name;
+            }
+        }
         return [
-            $matricula->fecha_inicia,
-            $matricula->sede->name,
-            $matricula->curso->name,
-            $matricula->control->ciclo->name,
-            $matricula->alumno->name,
-            $matricula->alumno->documento,
-            $matricula->medio,
-            $matricula->nivel,
-            $matricula->valor,
-            $matricula->creador->name,
-            $matricula->comercial->name,
-            $matricula->status
+            $activo->inicia,
+            $activo->sede->name,
+            $activo->matricula->curso->name,
+            $activo->ciclo->name,
+            $activo->estudiante->name,
+            $activo->estudiante->documento,
+            $activo->ultimo_pago,
+            $activo->ultima_asistencia,
+            $activo->mora,
+            $activo->overol,
+            $estatus_est
         ];
     }
 
@@ -115,8 +114,8 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->setTitle('matriculas');
-        $sheet->setCellValue('B2', 'LISTADO DE MATRICULAS A: '.now());
+        $sheet->setTitle('estado estudiantes');
+        $sheet->setCellValue('B2', 'ESTADO DE ESTUDIANTES A: '.now());
         $sheet->mergeCells('B2:H2');
     }
 }

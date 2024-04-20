@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Reportes;
 
+use App\Exports\AcaGestExport;
 use App\Models\Academico\Control;
 use App\Models\Configuracion\Estado;
 use App\Traits\FiltroTrait;
@@ -54,6 +55,10 @@ class Activos extends Component
     {
         $this->resetPage();
         $this->pages=$valor;
+    }
+
+    public function exportar(){
+        return new AcaGestExport($this->buscamin,$this->filtroSede,$this->estado);
     }
 
     private function controles(){
