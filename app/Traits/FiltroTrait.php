@@ -66,10 +66,11 @@ trait FiltroTrait
                 break;
 
             case 4:
-                $this->txt="Busque por acá: Fecha, observaciones, cajero y sede";
+                $this->txt="Busque por acá: Observaciones, cajero y sede";
 
                 //cierre caja
                 $this->is_Creades=true;
+                $this->is_sede=true;
                 break;
 
             case 5:

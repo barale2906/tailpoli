@@ -2,7 +2,7 @@
     <h1 class="text-center text-xl font-bold">
         A continuación puede generar los reportes descritos
     </h1>
-    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-3">
+    <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 m-3">
 
         <a href="" wire:click.prevent="show(1)" class="block max-w-sm p-6 bg-white border border-gray-200 ring rounded-2xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
@@ -37,6 +37,17 @@
 
         </a>
 
+        <a href="" wire:click.prevent="show(4)" class="block max-w-sm p-6 bg-white border border-gray-200 ring rounded-2xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Reporte Recibos Contables
+            </h5>
+            <p class="font-normal text-justify text-gray-700 dark:text-gray-400">
+                Genera un informe de todos los recibos de pago generados que ya esten cerrados con el cierre de caja respectivo.
+            </p>
+
+        </a>
+
     </div>
 
     @if ($is_cartera)
@@ -49,6 +60,10 @@
 
     @if ($is_crm)
         <livewire:cliente.crm.crms :reporte="3"/>
+    @endif
+
+    @if ($is_cierre)
+        <livewire:financiera.cierre-caja.cierre-cajas :reporte="1"/>
     @endif
 
 

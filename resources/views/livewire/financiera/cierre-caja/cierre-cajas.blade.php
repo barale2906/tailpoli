@@ -6,21 +6,29 @@
     @if ($is_modify)
         <div class="flex flex-wrap justify-end mb-4 ">
             @include('includes.filtro')
-            @can('fi_cierrecajaCrear')
-                <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
-                    <i class="fa-solid fa-plus"></i> crear
-                </a>
-            @endcan
-            @can('fi_activarecibos')
-                <a href="#" wire:click.prevent="$dispatch('desbloqueando')" class="w-auto text-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
-                    <i class="fa-solid fa-unlock-keyhole"></i> Desbloquear
-                </a>
-            @endcan
-            @can('fi_export')
-                <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
-                    <i class="fa-solid fa-file-excel fa-beat"></i>
-                </a>
-            @endcan
+            @if ($is_reporte)
+                @can('fi_cierrecajaCrear')
+                    <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                        <i class="fa-solid fa-plus"></i> crear
+                    </a>
+                @endcan
+                @can('fi_activarecibos')
+                    <a href="#" wire:click.prevent="$dispatch('desbloqueando')" class="w-auto text-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                        <i class="fa-solid fa-unlock-keyhole"></i> Desbloquear
+                    </a>
+                @endcan
+                @can('fi_export')
+                    <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                        <i class="fa-solid fa-file-excel fa-beat"></i>
+                    </a>
+                @endcan
+            @else
+                @can('fi_export')
+                    <a href="#" wire:click.prevent="exportcontab" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                        <i class="fa-solid fa-file-excel fa-beat"></i>
+                    </a>
+                @endcan
+            @endif
         </div>
         <div class="relative overflow-x-auto">
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">

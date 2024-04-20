@@ -15,9 +15,9 @@ class CierreCajas extends Component
     use WithPagination;
     use FiltroTrait;
 
-    public $ordena='id';
-    public $ordenado='ASC';
-    public $pages = 10;
+    public $ordena='fecha';
+    public $ordenado='DESC';
+    public $pages = 15;
 
     public $is_modify = true;
     public $is_creating = false;
@@ -32,11 +32,20 @@ class CierreCajas extends Component
     public $buscamin='';
     public $filtroCreades;
     public $filtroCreahas;
+    public $filtrocrea=[];
+    public $filtroSede;
+    public $is_reporte=true;
+
+
 
     protected $listeners = ['refresh' => '$refresh'];
 
-    public function mount(){
+    public function mount($reporte=null){
         $this->claseFiltro(4);
+        if($reporte){
+            $this->is_reporte=false;
+        }
+
     }
 
     //Cargar variable
@@ -83,6 +92,17 @@ class CierreCajas extends Component
     {
         $this->resetPage();
         $this->pages=$valor;
+    }
+
+    public function updatedFiltroCreahas(){
+        if($this->filtroCreades<=$this->filtroCreahas){
+            $crea=array();
+            array_push($crea, $this->filtroCreades);
+            array_push($crea, $this->filtroCreahas);
+            $this->filtrocrea=$crea;
+        }else{
+            $this->reset('filtroCreades','filtroCreahas');
+        }
     }
 
     //Activar evento
@@ -143,33 +163,30 @@ class CierreCajas extends Component
         return new FinCierreCajaExport();
     }
 
+    public function exportcontab(){
+        return new FinCierreCajaExport();
+    }
+
     private function cierres()
     {
-        $consulta = CierreCaja::query();
+        return CierreCaja::buscar($this->buscamin)
+                            ->sede($this->filtroSede)
+                            ->crea($this->filtrocrea)
+                            ->orderBy($this->ordena, $this->ordenado)
+                            ->paginate($this->pages);
+    }
 
-        if($this->buscamin){
-            $consulta = $consulta->where('fecha', 'like', "%".$this->buscamin."%")
-            ->orwhere('observaciones', 'like', "%".$this->buscamin."%")
-            ->orWhereHas('cajero', function(Builder $q){
-                $q->where('name', 'like', "%".$this->buscamin."%");
-            })->orWhereHas('sede', function($qu){
-                $qu->where('name', 'like', "%".$this->buscamin."%");
-            });
-        }
-
-        if($this->filtroCreades && $this->filtroCreahas){
-
-            $consulta = $consulta->whereBetween('fecha', [$this->filtroCreades , $this->filtroCreahas]);
-        }
-
-        return $consulta->orderBy($this->ordena, $this->ordenado)
-                        ->paginate($this->pages);
+    private function sedes(){
+        return CierreCaja::select('sede_id')
+                            ->groupBy('sede_id')
+                            ->get();
     }
 
     public function render()
     {
         return view('livewire.financiera.cierre-caja.cierre-cajas', [
             'cierres'=>$this->cierres(),
+            'sedes'=>$this->sedes(),
         ]);
     }
 }
