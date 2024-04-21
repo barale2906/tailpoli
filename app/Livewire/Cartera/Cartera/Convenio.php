@@ -247,7 +247,7 @@ class Convenio extends Component
                     'fecha_pago'=>$endDate,
                     'valor'=>$this->valor_cuota,
                     'saldo'=>$this->valor_cuota,
-                    'observaciones'=>'--- CONVENIO PAGO ---'.$a. ' cuota mensual de un convenio por: '.$this->total." -- ".$this->descripcion,
+                    'observaciones'=>'Cuota N°: '.$a.' mensual CONVENIO PAGO ----- de un convenio por: '.$this->total." -- ".$this->descripcion,
                     'matricula_id'=>$this->matricula_id,
                     'concepto_pago_id'=>$concepto->id,
                     'concepto'=>$concepto->name,

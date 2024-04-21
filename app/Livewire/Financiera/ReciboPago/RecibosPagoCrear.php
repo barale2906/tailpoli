@@ -480,7 +480,10 @@ class RecibosPagoCrear extends Component
                         'updated_at'=>now(),
                     ]);
 
-                $observa=now()." ".$this->alumnoName." realizo pago por ".number_format($value->saldo, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$value->observaciones;
+                $primer=explode("-----",$value->observaciones);
+                $inicial=$primer[0];
+
+                $observa=$inicial." ----- ".now()." ".$this->alumnoName." realizo pago por ".number_format($value->saldo, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$value->observaciones;
 
                 Cartera::whereId($value->id)
                         ->update([
@@ -510,8 +513,12 @@ class RecibosPagoCrear extends Component
                 if($value->tipo==="cartera"){
 
                     $item=Cartera::find($value->id_cartera);
+
+                    $obs=explode('-----',$item->observaciones);
+                    $obspr=$obs[0];
+
                     $saldo=$item->saldo-$value->valor;
-                    $observa=now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
+                    $observa=$obspr.'-----'.now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
 
                     if($saldo>0){
                         $esta=EstadoCartera::where('name', 'abonada')->first();
@@ -568,10 +575,12 @@ class RecibosPagoCrear extends Component
                                     ->get();
 
                     foreach ($deudas as $val) {
+                        $obser=explode('-----',$val->observaciones);
+                        $obprim=$obser[0];
                         if($this->descuento>0){
 
                             $this->saldo=$val->saldo-$this->descuento;
-                            $observa=now()." ".$this->alumnoName." recibio descuento por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$val->observaciones;
+                            $observa=$obprim.' ----- '.now()." ".$this->alumnoName." recibio descuento por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$val->observaciones;
                             if($this->saldo>0){
                                 $esta=EstadoCartera::where('name', 'abonada')->first();
                                 $this->estado=$esta->id;

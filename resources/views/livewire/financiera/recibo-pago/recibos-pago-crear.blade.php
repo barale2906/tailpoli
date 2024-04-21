@@ -244,20 +244,24 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($pendientes as $pendiente)
+                                                    @php
+                                                        $cuota=explode("-----",$pendiente->observaciones);
+                                                        $cuo=$cuota[0];
+                                                    @endphp
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                                             {{$pendiente->fecha_pago}}
                                                         </th>
                                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
                                                             $ {{number_format($pendiente->saldo, 0, '.', ' ')}}
                                                         </th>
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                                            {{$pendiente->concepto}}
+                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                                            {{$cuo}} - {{$pendiente->concepto}}
                                                         </th>
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                                                             <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
                                                         </th>
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
+                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white  text-right">
                                                             <select wire:model.blur="conceptos" wire:change="asigOtro(1, {{$pendiente}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                                                                 <option>Seleccione...</option>
                                                                 @foreach ($concePagos as $item)

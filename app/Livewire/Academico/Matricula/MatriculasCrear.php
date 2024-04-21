@@ -305,7 +305,7 @@ class MatriculasCrear extends Component
                     'fecha_pago'=>$endDate,
                     'valor'=>$this->valor_cuota,
                     'saldo'=>$this->valor_cuota,
-                    'observaciones'=>'Curso: '.$this->cursoName.'. '.$a.'a. cuota mensual para un curso por valor de: '.$this->valor_curso,
+                    'observaciones'=>'Cuota N°: '.$a.' mensual. ----- Curso: '.$this->cursoName.'. Un curso por valor de: '.$this->valor_curso,
                     'matricula_id'=>$this->matricula->id,
                     'concepto_pago_id'=>$concepto->id,
                     'concepto'=>$concepto->name,
