@@ -131,7 +131,7 @@ class ProgramacionSeeder extends Seeder
                             ]);
 
                             //Crear Grupos
-                            $nombregrupo=' -- '.$data[5]." - ".$data[7].$sedeBase.$cursoBase;
+                            $nombregrupo=' -- '.$data[5]." - ".$data[7]." - ".$data[9].$sedeBase.$cursoBase;
 
                             $imod=0;
 
