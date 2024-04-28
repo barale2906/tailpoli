@@ -5,6 +5,9 @@
             <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
         </a>.
     </div>
+    <h1 class=" text-center font-semibold uppercase">
+        Documentos asignados para firma
+    </h1>
     <div class="content-center text-center">
 
         <div class="md:inline-flex rounded-md shadow-sm" role="group">
@@ -20,4 +23,5 @@
         </div>
 
     </div>
+    <livewire:academico.matricula.documento-firmado :id="$matricula->id" />
 </div>

@@ -15,6 +15,7 @@ class Documentos extends Component
     public function mount($elegido){
         $this->matricula=Matricula::find($elegido);
         $this->crearuta();
+
     }
 
     public function crearuta(){

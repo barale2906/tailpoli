@@ -3,6 +3,7 @@
 namespace App\Models\Academico;
 
 use App\Models\Configuracion\Documento;
+use App\Models\Configuracion\DocumentoFirmado;
 use App\Models\Configuracion\Sede;
 use App\Models\User;
 use Carbon\Carbon;
@@ -60,6 +61,12 @@ class Matricula extends Model
     public function documentos(): BelongsToMany
     {
         return $this->BelongsToMany(Documento::class);
+    }
+
+    //Relación uno a muchos
+    public function firmados(): HasMany
+    {
+        return $this->hasMany(DocumentoFirmado::class);
     }
 
     //Relación uno a muchos
