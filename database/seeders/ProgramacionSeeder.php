@@ -149,7 +149,7 @@ class ProgramacionSeeder extends Seeder
                                         'quantity_limit'    =>100,
                                         'modulo_id'         =>$value->id,
                                         'sede_id'           =>$data[1],
-                                        'profesor_id'       =>453
+                                        'profesor_id'       =>intval($data[18])
                                         ]);
 
                                     //Area
