@@ -68,6 +68,7 @@
                     </h5>
                     <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-2 mb-4">
                         <div>
+                            {{$controle_id}}
                             @if ($controle_id>0)
                                 @if ($controlcrt->transacciones)
                                     @can('fi_transaccionesCrear')

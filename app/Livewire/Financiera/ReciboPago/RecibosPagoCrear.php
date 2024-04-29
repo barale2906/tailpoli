@@ -8,8 +8,6 @@ use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
-use App\Models\Financiera\ConfPagOtros;
-use App\Models\Financiera\ConfPagOtrosDet;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
@@ -104,8 +102,6 @@ class RecibosPagoCrear extends Component
             $this->alumnodocumento=$alum->documento;
             $this->obligaciones();
         }
-
-        $this->cierre();
     }
 
     public function variables(){
@@ -114,6 +110,29 @@ class RecibosPagoCrear extends Component
         $this->alumnodocumento=$this->transaccion->alumno->documento;
         $this->sede_id=$this->transaccion->sede_id;
         $this->obligaciones();
+    }
+
+    public function obligaciones(){
+        $this->pendientes= Cartera::where('responsable_id', $this->alumno_id)
+                                ->where('status', true)
+                                ->orderBy('fecha_pago')
+                                ->get();
+
+        $this->totalCartera=Cartera::where('responsable_id', $this->alumno_id)
+                                    ->where('status', true)
+                                    ->sum('saldo');
+
+        $this->identiControl();
+    }
+
+    public function identiControl(){
+        $this->controlcrt=Control::where('estudiante_id', $this->alumno_id)
+                                    ->where('status', true)
+                                    ->first();
+
+        if($this->controlcrt){
+            $this->controle_id=$this->controlcrt->id;
+        }
     }
 
     /* public function updatedSedeId(){
@@ -161,29 +180,6 @@ class RecibosPagoCrear extends Component
         $this->alumnodocumento=$item['documento'];
         $this->limpiar();
         $this->obligaciones();
-    }
-
-    public function obligaciones(){
-        $this->pendientes= Cartera::where('responsable_id', $this->alumno_id)
-                                ->where('status', true)
-                                ->orderBy('fecha_pago')
-                                ->get();
-
-        $this->totalCartera=Cartera::where('responsable_id', $this->alumno_id)
-                                    ->where('status', true)
-                                    ->sum('saldo');
-
-        $this->identiControl();
-    }
-
-    public function identiControl(){
-        $this->controlcrt=Control::where('estudiante_id', $this->alumno_id)
-                                    ->where('status', true)
-                                    ->first();
-
-        if($this->controlcrt){
-            $this->controle_id=$this->controlcrt->id;
-        }
     }
 
     public function cargaOtro(){
