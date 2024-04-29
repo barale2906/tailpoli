@@ -126,6 +126,7 @@ class RecibosPagoCrear extends Component
     }
 
     public function identiControl(){
+        $this->reset('controle_id');
         $this->controlcrt=Control::where('estudiante_id', $this->alumno_id)
                                     ->where('status', true)
                                     ->first();
