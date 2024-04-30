@@ -25,7 +25,7 @@ class ActivaCiclosSeeder extends Seeder
     {
         $row = 0;
 
-        if(($handle = fopen(public_path() . '24-asigna_Ciclos_Nuevos.csv', 'r')) !== false) {
+        if(($handle = fopen(public_path() . '/csv/24-asigna_Ciclos_Nuevos.csv', 'r')) !== false) {
 
                 while(($data = fgetcsv($handle, 26000, ';')) !== false) {
 
