@@ -36,45 +36,45 @@ class ActivaCiclosSeeder extends Seeder
 
                         // Cargar modulos
                         foreach ($ciclo->ciclogrupos as $value) {
+
+                            DB::table('grupo_matricula')
+                                ->insert([
+                                    'grupo_id'      =>$value->grupo->id,
+                                    'matricula_id'  =>$matricula->id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now(),
+                                ]);
+
+                            //Cargar estudiante al grupo
+                            DB::table('grupo_user')
+                                ->insert([
+                                    'grupo_id'      =>$value->grupo->id,
+                                    'user_id'       =>$matricula->alumno_id,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now(),
+                                ]);
+
+
+
+                            //Sumar usuario al grupo
+                            $inscritos=Grupo::find($value->grupo->id);
+
+                            $tot=$inscritos->inscritos+1;
+
+                            $inscritos->update([
+                                'inscritos'=>$tot
+                            ]);
+
                             DB::table('matricula_modulos_aprobacion')
                                 ->insert([
                                     'matricula_id'  =>$matricula->id,
                                     'alumno_id'     =>$matricula->alumno_id,
                                     'modulo_id'     =>$value->grupo->modulo_id,
-                                    'name'          =>$value->grupo->modulos->name,
-                                    'dependencia'   =>$value->grupo->modulos->dependencia,
+                                    'name'          =>$value->grupo->modulo->name,
+                                    'dependencia'   =>$value->grupo->modulo->dependencia,
                                     'observaciones' =>now()." ERP POLIANDINO",
                                     'created_at'    =>now(),
                                     'updated_at'    =>now(),
-                                ]);
-
-
-                                DB::table('grupo_matricula')
-                                ->insert([
-                                    'grupo_id'      =>$value->grupo_id,
-                                    'matricula_id'  =>$matricula->id,
-                                    'created_at'    =>now(),
-                                    'updated_at'    =>now(),
-                                ]);
-
-                                //Cargar estudiante al grupo
-                                DB::table('grupo_user')
-                                    ->insert([
-                                        'grupo_id'      =>$value->grupo_id,
-                                        'user_id'       =>$matricula->alumno_id,
-                                        'created_at'    =>now(),
-                                        'updated_at'    =>now(),
-                                    ]);
-
-
-
-                                //Sumar usuario al grupo
-                                $inscritos=Grupo::find($value->grupo_id);
-
-                                $tot=$inscritos->inscritos+1;
-
-                                $inscritos->update([
-                                    'inscritos'=>$tot
                                 ]);
                         }
 
