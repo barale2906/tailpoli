@@ -5,7 +5,6 @@ namespace App\Livewire\Impresiones;
 use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
-use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -25,7 +24,7 @@ class ImpCierre extends Component
 
     public function mount(){
 
-        $this->id_concepto=ConceptoPago::where('name', 'Descuento')->first();
+        //$this->id_concepto=ConceptoPago::where('name', 'Descuento')->first();
         $this->obtener=CierreCaja::find($this->id);
         $this->obterecibo();
 
@@ -46,11 +45,7 @@ class ImpCierre extends Component
             array_push($ids, $value->id);
         }
 
-        $this->descuentosT = DB::table('concepto_pago_recibo_pago')
-                                    ->where('concepto_pago_id', $this->id_concepto->id)
-                                    ->whereIn('recibo_pago_id', $ids)
-                                    ->sum('concepto_pago_recibo_pago.valor');
-
+        $this->descuentosT = $this->recibos->sum('descuento');
     }
 
     public function urlruta(){

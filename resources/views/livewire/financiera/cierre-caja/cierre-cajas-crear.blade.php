@@ -20,7 +20,8 @@
                     <select wire:model.live="cajero_id" id="cajero_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                         <option >Elija cajero...</option>
                         @foreach ($cajeros as $item)
-                            <option value="{{$item[0]->creador['id']}}">{{$item[0]->creador['name']}}</option>
+                            {{-- <option value="{{$item[0]->creador['id']}}">{{$item[0]->creador['name']}}</option> --}}
+                            <option value="{{$item->id}}">{{$item->name}}</option>
                         @endforeach
                     </select>
                     @error('cajero_id')
@@ -171,6 +172,9 @@
                         Valor
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Descuento
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Medio
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -190,22 +194,25 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             {{$recibo->fecha}}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                             {{$recibo->paga->name}}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                             {{$recibo->sede->name}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
                             $ {{number_format($recibo->valor_total, 0, '.', ' ')}}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                            $ {{number_format($recibo->descuento, 0, '.', ' ')}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white  text-right">
                             {{$recibo->medio}}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                             {{$recibo->observaciones}}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                             {{$recibo->creador->name}}
                         </th>
                     </tr>

@@ -92,6 +92,22 @@
                                 $ {{number_format($obtener->valor_total, 0, '.', '.')}}
                             </td>
                         </tr>
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" colspan="5" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
+                                DESCUENTOS APLICADOS:
+                            </th>
+                            <td class="px-3 py-1 text-right font-medium text-gray-900">
+                                $ {{number_format($obtener->descuento, 0, '.', '.')}}
+                            </td>
+                        </tr>
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" colspan="5" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
+                                NETO A PAGAR:
+                            </th>
+                            <td class="px-3 py-1 text-right font-medium text-gray-900">
+                                $ {{number_format($obtener->valor_total-$obtener->descuento, 0, '.', '.')}}
+                            </td>
+                        </tr>
                         <tr class="bg-white dark:bg-gray-800 border">
                             <th scope="row" colspan="6" class="px-3 py-1 text-xs text-gray-900 whitespace-nowrap dark:text-white">
                                 <small class="capitalize">
@@ -110,7 +126,7 @@
             </div>
         </div>
 
-        <div class="border border-spacing-40 h-1 border-black"></div>
+        <div class="border border-spacing-40 h-10 border-black"></div>
 
         <div>
             <div class="relative overflow-x-auto bg-slate-200 shadow-sm shadow-teal-200 m-1">
@@ -198,6 +214,22 @@
                             </th>
                             <td class="px-3 py-1 text-right font-medium text-gray-900">
                                 $ {{number_format($obtener->valor_total, 0, '.', '.')}}
+                            </td>
+                        </tr>
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" colspan="5" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
+                                DESCUENTOS APLICADOS:
+                            </th>
+                            <td class="px-3 py-1 text-right font-medium text-gray-900">
+                                $ {{number_format($obtener->descuento, 0, '.', '.')}}
+                            </td>
+                        </tr>
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" colspan="5" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
+                                NETO A PAGAR:
+                            </th>
+                            <td class="px-3 py-1 text-right font-medium text-gray-900">
+                                $ {{number_format($obtener->valor_total-$obtener->descuento, 0, '.', '.')}}
                             </td>
                         </tr>
                         <tr class="bg-white dark:bg-gray-800 border">
@@ -311,11 +343,27 @@
                             </tr>
                         @endforeach
                         <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" colspan="3" class="px-3 py-1 text-right text-gray-900  dark:text-white uppercase">
+                            <th scope="row" colspan="3" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
                                 TOTAL:
                             </th>
                             <td class="px-3 py-1 text-right font-medium text-gray-900">
                                 $ {{number_format($obtener->valor_total, 0, '.', '.')}}
+                            </td>
+                        </tr>
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" colspan="3" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
+                                DESCUENTOS APLICADOS:
+                            </th>
+                            <td class="px-3 py-1 text-right font-medium text-gray-900">
+                                $ {{number_format($obtener->descuento, 0, '.', '.')}}
+                            </td>
+                        </tr>
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" colspan="3" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
+                                NETO A PAGAR:
+                            </th>
+                            <td class="px-3 py-1 text-right font-medium text-gray-900">
+                                $ {{number_format($obtener->valor_total-$obtener->descuento, 0, '.', '.')}}
                             </td>
                         </tr>
                     </tbody>
@@ -323,7 +371,7 @@
             </div>
         </div>
 
-        <div class="border border-spacing-40 h-1 border-black"></div>
+        <div class="border border-spacing-40 h-10 border-black"></div>
 
         <div>
             <div class="relative overflow-x-auto bg-slate-200 shadow-sm shadow-teal-200 m-1">
@@ -417,11 +465,27 @@
                             </tr>
                         @endforeach
                         <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" colspan="3" class="px-3 py-1 text-right text-gray-900  dark:text-white uppercase">
+                            <th scope="row" colspan="3" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
                                 TOTAL:
                             </th>
                             <td class="px-3 py-1 text-right font-medium text-gray-900">
                                 $ {{number_format($obtener->valor_total, 0, '.', '.')}}
+                            </td>
+                        </tr>
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" colspan="3" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
+                                DESCUENTOS APLICADOS:
+                            </th>
+                            <td class="px-3 py-1 text-right font-medium text-gray-900">
+                                $ {{number_format($obtener->descuento, 0, '.', '.')}}
+                            </td>
+                        </tr>
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" colspan="3" class="px-3 py-1 text-right text-gray-900 whitespace-nowrap dark:text-white uppercase">
+                                NETO A PAGAR:
+                            </th>
+                            <td class="px-3 py-1 text-right font-medium text-gray-900">
+                                $ {{number_format($obtener->valor_total-$obtener->descuento, 0, '.', '.')}}
                             </td>
                         </tr>
                     </tbody>

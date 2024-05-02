@@ -87,7 +87,7 @@ class MatriculasAnular extends Component
         ]);
 
         Pqrs::create([
-            'estudiante_id' =>$this->crt->estudiante_id,
+            'estudiante_id' =>$crt->estudiante_id,
             'gestion_id'    =>Auth::user()->id,
             'fecha'         =>now(),
             'tipo'          =>4,

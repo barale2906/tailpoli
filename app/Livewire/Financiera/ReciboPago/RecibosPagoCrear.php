@@ -58,6 +58,7 @@ class RecibosPagoCrear extends Component
     public $concep=[];
     public $nameConcep;
     public $Total=0;
+    public $Totaldescue=0;
     public $subtotal;
     public $control=[];
 
@@ -102,6 +103,8 @@ class RecibosPagoCrear extends Component
             $this->alumnodocumento=$alum->documento;
             $this->obligaciones();
         }
+
+        $this->descuentoConcepto();
     }
 
     public function variables(){
@@ -110,6 +113,15 @@ class RecibosPagoCrear extends Component
         $this->alumnodocumento=$this->transaccion->alumno->documento;
         $this->sede_id=$this->transaccion->sede_id;
         $this->obligaciones();
+    }
+
+    public function descuentoConcepto(){
+        $concepdescuento=ConceptoPago::where('status', true)
+                                            ->where('name', "Descuento")
+                                            ->select('id')
+                                            ->first();
+
+        $this->concepdescuento=$concepdescuento->id;
     }
 
     public function obligaciones(){
@@ -161,7 +173,6 @@ class RecibosPagoCrear extends Component
     public function cargando(){
         $this->cargados=DB::table('apoyo_recibo')
                             ->where('id_creador', Auth::user()->id)
-                            ->orderBy('tipo')
                             ->get();
     }
 
@@ -193,30 +204,14 @@ class RecibosPagoCrear extends Component
             'id_creador'=>Auth::user()->id,
             'id_concepto'=>$this->concepotro,
             'concepto'=>$ite->name,
+            'id_producto'=>$this->concepotro,
+            'producto'=>$ite->name,
             'valor'=>abs($this->otro),
         ]);
 
         $this->Total=$this->Total+abs($this->otro);
 
-        $this->reset('otro', 'concepotro');
-
-        $this->cargando();
-    }
-
-    public function cargaDescuento(){
-
-        // Cargar descuento a la tabla temporal
-        DB::table('apoyo_recibo')->insert([
-            'tipo'=>'financiero',
-            'id_creador'=>Auth::user()->id,
-            'id_concepto'=>$this->concepdescuento,
-            'concepto'=>'Descuento',
-            'valor'=>abs($this->descuento),
-        ]);
-
-        $this->reset('descuento', 'concepdescuento');
-
-        $this->cargando();
+        $this->cargaDescuento();
     }
 
     public function asigOtro($id, $item,$conf=null){
@@ -280,8 +275,9 @@ class RecibosPagoCrear extends Component
             $this->reset(
                 'valor' ,
                 'conceptos',
-                'name'
+                'name',
                 );
+            $this->descuento=0;
         }else if($ya===0){
             switch ($id) {
                 case 0:
@@ -328,12 +324,51 @@ class RecibosPagoCrear extends Component
                     'conceptos',
                     'name'
                     );
+                $this->descuento=0;
             }
 
         }
 
+        $this->cargaDescuento();
+
+    }
+
+    public function cargaDescuento(){
+
+        if($this->descuento>0){
+
+            if($this->id_cartera>0){
+                // Cargar descuento a la tabla temporal
+                DB::table('apoyo_recibo')->insert([
+                    'tipo'          =>'financiero',
+                    'id_creador'    =>Auth::user()->id,
+                    'id_concepto'   =>$this->concepdescuento,
+                    'concepto'      =>'Descuento',
+                    'valor'         =>abs($this->descuento),
+                    'id_cartera'    =>$this->id_cartera
+                ]);
+            }else{
+                $ultimo=DB::table('apoyo_recibo')->orderBy('id', 'DESC')->first();
+                DB::table('apoyo_recibo')->insert([
+                    'tipo'          =>'financiero',
+                    'id_creador'    =>Auth::user()->id,
+                    'id_concepto'   =>$this->concepdescuento,
+                    'concepto'      =>'Descuento',
+                    'valor'         =>abs($this->descuento),
+                    'id_producto'   =>$ultimo->id_concepto,
+                    'producto'      =>$ultimo->concepto
+                ]);
+            }
 
 
+            $this->Totaldescue=$this->Totaldescue+abs($this->descuento);
+        }
+
+
+
+        $this->reset('descuento', 'otro', 'concepotro', 'id_cartera');
+
+        $this->cargando();
     }
 
     public function elimOtro($item){
@@ -346,6 +381,44 @@ class RecibosPagoCrear extends Component
 
         if($reg->concepto!=='Descuento'){
             $this->Total=$this->Total-$reg->valor;
+
+            if($reg->id_cartera){
+
+                $aplicado=DB::table('apoyo_recibo')
+                                ->where('id_cartera', $reg->id_cartera)
+                                ->where('concepto', 'Descuento')
+                                ->first();
+
+                if($aplicado){
+                    DB::table('apoyo_recibo')
+                                ->where('id_cartera', $reg->id_cartera)
+                                ->where('concepto', 'Descuento')
+                                ->delete();
+
+                    $this->Totaldescue=$this->Totaldescue-$aplicado->valor;
+                }
+            }
+
+            if($reg->id_producto>0){
+
+                $aplicado=DB::table('apoyo_recibo')
+                                ->where('id_producto', $reg->id_producto)
+                                ->where('concepto', 'Descuento')
+                                ->first();
+
+                if($aplicado){
+                    DB::table('apoyo_recibo')
+                                ->where('id_producto', $reg->id_producto)
+                                ->where('concepto', 'Descuento')
+                                ->delete();
+
+                    $this->Totaldescue=$this->Totaldescue-$aplicado->valor;
+                }
+            }
+        }
+
+        if($reg->concepto==='Descuento'){
+            $this->Totaldescue=$this->Totaldescue-$reg->valor;
         }
 
         DB::table('apoyo_recibo')
@@ -448,6 +521,7 @@ class RecibosPagoCrear extends Component
                                 'origen'=>true,
                                 'fecha'=>$this->fecha_pago,
                                 'valor_total'=>$this->Total,
+                                'descuento'=>$this->Totaldescue,
                                 'medio'=>$this->medio,
                                 'observaciones'=>strtolower($this->observaciones).$this->obser,
                                 'sede_id'=>$this->sede_id,
@@ -554,7 +628,6 @@ class RecibosPagoCrear extends Component
 
                 if($value->tipo==='financiero' && $value->concepto==='Descuento'){
 
-                    //Aplicar descuento desde el mas antiguo
                     $this->descuento=$value->valor;
 
                     Pqrs::create([
@@ -566,7 +639,31 @@ class RecibosPagoCrear extends Component
                         'status'        =>4
                     ]);
 
-                    $deudas=Cartera::where('responsable_id', $this->alumno_id)
+                    if($value->id_cartera){
+                        $item=Cartera::find($value->id_cartera);
+
+                        $obs=explode('-----',$item->observaciones);
+                        $obspr=$obs[0];
+
+                        $observa=$obspr.'-----'.now()." recibio descuento por $".number_format($this->descuento, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
+                        $descu=$item->descuento+$this->descuento;
+
+                        $item->update([
+                            'descuento'     =>$descu,
+                            'observaciones' =>$observa,
+                        ]);
+                    }else{
+                        $nota='-----'.now().' se aplico descuento de: '.number_format($this->descuento, 0, ',', '.').' a: '.$value->producto;
+                        DB::table('concepto_pago_recibo_pago')
+                                    ->where('recibo_pago_id',$recibo->id)
+                                    ->where('concepto_pago_id', $value->id_producto)
+                                    ->orderBy('id','DESC')
+                                    ->update([
+                                        'id_relacional'=>$nota
+                                    ]);
+                    }
+
+                    /* $deudas=Cartera::where('responsable_id', $this->alumno_id)
                                     ->where('status', true)
                                     ->orderBy('fecha_pago')
                                     ->get();
@@ -602,7 +699,7 @@ class RecibosPagoCrear extends Component
 
                         }
                         $this->reset('saldo');
-                    }
+                    } */
                 }
                 $this->reset('estado', 'status');
             }

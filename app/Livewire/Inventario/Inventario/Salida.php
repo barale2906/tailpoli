@@ -36,8 +36,11 @@ class Salida extends Component
 
     public $movimientos;
     public $Total=0;
+    public $Totaldescuento=0;
     public $id_ultimo;
     public $saldo;
+    public $descuento;
+    public $concepdescuento;
 
 
     public $producto_id;
@@ -95,8 +98,6 @@ class Salida extends Component
         $this->listaprecios($state);
 
         $this->concepto();
-
-
     }
 
     public function updatedMedio(){
@@ -145,7 +146,16 @@ class Salida extends Component
     }
 
     public function concepto(){
-        $this->conceptopago=ConceptoPago::where('tipo', 'inventario')
+
+        $concepdescuento=ConceptoPago::where('status', true)
+                                            ->where('name', "Descuento")
+                                            ->select('id')
+                                            ->first();
+
+        $this->concepdescuento=$concepdescuento->id;
+
+        $this->conceptopago=ConceptoPago::where('status', true)
+                                            ->where('tipo', 'inventario')
                                             ->first();
     }
 
@@ -230,7 +240,9 @@ class Salida extends Component
         $this->saldo=$this->saldo-$this->cantidad;
 
         $valor=$this->precio*$this->cantidad;
+
         $this->Total=$this->Total+$valor;
+
 
         if($this->saldo>=0){
 
@@ -275,25 +287,67 @@ class Salida extends Component
 
         }
 
-        $this->reset('cantidad','precio','producto','producto_id', 'saldo');
+        $this->cargaDescuento();
+
+    }
+
+    public function cargaDescuento(){
+
+        if($this->descuento>0){
+
+            $descuento=$this->descuento*$this->cantidad;
+
+            DB::table('apoyo_recibo')->insert([
+                'tipo'          =>'financiero',
+                'id_creador'    =>Auth::user()->id,
+                'id_concepto'   =>$this->concepdescuento,
+                'id_producto'   =>$this->producto->id,
+                'producto'      =>'Descuento '.$this->producto->name,
+                'concepto'      =>'Descuento',
+                'valor'         =>abs($this->descuento),
+                'cantidad'      =>$this->cantidad,
+                'subtotal'      =>abs($descuento),
+            ]);
+
+            $this->Totaldescuento=$this->Totaldescuento+abs($descuento);
+        }
+
+        $this->reset('cantidad','precio','producto','producto_id', 'saldo', 'descuento');
+
         $this->cargando();
-
-
     }
 
     //Eliminar producto
     public function elimOtro($item){
 
         $this->valoRecargo();
-        $prod=DB::table('apoyo_recibo')->whereId($item)->first();
+        $reg=DB::table('apoyo_recibo')->whereId($item)->first();
+
+        if($reg->concepto!=='Descuento'){
+            $this->Total=$this->Total-$reg->subtotal;
+
+            $aplicado=DB::table('apoyo_recibo')
+                        ->where('id_producto', $reg->id_producto)
+                        ->where('concepto', 'Descuento')
+                        ->first();
+
+            if($aplicado){
+                DB::table('apoyo_recibo')
+                            ->where('id_producto', $aplicado->id_producto)
+                            ->where('concepto', 'Descuento')
+                            ->delete();
+
+                $this->Totaldescuento=$this->Totaldescuento-$aplicado->subtotal;
+            }
+        }
+
+        if($reg->concepto==='Descuento'){
+            $this->Totaldescuento=$this->Totaldescuento-$reg->subtotal;
+        }
 
         DB::table('apoyo_recibo')
             ->where('id', $item)
             ->delete();
-
-        $valori=$prod->valor*$prod->cantidad;
-        $this->Total=$this->Total-$valori;
-
 
         $this->cargando();
     }
@@ -302,7 +356,6 @@ class Salida extends Component
     public function cargando(){
         $this->movimientos=DB::table('apoyo_recibo')
                                 ->where('id_creador', Auth::user()->id)
-                                ->orderBy('producto')
                                 ->get();
     }
 
@@ -516,6 +569,7 @@ class Salida extends Component
                 'origen'=>false,
                 'fecha'=>now(),
                 'valor_total'=>$this->Total,
+                'descuento'=>$this->Totaldescuento,
                 'medio'=>$this->medio,
                 'observaciones'=>$comentarios,
                 'sede_id'=>$this->sede_id,
@@ -609,7 +663,7 @@ class Salida extends Component
             }
 
             //Enviar por correo electrónico
-            $this->claseEmail(1,$this->recibo->id);
+            //$this->claseEmail(1,$this->recibo->id);
 
             $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$this->recibo->id;
 

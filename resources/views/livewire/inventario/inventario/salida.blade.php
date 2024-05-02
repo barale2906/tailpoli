@@ -148,50 +148,68 @@
             @endif
 
             <div class="grid grid-cols-2 gap-3 bg-slate-300 m-3 p-3">
-                <div class="grid grid-cols-4 gap-3 m-1 p-1">
+                @if ($producto)
+                    <div class="grid grid-cols-4 gap-3 m-1 p-1">
 
-                    <div class="mb-6">
-                        <label for="precio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Precio:  $ {{number_format($precio, 0, ',', '.')}}
-                        </label>
-                    </div>
-
-                    @if ($saldo>0)
                         <div class="mb-6">
-                            <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
-                            <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
-                            @error('cantidad')
+                            <label for="precio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Precio:  $ {{number_format($precio, 0, ',', '.')}}
+                            </label>
+                            <label for="precio" class="block mb-2 text-sm font-medium text-orange-500 dark:text-white uppercase">
+                                No hay existencias de este producto, puede cargarlo y dejarlo pendiente para entrega
+                            </label>
+                        </div>
+
+                        @if ($saldo>0)
+                            <div class="mb-6">
+                                <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
+                                <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
+                                @error('cantidad')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                    </div>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="mb-6">
+                                <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
+                                <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
+                                @error('cantidad')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                    </div>
+                                @enderror
+                            </div>
+                        @endif
+
+                        <div class="mb-6">
+                            <label for="descuento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descuento</label>
+                            <input type="text" id="descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="descuento" wire:model.live="descuento">
+                            @error('descuento')
                                 <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                     <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                                 </div>
                             @enderror
                         </div>
-                    @else
-                        <label for="precio" class="block mb-2 text-xl font-medium text-orange-500 dark:text-white uppercase">
-                            No hay existencias de este producto, puede cargarlo y dejarlo pendiente para entrega
-                        </label>
-                        <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
-                        <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
-                        @error('cantidad')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    @endif
 
-                    <div>
-                        @if ($cantidad>0 && $producto)
-                        <label for="temporal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargar</label>
-                            <a href="" wire:click.prevent="temporal()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
-                                <i class="fa-solid fa-check"></i>
-                            </a>
-                        @endif
+                        <div>
+                            @if ($cantidad>0 && $producto)
+                                <label for="temporal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargar</label>
+                                <a href="" wire:click.prevent="temporal()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-solid fa-check"></i>
+                                </a>
+                            @endif
+                        </div>
+
                     </div>
+                @endif
 
-                </div>
                 <div class="ring-2 bg-gray-50 p-2">
                     <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        Total: $ {{number_format($Total, 0, ',', '.')}}
+                        Total a pagar: $ {{number_format($Total-$Totaldescuento, 0, ',', '.')}}
+                    </h5>
+                    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                        Total: $ {{number_format($Total, 0, ',', '.')}} -- Descuento: $ {{number_format($Totaldescuento, 0, ',', '.')}}
                     </h5>
 
                     @if ($movimientos)

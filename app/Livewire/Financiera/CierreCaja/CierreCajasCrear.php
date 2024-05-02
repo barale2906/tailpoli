@@ -6,6 +6,7 @@ use App\Models\Configuracion\Sede;
 use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,7 +14,7 @@ use Livewire\Component;
 class CierreCajasCrear extends Component
 {
     public $sede_id;
-    public $cajeros=[];
+    public $cajeros;
     public $cajero_id;
     public $recibos=[];
 
@@ -65,10 +66,21 @@ class CierreCajasCrear extends Component
         $datos=ReciboPago::where('sede_id', $this->sede_id)
                             ->where('cierre', null)
                             ->where('status', '!=', 1)
+                            ->select('creador_id')
                             ->get();
 
-        $agrupar=$datos->groupBy('creador_id');
-        $this->cajeros=$agrupar->all();
+        $ids=array();
+        foreach ($datos as $value) {
+            if(in_array($value->creador_id,$ids)){
+
+            }else{
+                array_push($ids,$value->creador_id);
+            }
+        }
+
+        $this->cajeros=User::whereIn('id',$ids)
+                                ->orderBy('name', 'ASC')
+                                ->get();
     }
 
     public function updatedCajeroId(){
@@ -85,6 +97,12 @@ class CierreCajasCrear extends Component
                                         ->where('status', 0)
                                         ->sum('valor_total');
 
+        $this->descuentosT=ReciboPago::where('sede_id', $this->sede_id)
+                                        ->where('creador_id', $this->cajero_id)
+                                        ->where('cierre', null)
+                                        ->where('status', 0)
+                                        ->sum('descuento');
+
         $this->valor_anulado=ReciboPago::where('sede_id', $this->sede_id)
                                         ->where('creador_id', $this->cajero_id)
                                         ->where('cierre', null)
@@ -97,21 +115,6 @@ class CierreCajasCrear extends Component
                                     ->where('recibo_pagos.creador_id', $this->cajero_id)
                                     ->where('recibo_pagos.status', 0)
                                     ->where('concepto_pago_recibo_pago.medio', 'efectivo')
-                                    ->sum('concepto_pago_recibo_pago.valor');
-
-        $this->totalizardeta();
-    }
-
-    public function totalizardeta(){
-
-        //obtener valor descuento
-
-        $this->descuentosT = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $this->cajero_id)
-                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', $this->id_concepto->id)
-                                    ->where('recibo_pagos.status', 0)
                                     ->sum('concepto_pago_recibo_pago.valor');
 
         $this->carteradet();
