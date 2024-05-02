@@ -663,7 +663,7 @@ class Salida extends Component
             }
 
             //Enviar por correo electrónico
-            //$this->claseEmail(1,$this->recibo->id);
+            $this->claseEmail(1,$this->recibo->id);
 
             $ruta='/impresiones/imprecibo?rut='.$this->ruta.'&r='.$this->recibo->id;
 
