@@ -68,6 +68,7 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
             'Alumno',
             'Sede',
             'Valor',
+            'Descuento',
             'Medio',
             'Cajero',
             'Observaciones'
@@ -82,6 +83,7 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
             $recibo->paga->name,
             $recibo->sede->name,
             $recibo->valor_total,
+            $recibo->descuento,
             $recibo->medio,
             $recibo->creador->name,
             $recibo->observaciones,
