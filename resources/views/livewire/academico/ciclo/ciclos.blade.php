@@ -130,10 +130,10 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                                 {{$ciclo->sede->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$ciclo->curso->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$ciclo->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -145,7 +145,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$ciclo->registrados}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 @switch($ciclo->jornada)
                                     @case(1)
                                         Mañana
@@ -175,7 +175,7 @@
                                         @break
                                 @endswitch
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 @foreach ($ciclo->ciclogrupos as $item)
 
                                     <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">

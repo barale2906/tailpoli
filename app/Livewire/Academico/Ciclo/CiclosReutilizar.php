@@ -19,19 +19,32 @@ class CiclosReutilizar extends Component
 
     public function mount($elegido){
         $this->actual=Ciclo::find($elegido);
+
+        $this->fecha();
+    }
+
+    public function fecha(){
+        $this->inicio=$this->actual->inicia;
     }
 
     public function reutilizar(){
         $this->duracion=$this->actual->curso->duracion_meses;
-        $inicio=Carbon::create($this->actual->inicia)->addMonths($this->duracion)->addDay();
-        $this->inicio=$inicio;
-        $fin=Carbon::create($this->actual->finaliza)->addMonths($this->duracion)->addDay();
+        /*$inicio=Carbon::create($this->actual->inicia)->addMonths($this->duracion)->addDay();
+        $this->inicio=$inicio; */
+
+        $fin=Carbon::create($this->inicio)->addMonths($this->duracion)->addDay();
         $this->fin=$fin;
         $this->nombrar();
     }
 
     public function nombrar(){
-        $sede=Sede::where('id', $this->actual->sede_id)
+
+        $name=explode("--",$this->actual->name);
+        $detalle=explode("-",$name[2]);
+
+        $this->name=$name[0]." -- ".$name[1]." -- ".$this->inicio." - ".$detalle[3]." - ".$detalle[4]." -- ".$name[3]." -- ".$name[4];
+        $this->new();
+        /* $sede=Sede::where('id', $this->actual->sede_id)
                     ->select('slug','id','sector_id')
                     ->first();
 
@@ -58,8 +71,9 @@ class CiclosReutilizar extends Component
         }
 
 
-        $this->name=$sector->slug." ".$sede->slug." ".$this->actual->curso->slug." ".$jor." ".$this->inicio;
-        $this->new();
+        $this->name=$sector->slug." ".$sede->slug." ".$this->actual->curso->slug." ".$jor." ".$this->inicio; */
+
+
     }
 
     public function new(){

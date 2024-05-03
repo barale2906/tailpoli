@@ -133,13 +133,13 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$matricula->fecha_inicia}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$matricula->sede->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$matricula->curso->name}}
                             </th>
-                            <th scope="row" class="px-1 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-1 py-1 font-medium text-gray-900  dark:text-white capitalize">
                                 @if ($matricula->anula)
                                     {{$matricula->anula}} -por:  {{$matricula->anula_user}}
                                 @else
@@ -158,7 +158,7 @@
                                     @endforeach
                                 @endif
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$matricula->alumno->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -167,7 +167,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$matricula->metodo}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$matricula->creador->name}}
                             </th>
                         </tr>

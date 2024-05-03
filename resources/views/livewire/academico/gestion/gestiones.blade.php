@@ -248,7 +248,7 @@
                                 {{$controle->ultima_asistencia}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$controle->mora}}
+                                $ {{number_format($controle->mora, 0, ',', '.')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$controle->overol}}
