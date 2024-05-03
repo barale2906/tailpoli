@@ -6,6 +6,7 @@ use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Transaccion;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -30,7 +31,7 @@ class TransaccionCrear extends Component
 
 
     public function mount($elegido){
-        $this->actual=Control::find($elegido);
+        $this->actual=User::find($elegido);
         //$this->observacion=now()." ".Auth::user()->name." Cargo soporte de consignación. ----- ".$this->actual->observaciones;
     }
 
@@ -100,14 +101,13 @@ class TransaccionCrear extends Component
         $nombre=null;
 
 
-        $nombre='public_soportes/'.$this->actual->estudiante_id."-".uniqid().".".$this->soporte->extension();
+        $nombre='public_soportes/'.$this->actual->id."-".uniqid().".".$this->soporte->extension();
         $this->soporte->storeAs($nombre);
 
         Transaccion::create([
             'creador_id'=>Auth::user()->id,
             'gestionador_id'=>Auth::user()->id,
-            'alumno_id'=>$this->actual->estudiante_id,
-            'control_id'=>$this->actual->id,
+            'user_id'=>$this->actual->id,
             'sede_id'=>$this->sede_id,
             'fecha'=>now(),
             'ruta'=>$nombre,
@@ -119,12 +119,12 @@ class TransaccionCrear extends Component
         ]);
 
         //Actualizar control
-       /*  $this->actual->update([
+        /*  $this->actual->update([
             'observaciones'=>$this->observacion,
         ]); */
 
         Pqrs::create([
-            'estudiante_id' =>$this->actual->estudiante_id,
+            'estudiante_id' =>$this->actual->id,
             'gestion_id'    =>Auth::user()->id,
             'fecha'         =>now(),
             'tipo'          =>2,
@@ -132,7 +132,7 @@ class TransaccionCrear extends Component
             'status'        =>4
         ]);
 
-        $this->dispatch('alerta', name:'Se cargo soporte de pago para: '.$this->actual->estudiante->name);
+        $this->dispatch('alerta', name:'Se cargo soporte de pago para: '.$this->actual->name);
 
         //refresh
         $this->resetFields();

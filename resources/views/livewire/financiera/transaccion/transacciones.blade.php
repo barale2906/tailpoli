@@ -100,7 +100,7 @@
                                 {{$transaccione->sede->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$transaccione->alumno->name}}
+                                {{$transaccione->user->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-right">
                                 $ {{number_format($transaccione->academico, 0, '.', ' ')}}

@@ -148,8 +148,8 @@ class User extends Authenticatable
         return $this->hasMany(Transaccion::class);
     }
 
-    //Relación uno a muchos
-    public function transAlumno(): HasMany
+    //Relación uno a muchos Alumnos y sus transacciones
+    public function transUser(): HasMany
     {
         return $this->hasMany(Transaccion::class);
     }

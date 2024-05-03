@@ -170,11 +170,11 @@
                                     </button>
 
 
-                                    @if ($controle->transacciones)
+                                    @if ($controle->estudiante->transUser)
                                         @can('fi_transaccionesCrear')
                                             @php
                                                 $conteo=0;
-                                                foreach ($controle->transacciones as $value) {
+                                                foreach ($controle->estudiante->transUser as $value) {
                                                     if($value->status>1 && $value->status<4){
                                                         $conteo=$conteo+1;
                                                     }
@@ -182,7 +182,7 @@
                                             @endphp
                                             <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-red-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                                 @if ($conteo>0)
-                                                    <a href="" wire:click.prevent="show({{$controle->id}},{{4}})" class="inline-flex items-center font-medium text-red-600 dark:text-cyan-500 hover:underline">
+                                                    <a href="" wire:click.prevent="show({{$controle->estudiante_id}},{{4}})" class="inline-flex items-center font-medium text-red-600 dark:text-cyan-500 hover:underline">
                                                         <i class="fa-solid fa-triangle-exclamation"></i>
                                                     </a>
                                                 @endif
@@ -193,7 +193,7 @@
 
                                     <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-cyan-100 border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                         @can('fi_transaccionesCrear')
-                                            <a href="#" wire:click.prevent="show({{$controle->id}},{{3}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
+                                            <a href="#" wire:click.prevent="show({{$controle->estudiante->id}},{{3}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
                                                 <i class="fa-solid fa-camera"></i>
                                             </a>
                                         @endcan

@@ -18,14 +18,11 @@ return new class extends Migration
             $table->unsignedBigInteger('creador_id');
             $table->foreign('creador_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('control_id');
+            $table->unsignedBigInteger('gestionador_id');
             $table->foreign('gestionador_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('gestionador_id');
-            $table->foreign('control_id')->references('id')->on('controls');
-
-            $table->unsignedBigInteger('alumno_id');
-            $table->foreign('alumno_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
 
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');

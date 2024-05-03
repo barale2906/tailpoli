@@ -69,6 +69,8 @@ class RecibosPagoCrear extends Component
     public $alumnoName='';
     public $alumnodocumento='';
 
+    public $estuActual;
+
     public $ordena='name';
     public $ordenado='ASC';
     public $pages = 20;
@@ -80,7 +82,6 @@ class RecibosPagoCrear extends Component
     public $is_recibo=true;
     public $is_inventa=false;
     public $controle_id=0;
-    public $controlcrt;
 
     public $pendientes;
 
@@ -108,9 +109,9 @@ class RecibosPagoCrear extends Component
     }
 
     public function variables(){
-        $this->alumno_id=$this->transaccion->alumno_id;
-        $this->alumnoName=$this->transaccion->alumno->name;
-        $this->alumnodocumento=$this->transaccion->alumno->documento;
+        $this->alumno_id=$this->transaccion->user_id;
+        $this->alumnoName=$this->transaccion->user->name;
+        $this->alumnodocumento=$this->transaccion->user->documento;
         $this->sede_id=$this->transaccion->sede_id;
         $this->obligaciones();
     }
@@ -134,18 +135,7 @@ class RecibosPagoCrear extends Component
                                     ->where('status', true)
                                     ->sum('saldo');
 
-        $this->identiControl();
-    }
-
-    public function identiControl(){
-        $this->reset('controle_id');
-        $this->controlcrt=Control::where('estudiante_id', $this->alumno_id)
-                                    ->where('status', true)
-                                    ->first();
-
-        if($this->controlcrt){
-            $this->controle_id=$this->controlcrt->id;
-        }
+        $this->student();
     }
 
     /* public function updatedSedeId(){
@@ -192,6 +182,10 @@ class RecibosPagoCrear extends Component
         $this->alumnodocumento=$item['documento'];
         $this->limpiar();
         $this->obligaciones();
+    }
+
+    public function student(){
+        $this->estuActual=User::find($this->alumno_id);
     }
 
     public function cargaOtro(){

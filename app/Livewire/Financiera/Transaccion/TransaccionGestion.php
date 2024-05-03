@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Financiera\Transaccion;
 
-use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Transaccion;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -18,7 +18,7 @@ class TransaccionGestion extends Component
     public $url;
 
     public function mount($elegido, $ruta=null){
-        $this->actual=Control::find($elegido);
+        $this->actual=User::find($elegido);
         if($ruta){
             $this->ruta=$ruta;
         }

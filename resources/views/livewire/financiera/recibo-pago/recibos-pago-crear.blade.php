@@ -5,7 +5,7 @@
             <h1 class="text-xl text-center uppercase">
                 Cargar soporte de pago
             </h1>
-            <livewire:financiera.transaccion.transaccion-crear :elegido="$controle_id" />
+            <livewire:financiera.transaccion.transaccion-crear :elegido="$alumno_id" />
         @endif
 
         @if ($is_recibo)
@@ -68,12 +68,12 @@
                     </h5>
                     <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-2 mb-4">
                         <div>
-                            @if ($controle_id>0)
-                                @if ($controlcrt->transacciones)
+                            @if ($alumno_id)
+                                @if ($estuActual->transUser)
                                     @can('fi_transaccionesCrear')
                                         @php
                                             $conteo=0;
-                                            foreach ($controlcrt->transacciones as $value) {
+                                            foreach ($estuActual->transUser as $value) {
                                                 if($value->status>1 && $value->status<4){
                                                     $conteo=$conteo+1;
                                                 }
@@ -87,7 +87,6 @@
                                             @endif
                                         </button>
                                     @endcan
-
                                 @endif
 
                                 <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-cyan-100 border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
@@ -450,7 +449,7 @@
             <h1 class="text-xl text-center uppercase">
                 Generar entrega
             </h1>
-            <livewire:financiera.transaccion.transaccion-gestion :elegido="$controle_id" :ruta="2" />
+            <livewire:financiera.transaccion.transaccion-gestion :elegido="$alumno_id" :ruta="2" />
         @endif
 
 

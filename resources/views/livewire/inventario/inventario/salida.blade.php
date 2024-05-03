@@ -3,7 +3,7 @@
         @if ($crt)
             @if ($transaccion)
                 <h2 class="text-center text-xl font-bold uppercase">
-                    Alumno: {{$transaccion->alumno->name}}
+                    Alumno: {{$transaccion->user->name}}
                 </h2>
             @else
                 <div class="mb-6">

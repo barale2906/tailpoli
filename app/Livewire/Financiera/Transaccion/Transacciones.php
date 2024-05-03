@@ -91,7 +91,7 @@ class Transacciones extends Component
         $this->is_editing = !$this->is_editing;
     }
 
-    // Mostrar Regimen de Salud
+    // Gestionar
     public function show($esta){
 
         $this->elegido=$esta;

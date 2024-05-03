@@ -27,8 +27,8 @@ class Transaccion extends Model
         return $this->BelongsTo(User::class);
     }
 
-    //Relacion uno a muchos inversa
-    public function alumno() : BelongsTo
+    //Relacion uno a muchos inversa alumno
+    public function user() : BelongsTo
     {
         return $this->BelongsTo(User::class);
     }
@@ -37,11 +37,5 @@ class Transaccion extends Model
     public function sede() : BelongsTo
     {
         return $this->BelongsTo(Sede::class);
-    }
-
-    //Relacion uno a muchos inversa
-    public function controles() : BelongsTo
-    {
-        return $this->BelongsTo(Control::class);
     }
 }

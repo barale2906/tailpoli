@@ -1,10 +1,10 @@
 <div>
     <h2 class="text-center text-lg">
-        Transacciones abiertas para <span class="font-bold uppercase">{{$actual->estudiante->name}}</span>
+        Transacciones abiertas para <span class="font-bold uppercase">{{$actual->name}}</span>
     </h2>
     <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-2 mb-4">
 
-        @foreach ($actual->transacciones as $item)
+        @foreach ($actual->transUser as $item)
             @if ($item->status>1 && $item->status<4)
                 <a href="" wire:click.prevent="elegida({{$item->id}})" class="text-black bg-gradient-to-r from-gray-300 via-gray-400 to-gray-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-black dark:focus:ring-black font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                     <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -41,7 +41,7 @@
 
                 <div class="p-5">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {{$transaccion->alumno->name}}
+                        {{$transaccion->user->name}}
                     </h5>
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         {{$transaccion->observaciones}}

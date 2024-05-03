@@ -3,7 +3,7 @@
     @if ($todo)
         @if ($transaccion)
             <h2 class="text-center text-2xl uppercase font-extrabold">
-                Debe generar un movimiento por $ {{number_format($transaccion->inventario, 0, '.', ' ')}} para {{$transaccion->alumno->name}}
+                Debe generar un movimiento por $ {{number_format($transaccion->inventario, 0, '.', ' ')}} para {{$transaccion->user->name}}
             </h2>
         @endif
         <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">

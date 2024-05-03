@@ -78,7 +78,7 @@ class TransaccionEditar extends Component
         ]);
 
         //Actualiza la gestión del estudiante
-       /*  foreach ($this->control as $value) {
+        /*  foreach ($this->control as $value) {
             $opc=Control::find($value->id);
             $opc->update([
                 'observaciones'=>$this->observa.$opc->observaciones,
@@ -86,7 +86,7 @@ class TransaccionEditar extends Component
         } */
 
         Pqrs::create([
-            'estudiante_id' =>$this->actual->alumno_id,
+            'estudiante_id' =>$this->actual->user_id,
             'gestion_id'    =>Auth::user()->id,
             'fecha'         =>now(),
             'tipo'          =>2,

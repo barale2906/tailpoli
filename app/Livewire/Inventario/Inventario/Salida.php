@@ -81,7 +81,7 @@ class Salida extends Component
 
         if($transaccion){
             $this->transaccion=Transaccion::find($transaccion);
-            $this->selAlumno($this->transaccion->alumno_id);
+            $this->selAlumno($this->transaccion->user_id);
             $this->medio="transferencia";
         }
 

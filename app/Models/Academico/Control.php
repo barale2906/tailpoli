@@ -40,12 +40,6 @@ class Control extends Model
         return $this->BelongsTo(Sede::class);
     }
 
-    //Relación uno a muchos
-    public function transacciones(): HasMany
-    {
-        return $this->hasMany(Transaccion::class);
-    }
-
     public function scopeBuscar($query, $item){
         $query->when($item ?? null, function($query, $item){
             $query->wherehas('estudiante', function($query) use($item){
