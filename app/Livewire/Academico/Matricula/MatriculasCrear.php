@@ -169,6 +169,7 @@ class MatriculasCrear extends Component
                             ->where('inicia', '>=', $this->fechaRegistro)
                             ->where('status', true)
                             ->orderBy('inicia', 'ASC')
+                            ->orderBy('name', 'ASC')
                             ->get();
     }
 
@@ -188,6 +189,8 @@ class MatriculasCrear extends Component
                                 ->where('grupo_id', $this->primerGrupo->grupo_id)
                                 ->orderBy('hora', 'ASC')
                                 ->get();
+
+        //dd("sede: ",$this->sede_id," grupo: ",$this->primerGrupo->grupo_id," horarios: ",$this->horarios);
     }
 
     //Buscar Alumno

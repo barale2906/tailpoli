@@ -113,7 +113,7 @@ class ProgramacionSeeder extends Seeder
                                 }
                             }
 
-                            $name=$cursosel->name." -- ".$data[5]." -- ".$data[2]." -- ".$sedeBase." -- ".$ciudadBase;
+                            $name=$cursosel->name." -- ".$data[5]." -- ".$data[2]." - ".$data[7]." - ".$data[9]." -- ".$sedeBase." -- ".$ciudadBase;
 
 
                             $ini=new Carbon($data[2]);
@@ -148,7 +148,7 @@ class ProgramacionSeeder extends Seeder
                                         'name'              =>$nomGru,
                                         'quantity_limit'    =>100,
                                         'modulo_id'         =>$value->id,
-                                        'sede_id'           =>$data[1],
+                                        'sede_id'           =>intval($data[1]),
                                         'profesor_id'       =>intval($data[18])
                                         ]);
 
@@ -195,7 +195,7 @@ class ProgramacionSeeder extends Seeder
                                             //Log::info('fila: ' . $row . ' 23-ciclosfinales id dia: ' . $is.' horario inicio: '.$inih.' campo inicia: '. $hora);
 
                                             Horario::create([
-                                                'sede_id'       =>intval($data[3]),
+                                                'sede_id'       =>intval($data[1]),
                                                 'area_id'       =>$area->id,
                                                 'grupo'         =>$grupo->name,
                                                 'grupo_id'      =>$grupo->id,
