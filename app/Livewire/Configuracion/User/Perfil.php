@@ -8,7 +8,6 @@ use App\Models\Admin\RegimenSalud;
 use App\Models\Configuracion\Country;
 use App\Models\Configuracion\Perfil as ConfiguracionPerfil;
 use App\Models\Configuracion\Sector;
-use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\State;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -71,9 +70,6 @@ class Perfil extends Component
 
     public $disponibles=[];
     public $registro=[];
-
-    public $sedeperte=[];
-    public $noperte=[];
 
     public $impresion;
 
@@ -144,80 +140,6 @@ class Perfil extends Component
         $this->carnet=$this->actual->perfil->carnet;
 
         $this->sorteo_usuario=$this->actual->perfil->sorteo_usuario;
-
-        $this->sedeActuales();
-    }
-
-    //Carga sedes a las que pertenece el usuario
-    public function sedeActuales(){
-
-        foreach ($this->actual->sedes as $value) {
-            $nuevo=[
-                'id'            =>$value->id,
-                'name'          =>$value->name,
-            ];
-
-            if(in_array($nuevo, $this->sedeperte)){
-
-            }else{
-                array_push($this->sedeperte, $nuevo);
-            }
-        }
-
-        $this->sedePendiente();
-    }
-
-    //sedes a las que no pertenece
-    public function sedePendiente(){
-
-        $sedes = Sede::where('status', true)->orderBy('name', 'ASC')->get();
-
-        foreach ($sedes as $value) {
-            $nuevo=[
-                'id'            =>$value->id,
-                'name'          =>$value->name,
-            ];
-
-            if(in_array($nuevo, $this->sedeperte)){
-
-            }else{
-                array_push($this->noperte, $nuevo);
-            }
-        }
-    }
-
-    //Elegir los modulos incluidos
-    public function sel($id){
-
-        foreach ($this->noperte as $value) {
-
-            if($value['id']===$id){
-                $nuevo=[
-                    'id'=>$id,
-                    'name'=>$value['name']
-                ];
-
-                if(in_array($nuevo, $this->sedeperte)){
-
-                }else{
-                    array_push($this->sedeperte, $nuevo);
-                }
-            };
-        }
-    }
-
-    // Eliminar modulo elegido
-    public function elim($id){
-        foreach ($this->sedeperte as $value) {
-            if($value['id']===$id){
-                $nuevo=[
-                    'id'=>$id,
-                    'name'=>$value['name']
-                ];
-            }
-        }
-        $indice=array_search($nuevo,$this->sedeperte,true);
-        unset($this->sedeperte[$indice]);
     }
 
     //Carga las personas multi a las que pertenece el usuario
