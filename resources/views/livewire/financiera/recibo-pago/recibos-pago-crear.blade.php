@@ -317,7 +317,7 @@
                                             @foreach ($cargados as $otros)
                                                 @if ($otros->tipo==='otro')
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                                             {{$otros->concepto}}
                                                         </th>
                                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
@@ -353,7 +353,7 @@
                                             @foreach ($cargados as $otros)
                                                 @if ($otros->tipo==='cartera' || $otros->tipo==='financiero')
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                                             {{$otros->concepto}}
                                                         </th>
                                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">

@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Inventario\Inventario;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class InventarioSeeder extends Seeder
 {
@@ -13,7 +15,40 @@ class InventarioSeeder extends Seeder
      */
     public function run(): void
     {
-        Inventario::create([
+
+        $row = 0;
+
+        if(($handle = fopen(public_path() . '/csv/26_inventario.csv', 'r')) !== false) {
+
+            while(($data = fgetcsv($handle, 26000, ';')) !== false) {
+
+                $row++;
+
+                try {
+
+                    Inventario::create([
+                        'tipo'                  =>1,
+                        'fecha_movimiento'      =>now(),
+                        'cantidad'              =>intval($data[0]),
+                        'saldo'                 =>intval($data[0]),
+                        'precio'                =>1,
+                        'descripcion'           =>'POLIANDINO INVENTARIO INICIAL.',
+                        'status'                =>1,
+                        'entregado'             =>1,
+                        'almacen_id'            =>intval($data[1]),
+                        'producto_id'           =>intval($data[2]),
+                        'user_id'               =>108
+                    ]);
+
+                }catch(Exception $exception){
+                    Log::info('Line: ' . $row . ' 26_inventario with error: ' . $exception->getMessage().' código: '.$exception->getCode().' linea: '.$exception->getLine());
+                }
+            }
+        }
+
+        fclose($handle);
+
+        /* Inventario::create([
             'fecha_movimiento' => now(),
             'cantidad'=> 10,
             'saldo'=>10,
@@ -77,6 +112,6 @@ class InventarioSeeder extends Seeder
             'almacen_id'=>5,
             'producto_id'=>2,
             'user_id'=>19
-        ]);
+        ]); */
     }
 }
