@@ -5,12 +5,13 @@ namespace App\Console\Commands;
 use App\Models\Academico\Control;
 use App\Models\Financiera\Cartera;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Stmt\TryCatch;
 
 class cargaMora extends Command
 {
-    public $deuda;
-    public $id;
     /**
      * The name and signature of the console command.
      *
@@ -30,7 +31,7 @@ class cargaMora extends Command
      */
     public function handle()
     {
-        Cartera::where('fecha_pago', Carbon::today()->subDay())
+        /* Cartera::where('fecha_pago', Carbon::today()->subDay())
                 ->where('saldo', '>', 0)
                 ->each(function($cart){
                     $this->deuda=$cart->saldo;
@@ -42,6 +43,28 @@ class cargaMora extends Command
                                     'mora'=>$valor+$this->deuda,
                                 ]);
                             });
-                });
+            }); */
+
+        $vencida=Cartera::where('fecha_pago', Carbon::today()->subDay())
+                        ->where('saldo', '>', 0)
+                        ->get();
+
+        foreach ($vencida as $value) {
+            try {
+
+                $control=Control::where('status', true)
+                                ->where('estudiante_id', $value->responsable_id)
+                                ->get();
+
+                foreach ($control as $item) {
+                    $item->update([
+                        'mora'=>$item->mora+$value->saldo,
+                    ]);
+                }
+
+            } catch(Exception $exception){
+                Log::info('Linea cartera: ' . $value->id . ' CargaMora No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+            }
+        }
     }
 }
