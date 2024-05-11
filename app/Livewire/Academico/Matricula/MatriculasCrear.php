@@ -10,6 +10,7 @@ use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
+use App\Models\Academico\Planes;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Documento;
 use App\Models\Configuracion\Sede;
@@ -80,6 +81,8 @@ class MatriculasCrear extends Component
     public $ordenado='ASC';
     public $pages = 20;
 
+    public $plan;
+
     public function mount($ruta=null){
         $this->ruta=$ruta;
         $this->fechaRegistro=Carbon::now()->subDays(8);
@@ -128,6 +131,10 @@ class MatriculasCrear extends Component
             $this->dispatch('alerta', name:'El estudiante tiene una matricula activa a este curso.');
             $this->reset('curso_id', 'config_id', 'modulos');
         }
+
+        $this->plan=Planes::where('status', true)
+                            ->where('curso_id', $this->curso_id)
+                            ->first();
     }
 
 

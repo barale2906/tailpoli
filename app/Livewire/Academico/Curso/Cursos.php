@@ -77,6 +77,14 @@ class Cursos extends Component
         $this->is_editing = !$this->is_editing;
     }
 
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar listado de cursos
+    public function cancela()
+    {
+        $this->reset('is_modify', 'is_editing', 'is_deleting', 'is_creating');
+    }
+
     // Mostrar Regimen de Salud
     public function show($esta, $act){
 

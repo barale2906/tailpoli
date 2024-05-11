@@ -36,4 +36,10 @@ class Curso extends Model
     {
         return $this->hasMany(Ciclo::class);
     }
+
+    //Relación uno a muchos
+    public function planes(): HasMany
+    {
+        return $this->hasMany(Planes::class);
+    }
 }

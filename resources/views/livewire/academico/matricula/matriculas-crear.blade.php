@@ -117,6 +117,13 @@
                     @endif
                 </div>
                 <p class="text-xl font-semibold leading-normal text-gray-900 dark:text-white">
+                    @if ($plan)
+                        Ver plan de estudio en el siguiente link: <a href="{{Storage::url($plan->ruta_pdf)}}" target="_blank">
+                            <button type="button" class="px-4 py-2 text-sm font-medium text-red-900 bg-red-900 border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                                <i class="fa-solid fa-file-pdf"></i> PDF
+                            </button>
+                        </a>,
+                    @endif
                     Estos modulos estan incluidos en la matricula:
                 </p>
                 @if ($modulos)
@@ -165,7 +172,7 @@
                     <h1 class="text-center text-lg">
                         Inicia el <span class="font-extrabold uppercase">{{$primerGrupo->fecha_inicio}}</span> con el modulo <span class="font-extrabold uppercase">{{$primerGrupo->grupo->modulo->name}}</span> en el siguiente horario:
                     </h1>
-                    {{$ciclo_id}} ---{{$primerGrupo->grupo_id}}
+
                     <div class="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 sm:grid-cols-1 md:grid-cols-7 bg-white dark:bg-gray-800">
                         @for ($i = 1; $i <= 7; $i++)
                             <figure class="flex flex-col items-center p-4 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">

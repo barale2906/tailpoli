@@ -69,7 +69,6 @@ class CursoEditar extends Component
 
         //refresh
         $this->dispatch('refresh');
-        $this->dispatch('Editando');
     }
 
     public function render()

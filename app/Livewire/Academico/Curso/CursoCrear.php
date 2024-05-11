@@ -13,6 +13,8 @@ class CursoCrear extends Component
     public $duracion_horas='';
     public $duracion_meses='';
     public $correo;
+    public $is_planes=false;
+    public $id;
 
     /**
      * Reglas de validación
@@ -48,14 +50,16 @@ class CursoCrear extends Component
             $this->dispatch('alerta', name:'Ya existe este nombre o abreviación de curso: '.$this->name);
         } else {
             //Crear registro
-            Curso::create([
-                'name'=>strtolower($this->name),
-                'slug'=>$this->slug,
-                'tipo'=>strtolower($this->tipo),
-                'duracion_horas'=>strtolower($this->duracion_horas),
-                'duracion_meses'=>strtolower($this->duracion_meses),
-                'correo'        =>$this->correo
-            ]);
+            $curso=Curso::create([
+                            'name'              =>strtolower($this->name),
+                            'slug'              =>$this->slug,
+                            'tipo'              =>strtolower($this->tipo),
+                            'duracion_horas'    =>strtolower($this->duracion_horas),
+                            'duracion_meses'    =>strtolower($this->duracion_meses),
+                            'correo'            =>$this->correo
+                        ]);
+
+            $this->id=$curso->id;
 
             // Notificación
             $this->dispatch('alerta', name:'Se ha creado correctamente el curso: '.$this->name);
@@ -63,7 +67,8 @@ class CursoCrear extends Component
 
             //refresh
             $this->dispatch('refresh');
-            $this->dispatch('created');
+
+            $this->is_planes=true;
         }
     }
 
