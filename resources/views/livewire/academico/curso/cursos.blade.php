@@ -174,7 +174,7 @@
 
                                 @if ($curso->planes->count()>0)
                                     @foreach ($curso->planes as $item)
-                                        {{$item->name}} --
+                                        {{$item->name}} -- Fecha: {{$item->created_at}} --
                                         @if ($item->status===1)
                                             VIGENTE
                                         @else
