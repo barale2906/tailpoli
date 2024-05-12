@@ -3,12 +3,10 @@
 namespace App\Models\Academico;
 
 use App\Models\Configuracion\Sede;
-use App\Models\Financiera\Transaccion;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Control extends Model
 {

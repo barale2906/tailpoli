@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Configuracion\Documento;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class finDocumento extends Command
 {
@@ -43,5 +45,32 @@ class finDocumento extends Command
                         ]);
 
                     });
+
+        $documentos=Documento::where('status', 2)
+                                ->where('fecha', Carbon::today())
+                                ->get();
+
+
+        foreach ($documentos as $value) {
+            try {
+
+                Documento::where('tipo', $value->tipo)
+                            ->where('status', 3)
+                            ->where('fecha', '<', Carbon::today())
+                            ->update([
+                                'status'=>4
+                                ]);
+
+                $value->update([
+                    'status'=>3
+                ]);
+
+
+
+            } catch(Exception $exception){
+                Log::info('Linea documento: ' . $value->id . ' Documento No permitio registrar: ' . $exception->getMessage().' documen: '.$exception->getLine());
+            }
+        }
+
     }
 }

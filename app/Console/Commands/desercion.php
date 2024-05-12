@@ -6,7 +6,9 @@ use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Estado;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class desercion extends Command
 {
@@ -39,7 +41,15 @@ class desercion extends Command
 
         $this->desertado=$con->id;
 
-        Control::where('ultima_asistencia', Carbon::today()->subMonth())
+        //Verificar si sale de deserción
+        $conec=Estado::where('status', true)
+                    ->where('name', 'reintegro')
+                    ->select('id')
+                    ->first();
+
+        $this->activo=$conec->id;
+
+        /* Control::where('ultima_asistencia', Carbon::today()->subMonth())
                 ->each(function($cicl){
                     $cicl->update([
                         'status_est'=>$this->desertado
@@ -54,13 +64,6 @@ class desercion extends Command
                         'status'        =>4
                     ]);
                 });
-        //Verificar si sale de deserción
-        $con=Estado::where('status', true)
-                    ->where('name', 'reintegro')
-                    ->select('id')
-                    ->first();
-
-        $this->activo=$con->id;
 
         Control::where('ultima_asistencia', '>' ,Carbon::today()->subMonth())
                 ->where('status_est', $this->desertado)
@@ -77,7 +80,76 @@ class desercion extends Command
                         'observaciones' =>'ACÁDEMICO:  --- ¡REINTEGRADO! --- --- AUTOMATICO -----  ',
                         'status'        =>4
                     ]);
-                });
+                }); */
+
+        $controles=Control::where('status', true)
+                            ->get();
+
+        foreach ($controles as $value) {
+            try {
+                    $margen=$value->ciclo->desertado+1;
+                    $inicio=new Carbon($value->ciclo->inicia);
+                    $fecha=Carbon::today()->subDays($margen);
+                    $diferencia=$fecha->diffInDays($inicio);
+
+                    if($value->ultima_asistencia){
+                        if($value->ultima_asistencia <= $fecha){
+                            $value->update([
+                                'status_est'=>$this->desertado
+                            ]);
+
+                            Pqrs::create([
+                                'estudiante_id' =>$value->estudiante_id,
+                                'gestion_id'    =>$value->matricula->creador_id,
+                                'fecha'         =>now(),
+                                'tipo'          =>4,
+                                'observaciones' =>'ACÁDEMICO:  --- ¡DESERTADO! --- --- AUTOMATICO -----  ',
+                                'status'        =>4
+                            ]);
+                        }
+                    }else{
+                        if($diferencia>$margen){
+                            $value->update([
+                                'status_est'=>$this->desertado
+                            ]);
+
+                            Pqrs::create([
+                                'estudiante_id' =>$value->estudiante_id,
+                                'gestion_id'    =>$value->matricula->creador_id,
+                                'fecha'         =>now(),
+                                'tipo'          =>4,
+                                'observaciones' =>'ACÁDEMICO:  --- ¡DESERTADO! --- --- AUTOMATICO -----  ',
+                                'status'        =>4
+                            ]);
+                        }
+                    }
+
+                    //Reactiva alumnos
+                    if($value->status_est===$this->desertado){
+                        if($value->ultima_asistencia >= $fecha){
+                            $value->update([
+                                'status_est'=>$this->activo
+                            ]);
+
+                            Pqrs::create([
+                                'estudiante_id' =>$value->estudiante_id,
+                                'gestion_id'    =>$value->matricula->creador_id,
+                                'fecha'         =>now(),
+                                'tipo'          =>4,
+                                'observaciones' =>'ACÁDEMICO:  --- ¡REINTEGRADO! --- --- AUTOMATICO -----  ',
+                                'status'        =>4
+                            ]);
+                        }
+                    }
+
+            } catch(Exception $exception){
+                Log::info('Linea control: ' . $value->id . ' Deserción No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+            }
+        }
+
+
+
+
 
     }
 }

@@ -5,8 +5,10 @@ namespace App\Console\Commands;
 use App\Models\Academico\Ciclogrupo;
 use App\Models\Clientes\Pqrs;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class reprobo extends Command
 {
@@ -29,7 +31,7 @@ class reprobo extends Command
      */
     public function handle()
     {
-        Ciclogrupo::where('fecha_fin', Carbon::today()->subDays(15))
+        /* Ciclogrupo::where('fecha_fin', Carbon::today()->subDays(15))
                     ->each(function($cigr){
                         $registros= DB::table('notas_detalle')
                                         ->where('grupo_id', $cigr->grupo_id)
@@ -73,6 +75,62 @@ class reprobo extends Command
                                     ]);
                                 }
                             }
-                    });
+                    }); */
+
+        $ciclos=Ciclogrupo::where('fecha_fin', Carbon::today()->subMonths(2))->get();
+
+        foreach ($ciclos as $item) {
+            try {
+
+                $registros= DB::table('notas_detalle')
+                                ->where('grupo_id', $item->grupo_id)
+                                ->where('aprobo', 0)
+                                ->get();
+
+                if($registros){
+                    foreach ($registros as $value) {
+                        if ($value->acumulado>=3) {
+
+                            DB::table('notas_detalle')
+                                ->where('id', $value->id)
+                                ->update([
+                                    'aprobo'=>1,
+                                    'observaciones'=>now()." AUTOMATICO: APROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones
+                                ]);
+
+                            Pqrs::create([
+                                'estudiante_id' =>$value->alumno_id,
+                                'gestion_id'    =>$value->profesor_id,
+                                'fecha'         =>now(),
+                                'tipo'          =>4,
+                                'observaciones' =>'ACÁDEMICO:  --- ¡APROBO! --- '.$value->grupo.' --- AUTOMATICO -----  ',
+                                'status'        =>4
+                            ]);
+
+                        } else {
+                            DB::table('notas_detalle')
+                                ->where('id', $value->id)
+                                ->update([
+                                    'aprobo'=>2,
+                                    'observaciones'=>now()." AUTOMATICO: REPROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones
+                                ]);
+
+                            Pqrs::create([
+                                'estudiante_id' =>$value->alumno_id,
+                                'gestion_id'    =>$value->profesor_id,
+                                'fecha'         =>now(),
+                                'tipo'          =>4,
+                                'observaciones' =>'ACÁDEMICO:  --- ¡REPROBO! --- '.$value->grupo.' --- AUTOMATICO -----  ',
+                                'status'        =>4
+                            ]);
+                        }
+                    }
+                }
+
+
+            } catch(Exception $exception){
+                Log::info('Linea notas: ' . $value->id . ' notas No permitio registrar: ' . $exception->getMessage().' nota: '.$exception->getLine());
+            }
+        }
     }
 }

@@ -6,7 +6,9 @@ use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class cargaMulta extends Command
 {
@@ -36,7 +38,7 @@ class cargaMulta extends Command
                             ->select('valor','id','name')
                             ->first();
 
-        Cartera::where('fecha_pago', Carbon::today()->subDay())
+        /* Cartera::where('fecha_pago', Carbon::today()->subDay())
                 ->where('saldo', '>', 0)
                 ->each(function($cart){
 
@@ -62,7 +64,42 @@ class cargaMulta extends Command
                         'observaciones' =>'PAGO: Se carga multa por no pago en la fecha establecida. ----- ',
                         'status'        =>4
                     ]);
-                });
+                }); */
+
+        $vencida=Cartera::where('fecha_pago', Carbon::today()->subDay())
+                        ->where('saldo', '>', 0)
+                        ->get();
+
+        foreach ($vencida as $value) {
+            try {
+
+                    Cartera::create([
+                        'fecha_pago'=>$value->fecha_pago,
+                        'valor'=>$this->multa->valor,
+                        'saldo'=>$this->multa->valor,
+                        'observaciones'=>'Se carga multa por no pago de la cuota del: '.$value->fecha_pago.', por $'.number_format($value->saldo, 0, '.', ' '),
+                        'matricula_id'=>$value->matricula_id,
+                        'concepto_pago_id'=>$this->multa->id,
+                        'concepto'=>$this->multa->name,
+                        'responsable_id'=>$value->responsable_id,
+                        'estado_cartera_id'=>1,
+                        'sede_id'=>$value->sede_id,
+                        'sector_id'=>$value->sector_id
+                    ]);
+
+                    Pqrs::create([
+                        'estudiante_id' =>$value->responsable_id,
+                        'gestion_id'    =>$value->matricula->creador_id,
+                        'fecha'         =>now(),
+                        'tipo'          =>2,
+                        'observaciones' =>'PAGO: Se carga multa por no pago en la fecha establecida. ----- ',
+                        'status'        =>4
+                    ]);
+
+            } catch(Exception $exception){
+                Log::info('Linea cartera: ' . $value->id . ' CargaMulta No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+            }
+        }
 
     }
 }

@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Academico\Ciclo;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class finCiclo extends Command
 {
@@ -27,13 +29,18 @@ class finCiclo extends Command
      */
     public function handle()
     {
-        Ciclo::where('finaliza', Carbon::today()->subDay())
-                ->each(function($ciclo){
-                    $ciclo->update([
-                        'status'=>false,
-                    ]);
+        $ciclos=Ciclo::where('finaliza', Carbon::today()->subDay())
+                        ->get();
 
-                });
+        foreach ($ciclos as $value) {
+            try {
+                $value->update([
+                                    'status'=>false,
+                                ]);
+            } catch(Exception $exception){
+                Log::info('Linea ciclo: ' . $value->id . ' Ciclo No permitio registrar: ' . $exception->getMessage().' registro: '.$exception->getLine());
+            }
+        }
 
 
     }
