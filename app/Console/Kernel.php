@@ -12,13 +12,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('Ciclo:vencimiento')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
-        $schedule->command('Control:vencimiento')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
+        $schedule->command('Ciclo:vencimiento')->timezone('America/Bogota')->at('12:20');  //->everyThreeMinutes();
+        $schedule->command('Control:vencimiento')->timezone('America/Bogota')->at('12:40');  //->everyThreeMinutes();
         $schedule->command('Documento:vigencia')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
-        $schedule->command('Cartera:cargaMulta')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
-        $schedule->command('Cartera:cargaMora')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
-        $schedule->command('Academico:aprobo-reprobo')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
-        $schedule->command('Academico:desercion')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
+        $schedule->command('Cartera:cargaMulta')->timezone('America/Bogota')->at('01:10');  //->everyThreeMinutes();
+        $schedule->command('Cartera:cargaMora')->timezone('America/Bogota')->at('01:30');  //->everyThreeMinutes();
+        $schedule->command('Academico:aprobo-reprobo')->timezone('America/Bogota')->at('01:50');  //->everyThreeMinutes();
+        $schedule->command('Academico:desercion')->timezone('America/Bogota')->at('02:10');  //->everyThreeMinutes();
+        $schedule->command('Matricula:bienvenida-email')->timezone('America/Bogota')->everyMinute();//->at('02:30');  //->everyThreeMinutes();
     }
 
     /**
