@@ -4,13 +4,12 @@ namespace App\Traits;
 
 use App\Models\Academico\Matricula;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 trait PdfTrait
 {
     public function carnet($id){
-        Log::info('trait Pdf: ' . $id );
+
         $matricula=Matricula::find($id);
         $id=$id;
         $nombre=$matricula->alumno->documento."_carnet.pdf";

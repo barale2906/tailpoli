@@ -41,14 +41,12 @@ class BienvenidaEmail extends Command
                             ->select('id')
                             ->get();
 
-        Log::info('Matricula N°: ' .$nuevos. ' fecha: '.$fecha);
-
         if($nuevos->count()>0){
             foreach ($nuevos as $value) {
 
                 try {
 
-                    Log::info('Matricula N°: ' . $value->id );
+
                     //Genera carnet
                     $this->carnet($value->id);
 

@@ -7,7 +7,6 @@ use App\Mail\ReciboMailable;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ReciboPago;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 trait MailTrait
@@ -43,8 +42,6 @@ trait MailTrait
                         ->first();
 
         $destinatario=$mat->alumno->email;
-        var_dump($destinatario);
-        Log::info('Destinatario: '.$destinatario );
         Mail::to($destinatario)->send(new BienvenidaMailable($id));
     }
 }

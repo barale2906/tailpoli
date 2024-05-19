@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Academico\Matricula;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,7 +11,6 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class BienvenidaMailable extends Mailable implements ShouldQueue
@@ -19,6 +19,7 @@ class BienvenidaMailable extends Mailable implements ShouldQueue
     public $matricula;
     public $nombre;
     public $ruta;
+    public $vence;
 
     /**
      * Create a new message instance.
@@ -29,7 +30,10 @@ class BienvenidaMailable extends Mailable implements ShouldQueue
         $this->nombre=$this->matricula->alumno->documento."_carnet.pdf";
         $rutapdf='carnet/'.$this->nombre;
         $this->ruta=Storage::url($rutapdf);
-        Log::info('Mailable: ' . $id );
+        $fecha= new Carbon($this->matricula->fecha_inicia);
+        $duracion=$this->matricula->curso->duracion_meses+1;
+        $this->vence=$fecha->addMonths($duracion);
+
     }
 
     /**
@@ -51,6 +55,7 @@ class BienvenidaMailable extends Mailable implements ShouldQueue
             markdown: 'mails.bienvenida',
             with:[
                 'matricula'=>$this->matricula,
+                'vence'=>$this->vence,
             ],
         );
     }
