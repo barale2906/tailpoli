@@ -46,11 +46,10 @@ class BienvenidaEmail extends Command
 
                 try {
 
-
                     //Genera carnet
                     $this->carnet($value->id);
 
-
+                    //Enviar email
                     $this->claseEmail(2,$value->id);
 
 

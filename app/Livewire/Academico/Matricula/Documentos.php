@@ -4,20 +4,38 @@ namespace App\Livewire\Academico\Matricula;
 
 use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Documento;
+use App\Traits\MailTrait;
+use App\Traits\PdfTrait;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class Documentos extends Component
 {
+    use PdfTrait;
+    use MailTrait;
+
     public $matricula;
     public $ruta;
     public $documentos=[];
+    public $is_carnet=false;
 
     public function mount($elegido){
         $this->matricula=Matricula::find($elegido);
         $this->crearuta();
+        $this->controlcarnet();
 
     }
 
+    public function controlcarnet(){
+        $crt=new Carbon($this->matricula->created_at);
+        $hoy=Carbon::today();
+        $registro=$hoy->diffInDays($crt);
+
+        if($registro>1){
+            $this->is_carnet=true;
+        }
+
+    }
     public function crearuta(){
         foreach ($this->matricula->documentos as $value) {
 
@@ -129,6 +147,16 @@ class Documentos extends Component
                 array_push($this->documentos, $nuevo);
             }
         }
+    }
+
+    public function carnetgen(){
+        //Genera carnet
+        $this->carnet($this->matricula->id);
+
+        //Enviar email
+        $this->claseEmail(2,$this->matricula->id);
+
+        $this->dispatch('alerta', name:'Se ha enviado el carnet al correo: '.$this->matricula->alumno->email);
     }
 
     public function render()
