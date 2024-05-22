@@ -18,6 +18,7 @@ class Documentos extends Component
     public $is_modify = true;
     public $is_creating = false;
     public $is_editing = false;
+    public $is_tipo=false;
 
     public $actual;
 
@@ -67,6 +68,15 @@ class Documentos extends Component
     }
 
     //Activar evento
+    #[On('tipodoc')]
+    //Mostrar formulario de creación
+    public function tipodocumento()
+    {
+        $this->is_modify = !$this->is_modify;
+        $this->is_tipo = !$this->is_tipo;
+    }
+
+    //Activar evento
     #[On('Editando')]
     //Mostrar formulario de creación
     public function updatedIsEditing()
@@ -80,7 +90,7 @@ class Documentos extends Component
     //Mostrar formulario de creación
     public function vuelve()
     {
-        $this->reset('is_modify', 'is_creating', 'is_editing');
+        $this->reset('is_modify', 'is_creating', 'is_editing', 'is_tipo');
     }
 
     // Mostrar Regimen de Salud
