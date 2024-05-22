@@ -102,11 +102,18 @@ class DocumentosCrear extends Component
         $this->detalles=!$this->detalles;
     }
 
-
+    private function documentos(){
+        return DB::table('tipo_documentos')
+                    ->where('status', true)
+                    ->orderBy('name')
+                    ->get();
+    }
 
     public function render()
     {
 
-        return view('livewire.configuracion.documento.documentos-crear');
+        return view('livewire.configuracion.documento.documentos-crear',[
+            'documentos'=>$this->documentos()
+        ]);
     }
 }
