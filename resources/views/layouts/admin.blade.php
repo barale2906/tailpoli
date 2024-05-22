@@ -22,7 +22,7 @@
 
         <!-- Sweetalert2 -->
         {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-        <link href="{{ asset('build/assets/app-c1e3116c.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/assets/app-c18ff04e.css') }}" rel="stylesheet">
         <script src="{{ asset('build/assets/app-d509820f.js') }}" defer></script>
 
         {{-- DB_CONNECTION=mysql
