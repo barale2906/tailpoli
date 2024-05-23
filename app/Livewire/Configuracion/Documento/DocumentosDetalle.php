@@ -165,6 +165,12 @@ class DocumentosDetalle extends Component
         $this->orden=$this->modifica->orden;
     }
 
+    public function eliminar($id){
+
+        DB::table('detalle_documento')->whereId($id)->delete();
+        $this->resultado();
+    }
+
     public function finalizar(){
         $this->alerta=!$this->alerta;
     }
