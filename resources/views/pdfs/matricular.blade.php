@@ -26,6 +26,25 @@
                     </h1>
                     @break
 
+                @case('ciudadfecha')
+                    <p class="justificado font-sm">
+                        Bogotá,
+                        <strong class="uppercase">
+                            {{$fechaMes}}
+                        </strong>
+                    </p>
+                    @break
+
+                @case('destinatario')
+                    <p class="justificado font-sm">
+                        Señor(a):<br>
+                        <strong class="uppercase">
+                            {{$docuMatricula->alumno->name}}<br>
+                            {{$docuMatricula->alumno->perfil->tipo_documento}}: {{number_format($docuMatricula->alumno->documento, 0, '.', '.')}}
+                        </strong>
+                    </p>
+                    @break
+
                 @case('parrafo')
                     <p class="justificado font-sm">
                         {{$item['contenido']}}
@@ -33,8 +52,22 @@
                     @break
 
                 @case('parrafo1')
+                    <div class="content">
+                        <p class="justificado font-sm">
+                            {{$item['contenido']}}
+                        </p>
+                    </div>
+                    @break
+
+                @case('linea')
                     <p class="justificado font-sm">
-                        {{$item['contenido']}}
+                        Para constancia se firma en: ____________________,  a los: <strong>{{$fecha->day}}</strong>, del mes: <strong>{{$fecha->month}}</strong> del año: <strong>{{$fecha->year}}</strong>, el obligado principal:
+                    </p>
+                    @break
+
+                @case('linea1')
+                    <p class="justificado font-sm">
+                        En Constancia de lo anterior, y declarando que estoy en acuerdo con todas las clausulas aquí establecidas, siendo así, se suscribe este documento en la ciudad de: ____________________ el día <strong>{{$fecha->day}}</strong>, del mes: <strong>{{$fecha->month}}</strong> del año: <strong>{{$fecha->year}}</strong>.
                     </p>
                     @break
 
@@ -249,8 +282,90 @@
                     </table>
                     @break
 
+
+                @case('firma8')
+                    <table class="font-sm mt-2">
+                        <thead >
+                            <tr>
+                                <th scope="col" class="celdafirma">
+                                    ____________________________________
+                                </th>
+                                <th scope="col" class="celdafirma">
+                                    ____________________________________
+                                </th>
+                            </tr>
+                            @if ($edad>=18)
+                                <tr>
+                                    <th scope="col" class="celdafirma centrado uppercase">
+                                        {{$docuMatricula->alumno->name}}<br>
+                                        {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}
+                                    </th>
+                                    <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                        {{config('instituto.nombre_empresa')}}<br>
+                                        NIT: {{config('instituto.nit')}}
+                                    </th>
+                                </tr>
+                            @else
+                                <tr>
+                                    <th scope="col" class="celdafirma centrado uppercase">
+                                        ACUDIENTE: {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                        CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
+                                    </th>
+                                    <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                        {{config('instituto.nombre_empresa')}}<br>
+                                        NIT: {{config('instituto.nit')}}
+                                    </th>
+                                </tr>
+                            @endif
+
+                        </thead>
+                    </table>
+                    @break
+
                 @case('formaPago')
-                    @if ($docuFormaP->cuotas>0)
+                    @if ($docuFormaP)
+                        @if ($docuFormaP->cuotas>0)
+                            <table>
+                                <thead class="font-sm  uppercase ">
+                                    <tr>
+                                        <th scope="col" class="centrado font-sm">
+                                            concepto
+                                        </th>
+                                        <th scope="col" class="centrado font-sm">
+                                            fecha de pago
+                                        </th>
+                                        <th scope="col" class="centrado font-sm">
+                                            valor
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($docuCartera as $item)
+                                        <tr>
+                                            <th scope="row" class="justificado capitalize font-sm">
+                                                {{$item->concepto}}
+                                            </th>
+                                            <th scope="row" class=" centrado capitalize font-sm">
+                                                {{$item->fecha_pago}}
+                                            </th>
+                                            <th scope="row" class="derecha capitalize font-sm">
+                                                $ {{number_format($item->valor, 0, '.', '.')}}
+                                            </th>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+
+                    @else
+                        <p class="font-l centrado">
+                            ¡Pago de Contado!, Según lo especificado al momento de la matricula.
+                        </p>
+                    @endif
+                    @break
+
+                @case('cartera')
+                    @if ($docuCartera)
                         <table>
                             <thead class="font-sm  uppercase ">
                                 <tr>
@@ -262,6 +377,12 @@
                                     </th>
                                     <th scope="col" class="centrado font-sm">
                                         valor
+                                    </th>
+                                    <th scope="col" class="centrado font-sm">
+                                        Días de retraso
+                                    </th>
+                                    <th scope="col" class="centrado font-sm">
+                                        Saldo
                                     </th>
                                 </tr>
                             </thead>
@@ -277,66 +398,24 @@
                                         <th scope="row" class="derecha capitalize font-sm">
                                             $ {{number_format($item->valor, 0, '.', '.')}}
                                         </th>
+                                        <th scope="row" class="derecha capitalize font-sm">
+                                            @if ($item->fecha_pago < $fecha)
+                                                @php
+                                                    $fecha1 = date_create($item->fecha_pago);
+                                                    $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                @endphp
+                                                {{$dias}} días
+                                            @endif
+                                        </th>
+                                        <th scope="row" class="derecha capitalize font-sm">
+                                            $ {{number_format($item->saldo, 0, '.', '.')}}
+                                        </th>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                    @else
-                        <p class="font-l centrado">
-                            ¡Pago de Contado!, Según lo especificado al momento de la matricula.
-                        </p>
                     @endif
-                    @break
 
-                @case('cartera')
-                    <table>
-                        <thead class="font-sm  uppercase ">
-                            <tr>
-                                <th scope="col" class="centrado font-sm">
-                                    concepto
-                                </th>
-                                <th scope="col" class="centrado font-sm">
-                                    fecha de pago
-                                </th>
-                                <th scope="col" class="centrado font-sm">
-                                    valor
-                                </th>
-                                <th scope="col" class="centrado font-sm">
-                                    Días de retraso
-                                </th>
-                                <th scope="col" class="centrado font-sm">
-                                    Saldo
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($docuCartera as $item)
-                                <tr>
-                                    <th scope="row" class="justificado capitalize font-sm">
-                                        {{$item->concepto}}
-                                    </th>
-                                    <th scope="row" class=" centrado capitalize font-sm">
-                                        {{$item->fecha_pago}}
-                                    </th>
-                                    <th scope="row" class="derecha capitalize font-sm">
-                                        $ {{number_format($item->valor, 0, '.', '.')}}
-                                    </th>
-                                    <th scope="row" class="derecha capitalize font-sm">
-                                        @if ($item->fecha_pago < $fecha)
-                                            @php
-                                                $fecha1 = date_create($item->fecha_pago);
-                                                $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                            @endphp
-                                            {{$dias}} días
-                                        @endif
-                                    </th>
-                                    <th scope="row" class="derecha capitalize font-sm">
-                                        $ {{number_format($item->saldo, 0, '.', '.')}}
-                                    </th>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
                     @break
 
                 @case('matricula')
@@ -639,8 +718,6 @@
 
                 @default
                     <div class="salto"></div>
-
-
             @endswitch
 
         @endforeach
@@ -658,6 +735,25 @@
                             </h1>
                             @break
 
+                        @case('ciudadfecha')
+                            <p class="justificado font-sm">
+                                Bogotá,
+                                <strong class="uppercase">
+                                    {{$fechaMes}}
+                                </strong>
+                            </p>
+                            @break
+
+                        @case('destinatario')
+                            <p class="justificado font-sm">
+                                Señor(a):<br>
+                                <strong class="uppercase">
+                                    {{$docuMatricula->alumno->name}}<br>
+                                    {{$docuMatricula->alumno->perfil->tipo_documento}}: {{number_format($docuMatricula->alumno->documento, 0, '.', '.')}}
+                                </strong>
+                            </p>
+                            @break
+
                         @case('parrafo')
                             <p class="justificado font-sm">
                                 {{$item['contenido']}}
@@ -665,8 +761,22 @@
                             @break
 
                         @case('parrafo1')
+                            <div class="content">
+                                <p class="justificado font-sm">
+                                    {{$item['contenido']}}
+                                </p>
+                            </div>
+                            @break
+
+                        @case('linea')
                             <p class="justificado font-sm">
-                                {{$item['contenido']}}
+                                Para constancia se firma en: ____________________,  a los: <strong>{{$fecha->day}}</strong>, del mes: <strong>{{$fecha->month}}</strong> del año: <strong>{{$fecha->year}}</strong>, el obligado principal:
+                            </p>
+                            @break
+
+                        @case('linea1')
+                            <p class="justificado font-sm">
+                                En Constancia de lo anterior, y declarando que estoy en acuerdo con todas las clausulas aquí establecidas, siendo así, se suscribe este documento en la ciudad de: ____________________ el día <strong>{{$fecha->day}}</strong>, del mes: <strong>{{$fecha->month}}</strong> del año: <strong>{{$fecha->year}}</strong>.
                             </p>
                             @break
 
@@ -881,8 +991,90 @@
                             </table>
                             @break
 
+
+                        @case('firma8')
+                            <table class="font-sm mt-2">
+                                <thead >
+                                    <tr>
+                                        <th scope="col" class="celdafirma">
+                                            ____________________________________
+                                        </th>
+                                        <th scope="col" class="celdafirma">
+                                            ____________________________________
+                                        </th>
+                                    </tr>
+                                    @if ($edad>=18)
+                                        <tr>
+                                            <th scope="col" class="celdafirma centrado uppercase">
+                                                {{$docuMatricula->alumno->name}}<br>
+                                                {{$docuMatricula->alumno->perfil->tipo_documento}}: {{$docuMatricula->alumno->documento}}
+                                            </th>
+                                            <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                                {{config('instituto.nombre_empresa')}}<br>
+                                                NIT: {{config('instituto.nit')}}
+                                            </th>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <th scope="col" class="celdafirma centrado uppercase">
+                                                ACUDIENTE: {{$docuMatricula->alumno->perfil->contacto}}<br>
+                                                CÉDULA: {{$docuMatricula->alumno->perfil->documento_contacto}}
+                                            </th>
+                                            <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                                {{config('instituto.nombre_empresa')}}<br>
+                                                NIT: {{config('instituto.nit')}}
+                                            </th>
+                                        </tr>
+                                    @endif
+
+                                </thead>
+                            </table>
+                            @break
+
                         @case('formaPago')
-                            @if ($docuFormaP->cuotas>0)
+                            @if ($docuFormaP)
+                                @if ($docuFormaP->cuotas>0)
+                                    <table>
+                                        <thead class="font-sm  uppercase ">
+                                            <tr>
+                                                <th scope="col" class="centrado font-sm">
+                                                    concepto
+                                                </th>
+                                                <th scope="col" class="centrado font-sm">
+                                                    fecha de pago
+                                                </th>
+                                                <th scope="col" class="centrado font-sm">
+                                                    valor
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($docuCartera as $item)
+                                                <tr>
+                                                    <th scope="row" class="justificado capitalize font-sm">
+                                                        {{$item->concepto}}
+                                                    </th>
+                                                    <th scope="row" class=" centrado capitalize font-sm">
+                                                        {{$item->fecha_pago}}
+                                                    </th>
+                                                    <th scope="row" class="derecha capitalize font-sm">
+                                                        $ {{number_format($item->valor, 0, '.', '.')}}
+                                                    </th>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @endif
+
+                            @else
+                                <p class="font-l centrado">
+                                    ¡Pago de Contado!, Según lo especificado al momento de la matricula.
+                                </p>
+                            @endif
+                            @break
+
+                        @case('cartera')
+                            @if ($docuCartera)
                                 <table>
                                     <thead class="font-sm  uppercase ">
                                         <tr>
@@ -894,6 +1086,12 @@
                                             </th>
                                             <th scope="col" class="centrado font-sm">
                                                 valor
+                                            </th>
+                                            <th scope="col" class="centrado font-sm">
+                                                Días de retraso
+                                            </th>
+                                            <th scope="col" class="centrado font-sm">
+                                                Saldo
                                             </th>
                                         </tr>
                                     </thead>
@@ -909,66 +1107,24 @@
                                                 <th scope="row" class="derecha capitalize font-sm">
                                                     $ {{number_format($item->valor, 0, '.', '.')}}
                                                 </th>
+                                                <th scope="row" class="derecha capitalize font-sm">
+                                                    @if ($item->fecha_pago < $fecha)
+                                                        @php
+                                                            $fecha1 = date_create($item->fecha_pago);
+                                                            $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                        @endphp
+                                                        {{$dias}} días
+                                                    @endif
+                                                </th>
+                                                <th scope="row" class="derecha capitalize font-sm">
+                                                    $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                </th>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                            @else
-                                <p class="font-l centrado">
-                                    ¡Pago de Contado!, Según lo especificado al momento de la matricula.
-                                </p>
                             @endif
-                            @break
 
-                        @case('cartera')
-                            <table>
-                                <thead class="font-sm  uppercase ">
-                                    <tr>
-                                        <th scope="col" class="centrado font-sm">
-                                            concepto
-                                        </th>
-                                        <th scope="col" class="centrado font-sm">
-                                            fecha de pago
-                                        </th>
-                                        <th scope="col" class="centrado font-sm">
-                                            valor
-                                        </th>
-                                        <th scope="col" class="centrado font-sm">
-                                            Días de retraso
-                                        </th>
-                                        <th scope="col" class="centrado font-sm">
-                                            Saldo
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($docuCartera as $item)
-                                        <tr>
-                                            <th scope="row" class="justificado capitalize font-sm">
-                                                {{$item->concepto}}
-                                            </th>
-                                            <th scope="row" class=" centrado capitalize font-sm">
-                                                {{$item->fecha_pago}}
-                                            </th>
-                                            <th scope="row" class="derecha capitalize font-sm">
-                                                $ {{number_format($item->valor, 0, '.', '.')}}
-                                            </th>
-                                            <th scope="row" class="derecha capitalize font-sm">
-                                                @if ($item->fecha_pago < $fecha)
-                                                    @php
-                                                        $fecha1 = date_create($item->fecha_pago);
-                                                        $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                                    @endphp
-                                                    {{$dias}} días
-                                                @endif
-                                            </th>
-                                            <th scope="row" class="derecha capitalize font-sm">
-                                                $ {{number_format($item->saldo, 0, '.', '.')}}
-                                            </th>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
                             @break
 
                         @case('matricula')

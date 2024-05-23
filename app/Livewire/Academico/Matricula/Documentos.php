@@ -22,6 +22,7 @@ class Documentos extends Component
     public function mount($elegido){
         $this->matricula=Matricula::find($elegido);
         $this->crearuta();
+        $this->otrosD();
         $this->controlcarnet();
 
     }
@@ -36,12 +37,14 @@ class Documentos extends Component
         }
 
     }
+
+
     public function crearuta(){
         foreach ($this->matricula->documentos as $value) {
 
             $this->reset('ruta');
 
-            switch ($value->tipo) {
+            /* switch ($value->tipo) {
 
                 case 'contrato':
                     //$this->ruta="/impresiones/impcontrato?c=".$this->matricula->id;
@@ -83,7 +86,9 @@ class Documentos extends Component
                     $this->ruta="/pdfs/matricul/".$this->matricula->id;
                     break;
 
-            }
+            } */
+
+            $this->ruta="/pdfs/documento/".$this->matricula->id."/".$value->id;
 
             $nuevo=[
                 'titulo'=>$value->titulo,
@@ -101,9 +106,8 @@ class Documentos extends Component
         $this->otrosD();
     }
 
-    public function otrosD(){
 
-        $this->reset('ruta');
+    public function otrosD(){
 
         $docu=Documento::where('status', 3)
                                 ->whereNotIn('tipo', ['contrato','pagare','cartapagare','actaPago','comproCredito','comproEntrega','gastocertifinal','matricula'])
@@ -112,7 +116,9 @@ class Documentos extends Component
 
         foreach ($docu as $value) {
 
-            switch ($value->tipo) {
+            $this->reset('ruta');
+
+            /* switch ($value->tipo) {
 
                 case 'certiEstudio':
                     //$this->ruta="/impresiones/impcertiestudio?ce=".$this->matricula->id;
@@ -133,8 +139,9 @@ class Documentos extends Component
                     //$this->ruta="/impresiones/impformuPractica?fp=".$this->matricula->id;
                     $this->ruta="/pdfs/pagaret/".$this->matricula->id;
                     break;
-            }
+            } */
 
+            $this->ruta="/pdfs/documento/".$this->matricula->id."/".$value->id;
             $nuevo=[
                 'titulo'=>$value->titulo,
                 'tipo'=>$value->tipo,

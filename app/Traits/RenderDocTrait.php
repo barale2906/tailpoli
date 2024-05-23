@@ -15,6 +15,8 @@ trait RenderDocTrait
     public $docuTipo;
     public $docuMatricula;
     public $docuFormaP;
+    public $cuotas;
+    public $valormes;
     public $docuCartera;
     public $palabras=[];
     public $reemplazo;
@@ -23,6 +25,7 @@ trait RenderDocTrait
     public $impresion=[];
     public $deuda;
     public $edad;
+
 
     //public function docubase($id, $tipo, $ori=null){
     public function docubase($id, $doc){
@@ -82,22 +85,44 @@ trait RenderDocTrait
         $this->obtePalabras();
     }
 
+    public function docuDetalle(){
+
+        /* $ids=[];
+
+        foreach ($this->docuTipo as $value) {
+            array_push($ids, $value->id);
+        } */
+
+        $this->detalles=DB::table('detalle_documento')
+                            ->where('status', true)
+                            //->whereIn('documento_id', $ids)
+                            ->where('documento_id', $this->docuTipo->id)
+                            ->select('contenido','tipodetalle','documento_id')
+                            ->orderBy('orden', 'ASC')
+                            ->get();
+
+        $this->obtePalabras();
+
+    }
+
     public function formaPago(){
         $this->docuFormaP=ConfiguracionPago::find($this->docuMatricula->configpago);
 
-        if($this->docuFormaP->cuotas>0){
+
+        if($this->docuFormaP){
             $this->financiacion();
         }
     }
 
     public function financiacion(){
+
         $this->docuCartera=Cartera::where('matricula_id', $this->docuMatricula->id)
                                     ->get();
-
         $this->calculo();
     }
 
     public function calculo(){
+
         $fecha=Carbon::now();
         $nacio=$this->docuMatricula->alumno->perfil->fecha_nacimiento;
 
@@ -116,31 +141,15 @@ trait RenderDocTrait
         }
     }
 
-    public function docuDetalle(){
-
-        /* $ids=[];
-
-        foreach ($this->docuTipo as $value) {
-            array_push($ids, $value->id);
-        } */
-
-        $this->detalles=DB::table('detalle_documento')
-                            ->where('status', true)
-                            //->whereIn('documento_id', $ids)
-                            ->where('documento_id', $this->docuTipo->id)
-                            ->select('contenido','tipodetalle','documento_id')
-                            ->orderBy('orden', 'ASC')
-                            ->get();
-
-        $this->obtePalabras();
-    }
-
     public function obtePalabras(){
 
         $this->palabras=[
 
             'matriculaEstu',
             'matriculaInicia',
+            'matriSede',
+            'matriSector',
+            'matriState',
             'nombreEstu',
             'documentoEstu',
             'tipodocuEstu',
@@ -150,6 +159,8 @@ trait RenderDocTrait
             'ciudadEstu',
             'telefonoEstu',
             'cursoEstu',
+            'cursoDuraHor',
+            'cursoDuraMes',
             'valorMatricula',
             'valorMatLetras',
             'nitInsti',
@@ -159,7 +170,10 @@ trait RenderDocTrait
             'dirInsti',
             'telInsti',
             'deuda',
-            'fechaCrea'
+            'fechaCrea',
+            'fopaCuot',
+            'fopaVrMes',
+            'fopaLetVrMes'
         ];
 
         $this->equivale();
@@ -167,10 +181,22 @@ trait RenderDocTrait
     }
 
     public function equivale(){
+        $formaPago=ConfiguracionPago::find($this->docuMatricula->configpago);
+        if($formaPago){
+            $this->cuotas=$formaPago->cuotas;
+            $this->valormes=$formaPago->valor_cuota;
+        }else{
+            $this->cuotas=0;
+            $this->valormes=0;
+        }
         $formatterES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
+        $formapagoES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
 
         $matriculaId=$this->docuMatricula->id; //matriculaEstu	Numero de matricula del estudiante
         $matriculaInicia=$this->docuMatricula->fecha_inicia; //matriculaInicia	Fecha de inicio del estudiante
+        $matriSede=$this->docuMatricula->sede->name; // matriSede Nombre d ela sede donde se matriculo.
+        $matriSector=$this->docuMatricula->sede->sector->name; //Ciudad donde se matricula
+        $matriState=$this->docuMatricula->sede->sector->state->name; // matriState Departamento en el que se matriculo.
         $nombreEstud=strtoupper($this->docuMatricula->alumno->name); //nombreEstu	Nombre del estudiante
         $documEstu=number_format($this->docuMatricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
         $tipodocu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
@@ -180,7 +206,9 @@ trait RenderDocTrait
         $ciudadEstu=ucwords($this->docuMatricula->alumno->perfil->state->name); //ciudadEstu	ciudad del estudiante
         $telEstu=$this->docuMatricula->alumno->perfil->celular; //telefonoEstu	teléfono del estudiante
         $curso=strtoupper($this->docuMatricula->curso->name); //cursoEstu	Curso al que se inscribio estudiante
-        $valorMatricula=number_format($this->docuMatricula->valor, 0, '.', '.');
+        $cursoDuraHor=$this->docuMatricula->curso->duracion_horas; // cursoDuraHor Duración horas del curso.
+        $cursoDuraMes=$this->docuMatricula->curso->duracion_meses; // cursoDuraMes duración meses del curso.
+        $valorMatricula="$ ".number_format($this->docuMatricula->valor, 0, '.', '.');
         $valorMatLetras=ucwords($formatterES->format($this->docuMatricula->valor))." Pesos M/L.";
         $nit=config('instituto.nit'); //nitInsti	NIT del poliandino
         $empresa=strtoupper(config('instituto.nombre_empresa')); //nombreInsti	Nombre del poliandino
@@ -190,10 +218,16 @@ trait RenderDocTrait
         $telEmp=config('instituto.telefono'); //telInsti	teléfono legal del poliandino
         $deuda=$this->deuda; // deuda Valor de la mora.
         $fechaCrea=Carbon::now(); //FEcha en que se genera el documento
+        $fopaCuot=$this->cuotas; // formaCuotas Cantidad de cuotas pactadas
+        $fopaVrMes="$ ".number_format($this->valormes, 0, '.', '.'); // formaValorMensual Valor de la cuotamensual
+        $fopaLetVrMes=ucwords($formapagoES->format($this->valormes))." Pesos M/L."; //formaValorMensualLetras Valor de la cuota mensual en letras
 
         $this->reemplazo=[
             $matriculaId,
             $matriculaInicia,
+            $matriSede,
+            $matriSector,
+            $matriState,
             $nombreEstud,
             $documEstu,
             $horaDocu,
@@ -203,6 +237,8 @@ trait RenderDocTrait
             $ciudadEstu,
             $telEstu,
             $curso,
+            $cursoDuraHor,
+            $cursoDuraMes,
             $valorMatricula,
             $valorMatLetras,
             $nit,
@@ -212,7 +248,11 @@ trait RenderDocTrait
             $dirEmp,
             $telEmp,
             $deuda,
-            $fechaCrea
+            $fechaCrea,
+            $fopaCuot,
+            $fopaVrMes,
+            $fopaLetVrMes
+
         ];
 
         $this->docFiltra();
