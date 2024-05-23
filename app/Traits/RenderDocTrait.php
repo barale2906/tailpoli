@@ -24,9 +24,10 @@ trait RenderDocTrait
     public $deuda;
     public $edad;
 
-    public function docubase($id, $tipo, $ori=null){
+    //public function docubase($id, $tipo, $ori=null){
+    public function docubase($id, $doc){
 
-        if($ori){
+        /* if($ori){
 
             $this->docuTipo=Documento::whereId($id)->first();
 
@@ -40,10 +41,45 @@ trait RenderDocTrait
                                         ->get();
 
             $this->docuMatricula=Matricula::whereId($id)->first();
-        }
+        } */
+
+        $this->docuTipo=Documento::whereId($doc)->first();
+
+        $this->docuMatricula=Matricula::whereId($id)->first();
 
         $this->docuDetalle();
         $this->formaPago();
+    }
+
+    public function documatri($id, $tipo){
+
+        $this->docuMatricula=Matricula::whereId($id)->first();
+
+        $this->docuTipo=Documento::where('status', 3)
+                                        ->whereIn('tipo', $tipo)
+                                        ->get();
+
+
+        $this->formaPago();
+        $this->docuDetalleMatri();
+    }
+
+    public function docuDetalleMatri(){
+
+        $ids=[];
+
+        foreach ($this->docuTipo as $value) {
+            array_push($ids, $value->id);
+        }
+
+        $this->detalles=DB::table('detalle_documento')
+                            ->where('status', true)
+                            ->whereIn('documento_id', $ids)
+                            ->select('contenido','tipodetalle','documento_id')
+                            ->orderBy('orden', 'ASC')
+                            ->get();
+
+        $this->obtePalabras();
     }
 
     public function formaPago(){
@@ -82,15 +118,16 @@ trait RenderDocTrait
 
     public function docuDetalle(){
 
-        $ids=[];
+        /* $ids=[];
 
         foreach ($this->docuTipo as $value) {
             array_push($ids, $value->id);
-        }
+        } */
 
         $this->detalles=DB::table('detalle_documento')
                             ->where('status', true)
-                            ->whereIn('documento_id', $ids)
+                            //->whereIn('documento_id', $ids)
+                            ->where('documento_id', $this->docuTipo->id)
                             ->select('contenido','tipodetalle','documento_id')
                             ->orderBy('orden', 'ASC')
                             ->get();
@@ -108,6 +145,7 @@ trait RenderDocTrait
             'documentoEstu',
             'tipodocuEstu',
             'docuExpedi',
+            'horaDocu',
             'direccionEstu',
             'ciudadEstu',
             'telefonoEstu',
@@ -120,7 +158,8 @@ trait RenderDocTrait
             'rldocInsti',
             'dirInsti',
             'telInsti',
-            'deuda'
+            'deuda',
+            'fechaCrea'
         ];
 
         $this->equivale();
@@ -136,6 +175,7 @@ trait RenderDocTrait
         $documEstu=number_format($this->docuMatricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
         $tipodocu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
         $docuExpedi=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //docuExpedi	expedición del documento
+        $horaDocu=$this->docuMatricula->control->ciclo->name; //horario explicito en el nombre del ciclo respectivo
         $direEstu=ucwords($this->docuMatricula->alumno->perfil->direccion); //direccionEstu	direccion del estudiante
         $ciudadEstu=ucwords($this->docuMatricula->alumno->perfil->state->name); //ciudadEstu	ciudad del estudiante
         $telEstu=$this->docuMatricula->alumno->perfil->celular; //telefonoEstu	teléfono del estudiante
@@ -149,12 +189,14 @@ trait RenderDocTrait
         $dirEmp=ucwords(config('instituto.direccion')); //dirInsti	dirección legal del poliandino
         $telEmp=config('instituto.telefono'); //telInsti	teléfono legal del poliandino
         $deuda=$this->deuda; // deuda Valor de la mora.
+        $fechaCrea=Carbon::now(); //FEcha en que se genera el documento
 
         $this->reemplazo=[
             $matriculaId,
             $matriculaInicia,
             $nombreEstud,
             $documEstu,
+            $horaDocu,
             $tipodocu,
             $docuExpedi,
             $direEstu,
@@ -169,7 +211,8 @@ trait RenderDocTrait
             $docRl,
             $dirEmp,
             $telEmp,
-            $deuda
+            $deuda,
+            $fechaCrea
         ];
 
         $this->docFiltra();

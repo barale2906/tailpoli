@@ -27,9 +27,8 @@ class PdfController extends Controller
 
 
 
-    public function matri($id){
-
-        $this->docubase($id,$this->documentos);
+    public function documento($id,$doc){
+        $this->docubase($id,$doc);
         $matr=$this->docuTipo;
         $detalles=$this->impresion;
         $id=$id;
@@ -39,13 +38,32 @@ class PdfController extends Controller
         $docuFormaP=$this->docuFormaP;
         $docuCartera=$this->docuCartera;
         $edad=$this->edad;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad'));
+        $matricula=1;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad','matricula'));
+
+        return $pdf->stream();
+    }
+
+    public function matri($id){
+
+        $this->documatri($id,$this->documentos);
+        $matr=$this->docuTipo;
+        $detalles=$this->impresion;
+        $id=$id;
+        $docuMatricula=$this->docuMatricula;
+        $fecha=Carbon::now();
+        $fechaMes=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
+        $docuFormaP=$this->docuFormaP;
+        $docuCartera=$this->docuCartera;
+        $edad=$this->edad;
+        $matricula=2;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad','matricula'));
 
         return $pdf->stream();
 
     }
 
-    public function certificado($id){
+    /*public function certificado($id){
 
         $this->docubase($id,$this->certiestudios);
         $matr=$this->docuTipo;
@@ -241,5 +259,5 @@ class PdfController extends Controller
 
         return $pdf->stream();
 
-    }
+    } */
 }

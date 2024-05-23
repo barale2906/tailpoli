@@ -38,11 +38,17 @@
                                     <option >Elija tipo de detalle a agregar...</option>
                                     <option value="titulo">titulo</option>
                                     <option value="parrafo">parráfo</option>
-                                    <option value="firma">firma estudiante</option>
-                                    <option value="firma">firma estudiante con huella</option>
-
+                                    <option value="parrafo1">parráfo con fondo gris claro</option>
+                                    <option value="firma1">firma estudiante (todos los datos)</option>
+                                    <option value="firma2">firma estudiante (nombre - documento)</option>
+                                    <option value="firma3">firma estudiante (lineas diligenciar)</option>
+                                    <option value="firma4">firma estudiante con huella</option>
+                                    <option value="firma5">firma estudiante con huella (lineas diligenciar)</option>
+                                    <option value="firma6">firma departamento cartera</option>
+                                    <option value="firma7">firma directora</option>
                                     <option value="formaPago">forma de pago</option>
                                     <option value="cartera">cartera</option>
+                                    <option value="matricula">cuadro matricula</option>
                                 </select>
                                 @error('tipodetalle')
                                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">

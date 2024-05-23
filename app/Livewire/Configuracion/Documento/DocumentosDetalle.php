@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Configuracion\Documento;
 
+use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Documento;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -46,7 +47,11 @@ class DocumentosDetalle extends Component
 
     public function definRuta(){
 
-        switch ($this->actual->tipo) {
+        $matr=Matricula::where('status', true)->select('id')->orderBy('id', 'DESC')->first();
+
+        $this->ruta="/pdfs/documento/".$matr->id."/".$this->actual->id;
+
+        /* switch ($this->actual->tipo) {
 
             case 'contrato':
                 $this->ruta="/impresiones/impcontrato?o=1&c=".$this->actual->id;
@@ -91,7 +96,7 @@ class DocumentosDetalle extends Component
             case 'formuPractica':
                 $this->ruta="/impresiones/impformuPractica?o=1&fp=".$this->actual->id;
                 break;
-        }
+        } */
     }
 
     /**
