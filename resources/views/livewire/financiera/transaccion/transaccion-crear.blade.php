@@ -14,6 +14,28 @@
                 </div>
             @enderror
         </div>
+        @if ($sede_id)
+            <div class="mb-6">
+                <label for="total" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor total del registro</label>
+                <input  id="total" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor total de la consignación, transferencia" wire:model="total" required>
+                @error('total')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
+            </div>
+        @endif
+
+        <div class="mb-6">
+            <label for="fecha_transaccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de la transacción</label>
+            <input  id="fecha_transaccion" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model="fecha_transaccion" required>
+            @error('fecha_transaccion')
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                </div>
+            @enderror
+        </div>
+
         <div class="mb-6">
             <label for="opcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Concepto que paga</label>
             <select wire:model.live="opcion" id="opcion" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -23,6 +45,7 @@
                 <option value=3>Acádemico - Otros</option>
             </select>
         </div>
+
         @if ($is_academico)
             <div class="mb-6">
                 <label for="academico" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor del pago por acádemico</label>

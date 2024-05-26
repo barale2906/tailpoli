@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Financiera\Transaccion;
 
-use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Transaccion;
@@ -24,8 +23,10 @@ class TransaccionCrear extends Component
     public $opcion;
     public $url;
 
-    public $otro;
-    public $academico;
+    public $otro=0;
+    public $academico=0;
+    public $fecha_transaccion;
+    public $total;
     public $is_otro=false;
     public $is_academico=false;
 
@@ -70,7 +71,9 @@ class TransaccionCrear extends Component
         'observaciones' => 'required',
         'sede_id'       => 'required|integer',
         'academico'     => 'required',
-        'otro'    => 'required',
+        'otro'          => 'required',
+        'total'         => 'required',
+        'fecha_transaccion' => 'required',
     ];
 
     /**
@@ -85,6 +88,8 @@ class TransaccionCrear extends Component
                         'sede_id',
                         'academico',
                         'otro',
+                        'total',
+                        'fecha_transaccion'
                     );
     }
 
@@ -95,11 +100,34 @@ class TransaccionCrear extends Component
     }
 
     public function crear(){
+
+        $suma=$this->academico+$this->otro;
+
+        if($suma===intval($this->total)){
+            // Validar si ya esta cargado
+            $esta=Transaccion::where('fecha_transaccion', $this->fecha_transaccion)
+                                ->where('total', intval($this->total))
+                                ->where('user_id', $this->actual->id)
+                                ->count('id');
+
+            if($esta>0){
+                $this->dispatch('alerta', name:$this->actual->name.' ya registro un pago con ese soporte.');
+            }else{
+                $this->new();
+            }
+        }else{
+            $this->dispatch('alerta', name:'La suma de los itemes no es igual al total de la transacción.');
+            $this->reset('academico', 'otro');
+        }
+
+    }
+
+    public function new(){
+
         // validate
         $this->validate();
 
         $nombre=null;
-
 
         $nombre='public_soportes/'.$this->actual->id."-".uniqid().".".$this->soporte->extension();
         $this->soporte->storeAs($nombre);
@@ -112,10 +140,11 @@ class TransaccionCrear extends Component
             'fecha'=>now(),
             'ruta'=>$nombre,
             'extension'=>$this->soporte->extension(),
-            'otro'=>$this->otro,
-            'academico'=>$this->academico,
-            'inventario'=>$this->otro,
-            'observaciones'=>$this->observaciones
+            'academico'=>intval($this->academico),
+            'inventario'=>intval($this->otro),
+            'fecha_transaccion'=>$this->fecha_transaccion,
+            'total'=>intval($this->total),
+            'observaciones'=>$this->observaciones,
         ]);
 
         //Actualizar control
@@ -138,7 +167,6 @@ class TransaccionCrear extends Component
         $this->resetFields();
         $this->dispatch('refresh');
         $this->dispatch('cancelando');
-
     }
 
     public function render()
