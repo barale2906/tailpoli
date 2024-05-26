@@ -398,7 +398,7 @@ class Perfil extends Component
             ]);
         }
 
-        //Actualizar sedes
+        /* //Actualizar sedes
         $this->actual->sedes()->sync($ids);
 
         // Asignar multicultural
@@ -410,7 +410,7 @@ class Perfil extends Component
                 'created_at'                =>now(),
                 'updated_at'                =>now(),
             ]);
-        }
+        } */
 
         $this->dispatch('alerta', name:'Se ha modificado correctamente el perfil del Usuario: '.$this->actual->name);
 
