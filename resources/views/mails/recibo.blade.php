@@ -13,7 +13,7 @@
                             <th scope="col" class="px-6 py-3">
 
                                 <a href="" wire:navigate>
-                                    <img class="h-12 w-16 rounded-sm" src="{{asset('img/logo.jpeg')}}" alt="{{env('APP_NAME')}}">
+                                    <img class="h-12 w-16 rounded-sm" src="{{asset('img/logomin.jpeg')}}" alt="{{env('APP_NAME')}}">
                                 </a>
 
                             </th>
@@ -109,7 +109,7 @@
                             <th scope="col" class="px-6 py-3">
 
                                 <a href="" wire:navigate>
-                                    <img class="h-12 w-16 rounded-sm" src="{{asset('img/logopol.jpg')}}" alt="{{env('APP_NAME')}}">
+                                    <img class="h-12 w-16 rounded-sm" src="{{asset('img/logopolmin.jpg')}}" alt="{{env('APP_NAME')}}">
                                 </a>
 
                             </th>

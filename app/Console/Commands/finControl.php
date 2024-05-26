@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use Carbon\Carbon;

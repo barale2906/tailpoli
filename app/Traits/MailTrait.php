@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Mail\BienvenidaMailable;
+use App\Mail\RecartMailable;
 use App\Mail\ReciboMailable;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cartera;
@@ -19,6 +20,10 @@ trait MailTrait
 
             case 2:
                 $this->carnetpdf($info);
+                break;
+
+            case 3:
+                $this->recordatorio($info);
                 break;
         }
     }
@@ -43,5 +48,13 @@ trait MailTrait
 
         $destinatario=$mat->alumno->email;
         Mail::to($destinatario)->send(new BienvenidaMailable($id));
+    }
+
+    public function recordatorio($id){
+
+        $cartera=Cartera::find($id);
+
+        $destinatario=$cartera->responsable->email;
+        Mail::to($destinatario)->send(new RecartMailable($id));
     }
 }
