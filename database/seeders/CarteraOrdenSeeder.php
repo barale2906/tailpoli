@@ -20,7 +20,7 @@ class CarteraOrdenSeeder extends Seeder
 
         foreach ($matriculas as $value) {
             $carteras=Cartera::where('matricula_id', $value->id)
-                                ->where('status', true)
+                                //->where('status', true)
                                 ->where('concepto', 'mensualidad')
                                 ->orderBy('fecha_pago', 'ASC')
                                 ->get();
@@ -28,13 +28,15 @@ class CarteraOrdenSeeder extends Seeder
             if($carteras){
                 $a=1;
                 foreach ($carteras as $value) {
-                    try {
-                            $value->update([
-                                'observaciones'=>'Cuota Nro: '.$a.' mensual. ----- '.$value->observaciones
-                            ]);
-                            $a++;
-                    } catch(Exception $exception){
-                        Log::info('registro: '.$a.' Error al modificar las observaciones: '. $exception->getMessage().' linea código: '.$exception->getLine().' Cartera: '.$value );
+                    if($value->concepto_pago_id!==1){
+                        try {
+                                $value->update([
+                                    'observaciones'=>'Cuota Nro: '.$a.' mensual. ----- '.$value->observaciones
+                                ]);
+                                $a++;
+                        } catch(Exception $exception){
+                            Log::info('registro: '.$a.' Error al modificar las observaciones: '. $exception->getMessage().' linea código: '.$exception->getLine().' Cartera: '.$value );
+                        }
                     }
                 }
             }

@@ -393,6 +393,8 @@
                                     <option value="PSE">PSE</option>
                                     <option value="transferencia">Transferencia</option>
                                     <option value="cheque">Cheque</option>
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
                                 @else
                                     <option value="efectivo">Efectivo</option>
                                     <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
