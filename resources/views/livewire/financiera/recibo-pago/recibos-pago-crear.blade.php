@@ -385,33 +385,59 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="mb-6">
-                            <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
-                            <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                <option >Elija...</option>
-                                @if ($ruta===4)
-                                    <option value="PSE">PSE</option>
-                                    <option value="transferencia">Transferencia</option>
-                                    <option value="cheque">Cheque</option>
-                                    <option value="efectivo">Efectivo</option>
-                                    <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
-                                @else
-                                    <option value="efectivo">Efectivo</option>
-                                    <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
-                                @endif
+                        @if (Auth::user()->rol_id===1)
+                            <div class="mb-6">
+                                <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
+                                <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                    <option >Elija...</option>
+                                        <option value="PSE">PSE</option>
+                                        <option value="transferencia">Transferencia</option>
+                                        <option value="cheque">Cheque</option>
+                                        <option value="efectivo">Efectivo</option>
+                                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
 
-                            </select>
-                            @error('medio')
-                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                                </div>
-                            @enderror
-                            @if ($recargo>0)
-                                <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
-                                    Tendrá un recargo del <strong>{{$recargo}} %</strong>
-                                </label>
-                            @endif
-                        </div>
+                                </select>
+                                @error('medio')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                    </div>
+                                @enderror
+                                @if ($recargo>0)
+                                    <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
+                                        Tendrá un recargo del <strong>{{$recargo}} %</strong>
+                                    </label>
+                                @endif
+                            </div>
+                        @else
+                            <div class="mb-6">
+                                <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
+                                <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                    <option >Elija...</option>
+                                    @if ($ruta===4)
+                                        <option value="PSE">PSE</option>
+                                        <option value="transferencia">Transferencia</option>
+                                        <option value="cheque">Cheque</option>
+                                        <option value="efectivo">Efectivo</option>
+                                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
+                                    @else
+                                        <option value="efectivo">Efectivo</option>
+                                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
+                                    @endif
+
+                                </select>
+                                @error('medio')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                    </div>
+                                @enderror
+                                @if ($recargo>0)
+                                    <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
+                                        Tendrá un recargo del <strong>{{$recargo}} %</strong>
+                                    </label>
+                                @endif
+                            </div>
+                        @endif
+
                     </div>
                     @if ($Total>0 || $pagoTotal)
                         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-2 mb-4">
