@@ -133,7 +133,7 @@ class RecibosPago extends Component
     }
 
     public function exportar(){
-        return new FinReciboExport($this->buscamin);
+        return new FinReciboExport($this->buscamin, $this->filtrosede, $this->filtrocrea);
     }
 
     public function updatedFiltroCreahas(){

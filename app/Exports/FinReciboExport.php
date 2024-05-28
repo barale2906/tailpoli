@@ -20,12 +20,16 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     use Exportable;
 
     private $buscamin;
+    private $filtrosede;
+    private $filtrocrea;
     private $fileName = "Recibos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin)
+    public function __construct($buscamin,$filtrosede,$filtrocrea)
     {
         $this->buscamin=$buscamin;
+        $this->filtrosede=$filtrosede;
+        $this->filtrocrea=$filtrocrea;
     }
 
     /**
@@ -33,24 +37,10 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     */
     public function collection()
     {
-        return ReciboPago::query()
-                            ->with(['creador', 'paga', 'conceptos', 'sede'])
-                            ->when($this->buscamin, function($query){
-                                return $query->where('fecha', 'like', "%".$this->buscamin."%")
-                                        ->orwhere('medio', 'like', "%".$this->buscamin."%")
-                                        ->orWhereHas('creador', function($q){
-                                            $q->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('paga', function($qu){
-                                            $qu->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('conceptos', function($que){
-                                            $que->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('sede', function($que){
-                                            $que->where('name', 'like', "%".$this->buscamin."%");
-                                        });
-                            })
+        return ReciboPago::where('origen', 1)
+                            ->buscar($this->buscamin)
+                            ->sede($this->filtroSede)
+                            ->crea($this->filtrocrea)
                             ->orderBy('id', 'DESC')
                             ->get();
     }

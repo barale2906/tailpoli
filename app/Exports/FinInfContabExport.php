@@ -189,7 +189,7 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
     public function styles(Worksheet $sheet)
     {
         $sheet->setTitle('Recibos contabilidad');
-        $sheet->setCellValue('C2', 'LISTADO DE CIERRES A: '.now());
+        $sheet->setCellValue('C2', 'LISTADO DE RECIBOS A: '.now());
         $sheet->mergeCells('C2:P2');
     }
 }
