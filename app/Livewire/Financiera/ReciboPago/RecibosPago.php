@@ -24,6 +24,8 @@ class RecibosPago extends Component
     public $is_editing = false;
     public $is_deleting = false;
     public $is_reporte=true;
+    public $is_poliandino=true;
+    public $is_logo='img/logo.jpeg';
 
     public $accion;
 
@@ -133,7 +135,20 @@ class RecibosPago extends Component
     }
 
     public function exportar(){
-        return new FinReciboExport($this->buscamin, $this->filtroSede, $this->filtrocrea);
+        return new FinReciboExport($this->buscamin, $this->filtroSede, $this->filtrocrea,$this->is_poliandino,$this->is_logo);
+    }
+
+    public function empresa(){
+        $this->is_poliandino=!$this->is_poliandino;
+        $this->logos();
+    }
+
+    public function logos(){
+        if($this->is_poliandino){
+            $this->is_logo='img/logo.jpeg';
+        }else{
+            $this->is_logo='img/logopol.jpg';
+        }
     }
 
     public function updatedFiltroCreahas(){
@@ -149,7 +164,7 @@ class RecibosPago extends Component
 
     private function recibos()
     {
-        return ReciboPago::where('origen', 1)
+        return ReciboPago::where('origen', $this->is_poliandino)
                             ->buscar($this->buscamin)
                             ->sede($this->filtroSede)
                             ->crea($this->filtrocrea)

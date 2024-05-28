@@ -22,14 +22,18 @@ class FinCierreCajaExport implements FromCollection, WithCustomStartCell, Respon
     private $buscamin;
     private $filtroSede;
     private $filtrocrea;
+    private $is_poliandino;
+    private $is_logo;
     private $fileName = "Cierres.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$filtroSede,$filtrocrea)
+    public function __construct($buscamin,$filtroSede,$filtrocrea,$is_poliandino,$is_logo)
     {
         $this->buscamin=$buscamin;
         $this->filtroSede=$filtroSede;
         $this->filtrocrea=$filtrocrea;
+        $this->is_poliandino=$is_poliandino;
+        $this->is_logo=$is_logo;
     }
     /**
     * @return \Illuminate\Support\Collection
@@ -106,7 +110,7 @@ class FinCierreCajaExport implements FromCollection, WithCustomStartCell, Respon
         $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $drawing->setName('PoliAndino');
         $drawing->setDescription('PoliAndino');
-        $drawing->setPath(public_path('img/logo.jpeg'));
+        $drawing->setPath(public_path($this->is_logo));
         $drawing->setHeight(70);
         $drawing->setCoordinates('A1');
 

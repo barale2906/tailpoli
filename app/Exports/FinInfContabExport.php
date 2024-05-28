@@ -23,15 +23,23 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
     private $buscamin;
     private $filtroSede;
     private $filtrocrea;
+    private $is_poliandino;
+    private $is_logo;
+    private $nombre='INSTITUTO DE CAPACITACION POLIANDINO CENTRAL SAS';
     private $ids=array();
     private $fileName = "Recibos_contabilidad_credito.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$filtroSede,$filtrocrea)
+    public function __construct($buscamin,$filtroSede,$filtrocrea,$is_poliandino,$is_logo)
     {
         $this->buscamin=$buscamin;
         $this->filtroSede=$filtroSede;
         $this->filtrocrea=$filtrocrea;
+        $this->is_poliandino=$is_poliandino;
+        $this->is_logo=$is_logo;
+        if(!$is_poliandino){
+            $this->nombre='POLIDOTACIONES';
+        }
 
         $cierres=CierreCaja::buscar($this->buscamin)
                             ->sede($this->filtroSede)
@@ -49,7 +57,7 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
     */
     public function collection()
     {
-        return ReciboPago::where('origen', true)
+        return ReciboPago::where('origen', $this->is_poliandino)
                             ->whereIn('cierre', $this->ids)
                             ->get();
     }
@@ -124,7 +132,7 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
 
 
         $credito = [
-                    'INSTITUTO DE CAPACITACION POLIANDINO CENTRAL SAS',
+                    $this->nombre,
                     'RC',
                     'INGR',
                     $recibo->fecha,
@@ -143,7 +151,7 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
                 ];
 
         $debito = [
-                    'INSTITUTO DE CAPACITACION POLIANDINO CENTRAL SAS',
+                    $this->nombre,
                     'RC',
                     'INGR',
                     $recibo->fecha,
@@ -179,7 +187,7 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
         $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $drawing->setName('PoliAndino');
         $drawing->setDescription('PoliAndino');
-        $drawing->setPath(public_path('img/logo.jpeg'));
+        $drawing->setPath(public_path($this->is_logo));
         $drawing->setHeight(70);
         $drawing->setCoordinates('A1');
 

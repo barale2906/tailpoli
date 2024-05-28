@@ -22,14 +22,18 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     private $buscamin;
     private $filtrosede;
     private $filtrocrea;
+    private $is_poliandino;
+    private $is_logo;
     private $fileName = "Recibos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$filtroSede,$filtrocrea)
+    public function __construct($buscamin,$filtroSede,$filtrocrea,$is_poliandino,$is_logo)
     {
         $this->buscamin=$buscamin;
         $this->filtrosede=$filtroSede;
         $this->filtrocrea=$filtrocrea;
+        $this->is_poliandino=$is_poliandino;
+        $this->is_logo=$is_logo;
     }
 
     /**
@@ -37,11 +41,11 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     */
     public function collection()
     {
-        return ReciboPago::where('origen', 1)
+        return ReciboPago::where('origen', $this->is_poliandino)
                             ->buscar($this->buscamin)
                             ->sede($this->filtrosede)
                             ->crea($this->filtrocrea)
-                            ->orderBy('id', 'DESC')
+                            ->orderBy('id', 'ASC')
                             ->get();
     }
 
@@ -56,9 +60,11 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
             'N°',
             'Fecha',
             'Alumno',
+            'Documento',
             'Sede',
             'Valor',
             'Descuento',
+            'Neto',
             'Medio',
             'Cajero',
             'Observaciones'
@@ -67,17 +73,38 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
 
     public function map($recibo): array
     {
-        return [
+        $sale=array();
+
+        $neto=$recibo->valor_total-$recibo->descuento;
+
+        array_push($sale,$recibo->numero_recibo);
+        array_push($sale,$recibo->fecha);
+        array_push($sale,$recibo->paga->name);
+        array_push($sale,$recibo->paga->documento);
+        array_push($sale,$recibo->sede->name);
+        array_push($sale,$recibo->valor_total);
+        array_push($sale,$recibo->descuento);
+        array_push($sale,$neto);
+        array_push($sale,$recibo->medio);
+        array_push($sale,$recibo->creador->name);
+        array_push($sale,$recibo->observaciones);
+
+        return $sale;
+
+
+        /* return [
             $recibo->id,
             $recibo->fecha,
             $recibo->paga->name,
+            $recibo->paga->documento,
             $recibo->sede->name,
             $recibo->valor_total,
             $recibo->descuento,
             $recibo->medio,
+            $neto,
             $recibo->creador->name,
             $recibo->observaciones,
-        ];
+        ]; */
     }
 
     public function columnFormats(): array
@@ -92,7 +119,7 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
         $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $drawing->setName('PoliAndino');
         $drawing->setDescription('PoliAndino');
-        $drawing->setPath(public_path('img/logo.jpeg'));
+        $drawing->setPath(public_path($this->is_logo));
         $drawing->setHeight(70);
         $drawing->setCoordinates('A1');
 

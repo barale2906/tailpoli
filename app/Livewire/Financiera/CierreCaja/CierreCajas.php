@@ -36,6 +36,9 @@ class CierreCajas extends Component
     public $filtrocrea=[];
     public $filtroSede;
     public $is_reporte=true;
+    public $is_poliandino=true;
+    public $is_logo='img/logo.jpeg';
+
 
 
 
@@ -161,7 +164,20 @@ class CierreCajas extends Component
     }
 
     public function exportar(){
-        return new FinCierreCajaExport($this->buscamin,$this->filtroSede,$this->filtrocrea);
+        return new FinCierreCajaExport($this->buscamin,$this->filtroSede,$this->filtrocrea,$this->is_poliandino,$this->is_logo);
+    }
+
+    public function empresa(){
+        $this->is_poliandino=!$this->is_poliandino;
+        $this->logos();
+    }
+
+    public function logos(){
+        if($this->is_poliandino){
+            $this->is_logo='img/logo.jpeg';
+        }else{
+            $this->is_logo='img/logopol.jpg';
+        }
     }
 
     public function exportRecibos(){
@@ -170,7 +186,7 @@ class CierreCajas extends Component
     }
 
     public function exportcontab(){
-        return new FinInfContabExport($this->buscamin,$this->filtroSede,$this->filtrocrea);
+        return new FinInfContabExport($this->buscamin,$this->filtroSede,$this->filtrocrea,$this->is_poliandino,$this->is_logo);
     }
 
 
