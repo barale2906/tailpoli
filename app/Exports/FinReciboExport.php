@@ -25,10 +25,10 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     private $fileName = "Recibos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$filtrosede,$filtrocrea)
+    public function __construct($buscamin,$filtroSede,$filtrocrea)
     {
         $this->buscamin=$buscamin;
-        $this->filtrosede=$filtrosede;
+        $this->filtrosede=$filtroSede;
         $this->filtrocrea=$filtrocrea;
     }
 
