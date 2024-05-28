@@ -39,7 +39,7 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     {
         return ReciboPago::where('origen', 1)
                             ->buscar($this->buscamin)
-                            ->sede($this->filtroSede)
+                            ->sede($this->filtrosede)
                             ->crea($this->filtrocrea)
                             ->orderBy('id', 'DESC')
                             ->get();
