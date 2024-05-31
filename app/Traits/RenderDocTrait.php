@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Academico\Matricula;
+use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Documento;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConfiguracionPago;
@@ -14,6 +15,7 @@ trait RenderDocTrait
 {
     public $docuTipo;
     public $docuMatricula;
+    public $Modulos;
     public $docuFormaP;
     public $cuotas;
     public $valormes;
@@ -52,6 +54,14 @@ trait RenderDocTrait
 
         $this->docuDetalle();
         $this->formaPago();
+        $this->modulosCurso();
+    }
+
+    public function modulosCurso(){
+        $this->Modulos=Modulo::where('curso_id', $this->docuMatricula->curso_id)
+                                ->where('status', true)
+                                ->orderBy('name', 'ASC')
+                                ->get();
     }
 
     public function documatri($id, $tipo){

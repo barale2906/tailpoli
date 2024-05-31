@@ -59,6 +59,19 @@
                     </div>
                     @break
 
+                @case('modulos')
+                    <div class="content">
+                        <h1>
+                            El curso: <span class=" uppercase">{{$docuMatricula->curso->name}}</span> esta compuesto por los siguientes modulos:
+                        </h1>
+                        @foreach ($modulos as $item)
+                            <p class="justificado font-sm capitalize">
+                                {{$item->name}}
+                            </p>
+                        @endforeach
+                    </div>
+                    @break
+
                 @case('linea')
                     <p class="justificado font-sm">
                         Para constancia se firma en: ____________________,  a los: <strong>{{$fecha->day}}</strong>, del mes: <strong>{{$fecha->month}}</strong> del año: <strong>{{$fecha->year}}</strong>, el obligado principal:
@@ -768,6 +781,19 @@
                             </div>
                             @break
 
+                        @case('modulos')
+                            <div class="content">
+                                <h1>
+                                    El curso: <span class=" uppercase">{{$docuMatricula->curso->name}}</span> esta compuesto por los siguientes modulos:
+                                </h1>
+                                @foreach ($docuMatricula->curso->modulos as $item)
+                                    <p class="justificado font-sm capitalize">
+                                        {{$item->name}}
+                                    </p>
+                                @endforeach
+                            </div>
+                            @break
+
                         @case('linea')
                             <p class="justificado font-sm">
                                 Para constancia se firma en: ____________________,  a los: <strong>{{$fecha->day}}</strong>, del mes: <strong>{{$fecha->month}}</strong> del año: <strong>{{$fecha->year}}</strong>, el obligado principal:
@@ -1433,8 +1459,6 @@
             <div class="salto"></div>
         @endforeach
     @endif
-
-
 
 
     {{-- @foreach ($matr as $mat)
