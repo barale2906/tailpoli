@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Academico\Control;
+use App\Models\Academico\Ciclo;
 use App\Models\Clientes\Pqrs;
 use Carbon\Carbon;
 use Exception;
@@ -48,31 +49,35 @@ class finControl extends Command
                 }); */
 
         $controles=Control::where('status', true)
-                    ->get();
+                            ->get();
+
+        $cont=Carbon::today()->subMonths(2);
 
         foreach ($controles as $value) {
             try {
 
-                $cont=Carbon::today()->subMonths(2);
+                    $cicloac=Ciclo::where('finaliza', $cont)
+                                ->where('id',$value->ciclo->id)
+                                ->get();
 
-                if($value->ciclo->finaliza<$cont){
+                    if($cicloac->count()>=1){
 
-                    $value->update([
-                        'status'=>false,
-                    ]);
+                        $value->update([
+                            'status'=>false,
+                        ]);
 
-                    Pqrs::create([
-                        'estudiante_id' =>$value->estudiante_id,
-                        'gestion_id'    =>$value->matricula->creador_id,
-                        'fecha'         =>now(),
-                        'tipo'          =>1,
-                        'observaciones' =>'GESTIÓN: Finaliza ciclo cierre automático. ----- ',
-                        'status'        =>4
-                    ]);
-                }
+                        Pqrs::create([
+                            'estudiante_id' =>$value->estudiante_id,
+                            'gestion_id'    =>$value->matricula->creador_id,
+                            'fecha'         =>now(),
+                            'tipo'          =>1,
+                            'observaciones' =>'GESTIÓN: Finaliza ciclo cierre automático:  Control: '.$value->id.' ----- ',
+                            'status'        =>4
+                        ]);
+                    }
 
             } catch(Exception $exception){
-                Log::info('Linea control: ' . $value->id . ' Deserción No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::info('Linea control: ' . $value->id . ' finControl: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
     }
