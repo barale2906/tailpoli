@@ -30,8 +30,9 @@ class NotaSeeder extends Seeder
 
                     //Buscamos grupo
                     $grupo=Grupo::where('sede_id', intval($data[0]))
-                                    ->where('profesor_id', intval($data[1]))
+                                    //->where('profesor_id', intval($data[1]))
                                     ->where('modulo_id', intval($data[2]))
+                                    ->inRandomOrder()
                                     ->first();
 
                     //profesor
@@ -39,6 +40,8 @@ class NotaSeeder extends Seeder
 
                     //Estudiante
                     $estu=User::find(intval($data[3]));
+
+                    $observaciones="ERP POLIANDINO, cargada por seeder para el profesor: ".$profe->name;
 
                     if($grupo){
                         $nota=Nota::where('profesor_id', intval($data[1]))
@@ -56,7 +59,7 @@ class NotaSeeder extends Seeder
                                     'grupo_id'      =>$grupo->id,
                                     'grupo'         =>$grupo->name,
                                     'acumulado'     =>intval($data[4]),
-                                    'observaciones' =>"ERP POLIANDINO",
+                                    'observaciones' =>$observaciones,
                                     'nota1'         =>intval($data[4]),
                                     'porcen1'       =>intval($data[4]),
                                     'nota2'         =>null,
@@ -84,7 +87,7 @@ class NotaSeeder extends Seeder
                             $nuev=Nota::create([
                                                 'profesor_id'   =>intval($data[1]),
                                                 'grupo_id'      =>$grupo->id,
-                                                'descripcion'   =>"Creado ERP Poliandino",
+                                                'descripcion'   =>$observaciones,
                                                 'registros'     =>1,
                                                 'nota1'         =>'final',
                                                 'porcen1'       =>100
@@ -101,7 +104,7 @@ class NotaSeeder extends Seeder
                                                 'grupo_id'      =>$grupo->id,
                                                 'grupo'         =>$grupo->name,
                                                 'acumulado'     =>intval($data[4]),
-                                                'observaciones' =>"ERP POLIANDINO",
+                                                'observaciones' =>$observaciones,
                                                 'nota1'         =>intval($data[4]),
                                                 'porcen1'       =>intval($data[4]),
                                                 'nota2'         =>null,
