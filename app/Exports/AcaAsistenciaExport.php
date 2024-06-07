@@ -22,6 +22,7 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
     private $id;
     private $asist;
     private $xls;
+    private $final=array();
     private $fileName = "Asistencias.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
@@ -30,6 +31,27 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
         $this->id=$id;
         $this->xls=$xls;
         $this->asist=$asist;
+
+        $this->carga();
+    }
+
+    public function carga(){
+
+        foreach ($this->asist as $value) {
+            $as=array();
+            array_push($as, $value[2]);
+            $this->individual($value,$as);
+        }
+    }
+
+    public function individual($item,$arr){
+        $as=array();
+        $as=$arr;
+        for ($i = 3; $i < count($item); $i++) {
+            array_push($as, $item[$i]);
+        }
+
+        array_push($this->final, $as);
     }
 
     /**
@@ -40,7 +62,7 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
         return DB::table('asistencia_detalle')
                     ->where('asistencia_id', $this->id)
                     ->orderBy('alumno')
-                    ->get();
+                    ->first();
     }
 
     public function startCell(): string
@@ -56,43 +78,8 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
 
     public function map($asistencia): array
     {
-        dd($this->asist);
-        return [
-            $asistencia->grupo,
-            $asistencia->profesor,
-            $asistencia->alumno,
-            $asistencia->fecha1,
-            $asistencia->fecha2,
-            $asistencia->fecha3,
-            $asistencia->fecha4,
-            $asistencia->fecha5,
-            $asistencia->fecha6,
-            $asistencia->fecha7,
-            $asistencia->fecha8,
-            $asistencia->fecha9,
-            $asistencia->fecha10,
-            $asistencia->fecha11,
-            $asistencia->fecha12,
-            $asistencia->fecha13,
-            $asistencia->fecha14,
-            $asistencia->fecha15,
-            $asistencia->fecha16,
-            $asistencia->fecha17,
-            $asistencia->fecha18,
-            $asistencia->fecha19,
-            $asistencia->fecha20,
-            $asistencia->fecha21,
-            $asistencia->fecha22,
-            $asistencia->fecha23,
-            $asistencia->fecha24,
-            $asistencia->fecha25,
-            $asistencia->fecha26,
-            $asistencia->fecha27,
-            $asistencia->fecha28,
-            $asistencia->fecha29,
-            $asistencia->fecha30,
-            $asistencia->fecha31,
-        ];
+
+        return $this->final;
     }
 
     public function columnFormats(): array
