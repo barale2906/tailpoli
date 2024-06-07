@@ -3,6 +3,7 @@
 namespace App\Models\Academico;
 
 use App\Models\Configuracion\Sede;
+use App\Models\Academico\Asistencia;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -46,6 +47,12 @@ class Ciclo extends Model
     public function ciclogrupos(): HasMany
     {
         return $this->hasMany(Ciclogrupo::class);
+    }
+
+    //Relación uno a muchos
+    public function cicloasistencias(): HasMany
+    {
+        return $this->hasMany(Asistencia::class);
     }
 
     public function scopeBuscar($query, $item){

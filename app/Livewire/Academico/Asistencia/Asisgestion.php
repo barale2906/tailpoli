@@ -14,6 +14,7 @@ class Asisgestion extends Component
 {
     public $grupo_id;
     public $grupo;
+    public $ciclo;
     public $estudiante;
     public $fecha;
     public $actual;
@@ -21,8 +22,9 @@ class Asisgestion extends Component
     public $encabezado=[];
     public $xls=[];
 
-    public function mount($elegido=null, $estudiante_id=null){
+    public function mount($ciclo, $elegido=null, $estudiante_id=null){
 
+        $this->ciclo=$ciclo;
         $this->grupo_id=$elegido;
         $this->grupo=Grupo::find($elegido);
         if($estudiante_id){
@@ -35,6 +37,7 @@ class Asisgestion extends Component
 
         $esta=Asistencia::where('profesor_id', $this->grupo->profesor_id)
                         ->where('grupo_id', $this->grupo->id)
+                        ->where('ciclo_id', $this->ciclo)
                         ->first();
 
         if($esta){
@@ -49,6 +52,7 @@ class Asisgestion extends Component
         $this->actual=Asistencia::create([
             'profesor_id'   => $this->grupo->profesor_id,
             'grupo_id'      => $this->grupo->id,
+            'ciclo_id'      => $this->ciclo,
             'registros'     => 0
         ]);
 
@@ -86,18 +90,25 @@ class Asisgestion extends Component
     }
 
     public function cargaEstudiante($estu){
-        DB::table('asistencia_detalle')
-            ->insert([
-                'asistencia_id' =>$this->actual->id,
-                'alumno_id'     =>$estu->id,
-                'alumno'        =>$estu->name,
-                'profesor_id'   =>$this->actual->profesor_id,
-                'profesor'      =>$this->actual->profesor->name,
-                'grupo_id'      =>$this->actual->grupo_id,
-                'grupo'         =>$this->actual->grupo->name,
-                'created_at'    =>now(),
-                'updated_at'    =>now()
-            ]);
+
+        $esciclo=Control::where('estudiante_id', $estu->id)
+                            ->where('ciclo_id', $this->ciclo)
+                            ->count();
+        if($esciclo>0){
+            DB::table('asistencia_detalle')
+                ->insert([
+                    'asistencia_id' =>$this->actual->id,
+                    'alumno_id'     =>$estu->id,
+                    'alumno'        =>$estu->name,
+                    'profesor_id'   =>$this->actual->profesor_id,
+                    'profesor'      =>$this->actual->profesor->name,
+                    'grupo_id'      =>$this->actual->grupo_id,
+                    'grupo'         =>$this->actual->grupo->name,
+                    'created_at'    =>now(),
+                    'updated_at'    =>now()
+                ]);
+        }
+
     }
 
     public function registroAsistencias(){
@@ -106,14 +117,14 @@ class Asisgestion extends Component
 
         if($this->estudiante){
             $this->asistencias=DB::table('asistencia_detalle')
-                                    ->where('status', true)
+                                    //->where('status', true)
                                     ->where('asistencia_id', $this->actual->id)
                                     ->where('alumno_id', $this->estudiante->id)
                                     ->orderBy('alumno')
                                     ->first();
         }else{
             $this->asistencias=DB::table('asistencia_detalle')
-                                    ->where('status', true)
+                                    //->where('status', true)
                                     ->where('asistencia_id', $this->actual->id)
                                     ->orderBy('alumno')
                                     ->get();

@@ -23,8 +23,10 @@ class Ciclos extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $is_asistencias = false;
 
     public $elegido;
+    public $cicloele;
     public $cursos;
 
     public $buscar='';
@@ -83,7 +85,8 @@ class Ciclos extends Component
                         'is_modify',
                         'is_creating',
                         'is_editing',
-                        'is_deleting'
+                        'is_deleting',
+                        'is_asistencias'
                     );
     }
 
@@ -145,6 +148,15 @@ class Ciclos extends Component
         }else{
             $this->reset('filtroInides','filtroInihas');
         }
+    }
+
+    public function asistencia($cicloe,$grupo){
+        $this->reset('ciclo','elegido');
+        $this->cicloele=$cicloe;
+        $this->elegido=$grupo;
+        $this->is_asistencias=!$this->is_asistencias;
+        $this->is_modify = !$this->is_modify;
+
     }
 
     private function ciclos()

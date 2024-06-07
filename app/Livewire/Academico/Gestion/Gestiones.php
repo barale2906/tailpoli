@@ -43,6 +43,7 @@ class Gestiones extends Component
     public $ruta=2;
 
     public $elegido;
+    public $ciclo;
     public $hoy;
 
     public $buscar='';
@@ -230,9 +231,12 @@ class Gestiones extends Component
         }
     }
 
-    public function asistencia($item, $id){
+    public function asistencia($ciclo, $item, $id){
 
+        $this->reset('ciclo');
+        $this->ciclo=$ciclo;
         $this->show($item, 1, $id); //envío id del grupo
+
     }
 
     private function controles()

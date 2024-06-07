@@ -191,6 +191,9 @@
                                         <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
                                             Profesor: {{$item->grupo->profesor->name}}
                                         </p>
+                                        <a href="" wire:click.prevent="asistencia({{$ciclo->id}}, {{$item->grupo->id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                            <i class="fa-regular fa-calendar-days"></i>
+                                        </a>
                                     </div>
                                 @endforeach
                             </th>
@@ -227,6 +230,10 @@
 
     @if ($is_deleting)
         <livewire:academico.ciclo.ciclos-reutilizar :elegido="$elegido" />
+    @endif
+
+    @if ($is_asistencias)
+        <livewire:academico.asistencia.asisgestion :ciclo="$cicloele" :elegido="$elegido"/>
     @endif
 
     @push('js')
