@@ -20,14 +20,16 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
     use Exportable;
 
     private $id;
+    private $asist;
     private $xls;
     private $fileName = "Asistencias.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($id, $xls)
+    public function __construct($id, $xls, $asist)
     {
         $this->id=$id;
         $this->xls=$xls;
+        $this->asist=$asist;
     }
 
     /**
@@ -54,6 +56,7 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
 
     public function map($asistencia): array
     {
+        dd($this->asist);
         return [
             $asistencia->grupo,
             $asistencia->profesor,

@@ -1,7 +1,7 @@
 <div>
     <livewire:academico.matricula.matriculas-grupo :elegido="$grupo_id" />
     <h1 class="text-center uppercase p-3 rounded-lg bg-cyan-100 font-extrabold">
-        Cargar asistencia
+        Registrar asistencia
         @if ($estudiante)
             para: {{$estudiante->name}}
         @endif
@@ -37,58 +37,33 @@
                         <th scope="col" class="px-6 py-3" >
                             Alumno
                         </th>
-                        @foreach ($encabezado as $item)
+                        @for ($i = 0; $i < count($encabezado); $i++)
                             <th scope="col" class="px-6 py-3" >
-                                {{$actual->$item}}
+                                {{$encabezado[$i]}}
                             </th>
-                        @endforeach
+                        @endfor
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($estudiante)
+                    @foreach ($asist as $item)
+
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$asistencias->alumno}}
+                            <th scope="col" class="px-6 py-3 text-center uppercase">
+                                {{$item[2]}}
                             </th>
-                            @foreach ($encabezado as $dato)
+                            @for ($i = 3; $i < count($item); $i++)
                                 <th scope="col" class="px-6 py-3 text-center uppercase">
-                                    @if ($asistencias->$dato)
-                                        <strong>{{$asistencias->$dato}}</strong>
+                                    @if ($item[$i]==="X")
+                                        <strong>X</strong>
                                     @else
-                                        @php
-                                            $valor="'".$dato."'";
-                                        @endphp
-                                        <a href="" wire:click.prevent="cargaAsistencia({{$asistencias->id}},{{$valor}}, {{$asistencias->alumno_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                        <a href="" wire:click.prevent="cargaAsistencia({{$item[0]}},{{$item[1]}},{{$item[$i]}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                                             <i class="fa-solid fa-plane-arrival"></i>
                                         </a>
                                     @endif
                                 </th>
-                            @endforeach
+                            @endfor
                         </tr>
-                    @else
-                        @foreach ($asistencias as $item)
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{$item->alumno}}
-                                </th>
-                                @foreach ($encabezado as $dato)
-                                    <th scope="col" class="px-6 py-3 text-center uppercase">
-                                        @if ($item->$dato)
-                                            <strong>{{$item->$dato}}</strong>
-                                        @else
-                                            @php
-                                                $valor="'".$dato."'";
-                                            @endphp
-                                            <a href="" wire:click.prevent="cargaAsistencia({{$item->id}},{{$valor}},{{$item->alumno_id}})" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                                <i class="fa-solid fa-plane-arrival"></i>
-                                            </a>
-                                        @endif
-                                    </th>
-                                @endforeach
-                            </tr>
-                        @endforeach
-                    @endif
-
+                    @endforeach
                 </tbody>
             </table>
         </div>

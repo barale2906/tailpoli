@@ -30,7 +30,7 @@ return new class extends Migration
             $table->foreign('grupo_id')->references('id')->on('grupos');
             $table->string('grupo');
 
-            $table->string('fecha1')->nullable()->comment('fecha de control');
+            /*$table->string('fecha1')->nullable()->comment('fecha de control');
             $table->string('fecha2')->nullable()->comment('fecha de control');
             $table->string('fecha3')->nullable()->comment('fecha de control');
             $table->string('fecha4')->nullable()->comment('fecha de control');
@@ -105,7 +105,7 @@ return new class extends Migration
             $table->string('fecha59')->nullable()->comment('fecha de control');
 
             $table->string('fecha60')->nullable()->comment('fecha de control');
-/*            $table->string('fecha61')->nullable()->comment('fecha de control');
+            $table->string('fecha61')->nullable()->comment('fecha de control');
             $table->string('fecha62')->nullable()->comment('fecha de control'); */
 
             $table->timestamps();

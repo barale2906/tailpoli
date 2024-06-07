@@ -18,8 +18,11 @@ class Asisgestion extends Component
     public $estudiante;
     public $fecha;
     public $actual;
+    public $clases;
+    public $asist=array();
     public $asistencias;
     public $encabezado=[];
+    public $encabid=[];
     public $xls=[];
 
     public function mount($ciclo, $elegido=null, $estudiante_id=null){
@@ -34,6 +37,8 @@ class Asisgestion extends Component
     }
 
     public function cargarActual(){
+
+        $this->reset('asist');
 
         $esta=Asistencia::where('profesor_id', $this->grupo->profesor_id)
                         ->where('grupo_id', $this->grupo->id)
@@ -113,7 +118,7 @@ class Asisgestion extends Component
 
     public function registroAsistencias(){
 
-        $this->reset('asistencias', 'encabezado', 'xls');
+        $this->reset('asistencias', 'encabezado', 'xls','encabid');
 
         if($this->estudiante){
             $this->asistencias=DB::table('asistencia_detalle')
@@ -136,36 +141,74 @@ class Asisgestion extends Component
 
     public function formaencabezado(){
 
-            $this->reset('xls');
-            array_push($this->xls, "grupo");
-            array_push($this->xls, "profesor");
-            array_push($this->xls, "alumno");
+        $this->reset('xls');
+        array_push($this->xls, "grupo");
+        array_push($this->xls, "profesor");
+        array_push($this->xls, "alumno");
 
-            if($this->actual->registros>0){
-                $a=$this->actual->registros;
-                for ($i=1; $i <= $this->actual->registros; $i++) {
+        if($this->actual->registros>0){
 
-                    $fecha="fecha".$a;
-                    $fechaxls="fecha".$i;
-                    $a--;
-                    array_push($this->xls, $this->actual->$fechaxls);
-                    array_push($this->encabezado, $fecha);
-                }
+            $this->clases=DB::table('asistencia_registro')
+                        ->where('asistencia_id', $this->actual->id)
+                        ->orderBy('fecha_clase', 'DESC')
+                        ->get();
+
+            foreach ($this->clases as $value) {
+                array_push($this->encabezado, $value->fecha_clase);
+                array_push($this->encabid, $value->id);
             }
+        }
+
+        $this->lista();
+
+    }
+
+    public function lista(){
+
+        if($this->estudiante){
+            $this->genera($this->asistencias);
+        }else{
+            foreach ($this->asistencias as $value) {
+                $this->genera($value);
+            }
+        }
+    }
+
+    public function genera($asistencia){
+        $as=array();
+
+        array_push($as, $asistencia->id);
+        array_push($as, $asistencia->alumno_id);
+        array_push($as, $asistencia->alumno);
+
+        $a=0;
+        while ($a < count($this->encabid)) {
+            array_push($as, $this->encabid[$a]);
+            $a++;
+        }
+
+        $asistio=DB::table('asistencia_detalle_registro')
+                    ->where('asistencia_detalle_id', $asistencia->id)
+                    ->orderBy('registro_asistencia_id', 'DESC')
+                    ->get();
+
+        if($asistio){
+            foreach ($asistio as $value) {
+                $ubica=array_search($value->registro_asistencia_id, $as);
+                $reemplazo=array($ubica => "X");
+                $as=array_replace($as,$reemplazo);
+            }
+        }
+        array_push($this->asist,$as);
     }
 
     public function registro(){
 
         $this->cargarActual();
-
-        //Verifica existencia de la fecha
-        $esta=0;
-
-        foreach ($this->encabezado as $value) {
-            if($this->actual->$value===$this->fecha){
-                $esta=1;
-            }
-        }
+        $esta=DB::table('asistencia_registro')
+                    ->where('asistencia_id', $this->actual->id)
+                    ->where('fecha_clase', $this->fecha)
+                    ->count();
 
         if($esta>0){
             $this->dispatch('alerta', name:'La fecha ya esta cargada, incluya asistencias');
@@ -176,48 +219,53 @@ class Asisgestion extends Component
 
     public function asistenciaEncabezado(){
 
-        $titulo="fecha".$this->actual->registros+1;
-        Asistencia::whereId($this->actual->id)
-                    ->update([
-                        $titulo         =>$this->fecha,
-                        'registros'     =>$this->actual->registros+1
-                    ]);
+        $this->actual->update([
+            'registros'     =>$this->actual->registros+1
+        ]);
 
-        if($this->estudiante){
-            $this->cargaAsistencia($this->asistencias->id, $titulo, $this->estudiante->id);
-        }else{
-            $this->cargarActual();
-            $this->dispatch('alerta', name:'La fecha ha sido cargada, incluya asistencias');
-        }
-
-    }
-
-
-
-    public function cargaAsistencia($asis=null,$campo=null,$alumno=null){
-
-        DB::table('asistencia_detalle')
-            ->where('id', $asis)
-            ->update([
-                $campo          =>"X",
-                'updated_at'    =>now()
+        //Crgar fecha
+        DB::table('asistencia_registro')
+            ->insert([
+                'asistencia_id' => $this->actual->id,
+                'fecha_clase'   => $this->fecha,
+                'created_at'    => now(),
+                'updated_at'    => now()
             ]);
 
         $this->cargarActual();
+        $this->reset('fecha');
+        $this->dispatch('alerta', name:'La fecha ha sido cargada, incluya asistencias');
+
+    }
 
 
-        $fecha=$this->actual->$campo;
+    public function cargaAsistencia($detalle,$alumno_id,$registroasiste=null){
+
+        $registro=DB::table('asistencia_registro')
+                    ->where('id',$registroasiste)
+                    ->first();
+
+        DB::table('asistencia_detalle_registro')
+            ->insert([
+                'Asistencia_detalle_id'     => $detalle,
+                'fecha_asis'                => $registro->fecha_clase,
+                'registro_asistencia_id'    => $registro->id,
+                'created_at'                => now(),
+                'updated_at'                => now()
+            ]);
 
         //Registrar control
-        Control::where('estudiante_id', $alumno)
+        Control::where('estudiante_id', $alumno_id)
                 ->where('status', true)
                 ->update([
-                    'ultima_asistencia'=>$fecha,
+                    'ultima_asistencia'=>$registro->fecha_clase,
                 ]);
+
+        $this->cargarActual();
     }
 
     public function exportar(){
-        return new AcaAsistenciaExport($this->actual->id, $this->xls);
+        return new AcaAsistenciaExport($this->actual->id, $this->xls,$this->asist);
     }
 
     public function render()
