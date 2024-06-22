@@ -11,33 +11,33 @@
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                         </svg>
                     </button>
-                    <a href="/dashboard" class="flex ml-2 md:mr-24">
+                    <a href="/dashboard" class="hidden md:flex ml-2 md:mr-24 capitalize">
                         <img src="{{asset('img/logo.jpeg')}}" class="object-cover h-10 mr-3 rounded-t-lg" alt="{{env('APP_NAME')}} Logo" />
-                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{{env('APP_NAME')}}</span>
+                        <span class="self-center text-xs font-semibold md:text-xl dark:text-white">{{env('APP_NAME')}}</span>
                     </a>
                 </div>
-                <div class="flex items-center">
+                <div class="md:hidden flex">
                     @if (Auth::user()->roles[0]['name']!=="Estudiante")
-                        <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Matriculas - {{$matriculas}}
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                            <i class="fa-solid fa-graduation-cap fa-beat-fade"></i> {{$matriculas}}
                         </span>
 
-                        <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Vencidos - {{$vencidos}}
+                        <span class="bg-red-100 text-red-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> {{$vencidos}}
                         </span>
 
-                        <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Proximos - {{$proximos}}
+                        <span class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
+                            <i class="fa-solid fa-circle-arrow-right fa-beat-fade"></i> {{$proximos}}
                         </span>
 
-                        <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Desertados - {{$desertados}}
+                        <span class="bg-orange-100 text-orange-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-orange-400 border border-orange-400">
+                            <i class="fa-solid fa-parachute-box fa-beat-fade"></i> {{$desertados}}
                         </span>
 
                         @can('in_productos')
                             @if ($pendInventarios>0)
                                 <a href="{{route('inventario.pend')}}" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm text-center mr-2 mb-2 capitalize">
-                                    <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                                    <span class="bg-red-100 text-red-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
                                         <i class="fa-solid fa-truck-moving"></i>
                                         - {{$pendInventarios}}
                                     </span>
@@ -47,70 +47,109 @@
                         @can('fi_transaccionesEditar')
                             @if ($transacciones>0)
                                 <a href="{{route('financiera.transacciones')}}" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm text-center mr-2 mb-2 capitalize">
-                                    <span class="bg-red-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                                    <span class="bg-red-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
                                         <i class="fa-solid fa-money-bill-transfer"></i> - {{$transacciones}}
                                     </span>
                                 </a>
                             @endif
                         @endcan
                     @endif
+                </div>
+                <div class="hidden md:flex md:space-x-4">
+                    @if (Auth::user()->roles[0]['name']!=="Estudiante")
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                            <i class="fa-solid fa-graduation-cap fa-beat-fade mr-2"></i> Matriculas - {{$matriculas}}
+                        </span>
 
-                    <!-- Settings Dropdown -->
-                    <div class="ml-3 relative">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                    <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                        <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                    </button>
-                                @else
-                                    <span class="inline-flex rounded-md">
-                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150 uppercase">
-                                            {{ Auth::user()->name }}
+                        <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade mr-2"></i> Vencidos - {{$vencidos}}
+                        </span>
 
-                                            <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                            </svg>
-                                        </button>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
+                            <i class="fa-solid fa-circle-arrow-right fa-beat-fade mr-2"></i> Proximos - {{$proximos}}
+                        </span>
+
+                        <span class="bg-orange-100 text-orange-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-orange-400 border border-orange-400">
+                            <i class="fa-solid fa-parachute-box fa-beat-fade mr-2"></i> Desertados - {{$desertados}}
+                        </span>
+
+                        @can('in_productos')
+                            @if ($pendInventarios>0)
+                                <a href="{{route('inventario.pend')}}" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm text-center mr-2 mb-2 capitalize">
+                                    <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                                        <i class="fa-solid fa-truck-moving mr-2"></i>
+                                        - {{$pendInventarios}}
                                     </span>
-                                @endif
-                            </x-slot>
+                                </a>
+                            @endif
+                        @endcan
+                        @can('fi_transaccionesEditar')
+                            @if ($transacciones>0)
+                                <a href="{{route('financiera.transacciones')}}" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm text-center mr-2 mb-2 capitalize">
+                                    <span class="bg-red-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 mr-2">
+                                        <i class="fa-solid fa-money-bill-transfer"></i> - {{$transacciones}}
+                                    </span>
+                                </a>
+                            @endif
+                        @endcan
+                    @endif
+                </div>
 
-                            <x-slot name="content">
-                                {{-- <!-- Account Management -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Manage Account') }} ABV {{ Auth::user()->profile_photo_url }}
-                                </div> --}}
 
-                                <x-dropdown-link href="{{ route('profile.show') }}">
-                                    {{ __('Profile') }}
+                <!-- Settings Dropdown -->
+                <div class="ml-3 relative">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->perfil->name }}" />
+                                </button>
+                            @else
+                                <span class="inline-flex rounded-md">
+                                    <button type="button" class="inline-flex items-center px-1 py-1 border border-transparent text-xs md:text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150 capitalize">
+                                        {{ Auth::user()->perfil->name }}
+
+                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            @endif
+                        </x-slot>
+
+                        <x-slot name="content">
+                            {{-- <!-- Account Management -->
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Manage Account') }} ABV {{ Auth::user()->profile_photo_url }}
+                            </div> --}}
+
+                            <x-dropdown-link href="{{ route('profile.show') }}">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link href="{{ route('admin.ayuda') }}">
+                                AYUDA
+                            </x-dropdown-link>
+
+                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                                    {{ __('API Tokens') }}
                                 </x-dropdown-link>
+                            @endif
 
-                                <x-dropdown-link href="{{ route('admin.ayuda') }}">
-                                    AYUDA
+                            <div class="border-t border-gray-200"></div>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}" x-data>
+                                @csrf
+
+                                <x-dropdown-link href="{{ route('logout') }}"
+                                            @click.prevent="$root.submit();">
+                                    {{ __('Log Out') }}
                                 </x-dropdown-link>
-
-                                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                    <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                                        {{ __('API Tokens') }}
-                                    </x-dropdown-link>
-                                @endif
-
-                                <div class="border-t border-gray-200"></div>
-
-                                <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}" x-data>
-                                    @csrf
-
-                                    <x-dropdown-link href="{{ route('logout') }}"
-                                                @click.prevent="$root.submit();">
-                                        {{ __('Log Out') }}
-                                    </x-dropdown-link>
-                                </form>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
                 </div>
             </div>
         </div>
