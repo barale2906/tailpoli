@@ -1,7 +1,7 @@
 @if ($is_filtro)
     <div class="w-full">
-        <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
-        <h1 class="text-center text-lg font-semibold">{{$txt}}</h1>
+        <label for="search" class="mb-2 text-xs font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
+        <h1 class="text-center text-xs md:text-lg font-semibold">{{$txt}}</h1>
         <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -11,13 +11,13 @@
             <input
                 type="search"
                 id="buscar"
-                class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block w-full p-4 pl-10 text-xs md:text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="ingrese datos"
                 wire:model.live="buscar"
                 wire:keydown="buscaText()"
                 >
             <a href="">
-                <button type="button" class="text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600" wire:click="limpiar()">
+                <button type="button" class="text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-xs md:text-sm px-4 py-2 dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600" wire:click="limpiar()">
                     Limpiar Filtro
                 </button>
             </a>
@@ -27,12 +27,12 @@
 
 
     <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <h5 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Seleccione los parámetros de filtrado </h5>
+        <h5 class="mb-2 text-xs md:text-xl font-bold text-gray-900 dark:text-white">Seleccione los parámetros de filtrado </h5>
 
         <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
             <div class="w-full sm:col-span-1 md:col-span-4">
                 <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar: </label>
-                <h1 class="text-center text-lg font-semibold">{{$txt}}</h1>
+                <h1 class="text-center text-xs md:text-lg font-semibold">{{$txt}}</h1>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -43,12 +43,12 @@
                     <input
                         type="search"
                         id="buscar"
-                        class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ingrese datos"
+                        class="block w-full p-4 pl-10 text-xs md:text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ingrese datos"
                         wire:model.live="buscar"
                         wire:keydown="buscaText()"
                         >
                         <a href="">
-                            <button type="button" class="text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600" wire:click="limpiar()">
+                            <button type="button" class="text-white absolute right-2.5 bottom-2.5 bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-xs md:text-sm px-4 py-2 dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600" wire:click="limpiar()">
                                 Limpiar Filtro
                             </button>
                         </a>
@@ -56,38 +56,38 @@
             </div>
             @if ($is_Creades)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
-                    <label for="filtroCreades" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de creación</label>
+                    <label for="filtroCreades" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Fecha de creación</label>
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="date" wire:model.live="filtroCreades" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
-                        <label for="filtroCreades" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Desde</label>
+                        <input type="date" wire:model.live="filtroCreades" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
+                        <label for="filtroCreades" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Desde</label>
                     </div>
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="date" wire:model.live="filtroCreahas" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
-                        <label for="filtroCreahas" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hasta</label>
+                        <input type="date" wire:model.live="filtroCreahas" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
+                        <label for="filtroCreahas" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hasta</label>
                     </div>
                 </div>
             @endif
 
             @if ($is_vencimiento)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
-                    <label for="filtroCreades" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de vencimiento</label>
+                    <label for="filtroCreades" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Fecha de vencimiento</label>
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="date" wire:model.live="filtroVendes" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
-                        <label for="filtroCreades" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Desde</label>
+                        <input type="date" wire:model.live="filtroVendes" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
+                        <label for="filtroCreades" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Desde</label>
                     </div>
                     @if ($filtroVendes)
                         <div class="relative z-0 w-full mb-5 group">
-                            <input type="date" wire:model.live="filtroVenhas" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
-                            <label for="filtroCreahas" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hasta</label>
+                            <input type="date" wire:model.live="filtroVenhas" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
+                            <label for="filtroCreahas" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hasta</label>
                         </div>
                     @endif
                 </div>
 
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
-                    <label for="filtroCiudad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad</label>
+                    <label for="filtroCiudad" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Ciudad</label>
                     <select wire:model.live="filtroCiudad" id="filtroCiudad"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >ciudad</option>
                         @foreach ($ciudades as $item)
                             <option value={{$item->sector_id}}>{{$item->sector->name}}</option>
@@ -99,9 +99,9 @@
             @if ($is_sede)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
-                    <label for="filtroSede" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sede</label>
+                    <label for="filtroSede" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Sede</label>
                     <select wire:model.live="filtroSede" id="filtroSede"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >sede</option>
                         @foreach ($sedes as $item)
                             <option value={{$item->sede_id}}>{{$item->sede->name}}</option>
@@ -112,14 +112,14 @@
 
             @if ($is_Inides)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
-                    <label for="filtroInides" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio</label>
+                    <label for="filtroInides" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio</label>
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="date" wire:model.live="filtroInides" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
-                        <label for="filtroInides" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Desde</label>
+                        <input type="date" wire:model.live="filtroInides" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
+                        <label for="filtroInides" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Desde</label>
                     </div>
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="date" wire:model.live="filtroInihas" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
-                        <label for="filtroInihas" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hasta</label>
+                        <input type="date" wire:model.live="filtroInihas" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                        <label for="filtroInihas" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hasta</label>
                     </div>
                 </div>
             @endif
@@ -127,9 +127,9 @@
             @if ($is_matri)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
-                    <label for="filtromatri" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registro</label>
+                    <label for="filtromatri" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Registro</label>
                     <select wire:model.live="filtromatri" id="filtromatri"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Matriculo</option>
                         @foreach ($usuMatriculo as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
@@ -137,7 +137,7 @@
                     </select>
 
                     <select wire:model.live="filtrocom" id="filtrocom"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
                         <option >Comercial</option>
                         @foreach ($usuComercial as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
@@ -149,9 +149,9 @@
             @if ($is_curso)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
-                    <label for="filtrocurso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curso</label>
+                    <label for="filtrocurso" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Curso</label>
                     <select wire:model.live="filtrocurso" id="filtrocurso"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Curso...</option>
                         @foreach ($cursos as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
@@ -163,9 +163,9 @@
             @if ($is_tipo)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
-                    <label for="filtrotipo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
+                    <label for="filtrotipo" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
                     <select wire:model.live="filtrotipo" id="filtrotipo"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Tipo...</option>
                         @foreach ($tipo as $item)
                             <option value={{$item['id']}}>{{$item['nombre']}}</option>
@@ -177,7 +177,7 @@
             @if ($is_rol)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
-                    <label for="filtrorol" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rol</label>
+                    <label for="filtrorol" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Rol</label>
                     <select wire:model.live="filtrorol" id="filtrorol"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Tipo...</option>
@@ -206,9 +206,9 @@
             @if ($is_transaccion)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
-                    <label for="estado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado</label>
+                    <label for="estado" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Estado</label>
                     <select wire:model.live="estado" id="estado"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
                         <option >Estado transaccion</option>
                         <option value="1">Creada</option>
                         <option value="3">Pendiente Entrega Inventario</option>
@@ -223,7 +223,7 @@
 
 @endif
 @if ($is_verfiltro)
-    <a href="" wire:click.prevent="filtroMostrar" class="w-auto text-black bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+    <a href="" wire:click.prevent="filtroMostrar" class="w-auto text-black  bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-xs md:text-sm px-2 py-2 text-center mr-2 mb-2 capitalize" >
         <i class="fa-solid fa-filter"></i>
     </a>
 @endif

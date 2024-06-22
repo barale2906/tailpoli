@@ -21,9 +21,9 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Sweetalert2 -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        {{-- <link href="{{ asset('build/assets/app-c18ff04e.css') }}" rel="stylesheet">
-        <script src="{{ asset('build/assets/app-d509820f.js') }}" defer></script> --}}
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+        <link href="{{ asset('build/assets/app-fa36c09a.css') }}" rel="stylesheet">
+        <script src="{{ asset('build/assets/app-e201fd2b.js') }}" defer></script>
 
         {{-- DB_CONNECTION=mysql
             DB_HOST=127.0.0.1

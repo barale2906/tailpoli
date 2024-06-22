@@ -18,22 +18,6 @@
                 </div>
                 <div class="md:hidden flex">
                     @if (Auth::user()->roles[0]['name']!=="Estudiante")
-                        <span class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-                            <i class="fa-solid fa-graduation-cap fa-beat-fade"></i> {{$matriculas}}
-                        </span>
-
-                        <span class="bg-red-100 text-red-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> {{$vencidos}}
-                        </span>
-
-                        <span class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
-                            <i class="fa-solid fa-circle-arrow-right fa-beat-fade"></i> {{$proximos}}
-                        </span>
-
-                        <span class="bg-orange-100 text-orange-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-orange-400 border border-orange-400">
-                            <i class="fa-solid fa-parachute-box fa-beat-fade"></i> {{$desertados}}
-                        </span>
-
                         @can('in_productos')
                             @if ($pendInventarios>0)
                                 <a href="{{route('inventario.pend')}}" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm text-center mr-2 mb-2 capitalize">
@@ -53,26 +37,25 @@
                                 </a>
                             @endif
                         @endcan
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                            <i class="fa-solid fa-graduation-cap fa-beat-fade"></i> {{$matriculas}}
+                        </span>
+
+                        <span class="bg-red-100 text-red-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> {{$vencidos}}
+                        </span>
+
+                        <span class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
+                            <i class="fa-solid fa-circle-arrow-right fa-beat-fade"></i> {{$proximos}}
+                        </span>
+
+                        <span class="bg-orange-100 text-orange-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-orange-400 border border-orange-400">
+                            <i class="fa-solid fa-parachute-box fa-beat-fade"></i> {{$desertados}}
+                        </span>
                     @endif
                 </div>
                 <div class="hidden md:flex md:space-x-4">
                     @if (Auth::user()->roles[0]['name']!=="Estudiante")
-                        <span class="bg-blue-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-                            <i class="fa-solid fa-graduation-cap fa-beat-fade mr-2"></i> Matriculas - {{$matriculas}}
-                        </span>
-
-                        <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade mr-2"></i> Vencidos - {{$vencidos}}
-                        </span>
-
-                        <span class="bg-green-100 text-green-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
-                            <i class="fa-solid fa-circle-arrow-right fa-beat-fade mr-2"></i> Proximos - {{$proximos}}
-                        </span>
-
-                        <span class="bg-orange-100 text-orange-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-orange-400 border border-orange-400">
-                            <i class="fa-solid fa-parachute-box fa-beat-fade mr-2"></i> Desertados - {{$desertados}}
-                        </span>
-
                         @can('in_productos')
                             @if ($pendInventarios>0)
                                 <a href="{{route('inventario.pend')}}" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm text-center mr-2 mb-2 capitalize">
@@ -92,6 +75,21 @@
                                 </a>
                             @endif
                         @endcan
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                            <i class="fa-solid fa-graduation-cap fa-beat-fade mr-2"></i> Matriculas - {{$matriculas}}
+                        </span>
+
+                        <span class="bg-red-100 text-red-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                            <i class="fa-solid fa-triangle-exclamation fa-beat-fade mr-2"></i> Vencidos - {{$vencidos}}
+                        </span>
+
+                        <span class="bg-green-100 text-green-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
+                            <i class="fa-solid fa-circle-arrow-right fa-beat-fade mr-2"></i> Proximos - {{$proximos}}
+                        </span>
+
+                        <span class="bg-orange-100 text-orange-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-orange-400 border border-orange-400">
+                            <i class="fa-solid fa-parachute-box fa-beat-fade mr-2"></i> Desertados - {{$desertados}}
+                        </span>
                     @endif
                 </div>
 
