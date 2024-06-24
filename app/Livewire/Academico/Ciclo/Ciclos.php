@@ -24,6 +24,8 @@ class Ciclos extends Component
     public $is_editing = false;
     public $is_deleting = false;
     public $is_asistencias = false;
+    public $is_vergrupo=false;
+    public $crtid;
 
     public $elegido;
     public $cicloele;
@@ -156,6 +158,20 @@ class Ciclos extends Component
         $this->elegido=$grupo;
         $this->is_asistencias=!$this->is_asistencias;
         $this->is_modify = !$this->is_modify;
+
+    }
+
+    public function muestragrupo($id,$mus){
+        if($mus===1){
+            $this->is_vergrupo=!$this->is_vergrupo;
+            $this->crtid=$id;
+        }
+        if($mus===2){
+            $this->reset(
+                'is_vergrupo',
+                'crtid'
+            );
+        }
 
     }
 

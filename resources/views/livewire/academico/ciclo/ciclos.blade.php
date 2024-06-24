@@ -176,26 +176,41 @@
                                 @endswitch
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                @foreach ($ciclo->ciclogrupos as $item)
+                                @if ($is_vergrupo && $crtid===$ciclo->id)
+                                    @foreach ($ciclo->ciclogrupos as $item)
+                                        <span class="bg-cyan-100 text-cyan-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-cyan-900 dark:text-cyan-300">
+                                            <a href="#" wire:click.prevent="muestragrupo({{$ciclo->id}},{{2}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
+                                                <i class="fa-solid fa-eye-slash"></i>
+                                            </a>
+                                        </span>
+                                        <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                            <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
+                                                {{$item->grupo->name}}{{--
+                                                <span class="inline-flex items-center justify-center w-4 h-4 ms-2 p-4 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+                                                    {{$item->inscritos}}
+                                                </span> --}}
+                                            </h5>
+                                            <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                                Modulo: {{$item->grupo->modulo->name}}
+                                            </p>
+                                            <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                                Profesor: {{$item->grupo->profesor->name}}
+                                            </p>
+                                            <a href="" wire:click.prevent="asistencia({{$ciclo->id}}, {{$item->grupo->id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
+                                                <i class="fa-regular fa-calendar-days"></i>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                @else
 
-                                    <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                        <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
-                                            {{$item->grupo->name}}{{--
-                                            <span class="inline-flex items-center justify-center w-4 h-4 ms-2 p-4 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-                                                {{$item->inscritos}}
-                                            </span> --}}
-                                        </h5>
-                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
-                                            Modulo: {{$item->grupo->modulo->name}}
-                                        </p>
-                                        <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
-                                            Profesor: {{$item->grupo->profesor->name}}
-                                        </p>
-                                        <a href="" wire:click.prevent="asistencia({{$ciclo->id}}, {{$item->grupo->id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-1 py-1 text-center mr-2 mb-5 capitalize">
-                                            <i class="fa-regular fa-calendar-days"></i>
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                        <a href="#" wire:click.prevent="muestragrupo({{$ciclo->id}},{{1}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
+                                            <i class="fa-solid fa-binoculars"></i>
                                         </a>
-                                    </div>
-                                @endforeach
+                                    </span>
+
+                                @endif
+
                             </th>
                         </tr>
                     @endforeach

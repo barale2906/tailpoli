@@ -29,12 +29,9 @@
             <livewire:configuracion.user.contrasena :elegido="$elegido"/>
         </div>
     @endif
-
-    @if ($rol!=="Estudiante")
-
+    @can('co_userCrear')
         <livewire:configuracion.user.perfil-sedes :elegido="$elegido"/>
-
-    @endif
+    @endcan
     <form wire:submit.prevent="edit">
 
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
