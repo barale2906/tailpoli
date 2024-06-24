@@ -140,26 +140,41 @@
                                 {{$matricula->curso->name}}
                             </th>
                             <th scope="row" class="px-1 py-1 font-medium text-gray-900  dark:text-white capitalize">
+
                                 @if ($matricula->anula)
                                     {{$matricula->anula}} -por:  {{$matricula->anula_user}}
                                 @else
-                                    @foreach ($matricula->grupos as $item)
-                                        <a href="" wire:click.prevent="show({{$item->id}},{{1}})" class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                            <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
-                                                {{$item->name}}
-                                            </h5>
-                                            <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
-                                                Modulo: {{$item->modulo->name}}
-                                            </p>
-                                            <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
-                                                Profesor: {{$item->profesor->name}}
-                                            </p>
-                                        </a>
-                                    @endforeach
+                                    @if ($is_vergrupo && $crtid===$matricula->id)
+                                        <span class="bg-cyan-100 text-cyan-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-cyan-900 dark:text-cyan-300">
+                                            <a href="#" wire:click.prevent="muestragrupo({{$matricula->id}},{{2}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
+                                                <i class="fa-solid fa-eye-slash"></i>
+                                            </a>
+                                        </span>
+                                        @foreach ($matricula->grupos as $item)
+                                            <a href="" wire:click.prevent="show({{$item->id}},{{1}})" class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                                <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
+                                                    {{$item->name}}
+                                                </h5>
+                                                <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                                    Modulo: {{$item->modulo->name}}
+                                                </p>
+                                                <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                                                    Profesor: {{$item->profesor->name}}
+                                                </p>
+                                            </a>
+                                        @endforeach
+                                    @else
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                            <a href="#" wire:click.prevent="muestragrupo({{$matricula->id}},{{1}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
+                                                <i class="fa-solid fa-binoculars"></i>
+                                            </a>
+                                        </span>
+                                    @endif
+
                                 @endif
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$matricula->alumno->name}}
+                                {{$matricula->alumno->name}} -- {{number_format($matricula->alumno->documento, 0, ',', '.')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 $ {{number_format($matricula->valor, 0, ',', '.')}}

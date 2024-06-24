@@ -28,6 +28,8 @@ class Matriculas extends Component
     public $is_change=false;
     public $is_document=false;
     public $is_especiales=false;
+    public $is_vergrupo=false;
+    public $crtid;
     public $reportes=true;
 
     public $ruta=0;
@@ -174,6 +176,20 @@ class Matriculas extends Component
                 $this->is_document=!$this->is_document;
                 break;
         }
+    }
+
+    public function muestragrupo($id,$mus){
+        if($mus===1){
+            $this->is_vergrupo=!$this->is_vergrupo;
+            $this->crtid=$id;
+        }
+        if($mus===2){
+            $this->reset(
+                'is_vergrupo',
+                'crtid'
+            );
+        }
+
     }
 
     //Activar evento

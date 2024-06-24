@@ -35,6 +35,8 @@ class Gestiones extends Component
     public $is_gestransaccion=false;
     public $is_document=false;
     public $is_especiales=false;
+    public $is_vergrupo=false;
+    public $crtid;
 
     public $sedes=[];
 
@@ -181,6 +183,20 @@ class Gestiones extends Component
                 break;
 
         }
+    }
+
+    public function muestragrupo($id,$mus){
+        if($mus===1){
+            $this->is_vergrupo=!$this->is_vergrupo;
+            $this->crtid=$id;
+        }
+        if($mus===2){
+            $this->reset(
+                'is_vergrupo',
+                'crtid'
+            );
+        }
+
     }
 
     //Activar evento
