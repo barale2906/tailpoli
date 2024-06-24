@@ -197,9 +197,9 @@ class Matriculas extends Component
     public function updatedEstadoMatricula(){
         $crt=intval($this->estadoMatricula);
         if($crt===1){
-            $this->filtroestatumatri=1;
+            $this->filtroestatumatri=3; //Activa
         }else if($crt===0){
-            $this->filtroestatumatri=0;
+            $this->filtroestatumatri=2; //Inactiva
         }
     }
 

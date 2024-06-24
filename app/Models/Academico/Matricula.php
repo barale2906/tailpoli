@@ -113,7 +113,14 @@ class Matricula extends Model
 
     public function scopeStatus($query, $status){
         $query->when($status ?? null, function($query, $status){
-            $query->where('status', $status);
+            $crt;
+            if($status===2){
+                $crt=0;
+            }
+            if($status===3){
+                $crt=1;
+            }
+            $query->where('status', $crt);
         });
     }
 
