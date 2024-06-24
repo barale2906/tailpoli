@@ -38,6 +38,7 @@ class Ciclos extends Component
     public $filtroInides;
     public $filtroInihas;
     public $filtroinicia=[];
+    public $filtrojornada;
 
 
     protected $listeners = ['refresh' => '$refresh'];
@@ -142,10 +143,13 @@ class Ciclos extends Component
     }
 
     public function updatedFiltroInihas(){
+
         if($this->filtroInides<=$this->filtroInihas){
+
             $crea=array();
             array_push($crea, $this->filtroInides);
             array_push($crea, $this->filtroInihas);
+
             $this->filtroinicia=$crea;
         }else{
             $this->reset('filtroInides','filtroInihas');
@@ -177,11 +181,11 @@ class Ciclos extends Component
 
     private function ciclos()
     {
-        return Ciclo::where('status', true)
-                        ->buscar($this->buscamin)
+        return Ciclo::buscar($this->buscamin)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
                         ->inicia($this->filtroinicia)
+                        ->jornada($this->filtrojornada)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 

@@ -84,4 +84,10 @@ class Ciclo extends Model
             $query->whereBetween('inicia', [$fecha1 , $fecha2]);
         });
     }
+
+    public function scopeJornada($query, $jornada){
+        $query->when($jornada ?? null, function($query, $jornada){
+            $query->where('jornada', $jornada);
+        });
+    }
 }

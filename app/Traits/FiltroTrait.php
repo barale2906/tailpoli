@@ -32,6 +32,9 @@ trait FiltroTrait
     //Cartera
     public $is_vencimiento=false;
 
+    //Ciclos
+    public $is_jornada=false;
+
 
     public function filtroMostrar(){
         $this->is_filtro=!$this->is_filtro;
@@ -117,6 +120,7 @@ trait FiltroTrait
                 $this->is_Inides=true;
                 $this->is_sede=true;
                 $this->is_curso=true;
+                $this->is_jornada=true;
                 break;
 
             case 11:
