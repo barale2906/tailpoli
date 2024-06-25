@@ -138,7 +138,8 @@ class Ciclos extends Component
                                     $this->buscamin,
                                     $this->filtroSede,
                                     $this->filtrocurso,
-                                    $this->filtroinicia
+                                    $this->filtroinicia,
+                                    $this->filtrojornada
                                 );
     }
 

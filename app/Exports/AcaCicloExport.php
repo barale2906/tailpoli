@@ -24,15 +24,18 @@ class AcaCicloExport implements FromCollection, WithCustomStartCell, Responsable
     private $curso;
     private $inicia;
     private $buscamin;
+    private $jornada;
     private $fileName = "Ciclos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$sede,$curso,$inicia)
+    public function __construct($buscamin,$sede,$curso,$inicia,$jornada)
     {
         $this->buscamin=$buscamin;
         $this->sede=$sede;
         $this->curso=$curso;
         $this->inicia=$inicia;
+        $this->jornada=$jornada;
+
     }
     /**
     * @return \Illuminate\Support\Collection
@@ -44,6 +47,7 @@ class AcaCicloExport implements FromCollection, WithCustomStartCell, Responsable
                     ->sede($this->sede)
                     ->curso($this->curso)
                     ->inicia($this->inicia)
+                    ->jornada($this->filtrojornada)
                     ->orderBy('name', 'ASC')
                     ->get();
     }

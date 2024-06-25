@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Ciclo;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
+use App\Models\Configuracion\Sede;
 use App\Models\Clientes\Pqrs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,8 @@ class CiclosCambiar extends Component
     public $curso;
     public $curso_id;
     public $ciclo;
+    public $sede_id;
+    public $jornada_id;
     public $is_cambiar=false;
 
     public function mount($elegido){
@@ -122,13 +125,28 @@ class CiclosCambiar extends Component
         return Ciclo::where('status', true)
                         ->whereNot('id', $this->control->ciclo_id)
                         ->where('curso_id', $this->curso_id)
+                        ->sede($this->sede_id)
+                        ->jornada($this->jornada_id)
                         ->get();
+    }
+
+    private function sedes(){
+        $ids=Ciclo::where('status', true)
+                    ->where('curso_id', $this->curso_id)
+                    ->select('sede_id')
+                    ->groupBy('sede_id')
+                    ->get();
+
+        return Sede::whereIn('id',$ids)
+                    ->orderBy('name', 'ASC')
+                    ->get();
     }
 
     public function render()
     {
         return view('livewire.academico.ciclo.ciclos-cambiar',[
             'ciclos'=>$this->ciclos(),
+            'sedes' =>$this->sedes()
         ]);
     }
 }
