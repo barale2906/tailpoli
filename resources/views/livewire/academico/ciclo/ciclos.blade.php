@@ -173,12 +173,12 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 @if ($is_vergrupo && $crtid===$ciclo->id)
+                                    <span class="bg-cyan-100 text-cyan-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-cyan-900 dark:text-cyan-300">
+                                        <a href="#" wire:click.prevent="muestragrupo({{$ciclo->id}},{{2}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
+                                            <i class="fa-solid fa-eye-slash"></i>
+                                        </a>
+                                    </span>
                                     @foreach ($ciclo->ciclogrupos as $item)
-                                        <span class="bg-cyan-100 text-cyan-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-cyan-900 dark:text-cyan-300">
-                                            <a href="#" wire:click.prevent="muestragrupo({{$ciclo->id}},{{2}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
-                                                <i class="fa-solid fa-eye-slash"></i>
-                                            </a>
-                                        </span>
                                         <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                             <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
                                                 {{$item->grupo->name}}{{--
