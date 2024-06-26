@@ -6,6 +6,8 @@ use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -16,21 +18,134 @@ class CiclosReutilizar extends Component
     public $inicio;
     public $fin;
     public $name;
+    public $modulos;
+    public $orden;
+    public $cantidad;
+    public $cantidiscre;
+    public $distancia;
+    public $absoluto;
+
+    public $is_discre=true;
 
     public function mount($elegido){
         $this->actual=Ciclo::find($elegido);
-
-        $this->fecha();
+        $this->orden();
     }
 
-    public function fecha(){
-        $this->inicio=$this->actual->inicia;
+    public function orden(){
+        DB::table('apoyo_recibo')
+                ->where('tipo', 'ciclos')
+                ->where('id_creador', Auth::user()->id)
+                ->delete();
+
+        $ciclos=Ciclogrupo::where('ciclo_id', $this->actual->id)
+                            ->orderBy('fecha_inicio', 'ASC')
+                            ->get();
+
+        $a=1;
+        foreach ($ciclos as $value) {
+            DB::table('apoyo_recibo')->insert([
+                'tipo'          =>'ciclos',
+                'id_creador'    =>Auth::user()->id,
+                'valor'         =>$a, //Orden en que aparece
+                'producto'      =>$value->grupo->name,
+                'id_producto'   =>$value->grupo_id
+            ]);
+            $a++;
+        }
+        $this->cantidad=$a-1;
+        $this->obtener();
+    }
+
+    public function ordenar($id,$oractu){
+
+        if($this->orden>$this->cantidad || $this->orden<=0){
+
+            $this->reset('orden');
+            $this->dispatch('alerta', name:'Debe estar entre 1 y '.$this->cantidad);
+
+        }else{
+            $diferencia=$this->orden-$oractu;
+
+
+            foreach ($this->modulos as $value) {
+
+                $this->reset('distancia','absoluto');
+                $ubica=$value->valor+$diferencia;
+
+
+                if($ubica>$this->cantidad){
+                    $this->distancia=$ubica-$this->cantidad;
+                }else{
+                    $this->distancia=$ubica+$this->cantidad;
+                }
+
+                if($this->distancia>$this->cantidad){
+                    $this->absoluto=$this->distancia-$this->cantidad;
+                }else{
+                    $this->absoluto=$this->distancia;
+                }
+
+                DB::table('apoyo_recibo')
+                    ->where('id', $value->id)
+                    ->update([
+                        'valor' =>$this->absoluto
+                    ]);
+            }
+
+            $this->reset('orden');
+
+            $this->obtener();
+        }
+
+
+    }
+
+    public function ordendiscre($id){
+        if($this->orden>$this->cantidad || $this->orden<=0){
+            $this->reset('orden');
+            $this->dispatch('alerta', name:'Debe estar entre 1 y '.$this->cantidad);
+        }else if(){
+
+        }else{
+            $this->reset('orden');
+            $this->dispatch('alerta', name:'Ya esta ');
+        }
+
+        $this->is_discre=false;
+
+        DB::table('apoyo_recibo')
+                    ->where('id', $value->id)
+                    ->update([
+                        'id_almacen' =>$this->orden
+                    ]);
+
+        $this->obtener();
+    }
+
+    public function obtener(){
+        $this->modulos=DB::table('apoyo_recibo')
+                            ->where('tipo', 'ciclos')
+                            ->where('id_creador', Auth::user()->id)
+                            ->orderBy('valor', 'ASC')
+                            ->get();
+
+        if(!$this->is_discre){
+            $this->crtdiscre();
+        }
+    }
+
+    public function crtdiscre(){
+
+        dd($this->modulos->count('id_almacen'));
+
+        if($this->cantidad===$this->modulos->count('id_almacen')){
+            $this->is_discre=true;
+        }
     }
 
     public function reutilizar(){
         $this->duracion=$this->actual->curso->duracion_meses;
-        /*$inicio=Carbon::create($this->actual->inicia)->addMonths($this->duracion)->addDay();
-        $this->inicio=$inicio; */
 
         $fin=Carbon::create($this->inicio)->addMonths($this->duracion)->addDay();
         $this->fin=$fin;
@@ -44,39 +159,12 @@ class CiclosReutilizar extends Component
 
         $this->name=$name[0]." -- ".$name[1]." -- ".$this->inicio." - ".$detalle[3]." - ".$detalle[4]." -- ".$name[3]." -- ".$name[4];
         $this->new();
-        /* $sede=Sede::where('id', $this->actual->sede_id)
-                    ->select('slug','id','sector_id')
-                    ->first();
-
-        $sector=Sector::where('id', $sede->sector_id)
-                        ->select('slug')
-                        ->first();
-
-        switch ($this->actual->jornada) {
-            case "1":
-                $jor="Mañana";
-                break;
-
-            case "2":
-                $jor="Tarde";
-                break;
-
-            case "3":
-                $jor="Noche";
-                break;
-
-            case "4":
-                $jor="Fin Semana";
-                break;
-        }
-
-
-        $this->name=$sector->slug." ".$sede->slug." ".$this->actual->curso->slug." ".$jor." ".$this->inicio; */
-
-
     }
 
     public function new(){
+
+        $lapso=$this->duracion/$this->cantidad;
+        dd($lapso);
 
         //Crear ciclo
         $ciclo=Ciclo::create([
@@ -88,6 +176,7 @@ class CiclosReutilizar extends Component
                         'jornada'       =>$this->actual->jornada,
                         'desertado'     =>$this->actual->desertado
                     ]);
+
 
         foreach ($this->actual->ciclogrupos as $value) {
 
