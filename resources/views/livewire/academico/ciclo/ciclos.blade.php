@@ -269,5 +269,20 @@
                 });
             });
         </script>
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('corto', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'center-end',
+                        icon: 'success',
+                        title: variable['name'],
+                        showConfirmButton: false,
+                        timer: 500
+                    })
+                });
+            });
+        </script>
     @endpush
 </div>

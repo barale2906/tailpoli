@@ -4,8 +4,6 @@ namespace App\Livewire\Academico\Ciclo;
 
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
-use App\Models\Configuracion\Sector;
-use App\Models\Configuracion\Sede;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -24,6 +22,11 @@ class CiclosReutilizar extends Component
     public $cantidiscre;
     public $distancia;
     public $absoluto;
+    public $fechainicia;
+    public $fechafinaliza;
+    public $fechain;
+    public $fechafin;
+    public $lapso;
 
     public $is_discre=true;
 
@@ -62,7 +65,7 @@ class CiclosReutilizar extends Component
         if($this->orden>$this->cantidad || $this->orden<=0){
 
             $this->reset('orden');
-            $this->dispatch('alerta', name:'Debe estar entre 1 y '.$this->cantidad);
+            $this->dispatch('corto', name:'Debe estar entre 1 y '.$this->cantidad);
 
         }else{
             $diferencia=$this->orden-$oractu;
@@ -102,25 +105,52 @@ class CiclosReutilizar extends Component
     }
 
     public function ordendiscre($id){
-        if($this->orden>$this->cantidad || $this->orden<=0){
-            $this->reset('orden');
-            $this->dispatch('alerta', name:'Debe estar entre 1 y '.$this->cantidad);
-        }else if(){
 
-        }else{
-            $this->reset('orden');
-            $this->dispatch('alerta', name:'Ya esta ');
-        }
-
-        $this->is_discre=false;
-
-        DB::table('apoyo_recibo')
-                    ->where('id', $value->id)
+        if(!$this->orden){
+            DB::table('apoyo_recibo')
+                    ->where('id', $id)
                     ->update([
-                        'id_almacen' =>$this->orden
+                        'id_almacen' =>null
                     ]);
 
+            $this->reset('orden');
+            $this->obtener();
+        }
+
+        if($this->orden>$this->cantidad || $this->orden<=0){
+
+            $this->reset('orden');
+            $this->dispatch('corto', name:'Anulado el orden y/o Debe estar entre 1 y '.$this->cantidad);
+
+        }else{
+
+            $esta=DB::table('apoyo_recibo')
+                        ->where('id_almacen', $this->orden)
+                        ->where('id_creador', Auth::user()->id)
+                        ->count('id');
+
+            if($esta>0){
+                $this->reset('orden');
+                $this->dispatch('corto', name:'Ya esta asignado ese orden');
+            }else{
+                $this->cargadiscre($id);
+            }
+        }
+    }
+
+    public function cargadiscre($id){
+
+        $this->is_discre=false;
+        DB::table('apoyo_recibo')
+            ->where('id', $id)
+            ->update([
+                'id_almacen' =>$this->orden
+            ]);
+
+        $this->reset('orden');
+
         $this->obtener();
+
     }
 
     public function obtener(){
@@ -130,6 +160,8 @@ class CiclosReutilizar extends Component
                             ->orderBy('valor', 'ASC')
                             ->get();
 
+        $this->dispatch('refresh');
+
         if(!$this->is_discre){
             $this->crtdiscre();
         }
@@ -137,9 +169,12 @@ class CiclosReutilizar extends Component
 
     public function crtdiscre(){
 
-        dd($this->modulos->count('id_almacen'));
-
-        if($this->cantidad===$this->modulos->count('id_almacen')){
+        $this->cantidiscre=DB::table('apoyo_recibo')
+                        ->where('tipo', 'ciclos')
+                        ->where('id_creador', Auth::user()->id)
+                        ->where('id_almacen', '>', 0)
+                        ->count('id_almacen');
+        if($this->cantidad===$this->cantidiscre){
             $this->is_discre=true;
         }
     }
@@ -164,7 +199,8 @@ class CiclosReutilizar extends Component
     public function new(){
 
         $lapso=$this->duracion/$this->cantidad;
-        dd($lapso);
+        $lapdia=30*$lapso;
+        $this->lapso=round($lapdia);
 
         //Crear ciclo
         $ciclo=Ciclo::create([
@@ -178,21 +214,56 @@ class CiclosReutilizar extends Component
                     ]);
 
 
-        foreach ($this->actual->ciclogrupos as $value) {
+        if($this->cantidiscre){
 
-            $fechain=Carbon::create($value->fecha_inicio)->addDay();
-            $fechain=$fechain->addMonths($this->duracion);
+            $this->modulos=DB::table('apoyo_recibo')
+                                ->where('tipo', 'ciclos')
+                                ->where('id_creador', Auth::user()->id)
+                                ->orderBy('id_almacen', 'ASC')
+                                ->get();
+        }
 
-            $fechafin=Carbon::create($value->fecha_in)->addDay();
-            $fechafin=$fechafin->addMonths($this->duracion);
+        $a=0;
+        foreach ($this->modulos as $value) {
+            $this->reset(
+                'fechainicia',
+                'fechafinaliza',
+                'fechain',
+                'fechafin',
+            );
+
+            if($a===0){
+                $this->fechain=Carbon::create($this->inicio);
+
+                $this->fechainicia=$this->inicio;
+                $this->fechafinaliza=$this->fechain->addDays($this->lapso);
+            }else{
+                $ant=DB::table('apoyo_recibo')
+                        ->where('id', $a)
+                        ->first();
+
+                $this->fechain=Carbon::create($ant->fecha_fin)->addDay();
+                $this->fechafin=Carbon::create($ant->fecha_fin)->addDays($this->lapso);
+
+                $this->fechainicia=$this->fechain;
+                $this->fechafinaliza=$this->fechafin;
+            }
 
             Ciclogrupo::create([
                             'ciclo_id'       =>$ciclo->id,
-                            'grupo_id'       =>$value->grupo_id,
-                            'fecha_inicio'   =>$fechain,
-                            'fecha_fin'      =>$fechafin,
+                            'grupo_id'       =>$value->id_producto,
+                            'fecha_inicio'   =>$this->fechainicia,
+                            'fecha_fin'      =>$this->fechafinaliza,
                         ]);
 
+            DB::table('apoyo_recibo')
+                ->where('id', $value->id)
+                ->update([
+                    'fecha_fin' =>$this->fechafinaliza,
+                ]);
+
+
+            $a=$value->id;
         }
 
         // Notificación
