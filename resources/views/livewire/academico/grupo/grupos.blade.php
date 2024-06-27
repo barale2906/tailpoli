@@ -54,6 +54,9 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
+                            Jornada
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('quantity_limit')">
                             Max. Estudiantes
                             @if ($ordena != 'quantity_limit')
@@ -99,6 +102,23 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                                 {{$grupo->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                @switch($grupo->jornada)
+                                    @case(1)
+                                        Mañana
+                                        @break
+                                    @case(2)
+                                        Tarde
+                                        @break
+
+                                    @case(3)
+                                        Noche
+                                        @break
+                                    @case(4)
+                                        Fin de Semana
+                                        @break
+                                @endswitch
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                                 {{$grupo->quantity_limit}}

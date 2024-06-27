@@ -29,6 +29,7 @@ class GruposCrear extends Component
     public $modulos;
     public $curso_id;
     public $curso;
+    public $jornada;
 
     public $seleccionados=[];
     public $area_id;
@@ -95,6 +96,25 @@ class GruposCrear extends Component
     public function slugCrear(){
         $curso=explode(" ",$this->curso->name);
         $sede=explode(" ",$this->sede->name);
+        $jornada='';
+
+        switch ($this->jornada) {
+            case 1:
+                $jornada='';
+                break;
+
+            case 2:
+                $jornada='Tarde';
+                break;
+
+            case 3:
+                $jornada='Noche';
+                break;
+
+            case 4:
+                $jornada='Fin Semana';
+                break;
+        }
 
             $sedeBase="";
 
@@ -295,6 +315,7 @@ class GruposCrear extends Component
        //Crear registro
         $grupo= Grupo::create([
             'name'=>strtolower($this->name),
+            'jornada'   =>$this->jornada,
             //'start_date'        =>$this->start_date,
             //'finish_date'       =>$this->finish_date,
             'quantity_limit'    =>$this->quantity_limit,
