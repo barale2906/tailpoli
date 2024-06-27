@@ -69,4 +69,31 @@ class Grupo extends Model
     {
         return $this->BelongsToMany(Matricula::class);
     }
+
+    public function scopeBuscar($query, $item){
+        $query->when($item ?? null, function($query, $item){
+
+            $query->where('name', 'like', "%".$item."%")
+                    ->orwherehas('profesor', function($query) use($item){
+                        $query->where('users.name', 'like', "%".$item."%");
+                    })
+
+                    ->orwherehas('sede', function($query) use($item){
+                        $query->where('sedes.name', 'like', "%".$item."%");
+                    });
+        });
+    }
+
+    public function scopeCurso($query, $curso){
+        $query->when($curso ?? null, function($query, $curso){
+            $query->whereIn('modulo_id',$curso); //Curso es un array con los id de cada modulo
+        });
+    }
+
+    public function scopeJornada($query, $jornada){
+        $query->when($jornada ?? null, function($query, $jornada){
+            $query->where('jornada',$jornada);
+        });
+    }
+
 }

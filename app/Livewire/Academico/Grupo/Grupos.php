@@ -31,9 +31,11 @@ class Grupos extends Component
     public $buscar='';
     public $buscamin='';
     public $filtrocurso;
+    public $filtrojornada;
 
     public $idsCurso=[];
     public $idsModulo=[];
+
     public $cursos;
 
     protected $listeners = ['refresh' => '$refresh'];
@@ -67,6 +69,9 @@ class Grupos extends Component
     }
 
     public function updatedFiltrocurso(){
+
+        $this->reset('idsModulo');
+
         $curso=Curso::find($this->filtrocurso);
 
         foreach ($curso->modulos as $value) {
@@ -156,25 +161,10 @@ class Grupos extends Component
 
     private function grupos()
     {
-        $consulta = Grupo::query();
-
-        if($this->buscamin){
-            $consulta = $consulta->orWhereHas('modulo', function(Builder $q){
-                $q->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('profesor', function($qu){
-                $qu->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('sede', function($que){
-                $que->where('name', 'like', "%".$this->buscamin."%");
-            });
-        }
-
-        if($this->filtrocurso){
-            $consulta=$consulta->whereIn('modulo_id', $this->idsModulo);
-        }
-
-        return $consulta->orderBy($this->ordena, $this->ordenado)
+        return Grupo::buscar($this->buscamin)
+                        ->curso($this->idsModulo)
+                        ->jornada($this->filtrojornada)
+                        ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 
     }

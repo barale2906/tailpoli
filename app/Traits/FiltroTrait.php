@@ -58,6 +58,7 @@ trait FiltroTrait
 
                 //Grupos
                 $this->is_curso=true;
+                $this->is_jornada=true;
                 break;
 
             case 3:
