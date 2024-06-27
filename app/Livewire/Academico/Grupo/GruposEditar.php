@@ -72,12 +72,12 @@ class GruposEditar extends Component
 
         //Actualizar registros
         Grupo::whereId($this->id)->update([
-            'name'=>strtolower($this->name),/*
+            /*'name'=>strtolower($this->name),
             'start_date'        =>$this->start_date,
-            'finish_date'       =>$this->finish_date, */
-            'quantity_limit'    =>$this->quantity_limit,
+            'finish_date'       =>$this->finish_date,
             'modulo_id'         =>$this->modulo_id,
-            'sede_id'           =>$this->sede_id,
+            'sede_id'           =>$this->sede_id,*/
+            'quantity_limit'    =>$this->quantity_limit,
             'profesor_id'       =>$this->profesor_id
         ]);
 

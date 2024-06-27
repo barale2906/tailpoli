@@ -1,8 +1,19 @@
 <div>
     <form wire:submit.prevent="edit">
+
+        <div class="mb-6">
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Grupo (solo podrá modificar el profesor y la cantidad de alumnos)</label>
+            <input type="text" id="name" readonly disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="name">
+        </div>
+        @error('name')
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+            </div>
+        @enderror
+
         <div class="mb-6">
             <label for="modulo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Modulo</label>
-            <select wire:model.blur="modulo_id" id="modulo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+            <select wire:model.blur="modulo_id" disabled id="modulo" class="w-full disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                 @foreach ($modulos as $item)
                     <option value={{$item->id}}>modulo: {{$item->name}} - CURSO: {{$item->curso->name}}</option>
                 @endforeach
@@ -11,7 +22,7 @@
 
         <div class="mb-6">
             <label for="sede" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sede</label>
-            <select wire:model.blur="sede_id" id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+            <select wire:model.blur="sede_id" disabled id="sede" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                 @foreach ($sedes as $item)
                     <option value={{$item->id}}>Sede: {{$item->name}} - Ciudad: {{$item->sector->name}}</option>
                 @endforeach
@@ -26,16 +37,6 @@
                 @endforeach
             </select>
         </div>
-
-        <div class="mb-6">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Grupo</label>
-            <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="name">
-        </div>
-        @error('name')
-            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-            </div>
-        @enderror
 
         <div class="grid grid-cols-3 gap-4">
             {{-- <div>
