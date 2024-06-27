@@ -7,7 +7,6 @@ use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Modulo;
 use App\Traits\FiltroTrait;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -21,8 +20,8 @@ class Grupos extends Component
     public $ordenado='DESC';
     public $pages = 10;
 
-    public $is_modify = true;
-    public $is_creating = false;
+    public $is_modify = false;
+    public $is_creating = true;
     public $is_editing = false;
     public $is_deleting = false;
 

@@ -26,10 +26,12 @@ class GruposCrear extends Component
     public $funcionamiento;
     public $profesor_id;
     public $modulo_id;
+    public $modulo;
     public $modulos;
     public $curso_id;
     public $curso;
     public $jornada;
+    public $jornada_id;
 
     public $seleccionados=[];
     public $area_id;
@@ -42,6 +44,8 @@ class GruposCrear extends Component
     public $conteo=0;
     public $abre;
     public $cierra;
+    public $abremargen;
+    public $cierramargen;
     public $numerar=1;
 
 
@@ -69,8 +73,15 @@ class GruposCrear extends Component
             'seleccionados',
             'profesor_id',
             'name',
+            'jornada',
             'namebase'
         );
+
+        foreach ($this->modulos as $value) {
+            if($value->id===intval($this->modulo_id)){
+                $this->modulo=$value->name;
+            }
+        }
     }
 
 
@@ -89,32 +100,11 @@ class GruposCrear extends Component
                                         ->where('status', true)
                                         ->get();
 
-        $this->slugCrear();
-
     }
 
     public function slugCrear(){
         $curso=explode(" ",$this->curso->name);
         $sede=explode(" ",$this->sede->name);
-        $jornada='';
-
-        switch ($this->jornada) {
-            case 1:
-                $jornada='';
-                break;
-
-            case 2:
-                $jornada='Tarde';
-                break;
-
-            case 3:
-                $jornada='Noche';
-                break;
-
-            case 4:
-                $jornada='Fin Semana';
-                break;
-        }
 
             $sedeBase="";
 
@@ -152,11 +142,29 @@ class GruposCrear extends Component
                 }
             }
 
-            $this->namebase=$sedeBase.$cursoBase;
+            $horarios="";
+            $dias="";
+
+            foreach ($this->seleccionados as $value) {
+
+                if (strpos($dias, $value['dia']) === false) {
+                    $dias=$dias." - ".$value['dia'];
+                }
+
+                if(empty($horarios)){
+                    $horarios=$value['hora'];
+                }
+
+            }
+
+            $this->namebase=$this->modulo." -- ".$this->jornada." - ".$horarios." - ".$dias." -- ".$sedeBase.$cursoBase;
 
     }
 
     public function updatedDia(){
+
+        $this->reset('abre','cierra');
+
         foreach ($this->funcionamiento as $value) {
             if($value->periodo && $value->dia===$this->dia){
                 $this->abre=$value->hora;
@@ -165,16 +173,50 @@ class GruposCrear extends Component
                 $this->cierra=$value->hora;
             }
         }
+
+        $this->jornadaact();
+    }
+
+    public function jornadaact(){
+        switch ($this->jornada_id) {
+            case 1:
+                $this->jornada='Mañana';
+                $this->abremargen=$this->abre;
+                $this->cierramargen='12:00';
+                break;
+
+            case 2:
+                $this->jornada='Tarde';
+                $this->abremargen='12:00';
+                $this->cierramargen='18:00';
+                break;
+
+            case 3:
+                $this->jornada='Noche';
+                $this->abremargen='18:00';
+                $this->cierramargen=$this->cierra;
+                break;
+
+            case 4:
+                $this->jornada='Fin Semana';
+                $this->abremargen=$this->abre;
+                $this->cierramargen=$this->cierra;
+                break;
+        }
     }
 
     public function updatedAreaId(){
+        $this->reset('hora','intensidad');
         $this->area=Area::find($this->area_id);
+    }
 
+    public function updatedHora(){
         $this->ocupacion=Horario::where('sede_id', $this->sede_id)
                                     ->where('tipo', false)
                                     ->where('status', true)
                                     ->where('dia', $this->dia)
                                     ->where('area_id', $this->area_id)
+                                    ->where('hora', '>=', $this->hora)
                                     ->orderBy('hora', 'ASC')
                                     ->get();
     }
@@ -182,8 +224,8 @@ class GruposCrear extends Component
     //Cargar datos de horario para el grupo
     public function cargar(){
 
-        $abre = new Carbon($this->abre);
-        $cierra = new Carbon($this->cierra);
+        $abre = new Carbon($this->abremargen);
+        $cierra = new Carbon($this->cierramargen);
         $hora = new Carbon($this->hora);
         $termina = new Carbon($this->hora);
         $finclase = $termina->addHours($this->intensidad);
@@ -271,13 +313,17 @@ class GruposCrear extends Component
         $indice=array_search($nuevo,$this->seleccionados,true);
         unset($this->seleccionados[$indice]);
         $this->horas_semanales=$this->horas_semanales-1;
+
+        $this->slugCrear();
     }
+
+
 
     /**
      * Reglas de validación
      */
     protected $rules = [
-        'name' => 'required|max:100',
+        //'name' => 'required|max:100',
         //'start_date'=>'required',
         //'finish_date'=>'required',
         'quantity_limit'=>'required|integer',
@@ -308,14 +354,17 @@ class GruposCrear extends Component
 
     // Crear
     public function new(){
+
+        $this->slugCrear();
+        $this->name=$this->namebase;
+
         // validate
         $this->validate();
-        $this->name=$this->name.$this->namebase;
 
        //Crear registro
         $grupo= Grupo::create([
             'name'=>strtolower($this->name),
-            'jornada'   =>$this->jornada,
+            'jornada'   =>$this->jornada_id,
             //'start_date'        =>$this->start_date,
             //'finish_date'       =>$this->finish_date,
             'quantity_limit'    =>$this->quantity_limit,
