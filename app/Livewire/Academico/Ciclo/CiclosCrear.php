@@ -6,6 +6,8 @@ use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
+use App\Models\Academico\Horario;
+use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
 use Carbon\Carbon;
@@ -28,6 +30,8 @@ class CiclosCrear extends Component
     public $desertado;
     public $contar=0;
     public $maximo;
+    public $modulos;
+    public $modulo_id;
 
     public $fechaRegistro;
 
@@ -50,8 +54,13 @@ class CiclosCrear extends Component
         $this->reset('grupos', 'seleccionados', 'curso', 'contar', 'jornada', 'name');
 
         $this->curso=Curso::find($this->curso_id);
+        $this->modulos=Modulo::where('curso_id', $this->curso_id)
+                                ->where('status', true)
+                                ->orderBy('name', 'ASC')
+                                ->get();
 
-        $this->maximo=$this->curso->modulos->count();
+
+        $this->maximo=$this->modulos->count();
 
         foreach ($this->curso->modulos as $value) {
 
@@ -65,22 +74,24 @@ class CiclosCrear extends Component
 
                 foreach ($grupo as $value) {
 
-                    $nuevo=[
+                    /* $nuevo=[
                         'id'            =>$value->id,
                         'name'          =>$value->name,
                         'profesor_id'   =>$value->profesor_id,
                         'profesor'      =>$value->profesor->name,
                         'inscritos'     =>$value->inscritos,
                         'limit'         =>$value->quantity_limit,
-                        'modulo'        =>$value->modulo->id
+                        'modulo'        =>$value->modulo->id,
                     ];
 
                     if(in_array($nuevo, $this->grupos)){
 
                     }else{
                         array_push($this->grupos, $nuevo);
-                        $this->contar=$this->contar+1;
-                    }
+
+                    } */
+
+                    $this->contar=$this->contar+1;
                 }
 
             }
@@ -108,8 +119,16 @@ class CiclosCrear extends Component
         }else{
             $this->desertado=config('instituto.desertado_fin');
         }
+    }
 
-        $this->nombrar();
+    public function updatedModuloId(){
+        $this->reset('fechaModulo','fechaFin' , 'grupoId', 'moduloId', 'grupos', 'is_date');
+
+        $this->grupos=Grupo::where('sede_id', $this->sede_id)
+                            ->where('jornada', $this->jornada)
+                            ->where('modulo_id', $this->modulo_id)
+                            ->where('status', true)
+                            ->get();
     }
 
     public function nombrar(){
@@ -180,25 +199,35 @@ class CiclosCrear extends Component
                 }
             }
 
-            /* $cursoBase="";
+            //Seleccionar el primer grupo
+            $elegido=DB::table('apoyo_recibo')
+                        ->where('id_creador', Auth::user()->id)
+                        ->select('id_concepto')
+                        ->orderBy('fecha_movimiento', 'ASC')
+                        ->first();
 
-            for ($i=0; $i < count($curso); $i++) {
+            $horar=Horario::where('grupo_id',$elegido->id_concepto)
+                                ->where('status', true)
+                                ->orderBy('dia','ASC')
+                                ->orderBy('hora','ASC')
+                                ->get();
 
-                $lon=strlen($curso[$i]);
+            $horarios="";
+            $dias="";
 
+            foreach ($horar as $value) {
 
-                if($lon>3){
-                    $text=substr($curso[$i], 0, 4);
-                    $cursoBase=$cursoBase."-".$text;
-                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
-                }else{
-                    $text=substr($curso[$i], 0, $lon);
-                    $cursoBase=$cursoBase."-".$text;
-                    //Log::info('Line: ' . $i . ' Longitud: '.$lon.', texto. '.$text.' Original: '.$sede[$i]);
+                if (strpos($dias, $value->dia) === false) {
+                    $dias=$dias." - ".$value->dia;
                 }
-            } */
 
-        $this->name=$this->curso->name." -- ".$jor." -- ".$this->inicia." -- ".$sedeBase." -- ".$ciudadBase;
+                if(empty($horarios)){
+                    $horarios=$value->hora;
+                }
+
+            }
+
+        $this->name=$this->curso->name." -- ".$jor." -- ".$this->inicia." -- ".$dias." -- ".$horarios." -- ".$sedeBase." -- ".$ciudadBase;
     }
 
     public function activFecha($id, $mod){
@@ -223,24 +252,24 @@ class CiclosCrear extends Component
                     ->count();
 
             if($esta===0){
-                foreach ($this->grupos as $grupo) {
-                    if($grupo['id']===$this->grupoId){
-                        DB::table('apoyo_recibo')
+
+                $ele=Grupo::where('id',$this->grupoId)->first();
+
+                DB::table('apoyo_recibo')
                         ->insert([
                             'id_creador'        =>Auth::user()->id,
-                            'id_concepto'       =>$grupo['id'],
-                            'tipo'              =>$grupo['name'],
-                            'id_producto'       =>$grupo['profesor_id'],
-                            'producto'          =>$grupo['profesor'],
-                            'valor'             =>$grupo['inscritos'],
-                            'id_ultimoreg'      =>$grupo['limit'],
-                            'id_cartera'        =>$grupo['modulo'],
+                            'id_concepto'       =>$ele->id,
+                            'tipo'              =>$ele->name,
+                            'id_producto'       =>$ele->profesor_id,
+                            'producto'          =>$ele->profesor->name,
+                            'valor'             =>$ele->inscritos,
+                            'id_ultimoreg'      =>$ele->quantity_limit,
+                            'id_cartera'        =>$ele->modulo_id,
                             'fecha_movimiento'  =>$this->fechaModulo,
                             'fecha_fin'         =>$this->fechaFin
                         ]);
-                    }
-                }
-                $this->reset('is_date', 'fechaModulo','fechaFin' , 'grupoId');
+
+                $this->reset('is_date', 'fechaModulo','fechaFin' , 'grupoId', 'modulo_id', 'moduloId','grupos');
                 $this->ordenarrender();
             }else{
                 $this->dispatch('alerta', name:'modulo ya cargado o traslape de fechas');
@@ -277,7 +306,7 @@ class CiclosCrear extends Component
     protected $rules = [
         'sede_id'=>'required|integer',
         'curso_id'=>'required|integer',
-        'name' => 'required|max:100',
+        'name' => 'required|max:200',
         'inicia'=>'required|date|after:fechaRegistro',
         'finaliza'=>'required|date',
         'jornada'=>'required|integer',
@@ -302,6 +331,8 @@ class CiclosCrear extends Component
 
     // Crear
     public function new(){
+
+        $this->nombrar();
 
         // validate
         $this->validate();

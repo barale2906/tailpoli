@@ -157,7 +157,7 @@ class GruposCrear extends Component
 
             }
 
-            $this->namebase=$this->modulo." -- ".$this->jornada." - ".$horarios." - ".$dias." -- ".$sedeBase.$cursoBase;
+            $this->namebase=$this->modulo." -- ".$this->jornada." -- ".$horarios." -- ".$dias." -- ".$sedeBase.$cursoBase;
 
     }
 

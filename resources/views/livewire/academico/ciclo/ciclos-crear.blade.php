@@ -1,5 +1,16 @@
 <div>
     <form wire:submit.prevent="new">
+        @if ($jornada)
+                <div class="mb-6">
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la programación: {{$name}}</label>
+                    <input type="name" id="name" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="name">
+                    @error('name')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+            @endif
         <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
             <div class="mb-6">
                 <label for="sede_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sede</label>
@@ -25,27 +36,32 @@
             @if ($sede_id>0 && $curso_id>0 && $contar>0)
 
                 <div class="mb-6">
-                    <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio debe ser posterior a: {{$fechaRegistro}}</label>
+                    <label for="inicia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio</label>
                     <input type="date" id="inicia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.live="inicia">
+                    <span class=" text-xs">Debe ser posterior a: {{$fechaRegistro}}</span>
                     @error('inicia')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                         </div>
                     @enderror
                 </div>
-
+            @endif
+            @if ($inicia)
                 <div class="mb-6">
                     <label for="finaliza" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Fecha de Finalización sugerida: <strong>{{$finalizaej}}</strong>
+                        Fecha de Finalización </strong>
                     </label>
-                    <input type="date" id="finaliza" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.blur="finaliza">
+                    <input type="date" id="finaliza" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.live="finaliza">
                     @error('finaliza')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                         </div>
                     @enderror
+                    <span class=" text-xs">sugerida: <strong>{{$finalizaej}}</span>
                 </div>
+            @endif
 
+            @if ($finaliza)
                 <div class="mb-6">
                     <label for="jornada" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jornada</label>
                     <select wire:model.live="jornada" id="curso_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
@@ -61,32 +77,31 @@
                         </div>
                     @enderror
                 </div>
-                @if ($jornada)
-                    <div class="mb-6">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la programación</label>
-                        <input type="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="name" readonly>
-                        @error('name')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
-                @endif
             @endif
-
         </div>
 
-        @if ($jornada>0)
+        @if ($jornada)
             <h1 class="text-center text-lg">
                 Tenga presente que para el curso: <strong class="uppercase">{{$curso->name}}</strong> solamente hay <strong>{{$maximo}}</strong> módulos, que son:
             </h1>
             <h1 class="text-center text-lg">
-                @foreach ($curso->modulos as $item)
+                @foreach ($modulos as $item)
                     <span class="bg-green-100 text-green-800 font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 uppercase">
                         {{$item->name}}
                     </span>
                 @endforeach
             </h1>
+
+            <div class="mb-6">
+                <label for="modulo_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Elija Modulo</label>
+                <select wire:model.live="modulo_id" id="modulo_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                    <option >Defina Modulo a Cargar</option>
+                    @foreach ($modulos as $item)
+                        <option value={{$item->id}}>{{$item->name}}</option>
+                    @endforeach
+
+                </select>
+            </div>
 
             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
 
@@ -113,8 +128,8 @@
                     @else
                         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
                             @foreach ($grupos as $item)
-                                <a href="" wire:click.prevent="activFecha({{$item['id']}},{{$item['modulo']}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                    <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item['name']}}
+                                <a href="" wire:click.prevent="activFecha({{$item->id}},{{$item->modulo_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                    <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item->name}}
                                 </a>
                             @endforeach
                         </div>
