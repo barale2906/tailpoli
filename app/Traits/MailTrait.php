@@ -8,6 +8,7 @@ use App\Mail\ReciboMailable;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ReciboPago;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 trait MailTrait
@@ -56,5 +57,6 @@ trait MailTrait
 
         $destinatario=$cartera->responsable->email;
         Mail::to($destinatario)->send(new RecartMailable($id));
+        Log::info('AvisoCartera: envio correo a: ' . $destinatario);
     }
 }

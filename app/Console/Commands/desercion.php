@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Estado;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
@@ -48,39 +49,6 @@ class desercion extends Command
                     ->first();
 
         $this->activo=$conec->id;
-
-        /* Control::where('ultima_asistencia', Carbon::today()->subMonth())
-                ->each(function($cicl){
-                    $cicl->update([
-                        'status_est'=>$this->desertado
-                    ]);
-
-                    Pqrs::create([
-                        'estudiante_id' =>$cicl->estudiante_id,
-                        'gestion_id'    =>$cicl->matricula->creador_id,
-                        'fecha'         =>now(),
-                        'tipo'          =>4,
-                        'observaciones' =>'ACÁDEMICO:  --- ¡DESERTADO! --- --- AUTOMATICO -----  ',
-                        'status'        =>4
-                    ]);
-                });
-
-        Control::where('ultima_asistencia', '>' ,Carbon::today()->subMonth())
-                ->where('status_est', $this->desertado)
-                ->each(function($cicl){
-                    $cicl->update([
-                        'status_est'=>$this->activo
-                    ]);
-
-                    Pqrs::create([
-                        'estudiante_id' =>$cicl->estudiante_id,
-                        'gestion_id'    =>$cicl->matricula->creador_id,
-                        'fecha'         =>now(),
-                        'tipo'          =>4,
-                        'observaciones' =>'ACÁDEMICO:  --- ¡REINTEGRADO! --- --- AUTOMATICO -----  ',
-                        'status'        =>4
-                    ]);
-                }); */
 
         $controles=Control::where('status', true)
                             ->get();
@@ -130,6 +98,11 @@ class desercion extends Command
                             $value->update([
                                 'status_est'=>$this->activo
                             ]);
+
+                            User::where('id',$value->estudiante_id)
+                                    ->update([
+                                        'caso_especial'=>2
+                                    ]);
 
                             Pqrs::create([
                                 'estudiante_id' =>$value->estudiante_id,
