@@ -10,24 +10,25 @@
     </h1>
     <div class="content-center text-center">
 
-        <div class="md:inline-flex rounded-md shadow-sm" role="group">
-
+        <div class="grid sm:grid-cols-1 md:grid-cols-6 gap-1 m-1">
             @if ($is_carnet)
-                <a wire:click.prevent="carnetgen()">
-                    <button type="button" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-150 border border-gray-200 rounded-lg hover:bg-green-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+
+                <a wire:click.prevent="carnetgen()" class="block max-w-sm p-1 bg-teal-400 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                    <h5 class="mb-2 text-xs md:text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                         Enviar Carnet
-                    </button>
+                    </h5>
                 </a>
             @endif
 
             @foreach ($documentos as $item)
-                <a href="{{$item['ruta']}}" target="_blank">
-                    <button type="button" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-150 border border-gray-200 rounded-lg hover:bg-green-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                <a href="{{$item['ruta']}}" target="_blank" class="block max-w-sm p-1 bg-teal-400 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                    <h5 class="mb-2 text-xs md:text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                         {{$item['titulo']}} - {{$item['tipo']}}
-                    </button>
+                    </h5>
                 </a>
             @endforeach
-
         </div>
 
     </div>

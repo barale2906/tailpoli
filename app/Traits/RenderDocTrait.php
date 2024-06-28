@@ -32,22 +32,6 @@ trait RenderDocTrait
     //public function docubase($id, $tipo, $ori=null){
     public function docubase($id, $doc){
 
-        /* if($ori){
-
-            $this->docuTipo=Documento::whereId($id)->first();
-
-            $this->docuMatricula=Matricula::where('status', true)
-                                        ->orderBy('id', 'DESC')
-                                        ->first();
-        }else{
-
-            $this->docuTipo=Documento::where('status', 3)
-                                        ->whereIn('tipo', $tipo)
-                                        ->get();
-
-            $this->docuMatricula=Matricula::whereId($id)->first();
-        } */
-
         $this->docuTipo=Documento::whereId($doc)->first();
 
         $this->docuMatricula=Matricula::whereId($id)->first();
@@ -96,12 +80,6 @@ trait RenderDocTrait
     }
 
     public function docuDetalle(){
-
-        /* $ids=[];
-
-        foreach ($this->docuTipo as $value) {
-            array_push($ids, $value->id);
-        } */
 
         $this->detalles=DB::table('detalle_documento')
                             ->where('status', true)
