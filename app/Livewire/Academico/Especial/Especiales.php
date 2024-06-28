@@ -65,16 +65,10 @@ class Especiales extends Component
 
     private function usuarios(){
 
-        $consulta = User::query();
-
-        if($this->buscamin){
-            $consulta = $consulta->where('name', 'like', "%".$this->buscamin."%")
-                                ->orWhere('documento', 'like', "%".$this->buscamin."%");
-        }
-
-        return $consulta->where('caso_especial', '>', 0)
-                        ->orderBy($this->ordena, $this->ordenado)
-                        ->paginate($this->pages);
+        return User::buscar($this->buscamin)
+                    ->where('caso_especial', '>', 0)
+                    ->orderBy($this->ordena, $this->ordenado)
+                    ->paginate($this->pages);
 
     }
 

@@ -101,8 +101,6 @@ trait FiltroTrait
 
             case 8:
                 $this->txt="Busque por acá: nombre o documento del alumno";
-
-                //transacciones
                 $this->is_verfiltro=false;
                 break;
 

@@ -246,4 +246,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Sede::class);
     }
+
+    public function scopeBuscar($query, $item){
+        $query->when($item ?? null, function($query, $item){
+            $query->where('name', 'like', "%".$item."%")
+                    ->orwhere('documento', 'like', "%".$item."%");
+        });
+    }
 }
