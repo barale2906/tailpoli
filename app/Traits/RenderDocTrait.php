@@ -27,12 +27,20 @@ trait RenderDocTrait
     public $impresion=[];
     public $deuda;
     public $edad;
+    public $plantilla;
 
 
     //public function docubase($id, $tipo, $ori=null){
     public function docubase($id, $doc){
 
         $this->docuTipo=Documento::whereId($doc)->first();
+
+        $plantilla=DB::table('tipo_documentos')
+                            ->where('name',$this->docuTipo->tipo)
+                            ->select('plantilla')
+                            ->first();
+
+        $this->plantilla=$plantilla->plantilla;
 
         $this->docuMatricula=Matricula::whereId($id)->first();
 
@@ -138,6 +146,7 @@ trait RenderDocTrait
             'matriSede',
             'matriSector',
             'matriState',
+            'matriGen',
             'nombreEstu',
             'documentoEstu',
             'tipodocuEstu',
@@ -179,12 +188,14 @@ trait RenderDocTrait
         }
         $formatterES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
         $formapagoES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
+        $matricrea= Carbon::create($this->docuMatricula->created_at);
 
         $matriculaId=$this->docuMatricula->id; //matriculaEstu	Numero de matricula del estudiante
         $matriculaInicia=$this->docuMatricula->fecha_inicia; //matriculaInicia	Fecha de inicio del estudiante
         $matriSede=$this->docuMatricula->sede->name; // matriSede Nombre d ela sede donde se matriculo.
         $matriSector=$this->docuMatricula->sede->sector->name; //Ciudad donde se matricula
         $matriState=$this->docuMatricula->sede->sector->state->name; // matriState Departamento en el que se matriculo.
+        $matriGen=$formattedDate = $matricrea->format('d') . ' días del mes de ' . $matricrea->locale('es')->monthName . ' de ' . $matricrea->format('Y'); // Fecha de creación de la matricula para los contratos
         $nombreEstud=strtoupper($this->docuMatricula->alumno->name); //nombreEstu	Nombre del estudiante
         $documEstu=number_format($this->docuMatricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
         $tipodocu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
@@ -216,6 +227,7 @@ trait RenderDocTrait
             $matriSede,
             $matriSector,
             $matriState,
+            $matriGen,
             $nombreEstud,
             $documEstu,
             $horaDocu,

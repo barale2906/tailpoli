@@ -11,11 +11,12 @@ class DocumentosTipo extends Component
     use WithPagination;
 
     public $ordena='name';
-    public $ordenado='DESC';
+    public $ordenado='ASC';
     public $pages=15;
 
     public $name;
     public $descripcion;
+    public $plantilla;
 
 
     protected $listeners = ['refresh' => '$refresh'];
@@ -46,6 +47,7 @@ class DocumentosTipo extends Component
     protected $rules = [
         'name'          => 'required|unique:tipo_documentos|max:255',
         'descripcion'   => 'required',
+        'plantilla'     => 'required',
     ];
 
     /**
@@ -55,7 +57,8 @@ class DocumentosTipo extends Component
     public function resetFields(){
         $this->reset(
                         'name',
-                        'descripcion'
+                        'descripcion',
+                        'plantilla'
                     );
     }
 
@@ -67,6 +70,7 @@ class DocumentosTipo extends Component
         DB::table('tipo_documentos')->insert([
             'name'          =>strtolower($this->name),
             'descripcion'   =>strtolower($this->descripcion),
+            'plantilla'     =>$this->plantilla,
             'created_at'    =>now(),
             'updated_at'    =>now(),
         ]);
@@ -77,6 +81,7 @@ class DocumentosTipo extends Component
 
         //refresh
         $this->dispatch('refresh');
+        $this->documentos();
     }
 
     private function documentos(){

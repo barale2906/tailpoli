@@ -18,6 +18,35 @@
                 </div>
             @enderror
         </div>
+        <h1 class=" text-center">
+            Elija tipo de plantilla aplicable:
+        </h1>
+        <div class="flex items-center mb-4">
+            <input id="plantilla-1" type="radio" wire:model.live="plantilla" name="plantilla" value="1" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600">
+            <label for="plantilla-1" class="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-300">
+                Encabezado y pie de página (para documentos de una página).
+            </label>
+        </div>
+
+        <div class="flex items-center mb-4">
+            <input id="plantilla-2" type="radio" wire:model.live="plantilla" name="plantilla" value="2" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600">
+            <label for="plantilla-2" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Solo encabezado. (documentos de varias páginas)
+            </label>
+        </div>
+
+        <div class="flex items-center mb-4">
+            <input id="plantilla-3" type="radio" wire:model.live="plantilla" name="plantilla" value="3" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:bg-gray-700 dark:border-gray-600">
+            <label for="plantilla-3" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Sin encabezado ni pie de página (Documentos legales como contratos, pagarés etc)
+            </label>
+            @error('plantilla')
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                </div>
+            @enderror
+        </div>
+
     </div>
     <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 m">
         <button type="button" wire:click.prevent="new()"
@@ -57,6 +86,9 @@
                             @endif
                         @endif
                     </th>
+                    <th scope="col" class="px-6 py-3">
+                        PLANTILLA
+                    </th>
                     <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('status')">
                         ESTADO DEL DOCUMENTO
                         @if ($ordena != 'status')
@@ -74,11 +106,25 @@
             <tbody>
                 @foreach ($documentos as $documento)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                             {{$documento->name}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                             {{$documento->descripcion}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                            @switch($documento->plantilla)
+                                @case(1)
+                                    Usa encabezado y pie de página
+                                    @break
+                                @case(2)
+                                    Usa Solo encabezado
+                                    @break
+                                @case(3)
+                                    No usa encabezado ni pie de página
+                                    @break
+
+                            @endswitch
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             @if ($documento->status)
