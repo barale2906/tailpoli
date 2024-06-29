@@ -371,7 +371,7 @@
                 Por favor genere los documentos respectivos para su firma y el recibo de caja para registar el pago.
             </p>
             <div class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
-                <a href="{{$url}}" target="a_blank"  class="w-full sm:w-auto bg-orange-800 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-orange-700 dark:hover:bg-orange-600 dark:focus:ring-orange-700">
+                <a href="" wire:click.prevent="documentos()"  class="w-full sm:w-auto bg-orange-800 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-orange-700 dark:hover:bg-orange-600 dark:focus:ring-orange-700">
                     <i class="fa-solid fa-file-pdf mr-2"></i>
                     <div class="text-left rtl:text-right">
                         <div class="mb-1 text-xs">Descargar documentos</div>
@@ -410,6 +410,9 @@
         @if (!$genrecibo)
             <livewire:financiera.recibo-pago.recibos-pago-crear :ruta="$ruta" :estudiante="$alumno_id"/>
         @endif
+        @if ($is_document)
+            <livewire:academico.matricula.documentos :elegido="$elegido" />
+    @endif
 
     @endif
 </div>

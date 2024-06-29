@@ -60,6 +60,7 @@ class MatriculasCrear extends Component
     public $cuotas;
 
     public $matricula;
+    public $elegido;
 
     public $vista=true;
     public $genrecibo=true;
@@ -69,6 +70,7 @@ class MatriculasCrear extends Component
     public $url;
 
     public $is_comercial=false;
+    public $is_document=false;
     public $primerGrupo;
 
 
@@ -281,6 +283,7 @@ class MatriculasCrear extends Component
                                 'configpago'=>$this->config_id
                             ]);
 
+        $this->elegido=$this->matricula->id;
 
         //cartera
         $concepto=ConceptoPago::where('name', 'Matricula')
@@ -382,6 +385,11 @@ class MatriculasCrear extends Component
 
         //Asignar grupos
         $this->asignar();
+    }
+
+    //Activar documentos
+    public function documentos(){
+        $this->is_document=!$this->is_document;
     }
 
     //Asignar grupos al estudiante
