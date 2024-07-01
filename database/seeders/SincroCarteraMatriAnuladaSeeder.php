@@ -21,11 +21,17 @@ class SincroCarteraMatriAnuladaSeeder extends Seeder
 
                     try {
 
-                        //Actualizar fechas de pago reales cartera
-                        Cartera::where('matricula_id', $data[0])
-                                ->update([
-                                    'status'=>false
-                                ]);
+                        $observaciones=now().' ERP poliandino, ajuste de cartera por matricula anulada. ----- ';
+
+                        $item=Cartera::where('matricula_id', $data[0])->get();
+
+                        foreach ($item as $value) {
+                            Cartera::where('id', $value->id)
+                                    ->update([
+                                        'status' => false,
+                                        'observaciones' =>$observaciones.$value->observaciones,
+                                    ]);
+                        }
 
 
                     }catch(Exception $exception){
