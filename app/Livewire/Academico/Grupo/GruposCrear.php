@@ -34,6 +34,7 @@ class GruposCrear extends Component
     public $jornada_id;
 
     public $seleccionados=[];
+    public $diaselegidos;
     public $area_id;
     public $area;
     public $intensidad;
@@ -185,24 +186,28 @@ class GruposCrear extends Component
                 $this->jornada='Mañana';
                 $this->abremargen=$this->abre;
                 $this->cierramargen='12:00';
+                $this->diaselegidos='lunes,martes, miercoles, jueves, viernes';
                 break;
 
             case 2:
                 $this->jornada='Tarde';
                 $this->abremargen='12:00';
                 $this->cierramargen='18:00';
+                $this->diaselegidos='lunes,martes, miercoles, jueves, viernes';
                 break;
 
             case 3:
                 $this->jornada='Noche';
                 $this->abremargen='18:00';
                 $this->cierramargen=$this->cierra;
+                $this->diaselegidos='lunes,martes, miercoles, jueves, viernes';
                 break;
 
             case 4:
                 $this->jornada='Fin Semana';
                 $this->abremargen=$this->abre;
                 $this->cierramargen=$this->cierra;
+                $this->diaselegidos='sabado, domingo';
                 break;
         }
     }
@@ -232,40 +237,44 @@ class GruposCrear extends Component
         $termina = new Carbon($this->hora);
         $finclase = $termina->addHours($this->intensidad);
 
-        if($hora >= $abre && $finclase <= $cierra){
+        if (strpos($this->diaselegidos, $this->dia) !== false) {
+            if($hora >= $abre && $finclase <= $cierra){
 
-            for ($i=0; $i < $this->intensidad; $i++) {
+                for ($i=0; $i < $this->intensidad; $i++) {
 
-                $horad = new Carbon($this->hora);
-                $finev = $horad->addHours($i);
-                $horafin=$finev->roundMinutes(60)->format('H:i:s');
+                    $horad = new Carbon($this->hora);
+                    $finev = $horad->addHours($i);
+                    $horafin=$finev->roundMinutes(60)->format('H:i:s');
 
 
-                $esta=Horario::where('sede_id', $this->sede_id)
-                            ->where('status', true)
-                            ->where('area_id', $this->area_id)
-                            ->where('dia', $this->dia)
-                            ->where('tipo', false)
-                            ->whereNot('grupo', 'like', "%".$this->namebase."%")
-                            ->where('hora', $horafin)
-                            ->count();
+                    $esta=Horario::where('sede_id', $this->sede_id)
+                                ->where('status', true)
+                                ->where('area_id', $this->area_id)
+                                ->where('dia', $this->dia)
+                                ->where('tipo', false)
+                                ->whereNot('grupo', 'like', "%".$this->namebase."%")
+                                ->where('hora', $horafin)
+                                ->count();
 
-                if($esta>0){
-                    $this->conteo=$this->conteo+$esta;
+                    if($esta>0){
+                        $this->conteo=$this->conteo+$esta;
+                    }
                 }
-            }
 
-            if($this->conteo>0){
-                $this->dispatch('alerta', name:'Revise el horario, área e intensidad horaria, ya esta registrado el valor o se traslapa con otro grupo');
-                $this->reset('conteo');
+                if($this->conteo>0){
+                    $this->dispatch('alerta', name:'Revise el horario, área e intensidad horaria, ya esta registrado el valor o se traslapa con otro grupo');
+                    $this->reset('conteo');
+                }else{
+                    $this->reset('conteo');
+                    $this->cargaSele();
+                }
+
             }else{
-                $this->reset('conteo');
-                $this->cargaSele();
+                $this->dispatch('alerta', name:'Revise el horario, fuera de horario para el día');
             }
         }else{
-            $this->dispatch('alerta', name:'Revise el horario, fuera de horario para el día');
+            $this->dispatch('alerta', name:'El día seleccionado no corresponde a la jornada elegida');
         }
-
 
 
     }
@@ -366,39 +375,27 @@ class GruposCrear extends Component
             $this->variosmodulos=true;
         }
 
-        $this->slugCrear();
-        $this->name=$this->namebase;
+        $this->name='pr';
 
         // validate
         $this->validate();
 
         if($this->variosmodulos){
 
+            foreach ($this->modulos as $key => $value) {
+                $this->reset('modulo', 'modulo_id');
+                $this->modulo       =$value->name;
+                $this->modulo_id    =$value->id;
+                $this->slugCrear();
+                $this->crear();
+                Log::info('Line: ' . $value->id. ' modulo: '.$this->modulo.' id: '.$this->modulo_id);
+            }
+            $this->dispatch('alerta', name:'Se crearon todos los grupos para los modulos respectivos');
+
         }else{
 
-            //Genera un solo grupo
-            $grupo= Grupo::create([
-                'name'=>strtolower($this->name),
-                'jornada'   =>$this->jornada_id,
-                'quantity_limit'    =>$this->quantity_limit,
-                'modulo_id'         =>$this->modulo_id,
-                'sede_id'           =>$this->sede_id,
-                'profesor_id'       =>$this->profesor_id
-                ]);
-
-            //Cargar horarios
-            foreach ($this->seleccionados as $value) {
-                Horario::create([
-                        'sede_id'       =>$this->sede_id,
-                        'area_id'       =>$value['area_id'],
-                        'grupo'         =>$this->name,
-                        'grupo_id'      =>$grupo->id,
-                        'tipo'          =>false,
-                        'periodo'       =>true,
-                        'dia'           =>$value['dia'],
-                        'hora'          =>$value['hora'],
-                ]);
-            }
+            $this->slugCrear();
+            $this->crear();
             // Notificación
             $this->dispatch('alerta', name:'Se ha creado correctamente el grupo: '.$this->name);
         }
@@ -412,6 +409,35 @@ class GruposCrear extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('created');
+    }
+
+    private function crear(){
+
+        $this->name=$this->namebase;
+
+        //Genera un solo grupo
+        $grupo= Grupo::create([
+                        'name'              =>strtolower($this->name),
+                        'jornada'           =>$this->jornada_id,
+                        'quantity_limit'    =>$this->quantity_limit,
+                        'modulo_id'         =>$this->modulo_id,
+                        'sede_id'           =>$this->sede_id,
+                        'profesor_id'       =>$this->profesor_id
+                    ]);
+
+        //Cargar horarios
+        foreach ($this->seleccionados as $value) {
+            Horario::create([
+                    'sede_id'       =>$this->sede_id,
+                    'area_id'       =>$value['area_id'],
+                    'grupo'         =>$this->name,
+                    'grupo_id'      =>$grupo->id,
+                    'tipo'          =>false,
+                    'periodo'       =>true,
+                    'dia'           =>$value['dia'],
+                    'hora'          =>$value['hora'],
+            ]);
+        }
     }
 
     private function cursos()

@@ -441,7 +441,7 @@
                     Generar todos los grupos - Modulos
                 </button>
                 <button type="submit" wire:click.prevent="new()"
-                    class="text-white bg-cyan-500 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-xs md:text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-500 dark:focus:ring-cyan-400"
+                    class=" text-black uppercase  bg-cyan-500 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-xs md:text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-500 dark:focus:ring-cyan-400"
                     >
                         Generar solo este Grupo
                     </button>
