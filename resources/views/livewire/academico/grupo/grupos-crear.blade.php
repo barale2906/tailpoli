@@ -63,35 +63,7 @@
 
                 @if ($profesor_id>0)
                     {{$namebase}}
-                    {{-- <div class="mb-6">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Grupo: {{$name}}{{$namebase}}</label>
-                        <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.live="name">
-                        @error('name')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div> --}}
 
-                    {{-- <div class="mb-6">
-                        <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio</label>
-                        <input type="date" id="start_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.live="start_date">
-                        @error('start_date')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-6">
-                        <label for="finish_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Finalización</label>
-                        <input type="date" id="finish_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  wire:model.blur="finish_date">
-                        @error('finish_date')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div> --}}
 
                     <div class="mb-6">
                         <label for="quantity_limit" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Límite de Estudiantes</label>
@@ -456,12 +428,24 @@
 
         @if ($profesor_id>0 && count($seleccionados)>0)
             <div>
-                <button type="submit" wire:click.prevent="new"
+                <button type="submit" wire:click.prevent="validar"
                 class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs md:text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
                 >
                     Nuevo Grupo
                 </button>
             </div>
+            @if ($is_varios)
+                <button type="submit" wire:click.prevent="new(1)"
+                class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-400 dark:hover:bg-green-500 dark:focus:ring-green-400"
+                >
+                    Generar todos los grupos - Modulos
+                </button>
+                <button type="submit" wire:click.prevent="new()"
+                    class="text-white bg-cyan-500 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-xs md:text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-500 dark:focus:ring-cyan-400"
+                    >
+                        Generar solo este Grupo
+                    </button>
+            @endif
         @endif
 
         <div>

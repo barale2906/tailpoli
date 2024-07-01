@@ -47,6 +47,8 @@ class GruposCrear extends Component
     public $abremargen;
     public $cierramargen;
     public $numerar=1;
+    public $variosmodulos=false;
+    public $is_varios=false;
 
 
     public function updatedCursoId(){
@@ -352,8 +354,17 @@ class GruposCrear extends Component
                     );
     }
 
+    //Verificar si uno o todos los odulos del curso
+    public function validar(){
+        $this->is_varios=!$this->is_varios;
+    }
+
     // Crear
-    public function new(){
+    public function new($varios=null){
+
+        if($varios){
+            $this->variosmodulos=true;
+        }
 
         $this->slugCrear();
         $this->name=$this->namebase;
@@ -361,35 +372,41 @@ class GruposCrear extends Component
         // validate
         $this->validate();
 
-       //Crear registro
-        $grupo= Grupo::create([
-            'name'=>strtolower($this->name),
-            'jornada'   =>$this->jornada_id,
-            //'start_date'        =>$this->start_date,
-            //'finish_date'       =>$this->finish_date,
-            'quantity_limit'    =>$this->quantity_limit,
-            'modulo_id'         =>$this->modulo_id,
-            'sede_id'           =>$this->sede_id,
-            'profesor_id'       =>$this->profesor_id
-            ]);
+        if($this->variosmodulos){
 
-        //Cargar horarios
-        foreach ($this->seleccionados as $value) {
-            Horario::create([
-                    'sede_id'       =>$this->sede_id,
-                    'area_id'       =>$value['area_id'],
-                    'grupo'         =>$this->name,
-                    'grupo_id'      =>$grupo->id,
-                    'tipo'          =>false,
-                    'periodo'       =>true,
-                    'dia'           =>$value['dia'],
-                    'hora'          =>$value['hora'],
-            ]);
+        }else{
+
+            //Genera un solo grupo
+            $grupo= Grupo::create([
+                'name'=>strtolower($this->name),
+                'jornada'   =>$this->jornada_id,
+                'quantity_limit'    =>$this->quantity_limit,
+                'modulo_id'         =>$this->modulo_id,
+                'sede_id'           =>$this->sede_id,
+                'profesor_id'       =>$this->profesor_id
+                ]);
+
+            //Cargar horarios
+            foreach ($this->seleccionados as $value) {
+                Horario::create([
+                        'sede_id'       =>$this->sede_id,
+                        'area_id'       =>$value['area_id'],
+                        'grupo'         =>$this->name,
+                        'grupo_id'      =>$grupo->id,
+                        'tipo'          =>false,
+                        'periodo'       =>true,
+                        'dia'           =>$value['dia'],
+                        'hora'          =>$value['hora'],
+                ]);
+            }
+            // Notificación
+            $this->dispatch('alerta', name:'Se ha creado correctamente el grupo: '.$this->name);
         }
 
 
-        // Notificación
-        $this->dispatch('alerta', name:'Se ha creado correctamente el grupo: '.$this->name);
+
+
+
         $this->resetFields();
 
         //refresh
