@@ -117,7 +117,7 @@ class MatriculasAnular extends Component
             }
         }
 
-        $asis=DB::table('asistencia_detalle')
+        /* $asis=DB::table('asistencia_detalle')
                     ->where('alumno_id', $this->matricula->alumno_id)
                     ->get();
 
@@ -126,10 +126,11 @@ class MatriculasAnular extends Component
                 DB::table('asistencia_detalle')
                     ->where('id', $value->id)
                     ->update([
-                        'status'=>false
+                        //'status'=>false
+                        ''
                     ]);
             }
-        }
+        } */
 
 
 
