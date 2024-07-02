@@ -123,7 +123,7 @@ class MatriculasAnular extends Component
 
         if($asis){
             foreach ($asis as $value) {
-                DB::table('aistencia_detalle')
+                DB::table('asistencia_detalle')
                     ->where('id', $value->id)
                     ->update([
                         'status'=>false
