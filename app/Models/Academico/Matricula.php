@@ -128,6 +128,7 @@ class Matricula extends Model
         $query->when($lapso ?? null, function($query, $lapso){
             $fecha1=Carbon::parse($lapso[0]);
             $fecha2=Carbon::parse($lapso[1]);
+            $fecha2->addSeconds(86399);
             $query->whereBetween('created_at', [$fecha1 , $fecha2]);
         });
     }
