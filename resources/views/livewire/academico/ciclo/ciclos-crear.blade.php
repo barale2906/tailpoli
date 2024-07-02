@@ -1,16 +1,16 @@
 <div>
     <form wire:submit.prevent="new">
         @if ($jornada)
-                <div class="mb-6">
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la programación: {{$name}}</label>
-                    <input type="name" id="name" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="name">
-                    @error('name')
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                        </div>
-                    @enderror
-                </div>
-            @endif
+            <div class="mb-6">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la programación: {{$name}}</label>
+                <input type="name" id="name" class="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" wire:model.blur="name">
+                @error('name')
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                    </div>
+                @enderror
+            </div>
+        @endif
         <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
             <div class="mb-6">
                 <label for="sede_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sede</label>
@@ -110,8 +110,12 @@
                             <label for="fechaModulo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio del Modulo</label>
                             <input type="date" id="fechaModulo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fechaModulo">
 
-                            <label for="fechaFin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Fin del Modulo</label>
-                            <input type="date" id="fechaFin" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fechaFin">
+                            @if ($fechaModulo)
+                                <label for="fechaFin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Fecha de Fin del Modulo, <span class=" text-xs">final sugerido: {{$fechafinsugerida}}</span>
+                                </label>
+                                <input type="date" id="fechaFin" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fechaFin">
+                            @endif
 
 
                                 <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">

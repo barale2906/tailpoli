@@ -32,12 +32,14 @@ class CiclosCrear extends Component
     public $maximo;
     public $modulos;
     public $modulo_id;
+    public $lapso;
 
     public $fechaRegistro;
 
     public $is_date=false;
     public $fechaModulo;
     public $fechaFin;
+    public $fechafinsugerida;
     public $grupoId;
     public $moduloId;
 
@@ -61,6 +63,10 @@ class CiclosCrear extends Component
 
 
         $this->maximo=$this->modulos->count();
+        $lapso=$this->curso->duracion_meses/$this->maximo;
+        $lapdia=30*$lapso;
+        $this->lapso=round($lapdia);
+
 
         foreach ($this->curso->modulos as $value) {
 
@@ -129,6 +135,12 @@ class CiclosCrear extends Component
                             ->where('modulo_id', $this->modulo_id)
                             ->where('status', true)
                             ->get();
+    }
+
+    public function updatedFechaModulo(){
+        $fechaFin=Carbon::create($this->fechaModulo)->addDays($this->lapso);
+        $this->fechaFin=$fechaFin->format('Y-m-d');
+        $this->fechafinsugerida=$fechaFin->format('Y-m-d');
     }
 
     public function nombrar(){
