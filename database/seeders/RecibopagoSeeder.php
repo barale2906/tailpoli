@@ -8,6 +8,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Financiera\ReciboPago;
 
 class RecibopagoSeeder extends Seeder
 {
@@ -37,8 +38,14 @@ class RecibopagoSeeder extends Seeder
                     $fecha=new Carbon($data[1]);
                     $fech=$fecha->format('Y-m-d');
 
+                    $ultimo=ReciboPago::where('origen', true)
+                                ->max('numero_recibo');
+
+                    $recibo=$ultimo+1;
+
                     DB::table('recibo_pagos')->insert([
-                        'numero_recibo'     =>intval($data[0]),
+                        //'numero_recibo'     =>intval($data[0]),
+                        'numero_recibo'     =>$recibo,
                         'origen'            =>true,
                         'fecha'             =>$data[1],
                         'valor_total'       =>$data[2],
