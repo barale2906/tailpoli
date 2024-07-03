@@ -97,6 +97,7 @@ trait FiltroTrait
 
                 //transacciones
                 $this->is_transaccion=true;
+                $this->is_Creades=true;
                 break;
 
             case 8:

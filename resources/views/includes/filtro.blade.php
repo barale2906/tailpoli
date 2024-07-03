@@ -225,10 +225,10 @@
                     <select wire:model.live="estado" id="estado"
                     class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
                         <option >Estado transaccion</option>
-                        <option value="1">Creada</option>
-                        <option value="3">Pendiente Entrega Inventario</option>
-                        <option value="4">Devuelto</option>
-                        <option value="2">Cerrada</option>
+                        <option value=1>Creada</option>
+                        <option value=2>Pendiente Entrega Inventario</option>
+                        <option value=3>Devuelto</option>
+                        <option value=4>Cerrada</option>
                     </select>
                 </div>
             @endif

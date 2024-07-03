@@ -86,9 +86,8 @@ class RecibosPagoCrear extends Component
     public $pendientes;
 
     public function mount($ruta=null, $elegido=null, $estudiante=null){
-        DB::table('apoyo_recibo')
-            ->where('id_creador', Auth::user()->id)
-            ->delete();
+
+        $this->limpiapoyo();
 
         $this->ruta=$ruta;
 
@@ -106,6 +105,12 @@ class RecibosPagoCrear extends Component
         }
 
         $this->descuentoConcepto();
+    }
+
+    public function limpiapoyo(){
+        DB::table('apoyo_recibo')
+            ->where('id_creador', Auth::user()->id)
+            ->delete();
     }
 
     public function variables(){
@@ -753,6 +758,7 @@ class RecibosPagoCrear extends Component
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente el recibo: '.$recibo->numero_recibo);
         $this->resetFields();
+        $this->limpiapoyo();
 
         //refresh
         $this->dispatch('refresh');

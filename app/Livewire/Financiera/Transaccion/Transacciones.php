@@ -8,6 +8,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
+use App\Exports\TransaccionesExport;
 
 class Transacciones extends Component
 {
@@ -27,6 +28,9 @@ class Transacciones extends Component
     public $buscamin='';
     public $estado;
     public $id_estado;
+    public $filtroCreades;
+    public $filtroCreahas;
+    public $filtrocrea=[];
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -100,34 +104,27 @@ class Transacciones extends Component
 
     }
 
+    public function updatedFiltroCreahas(){
+        if($this->filtroCreades<=$this->filtroCreahas){
+            $crea=array();
+            array_push($crea, $this->filtroCreades);
+            array_push($crea, $this->filtroCreahas);
+            $this->filtrocrea=$crea;
+        }else{
+            $this->reset('filtroCreades','filtroCreahas');
+        }
+    }
+    public function exportar(){
+        return new TransaccionesExport($this->buscamin, $this->filtrocrea,$this->id_estado);
+    }
+
     private function transacciones()
     {
-        $consulta = Transaccion::query();
-
-        if($this->buscamin){
-            $consulta = $consulta->where('fecha', 'like', "%".$this->buscamin."%")
-            ->orwhere('observaciones', 'like', "%".$this->buscamin."%")
-
-            ->orWhereHas('creador', function(Builder $q){
-                $q->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('gestionador', function(Builder $q){
-                $q->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('alumno', function($qu){
-                $qu->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('sede', function($que){
-                $que->where('name', 'like', "%".$this->buscamin."%");
-            });
-        }
-
-        if($this->id_estado){
-            $consulta=$consulta->where('status', $this->id_estado);
-        }
-
-        return $consulta->orderBy($this->ordena, $this->ordenado)
-                        ->paginate($this->pages);
+        return Transaccion::buscar($this->buscamin)
+                            ->estado($this->id_estado)
+                            ->crea($this->filtrocrea)
+                            ->orderBy($this->ordena, $this->ordenado)
+                            ->paginate($this->pages);
 
     }
 
