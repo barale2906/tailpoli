@@ -102,11 +102,10 @@ class Salida extends Component
 
     public function updatedMedio(){
 
-        if($this->medio==="tarjeta"){
+        $registro=explode("-",$this->medio);
+        if(intval($registro[1])===2){
 
-            $porc=ConceptoPago::where('status', true)
-                                ->where('name', 'Recargo Tarjeta')
-                                ->first();
+            $porc=ConceptoPago::find(intval($registro[0]));
 
             $this->recargo=$porc->valor;
             $this->recargo_id=$porc->id;
@@ -120,7 +119,7 @@ class Salida extends Component
                 'id_creador'=>Auth::user()->id,
                 'id_concepto'=>$porc->id,
                 'concepto'=>$porc->name,
-                'producto'=>'Recargo Tarjeta',
+                'producto'=>$porc->name,
                 'cantidad'=>1,
                 'subtotal'=>$this->recargoValor,
                 'valor'=>$this->recargoValor
@@ -320,7 +319,7 @@ class Salida extends Component
     //Eliminar producto
     public function elimOtro($item){
 
-        $this->valoRecargo();
+
         $reg=DB::table('apoyo_recibo')->whereId($item)->first();
 
         if($reg->concepto!=='Descuento'){
@@ -719,21 +718,21 @@ class Salida extends Component
 
         return $consulta->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
+    }
 
-        /* return User::where('status', true)
-                        ->where('name', 'like', "%".$this->buscaestudi."%")
-                        ->orWhere('documento', 'like', "%".$this->buscaestudi."%")
-                        ->orderBy('name')
-                        ->with('roles')->get()->filter(
-                            fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                        ); */
+    private function tarjetas(){
+        return ConceptoPago::where('status', true)
+                            ->where('name', 'like', "%".'Recargo Tarjeta'."%")
+                            ->orderBy('name', 'ASC')
+                            ->get();
     }
 
     public function render()
     {
         return view('livewire.inventario.inventario.salida',[
             'estudiantes'   =>$this->estudiantes(),
-            'productos'     =>$this->productos()
+            'productos'     =>$this->productos(),
+            'tarjetas'      =>$this->tarjetas(),
         ]);
     }
 }

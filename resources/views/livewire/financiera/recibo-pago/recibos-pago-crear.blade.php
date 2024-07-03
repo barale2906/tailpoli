@@ -119,56 +119,6 @@
                     @if (!$pagoTotal)
                         <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-2 mb-4">
                             <div class="ring-2 bg-slate-50 col-span-2 p-4">
-                                {{-- @if ($listaotros)
-                                    <div>
-                                        <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                            Otros Conceptos
-                                        </h5>
-                                        <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
-                                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                                <tr>
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        Concepto de pago
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        Valor
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        Valor pagado
-                                                    </th>
-                                                    <th>
-
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($listaotros as $item)
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
-                                                            {{$item->name}}
-                                                        </th>
-                                                        <th scope="row" class="px-6 py-4 text-right font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                                            {{$item->precio}}
-                                                        </th>
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                                            <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
-                                                        </th>
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
-
-                                                            <a href="" wire:click.prevent="asigOtro(0,0,{{$item}})"  class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
-                                                                <i class="fa-solid fa-check"></i>
-                                                            </a>
-                                                        </th>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                @else
-                                    <h5 class="mb-2 text-xl font-semibold tracking-tight dark:text-white uppercase text-orange-300">
-                                        ¡No hay lista de precios de otros conceptos activa para esta sede.!
-                                    </h5>
-                                @endif --}}
 
                                 <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -210,24 +160,6 @@
                                         </h5>
                                         <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                                {{-- <tr>
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        Registrar descuento
-                                                    </th>
-                                                    <th scope="col" colspan="2" class="px-6 py-3" >
-                                                        <input type="text" id="descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a descontar" wire:model.blur="descuento">
-                                                    </th>
-                                                    <th scope="row" colspan="2" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
-                                                        <select wire:model.blur="concepdescuento" wire:change="cargaDescuento" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                                            <option>Seleccione...</option>
-                                                            @foreach ($concePagos as $item)
-                                                                @if ($item->name==="Descuento")
-                                                                    <option value={{$item->id}}>{{$item->name}}</option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                    </th>
-                                                </tr> --}}
                                                 <tr>
                                                     <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                                                         Fecha pago programada
@@ -385,58 +317,68 @@
                                 </div>
                             @enderror
                         </div>
-                        @if (Auth::user()->rol_id===1)
-                            <div class="mb-6">
-                                <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
-                                <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                    <option >Elija...</option>
-                                        <option value="PSE">PSE</option>
-                                        <option value="transferencia">Transferencia</option>
-                                        <option value="cheque">Cheque</option>
-                                        <option value="efectivo">Efectivo</option>
-                                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
+                        @if ($Total>0)
+                            @if (Auth::user()->rol_id===1)
+                                <div class="mb-6">
+                                    <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
+                                    <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                        <option >Elija...</option>
+                                            <option value="PSE-1">PSE</option>
+                                            <option value="transferencia-1">Transferencia</option>
+                                            <option value="cheque-1">Cheque</option>
+                                            <option value="efectivo-1">Efectivo</option>
+                                            @foreach ($tarjetas as $item)
+                                                <option value={{$item->id}}-2>{{$item->name}}</option>
+                                            @endforeach
 
-                                </select>
-                                @error('medio')
-                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                                    </div>
-                                @enderror
-                                @if ($recargo>0)
-                                    <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
-                                        Tendrá un recargo del <strong>{{$recargo}} %</strong>
-                                    </label>
-                                @endif
-                            </div>
-                        @else
-                            <div class="mb-6">
-                                <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
-                                <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                    <option >Elija...</option>
-                                    @if ($ruta===4)
-                                        <option value="PSE">PSE</option>
-                                        <option value="transferencia">Transferencia</option>
-                                        <option value="cheque">Cheque</option>
-                                        <option value="efectivo">Efectivo</option>
-                                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
-                                    @else
-                                        <option value="efectivo">Efectivo</option>
-                                        <option value="tarjeta">Tarjeta Crédito / Tarjeta débito</option>
+
+                                    </select>
+                                    @error('medio')
+                                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                        </div>
+                                    @enderror
+                                    @if ($recargo>0)
+                                        <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
+                                            Tendrá un recargo del <strong>{{$recargo}} %</strong>
+                                        </label>
                                     @endif
+                                </div>
+                            @else
+                                <div class="mb-6">
+                                    <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Método de pago</label>
+                                    <select wire:model.live="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                        <option >Elija...</option>
+                                        @if ($ruta===4)
+                                            <option value="PSE-1">PSE</option>
+                                            <option value="transferencia-1">Transferencia</option>
+                                            <option value="cheque-1">Cheque</option>
+                                            <option value="efectivo-1">Efectivo</option>
+                                            @foreach ($tarjetas as $item)
+                                                <option value={{$item->id}}-2>{{$item->name}}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="efectivo-1">Efectivo</option>
+                                            @foreach ($tarjetas as $item)
+                                                <option value={{$item->id}}-2>{{$item->name}}</option>
+                                            @endforeach
+                                        @endif
 
-                                </select>
-                                @error('medio')
-                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                                    </div>
-                                @enderror
-                                @if ($recargo>0)
-                                    <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
-                                        Tendrá un recargo del <strong>{{$recargo}} %</strong>
-                                    </label>
-                                @endif
-                            </div>
+                                    </select>
+                                    @error('medio')
+                                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                        </div>
+                                    @enderror
+                                    @if ($recargo>0)
+                                        <label for="medio" class="block mb-2 text-sm font-medium text-red-600 dark:text-white capitalize">
+                                            Tendrá un recargo del <strong>{{$recargo}} %</strong>
+                                        </label>
+                                    @endif
+                                </div>
+                            @endif
                         @endif
+
 
                     </div>
                     @if ($Total>0 || $pagoTotal)

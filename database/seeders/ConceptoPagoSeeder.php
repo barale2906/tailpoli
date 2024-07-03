@@ -14,6 +14,36 @@ class ConceptoPagoSeeder extends Seeder
     public function run(): void
     {
         ConceptoPago::create([
+            'name'              =>'Recargo Tarjeta 0 %',
+            'tipo'              =>'financiero',
+            'valor'             =>0
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Recargo Tarjeta 1 %',
+            'tipo'              =>'financiero',
+            'valor'             =>1
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Recargo Tarjeta 2 %',
+            'tipo'              =>'financiero',
+            'valor'             =>2
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Recargo Tarjeta 4 %',
+            'tipo'              =>'financiero',
+            'valor'             =>4
+        ]);
+
+        ConceptoPago::create([
+            'name'              =>'Recargo Tarjeta 5 %',
+            'tipo'              =>'financiero',
+            'valor'             =>5
+        ]);
+
+        /* ConceptoPago::create([
             'name'              =>'Matricula',
             'tipo'              =>'cartera'
         ]);
@@ -150,5 +180,5 @@ class ConceptoPagoSeeder extends Seeder
             'name'              =>'Anteriores',
             'tipo'              =>'otro'
         ]);
-    }
+ */    }
 }

@@ -376,7 +376,7 @@ class RecibosPagoCrear extends Component
                 ->where('id', $item)
                 ->first();
 
-        $this->valoRecargo();
+        //$this->valoRecargo();
 
         if($reg->concepto!=='Descuento'){
             $this->Total=$this->Total-$reg->valor;
@@ -400,18 +400,18 @@ class RecibosPagoCrear extends Component
 
             if($reg->id_producto>0){
 
-                $aplicado=DB::table('apoyo_recibo')
+                $aplic=DB::table('apoyo_recibo')
                                 ->where('id_producto', $reg->id_producto)
                                 ->where('concepto', 'Descuento')
                                 ->first();
 
-                if($aplicado){
+                if($aplic){
                     DB::table('apoyo_recibo')
                                 ->where('id_producto', $reg->id_producto)
                                 ->where('concepto', 'Descuento')
                                 ->delete();
 
-                    $this->Totaldescue=$this->Totaldescue-$aplicado->valor;
+                    $this->Totaldescue=$this->Totaldescue-$aplic->valor;
                 }
             }
         }
@@ -428,11 +428,10 @@ class RecibosPagoCrear extends Component
     }
 
     public function updatedMedio(){
-        if($this->medio==="tarjeta"){
+        $registro=explode("-",$this->medio);
 
-            $porc=ConceptoPago::where('status', true)
-                                ->where('name', 'Recargo Tarjeta')
-                                ->first();
+        if(intval($registro[1])===2){
+            $porc=ConceptoPago::find(intval($registro[0]));
 
             $this->recargo=$porc->valor;
             $this->recargo_id=$porc->id;
@@ -661,44 +660,6 @@ class RecibosPagoCrear extends Component
                                         'id_relacional'=>$nota
                                     ]);
                     }
-
-                    /* $deudas=Cartera::where('responsable_id', $this->alumno_id)
-                                    ->where('status', true)
-                                    ->orderBy('fecha_pago')
-                                    ->get();
-
-                    foreach ($deudas as $val) {
-                        $obser=explode('-----',$val->observaciones);
-                        $obprim=$obser[0];
-                        if($this->descuento>0){
-
-                            $this->saldo=$val->saldo-$this->descuento;
-                            $observa=$obprim.' ----- '.now()." ".$this->alumnoName." recibio descuento por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$val->observaciones;
-                            if($this->saldo>0){
-                                $esta=EstadoCartera::where('name', 'abonada')->first();
-                                $this->estado=$esta->id;
-                                $this->status=true;
-                                $this->descuento=0;
-                            }else{
-                                $esta=EstadoCartera::where('name', 'cerrada')->first();
-                                $this->estado=$esta->id;
-                                $this->status=false;
-                                $this->descuento=$this->descuento-$this->saldo;
-                                $this->saldo=0;
-                            }
-
-                            $val->update([
-                                'fecha_real'=>$this->fecha_pago,
-                                'saldo'=>$this->saldo,
-                                'observaciones'=>$observa,
-                                'status'=>$this->status,
-                                'estado_cartera_id'=>$this->estado
-                            ]);
-
-
-                        }
-                        $this->reset('saldo');
-                    } */
                 }
                 $this->reset('estado', 'status');
             }
@@ -827,11 +788,19 @@ class RecibosPagoCrear extends Component
         return $this->concep;
     }
 
+    private function tarjetas(){
+        return ConceptoPago::where('status', true)
+                            ->where('name', 'like', "%".'Recargo Tarjeta'."%")
+                            ->orderBy('name', 'ASC')
+                            ->get();
+    }
+
     public function render(){
         return view('livewire.financiera.recibo-pago.recibos-pago-crear',[
             'sedes'=>$this->sedes(),
             'estudiantes'=>$this->estudiantes(),
-            'concePagos'=>$this->concePagos()
+            'concePagos'=>$this->concePagos(),
+            'tarjetas'=>$this->tarjetas(),
         ]);
     }
 }
