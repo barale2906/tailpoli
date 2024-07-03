@@ -48,8 +48,20 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('created_at')">
+                            Fecha Creación
+                            @if ($ordena != 'created_at')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_inicia')">
-                            Fecha
+                            Fecha Inicia
                             @if ($ordena != 'fecha_inicia')
                                 <i class="fas fa-sort"></i>
                             @else
@@ -132,6 +144,9 @@
 
 
                                 @endif
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                {{$matricula->created_at}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$matricula->fecha_inicia}}
