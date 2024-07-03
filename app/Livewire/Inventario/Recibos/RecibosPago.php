@@ -21,6 +21,9 @@ class RecibosPago extends Component
     public $buscamin='';
     public $filtroCreades;
     public $filtroCreahas;
+    public $filtroSede;
+    public $filtrocrea=[];
+    public $is_poliandino=false;
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -59,41 +62,39 @@ class RecibosPago extends Component
         $this->pages=$valor;
     }
 
+    public function updatedFiltroCreahas(){
+        if($this->filtroCreades<=$this->filtroCreahas){
+            $crea=array();
+            array_push($crea, $this->filtroCreades);
+            array_push($crea, $this->filtroCreahas);
+            $this->filtrocrea=$crea;
+        }else{
+            $this->reset('filtroCreades','filtroCreahas');
+        }
+    }
+
     private function recibos()
     {
-        $consulta = ReciboPago::query()->where('origen', 0);
+        return ReciboPago::where('origen', $this->is_poliandino)
+                            ->buscar($this->buscamin)
+                            ->sede($this->filtroSede)
+                            ->crea($this->filtrocrea)
+                            ->orderBy($this->ordena, $this->ordenado)
+                            ->paginate($this->pages);
 
-        if($this->buscamin){
-            $consulta = $consulta->where('fecha', 'like', "%".$this->buscamin."%")
-            ->orwhere('medio', 'like', "%".$this->buscamin."%")
-            ->orwhere('observaciones', 'like', "%".$this->buscamin."%")
-            ->orWhereHas('creador', function(Builder $q){
-                $q->where('name', 'like', "%".$this->buscamin."%");
-            })->orWhereHas('paga', function($qu){
-                $qu->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('conceptos', function($que){
-                $que->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('sede', function($que){
-                $que->where('name', 'like', "%".$this->buscamin."%");
-            });
-        }
+    }
 
-        if($this->filtroCreades && $this->filtroCreahas){
-
-            $consulta = $consulta->whereBetween('fecha', [$this->filtroCreades , $this->filtroCreahas]);
-        }
-
-        return $consulta->orderBy($this->ordena, $this->ordenado)
-                        ->paginate($this->pages);
-
+    private function sedes(){
+        return ReciboPago::select('sede_id')
+                        ->groupBy('sede_id')
+                        ->get();
     }
 
     public function render()
     {
         return view('livewire.inventario.recibos.recibos-pago',[
-            'recibos'=>$this->recibos()
+            'recibos'=>$this->recibos(),
+            'sedes'=>$this->sedes(),
         ]);
     }
 }
