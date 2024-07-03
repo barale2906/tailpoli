@@ -61,8 +61,8 @@
                                 </div>
 
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$cartera->responsable->name}}
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                {{$cartera->responsable->name}} - {{$cartera->matricula->curso->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 $ {{number_format($cartera->saldo, 0, ',', '.')}}
