@@ -639,7 +639,7 @@ class Salida extends Component
 
             //Descargar la transaccion
             if($this->transaccion){
-                $respuesta=now()." ".Auth::user()->name." GENERO RECIBO POR LOS PRODUCTOS ----- ";
+                $respuesta=now()." ".Auth::user()->name." Genero recibo por los productos N°".$this->recibo->numero_recibo." ----- ";
                 $this->transaccion->update([
                     'observaciones'=>$respuesta.$this->transaccion->observaciones,
                     'status'=>4

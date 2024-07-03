@@ -727,7 +727,7 @@ class RecibosPagoCrear extends Component
 
         //Actualiza la transacción
         if($this->transaccion){
-            $observa=now()." ".Auth::user()->name." GENERO RECIBO DE PAGO N°: ".$recibo->numero_recibo." ----- ";
+            $observa=now()." ".Auth::user()->name." Genero recibo de pago N°: ".$recibo->numero_recibo." ----- ";
             if($this->transaccion->inventario>0){
                 $this->status_transa=$this->transaccion->status;
             }else{

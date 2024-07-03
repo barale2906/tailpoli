@@ -20,7 +20,7 @@
                     <tr>
                         <th scope="col" class="px-6 py-3" ></th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha')">
-                            Fecha
+                            Fecha de Registro
                             @if ($ordena != 'fecha')
                                 <i class="fas fa-sort"></i>
                             @else
@@ -73,6 +73,32 @@
                                 @endif
                             @endif
                         </th>
+
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_transaccion')">
+                            Fecha Transacción
+                            @if ($ordena != 'fecha_transaccion')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('banco')">
+                            Banco
+                            @if ($ordena != 'banco')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
                         <th scope="col" class="px-6 py-3" >
                             Creador
                         </th>
@@ -91,6 +117,12 @@
                                             </a>
                                         </span>
                                     @endcan
+                                @else
+                                    <a href="{{Storage::url($transaccione->ruta)}}" target="_blank">
+                                        <button type="button" class="px-4 py-2 text-xs font-medium text-gray-900 bg-blue-150 border border-gray-200 rounded-lg hover:bg-green-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </a>
                                 @endif
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
@@ -110,6 +142,12 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                                 {{$transaccione->observaciones}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                {{$transaccione->fecha_transaccion}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                {{$transaccione->banco}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                                 {{$transaccione->creador->name}}

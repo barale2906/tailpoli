@@ -35,6 +35,21 @@
                 </div>
             @enderror
         </div>
+        <div class="mb-6">
+            <label for="banco" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Banco donde consignaron</label>
+            <select wire:model.live="banco" id="banco" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                <option >Elija banco...</option>
+                <option value='Bancolombia Ahorros'>Bancolombia Ahorros</option>
+                <option value='Colpatria Ahorros'>Colpatria Ahorros</option>
+                <option value='Davivienda Ahorros'>Davivienda Ahorros</option>
+                <option value='Davivienda Corriente'>Davivienda Corriente</option>
+            </select>
+            @error('banco')
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                </div>
+            @enderror
+        </div>
 
         <div class="mb-6">
             <label for="opcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Concepto que paga</label>

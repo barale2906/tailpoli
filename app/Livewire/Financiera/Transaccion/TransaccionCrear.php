@@ -20,6 +20,7 @@ class TransaccionCrear extends Component
     public $observacion;
     public $observaciones;
     public $sede_id;
+    public $banco;
     public $opcion;
     public $url;
 
@@ -74,6 +75,7 @@ class TransaccionCrear extends Component
         'otro'          => 'required',
         'total'         => 'required',
         'fecha_transaccion' => 'required',
+        'banco'         => 'required',
     ];
 
     /**
@@ -89,7 +91,8 @@ class TransaccionCrear extends Component
                         'academico',
                         'otro',
                         'total',
-                        'fecha_transaccion'
+                        'fecha_transaccion',
+                        'banco'
                     );
     }
 
@@ -143,6 +146,7 @@ class TransaccionCrear extends Component
             'academico'=>intval($this->academico),
             'inventario'=>intval($this->otro),
             'fecha_transaccion'=>$this->fecha_transaccion,
+            'banco'=>$this->banco,
             'total'=>intval($this->total),
             'observaciones'=>$this->observaciones,
         ]);
