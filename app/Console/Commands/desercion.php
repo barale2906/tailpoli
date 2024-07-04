@@ -51,6 +51,7 @@ class desercion extends Command
         $this->activo=$conec->id;
 
         $controles=Control::where('status', true)
+                            ->where('inicia', '<', Carbon::today())
                             ->get();
 
         foreach ($controles as $value) {
