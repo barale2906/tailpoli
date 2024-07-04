@@ -33,6 +33,7 @@ class Salida extends Component
 
     public $descripcion;
     public $medio;
+    public $medioele;
 
     public $movimientos;
     public $Total=0;
@@ -113,6 +114,8 @@ class Salida extends Component
             $this->recargo_id=$porc->id;
             $this->recargoValor=$this->Total*$this->recargo/100;
             $this->Total=$this->Total+$this->recargoValor;
+            $this->medioele=$porc->name;
+            $this->banco=$porc->name;
 
 
             //Cargar valor al recibo
@@ -130,6 +133,9 @@ class Salida extends Component
             $this->cargando();
 
         }else{
+            $medio=explode("-",$this->medio);
+            $this->medioele=$medio[0];
+            $this->banco=$medio[0];
             $this->valoRecargo();
         }
     }
@@ -568,7 +574,6 @@ class Salida extends Component
                 $this->banco=$this->transaccion->banco;
                 $this->fecha_transaccion=$this->transaccion->fecha_transaccion;
             }else{
-                $this->banco=$this->medio;
                 $this->fecha_transaccion=now();
             }
 
@@ -579,7 +584,7 @@ class Salida extends Component
                 'fecha'=>now(),
                 'valor_total'=>$this->Total,
                 'descuento'=>$this->Totaldescuento,
-                'medio'=>$this->medio,
+                'medio'=>$this->medioele,
                 'banco'=>$this->banco,
                 'fecha_transaccion'=>$this->fecha_transaccion,
                 'observaciones'=>$comentarios,

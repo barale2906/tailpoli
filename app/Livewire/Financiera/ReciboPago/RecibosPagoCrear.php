@@ -27,6 +27,7 @@ class RecibosPagoCrear extends Component
     use MailTrait;
 
     public $medio='';
+    public $medioele;
     public $observaciones='';
     public $obser;
     public $sede_id;
@@ -439,6 +440,8 @@ class RecibosPagoCrear extends Component
             $this->recargo_id=$porc->id;
             $this->recargoValor=$this->Total*$this->recargo/100;
             $this->Total=$this->Total+$this->recargoValor;
+            $this->medioele=$porc->name;
+            $this->banco=$porc->name;
 
 
             //Cargar valor al recibo
@@ -453,6 +456,9 @@ class RecibosPagoCrear extends Component
             $this->cargando();
 
         }else{
+            $medio=explode("-",$this->medio);
+            $this->medioele=$medio[0];
+            $this->banco=$medio[0];
             $this->valoRecargo();
         }
     }
@@ -515,11 +521,11 @@ class RecibosPagoCrear extends Component
             $recibo=1;
         }
 
+
         if($this->transaccion){
             $this->banco=$this->transaccion->banco;
             $this->fecha_transaccion=$this->transaccion->fecha_transaccion;
         }else{
-            $this->banco=$this->medio;
             $this->fecha_transaccion=now();
         }
 
@@ -530,7 +536,7 @@ class RecibosPagoCrear extends Component
                                 'fecha'=>$this->fecha_pago,
                                 'valor_total'=>$this->Total,
                                 'descuento'=>$this->Totaldescue,
-                                'medio'=>$this->medio,
+                                'medio'=>$this->medioele,
                                 'banco'=>$this->banco,
                                 'fecha_transaccion'=>$this->fecha_transaccion,
                                 'observaciones'=>strtolower($this->observaciones).$this->obser,
