@@ -85,7 +85,7 @@ class Salida extends Component
         if($transaccion){
             $this->transaccion=Transaccion::find($transaccion);
             $this->selAlumno($this->transaccion->user_id);
-            $this->medio="transferencia";
+            $this->medioele="transferencia";
         }
 
         $id=intval($almacen_id);
@@ -620,7 +620,7 @@ class Salida extends Component
                     ->insert([
                         'valor'=>$value->subtotal,
                         'tipo'=>$value->tipo,
-                        'medio'=>$this->medio,
+                        'medio'=>$this->medioele,
                         'producto'=>$value->producto,
                         'cantidad'=>$value->cantidad,
                         'unitario'=>$value->valor,
