@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
 
 class Control extends Model
 {
@@ -59,7 +60,23 @@ class Control extends Model
 
     public function scopeSede($query, $sede){
         $query->when($sede ?? null, function($query, $sede){
-            $query->where('sede_id', $sede);
+            $query->where('sede_id', intval($sede));
+        });
+    }
+
+    public function scopeCurso($query, $curso){
+        $query->when($curso ?? null, function($query, $curso){
+            $query->wherehas('matricula', function($qu) use($curso){
+                $qu->where('matriculas.curso_id', intval($curso));
+            });
+        });
+    }
+
+    public function scopeInicia($query, $lapso){
+        $query->when($lapso ?? null, function($query, $lapso){
+            $fecha1=Carbon::parse($lapso[0]);
+            $fecha2=Carbon::parse($lapso[1]);
+            $query->whereBetween('inicia', [$fecha1 , $fecha2]);
         });
     }
 }

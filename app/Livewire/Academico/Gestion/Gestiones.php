@@ -4,6 +4,8 @@ namespace App\Livewire\Academico\Gestion;
 
 use App\Models\Academico\Control;
 use App\Models\Academico\Nota;
+use App\Models\Academico\Curso;
+use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\Estado;
 use App\Traits\FiltroTrait;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +52,11 @@ class Gestiones extends Component
 
     public $buscar='';
     public $buscamin='';
+    public $filtroSede;
+    public $filtrocurso;
+    public $filtroInides;
+    public $filtroInihas;
+    public $filtroinicia=[];
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -235,6 +242,17 @@ class Gestiones extends Component
         $this->is_especiales = !$this->is_especiales;
     }
 
+    public function updatedFiltroInihas(){
+        if($this->filtroInides<=$this->filtroInihas){
+            $crea=array();
+            array_push($crea, $this->filtroInides);
+            array_push($crea, $this->filtroInihas);
+            $this->filtroinicia=$crea;
+        }else{
+            $this->reset('filtroInides','filtroInihas');
+        }
+    }
+
     public function notas($item, $id){
 
         $notas=Nota::where('grupo_id', $item)->first();
@@ -260,6 +278,9 @@ class Gestiones extends Component
         return Control::where('status', true)
                         ->whereIn('sede_id', $this->sedes)
                         ->buscar($this->buscamin)
+                        ->sede($this->filtroSede)
+                        ->curso($this->filtrocurso)
+                        ->inicia($this->filtroinicia)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
     }
@@ -271,11 +292,26 @@ class Gestiones extends Component
 
     }
 
+    private function sedeasignadas(){
+
+        return Sede::whereIn('id',$this->sedes)
+                    ->orderBy('name', 'asc')
+                    ->get();
+    }
+
+    private function cursos(){
+        return Curso::where('status', true)
+                        ->orderBy('name', 'ASC')
+                        ->get();
+    }
+
     public function render()
     {
         return view('livewire.academico.gestion.gestiones',[
             'controles' =>$this->controles(),
-            'estados'    =>$this->estados()
+            'estados'    =>$this->estados(),
+            'asignadas'     =>$this->sedeasignadas(),
+            'cursos'        =>$this->cursos(),
         ]);
     }
 }

@@ -13,6 +13,7 @@ trait FiltroTrait
     public $is_matri=false;
     public $is_estatumatri=false;
     public $is_sede=false;
+    public $is_sededir=false;
 
     //Curso
     public $is_curso=false;
@@ -125,6 +126,9 @@ trait FiltroTrait
 
             case 11:
                 $this->txt="Busque por acá: Nombre - documento del estudiante";
+                $this->is_sededir=true;
+                $this->is_Inides=true;
+                $this->is_curso=true;
                 break;
         }
     }

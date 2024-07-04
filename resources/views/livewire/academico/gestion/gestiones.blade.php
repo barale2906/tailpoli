@@ -7,89 +7,86 @@
 
 
     @if ($is_modify)
-        <div class="flex justify-center mb-4 ">
-            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
-                @include('includes.filtro')
-                {{-- pantalla grande --}}
-                <div class="hidden md:flex md:space-x-4 w-full">
-                    @can('ac_estudianteCrear')
-                        <a href="" wire:click.prevent="$dispatch('estudiantes')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center ml-1 mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-graduation-cap"></i> Estudiante
-                        </a>
-                    @endcan
-                    @can('ac_matriculaCrear')
-                        <a href="" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-book-medical"></i> Matricula
-                        </a>
-                    @endcan
-                    @can('ac_matriculaCrear')
-                        <a href="" wire:click.prevent="$dispatch('especia')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-book-medical"></i> Casos Especiales
-                        </a>
-                    @endcan
-                    @can('fi_recibopagoCrear')
-                        <a href="" wire:click.prevent="$dispatch('Editando')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-file-invoice-dollar"></i> Recibo
-                        </a>
-                    @endcan
-                    @can('fi_cierrecajaCrear')
-                        <a href="" wire:click.prevent="$dispatch('Inactivando')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-receipt"></i> Cierre
-                        </a>
-                    @endcan
-                    @can('ac_export')
-                        {{-- <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-file-excel"></i> Descargar
-                        </a> --}}
-                    @endcan
-                    @can('in_inventarioCrear')
-                        <a href="" wire:click.prevent="$dispatch('inventario')" class="w-auto text-black bg-gradient-to-r from-white via-white to-white hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-white dark:focus:ring-white font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                    @endcan
-                </div>
+        @include('includes.filtro')
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
 
-                {{-- pantalla pequeña --}}
-                <div class="md:hidden w-full">
-                    @can('ac_estudianteCrear')
-                        <a href="" wire:click.prevent="$dispatch('estudiantes')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center ml-1 mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-graduation-cap"></i>
-                        </a>
-                    @endcan
-                    @can('ac_matriculaCrear')
-                        <a href="" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-book-medical"></i>
-                        </a>
-                    @endcan
-                    @can('ac_matriculaCrear')
-                        <a href="" wire:click.prevent="$dispatch('especia')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-book-medical"></i>
-                        </a>
-                    @endcan
-                    @can('fi_recibopagoCrear')
-                        <a href="" wire:click.prevent="$dispatch('Editando')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-file-invoice-dollar"></i>
-                        </a>
-                    @endcan
-                    @can('fi_cierrecajaCrear')
-                        <a href="" wire:click.prevent="$dispatch('Inactivando')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-receipt"></i>
-                        </a>
-                    @endcan
-                    @can('ac_export')
-                        {{-- <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-file-excel"></i> Descargar
-                        </a> --}}
-                    @endcan
-                    @can('in_inventarioCrear')
-                        <a href="" wire:click.prevent="$dispatch('inventario')" class="w-auto text-black bg-gradient-to-r from-white via-white to-white hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-white dark:focus:ring-white font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                    @endcan
-                </div>
+            {{-- pantalla grande --}}
+            <div class="hidden md:flex md:space-x-4 w-full">
+                @can('ac_estudianteCrear')
+                    <a href="" wire:click.prevent="$dispatch('estudiantes')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center ml-1 mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-graduation-cap"></i> Estudiante
+                    </a>
+                @endcan
+                @can('ac_matriculaCrear')
+                    <a href="" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-book-medical"></i> Matricula
+                    </a>
+                @endcan
+                @can('ac_matriculaCrear')
+                    <a href="" wire:click.prevent="$dispatch('especia')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-book-medical"></i> Casos Especiales
+                    </a>
+                @endcan
+                @can('fi_recibopagoCrear')
+                    <a href="" wire:click.prevent="$dispatch('Editando')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-file-invoice-dollar"></i> Recibo
+                    </a>
+                @endcan
+                @can('fi_cierrecajaCrear')
+                    <a href="" wire:click.prevent="$dispatch('Inactivando')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-receipt"></i> Cierre
+                    </a>
+                @endcan
+                @can('ac_export')
+                    {{-- <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-file-excel"></i> Descargar
+                    </a> --}}
+                @endcan
+                @can('in_inventarioCrear')
+                    <a href="" wire:click.prevent="$dispatch('inventario')" class="w-auto text-black bg-gradient-to-r from-white via-white to-white hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-white dark:focus:ring-white font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-check"></i>
+                    </a>
+                @endcan
             </div>
 
-
+            {{-- pantalla pequeña --}}
+            <div class="md:hidden w-full">
+                @can('ac_estudianteCrear')
+                    <a href="" wire:click.prevent="$dispatch('estudiantes')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center ml-1 mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </a>
+                @endcan
+                @can('ac_matriculaCrear')
+                    <a href="" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-book-medical"></i>
+                    </a>
+                @endcan
+                @can('ac_matriculaCrear')
+                    <a href="" wire:click.prevent="$dispatch('especia')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-book-medical"></i>
+                    </a>
+                @endcan
+                @can('fi_recibopagoCrear')
+                    <a href="" wire:click.prevent="$dispatch('Editando')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </a>
+                @endcan
+                @can('fi_cierrecajaCrear')
+                    <a href="" wire:click.prevent="$dispatch('Inactivando')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-receipt"></i>
+                    </a>
+                @endcan
+                @can('ac_export')
+                    {{-- <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-file-excel"></i> Descargar
+                    </a> --}}
+                @endcan
+                @can('in_inventarioCrear')
+                    <a href="" wire:click.prevent="$dispatch('inventario')" class="w-auto text-black bg-gradient-to-r from-white via-white to-white hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-white dark:focus:ring-white font-medium rounded-lg text-sm p-2 text-center mr-1 mb-2 capitalize" >
+                        <i class="fa-solid fa-check"></i>
+                    </a>
+                @endcan
+            </div>
         </div>
         <div class="relative md:overflow-x-auto">
             <table class=" text-xs md:text-sm text-left text-gray-500 dark:text-gray-400">
