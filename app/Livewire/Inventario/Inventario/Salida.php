@@ -64,6 +64,8 @@ class Salida extends Component
     public $fin=true;
     public $control=0;
     public $recibo;
+    public $banco;
+    public $fecha_transaccion;
 
 
     public $recargo=0;
@@ -562,6 +564,14 @@ class Salida extends Component
                 $recibo=1;
             }
 
+            if($this->transaccion){
+                $this->banco=$this->transaccion->banco;
+                $this->fecha_transaccion=$this->transaccion->fecha_transaccion;
+            }else{
+                $this->banco=$this->medio;
+                $this->fecha_transaccion=now();
+            }
+
             //Crear recibo
             $this->recibo= ReciboPago::create([
                 'numero_recibo'=>$recibo,
@@ -570,6 +580,8 @@ class Salida extends Component
                 'valor_total'=>$this->Total,
                 'descuento'=>$this->Totaldescuento,
                 'medio'=>$this->medio,
+                'banco'=>$this->banco,
+                'fecha_transaccion'=>$this->fecha_transaccion,
                 'observaciones'=>$comentarios,
                 'sede_id'=>$this->sede_id,
                 'creador_id'=>Auth::user()->id,

@@ -43,6 +43,8 @@ class RecibosPagoCrear extends Component
     public $totalCartera=0;
     public $fecha_pago;
     public $ruta;
+    public $banco;
+    public $fecha_transaccion;
 
     public $concepdescuento;
     public $descuento;
@@ -513,6 +515,14 @@ class RecibosPagoCrear extends Component
             $recibo=1;
         }
 
+        if($this->transaccion){
+            $this->banco=$this->transaccion->banco;
+            $this->fecha_transaccion=$this->transaccion->fecha_transaccion;
+        }else{
+            $this->banco=$this->medio;
+            $this->fecha_transaccion=now();
+        }
+
         //Crear registro
         $recibo= ReciboPago::create([
                                 'numero_recibo'=>$recibo,
@@ -521,6 +531,8 @@ class RecibosPagoCrear extends Component
                                 'valor_total'=>$this->Total,
                                 'descuento'=>$this->Totaldescue,
                                 'medio'=>$this->medio,
+                                'banco'=>$this->banco,
+                                'fecha_transaccion'=>$this->fecha_transaccion,
                                 'observaciones'=>strtolower($this->observaciones).$this->obser,
                                 'sede_id'=>$this->sede_id,
                                 'creador_id'=>Auth::user()->id,

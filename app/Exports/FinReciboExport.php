@@ -66,6 +66,8 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
             'Descuento',
             'Neto',
             'Medio',
+            'banco',
+            'fecha_transaccion',
             'Cajero',
             'Observaciones'
         ];
@@ -86,6 +88,8 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
         array_push($sale,$recibo->descuento);
         array_push($sale,$neto);
         array_push($sale,$recibo->medio);
+        array_push($sale,$recibo->banco);
+        array_push($sale,$recibo->fecha_transaccion);
         array_push($sale,$recibo->creador->name);
         array_push($sale,$recibo->observaciones);
 
