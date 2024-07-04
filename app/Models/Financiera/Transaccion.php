@@ -53,7 +53,7 @@ class Transaccion extends Model
                         $query->where('users.name', 'like', "%".$item."%");
                     })
 
-                    ->orwherehas('alumno', function($query) use($item){
+                    ->orwherehas('user', function($query) use($item){
                         $query->where('users.name', 'like', "%".$item."%");
                     })
 
