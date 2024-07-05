@@ -28,6 +28,9 @@ trait RenderDocTrait
     public $deuda;
     public $edad;
     public $plantilla;
+    public $diaprimer;
+    public $mesprimer;
+    public $anoprimer;
 
 
     //public function docubase($id, $tipo, $ori=null){
@@ -114,6 +117,8 @@ trait RenderDocTrait
 
         $this->docuCartera=Cartera::where('matricula_id', $this->docuMatricula->id)
                                     ->get();
+
+
         $this->calculo();
     }
 
@@ -170,7 +175,10 @@ trait RenderDocTrait
             'fechaCrea',
             'fopaCuot',
             'fopaVrMes',
-            'fopaLetVrMes'
+            'fopaLetVrMes',
+            'fopaprimerdia',
+            'fopaprimermes',
+            'fopaprimeryear'
         ];
 
         $this->equivale();
@@ -182,10 +190,22 @@ trait RenderDocTrait
         if($formaPago){
             $this->cuotas=$formaPago->cuotas;
             $this->valormes=$formaPago->valor_cuota;
+            $primero=Cartera::where('responsable_id', $this->docuMatricula->alumno_id)
+                                ->where('observaciones', 'like', '%Cuota N°: 1%')
+                                ->first();
+
+            $pago=Carbon::create($primero->fecha_pago);
+            $this->diaprimer=$pago->day;
+            $this->mesprimer=$pago->month;
+            $this->anoprimer=$pago->year;
         }else{
             $this->cuotas=0;
             $this->valormes=0;
+            $this->diaprimer=0;
+            $this->mesprimer=0;
+            $this->anoprimer=0;
         }
+
         $formatterES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
         $formapagoES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
         $matricrea= Carbon::create($this->docuMatricula->created_at);
@@ -220,6 +240,9 @@ trait RenderDocTrait
         $fopaCuot=$this->cuotas; // formaCuotas Cantidad de cuotas pactadas
         $fopaVrMes="$ ".number_format($this->valormes, 0, '.', '.'); // formaValorMensual Valor de la cuotamensual
         $fopaLetVrMes=ucwords($formapagoES->format($this->valormes))." Pesos M/L."; //formaValorMensualLetras Valor de la cuota mensual en letras
+        $fopaprimerdia=$this->diaprimer; //Día del primer pago de cartera
+        $fopaprimermes=$this->mesprimer; // Mes del primer pago de cartera
+        $fopaprimeryear=$this->anoprimer; // Año del primer pago de cartera
 
         $this->reemplazo=[
             $matriculaId,
@@ -251,8 +274,10 @@ trait RenderDocTrait
             $fechaCrea,
             $fopaCuot,
             $fopaVrMes,
-            $fopaLetVrMes
-
+            $fopaLetVrMes,
+            $fopaprimerdia,
+            $fopaprimermes,
+            $fopaprimeryear
         ];
 
         $this->docFiltra();
