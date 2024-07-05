@@ -189,7 +189,7 @@ trait RenderDocTrait
 
     public function equivale(){
         $formaPago=ConfiguracionPago::find($this->docuMatricula->configpago);
-        if($formaPago){
+        if($formaPago->cuotas>0){
             $this->cuotas=$formaPago->cuotas;
             $this->valormes=$formaPago->valor_cuota;
             $primero=Cartera::where('responsable_id', $this->docuMatricula->alumno_id)
@@ -246,8 +246,8 @@ trait RenderDocTrait
         $fopaprimerdia=$this->diaprimer; //Día del primer pago de cartera
         $fopaprimermes=$this->mesprimer; // Mes del primer pago de cartera
         $fopaprimeryear=$this->anoprimer; // Año del primer pago de cartera
-        $fopamatricula="$ ".number_format($formapago->valor_matricula, 0, '.', '.'); // Valor a pagar por matricula
-        $fopamatriculaletras=ucwords($formamatriculaES->format($formapago->valor_matricula))." Pesos M/L."; //Valor en letras del costo de matricula
+        $fopamatricula="$ ".number_format($formaPago->valor_matricula, 0, '.', '.'); // Valor a pagar por matricula
+        $fopamatriculaletras=ucwords($formamatriculaES->format($formaPago->valor_matricula))." Pesos M/L."; //Valor en letras del costo de matricula
 
         $this->reemplazo=[
             $matriculaId,
