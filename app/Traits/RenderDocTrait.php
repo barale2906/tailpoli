@@ -180,7 +180,7 @@ trait RenderDocTrait
             'fopaprimermes',
             'fopaprimeryear',
             'fopamatricula',
-            'fopamatriculaletras'
+            'fopaletrasmatricula'
         ];
 
         $this->equivale();
@@ -247,7 +247,7 @@ trait RenderDocTrait
         $fopaprimermes=$this->mesprimer; // Mes del primer pago de cartera
         $fopaprimeryear=$this->anoprimer; // Año del primer pago de cartera
         $fopamatricula="$ ".number_format($formaPago->valor_matricula, 0, '.', '.'); // Valor a pagar por matricula
-        $fopamatriculaletras=ucwords($formamatriculaES->format($formaPago->valor_matricula))." Pesos M/L."; //Valor en letras del costo de matricula
+        $fopaletrasmatricula=ucwords($formamatriculaES->format($formaPago->valor_matricula))." Pesos M/L."; //Valor en letras del costo de matricula
 
         $this->reemplazo=[
             $matriculaId,
@@ -284,7 +284,7 @@ trait RenderDocTrait
             $fopaprimermes,
             $fopaprimeryear,
             $fopamatricula,
-            $fopamatriculaletras,
+            $fopaletrasmatricula,
         ];
 
         $this->docFiltra();
