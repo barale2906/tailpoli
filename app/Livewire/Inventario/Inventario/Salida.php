@@ -383,7 +383,10 @@ class Salida extends Component
             'saldo',
             'precio',
             'descripcion',
-            'producto_id'
+            'producto_id',
+            'Total',
+            'Totaldescuento',
+            'alumno_id',
         );
     }
 

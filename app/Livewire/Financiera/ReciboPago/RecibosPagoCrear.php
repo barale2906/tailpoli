@@ -494,7 +494,10 @@ class RecibosPagoCrear extends Component
         $this->reset(
                     'medio',
                     'observaciones',
-                    'sede_id'
+                    'sede_id',
+                    'Total',
+                    'Totaldescue',
+                    'alumno_id',
                     );
     }
 

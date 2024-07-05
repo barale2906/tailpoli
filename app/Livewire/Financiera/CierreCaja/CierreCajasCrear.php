@@ -10,9 +10,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use App\Traits\ComunesTrait;
 
 class CierreCajasCrear extends Component
 {
+    use ComunesTrait;
+
     public $sede_id;
     public $cajeros;
     public $cajero_id;
@@ -114,12 +117,13 @@ class CierreCajasCrear extends Component
                                     ->where('recibo_pagos.sede_id', $this->sede_id)
                                     ->where('recibo_pagos.creador_id', $this->cajero_id)
                                     ->where('recibo_pagos.status', 0)
+                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'financiero')
                                     ->where('concepto_pago_recibo_pago.medio', 'efectivo')
                                     ->sum('concepto_pago_recibo_pago.valor');
 
-        $this->carteradet();
+        $this->carteradet($this->cajero_id);
     }
-
+/*
     public function carteradet(){
 
         $this->valor_pensiones = DB::table('concepto_pago_recibo_pago')
@@ -221,7 +225,7 @@ class CierreCajasCrear extends Component
                                     ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
                                     ->whereIn('concepto_pago_recibo_pago.medio', ['consignacion', 'PSE', ])
                                     ->sum('concepto_pago_recibo_pago.valor');
-    }
+    } */
 
     // Crear
     public function new(){

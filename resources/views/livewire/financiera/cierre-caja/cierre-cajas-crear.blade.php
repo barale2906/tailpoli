@@ -43,7 +43,7 @@
                     </div>
                 @enderror
             </div>
-            <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 bg-slate-300">
+            <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-3 bg-slate-300">
                 <div class="mb-6">
                     <div class="flex flex-col items-center justify-center">
                         <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($valor_total, 0, ',', '.')}}</dt>
@@ -52,14 +52,20 @@
                 </div>
                 <div class="mb-6">
                     <div class="flex flex-col items-center justify-center">
-                        <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($valor_anulado, 0, ',', '.')}}</dt>
-                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor anulado</dd>
+                        <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($valor_tarjeta, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor tarjetas</dd>
                     </div>
                 </div>
                 <div class="mb-6">
                     <div class="flex flex-col items-center justify-center">
                         <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($valor_efectivoT, 0, ',', '.')}}</dt>
                         <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor efectivo</dd>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($valor_anulado, 0, ',', '.')}}</dt>
+                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor anulado</dd>
                     </div>
                 </div>
                 <div class="mb-6">
@@ -81,12 +87,6 @@
                     <div class="flex flex-col items-center justify-center">
                         <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_efectivo, 0, ',', '.')}}</dt>
                         <dd class="text-gray-500 dark:text-gray-400 capitalize">Efectivo Pensiones</dd>
-                    </div>
-                </div>
-                <div class="mb-6">
-                    <div class="flex flex-col items-center justify-center">
-                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_tarjeta, 0, ',', '.')}}</dt>
-                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Tarjetas</dd>
                     </div>
                 </div>
                 <div class="mb-6">
@@ -114,12 +114,6 @@
                     <div class="flex flex-col items-center justify-center">
                         <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_efectivo_o, 0, ',', '.')}}</dt>
                         <dd class="text-gray-500 dark:text-gray-400 capitalize">Efectivo Otros</dd>
-                    </div>
-                </div>
-                <div class="mb-6">
-                    <div class="flex flex-col items-center justify-center">
-                        <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_tarjeta_o, 0, ',', '.')}}</dt>
-                        <dd class="text-gray-500 dark:text-gray-400 capitalize">Tarjetas</dd>
                     </div>
                 </div>
                 <div class="mb-6">
