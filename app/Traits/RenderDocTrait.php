@@ -178,7 +178,9 @@ trait RenderDocTrait
             'fopaLetVrMes',
             'fopaprimerdia',
             'fopaprimermes',
-            'fopaprimeryear'
+            'fopaprimeryear',
+            'fopamatricula',
+            'fopamatriculaletras'
         ];
 
         $this->equivale();
@@ -208,6 +210,7 @@ trait RenderDocTrait
 
         $formatterES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
         $formapagoES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
+        $formamatriculaES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
         $matricrea= Carbon::create($this->docuMatricula->created_at);
 
         $matriculaId=$this->docuMatricula->id; //matriculaEstu	Numero de matricula del estudiante
@@ -243,6 +246,8 @@ trait RenderDocTrait
         $fopaprimerdia=$this->diaprimer; //Día del primer pago de cartera
         $fopaprimermes=$this->mesprimer; // Mes del primer pago de cartera
         $fopaprimeryear=$this->anoprimer; // Año del primer pago de cartera
+        $fopamatricula="$ ".number_format($formapago->valor_matricula, 0, '.', '.'); // Valor a pagar por matricula
+        $fopamatriculaletras=ucwords($formamatriculaES->format($formapago->valor_matricula))." Pesos M/L."; //Valor en letras del costo de matricula
 
         $this->reemplazo=[
             $matriculaId,
@@ -277,7 +282,9 @@ trait RenderDocTrait
             $fopaLetVrMes,
             $fopaprimerdia,
             $fopaprimermes,
-            $fopaprimeryear
+            $fopaprimeryear,
+            $fopamatricula,
+            $fopamatriculaletras,
         ];
 
         $this->docFiltra();

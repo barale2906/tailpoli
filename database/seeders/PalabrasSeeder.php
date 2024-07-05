@@ -15,6 +15,22 @@ class PalabrasSeeder extends Seeder
     {
         DB::table('palabras_clave')
                 ->insert([
+                    'palabra'=>'fopamatricula',
+                    'descripcion'=>'Valor en numeros de la matricula a pagar inicial.',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'fopamatriculaletras',
+                    'descripcion'=>'Valor en letras de la matricula a pagar inicial.',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        /* DB::table('palabras_clave')
+                ->insert([
                     'palabra'=>'fopaprimerdia',
                     'descripcion'=>'Día de pago de la primer cuota.',
                     'created_at'=>now(),
@@ -37,7 +53,7 @@ class PalabrasSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
-        /* DB::table('palabras_clave')
+         DB::table('palabras_clave')
                 ->insert([
                     'palabra'=>'matriculaEstu',
                     'descripcion'=>'Numero de matricula del estudiante',

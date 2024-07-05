@@ -157,7 +157,7 @@ class CierreCajeroCrear extends Component
 
         //relacionar recibos
         foreach ($this->recibos as $value) {
-            if($value===2){
+            if($value->status===2){
                 $this->status=2;
             }
 
