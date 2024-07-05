@@ -220,7 +220,7 @@ class CiclosCrear extends Component
 
             $horar=Horario::where('grupo_id',$elegido->id_concepto)
                                 ->where('status', true)
-                                ->orderBy('dia','ASC')
+                                //->orderBy('dia','ASC')
                                 ->orderBy('hora','ASC')
                                 ->get();
 
@@ -230,7 +230,7 @@ class CiclosCrear extends Component
             foreach ($horar as $value) {
 
                 if (strpos($dias, $value->dia) === false) {
-                    $dias=$dias." - ".$value->dia;
+                    $dias=$dias." ".$value->dia;
                 }
 
                 if(empty($horarios)){
@@ -239,7 +239,7 @@ class CiclosCrear extends Component
 
             }
 
-        $this->name=$this->curso->name." -- ".$jor." -- ".$this->inicia." -- ".$dias." -- ".$horarios." -- ".$sedeBase." -- ".$ciudadBase;
+        $this->name=$this->curso->name." -- ".$jor." -- ".$this->inicia." - ".$dias." - ".$horarios." -- ".$sedeBase." -- ".$ciudadBase;
     }
 
     public function activFecha($id, $mod){
