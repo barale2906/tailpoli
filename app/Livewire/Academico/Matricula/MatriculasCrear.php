@@ -313,7 +313,13 @@ class MatriculasCrear extends Component
         if($this->cuotas>0){
             $a=1;
             while ($a <= $this->cuotas) {
-                $endDate = $date->addMonths();
+                $endDate="";
+                if($a===1){
+                    $endDate=$date;
+                }else{
+                    $endDate = $date->addMonths();
+                }
+
                 Cartera::create([
                     'fecha_pago'=>$endDate,
                     'valor'=>$this->valor_cuota,
