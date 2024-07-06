@@ -237,6 +237,12 @@ class CierreCajasCrear extends Component
                         'fecha_cierre'=>now(),
                         'fecha'=>now(),
                         'valor_total'=>$this->valor_total,
+                        'efectivo'=>$this->valor_efectivo+$this->valor_efectivo_o,
+                        'efectivo_descuento'=>$this->descefec,
+                        'efectivo_disponible'=>$this->efectivoentrega,
+                        'cobro_tarjeta'=>$this->valor_tarjeta,
+                        'tarjeta'=>$this->tarjetaventa,
+                        'descuentotal'=>$this->descuentosT,
                         'observaciones'=>$this->observaciones,
 
                         'valor_pensiones'=>$this->valor_pensiones,
@@ -251,12 +257,6 @@ class CierreCajasCrear extends Component
                         'valor_cheque_o'=>$this->valor_cheque_o,
                         'valor_consignacion_o'=>$this->valor_consignacion_o,
 
-                        /* 'valor_herramientas'=>$this->valor_herramientas,
-                        'valor_efectivo_h'=>$this->valor_efectivo_h,
-                        'valor_tarjeta_h'=>$this->valor_tarjeta_h,
-                        'valor_cheque_h'=>$this->valor_cheque_h,
-                        'valor_consignacion_h'=>$this->valor_consignacion_h, */
-
                         'sede_id'=>$this->sede_id,
                         'cajero_id'=>$this->cajero_id,
                         'coorcaja_id'=>Auth::user()->id,
@@ -265,9 +265,8 @@ class CierreCajasCrear extends Component
 
         //relacionar recibos
         foreach ($this->recibos as $value) {
-            if($value->status===2){
-                $this->status=2;
-            }
+
+            $this->status=2;
 
             //Actualizar recibo
             ReciboPago::whereId($value->id)->update([
@@ -284,7 +283,6 @@ class CierreCajasCrear extends Component
                 'updated_at'=>now(),
             ]);
 
-            $this->reset('status');
         }
 
         // Notificación

@@ -6,6 +6,7 @@ use App\Models\Financiera\CierreCaja;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Financiera\ConceptoPago;
+use App\Models\Financiera\ReciboPago;
 
 
 trait ComunesTrait
@@ -21,6 +22,13 @@ trait ComunesTrait
     public $idstarjetas=[];
     public $pensiones;
     public $otros;
+    public $reporte;
+    public $totalmedios;
+    public $valor_tarjetas=0;
+    public $valor_tarjetas_o=0;
+    public $descefec=0;
+    public $efectivoentrega=0;
+    public $tarjetaventa=0;
 
 
     public function cierre(){
@@ -55,6 +63,25 @@ trait ComunesTrait
         foreach ($this->recibos as $value) {
             array_push($this->idsrecibos, $value->id);
         }
+        //Mostrar todos los detalle sdel cierre
+        $this->reporte=DB::table('concepto_pago_recibo_pago')
+                            ->join('concepto_pagos', 'concepto_pago_recibo_pago.concepto_pago_id', '=', 'concepto_pagos.id')
+                            ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
+                            ->whereIn('concepto_pago_recibo_pago.recibo_pago_id', $this->idsrecibos)
+                            ->select(
+                                'recibo_pagos.numero_recibo',
+                                'recibo_pagos.fecha',
+                                'recibo_pagos.valor_total',
+                                'recibo_pagos.descuento',
+                                'concepto_pagos.name',
+                                'concepto_pago_recibo_pago.tipo',
+                                'concepto_pago_recibo_pago.medio',
+                                'concepto_pago_recibo_pago.valor',
+                                'concepto_pago_recibo_pago.producto',
+                                'concepto_pago_recibo_pago.cantidad',
+                                'concepto_pago_recibo_pago.unitario',
+                                )
+                            ->get();
 
         $conceptos=DB::table('concepto_pago_recibo_pago')
                         ->whereIn('recibo_pago_id', $this->idsrecibos)
@@ -129,9 +156,11 @@ trait ComunesTrait
         $this->valor_cheque = $this->pensiones->whereIn('medio', 'cheque')->sum('valor');
 
         $this->valor_consignacion = $this->pensiones->where('medio', ['consignacion', 'PSE'])->sum('valor');
+        $this->valor_tarjetas = $this->pensiones->where('medio', 'like', '%Tarjeta%')->sum('valor');
 
         $this->otrosdet();
-
+        $this->buscamedios();
+        $this->descuentoefectivo();
     }
 
     public function otrosdet(){
@@ -149,5 +178,31 @@ trait ComunesTrait
 
         $this->valor_consignacion_o = $this->otros->whereIn('medio',['consignacion', 'PSE'])->sum('valor');
 
+        $this->valor_tarjetas_o = $this->otros->where('medio', 'like', '%Tarjeta%')->sum('valor');
+
+    }
+
+    public function buscamedios(){
+        $this->totalmedios=ReciboPago::whereIn('id', $this->idsrecibos)
+                                ->select('medio', DB::raw('SUM(valor_total) as total'))
+                                ->groupBY('medio')
+                                ->orderBy('medio')
+                                ->get();
+    }
+
+    public function descuentoefectivo(){
+        $this->descefec=DB::table('concepto_pago_recibo_pago')
+                            ->whereIn('recibo_pago_id',$this->idsrecibos)
+                            ->whereIn('concepto_pago_id',$this->idsdescuentos)
+                            ->where('medio','efectivo')
+                            ->sum('valor');
+
+        foreach ($this->totalmedios as $value) {
+            if($value->medio==='efectivo'){
+                $this->efectivoentrega=$value->total-$this->descefec;
+            }
+        }
+
+        $tarjetaventa=0; //OJO ENCONTRAR EL TEXTO Y SUMAR
     }
 }
