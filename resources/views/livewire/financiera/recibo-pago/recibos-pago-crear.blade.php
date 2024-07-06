@@ -165,6 +165,9 @@
                                                         Fecha pago programada
                                                     </th>
                                                     <th scope="col" class="px-6 py-3" >
+                                                        <span class=" text-xs">Curso</span>
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3" >
                                                         Saldo <small class=" text-red-400">De esta deuda</small>
                                                     </th>
                                                     <th scope="col" class="px-6 py-3" >
@@ -189,10 +192,13 @@
                                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                                             {{$pendiente->fecha_pago}}
                                                         </th>
+                                                        <th scope="row" class="px-6 py-4 text-sm text-gray-900 dark:text-white text-justify">
+                                                            {{$pendiente->matricula->curso->name}}
+                                                        </th>
                                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
                                                             $ {{number_format($pendiente->saldo, 0, '.', ' ')}}
                                                         </th>
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                                        <th scope="row" class="px-6 py-4 text-sm text-justify  text-gray-900 dark:text-white capitalize">
                                                             {{$cuo}} - {{$pendiente->concepto}}
                                                         </th>
                                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">

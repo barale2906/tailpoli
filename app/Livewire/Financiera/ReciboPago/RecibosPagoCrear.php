@@ -136,6 +136,7 @@ class RecibosPagoCrear extends Component
     public function obligaciones(){
         $this->pendientes= Cartera::where('responsable_id', $this->alumno_id)
                                 ->where('status', true)
+                                ->orderBy('matricula_id')
                                 ->orderBy('fecha_pago')
                                 ->get();
 
@@ -145,26 +146,6 @@ class RecibosPagoCrear extends Component
 
         $this->student();
     }
-
-    /* public function updatedSedeId(){
-        $sede=Sede::find($this->sede_id);
-        $config=ConfPagOtros::where('status', true)
-                                        ->where('sector_id', $sede->sector_id)
-                                        ->select('id')
-                                        ->first();
-
-        if($config){
-            $this->listaotros=ConfPagOtrosDet::where('conf_pag_otro_id', $config->id)
-                                            ->where('status', true)
-                                            ->orderBy('name', 'ASC')
-                                            ->get();
-        }else{
-            $this->dispatch('alerta', name:'No hay lista de precios para esta sede');
-        }
-
-
-
-    } */
 
     #[On('cargados')]
     //obtener itemes cargados
