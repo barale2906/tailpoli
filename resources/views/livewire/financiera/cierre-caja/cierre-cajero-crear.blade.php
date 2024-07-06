@@ -2,7 +2,7 @@
     @if ($is_dia)
         @if (!$print)
             @if ($recibos->count()>0)
-                <form wire:submit.prevent="new">
+                <form >
                     <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             @if ($this->agrupado->count()===1)
@@ -25,28 +25,26 @@
                                 </div>
                             @endif
                             <div class="mb-6">
-                                <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones:</label>
-                                <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Anotaciones importantes" wire:model.blur="observaciones">
+                                <label for="comentarios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
+                                <input type="text" id="comentarios" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones del cierre" wire:model.blur="observaciones" autocomplete="off">
 
-                                @error('observaciones')
-                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 m-2" role="alert">
+                                @error('comentarios')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                                     </div>
                                 @enderror
                             </div>
+
                             <div class="mb-6">
-                                <label for="valor_reportado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">
-                                    Efectivo entregado: <span class=" text-xs text-red-700 font-extrabold">Exceptuando el dinero de base.</span>
-                                </label>
-                                <input type="text" id="valor_reportado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor anexado en efectivo" wire:model.blur="valor_reportado">
+                                <label for="dinero_entegado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Efectivo entregado, descontando dinero de base</label>
+                                <input type="text" id="dinero_entegado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="dinero entregado" wire:model.blur="observaciones" autocomplete="off">
 
-                                @error('valor_reportado')
-                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 m-2" role="alert">
+                                @error('dinero_entegado')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                         <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                                     </div>
                                 @enderror
                             </div>
-
 
                         </div>
                         <div>
@@ -93,12 +91,17 @@
                     </div>
                     <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
                         @if ($sede_id>0)
-                            <button type="submit"
-                            class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
-                            >
-                                Generar Cierre de Caja
-                            </button>
+                            <div>
+                                <a href="#" wire:click.prevent="creanuevo" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-2 capitalize">
+                                    <i class="fa-solid fa-rectangle-xmark"></i> Generar
+                                </a>
+                            </div>
                         @endif
+                        <div>
+                            <a href="#" wire:click.prevent="creanuevo" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-2 capitalize">
+                                <i class="fa-solid fa-rectangle-xmark"></i> generar
+                            </a>
+                        </div>
                         <div>
                             <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-2 capitalize">
                                 <i class="fa-solid fa-rectangle-xmark"></i> cancelar

@@ -24,7 +24,7 @@ class CierreCajasCrear extends Component
     public $valor_total=0;
     public $valor_anulado=0;
     public $valor_efectivoT=0;
-    public $observaciones;
+    public $comentarios;
 
     public $valor_pensiones=0;
     public $valor_efectivo=0;
@@ -52,7 +52,7 @@ class CierreCajasCrear extends Component
      */
     protected $rules = [
         'valor_total' => 'required',
-        'observaciones' => 'required'
+        'comentarios' => 'required'
     ];
 
     /**
@@ -60,7 +60,7 @@ class CierreCajasCrear extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('valor_total', 'observaciones');
+        $this->reset('valor_total', 'comentarios');
     }
 
     public function updatedSedeId(){
@@ -228,6 +228,9 @@ class CierreCajasCrear extends Component
     } */
 
     // Crear
+    public function acortador(){
+        $this->crear();
+    }
     public function new(){
         // validate
         $this->validate();
@@ -243,7 +246,7 @@ class CierreCajasCrear extends Component
                         'cobro_tarjeta'=>$this->valor_tarjeta,
                         'tarjeta'=>$this->tarjetaventa,
                         'descuentotal'=>$this->descuentosT,
-                        'observaciones'=>$this->observaciones,
+                        'observaciones'=>$this->comentarios,
 
                         'valor_pensiones'=>$this->valor_pensiones,
                         'valor_efectivo'=>$this->valor_efectivo,

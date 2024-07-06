@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class CierreCajeroCrear extends Component
+class CierrePorCajero extends Component
 {
     use ComunesTrait;
 
@@ -124,7 +124,9 @@ class CierreCajeroCrear extends Component
     }
 
     // Crear
-    public function nuevo(){
+    public function new(){
+
+        Log::info('new');
 
         // validate
         $this->validate();
@@ -198,10 +200,6 @@ class CierreCajeroCrear extends Component
 
     }
 
-    public function creanuevo(){
-        dd("eso");
-    }
-
     //volver
     #[On('volver')]
     public function vuelve(){
@@ -210,6 +208,6 @@ class CierreCajeroCrear extends Component
 
     public function render()
     {
-        return view('livewire.financiera.cierre-caja.cierre-cajero-crear');
+        return view('livewire.financiera.cierre-caja.cierre-por-cajero');
     }
 }

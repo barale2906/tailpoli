@@ -121,7 +121,8 @@
     @endif
 
     @if ($is_creating)
-        <livewire:financiera.cierre-caja.cierre-cajero-crear />
+        {{-- <livewire:financiera.cierre-caja.cierre-cajero-crear /> --}}
+        <livewire:financiera.cierre-caja.cierre-por-cajero />
     @endif
 
     @if ($is_watching)
