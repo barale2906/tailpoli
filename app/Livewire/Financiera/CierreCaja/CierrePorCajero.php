@@ -126,8 +126,6 @@ class CierrePorCajero extends Component
     // Crear
     public function new(){
 
-        Log::info('new');
-
         // validate
         $this->validate();
 

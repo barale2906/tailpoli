@@ -56,7 +56,7 @@
                     <div class="mb-6">
                         <div class="flex flex-col items-center justify-center">
                             <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($item->total, 0, ',', '.')}}</dt>
-                            <dd class="text-gray-500 dark:text-gray-400 capitalize">Recaudo en: {{$item->medio}}</dd>
+                            <dd class="text-gray-500 dark:text-gray-400 capitalize">Total Recaudo en: {{$item->medio}}</dd>
                         </div>
                     </div>
 

@@ -91,6 +91,7 @@ class RecibosPagoCrear extends Component
     public function mount($ruta=null, $elegido=null, $estudiante=null){
 
         $this->limpiapoyo();
+        $this->cierre();
 
         $this->ruta=$ruta;
 
