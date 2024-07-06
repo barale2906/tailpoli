@@ -244,58 +244,61 @@ class Salida extends Component
     //cargar productos
     public function temporal(){
 
-        $this->saldo=$this->saldo-$this->cantidad;
+        if($this->precio>=$this->descuento){
+            $this->saldo=$this->saldo-$this->cantidad;
 
-        $valor=$this->precio*$this->cantidad;
+            $valor=$this->precio*$this->cantidad;
 
-        $this->Total=$this->Total+$valor;
-
-
-        if($this->saldo>=0){
-
-            DB::table('apoyo_recibo')->insert([
-                'tipo'=>'inventario',
-                'id_creador'=>Auth::user()->id,
-                'id_concepto'=>$this->conceptopago->id,
-                'concepto'=>"Entrada de Inventario",
-                'valor'=>$this->precio,
-                'cantidad'=>$this->cantidad,
-                'subtotal'=>$valor,
-                'entregado'=>true,
-                'id_producto'=>$this->producto->id,
-                'producto'=>$this->producto->name,
-                'id_almacen'=>$this->almacen->id,
-                'almacen'=>$this->almacen->name,
-                'id_ultimoreg'=>$this->id_ultimo,
-                'saldo'=>$this->saldo,
-            ]);
+            $this->Total=$this->Total+$valor;
 
 
+            if($this->saldo>=0){
+
+                DB::table('apoyo_recibo')->insert([
+                    'tipo'=>'inventario',
+                    'id_creador'=>Auth::user()->id,
+                    'id_concepto'=>$this->conceptopago->id,
+                    'concepto'=>"Entrada de Inventario",
+                    'valor'=>$this->precio,
+                    'cantidad'=>$this->cantidad,
+                    'subtotal'=>$valor,
+                    'entregado'=>true,
+                    'id_producto'=>$this->producto->id,
+                    'producto'=>$this->producto->name,
+                    'id_almacen'=>$this->almacen->id,
+                    'almacen'=>$this->almacen->name,
+                    'id_ultimoreg'=>$this->id_ultimo,
+                    'saldo'=>$this->saldo,
+                ]);
+
+
+            }else{
+
+                DB::table('apoyo_recibo')->insert([
+                    'tipo'=>'inventario',
+                    'id_creador'=>Auth::user()->id,
+                    'id_concepto'=>$this->conceptopago->id,
+                    'concepto'=>"Entrada de Inventario",
+                    'valor'=>$this->precio,
+                    'cantidad'=>$this->cantidad,
+                    'subtotal'=>$valor,
+                    'entregado'=>false,
+                    'id_producto'=>$this->producto->id,
+                    'producto'=>$this->producto->name,
+                    'id_almacen'=>$this->almacen->id,
+                    'almacen'=>$this->almacen->name,
+                    'id_ultimoreg'=>$this->id_ultimo,
+                    'saldo'=>$this->saldo,
+                ]);
+
+                $this->dispatch('alerta', name:'¡NO SUFICIENTES, PENDIENTE POR ENTREGA!');
+
+            }
+
+            $this->cargaDescuento();
         }else{
-
-            DB::table('apoyo_recibo')->insert([
-                'tipo'=>'inventario',
-                'id_creador'=>Auth::user()->id,
-                'id_concepto'=>$this->conceptopago->id,
-                'concepto'=>"Entrada de Inventario",
-                'valor'=>$this->precio,
-                'cantidad'=>$this->cantidad,
-                'subtotal'=>$valor,
-                'entregado'=>false,
-                'id_producto'=>$this->producto->id,
-                'producto'=>$this->producto->name,
-                'id_almacen'=>$this->almacen->id,
-                'almacen'=>$this->almacen->name,
-                'id_ultimoreg'=>$this->id_ultimo,
-                'saldo'=>$this->saldo,
-            ]);
-
-            $this->dispatch('alerta', name:'¡NO SUFICIENTES, PENDIENTE POR ENTREGA!');
-
+            $this->dispatch('alerta', name:'el descuento debe ser menor o igual al pago');
         }
-
-        $this->cargaDescuento();
-
     }
 
     public function cargaDescuento(){

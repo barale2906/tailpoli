@@ -180,140 +180,154 @@ class RecibosPagoCrear extends Component
 
     public function cargaOtro(){
 
-        $ite=ConceptoPago::find($this->concepotro);
+        if($this->otro>=$this->descuento){
 
-        // Cargar descuento a la tabla temporal
-        DB::table('apoyo_recibo')->insert([
-            'tipo'=>'otro',
-            'id_creador'=>Auth::user()->id,
-            'id_concepto'=>$this->concepotro,
-            'concepto'=>$ite->name,
-            'id_producto'=>$this->concepotro,
-            'producto'=>$ite->name,
-            'valor'=>abs($this->otro),
-        ]);
+            $ite=ConceptoPago::find($this->concepotro);
 
-        $this->Total=$this->Total+abs($this->otro);
+            // Cargar descuento a la tabla temporal
+            DB::table('apoyo_recibo')->insert([
+                'tipo'=>'otro',
+                'id_creador'=>Auth::user()->id,
+                'id_concepto'=>$this->concepotro,
+                'concepto'=>$ite->name,
+                'id_producto'=>$this->concepotro,
+                'producto'=>$ite->name,
+                'valor'=>abs($this->otro),
+            ]);
 
-        $this->cargaDescuento();
+            $this->Total=$this->Total+abs($this->otro);
+
+            $this->cargaDescuento();
+
+        }else{
+            $this->dispatch('alerta', name:'el descuento debe ser menor o igual al pago');
+        }
     }
 
     public function asigOtro($id, $item,$conf=null){
 
-        $this->valoRecargo();
-        //dd($conf);
-        if($item===0){
-            //obtener Matricula
-            $matr=Matricula::where('alumno_id', $this->alumno_id)
-                            ->orderBy('id', 'DESC')
-                            ->first();
+        if($this->valor>=$this->descuento){
 
-            $ya=0;
-            $this->subtotal=$conf['precio'];
-            $this->conceptos=$conf['concepto_pago_id'];
-            $this->nameConcep=$conf['name'];
-            if($this->subtotal<=$this->valor){
-                $this->valor=$this->subtotal;
-            }
+            $this->valoRecargo();
 
-            $this->saldo=$this->subtotal-$this->valor;
+            if($item===0){
+                //obtener Matricula
+                $matr=Matricula::where('alumno_id', $this->alumno_id)
+                                ->orderBy('id', 'DESC')
+                                ->first();
 
-            if($this->saldo>0 && $matr){
-                $this->id_cartera=$matr->id;
-            }else if($this->saldo>0 && !$matr){
-                $this->dispatch('alerta', name:'¡Debe cancelar completo, no tiene matriculas registradas!');
-                $ya=-1;
-            }
-
-        }else{
-            //Verificar si el valor mayor a la 1/2
-            $mitad=$item['saldo']/2;
-
-            if($mitad>$this->valor){
-                $this->dispatch('alerta', name:'¡Abono inferior a la mitad!, solo con transferencia!');
-                $this->obser="  ¡IMPORTANTE! Se recibe abono inferior, validar transferencia.";
-            }
-
-            //Verificar que no exceda el saldo
-            if($item['saldo']<$this->valor){
-                $this->valor=$item['saldo'];
-            }
-
-            //Verificar que no se haya cargado el dato
-            $ya= DB::table('apoyo_recibo')->where('id_cartera',$item['id'])->count();
-
-            //Obtener nombre del concepto
-            $this->conceptos=intval($this->conceptos);
-
-            foreach ($this->concep as $value) {
-
-                if($value->id===$this->conceptos){
-                    $this->nameConcep=$value->name;
+                $ya=0;
+                $this->subtotal=$conf['precio'];
+                $this->conceptos=$conf['concepto_pago_id'];
+                $this->nameConcep=$conf['name'];
+                if($this->subtotal<=$this->valor){
+                    $this->valor=$this->subtotal;
                 }
 
-            }
-        }
+                $this->saldo=$this->subtotal-$this->valor;
 
-        if($ya>0){
-            $this->dispatch('alerta', name:'Ya esta cargado');
-            $this->reset(
-                'valor' ,
-                'conceptos',
-                'name',
-                );
-            $this->descuento=0;
-        }else if($ya===0){
-            switch ($id) {
-                case 0:
-                    $this->tipo="otro";
-                    break;
+                if($this->saldo>0 && $matr){
+                    $this->id_cartera=$matr->id;
+                }else if($this->saldo>0 && !$matr){
+                    $this->dispatch('alerta', name:'¡Debe cancelar completo, no tiene matriculas registradas!');
+                    $ya=-1;
+                }
 
-                case 1:
-                    $this->tipo="cartera";
-                    $this->saldo=$item['saldo'];
-                    $this->id_cartera=$item['id'];
-                    break;
-
-                default:
-                    $this->tipo="inventario";
-                    break;
-            }
-
-            if($this->valor>0){
-
-                    DB::table('apoyo_recibo')->insert([
-                        'tipo'=>$this->tipo,
-                        'id_creador'=>Auth::user()->id,
-                        'id_concepto'=>$this->conceptos,
-                        'concepto'=>$this->nameConcep,
-                        'valor'=>$this->valor,
-                        'saldo'=>$this->saldo,
-                        'id_cartera'=>$this->id_cartera,
-                        'subtotal'=>$this->subtotal
-                    ]);
-
-                    $this->Total=$this->Total+$this->valor;
-
-                    $this->reset(
-                                'valor' ,
-                                'conceptos',
-                                'name'
-                                );
-
-                    $this->cargando();
             }else{
-                $this->dispatch('alerta', name:'VALOR Mayor que cero');
+                //Verificar si el valor mayor a la 1/2
+                $mitad=$item['saldo']/2;
+
+                if($mitad>$this->valor){
+                    $this->dispatch('alerta', name:'¡Abono inferior a la mitad!, solo con transferencia!');
+                    $this->obser="  ¡IMPORTANTE! Se recibe abono inferior, validar transferencia.";
+                }
+
+                //Verificar que no exceda el saldo
+                if($item['saldo']<$this->valor){
+                    $this->valor=$item['saldo'];
+                }
+
+                //Verificar que no se haya cargado el dato
+                $ya= DB::table('apoyo_recibo')->where('id_cartera',$item['id'])->count();
+
+                //Obtener nombre del concepto
+                $this->conceptos=intval($this->conceptos);
+
+                foreach ($this->concep as $value) {
+
+                    if($value->id===$this->conceptos){
+                        $this->nameConcep=$value->name;
+                    }
+
+                }
+            }
+
+            if($ya>0){
+                $this->dispatch('alerta', name:'Ya esta cargado');
                 $this->reset(
                     'valor' ,
                     'conceptos',
-                    'name'
+                    'name',
                     );
                 $this->descuento=0;
+            }else if($ya===0){
+                switch ($id) {
+                    case 0:
+                        $this->tipo="otro";
+                        break;
+
+                    case 1:
+                        $this->tipo="cartera";
+                        $this->saldo=$item['saldo'];
+                        $this->id_cartera=$item['id'];
+                        break;
+
+                    default:
+                        $this->tipo="inventario";
+                        break;
+                }
+
+                if($this->valor>0){
+
+                        DB::table('apoyo_recibo')->insert([
+                            'tipo'=>$this->tipo,
+                            'id_creador'=>Auth::user()->id,
+                            'id_concepto'=>$this->conceptos,
+                            'concepto'=>$this->nameConcep,
+                            'valor'=>$this->valor,
+                            'saldo'=>$this->saldo,
+                            'id_cartera'=>$this->id_cartera,
+                            'subtotal'=>$this->subtotal
+                        ]);
+
+                        $this->Total=$this->Total+$this->valor;
+
+                        $this->reset(
+                                    'valor' ,
+                                    'conceptos',
+                                    'name'
+                                    );
+
+                        $this->cargando();
+                }else{
+                    $this->dispatch('alerta', name:'VALOR Mayor que cero');
+                    $this->reset(
+                        'valor' ,
+                        'conceptos',
+                        'name'
+                        );
+                    $this->descuento=0;
+                }
+
             }
 
+            $this->cargaDescuento();
+
+        }else{
+            $this->dispatch('alerta', name:'el descuento debe ser menor o igual al pago');
         }
 
-        $this->cargaDescuento();
+
 
     }
 
