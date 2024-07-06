@@ -120,13 +120,14 @@ class CierreCajeroCrear extends Component
                                         ->where('status', 0)
                                         ->sum('valor_total');
 
-        $this->carteradet(Auth::user()->id);
+        $this->carteradet();
     }
 
 
 
     // Crear
     public function new(){
+
         // validate
         $this->validate();
 
@@ -157,9 +158,8 @@ class CierreCajeroCrear extends Component
 
         //relacionar recibos
         foreach ($this->recibos as $value) {
-            if($value->status===2){
-                $this->status=2;
-            }
+
+            $this->status=2;
 
             //Actualizar recibo
             ReciboPago::whereId($value->id)->update([
@@ -175,15 +175,13 @@ class CierreCajeroCrear extends Component
                 'created_at'=>now(),
                 'updated_at'=>now(),
             ]);
-
-            $this->reset('status');
         }
 
         //Datos de impresión
         $this->elegido=$cierre;
 
         // Notificación
-        $this->dispatch('alerta', name:'Se ha realizado correctamente el pre-cierre de caja N°: '.$cierre->id);
+        $this->dispatch('alerta', name:'Se ha realizado correctamente el cierre de caja N°: '.$cierre->id);
         $this->resetFields();
 
         //refresh

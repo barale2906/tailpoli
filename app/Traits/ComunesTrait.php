@@ -19,6 +19,8 @@ trait ComunesTrait
     public $idsotros=[];
     public $idsdescuentos=[];
     public $idstarjetas=[];
+    public $pensiones;
+    public $otros;
 
 
     public function cierre(){
@@ -39,7 +41,7 @@ trait ComunesTrait
 
     }
 
-    public function carteradet($usuario){
+    public function carteradet(){
 
         $this->reset(
             'idsrecibos',
@@ -110,7 +112,7 @@ trait ComunesTrait
             array_push($this->idsotros, $value);
         }
 
-        $this->valor_pensiones = DB::table('concepto_pago_recibo_pago')
+        $this->pensiones = DB::table('concepto_pago_recibo_pago')
                                     ->whereIn('recibo_pago_id',$this->idsrecibos)
                                     ->whereIn('concepto_pago_id',$this->idscartera)
                                     ->get();
@@ -119,113 +121,33 @@ trait ComunesTrait
                                     ->whereIn('recibo_pago_id',$this->idsrecibos)
                                     ->whereIn('concepto_pago_id',$this->idstarjetas)
                                     ->sum('valor');
-                                    /*
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'cartera')
-                                    ->sum('concepto_pago_recibo_pago.valor'); */
 
+        $this->valor_pensiones=$this->pensiones->sum('valor');
 
-        /* $this->valor_efectivo = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'cartera')
-                                    ->where('concepto_pago_recibo_pago.medio', 'efectivo')
-                                    ->sum('concepto_pago_recibo_pago.valor');
+        $this->valor_efectivo=$this->pensiones->where('medio', 'efectivo')->sum('valor');
 
+        $this->valor_cheque = $this->pensiones->whereIn('medio', 'cheque')->sum('valor');
 
-        $this->valor_tarjeta = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    //->where('concepto_pago_recibo_pago.tipo', 'cartera')
-                                    ->where('concepto_pago_recibo_pago.medio','like', "%".'Tarjeta'."%" )
-                                    ->sum('concepto_pago_recibo_pago.valor');*/
+        $this->valor_consignacion = $this->pensiones->where('medio', ['consignacion', 'PSE'])->sum('valor');
 
-        $this->valor_efectivo=$this->valor_pensiones->where('medio', 'efectivo')->sum('valor');
-
-        dd($this->valor_pensiones->sum('valor'),$this->valor_efectivo, $this->valor_tarjeta);
-
-        $this->valor_cheque = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'cartera')
-                                    ->where('concepto_pago_recibo_pago.medio', 'cheque')
-                                    ->sum('concepto_pago_recibo_pago.valor');
-
-        $this->valor_consignacion = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', 'cartera')
-                                    ->whereIn('concepto_pago_recibo_pago.medio', ['consignacion', 'PSE'])
-                                    ->sum('concepto_pago_recibo_pago.valor');
-
-        $this->otrosdet($usuario);
+        $this->otrosdet();
 
     }
 
-    public function otrosdet($usuario){
-        $this->valor_otros = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo','!=', 'cartera')
-                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'financiero')
-                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
-                                    //->where('concepto_pago_recibo_pago.medio', 'efectivo')
-                                    ->sum('concepto_pago_recibo_pago.valor');
+    public function otrosdet(){
 
-        $this->valor_efectivo_o = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
-                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'financiero')
-                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
-                                    ->where('concepto_pago_recibo_pago.medio', 'efectivo')
-                                    ->sum('concepto_pago_recibo_pago.valor');
+        $this->otros=DB::table('concepto_pago_recibo_pago')
+                        ->whereIn('recibo_pago_id',$this->idsrecibos)
+                        ->whereNotIn('concepto_pago_id',$this->idsotros)
+                        ->get();
 
-        /* $this->valor_tarjeta_o = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
-                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
-                                    ->where('concepto_pago_recibo_pago.medio', 'tarjeta')
-                                    ->sum('concepto_pago_recibo_pago.valor'); */
+        $this->valor_otros = $this->otros->sum('valor');
 
-        $this->valor_cheque_o = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
-                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'financiero')
-                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
-                                    ->where('concepto_pago_recibo_pago.medio', 'cheque')
-                                    ->sum('concepto_pago_recibo_pago.valor');
+        $this->valor_efectivo_o = $this->otros->where('medio','efectivo')->sum('valor');
 
-        $this->valor_consignacion_o = DB::table('concepto_pago_recibo_pago')
-                                    ->join('recibo_pagos', 'concepto_pago_recibo_pago.recibo_pago_id', '=', 'recibo_pagos.id')
-                                    ->where('recibo_pagos.sede_id', $this->sede_id)
-                                    ->where('recibo_pagos.creador_id', $usuario)
-                                    ->where('recibo_pagos.status', 0)
-                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'cartera')
-                                    ->where('concepto_pago_recibo_pago.tipo', '!=', 'financiero')
-                                    ->where('concepto_pago_recibo_pago.concepto_pago_id', '!=', $this->id_concepto->id)
-                                    ->whereIn('concepto_pago_recibo_pago.medio', ['consignacion', 'PSE'])
-                                    ->sum('concepto_pago_recibo_pago.valor');
+        $this->valor_cheque_o = $this->otros->where('medio','cheque')->sum('valor');
+
+        $this->valor_consignacion_o = $this->otros->whereIn('medio',['consignacion', 'PSE'])->sum('valor');
+
     }
 }
