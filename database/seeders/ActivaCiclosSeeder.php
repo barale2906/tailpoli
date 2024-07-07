@@ -153,7 +153,7 @@ class ActivaCiclosSeeder extends Seeder
 
 
                     }catch(Exception $exception){
-                        Log::info('Line: ' . $row . ' 24-asigna_Ciclos_Nuevos with error: ' . $exception->getMessage().' codigo: '.$exception->getLine());
+                        Log::info('Line: ' . $row . ' 24-asigna_Ciclos_Nuevos with error: '.$data[0]."--" . $exception->getMessage().' codigo: '.$exception->getLine());
                     }
                     $row++;
                 }
