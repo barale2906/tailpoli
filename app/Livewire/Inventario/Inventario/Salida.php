@@ -620,6 +620,8 @@ class Salida extends Component
                     ]);
             } */
 
+            $productos="";
+
             foreach ($cargados as $value) {
 
                 DB::table('concepto_pago_recibo_pago')
@@ -638,6 +640,8 @@ class Salida extends Component
                         'updated_at'=>now(),
                     ]);
 
+
+                $productos=$productos.$value->producto.', ';
             }
 
             //Eliminar datos de apoyo
@@ -653,11 +657,6 @@ class Salida extends Component
                                     ->orderBy('producto')
                                     ->get();
             }
-            // Notificación
-            $this->dispatch('alerta', name:'Se ha cargado correctamente el movimiento de inventario y generado el recibo N°: '.$this->recibo->numero_recibo);
-            $this->resetFields();
-            $this->fin=!$this->fin;
-            $this->dispatch('mostodo');
 
             //Descargar la transaccion
             if($this->transaccion){
@@ -683,6 +682,24 @@ class Salida extends Component
                         ]); */
 
             }
+
+            //Cargar historial
+            Pqrs::create([
+                'estudiante_id' =>$this->alumno_id,
+                'gestion_id'    =>Auth::user()->id,
+                'fecha'         =>now(),
+                'tipo'          =>2,
+                'observaciones' =>'PAGOS: '."Realizo compra de: ".$productos."por: $".number_format($this->Total, 0, ',', '.').", con el recibo N°: ".$this->recibo->numero_recibo.". ----- ",
+                'status'        =>4
+            ]);
+
+            // Notificación
+            $this->dispatch('alerta', name:'Se ha cargado correctamente el movimiento de inventario y generado el recibo N°: '.$this->recibo->numero_recibo);
+            $this->resetFields();
+            $this->fin=!$this->fin;
+            $this->dispatch('mostodo');
+
+
 
             //Enviar por correo electrónico
             $this->claseEmail(1,$this->recibo->id);
