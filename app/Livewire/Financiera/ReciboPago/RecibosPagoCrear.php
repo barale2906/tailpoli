@@ -267,7 +267,7 @@ class RecibosPagoCrear extends Component
                 $this->reset(
                     'valor' ,
                     'conceptos',
-                    'name',
+                    //'name',
                     );
                 $this->descuento=0;
             }else if($ya===0){
@@ -305,7 +305,7 @@ class RecibosPagoCrear extends Component
                         $this->reset(
                                     'valor' ,
                                     'conceptos',
-                                    'name'
+                                    //'name'
                                     );
 
                         $this->cargando();
@@ -314,7 +314,7 @@ class RecibosPagoCrear extends Component
                     $this->reset(
                         'valor' ,
                         'conceptos',
-                        'name'
+                        //'name'
                         );
                     $this->descuento=0;
                 }

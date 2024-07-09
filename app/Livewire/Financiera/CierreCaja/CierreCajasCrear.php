@@ -11,44 +11,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Traits\ComunesTrait;
-use App\Traits\CierreCajaTrait;
+use App\Traits\CajaCierraTrait;
 
 class CierreCajasCrear extends Component
 {
     use ComunesTrait;
-    use CierreCajaTrait;
+    use CajaCierraTrait;
 
-    public $sede_id;
     public $cajeros;
-    public $cajero_id;
-    public $recibos=[];
-
-    public $valor_total=0;
-    public $valor_anulado=0;
-    public $valor_efectivoT=0;
-    public $comentarios;
-    public $dinero_entegado;
-
-    public $valor_pensiones=0;
-    public $valor_efectivo=0;
-    public $valor_tarjeta=0;
-    public $valor_cheque=0;
-    public $valor_consignacion=0;
-
-    public $valor_otros=0;
-    public $valor_efectivo_o=0;
-    public $valor_tarjeta_o=0;
-    public $valor_cheque_o=0;
-    public $valor_consignacion_o=0;
-    public $descuentosT=0;
-    public $id_concepto;
-
-
-    public $status=1;
 
     public function mount(){
-        $this->id_concepto=ConceptoPago::where('name', 'Descuento')->first();
+
+        $this->sedesinlegalizar();
+
     }
+
 
     public function updatedSedeId(){
         $this->reset('cajero_id');
@@ -73,7 +50,7 @@ class CierreCajasCrear extends Component
                                 ->get();
     }
 
-    public function updatedCajeroId(){
+    /* public function updatedCajeroId(){
 
         $this->recibos=ReciboPago::where('sede_id', $this->sede_id)
                                     ->where('creador_id', $this->cajero_id)
@@ -109,26 +86,11 @@ class CierreCajasCrear extends Component
                                     ->sum('concepto_pago_recibo_pago.valor');
 
         $this->carteradet($this->cajero_id);
-    }
-
-    private function sedes(){
-        return Sede::query()
-                    ->with(['users'])
-                    ->when(Auth::user()->id, function($qu){
-                        return $qu->where('status', true)
-                                ->whereHas('users', function($q){
-                                    $q->where('user_id', Auth::user()->id);
-                                });
-                    })
-                    ->orderBy('name')
-                    ->get();
-    }
+    } */
 
     public function render()
     {
-        return view('livewire.financiera.cierre-caja.cierre-cajas-crear', [
-            'sedes'=>$this->sedes(),
-        ]);
+        return view('livewire.financiera.cierre-caja.cierre-cajas-crear');
     }
 
 

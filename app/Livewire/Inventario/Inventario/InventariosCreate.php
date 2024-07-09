@@ -59,7 +59,7 @@ class InventariosCreate extends Component
     }
 
     public function updatedAlmacenId(){
-        $this->reset('almacen');
+        //$this->reset('almacen_id');
         $this->crtAlma=!$this->crtAlma;
     }
 

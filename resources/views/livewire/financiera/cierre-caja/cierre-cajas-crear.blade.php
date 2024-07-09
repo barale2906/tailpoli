@@ -69,7 +69,7 @@
 
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($descefec, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($totaldesefectivo, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor descuentos en efectivo</dd>
                 </div>
             </div>
@@ -83,7 +83,7 @@
 
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($valor_tarjeta, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($tarjetaventa, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Cobro por uso de tarjetas</dd>
                 </div>
             </div>
@@ -98,31 +98,31 @@
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 bg-slate-200">
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($valor_pensiones, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-3xl font-extrabold">$ {{number_format($totalpensiones, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Valor pensiones</dd>
                 </div>
             </div>
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_efectivo, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($totalefectivopensiones, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Efectivo Pensiones</dd>
                 </div>
             </div>
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_cheque, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($totalchequepensiones, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Cheques</dd>
                 </div>
             </div>
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_consignacion, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($totaltransaccionpensiones, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Transferencia PSE </dd>
                 </div>
             </div>
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_pensiones-$valor_efectivo-$valor_cheque-$valor_consignacion, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($totaltarjetapensiones, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Pagos con Tarjeta </dd>
                 </div>
             </div>
@@ -155,7 +155,7 @@
             </div>
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_otros-$valor_efectivo_o-$valor_cheque_o-$valor_consignacion_o, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-2xl font-extrabold">$ {{number_format($valor_tarjetas_o, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Pagos con Tarjeta </dd>
                 </div>
             </div>
@@ -176,7 +176,7 @@
         </div>
     </div>
     @if ($sede_id>0 && $cajero_id>0)
-        <h5 class="text-semibold md:text-lg sm:text-sm capitalize m-3">Detalle Recibos de caja encontrados de un total de {{$recibos->count()}} recibos</h5>
+        <h5 class="text-semibold md:text-lg sm:text-sm capitalize m-3">Detalle Recibos de caja encontrados de un total de {{$reciboselegidos->count()}} recibos</h5>
         <table class=" text-sm text-left text-gray-500 dark:text-gray-400 m-2">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr class=" bg-gray-100">
@@ -224,7 +224,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($reporte as $recibo)
+                @foreach ($resumen as $recibo)
 
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
