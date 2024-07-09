@@ -204,6 +204,10 @@ trait CierreCajaTrait
         $this->reset('valor_total', 'comentarios', 'dinero_entegado');
     }
 
+    public function test(){
+        dd("wow");
+    }
+
     public function generaCierre($origen=null){
 
         if($origen){
@@ -221,11 +225,11 @@ trait CierreCajaTrait
             'valor_reportado'=>$this->dinero_entegado,
             'efectivo'=>$this->valor_efectivo+$this->valor_efectivo_o,
             'efectivo_descuento'=>$this->descefec,
-            'efectivo_disponible'=>$this->efectivoentrega,
+            'efectivo_disponible'=>0,//$this->efectivoentrega,
             'cobro_tarjeta'=>$this->valor_tarjeta,
             'tarjeta'=>$this->tarjetaventa,
             'descuentotal'=>$this->descuentosT,
-            'observaciones'=>$this->comentarios,
+            'observaciones'=>"",//$this->comentarios,
 
             'valor_pensiones'=>$this->valor_pensiones,
             'valor_efectivo'=>$this->valor_efectivo,

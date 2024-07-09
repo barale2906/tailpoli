@@ -345,7 +345,8 @@
 
     @if ($is_deleting)
         {{-- <livewire:financiera.cierre-caja.cierre-cajero-crear :ruta="$ruta" /> --}}
-        <livewire:financiera.cierre-caja.cierre-por-cajero :ruta="$ruta" />
+        {{-- <livewire:financiera.cierre-caja.cierre-por-cajero :ruta="$ruta" /> --}}
+        <livewire:financiera.cerrar-caja.cierra-jornada-cajero :ruta="$ruta"/>
     @endif
 
     @if ($is_grupos)
