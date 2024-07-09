@@ -7,6 +7,7 @@ use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\CierreCaja;
 use App\Models\Configuracion\Sede;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 trait CajaCierraTrait
 {
@@ -75,6 +76,7 @@ trait CajaCierraTrait
 
         $this->reciboscaja=ReciboPago::where('creador_id', $usuario)
                                     ->where('status', '!==', 1)
+                                    ->where('cierre', null)
                                     ->get();
 
         $this->cajero_id=$usuario;
@@ -367,7 +369,7 @@ trait CajaCierraTrait
             'valor_pensiones'=>$this->totalpensiones,
             'valor_efectivo'=>$this->totalefectivopensiones,
             'valor_tarjeta'=>$this->totaltarjetapensiones,
-            'valor_cheque'=>$this->valor_chetotalchequepensionesque,
+            'valor_cheque'=>$this->totalchequepensiones,
             'valor_consignacion'=>$this->totaltransaccionpensiones,
 
             'valor_otros'=>$this->valor_otros,
@@ -383,7 +385,7 @@ trait CajaCierraTrait
         ]);
 
         //relacionar recibos
-        foreach ($this->recibos as $value) {
+        foreach ($this->reciboselegidos as $value) {
 
             $this->status=2;
 
@@ -403,6 +405,8 @@ trait CajaCierraTrait
             ]);
         }
 
+        //agregar recibos anulados
+
         //Datos de impresión
         $this->elegido=$cierre;
 
@@ -413,6 +417,7 @@ trait CajaCierraTrait
         //refresh
         $this->dispatch('refresh');
         $this->print=!$this->print;
+        //OJO OJO OJO CUADRAR IMPRESIONES
 
         $ruta='/impresiones/impcierre?o='.$this->ruta.'&c='.$cierre->id;
 
