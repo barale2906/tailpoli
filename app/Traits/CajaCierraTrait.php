@@ -54,6 +54,7 @@ trait CajaCierraTrait
     public $valor_cheque_o;
     public $valor_consignacion_o;
     public $valor_tarjetas_o;
+    public $dia=false;
 
     public function sedesinlegalizar(){
         $sedes=ReciboPago::where('status', '!==', 1)
