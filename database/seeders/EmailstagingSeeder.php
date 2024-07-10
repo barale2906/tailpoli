@@ -16,19 +16,28 @@ class EmailstagingSeeder extends Seeder
     public function run(): void
     {
         $estudiantes=User::where('rol_id', 6)
-                            ->where('id','>',20124)
                             ->get();
 
         foreach ($estudiantes as $value) {
             try {
+
                 $emailMod='--st1--'.$value->email;
+
                 $value->update([
                     'email'=>$emailMod
                 ]);
-                $value->perfil->update([
-                    'email'=>$emailMod
-                ]);
+
+                $perfil=Perfil::where('user_id', $value->id)->first();
+
+                if($perfil){
+                    $value->perfil->update([
+                        'email'=>$emailMod
+                    ]);
+                }
+
+
                 Log::info('fila: '.$value->id.' email: '.$value->email );
+
             } catch(Exception $exception){
                 Log::info('fila: '.$value->id.' Error al modificar el email: '. $exception->getMessage().' linea código: '.$exception->getLine() );
             }
