@@ -15,7 +15,9 @@ class EmailstagingSeeder extends Seeder
      */
     public function run(): void
     {
-        $estudiantes=User::where('rol_id', 6)->get();
+        $estudiantes=User::where('rol_id', 6)
+                            ->where('id'>20124)
+                            ->get();
 
         foreach ($estudiantes as $value) {
             try {
