@@ -26,6 +26,7 @@ class EmailstagingSeeder extends Seeder
                 $value->perfil->update([
                     'email'=>$emailMod
                 ]);
+                Log::info('fila: '.$value->id.' email: '.$value->email );
             } catch(Exception $exception){
                 Log::info('fila: '.$value->id.' Error al modificar el email: '. $exception->getMessage().' linea código: '.$exception->getLine() );
             }
