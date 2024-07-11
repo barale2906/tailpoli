@@ -37,6 +37,9 @@ class RecibosPago extends Component
     public $filtroCreahas;
     public $filtroSede;
     public $filtrocrea=[];
+    public $filtroTransdes;
+    public $filtroTranshas;
+    public $filtrotrans=[];
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -162,15 +165,38 @@ class RecibosPago extends Component
         }
     }
 
+    public function updatedFiltroTranshas(){
+        if($this->filtroTransdes<=$this->filtroTranshas){
+            $tra=array();
+            array_push($tra, $this->filtroTransdes);
+            array_push($tra, $this->filtroTranshas);
+            $this->filtrotrans=$tra;
+        }else{
+            $this->reset('filtroTransdes','filtroTranshas');
+        }
+    }
+
     private function recibos()
     {
         return ReciboPago::where('origen', $this->is_poliandino)
                             ->buscar($this->buscamin)
                             ->sede($this->filtroSede)
                             ->crea($this->filtrocrea)
+                            ->transaccion($this->filtrotrans)
                             ->orderBy($this->ordena, $this->ordenado)
                             ->paginate($this->pages);
 
+    }
+
+    private function recibosTotal(){
+
+        return ReciboPago::where('origen', $this->is_poliandino)
+                            ->where('status', '!=', 2)
+                            ->buscar($this->buscamin)
+                            ->sede($this->filtroSede)
+                            ->crea($this->filtrocrea)
+                            ->transaccion($this->filtrotrans)
+                            ->sum('valor_total');
     }
 
     private function sedes(){
@@ -184,6 +210,7 @@ class RecibosPago extends Component
         return view('livewire.financiera.recibo-pago.recibos-pago', [
             'recibos'=>$this->recibos(),
             'sedes'=>$this->sedes(),
+            'recibosTotal'=>$this->recibosTotal(),
         ]);
     }
 }

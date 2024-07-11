@@ -36,6 +36,9 @@ trait FiltroTrait
     //Ciclos
     public $is_jornada=false;
 
+    // Recibos
+    public $is_fechatransaccion=false;
+
 
     public function filtroMostrar(){
         $this->is_filtro=!$this->is_filtro;
@@ -68,6 +71,7 @@ trait FiltroTrait
                 //Recibos
                 $this->is_Creades=true;
                 $this->is_sede=true;
+                $this->is_fechatransaccion=true;
                 break;
 
             case 4:

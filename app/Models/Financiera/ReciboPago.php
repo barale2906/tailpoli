@@ -84,7 +84,18 @@ class ReciboPago extends Model
         $query->when($lapso ?? null, function($query, $lapso){
             $fecha1=Carbon::parse($lapso[0]);
             $fecha2=Carbon::parse($lapso[1]);
+            $fecha2->addSeconds(86399);
             $query->whereBetween('fecha', [$fecha1 , $fecha2]);
+        });
+    }
+
+    public function scopetransaccion($query, $latrans){
+        $query->when($latrans ?? null, function($query, $latrans){
+            $fec1=Carbon::parse($latrans[0]);
+            $fec2=Carbon::parse($latrans[1]);
+            $fec2->addSeconds(86399);
+
+            $query->whereBetween('fecha_transaccion', [$fec1 , $fec2]);
         });
     }
 

@@ -23,6 +23,15 @@
                 </a>
             @endcan
         </div>
+        @if (!$is_filtro)
+            @can('fi_recibopagoAnular')
+                <h1>
+                    Valor Total según el filtro aplicado: $ {{number_format($recibosTotal, 0, '.', ' ')}}
+                </h1>
+            @endcan
+        @endif
+
+
         <div class="relative overflow-x-auto">
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
