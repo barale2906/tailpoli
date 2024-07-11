@@ -191,7 +191,7 @@ class RecibosPago extends Component
     private function recibosTotal(){
 
         return ReciboPago::where('origen', $this->is_poliandino)
-                            ->where('status', '!=', 2)
+                            //->where('status', '!=', 2)
                             ->buscar($this->buscamin)
                             ->sede($this->filtroSede)
                             ->crea($this->filtrocrea)
