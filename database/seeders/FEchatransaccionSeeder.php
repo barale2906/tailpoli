@@ -16,8 +16,8 @@ class FEchatransaccionSeeder extends Seeder
     {
         $recibos=Recibopago::select('id','created_at','numero_recibo')
                             ->whereNull('fecha_transaccion')
-                            ->where('id', '>=',60000)
-                            ->where('id', '<',90000)
+                            ->where('id', '>=',90000)
+                            ->where('id', '<',120000)
                             ->get();
 
         foreach ($recibos as $value) {
