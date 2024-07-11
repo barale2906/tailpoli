@@ -238,7 +238,7 @@
                     </th>
                     <th scope="col" colspan="2" class="px-6 py-3 text-justify text-xl capitalize">
                         <h1>TOTAL</h1>
-                        <h1>DESCUENTOS </h1>
+                        <h1>TOTAL DESCUENTOS </h1>
                         <h1>EFECTIVO FACTURADO  </h1>
                         <h1>EFECTIVO DESCUENTO  </h1>
                         <h1>EFECTIVO REPORTADO </h1>

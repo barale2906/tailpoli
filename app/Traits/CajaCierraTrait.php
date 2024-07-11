@@ -120,6 +120,7 @@ trait CajaCierraTrait
     }
 
     public function eligesede(){
+
         $this->updatedCajeroId();
     }
 

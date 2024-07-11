@@ -16,7 +16,7 @@ class CierreCajas extends Component
     use WithPagination;
     use FiltroTrait;
 
-    public $ordena='fecha';
+    public $ordena='id';
     public $ordenado='DESC';
     public $pages = 15;
 
@@ -72,7 +72,7 @@ class CierreCajas extends Component
         $this->reset(
                         'is_modify',
                         'is_creating',
-                        'is_editing',
+                        //'is_editing',
                         'is_deleting',
                         'is_watching',
                         'is_desbloqueo'

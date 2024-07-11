@@ -258,7 +258,7 @@ class Salida extends Component
                     'tipo'=>'inventario',
                     'id_creador'=>Auth::user()->id,
                     'id_concepto'=>$this->conceptopago->id,
-                    'concepto'=>"Entrada de Inventario",
+                    'concepto'=>"Sálida de Inventario",
                     'valor'=>$this->precio,
                     'cantidad'=>$this->cantidad,
                     'subtotal'=>$valor,
@@ -634,7 +634,7 @@ class Salida extends Component
                         'unitario'=>$value->valor,
                         'subtotal'=>$value->subtotal,
                         'id_relacional'=>$value->id_cartera,
-                        'concepto_pago_id'=>$this->conceptopago->id,
+                        'concepto_pago_id'=>$value->id_concepto,
                         'recibo_pago_id'=>$this->recibo->id,
                         'created_at'=>now(),
                         'updated_at'=>now(),
@@ -647,7 +647,7 @@ class Salida extends Component
             //Eliminar datos de apoyo
             DB::table('apoyo_recibo')
                 ->where('id_creador', Auth::user()->id)
-                ->where('status', true)
+                //->where('status', true)
                 ->delete();
 
             if($this->control>0){
