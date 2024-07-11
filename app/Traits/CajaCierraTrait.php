@@ -55,6 +55,11 @@ trait CajaCierraTrait
     public $valor_consignacion_o;
     public $valor_tarjetas_o;
     public $dia=false;
+    public $status=false;
+
+    public $ruta=1;
+
+    public $print=false;
 
     public function sedesinlegalizar(){
         $sedes=ReciboPago::where('status', '!==', 1)
@@ -271,8 +276,13 @@ trait CajaCierraTrait
         // total transaccion pensiones
         $this->totaltransaccionpensiones=$this->movimientosacademico->whereIn('medio', ['consignacion', 'PSE'])->sum('valor');
 
+
         // total tarjeta pensiones
-        $this->totaltarjetapensiones=$this->movimientosacademico->where('medio', 'like','%tarjeta%')->sum('valor');
+        $this->totaltarjetapensiones=DB::table('concepto_pago_recibo_pago')
+                                            ->whereIn('recibo_pago_id', $this->recibosids)
+                                            ->whereIn('concepto_pago_id', $this->carteraids)
+                                            ->where('medio', 'like', '%tarjeta%')
+                                            ->sum('valor');
 
         $this->totalizapormedio();
         $this->totalizadescuentoefectivo();
@@ -295,7 +305,11 @@ trait CajaCierraTrait
 
         $this->valor_consignacion_o = $this->otros->whereIn('medio',['consignacion', 'PSE'])->sum('valor');
 
-        $this->valor_tarjetas_o = $this->otros->where('medio', 'like', '%Tarjeta%')->sum('valor');
+        $this->valor_tarjetas_o = DB::table('concepto_pago_recibo_pago')
+                                        ->whereIn('recibo_pago_id',$this->recibosids)
+                                        ->whereNotIn('concepto_pago_id',$this->otrosids)
+                                        ->where('medio', 'like', '%tarjeta%')
+                                        ->sum('valor');
     }
 
     public function totalizapormedio(){
@@ -347,8 +361,9 @@ trait CajaCierraTrait
     public function generaCierre($origen=null){
 
         if($origen){
-            $this->dinero_entegado=0;
             $this->dia=true;
+            $this->ruta=0;
+            $this->status=true;
         }
 
         // validate
@@ -382,17 +397,16 @@ trait CajaCierraTrait
             'sede_id'=>$this->sede_id,
             'cajero_id'=>$this->cajero_id,
             'coorcaja_id'=>Auth::user()->id,
-            'dia'=>$this->dia
+            'dia'=>$this->dia,
+            'status'=>$this->status
         ]);
 
         //relacionar recibos
         foreach ($this->reciboselegidos as $value) {
 
-            $this->status=2;
-
             //Actualizar recibo
             ReciboPago::whereId($value->id)->update([
-                                    'status'=>$this->status,
+                                    'status'=>1,
                                     'cierre'=>$cierre->id
                                 ]);
 
@@ -407,6 +421,12 @@ trait CajaCierraTrait
         }
 
         //agregar recibos anulados
+        ReciboPago::where('creador_id', $this->cajero_id)
+                    ->where('status', 2)
+                    ->where('cierre', null)
+                    ->update([
+                        'cierre'=> $cierre->id
+                    ]);
 
         //Datos de impresión
         $this->elegido=$cierre;
@@ -418,7 +438,6 @@ trait CajaCierraTrait
         //refresh
         $this->dispatch('refresh');
         $this->print=!$this->print;
-        //OJO OJO OJO CUADRAR IMPRESIONES
 
         $ruta='/impresiones/impcierre?o='.$this->ruta.'&c='.$cierre->id;
 

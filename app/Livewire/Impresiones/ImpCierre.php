@@ -35,7 +35,7 @@ class ImpCierre extends Component
 
         $this->recibos=ReciboPago::where('cierre', $this->id)->get();
         $this->urlruta();
-        $this->descuenTotal();
+        //$this->descuenTotal();
     }
 
     public function descuenTotal(){

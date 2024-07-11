@@ -19,7 +19,7 @@ class CierreCajasCrear extends Component
     use CajaCierraTrait;
 
     public $cajeros;
-    public $print=false;
+    //public $print=false;
 
     public function mount(){
 

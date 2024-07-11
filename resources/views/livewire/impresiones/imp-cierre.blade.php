@@ -93,7 +93,7 @@
                         TOTAL DESCUENTO:
                     </th>
                     <th scope="row" class="px-3 py-1 text-right font-semibold  text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                        $ {{number_format($descuentosT, 0, '.', '.')}}
+                        $ {{number_format($obtener->descuentotal, 0, '.', '.')}}
                     </th>
                 </tr>
             </tbody>
@@ -222,30 +222,35 @@
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
                 <tr>
-                    <th scope="col" colspan="1" class="px-6 py-3 text-justify text-xl capitalize"></th>
-                    <th scope="col" colspan="2" class="px-6 py-3 text-justify text-xl capitalize">
-                        <h1>TOTAL: </h1>
-                        <h1>DESCUENTOS: </h1>
-                        <h1>EFECTIVO FACTURADO:  </h1>
-                        <h1>EFECTIVO REPORTADO: </h1>
-                        <h1>TARJETA: </h1>
-                        <h1>CHEQUE: </h1>
-                        <h1>TRANSFERENCIA - PSE: </h1>
-                    </th>
+                    <th scope="col" colspan="2" class="px-6 py-3 text-justify text-xl capitalize"></th>
+
                     <th scope="col" colspan="1" class="px-6 py-3 text-right text-xl capitalize">
                         <h1>$ {{number_format($obtener->valor_total, 0, '.', '.')}}  </h1>
-                        <h1>$ {{number_format($descuentosT, 0, '.', '.')}}  </h1>
-                        <h1>$ {{number_format($obtener->valor_efectivo+$obtener->valor_efectivo_o, 0, '.', '.')}}  </h1>
+                        <h1>$ {{number_format($obtener->descuentotal, 0, '.', '.')}}  </h1>
+                        <h1>$ {{number_format($obtener->efectivo, 0, '.', '.')}}  </h1>
+                        <h1>$ {{number_format($obtener->efectivo_descuento, 0, '.', '.')}}  </h1>
                         <h1>$ {{number_format($obtener->valor_reportado, 0, '.', '.')}}  </h1>
-                        <h1>$ {{number_format($obtener->valor_tarjeta, 0, '.', '.')}}  </h1>
+                        <h1>$ {{number_format($obtener->valor_tarjeta+$obtener->valor_tarjeta_o, 0, '.', '.')}}  </h1>
+                        <h1>$ {{number_format($obtener->cobro_tarjeta, 0, '.', '.')}}  </h1>
                         <h1>$ {{number_format($obtener->valor_cheque+$obtener->valor_cheque_o, 0, '.', '.')}}  </h1>
                         <h1>$ {{number_format($obtener->valor_consignacion+$obtener->valor_consignacion_o, 0, '.', '.')}}  </h1>
 
                     </th>
-                    <th scope="col" colspan="1" class="px-6 py-3 text-right text-xl capitalize"></th>
+                    <th scope="col" colspan="2" class="px-6 py-3 text-justify text-xl capitalize">
+                        <h1>TOTAL</h1>
+                        <h1>DESCUENTOS </h1>
+                        <h1>EFECTIVO FACTURADO  </h1>
+                        <h1>EFECTIVO DESCUENTO  </h1>
+                        <h1>EFECTIVO REPORTADO </h1>
+                        <h1>TARJETA </h1>
+                        <h1>COBRO POR USO TARJETA </h1>
+                        <h1>CHEQUE </h1>
+                        <h1>TRANSFERENCIA - PSE </h1>
+                    </th>
+                    <th scope="col" colspan="2" class="px-6 py-3 text-right text-xl capitalize"></th>
                 </tr>
                 <tr>
-                    <th scope="col" colspan="1" class="px-6 py-3 text-justify text-xl capitalize"></th>
+                    <th scope="col" colspan="2" class="px-6 py-3 text-justify text-xl capitalize"></th>
                     <th scope="col" colspan="4" class="px-6 py-3 text-justify text-xl capitalize">
                         <h1 class="mt-3">Firma: ________________________________________</h1>
                     </th>

@@ -34,7 +34,7 @@
 
         <div class="mb-6">
             <label for="comentarios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
-            <input type="text" id="comentarios" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones del recibo" wire:model.live="comentarios" autocomplete="off">{{$comentarios}}
+            <input type="text" id="comentarios" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones de cierre" wire:model.blur="comentarios" autocomplete="off">
 
             @error('comentarios')
                 <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -42,6 +42,17 @@
                 </div>
             @enderror
         </div>
+        <div class="mb-6">
+            <label for="dinero_entegado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Efectivo entregado, descontando dinero de base</label>
+            <input type="text" id="dinero_entegado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="dinero entregado" wire:model.blur="dinero_entegado" autocomplete="off">
+
+            @error('dinero_entegado')
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                </div>
+            @enderror
+        </div>
+
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-3 bg-slate-300">
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
@@ -77,13 +88,13 @@
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($efectivoentrega, 0, ',', '.')}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400 capitalize">Total en efectivo disponible</dd>
+                    <dd class="text-gray-500 dark:text-gray-400 capitalize">TOTAL EFECTIVO A ENTREGAR</dd>
                 </div>
             </div>
 
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($tarjetaventa, 0, ',', '.')}}</dt>
+                    <dt class="mb-2 text-4xl font-extrabold">$ {{number_format($totaltarjeta, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400 capitalize">Cobro por uso de tarjetas</dd>
                 </div>
             </div>
@@ -165,7 +176,7 @@
         @if ($sede_id>0 && $cajero_id>0)
         <div>
             <a href="#" wire:click.prevent="generaCierre(1)" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-2 capitalize">
-                <i class="fa-solid fa-rectangle-xmark"></i> GENERAR
+                <i class="fa-solid fa-rectangle-xmark"></i> GENERAR Y APROBAR CIERRE
             </a>
         </div>
         @endif
