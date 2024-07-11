@@ -230,6 +230,15 @@
                         <h1>$ {{number_format($obtener->efectivo, 0, '.', '.')}}  </h1>
                         <h1>$ {{number_format($obtener->efectivo_descuento, 0, '.', '.')}}  </h1>
                         <h1>$ {{number_format($obtener->valor_reportado, 0, '.', '.')}}  </h1>
+                        @if ($diferencia>0)
+                            <h1 class=" text-blue-500">$ {{number_format($obtener->efectivo-$obtener->efectivo_descuento-$obtener->valor_reportado, 0, '.', '.')}}  </h1>
+                        @endif
+                        @if ($diferencia<0)
+                            <h1 class=" text-red-500">$ {{number_format($obtener->efectivo-$obtener->efectivo_descuento-$obtener->valor_reportado, 0, '.', '.')}}  </h1>
+                        @endif
+                        @if ($diferencia===0)
+                            <h1>$ {{number_format($obtener->efectivo-$obtener->efectivo_descuento-$obtener->valor_reportado, 0, '.', '.')}}  </h1>
+                        @endif
                         <h1>$ {{number_format($obtener->valor_tarjeta+$obtener->valor_tarjeta_o, 0, '.', '.')}}  </h1>
                         <h1>$ {{number_format($obtener->cobro_tarjeta, 0, '.', '.')}}  </h1>
                         <h1>$ {{number_format($obtener->valor_cheque+$obtener->valor_cheque_o, 0, '.', '.')}}  </h1>
@@ -242,6 +251,21 @@
                         <h1>EFECTIVO FACTURADO  </h1>
                         <h1>EFECTIVO DESCUENTO  </h1>
                         <h1>EFECTIVO REPORTADO </h1>
+                        @if ($diferencia>0)
+                            <h1 class=" text-blue-500">
+                                DIFERENCIA EFECTIVO (EXCEDENTE)
+                            </h1>
+                        @endif
+                        @if ($diferencia<0)
+                            <h1 class=" text-red-500">
+                                DIFERENCIA EFECTIVO (FALTANTE)
+                            </h1>
+                        @endif
+                        @if ($diferencia===0)
+                            <h1>
+                                DIFERENCIA EFECTIVO
+                            </h1>
+                        @endif
                         <h1>TARJETA </h1>
                         <h1>COBRO POR USO TARJETA </h1>
                         <h1>CHEQUE </h1>

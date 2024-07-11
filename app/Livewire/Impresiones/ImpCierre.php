@@ -21,12 +21,14 @@ class ImpCierre extends Component
     public $ruta;
     public $descuentosT=0;
     public $id_concepto;
+    public $diferencia;
 
     public function mount(){
 
         //$this->id_concepto=ConceptoPago::where('name', 'Descuento')->first();
         $this->obtener=CierreCaja::find($this->id);
         $this->obterecibo();
+        $this->calculadiferencia();
 
     }
 
@@ -36,6 +38,11 @@ class ImpCierre extends Component
         $this->recibos=ReciboPago::where('cierre', $this->id)->get();
         $this->urlruta();
         //$this->descuenTotal();
+    }
+
+    public function calculadiferencia(){
+        $descuentos=$this->obtener->efectivo_descuento+$this->obtener->valor_reportado;
+        $this->diferencia=$descuentos-$this->obtener->efectivo;
     }
 
     public function descuenTotal(){
