@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Gestion;
 use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\ReciboPago;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -65,10 +66,16 @@ class Observaciones extends Component
                         ->get();
     }
 
+    private function recibos(){
+        return ReciboPago::where('paga_id', $this->elegido->estudiante_id)
+                            ->get();
+    }
+
     public function render()
     {
         return view('livewire.academico.gestion.observaciones',[
             'cartera'=>$this->cartera(),
+            'recibos'=>$this->recibos(),
         ]);
     }
 }

@@ -95,6 +95,74 @@
         <h1 class="text-lg text-justify">
             A la fecha del {{$fecha}}, su deuda es de: <strong>$ {{number_format($cartera->sum('saldo')   , 0, '.', '.')}}</strong>
         </h1>
+
+    </div>
+    <div class="relative overflow-x-auto">
+        <h1 class="text-center text-lg font-semibold rounded-lg bg-cyan-300 uppercase mt-4">recibos pago</h1>
+        <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('id')">
+                        No
+                    </th>
+                    <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha')">
+                        Fecha
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Alumno
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Sede
+                    </th>
+                    <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('valor_total')">
+                        Valor
+                    </th>
+                    <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('medio')">
+                        Medio
+                    </th>
+                    <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('observaciones')">
+                        Observaciones
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Creador
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($recibos as $recibo)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                <a href="/impresiones/imprecibo?rut=0&r={{$recibo->id}}" target="_blank" class="inline-flex items-center font-medium text-blue-600 dark:texgreen-500 hover:underline">
+                                    <i class="fa-solid fa-print"></i>
+                                </a>
+                            </span>
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            {{$recibo->fecha}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            {{$recibo->paga->name}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            {{$recibo->sede->name}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                            $ {{number_format($recibo->valor_total, 0, '.', ' ')}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
+                            {{$recibo->medio}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                            {{$recibo->observaciones}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            {{$recibo->creador->name}}
+                        </th>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
         <livewire:configuracion.user.perfil :elegido="$alumno" :perf="1" :impresion="0" :ruta="$ruta"/>
     </div>
 </div>
