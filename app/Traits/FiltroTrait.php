@@ -38,6 +38,8 @@ trait FiltroTrait
 
     // Recibos
     public $is_fechatransaccion=false;
+    public $is_medio=false;
+    public $is_cajero=false;
 
 
     public function filtroMostrar(){
@@ -72,6 +74,8 @@ trait FiltroTrait
                 $this->is_Creades=true;
                 $this->is_sede=true;
                 $this->is_fechatransaccion=true;
+                $this->is_medio=true;
+                $this->is_cajero=true;
                 break;
 
             case 4:

@@ -25,10 +25,12 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     private $is_poliandino;
     private $is_logo;
     private $filtrotrans;
+    private $filtromedio;
+    private $filtrocajero;
     private $fileName = "Recibos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$filtroSede,$filtrocrea,$is_poliandino,$is_logo,$filtrotrans)
+    public function __construct($buscamin,$filtroSede,$filtrocrea,$is_poliandino,$is_logo,$filtrotrans,$filtromedio,$filtrocajero)
     {
         $this->buscamin=$buscamin;
         $this->filtrosede=$filtroSede;
@@ -36,6 +38,8 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
         $this->is_poliandino=$is_poliandino;
         $this->is_logo=$is_logo;
         $this->filtrotrans=$filtrotrans;
+        $this->filtromedio=$filtromedio;
+        $this->filtrocajero=$filtrocajero;
     }
 
     /**
@@ -48,6 +52,8 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
                             ->sede($this->filtrosede)
                             ->crea($this->filtrocrea)
                             ->transaccion($this->filtrotrans)
+                            ->medio($this->filtromedio)
+                            ->cajero($this->filtrocajero)
                             ->orderBy('id', 'ASC')
                             ->get();
     }

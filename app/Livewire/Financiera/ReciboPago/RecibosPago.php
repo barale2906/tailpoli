@@ -4,6 +4,7 @@ namespace App\Livewire\Financiera\ReciboPago;
 
 use App\Exports\FinReciboExport;
 use App\Models\Financiera\ReciboPago;
+use App\Models\User;
 use App\Traits\FiltroTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
@@ -40,6 +41,8 @@ class RecibosPago extends Component
     public $filtroTransdes;
     public $filtroTranshas;
     public $filtrotrans=[];
+    public $filtromedio;
+    public $filtrocajero;
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -138,7 +141,7 @@ class RecibosPago extends Component
     }
 
     public function exportar(){
-        return new FinReciboExport($this->buscamin, $this->filtroSede, $this->filtrocrea,$this->is_poliandino,$this->is_logo,$this->filtrotrans);
+        return new FinReciboExport($this->buscamin, $this->filtroSede, $this->filtrocrea,$this->is_poliandino,$this->is_logo,$this->filtrotrans,$this->filtromedio,$this->filtrocajero);
     }
 
     public function empresa(){
@@ -183,6 +186,8 @@ class RecibosPago extends Component
                             ->sede($this->filtroSede)
                             ->crea($this->filtrocrea)
                             ->transaccion($this->filtrotrans)
+                            ->medio($this->filtromedio)
+                            ->cajero($this->filtrocajero)
                             ->orderBy($this->ordena, $this->ordenado)
                             ->paginate($this->pages);
 
@@ -196,7 +201,23 @@ class RecibosPago extends Component
                             ->sede($this->filtroSede)
                             ->crea($this->filtrocrea)
                             ->transaccion($this->filtrotrans)
+                            ->medio($this->filtromedio)
+                            ->cajero($this->filtrocajero)
                             ->sum('valor_total');
+    }
+
+    private function cajeros(){
+        $cajeros=ReciboPago::select('creador_id')
+                            ->groupBy('creador_id')
+                            ->get();
+        $ids=array();
+        foreach ($cajeros as $value) {
+            array_push($ids,$value->creador_id);
+        }
+
+        return User::whereIn('id',$ids)
+                    ->orderBy('name', 'ASC')
+                    ->get();
     }
 
     private function sedes(){
@@ -211,6 +232,7 @@ class RecibosPago extends Component
             'recibos'=>$this->recibos(),
             'sedes'=>$this->sedes(),
             'recibosTotal'=>$this->recibosTotal(),
+            'cajeros'=>$this->cajeros(),
         ]);
     }
 }

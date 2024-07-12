@@ -56,7 +56,6 @@ class ReciboPago extends Model
     public function scopeBuscar($query, $item){
         $query->when($item ?? null, function($query, $item){
             $query->where('numero_recibo', 'like', "%".$item."%")
-                    ->orwhere('medio', 'like', "%".$item."%")
                     ->orwhere('observaciones', 'like', "%".$item."%")
 
                     ->orwherehas('creador', function($query) use($item){
@@ -80,6 +79,18 @@ class ReciboPago extends Model
         });
     }
 
+    public function scopeMedio($query, $medio){
+        $query->when($medio ?? null, function($query, $medio){
+            $query->where('medio', 'like', "%".$medio."%");
+        });
+    }
+
+    public function scopeCajero($query, $cajero){
+        $query->when($cajero ?? null, function($query, $cajero){
+            $query->where('creador_id', $cajero);
+        });
+    }
+
     public function scopeCrea($query, $lapso){
         $query->when($lapso ?? null, function($query, $lapso){
             $fecha1=Carbon::parse($lapso[0]);
@@ -98,5 +109,7 @@ class ReciboPago extends Model
             $query->whereBetween('fecha_transaccion', [$fec1 , $fec2]);
         });
     }
+
+
 
 }
