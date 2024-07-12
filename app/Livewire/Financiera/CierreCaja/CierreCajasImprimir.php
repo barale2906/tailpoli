@@ -19,27 +19,27 @@ class CierreCajasImprimir extends Component
     public $ruta;
     public $descuentosT=0;
     public $id_concepto;
+    public $valor_anulado;
+    public $diferencia;
 
     public function mount($elegido = null,$accion,$ruta=null)
     {
-        $this->id_concepto=ConceptoPago::where('name', 'Descuento')->first();
         $this->cierre=CierreCaja::find($elegido['id']);
         $this->recibos=ReciboPago::where('cierre', $elegido['id'])->orderBy('fecha', 'ASC')->get();
         $this->$accion=$accion;
         $this->ruta=$ruta;
-        $this->descuenTotal();
+        $this->valor_anulado=ReciboPago::where('cierre', $elegido['id'])
+                                        ->where('status', 2)
+                                        ->sum('valor_total');
+
+        $this->calculadiferencia();
     }
 
-    public function descuenTotal(){
-        $ids=array();
-
-        foreach ($this->recibos as $value) {
-            array_push($ids, $value->id);
-        }
-
-        $this->descuentosT = $this->recibos->sum('descuento');
-
+    public function calculadiferencia(){
+        $descuentos=$this->cierre->efectivo_descuento+$this->cierre->valor_reportado;
+        $this->diferencia=$descuentos-$this->cierre->efectivo;
     }
+
     /**
      * Reglas de validación
      */

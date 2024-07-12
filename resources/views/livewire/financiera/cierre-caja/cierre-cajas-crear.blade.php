@@ -32,27 +32,6 @@
     </div>
     @if ($sede_id>0 && $cajero_id>0)
 
-        <div class="mb-6">
-            <label for="comentarios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
-            <input type="text" id="comentarios" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones de cierre" wire:model.blur="comentarios" autocomplete="off">
-
-            @error('comentarios')
-                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                </div>
-            @enderror
-        </div>
-        <div class="mb-6">
-            <label for="dinero_entegado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Efectivo entregado, descontando dinero de base</label>
-            <input type="text" id="dinero_entegado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="dinero entregado" wire:model.blur="dinero_entegado" autocomplete="off">
-
-            @error('dinero_entegado')
-                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                </div>
-            @enderror
-        </div>
-
         <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-3 bg-slate-300">
             <div class="mb-6">
                 <div class="flex flex-col items-center justify-center">
@@ -171,7 +150,31 @@
                 </div>
             </div>
         </div>
+
+        <div class="mb-6">
+            <label for="comentarios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observaciones</label>
+            <input type="text" id="comentarios" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Observaciones de cierre" wire:model.blur="comentarios" autocomplete="off">
+
+            @error('comentarios')
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                </div>
+            @enderror
+        </div>
+        <div class="mb-6">
+            <label for="dinero_entegado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Efectivo entregado, descontando dinero de base</label>
+            <input type="text" id="dinero_entegado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="dinero entregado" wire:model.blur="dinero_entegado" autocomplete="off">
+
+            @error('dinero_entegado')
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                </div>
+            @enderror
+        </div>
     @endif
+
+
+
     <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
         @if ($sede_id>0 && $cajero_id>0)
         <div>
