@@ -60,7 +60,11 @@
                     </thead>
                 </table>
             </div>
-
+            @if ($obtener->status===2)
+                <h1 class=" text-3xl font-extrabold text-red-600 bg-red-400 text-center">
+                    ¡RECIBO ANULADO!
+                </h1>
+            @endif
             <div class="relative overflow-x-auto m-1 shadow-sm shadow-teal-300">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
@@ -184,6 +188,11 @@
                     </thead>
                 </table>
             </div>
+            @if ($obtener->status===2)
+                <h1 class=" text-3xl font-extrabold text-red-600 bg-red-400 text-center">
+                    ¡RECIBO ANULADO!
+                </h1>
+            @endif
 
             <div class="relative overflow-x-auto m-1 shadow-sm shadow-teal-300">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -307,6 +316,12 @@
                 </table>
             </div>
 
+            @if ($obtener->status===2)
+                <h1 class=" text-3xl font-extrabold text-red-600 bg-red-400 text-center">
+                    ¡RECIBO ANULADO!
+                </h1>
+            @endif
+
             <div class="relative overflow-x-auto m-1 shadow-sm shadow-teal-300">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
@@ -429,6 +444,11 @@
                 </table>
             </div>
 
+            @if ($obtener->status===2)
+                <h1 class=" text-3xl font-extrabold text-red-600 bg-red-400">
+                    ¡RECIBO ANULADO!
+                </h1>
+            @endif
             <div class="relative overflow-x-auto m-1 shadow-sm shadow-teal-300">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
