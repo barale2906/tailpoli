@@ -497,18 +497,25 @@ class RecibosPagoCrear extends Component
                     );
     }
 
+    public function updatedPagoTotal(){
+        if($this->pagoTotal){
+            $this->Total=$this->totalCartera;
+
+        }else{
+            $this->reset('totalCartera');
+        }
+    }
     // Crear REcibo de Pago
     public function new(){
+
         // validate
         $this->validate();
 
-        $this->fecha_pago=now();
-
         if($this->pagoTotal){
-            $this->Total=$this->totalCartera;
+            $this->Totaldescue=$this->descuento;
         }
 
-
+        $this->fecha_pago=now();
 
         $ultimo=ReciboPago::where('origen', true)
                                 ->max('numero_recibo');
@@ -549,8 +556,24 @@ class RecibosPagoCrear extends Component
         if($this->pagoTotal){
 
             $esta=EstadoCartera::where('name', 'cerrada')->first();
-                        $this->estado=$esta->id;
-                        $this->status=false;
+
+            $this->estado=$esta->id;
+            $this->status=false;
+
+            $tipo="";
+            $conceptodesc=0;
+            $descuentomensual=0;
+            if($this->descuento){
+                $desc=ConceptoPago::where('status', true)
+                                    ->where('name', 'like', "%".'descuento'."%")
+                                    ->select('id','tipo')
+                                    ->first();
+
+                $descuentomensual=$this->descuento/$this->pendientes->count();
+                $tipo=$desc->tipo;
+                $conceptodesc=$desc->id;
+            }
+
 
             foreach ($this->pendientes as $value) {
 
@@ -566,6 +589,20 @@ class RecibosPagoCrear extends Component
                         'updated_at'=>now(),
                     ]);
 
+                if($this->descuento){
+                    DB::table('concepto_pago_recibo_pago')
+                            ->insert([
+                                'valor'=>$descuentomensual,
+                                'tipo'=>$tipo,
+                                'medio'=>$this->medioele,
+                                'id_relacional'=>$value->id,
+                                'concepto_pago_id'=>$conceptodesc,
+                                'recibo_pago_id'=>$recibo->id,
+                                'created_at'=>now(),
+                                'updated_at'=>now(),
+                            ]);
+                }
+
                 $primer=explode("-----",$value->observaciones);
                 $inicial=$primer[0];
 
@@ -575,6 +612,7 @@ class RecibosPagoCrear extends Component
                         ->update([
                             'fecha_real'=>now(),
                             'saldo'=>0,
+                            'descuento'=>$descuentomensual,
                             'observaciones'=>$observa,
                             'status'=>$this->status,
                             'estado_cartera_id'=>$this->estado
@@ -789,12 +827,6 @@ class RecibosPagoCrear extends Component
 
         return $consulta->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
-        /* return User::where('name', 'like', "%".$this->buscaestudi."%")
-                        ->orWhere('documento', 'like', "%".$this->buscaestudi."%")
-                        ->orderBy('name')
-                        ->with('roles')->get()->filter(
-                            fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                        ); */
     }
 
     private function concePagos(){
