@@ -109,7 +109,7 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
 
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                @if ($transaccione->status!==4)
+                                @if ($transaccione->status<4)
                                     @can('fi_transaccionesEditar')
                                         <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
                                             <a href="" wire:click.prevent="show({{$transaccione->id}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">

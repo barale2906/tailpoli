@@ -17,6 +17,7 @@ class TransaccionCrear extends Component
     public $soporte;
 
     public $actual;
+    public $editarlo;
     public $observacion;
     public $observaciones;
     public $sede_id;
@@ -32,9 +33,31 @@ class TransaccionCrear extends Component
     public $is_academico=false;
 
 
-    public function mount($elegido){
-        $this->actual=User::find($elegido);
+    public function mount($elegido,$ruta=null){
+
+        if($ruta){
+            $this->editarlo=Transaccion::find($elegido);
+            $this->asignardatos();
+        }else{
+            $this->actual=User::find($elegido);
+        }
+
         //$this->observacion=now()." ".Auth::user()->name." Cargo soporte de consignación. ----- ".$this->actual->observaciones;
+    }
+
+    public function asignardatos(){
+
+        $this->actual=User::find($this->editarlo->user_id);
+        $this->sede_id=$this->editarlo->sede_id;
+        $this->total=$this->editarlo->total;
+        $this->fecha_transaccion=$this->editarlo->fecha_transaccion;
+        $this->banco=$this->editarlo->banco;
+
+        $this->is_academico=true;
+        $this->is_otro=true;
+        $this->academico=$this->editarlo->academico;
+        $this->otro=$this->editarlo->inventario;
+
     }
 
     public function updatedOpcion(){
@@ -171,6 +194,56 @@ class TransaccionCrear extends Component
         $this->resetFields();
         $this->dispatch('refresh');
         $this->dispatch('cancelando');
+    }
+
+    public function editar(){
+
+        $suma=intval($this->academico)+intval($this->otro);
+
+        if($suma===intval($this->total) && $this->observaciones){
+
+            $this->editarlo->update([
+
+                'gestionador_id'=>Auth::user()->id,
+                'user_id'=>$this->actual->id,
+                'sede_id'=>$this->sede_id,
+                'academico'=>intval($this->academico),
+                'inventario'=>intval($this->otro),
+                'fecha_transaccion'=>$this->fecha_transaccion,
+                'banco'=>$this->banco,
+                'total'=>intval($this->total),
+                'observaciones'=>now().' '.Auth::user()->name.': ¡MODIFCO LA SOLICITUD! '.$this->observaciones." ----- ".$this->editarlo->observaciones,
+
+            ]);
+
+            //refresh
+            $this->resetFields();
+            $this->dispatch('refresh');
+            $this->dispatch('cambiando');
+            $this->dispatch('alerta', name:'Se actualizo correctamente');
+
+        }else{
+            $this->dispatch('alerta', name:'La suma de los itemes no es igual al total de la transacción y / o registre observaciones.');
+        }
+
+    }
+
+    public function anular(){
+        if($this->observaciones){
+            $this->editarlo->update([
+                'status'=>5,
+                'observaciones'=>now().' '.Auth::user()->name.': ¡ANULO LA SOLICITUD!: '.$this->observaciones." ----- ".$this->editarlo->observaciones,
+            ]);
+
+            //refresh
+            $this->resetFields();
+            $this->dispatch('refresh');
+            $this->dispatch('cancelando');
+            $this->dispatch('alerta', name:'Se anulo correctamente la solicitud N°: '.$this->editarlo->id);
+
+        }else{
+            $this->dispatch('alerta', name:'Registre observaciones de cierre.');
+        }
     }
 
     public function render()

@@ -44,6 +44,7 @@ class Transaccion extends Model
         $query->when($item ?? null, function($query, $item){
             $query->where('fecha', 'like', "%".$item."%")
                     ->orwhere('observaciones', 'like', "%".$item."%")
+                    ->orwhere('id', 'like', "%".$item."%")
 
                     ->orwherehas('creador', function($query) use($item){
                         $query->where('users.name', 'like', "%".$item."%");

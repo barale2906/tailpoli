@@ -7,6 +7,7 @@ use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Transaccion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class TransaccionEditar extends Component
@@ -21,7 +22,7 @@ class TransaccionEditar extends Component
     public $control;
     public $status_inventario;
 
-    public $is_recibo=false;
+    public $is_recibo=1;
 
     public function mount($elegido){
         $this->actual=Transaccion::find($elegido);
@@ -49,8 +50,8 @@ class TransaccionEditar extends Component
                                 ->get(); */
     }
 
-    public function recibo(){
-        $this->is_recibo=!$this->is_recibo;
+    public function recibo($id){
+        $this->is_recibo=$id;
     }
 
     public function inventar(){
@@ -102,6 +103,14 @@ class TransaccionEditar extends Component
         $this->dispatch('cancelando');
 
 
+    }
+
+    //Activar evento
+    #[On('cambiando')]
+    //Mostrar formulario de gestión
+    public function cambia()
+    {
+        $this->is_recibo=1;
     }
 
     public function render()
