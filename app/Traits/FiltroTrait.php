@@ -20,6 +20,8 @@ trait FiltroTrait
 
     //Inventario
     public $is_tipo=false;
+    public $is_almacen=false;
+    public $is_saldo=false;
 
     //Usuarios
     public $is_rol=false;
@@ -92,6 +94,8 @@ trait FiltroTrait
                 //Inventario
                 $this->is_Creades=true;
                 $this->is_tipo=true;
+                $this->is_almacen=true;
+                $this->is_saldo=true;
                 break;
 
             case 6:

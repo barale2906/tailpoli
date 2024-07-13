@@ -105,7 +105,7 @@
                             @endif
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('inicia')">
-                            Fecha Inicio
+                            Matricula -- Fecha Inicio
                             @if ($ordena != 'inicia')
                                 <i class="fas fa-sort"></i>
                             @else
@@ -239,10 +239,10 @@
 
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$controle->inicia}}
+                                {{$controle->matricula_id}} -- {{$controle->inicia}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$controle->estudiante->name}} -- {{number_format($controle->estudiante->documento, 0, ',', '.')}}
+                                {{$controle->estudiante->name}} -- {{$controle->estudiante->documento}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$controle->ciclo->name}}

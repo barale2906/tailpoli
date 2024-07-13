@@ -4,6 +4,7 @@ namespace App\Livewire\Inventario\Inventario;
 
 use App\Exports\InvInventarioExport;
 use App\Models\Inventario\Inventario;
+use App\Models\Inventario\Almacen;
 use App\Traits\FiltroTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
@@ -30,8 +31,12 @@ class Inventarios extends Component
     public $buscamin='';
     public $filtroCreades;
     public $filtroCreahas;
+    public $filtrocrea=[];
     public $filtrotipo;
     public $valorFiltrotipo;
+    public $filtrosaldo=false;
+    public $Saldofiltro;
+    public $filtroalmacen;
 
     public $tipo=[];
 
@@ -128,6 +133,15 @@ class Inventarios extends Component
         }
     }
 
+    public function updatedSaldofiltro(){
+        if($this->Saldofiltro==="si"){
+            $this->filtrosaldo=true;
+        }
+        if($this->Saldofiltro==="no"){
+            $this->filtrosaldo=false;
+        }
+    }
+
     // Mostrar Regimen de Salud
     public function show($esta, $act){
 
@@ -150,46 +164,57 @@ class Inventarios extends Component
         $this->is_deleting = !$this->is_deleting;
     }
 
+    public function updatedFiltroCreahas(){
+        if($this->filtroCreades<=$this->filtroCreahas){
+            $crea=array();
+            array_push($crea, $this->filtroCreades);
+            array_push($crea, $this->filtroCreahas);
+            $this->filtrocrea=$crea;
+        }else{
+            $this->reset('filtroCreades','filtroCreahas');
+        }
+    }
+
     public function exportar(){
-        return new InvInventarioExport($this->buscamin);
+        return new InvInventarioExport($this->buscamin,$this->filtrocrea,$this->valorFiltrotipo,$this->filtroalmacen,$this->filtrosaldo);
     }
 
     private function inventarios()
     {
-        $consulta = Inventario::query();
+        return Inventario::buscar($this->buscamin)
+                            ->crea($this->filtrocrea)
+                            ->tipo($this->valorFiltrotipo)
+                            ->almacen($this->filtroalmacen)
+                            ->saldo($this->filtrosaldo)
+                            ->orderBy($this->ordena, $this->ordenado)
+                            ->orderBy('id', 'DESC')
+                            ->paginate($this->pages);
+    }
 
-        if($this->buscamin){
-            $consulta = $consulta->where('descripcion', 'like', "%".$this->buscamin."%")
-            ->orwhere('fecha_movimiento', 'like', "%".$this->buscamin."%")
-            ->orWhereHas('producto', function($q){
-                $q->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('almacen', function($qu){
-                $qu->where('name', 'like', "%".$this->buscamin."%");
-            })
-            ->orWhereHas('user', function($que){
-                $que->where('name', 'like', "%".$this->buscamin."%");
-            });
+    private function almacenes(){
+        $almac=Inventario::buscar($this->buscamin)
+                                ->crea($this->filtrocrea)
+                                ->tipo($this->valorFiltrotipo)
+                                ->saldo($this->filtrosaldo)
+                                ->select('almacen_id')
+                                ->groupBy('almacen_id')
+                                ->get();
+
+        $ids=array();
+        foreach ($almac as $value) {
+            array_push($ids,$value->almacen_id);
         }
 
-        if($this->filtroCreades && $this->filtroCreahas){
-
-            $consulta = $consulta->whereBetween('fecha_movimiento', [$this->filtroCreades , $this->filtroCreahas]);
-        }
-
-        if($this->filtrotipo){
-
-            $consulta = $consulta->where('tipo', $this->valorFiltrotipo);
-        }
-
-        return $consulta->orderBy($this->ordena, $this->ordenado)
-                        ->paginate($this->pages);
+        return Almacen::whereIn('id',$ids)
+                        ->orderBy('name', 'ASC')
+                        ->get();
     }
 
     public function render()
     {
         return view('livewire.inventario.inventario.inventarios', [
-            'inventarios' => $this->inventarios()
+            'inventarios'   => $this->inventarios(),
+            'almacenes'     =>$this->almacenes(),
         ]);
     }
 }

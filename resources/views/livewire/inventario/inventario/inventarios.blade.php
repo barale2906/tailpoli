@@ -80,7 +80,7 @@
                                     <i class="fas fa-sort-down"></i>
                                 @endif
                             @endif
-                        </th>
+                        </th>{{--
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('saldo')">
                             Saldo
                             @if ($ordena != 'saldo')
@@ -92,7 +92,7 @@
                                     <i class="fas fa-sort-down"></i>
                                 @endif
                             @endif
-                        </th>
+                        </th> --}}
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('precio')">
                             Precio
                             @if ($ordena != 'precio')
@@ -155,30 +155,30 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$inventario->fecha_movimiento}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$inventario->almacen->sede->sector->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$inventario->almacen->sede->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$inventario->almacen->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 <a href="" wire:click.prevent="show({{$inventario->id}},{{1}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
                                     {{$inventario->producto->name}}
                                 </a>
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
                                 {{$inventario->cantidad}}
-                            </th>
+                            </th>{{--
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
                                 {{$inventario->saldo}}
-                            </th>
+                            </th> --}}
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
                                 $ {{number_format($inventario->precio, 0, '.', ' ')}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$inventario->user->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">

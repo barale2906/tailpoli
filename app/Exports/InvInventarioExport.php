@@ -20,12 +20,20 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
     use Exportable;
 
     private $buscamin;
+    private $filtrocrea;
+    private $valorFiltrotipo;
+    private $filtrosaldo;
+    private $filtroalmacen;
     private $fileName = "Inventarios.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin)
+    public function __construct($buscamin,$filtrocrea,$valorFiltrotipo,$filtroalmacen,$filtrosaldo)
     {
         $this->buscamin=$buscamin;
+        $this->filtrocrea=$filtrocrea;
+        $this->valorFiltrotipo=$valorFiltrotipo;
+        $this->filtroalmacen=$filtroalmacen;
+        $this->filtrosaldo=$filtrosaldo;
     }
 
     /**
@@ -33,24 +41,14 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
     */
     public function collection()
     {
-        return Inventario::query()
-                            ->with(['producto', 'almacen', 'user'])
-                            ->when($this->buscamin, function($query){
-                                return $query->where('status', true)
-                                        ->where('descripcion', 'like', "%".$this->buscamin."%")
-                                        ->orwhere('fecha_movimiento', 'like', "%".$this->buscamin."%")
-                                        ->orWhereHas('producto', function($q){
-                                            $q->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('almacen', function($qu){
-                                            $qu->where('name', 'like', "%".$this->buscamin."%");
-                                        })
-                                        ->orWhereHas('user', function($que){
-                                            $que->where('name', 'like', "%".$this->buscamin."%");
-                                        });
-                            })
+        $caso=Inventario::buscar($this->buscamin)
+                            ->crea($this->filtrocrea)
+                            ->tipo($this->valorFiltrotipo)
+                            ->almacen($this->filtroalmacen)
+                            ->saldo($this->filtrosaldo)
                             ->orderBy('id', 'DESC')
                             ->get();
+        return  $caso;
     }
 
     public function startCell(): string
@@ -62,14 +60,15 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
     {
         return [
             'Fecha Movimiento',
+            //'Tipo (1 sálida, 2 entrada, 3 pendiente, 4 traslado)',
             'Tipo',
             'Ciudad',
             'Sede',
             'Almacén',
             'Producto',
             'Cantidad',
-            'Saldo',
-            'Precio',
+            'Saldo con este movimiento (si el campo esta vacio su valor es cero)',
+            'Precio (si el campo esta vacio su valor es cero)',
             'Responsable del Movimiento',
             'Descripción'
         ];
@@ -77,9 +76,40 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
 
     public function map($inventario): array
     {
+        $tipo="";
+        switch ($inventario->tipo) {
+            case 0:
+                $tipo="ENTRADA";
+                break;
+
+            case 1:
+                $tipo="SALIDA";
+                break;
+
+            case 2:
+                $tipo="PENDIENTE";
+                break;
+
+            case 3:
+                $tipo="TRASLADO";
+                break;
+        }
+        if($inventario->saldo===0){
+            $saldo=0;
+        }else{
+            $saldo=$inventario->saldo;
+        }
+
+        if($inventario->precio===0){
+            $precio=0;
+        }else{
+            $precio=$inventario->precio;
+        }
+
         return [
             $inventario->fecha_movimiento,
-            $inventario->tipo ? "ENTRADA":"SALIDA",
+            //$inventario->tipo+1,// ? "ENTRADA":"SALIDA",
+            $tipo,
             $inventario->almacen->sede->sector->name,
             $inventario->almacen->sede->name,
             $inventario->almacen->name,
