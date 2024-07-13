@@ -118,87 +118,94 @@
         @endif
     </div>
     @if ($responsable_id>0)
-        <div class="relative overflow-x-auto">
-            <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3" >
-
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Fecha Programada
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Fecha registro
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Valor
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Saldo
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Estudiante
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Concepto
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Observaciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($deudas as $deuda)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <div class=" mb-3">
-                                    <a href="" wire:click.prevent="eliminar({{$deuda->id}})" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                        <i class="fa-solid fa-trash-can-arrow-up"></i>
-                                    </a>
-                                </div>
-
-                                @if ($deuda->id===$id_elimina)
-                                <div class=" mb-3 mt-3">
-                                    <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Registre el motivo" wire:model.live="observaciones">
-                                </div>
-
-                                    @if ($observaciones)
-                                        <div class=" mb-3 mt-3">
-                                            <a href="" wire:click.prevent="anular" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                                <i class="fa-solid fa-triangle-exclamation"></i> Confirme la anulación
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endif
+        @if ($deudas->count()>0)
+            <div class="relative overflow-x-auto">
+                <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3" >
 
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$deuda->fecha_pago}}
+                            <th scope="col" class="px-6 py-3" >
+                                Fecha Programada
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$deuda->fecha_real}}
+                            <th scope="col" class="px-6 py-3" >
+                                Fecha registro
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                $ {{number_format($deuda->valor, 0, ',', '.')}}
+                            <th scope="col" class="px-6 py-3" >
+                                Valor
                             </th>
-
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                $ {{number_format($deuda->saldo, 0, ',', '.')}}
+                            <th scope="col" class="px-6 py-3" >
+                                Saldo
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$deuda->responsable->name}}
+                            <th scope="col" class="px-6 py-3" >
+                                Estudiante
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$deuda->concepto}}
+                            <th scope="col" class="px-6 py-3" >
+                                Concepto
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
-                                {{$deuda->observaciones}}
+                            <th scope="col" class="px-6 py-3" >
+                                Observaciones
                             </th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        @foreach ($deudas as $deuda)
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <div class=" mb-3">
+                                        <a href="" wire:click.prevent="eliminar({{$deuda->id}})" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                            <i class="fa-solid fa-trash-can-arrow-up"></i>
+                                        </a>
+                                    </div>
+
+                                    @if ($deuda->id===$id_elimina)
+                                    <div class=" mb-3 mt-3">
+                                        <input type="text" id="observaciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Registre el motivo" wire:model.live="observaciones">
+                                    </div>
+
+                                        @if ($observaciones)
+                                            <div class=" mb-3 mt-3">
+                                                <a href="" wire:click.prevent="anular" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                                                    <i class="fa-solid fa-triangle-exclamation"></i> Confirme la anulación
+                                                </a>
+                                            </div>
+                                        @endif
+                                    @endif
+
+                                </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{$deuda->fecha_pago}}
+                                </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                    {{$deuda->fecha_real}}
+                                </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                    $ {{number_format($deuda->valor, 0, ',', '.')}}
+                                </th>
+
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                    $ {{number_format($deuda->saldo, 0, ',', '.')}}
+                                </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                    {{$deuda->responsable->name}}
+                                </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                    {{$deuda->concepto}}
+                                </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                    {{$deuda->observaciones}}
+                                </th>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <h1 class=" text-center capitalize">
+                El estudiante no tiene cartera registrada.
+            </h1>
+        @endif
+
     @endif
 </div>

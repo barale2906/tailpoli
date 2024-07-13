@@ -102,12 +102,14 @@ class Convenio extends Component
                             ->where('status', true)
                             ->get();
 
-        $crt=Cartera::where('responsable_id', $this->responsable_id)
-                    ->where('status', true)
-                    ->first();
+        if($this->deudas->count()>0){
+            $crt=Cartera::where('responsable_id', $this->responsable_id)
+            ->where('status', true)
+            ->first();
 
-        $this->sede_id=$crt->sede_id;
-        $this->sector_id=$crt->sector_id;
+            $this->sede_id=$crt->sede_id;
+            $this->sector_id=$crt->sector_id;
+        }
 
         $this->total=Cartera::where('responsable_id', $this->responsable_id)
                             ->where('status', true)
