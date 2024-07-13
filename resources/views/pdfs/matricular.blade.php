@@ -418,16 +418,27 @@
                                                                 $ {{number_format($item->valor, 0, '.', '.')}}
                                                             </th>
                                                             <th scope="row" class="derecha capitalize font-sm">
-                                                                @if ($item->fecha_pago < $fecha)
-                                                                    @php
-                                                                        $fecha1 = date_create($item->fecha_pago);
-                                                                        $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                                                    @endphp
-                                                                    {{$dias}} días
+                                                                @if ($item->status)
+                                                                    @if ($item->fecha_pago < $fecha)
+                                                                        @php
+                                                                            $fecha1 = date_create($item->fecha_pago);
+                                                                            $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                                        @endphp
+                                                                        {{$dias}} días
+                                                                    @endif
+                                                                @else
+                                                                    0 Días
                                                                 @endif
+
                                                             </th>
                                                             <th scope="row" class="derecha capitalize font-sm">
-                                                                $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                                @if ($item->status)
+                                                                    @if ($item->fecha_pago < $fecha)
+                                                                        $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                                    @endif
+                                                                @else
+                                                                    $ 0
+                                                                @endif
                                                             </th>
                                                         </tr>
                                                     @endforeach
@@ -1140,16 +1151,27 @@
                                                                         $ {{number_format($item->valor, 0, '.', '.')}}
                                                                     </th>
                                                                     <th scope="row" class="derecha capitalize font-sm">
-                                                                        @if ($item->fecha_pago < $fecha)
-                                                                            @php
-                                                                                $fecha1 = date_create($item->fecha_pago);
-                                                                                $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                                                            @endphp
-                                                                            {{$dias}} días
+                                                                        @if ($item->status)
+                                                                            @if ($item->fecha_pago < $fecha)
+                                                                                @php
+                                                                                    $fecha1 = date_create($item->fecha_pago);
+                                                                                    $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                                                @endphp
+                                                                                {{$dias}} días
+                                                                            @endif
+                                                                        @else
+                                                                            0 Días
                                                                         @endif
+
                                                                     </th>
                                                                     <th scope="row" class="derecha capitalize font-sm">
-                                                                        $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                                        @if ($item->status)
+                                                                            @if ($item->fecha_pago < $fecha)
+                                                                                $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                                            @endif
+                                                                        @else
+                                                                            $ 0
+                                                                        @endif
                                                                     </th>
                                                                 </tr>
                                                             @endforeach
@@ -1879,16 +1901,27 @@
                                                     $ {{number_format($item->valor, 0, '.', '.')}}
                                                 </th>
                                                 <th scope="row" class="derecha capitalize font-sm">
-                                                    @if ($item->fecha_pago < $fecha)
-                                                        @php
-                                                            $fecha1 = date_create($item->fecha_pago);
-                                                            $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                                        @endphp
-                                                        {{$dias}} días
+                                                    @if ($item->status)
+                                                        @if ($item->fecha_pago < $fecha)
+                                                            @php
+                                                                $fecha1 = date_create($item->fecha_pago);
+                                                                $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                            @endphp
+                                                            {{$dias}} días
+                                                        @endif
+                                                    @else
+                                                        0 Días
                                                     @endif
+
                                                 </th>
                                                 <th scope="row" class="derecha capitalize font-sm">
-                                                    $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                    @if ($item->status)
+                                                        @if ($item->fecha_pago < $fecha)
+                                                            $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                        @endif
+                                                    @else
+                                                        $ 0
+                                                    @endif
                                                 </th>
                                             </tr>
                                         @endforeach
@@ -2601,16 +2634,27 @@
                                                             $ {{number_format($item->valor, 0, '.', '.')}}
                                                         </th>
                                                         <th scope="row" class="derecha capitalize font-sm">
-                                                            @if ($item->fecha_pago < $fecha)
-                                                                @php
-                                                                    $fecha1 = date_create($item->fecha_pago);
-                                                                    $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                                                @endphp
-                                                                {{$dias}} días
+                                                            @if ($item->status)
+                                                                @if ($item->fecha_pago < $fecha)
+                                                                    @php
+                                                                        $fecha1 = date_create($item->fecha_pago);
+                                                                        $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                                    @endphp
+                                                                    {{$dias}} días
+                                                                @endif
+                                                            @else
+                                                                0 Días
                                                             @endif
+
                                                         </th>
                                                         <th scope="row" class="derecha capitalize font-sm">
-                                                            $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                            @if ($item->status)
+                                                                @if ($item->fecha_pago < $fecha)
+                                                                    $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                                @endif
+                                                            @else
+                                                                $ 0
+                                                            @endif
                                                         </th>
                                                     </tr>
                                                 @endforeach
@@ -3325,16 +3369,27 @@
                                                     $ {{number_format($item->valor, 0, '.', '.')}}
                                                 </th>
                                                 <th scope="row" class="derecha capitalize font-sm">
-                                                    @if ($item->fecha_pago < $fecha)
-                                                        @php
-                                                            $fecha1 = date_create($item->fecha_pago);
-                                                            $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                                        @endphp
-                                                        {{$dias}} días
+                                                    @if ($item->status)
+                                                        @if ($item->fecha_pago < $fecha)
+                                                            @php
+                                                                $fecha1 = date_create($item->fecha_pago);
+                                                                $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                            @endphp
+                                                            {{$dias}} días
+                                                        @endif
+                                                    @else
+                                                        0 Días
                                                     @endif
+
                                                 </th>
                                                 <th scope="row" class="derecha capitalize font-sm">
-                                                    $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                    @if ($item->status)
+                                                        @if ($item->fecha_pago < $fecha)
+                                                            $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                        @endif
+                                                    @else
+                                                        $ 0
+                                                    @endif
                                                 </th>
                                             </tr>
                                         @endforeach
@@ -4047,16 +4102,27 @@
                                                             $ {{number_format($item->valor, 0, '.', '.')}}
                                                         </th>
                                                         <th scope="row" class="derecha capitalize font-sm">
-                                                            @if ($item->fecha_pago < $fecha)
-                                                                @php
-                                                                    $fecha1 = date_create($item->fecha_pago);
-                                                                    $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                                                @endphp
-                                                                {{$dias}} días
+                                                            @if ($item->status)
+                                                                @if ($item->fecha_pago < $fecha)
+                                                                    @php
+                                                                        $fecha1 = date_create($item->fecha_pago);
+                                                                        $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                                    @endphp
+                                                                    {{$dias}} días
+                                                                @endif
+                                                            @else
+                                                                0 Días
                                                             @endif
+
                                                         </th>
                                                         <th scope="row" class="derecha capitalize font-sm">
-                                                            $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                            @if ($item->status)
+                                                                @if ($item->fecha_pago < $fecha)
+                                                                    $ {{number_format($item->saldo, 0, '.', '.')}}
+                                                                @endif
+                                                            @else
+                                                                $ 0
+                                                            @endif
                                                         </th>
                                                     </tr>
                                                 @endforeach

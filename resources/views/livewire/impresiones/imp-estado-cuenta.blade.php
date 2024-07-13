@@ -94,17 +94,29 @@
                                             $ {{number_format($item->valor, 0, '.', '.')}}
                                         </th>
                                         <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
-                                            @if ($item->fecha_pago < $fecha)
-                                                @php
-                                                    $fecha1 = date_create($item->fecha_pago);
-                                                    $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                                @endphp
-                                                {{$dias}} días
+
+                                            @if ($item->status)
+                                                {{$item->status}}
+                                                @if ($item->fecha_pago < $fecha)
+                                                    @php
+                                                        $fecha1 = date_create($item->fecha_pago);
+                                                        $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                                    @endphp
+                                                    {{$dias}} días
+                                                @endif
+                                            @else
+                                                Cancelado
                                             @endif
+
                                         </th>
-                                        <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
-                                            $ {{number_format($item->saldo, 0, '.', '.')}}
-                                        </th>
+                                        @if ($item->status)
+                                            <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
+                                                $ {{number_format($item->saldo, 0, '.', '.')}}
+                                            </th>
+                                        @else
+                                            Cancelado
+                                        @endif
+
                                     </tr>
                                 @endforeach
                             </tbody>
