@@ -25,4 +25,20 @@ class ConfiguracionPago extends Model
     {
         return $this->BelongsTo(Curso::class);
     }
+
+    public function scopeBuscar($query, $item){
+        $query->when($item ?? null, function($query, $item){
+            $query->where('descripcion', 'like', "%".$item."%")
+
+                    ->orWhereHas('sector', function($q) use($item){
+                        $q->where('sectors.name', 'like', "%".$this->buscamin."%");
+                    });
+        });
+    }
+
+    public function scopeCurso($query, $curso){
+        $query->when($curso ?? null, function($query, $curso){
+            $query->where('curso_id', $curso);
+        });
+    }
 }

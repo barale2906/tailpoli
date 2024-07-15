@@ -4,6 +4,8 @@ namespace App\Livewire\Financiera\ConfiguracionPago;
 
 use App\Models\Financiera\ConfiguracionPago;
 use App\Models\Financiera\ConfPagOtros;
+use App\Models\Academico\Curso;
+use App\Traits\FiltroTrait;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,10 +13,11 @@ use Livewire\WithPagination;
 class ConfiguracionPagos extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='DESC';
-    public $pages = 10;
+    public $pages = 15;
 
     public $is_modify = true;
     public $is_creating = false;
@@ -31,8 +34,13 @@ class ConfiguracionPagos extends Component
 
     public $buscar='';
     public $buscamin='';
+    public $filtrocurso;
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(12);
+    }
 
     //Activar evento
     #[On('cancelando')]
@@ -141,18 +149,8 @@ class ConfiguracionPagos extends Component
 
     private function configuraciones()
     {
-        return ConfiguracionPago::query()
-                        ->with(['sector', 'curso'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('status', true)
-                                    ->where('descripcion', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('sector', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('curso', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
+        return ConfiguracionPago::buscar($this->buscamin)
+                        ->curso($this->filtrocurso)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->orderBy('id', 'DESC')
                         ->paginate($this->pages);
@@ -165,11 +163,17 @@ class ConfiguracionPagos extends Component
                                     ->paginate($this->pages);
     }
 
+    private function cursos(){
+        return Curso::orderBy('name', 'ASC')
+                        ->get();
+    }
+
     public function render()
     {
         return view('livewire.financiera.configuracion-pago.configuracion-pagos', [
             'configuraciones'=>$this->configuraciones(),
             'otros'=>$this->otros(),
+            'cursos'=>$this->cursos(),
         ]);
     }
 }

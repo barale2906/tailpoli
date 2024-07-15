@@ -142,6 +142,13 @@ trait FiltroTrait
                 $this->is_Inides=true;
                 $this->is_curso=true;
                 break;
+
+            case 12:
+                $this->txt="Busque por acá: Nombre y Sector";
+
+                //Grupos
+                $this->is_curso=true;
+                break;
         }
     }
 
