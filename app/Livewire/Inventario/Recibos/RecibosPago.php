@@ -2,14 +2,29 @@
 
 namespace App\Livewire\Inventario\Recibos;
 
-use App\Models\Financiera\ReciboPago;
+/* use App\Models\Financiera\ReciboPago;
 use App\Traits\FiltroTrait;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Database\Eloquent\Builder; */
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
+use App\Traits\ReciboCajaTrait;
 
 class RecibosPago extends Component
 {
+    use ReciboCajaTrait;
+
+    public function mount($reporte=null){
+        $this->empresa();
+        $this->claseFiltro(3);
+        if($reporte){
+            $this->is_reporte=false;
+        }
+    }
+
+
+    /*
     use WithPagination;
     use FiltroTrait;
 
@@ -89,12 +104,14 @@ class RecibosPago extends Component
                         ->groupBy('sede_id')
                         ->get();
     }
-
+ */
     public function render()
     {
         return view('livewire.inventario.recibos.recibos-pago',[
             'recibos'=>$this->recibos(),
             'sedes'=>$this->sedes(),
+            'recibosTotal'=>$this->recibosTotal(),
+            'cajeros'=>$this->cajeros(),
         ]);
     }
 }

@@ -1,29 +1,19 @@
 <?php
 
-namespace App\Livewire\Financiera\ReciboPago;
-
-/* use App\Exports\FinReciboExport;
+namespace App\Traits;
+use App\Exports\FinReciboExport;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
 use App\Traits\FiltroTrait;
+/* use Illuminate\Database\Eloquent\Builder; */
 use Livewire\Attributes\On;
-use Livewire\WithPagination; */
-use Illuminate\Database\Eloquent\Builder;
-use Livewire\Component;
-use App\Traits\ReciboCajaTrait;
+/* use Livewire\Component; */
+use Livewire\WithPagination;
 
-class RecibosPago extends Component
+
+trait ReciboCajaTrait
 {
-    use ReciboCajaTrait;
-
-    public function mount($reporte=null){
-        $this->claseFiltro(3);
-        if($reporte){
-            $this->is_reporte=false;
-        }
-    }
-
-    /* use WithPagination;
+    use WithPagination;
     use FiltroTrait;
 
     public $ordena='id';
@@ -54,13 +44,10 @@ class RecibosPago extends Component
     public $filtromedio;
     public $filtrocajero;
 
-    protected $listeners = ['refresh' => '$refresh'];
+    //protected $listeners = ['refresh' => '$refresh'];
 
-    public function mount($reporte=null){
-        $this->claseFiltro(3);
-        if($reporte){
-            $this->is_reporte=false;
-        }
+    public function eligeempresa(){
+
     }
 
     //Cargar variable
@@ -234,17 +221,6 @@ class RecibosPago extends Component
         return ReciboPago::select('sede_id')
                         ->groupBy('sede_id')
                         ->get();
-    } */
-
-    public function render()
-    {
-        return view('livewire.financiera.recibo-pago.recibos-pago', [
-            'recibos'=>$this->recibos(),
-            'sedes'=>$this->sedes(),
-            'recibosTotal'=>$this->recibosTotal(),
-            'cajeros'=>$this->cajeros(),
-        ]);
     }
+
 }
-
-
