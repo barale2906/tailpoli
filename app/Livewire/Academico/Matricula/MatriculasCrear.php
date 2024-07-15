@@ -18,6 +18,7 @@ use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ConfiguracionPago;
 use App\Models\User;
+use App\Models\Configuracion\Perfil;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -71,6 +72,7 @@ class MatriculasCrear extends Component
 
     public $is_comercial=false;
     public $is_document=false;
+    public $is_incompleto=false;
     public $primerGrupo;
 
 
@@ -116,6 +118,7 @@ class MatriculasCrear extends Component
         $this->reset('config_id', 'ciclo_id', 'ciclosel', 'horarios');
         $this->configPago=ConfiguracionPago::where('sector_id', $this->sedeele->sector->id)
                                             ->where('curso_id', $this->curso_id)
+                                            ->where('status', true)
                                             ->orderBy('descripcion')
                                             ->get();
 
@@ -221,6 +224,36 @@ class MatriculasCrear extends Component
     }
 
     public function selAlumno($item){
+        $this->reset(
+                'alumno_id',
+                'alumnoName',
+                'alumnodocumento',
+        );
+        $eleg=Perfil::where('user_id', $item['id'])->first();
+        $cont=0;
+        if(!$eleg->fecha_documento){
+            $cont=$cont+1;
+        }
+        if(!$eleg->direccion){
+            $cont=$cont+1;
+        }
+        if(!$eleg->fecha_nacimiento){
+            $cont=$cont+1;
+        }
+        if(!$eleg->celular){
+            $cont=$cont+1;
+        }
+
+        if($cont>0){
+            $this->is_incompleto=true;
+            $this->alumnoName=$item['name'];
+        }else{
+            $this->cargaEstudiante($item);
+        }
+    }
+
+    public function cargaEstudiante($item){
+        $this->reset('is_incompleto');
         $this->alumno_id=$item['id'];
         $this->alumnoName=$item['name'];
         $this->alumnodocumento=$item['documento'];

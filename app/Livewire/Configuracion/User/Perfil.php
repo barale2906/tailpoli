@@ -280,7 +280,7 @@ class Perfil extends Component
      */
     public function resetFields(){
         $this->reset(
-                        'password',
+                        //'password',
                         'name',
                         'lastname',
                         'email',

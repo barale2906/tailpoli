@@ -40,7 +40,7 @@
             </div>
             @if ($alumno_id>0)
                 <p class="text-xl font-semibold leading-normal text-gray-900 dark:text-white">
-                    Generar Matricula para {{$alumnoName}} documento: {{$alumnodocumento}}
+                    Generar Matricula para <span class=" font-extrabold uppercase">{{$alumnoName}}</span> documento: {{$alumnodocumento}}
                 </p>
                 <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
                     <div class="mb-6">
@@ -135,6 +135,19 @@
                         @endforeach
                     </div>
                 @endif
+            @endif
+            @if ($is_incompleto)
+                <a href="{{route('academico.estudiantes')}}">
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">¡IMPORTANTE!</span> Debe diligenciar toda la información del estudiante: <span class="uppercase font-extrabold">{{$alumnoName}}</span> para generar la matricula.<br>
+                        Para hacerlo:
+                        <ul>
+                            <li>- Haga clic aquí.</li>
+                            <li>- Busque el estudiante.</li>
+                            <li>- De clic en el icono VERDE.</li>
+                        </ul>
+                    </div>
+                </a>
             @endif
             @if ($curso_id>0 && $alumno_id>0 && $config_id>0)
                 <div class="mb-6">
