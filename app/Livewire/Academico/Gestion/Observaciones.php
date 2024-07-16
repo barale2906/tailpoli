@@ -62,8 +62,15 @@ class Observaciones extends Component
 
     private function cartera(){
         return Cartera::where('responsable_id', $this->elegido->estudiante_id)
-                        ->where('status', true)
+                        ->orderBy('matricula_id', 'ASC')
+                        ->orderBy('fecha_pago', 'ASC')
                         ->get();
+    }
+
+    private function saldoCartera(){
+        return Cartera::where('responsable_id', $this->elegido->estudiante_id)
+                        ->where('status', true)
+                        ->sum('saldo');
     }
 
     private function recibos(){
@@ -75,6 +82,7 @@ class Observaciones extends Component
     {
         return view('livewire.academico.gestion.observaciones',[
             'cartera'=>$this->cartera(),
+            'saldocartera'=>$this->saldoCartera(),
             'recibos'=>$this->recibos(),
         ]);
     }

@@ -47,6 +47,9 @@
             <thead class="text-xs text-gray-700 uppercase font-extrabold bg-slate-300 dark:bg-gray-700  dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-center text-xs">
+                        Matricula - Curso
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center text-xs">
                         concepto
                     </th>
                     <th scope="col" class="px-6 py-3 text-center text-xs">
@@ -65,35 +68,49 @@
             </thead>
             <tbody>
                 @foreach ($cartera as $item)
-                    <tr class="bg-white dark:bg-gray-800">
-                        <th scope="row" class="px-3 py-1 text-justify text-gray-900 text-xs  dark:text-white capitalize">
-                            {{$item->concepto}}
-                        </th>
-                        <th scope="row" class="px-3 py-1 text-center text-gray-900 text-xs  dark:text-white capitalize">
-                            {{$item->fecha_pago}}
-                        </th>
-                        <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
-                            $ {{number_format($item->valor, 0, '.', '.')}}
-                        </th>
-                        <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
-                            @if ($item->fecha_pago < $fecha)
-                                @php
-                                    $fecha1 = date_create($item->fecha_pago);
-                                    $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                @endphp
-                                {{$dias}} días
-                            @endif
-                        </th>
-                        <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
-                            $ {{number_format($item->saldo, 0, '.', '.')}}
-                        </th>
-                    </tr>
+                    @if (!$item->matricula->anula)
+                        <tr class="bg-white dark:bg-gray-800">
+                            <th scope="row" class="px-3 py-1 text-justify text-gray-900 text-xs  dark:text-white capitalize">
+                                {{$item->matricula->id}} - {{$item->matricula->curso->name}}
+                            </th>
+                            <th scope="row" class="px-3 py-1 text-justify text-gray-900 text-xs  dark:text-white capitalize">
+                                {{$item->concepto}}
+                            </th>
+                            <th scope="row" class="px-3 py-1 text-center text-gray-900 text-xs  dark:text-white capitalize">
+                                {{$item->fecha_pago}}
+                            </th>
+                            <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
+                                $ {{number_format($item->valor, 0, '.', '.')}}
+                            </th>
+                            <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
+                                @if ($item->status)
+                                    @if ($item->fecha_pago < $fecha)
+                                        @php
+                                            $fecha1 = date_create($item->fecha_pago);
+                                            $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                        @endphp
+                                        {{$dias}} días
+                                    @endif
+                                @else
+                                    Fecha pago: {{$item->fecha_real}}
+                                @endif
+                            </th>
+                            <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
+                                @if ($item->status)
+                                    $ {{number_format($item->saldo, 0, '.', '.')}}
+                                @else
+                                    CANCELADO
+                                @endif
+
+                            </th>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
 
         <h1 class="text-lg text-justify">
-            A la fecha del {{$fecha}}, su deuda es de: <strong>$ {{number_format($cartera->sum('saldo')   , 0, '.', '.')}}</strong>
+            A la fecha del {{$fecha}}, su deuda es de: <strong>$ {{number_format($saldocartera   , 0, '.', '.')}}</strong>
         </h1>
 
     </div>
@@ -106,7 +123,10 @@
                         No
                     </th>
                     <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha')">
-                        Fecha
+                        Fecha Recibo
+                    </th>
+                    <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha')">
+                        Fecha Transacción
                     </th>
                     <th scope="col" class="px-6 py-3" >
                         Alumno
@@ -140,6 +160,9 @@
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             {{$recibo->fecha}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            {{$recibo->fecha_transaccion}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             {{$recibo->paga->name}}
