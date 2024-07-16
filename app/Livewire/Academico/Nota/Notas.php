@@ -87,7 +87,7 @@ class Notas extends Component
                         'is_modify',
                         'is_creating',
                         'is_editing',
-                        'is_deleting',
+                        //'is_deleting',
                         'is_asistencia'
                     );
     }
