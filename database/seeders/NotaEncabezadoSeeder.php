@@ -32,7 +32,7 @@ class NotaEncabezadoSeeder extends Seeder
                         'profesor_id'   =>$value->profesor_id,
                         'grupo_id'      =>$value->id,
                         'descripcion'   =>'Creado ERP Poliandino -- Seeder',
-                        'registros'     =>0,
+                        'registros'     =>1,
                         'nota1'         =>'final',
                         'porcen1'       =>100
                     ]);
