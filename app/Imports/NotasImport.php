@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Illuminate\Support\Facades\Auth;
 
 class NotasImport implements ToCollection
 {
@@ -18,6 +19,7 @@ class NotasImport implements ToCollection
 
     public function collection($rows)
     {
+        $observ=now()." ".Auth::user()->name." ----- ";
 
         foreach($rows as $row){
 
@@ -32,6 +34,7 @@ class NotasImport implements ToCollection
                     }
                 }
 
+
             DB::table('notas_detalle')
                 ->insert([
                     'nota_id'       =>$this->carga[0],
@@ -41,7 +44,7 @@ class NotasImport implements ToCollection
                     'profesor'      =>$this->carga[4],
                     'grupo_id'      =>$this->carga[5],
                     'grupo'         =>$this->carga[6],
-                    'observaciones' =>$this->carga[7],
+                    'observaciones' =>$observ.$this->carga[7],
                     'acumulado'     =>$this->carga[8],
                     'nota1'         =>$this->carga[9],
                     'porcen1'       =>$this->carga[10],
