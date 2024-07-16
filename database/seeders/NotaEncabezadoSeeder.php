@@ -18,7 +18,6 @@ class NotaEncabezadoSeeder extends Seeder
     {
         $con=Grupo::where('inscritos', '>',0)
                     ->orderBy('id', 'DESC')
-                    ->limit(5)
                     ->get();
 
         foreach ($con as $value) {
