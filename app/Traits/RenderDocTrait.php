@@ -220,14 +220,14 @@ trait RenderDocTrait
         $matriState=$this->docuMatricula->sede->sector->state->name; // matriState Departamento en el que se matriculo.
         $matriGen=$formattedDate = $matricrea->format('d') . ' días del mes de ' . $matricrea->locale('es')->monthName . ' de ' . $matricrea->format('Y'); // Fecha de creación de la matricula para los contratos
         $nombreEstud=strtoupper($this->docuMatricula->alumno->name); //nombreEstu	Nombre del estudiante
-        $documEstu=number_format($this->docuMatricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
-        $tipodocu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
+        $documentoEstu=number_format($this->docuMatricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
+        $tipodocuEstu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
         $docuExpedi=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //docuExpedi	expedición del documento
         $horaDocu=$this->docuMatricula->control->ciclo->name; //horario explicito en el nombre del ciclo respectivo
         $direEstu=ucwords($this->docuMatricula->alumno->perfil->direccion); //direccionEstu	direccion del estudiante
         $ciudadEstu=ucwords($this->docuMatricula->alumno->perfil->state->name); //ciudadEstu	ciudad del estudiante
         $telEstu=$this->docuMatricula->alumno->perfil->celular; //telefonoEstu	teléfono del estudiante
-        $curso=strtoupper($this->docuMatricula->curso->name); //cursoEstu	Curso al que se inscribio estudiante
+        $cursoEstu=strtoupper($this->docuMatricula->curso->name); //cursoEstu	Curso al que se inscribio estudiante
         $cursoDuraHor=$this->docuMatricula->curso->duracion_horas; // cursoDuraHor Duración horas del curso.
         $cursoDuraMes=$this->docuMatricula->curso->duracion_meses; // cursoDuraMes duración meses del curso.
         $valorMatricula="$ ".number_format($this->docuMatricula->valor, 0, '.', '.');
@@ -257,14 +257,14 @@ trait RenderDocTrait
             $matriState,
             $matriGen,
             $nombreEstud,
-            $documEstu,
+            $documentoEstu,
             $horaDocu,
-            $tipodocu,
+            $tipodocuEstu,
             $docuExpedi,
             $direEstu,
             $ciudadEstu,
             $telEstu,
-            $curso,
+            $cursoEstu,
             $cursoDuraHor,
             $cursoDuraMes,
             $valorMatricula,
