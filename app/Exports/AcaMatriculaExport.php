@@ -61,10 +61,11 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     public function headings(): array
     {
         return [
+            'Fecha Matricula',
             'Fecha Inicia',
             'Sede',
             'Curso',
-            'Programación',
+            //'Programación',
             'Estudiante',
             'Documento',
             '¿Cómo se entero?',
@@ -72,17 +73,25 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             'valor',
             'Matriculo',
             'Comercial',
-            'Estado (0 inactiva, 1 activa)'
+            'Estado'
         ];
     }
 
     public function map($matricula): array
     {
+        $estado="";
+        if ($matricula->status) {
+            $estado="Activa";
+        } else {
+            $estado="Inactiva";
+        }
+
         return [
+            $matricula->created_at,
             $matricula->fecha_inicia,
             $matricula->sede->name,
             $matricula->curso->name,
-            $matricula->control->ciclo->name,
+            //$matricula->control->ciclo->name,
             $matricula->alumno->name,
             $matricula->alumno->documento,
             $matricula->medio,
@@ -90,7 +99,7 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             $matricula->valor,
             $matricula->creador->name,
             $matricula->comercial->name,
-            $matricula->status
+            $estado
         ];
     }
 
