@@ -81,7 +81,7 @@
                         @foreach ($detalles as $item)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" colspan="5" class="px-3 py-1 font-medium text-gray-900 dark:text-white capitalize">
-                                    {{$item->name}}
+                                    {{$item->name}} -- {{$item->producto}}
                                 </th>
                                 <td class="px-3 py-1 text-right font-medium text-gray-900">
                                     $ {{number_format($item->valor, 0, '.', '.')}}
@@ -210,7 +210,7 @@
                         @foreach ($detalles as $item)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" colspan="5" class="px-3 py-1 font-medium text-gray-900 dark:text-white capitalize">
-                                    {{$item->name}}
+                                    {{$item->name}}  -- {{$item->producto}}
                                 </th>
                                 <td class="px-3 py-1 text-right font-medium text-gray-900">
                                     $ {{number_format($item->valor, 0, '.', '.')}}

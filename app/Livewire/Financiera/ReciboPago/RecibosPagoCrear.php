@@ -207,6 +207,8 @@ class RecibosPagoCrear extends Component
     public function asigOtro($id, $item,$conf=null){
 
         if($this->valor>=$this->descuento){
+            $dato=explode("-----",$item['observaciones']);
+            $dat=$dato[0];
 
             $this->valoRecargo();
 
@@ -293,6 +295,7 @@ class RecibosPagoCrear extends Component
                             'tipo'=>$this->tipo,
                             'id_creador'=>Auth::user()->id,
                             'id_concepto'=>$this->conceptos,
+                            'producto'  =>$dat,
                             'concepto'=>$this->nameConcep,
                             'valor'=>$this->valor,
                             'saldo'=>$this->saldo,
@@ -577,12 +580,16 @@ class RecibosPagoCrear extends Component
 
             foreach ($this->pendientes as $value) {
 
+                $dato=explode("-----",$value->observaciones);
+                $dat=$dato[0];
+
                 DB::table('concepto_pago_recibo_pago')
                     ->insert([
                         'valor'=>$value->saldo,
                         'tipo'=>"cartera",
                         'medio'=>$this->medioele,
                         'id_relacional'=>$value->id,
+                        'producto'=>$dat,
                         'concepto_pago_id'=>$value->concepto_pago_id,
                         'recibo_pago_id'=>$recibo->id,
                         'created_at'=>now(),
@@ -629,6 +636,7 @@ class RecibosPagoCrear extends Component
                         'medio'=>$this->medioele,
                         'id_relacional'=>$value->id_cartera,
                         'concepto_pago_id'=>$value->id_concepto,
+                        'producto'=>$value->producto,
                         'recibo_pago_id'=>$recibo->id,
                         'created_at'=>now(),
                         'updated_at'=>now(),
