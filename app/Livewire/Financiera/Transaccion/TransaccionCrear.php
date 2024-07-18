@@ -134,6 +134,7 @@ class TransaccionCrear extends Component
             $esta=Transaccion::where('fecha_transaccion', $this->fecha_transaccion)
                                 ->where('total', intval($this->total))
                                 ->where('user_id', $this->actual->id)
+                                ->where('status','<',5)
                                 ->count('id');
 
             if($esta>0){
