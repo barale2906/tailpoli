@@ -120,7 +120,15 @@
                                         </span>
                                     @endcan
                                 @else
-                                    {{$recibo->numero_recibo}}
+                                    @if ($recibo->status!=2 && Auth::user()->rol_id===1)
+                                        <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                            <a href="#" wire:click.prevent="show({{$recibo}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                                <i class="fa-solid fa-marker"></i> - {{$recibo->numero_recibo}}
+                                            </a>
+                                        </span>
+                                    @else
+                                        {{$recibo->numero_recibo}}
+                                    @endif
                                 @endif
                                 <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
                                     <a href="/impresiones/imprecibo?rut=0&r={{$recibo->id}}" class="inline-flex items-center font-medium text-blue-600 dark:texgreen-500 hover:underline">

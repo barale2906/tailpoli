@@ -38,9 +38,9 @@ class Ciclo extends Model
     }
 
     //Relación uno a muchos
-    public function control(): HasOne
+    public function control(): hasMany
     {
-        return $this->hasOne(Control::class);
+        return $this->hasMany(Control::class);
     }
 
     //Relación uno a muchos
