@@ -58,6 +58,7 @@ class Ciclo extends Model
     public function scopeBuscar($query, $item){
         $query->when($item ?? null, function($query, $item){
             $query->where('name', 'like', "%".$item."%")
+                    ->orWhere('id', $item)
 
                     ->orwherehas('curso', function($query) use($item){
                         $query->where('cursos.name', 'like', "%".$item."%");

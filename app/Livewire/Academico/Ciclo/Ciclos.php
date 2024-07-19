@@ -39,6 +39,8 @@ class Ciclos extends Component
     public $filtroInihas;
     public $filtroinicia=[];
     public $filtrojornada;
+    public $is_estudiantes=false;
+    public $crt;
 
 
     protected $listeners = ['refresh' => '$refresh'];
@@ -111,7 +113,7 @@ class Ciclos extends Component
         $this->is_editing = !$this->is_editing;
     }
 
-    // Mostrar Regimen de Salud
+    // Mostrar
     public function show($esta, $act){
 
         $this->elegido=$esta;
@@ -141,6 +143,12 @@ class Ciclos extends Component
                                     $this->filtroinicia,
                                     $this->filtrojornada
                                 );
+    }
+
+    public function verestudiantes($id){
+        $this->reset('crt');
+        $this->is_estudiantes=!$this->is_estudiantes;
+        $this->crt=$id;
     }
 
     public function updatedFiltroInihas(){

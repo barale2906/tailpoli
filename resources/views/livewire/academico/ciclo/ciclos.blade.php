@@ -147,8 +147,25 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$ciclo->finaliza}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$ciclo->registrados}}
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                @if ($is_estudiantes && $crt===$ciclo->id)
+                                    <a href="" wire:click.prevent="verestudiantes({{$ciclo->id}})" class=" bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm p-1 text-center mr-2 mb-2 capitalize">
+                                        <i class="fa-solid fa-eye-slash"></i>
+                                    </a>
+
+
+                                    <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                        @foreach ($ciclo->control as $item)
+                                            <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                                {{$item->estudiante->documento}} - {{$item->estudiante->name}}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <a href="" wire:click.prevent="verestudiantes({{$ciclo->id}})" class=" bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm p-1 text-center mr-2 mb-2 capitalize">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                @endif
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 @switch($ciclo->jornada)
