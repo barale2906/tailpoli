@@ -166,7 +166,7 @@ trait RenderDocTrait
             'valorMatricula',
             'valorMatLetras',
             'nitInsti',
-            'nombreIns',
+            'nombreInsti',
             'rlInsti',
             'rldocInsti',
             'dirInsti',
@@ -213,31 +213,31 @@ trait RenderDocTrait
         $formamatriculaES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
         $matricrea= Carbon::create($this->docuMatricula->created_at);
 
-        $matriculaId=$this->docuMatricula->id; //matriculaEstu	Numero de matricula del estudiante
+        $matriculaEstu=$this->docuMatricula->id; //matriculaEstu	Numero de matricula del estudiante
         $matriculaInicia=$this->docuMatricula->fecha_inicia; //matriculaInicia	Fecha de inicio del estudiante
         $matriSede=$this->docuMatricula->sede->name; // matriSede Nombre d ela sede donde se matriculo.
         $matriSector=$this->docuMatricula->sede->sector->name; //Ciudad donde se matricula
         $matriState=$this->docuMatricula->sede->sector->state->name; // matriState Departamento en el que se matriculo.
         $matriGen=$formattedDate = $matricrea->format('d') . ' días del mes de ' . $matricrea->locale('es')->monthName . ' de ' . $matricrea->format('Y'); // Fecha de creación de la matricula para los contratos
-        $nombreEstud=strtoupper($this->docuMatricula->alumno->name); //nombreEstu	Nombre del estudiante
+        $nombreEstu=strtoupper($this->docuMatricula->alumno->name); //nombreEstu	Nombre del estudiante
         $documentoEstu=number_format($this->docuMatricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
         $tipodocuEstu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
-        $docuExpedi=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //docuExpedi	expedición del documento
+        $docuExpedi=strtoupper($this->docuMatricula->alumno->perfil->lugar_expedicion); //docuExpedi	expedición del documento
         $horaDocu=$this->docuMatricula->control->ciclo->name; //horario explicito en el nombre del ciclo respectivo
-        $direEstu=ucwords($this->docuMatricula->alumno->perfil->direccion); //direccionEstu	direccion del estudiante
+        $direccionEstu=ucwords($this->docuMatricula->alumno->perfil->direccion); //direccionEstu	direccion del estudiante
         $ciudadEstu=ucwords($this->docuMatricula->alumno->perfil->state->name); //ciudadEstu	ciudad del estudiante
-        $telEstu=$this->docuMatricula->alumno->perfil->celular; //telefonoEstu	teléfono del estudiante
+        $telefonoEstu=$this->docuMatricula->alumno->perfil->celular; //telefonoEstu	teléfono del estudiante
         $cursoEstu=strtoupper($this->docuMatricula->curso->name); //cursoEstu	Curso al que se inscribio estudiante
         $cursoDuraHor=$this->docuMatricula->curso->duracion_horas; // cursoDuraHor Duración horas del curso.
         $cursoDuraMes=$this->docuMatricula->curso->duracion_meses; // cursoDuraMes duración meses del curso.
         $valorMatricula="$ ".number_format($this->docuMatricula->valor, 0, '.', '.');
         $valorMatLetras=ucwords($formatterES->format($this->docuMatricula->valor))." Pesos M/L.";
-        $nit=config('instituto.nit'); //nitInsti	NIT del poliandino
-        $empresa=strtoupper(config('instituto.nombre_empresa')); //nombreInsti	Nombre del poliandino
-        $rl=strtoupper(config('instituto.representante_legal')); //rlInsti	Representante Legal del poliandino
-        $docRl=config('instituto.documento_rl'); //rldocInsti	Documento Representante Legal del poliandino
-        $dirEmp=ucwords(config('instituto.direccion')); //dirInsti	dirección legal del poliandino
-        $telEmp=config('instituto.telefono'); //telInsti	teléfono legal del poliandino
+        $nitInsti=config('instituto.nit'); //nitInsti	NIT del poliandino
+        $nombreInsti=strtoupper(config('instituto.nombre_empresa')); //nombreInsti	Nombre del poliandino
+        $rlInsti=strtoupper(config('instituto.representante_legal')); //rlInsti	Representante Legal del poliandino
+        $rldocInsti=config('instituto.documento_rl'); //rldocInsti	Documento Representante Legal del poliandino
+        $dirInsti=ucwords(config('instituto.direccion')); //dirInsti	dirección legal del poliandino
+        $telInsti=config('instituto.telefono'); //telInsti	teléfono legal del poliandino
         $deuda=$this->deuda; // deuda Valor de la mora.
         $fechaCrea=Carbon::now(); //FEcha en que se genera el documento
         $fopaCuot=$this->cuotas; // formaCuotas Cantidad de cuotas pactadas
@@ -250,31 +250,31 @@ trait RenderDocTrait
         $fopaletrasmatricula=ucwords($formamatriculaES->format($formaPago->valor_matricula))." Pesos M/L."; //Valor en letras del costo de matricula
 
         $this->reemplazo=[
-            $matriculaId,
+            $matriculaEstu,
             $matriculaInicia,
             $matriSede,
             $matriSector,
             $matriState,
             $matriGen,
-            $nombreEstud,
+            $nombreEstu,
             $documentoEstu,
-            $horaDocu,
             $tipodocuEstu,
             $docuExpedi,
-            $direEstu,
+            $horaDocu,
+            $direccionEstu,
             $ciudadEstu,
-            $telEstu,
+            $telefonoEstu,
             $cursoEstu,
             $cursoDuraHor,
             $cursoDuraMes,
             $valorMatricula,
             $valorMatLetras,
-            $nit,
-            $empresa,
-            $rl,
-            $docRl,
-            $dirEmp,
-            $telEmp,
+            $nitInsti,
+            $nombreInsti,
+            $rlInsti,
+            $rldocInsti,
+            $dirInsti,
+            $telInsti,
             $deuda,
             $fechaCrea,
             $fopaCuot,
