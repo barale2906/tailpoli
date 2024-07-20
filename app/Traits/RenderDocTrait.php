@@ -25,7 +25,7 @@ trait RenderDocTrait
     public $nombre_empresa;
     public $detalles;
     public $impresion=[];
-    public $deuda;
+    public $moruda;
     public $edad;
     public $plantilla;
     public $diaprimer;
@@ -137,7 +137,7 @@ trait RenderDocTrait
 
         foreach ($this->docuCartera as $value) {
             if($value->fecha_pago<$fecha){
-                $this->deuda=$this->deuda+$value->saldo;
+                $this->moruda=$this->moruda+$value->saldo;
             }
         }
     }
@@ -171,7 +171,7 @@ trait RenderDocTrait
             'rldocInsti',
             'dirInsti',
             'telInsti',
-            'deuda',
+            'moruda',
             'fechaCrea',
             'fopaCuot',
             'fopaVrMes',
@@ -238,7 +238,7 @@ trait RenderDocTrait
         $rldocInsti=config('instituto.documento_rl'); //rldocInsti	Documento Representante Legal del poliandino
         $dirInsti=ucwords(config('instituto.direccion')); //dirInsti	dirección legal del poliandino
         $telInsti=config('instituto.telefono'); //telInsti	teléfono legal del poliandino
-        $deuda=$this->deuda; // deuda Valor de la mora.
+        $moruda=$this->moruda; // moruda Valor de la mora.
         $fechaCrea=Carbon::now(); //FEcha en que se genera el documento
         $fopaCuot=$this->cuotas; // formaCuotas Cantidad de cuotas pactadas
         $fopaVrMes="$ ".number_format($this->valormes, 0, '.', '.'); // formaValorMensual Valor de la cuotamensual
@@ -275,7 +275,7 @@ trait RenderDocTrait
             $rldocInsti,
             $dirInsti,
             $telInsti,
-            $deuda,
+            $moruda,
             $fechaCrea,
             $fopaCuot,
             $fopaVrMes,
