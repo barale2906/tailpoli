@@ -55,7 +55,8 @@ class Transaccion extends Model
                     })
 
                     ->orwherehas('user', function($query) use($item){
-                        $query->where('users.name', 'like', "%".$item."%");
+                        $query->where('users.name', 'like', "%".$item."%")
+                                ->orwhere('users.documento', 'like', "%".$item."%");
                     })
 
                     ->orwherehas('sede', function($query) use($item){

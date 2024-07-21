@@ -6,6 +6,7 @@ use App\Models\Academico\Control;
 use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ReciboPago;
+use App\Models\Financiera\Transaccion;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -78,12 +79,18 @@ class Observaciones extends Component
                             ->get();
     }
 
+    private function transacciones(){
+        return Transaccion::where('user_id', $this->elegido->estudiante_id)
+                            ->get();
+    }
+
     public function render()
     {
         return view('livewire.academico.gestion.observaciones',[
             'cartera'=>$this->cartera(),
             'saldocartera'=>$this->saldoCartera(),
             'recibos'=>$this->recibos(),
+            'transacciones'=>$this->transacciones()
         ]);
     }
 }

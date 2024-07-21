@@ -114,6 +114,88 @@
         </h1>
 
     </div>
+    @if ($transacciones)
+        <div class="relative overflow-x-auto">
+            <h1 class="text-center text-lg font-semibold rounded-lg bg-cyan-300 uppercase mt-4">Transacciones enviadas a validación</h1>
+            <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3" ></th>
+                        <th scope="col" class="px-6 py-3" >
+                            Fecha de Creación
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Sede
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Alumno
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Acádemico
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Otros
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Observaciones
+                        </th>
+
+                        <th scope="col" class="px-6 py-3" >
+                            Fecha Transacción
+                        </th>
+
+                        <th scope="col" class="px-6 py-3" >
+                            Banco
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Creador
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($transacciones as $transaccione)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                <a href="{{Storage::url($transaccione->ruta)}}" target="_blank">
+                                    <button type="button" class="px-4 py-2 text-xs font-medium text-gray-900 bg-blue-150 border border-gray-200 rounded-lg hover:bg-green-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                        <i class="fa-solid fa-magnifying-glass"></i> - {{$transaccione->id}}
+                                    </button>
+                                </a>
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                {{$transaccione->fecha}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                {{$transaccione->sede->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                {{$transaccione->user->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-right">
+                                $ {{number_format($transaccione->academico, 0, '.', ' ')}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-right">
+                                $ {{number_format($transaccione->inventario, 0, '.', ' ')}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                {{$transaccione->observaciones}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                {{$transaccione->fecha_transaccion}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                {{$transaccione->banco}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                {{$transaccione->creador->name}}
+                            </th>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
     <div class="relative overflow-x-auto">
         <h1 class="text-center text-lg font-semibold rounded-lg bg-cyan-300 uppercase mt-4">recibos pago</h1>
         <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
@@ -188,4 +270,6 @@
         </table>
         <livewire:configuracion.user.perfil :elegido="$alumno" :perf="1" :impresion="0" :ruta="$ruta"/>
     </div>
+
+
 </div>
