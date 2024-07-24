@@ -5,8 +5,10 @@ namespace App\Livewire\Academico\Ciclo;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
+use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Sede;
 use App\Models\Clientes\Pqrs;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -19,6 +21,7 @@ class CiclosCambiar extends Component
     public $ciclo;
     public $sede_id;
     public $jornada_id;
+    public $fechacontrol;
     public $is_cambiar=false;
 
     public function mount($elegido){
@@ -32,6 +35,7 @@ class CiclosCambiar extends Component
     }
 
     public function datocurso(){
+        $this->fechacontrol=Carbon::now()->subMonths(3);
         $this->curso=$this->control->matricula->curso->name;
     }
 
@@ -54,6 +58,12 @@ class CiclosCambiar extends Component
             'sede_id'       =>$this->ciclo->sede_id,
             //'observaciones' =>$obser.$this->control->observaciones
         ]);
+
+        // Hoja matricula
+        Matricula::where('id', $this->control->matricula_id)
+                    ->update([
+                        'fecha_inicia' => $this->ciclo->inicia
+                    ]);
 
         Pqrs::create([
             'estudiante_id' =>$this->control->estudiante_id,
@@ -125,8 +135,10 @@ class CiclosCambiar extends Component
         return Ciclo::where('status', true)
                         ->whereNot('id', $this->control->ciclo_id)
                         ->where('curso_id', $this->curso_id)
+                        ->where('inicia', '>', $this->fechacontrol)
                         ->sede($this->sede_id)
                         ->jornada($this->jornada_id)
+                        ->orderBy('inicia', 'DESC')
                         ->get();
     }
 
