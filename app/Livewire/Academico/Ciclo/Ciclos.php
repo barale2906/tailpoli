@@ -166,7 +166,7 @@ class Ciclos extends Component
     }
 
     public function asistencia($cicloe,$grupo){
-        $this->reset('ciclo','elegido');
+        $this->reset('elegido');
         $this->cicloele=$cicloe;
         $this->elegido=$grupo;
         $this->is_asistencias=!$this->is_asistencias;

@@ -370,7 +370,7 @@
     @endif
 
     @if ($is_asistencias)
-        <livewire:academico.asistencia.asisgestion :ciclo="$ciclo" :elegido="$elegido" :estudiante_id="$estudiante_id"/>
+        <livewire:academico.asistencia.asisgestion :ciclo="$ciclo" :elegido="$elegido" /> {{-- :estudiante_id="$estudiante_id"/> --}}
     @endif
 
     @if ($is_transacciones)
