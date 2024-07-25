@@ -4,6 +4,7 @@ namespace App\Livewire\Configuracion\Sector;
 
 use App\Models\Configuracion\Sector;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class SectorsCreate extends Component
 {
@@ -33,8 +34,10 @@ class SectorsCreate extends Component
         $this->reset('name', 'slug');
     }
 
-    // Crear Regimen de Salud
+    // Crear
     public function new(){
+
+        $this->slug = Str::slug($this->name);
         // validate
         $this->validate();
 

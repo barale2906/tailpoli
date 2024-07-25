@@ -4,6 +4,7 @@ namespace App\Livewire\Configuracion\Sector;
 
 use App\Models\Configuracion\Sector;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class SectorsEditar extends Component
 {
@@ -25,7 +26,7 @@ class SectorsEditar extends Component
      * @return void
      */
     public function resetFields(){
-        $this->reset('name', 'id', 'codeZip');
+        $this->reset('name', 'id', 'slug');
     }
 
     public function mount($elegido = null)
@@ -38,6 +39,7 @@ class SectorsEditar extends Component
     //Actualizar Regimen de Salud
     public function edit()
     {
+        $this->slug = Str::slug($this->name);
         // validate
         $this->validate();
 
