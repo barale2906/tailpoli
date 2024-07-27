@@ -65,8 +65,18 @@ class ImpReciboPago extends Component
 
     public function obteTotal(){
 
-        $this->matriculas=Matricula::where('alumno_id', $this->obtener->paga_id)
-                                ->where('status', true)
+        $ids=array();
+
+        foreach ($this->detalles as $value) {
+            if(in_array($value->id_relacional, $ids)){
+
+            }else{
+                array_push($ids, $value->id_relacional);
+            }
+        }
+
+        $this->matriculas=Matricula::whereIn('id', $ids)
+                                //->where('status', true)
                                 ->get();
 
         $this->obteSaldo();
