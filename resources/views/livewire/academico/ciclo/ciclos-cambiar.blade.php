@@ -45,7 +45,10 @@
                         </p>
                         <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
                             Inicia: {{$item->inicia}} Finaliza: {{$item->finaliza}}
+                            -- <strong>PROFESOR:</strong>
+                            {{$item->ciclogrupos[0]->grupo->profesor->name}}
                         </p>
+
                     </a>
                 </div>
             @endforeach

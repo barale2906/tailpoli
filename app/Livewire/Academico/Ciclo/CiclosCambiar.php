@@ -35,7 +35,7 @@ class CiclosCambiar extends Component
     }
 
     public function datocurso(){
-        $this->fechacontrol=Carbon::now()->subMonths(3);
+        $this->fechacontrol=Carbon::now()->subMonths(7);
         $this->curso=$this->control->matricula->curso->name;
     }
 
