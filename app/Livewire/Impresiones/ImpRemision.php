@@ -53,6 +53,10 @@ class ImpRemision extends Component
                 $this->url="/academico/gestion";
                 break;
 
+            case 3:
+                $this->url="/inventario/inventarios";
+                break;
+
         }
     }
 

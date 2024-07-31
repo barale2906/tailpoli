@@ -20,7 +20,13 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  uppercase">sede:</h1>
-                            <h1 class="text-center  font-extrabold uppercase">{{$sede->almacen->sede->name}}</h1>
+                            <h1 class="text-center  font-extrabold uppercase">
+                                @if ($sede->almacen->sede->name)
+                                    {{ $sede->almacen->sede->name}}
+                                @else
+                                    --
+                                @endif
+                            </h1>
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             <dd class="text-gray-500 dark:text-gray-400">Remisión N°:</dd>
@@ -29,7 +35,13 @@
                     </tr>
                     <tr>
                         <th scope="col" colspan="4" class="px-6 py-3 ">
-                            <h1 class="text-justify capitalize">dirección sede: {{$sede->almacen->sede->address}}</h1>
+                            <h1 class="text-justify capitalize">dirección sede: {{  $sede->almacen->sede->address }}
+                                @if ($sede->almacen->sede->address)
+                                    {{  $sede->almacen->sede->address }}
+                                @else
+                                    --
+                                @endif
+                            </h1>
                         </th>
                     </tr>
                     <tr>
@@ -100,11 +112,17 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  font-extrabold uppercase">POLIDOTACIONES</h1>
-                            <h2 class="text-center  font-extrabold uppercase">XXXXXXXXX</h2>
+                            <h2 class="text-center  font-extrabold uppercase">nit: 900656857-5</h2>
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  uppercase">sede:</h1>
-                            <h1 class="text-center  font-extrabold uppercase">{{$sede->almacen->sede->name}}</h1>
+                            <h1 class="text-center  font-extrabold uppercase">
+                                @if ($sede->almacen->sede->name)
+                                    {{ $sede->almacen->sede->name}}
+                                @else
+                                    --
+                                @endif
+                            </h1>
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             <dd class="text-gray-500 dark:text-gray-400">Remisión N°:</dd>
@@ -113,7 +131,13 @@
                     </tr>
                     <tr>
                         <th scope="col" colspan="4" class="px-6 py-3 ">
-                            <h1 class="text-justify capitalize">dirección sede: {{$sede->almacen->sede->address}}</h1>
+                            <h1 class="text-justify capitalize">dirección sede: {{  $sede->almacen->sede->address }}
+                                @if ($sede->almacen->sede->address)
+                                    {{  $sede->almacen->sede->address }}
+                                @else
+                                    --
+                                @endif
+                            </h1>
                         </th>
                     </tr>
                     <tr>
