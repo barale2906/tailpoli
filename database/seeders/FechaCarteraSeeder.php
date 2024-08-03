@@ -19,6 +19,7 @@ class FechaCarteraSeeder extends Seeder
     {
         $cartera=Cartera::whereNotNull('fecha_real')
                             ->where('created_at', '<','2024-05-31 23:59:59')
+                            ->select('id','updated_at','fecha_real','matricula_id')
                             ->get();
 
         foreach ($cartera as $value) {
