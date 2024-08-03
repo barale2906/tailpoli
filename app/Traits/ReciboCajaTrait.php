@@ -5,6 +5,7 @@ use App\Exports\FinReciboExport;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
 use App\Traits\FiltroTrait;
+use Illuminate\Support\Facades\DB;
 /* use Illuminate\Database\Eloquent\Builder; */
 use Livewire\Attributes\On;
 /* use Livewire\Component; */
@@ -200,7 +201,19 @@ trait ReciboCajaTrait
                             ->transaccion($this->filtrotrans)
                             ->medio($this->filtromedio)
                             ->cajero($this->filtrocajero)
-                            ->sum('valor_total');
+                            ->select(
+                                DB::raw('SUM(valor_total) as total_valor_total'),
+                                DB::raw('SUM(descuento) as total_descuento')
+                            )
+                            ->first();
+
+        $valorTotal = $total->total_valor_total ?? 0;
+        $descuentoTotal = $total->total_descuento ?? 0;
+
+        return [
+            'total_valor_total' => $valorTotal,
+            'total_descuento' => $descuentoTotal,
+        ];
     }
 
     private function cajeros(){

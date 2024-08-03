@@ -26,7 +26,7 @@
         @if (!$is_filtro)
             @can('fi_recibopagoAnular')
                 <h1>
-                    Valor Total según el filtro aplicado: $ {{number_format($recibosTotal, 0, '.', ' ')}}
+                    <span class=" font-extrabold">VALOR TOTAL</span> según el filtro aplicado: <span class=" font-extrabold">$ {{number_format($recibosTotal->total_valor_total, 0, '.', ' ')}}</span>, <span class=" font-extrabold">VALOR DESCUENTOS</span> según el filtro: <span class=" font-extrabold">$ {{number_format($recibosTotal->total_descuento, 0, '.', ' ')}}</span>, <span class=" font-extrabold">VALOR NETO: $ {{number_format($recibosTotal->total_valor_total-$recibosTotal->total_descuento, 0, '.', ' ')}}</span>
                 </h1>
             @endcan
         @endif
@@ -69,6 +69,18 @@
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('valor_total')">
                             Valor
                             @if ($ordena != 'valor_total')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('descuento')">
+                            Descuento
+                            @if ($ordena != 'descuento')
                                 <i class="fas fa-sort"></i>
                             @else
                                 @if ($ordenado=='ASC')
@@ -145,14 +157,17 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$recibo->fecha}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$recibo->paga->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$recibo->sede->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
                                 $ {{number_format($recibo->valor_total, 0, '.', ' ')}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                $ {{number_format($recibo->descuento, 0, '.', ' ')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
                                 {{$recibo->medio}}
@@ -160,7 +175,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
                                 {{$recibo->observaciones}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$recibo->creador->name}}
                             </th>
                         </tr>
