@@ -83,10 +83,15 @@ class configMatriSeeder extends Seeder
                             $fecha1=Carbon::create($matricula->fecha_inicia)->subDays(7);
                             $fecha2=Carbon::create($matricula->fecha_inicia)->addDays(7);
 
-                            $ciclo=Ciclo::whereBetween('inicia', [$fecha1,$fecha2])
+                            /* $ciclo=Ciclo::whereBetween('inicia', [$fecha1,$fecha2])
                                             ->where('sede_id', $cartera->sede_id)
                                             ->where('curso_id', $matricula->curso_id)
                                             ->inRandomOrder()
+                                            ->first(); */
+
+                            $ciclo=Ciclo::where('sede_id', $cartera->sede_id)
+                                            ->where('curso_id', $matricula->curso_id)
+                                            ->orderBy('inicia', 'ASC')
                                             ->first();
 
                             // Cargar modulos
