@@ -192,7 +192,7 @@
                                 @endif
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$matricula->alumno->name}} -- {{number_format($matricula->alumno->documento, 0, ',', '.')}}
+                                {{$matricula->alumno->name}} -- {{$matricula->alumno->documento}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 $ {{number_format($matricula->valor, 0, ',', '.')}}
