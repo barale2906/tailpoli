@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Matricula;
 
 use App\Exports\AcaMatriculaExport;
+use App\Models\Academico\Curso;
 use App\Models\Academico\Matricula;
 use App\Models\User;
 use App\Traits\FiltroTrait;
@@ -56,6 +57,7 @@ class Matriculas extends Component
     public $filtrocrea=[];
     public $filtroinicia=[];
     public $filtroSede;
+    public $filtrocurso;
     public $matriculo=[];
     public $comercial=[];
 
@@ -80,6 +82,7 @@ class Matriculas extends Component
             'filtrocom',
             'filtroestatumatri',
             'filtroestatualum',
+            'filtrocurso'
         );
         $this->resetPage();
         $this->matriculas();
@@ -292,6 +295,7 @@ class Matriculas extends Component
     {
         return Matricula::buscar($this->buscamin)
                             ->sede($this->filtroSede)
+                            ->curso($this->filtrocurso)
                             ->creador($this->filtromatri)
                             ->comercial($this->filtrocom)
                             ->status($this->filtroestatumatri)
@@ -322,13 +326,19 @@ class Matriculas extends Component
                         ->get();
     }
 
+    private function cursos(){
+        return Curso::orderBy('name', 'ASC')
+                    ->get();
+    }
+
     public function render()
     {
         return view('livewire.academico.matricula.matriculas', [
             'matriculas'        => $this->matriculas(),
             'usuMatriculo'      => $this->usuMatriculo(),
             'usuComercial'      => $this->usuComercial(),
-            'sedes'             =>$this->sedes(),
+            'sedes'             => $this->sedes(),
+            'cursos'            => $this->cursos(),
         ]);
     }
 }

@@ -59,6 +59,7 @@ trait FiltroTrait
                 $this->is_matri=true;
                 $this->is_estatumatri=true;
                 $this->is_sede=true;
+                $this->is_curso=true;
                 break;
 
             case 2:

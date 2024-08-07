@@ -99,6 +99,12 @@ class Matricula extends Model
         });
     }
 
+    public function scopeCurso($query, $curso){
+        $query->when($curso ?? null, function($query, $curso){
+            $query->where('curso_id', $curso);
+        });
+    }
+
     public function scopeCreador($query, $creador){
         $query->when($creador ?? null, function($query, $creador){
             $query->where('creador_id', $creador);
