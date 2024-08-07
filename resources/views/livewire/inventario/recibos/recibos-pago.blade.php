@@ -16,9 +16,9 @@
         </div>
         @if (!$is_filtro)
             @can('fi_recibopagoAnular')
-                <h1>
-                    Valor Total según el filtro aplicado: $ {{number_format($recibosTotal, 0, '.', ' ')}}
-                </h1>
+            <h1>
+                <span class=" font-extrabold">VALOR TOTAL</span> según el filtro aplicado: <span class=" font-extrabold">$ {{number_format($recibosTotal->total_valor_total, 0, '.', ' ')}}</span>, <span class=" font-extrabold">VALOR DESCUENTOS</span> según el filtro: <span class=" font-extrabold">$ {{number_format($recibosTotal->total_descuento, 0, '.', ' ')}}</span>, <span class=" font-extrabold">VALOR NETO: $ {{number_format($recibosTotal->total_valor_total-$recibosTotal->total_descuento, 0, '.', ' ')}}</span>
+            </h1>
             @endcan
         @endif
         <div class="relative overflow-x-auto">
