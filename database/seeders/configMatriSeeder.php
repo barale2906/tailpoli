@@ -94,7 +94,7 @@ class configMatriSeeder extends Seeder
                                             ->inRandomOrder()
                                             ->first();
 
-                            if($ciclo->ciclogrupos){
+                            /* if($ciclo->ciclogrupos){
                                 // Cargar modulos
                                 foreach ($ciclo->ciclogrupos as $value) {
 
@@ -138,7 +138,7 @@ class configMatriSeeder extends Seeder
                                             'updated_at'    =>now(),
                                         ]);
                                 }
-                            }
+                            } */
 
 
                             //Sumar usuario al ciclo
