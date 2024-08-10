@@ -1,12 +1,11 @@
 <div>
     <h1 class=" text-center text-xl m-4">
-        A continuación se presenta el menú de ayuda para el modulo <span class=" font-extrabold uppercase">{{$crt}}</span>
+        A continuación se presenta el menú de ayuda para el modulo <span class=" font-extrabold uppercase">{{$modulos[0]->modulo}}</span>
         <a href="#" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm text-center mr-2 p-2 capitalize">
             <i class="fa-solid fa-backward-fast fa-beat"></i> Volver
         </a>.
     </h1>
     @if ($is_video)
-
         <div class="grid sm:grid-cols-1 md:grid-cols-2 mb-2">
 
             <video class="w-full rounded-3xl" autoplay controls>
@@ -49,20 +48,26 @@
             </div>
 
         </div>
-    @else
-        <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4">
-            @foreach ($modulos as $item)
-                <a href="" wire:click.prevent="ver({{$item->id}})" class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-2 text-sm text-center tracking-tight text-gray-900 dark:text-white uppercase font-extrabold">
-                        {{$item->titulo}}
-                    </h5>
-                    <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
-                        DESCRIPCIÓN: <br>{{$item->descripcion}}
-                    </p>
-                </a>
-            @endforeach
+    @endif
+    @if ($is_pdfs)
+        <div class="sm:col-span-1 md:col-span-3 bg-orange-100">
+            <h2 class="text-center text-lg">
+                {{$this->seleccionado->titulo}}
+            </h2>
+            <embed src="{{$ruta}}" type="application/pdf" width="100%" height="300px" />
         </div>
     @endif
-
+    <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 mt-6">
+        @foreach ($modulos as $item)
+            <a href="" wire:click.prevent="ver({{$item->id}})" class="block max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h5 class="mb-2 text-sm text-center tracking-tight text-gray-900 dark:text-white uppercase font-extrabold">
+                    {{$item->titulo}}
+                </h5>
+                <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
+                    DESCRIPCIÓN: <br>{{$item->descripcion}}
+                </p>
+            </a>
+        @endforeach
+    </div>
 
 </div>

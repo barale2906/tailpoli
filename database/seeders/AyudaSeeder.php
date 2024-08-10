@@ -28,10 +28,12 @@ class AyudaSeeder extends Seeder
 
                         DB::table('ayudas')->insert([
                             'modulo'        => strtolower($data[0]),
-                            'titulo'        => strtolower($data[1]),
-                            'descripcion'   => strtolower($data[2]),
-                            'ruta'          => $data[3],
-                            'youtube'       => $data[4],
+                            'modulo_id'     => strtolower($data[1]),
+                            'tipo'          => strtolower($data[2]),
+                            'titulo'        => strtolower($data[3]),
+                            'descripcion'   => strtolower($data[4]),
+                            'ruta'          => $data[5],
+                            'youtube'       => $data[6],
                             'created_at'    => now(),
                             'updated_at'    => now(),
                         ]);
