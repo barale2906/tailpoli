@@ -63,26 +63,22 @@
     @endif
 
     @if ($pdfstate)
-        <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-2 bg-orange-100 rounded-lg p-3">
-            <div class="max-w-sm border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 bg-orange-100 p-3">
-                <div class="h-full px-3 pb-4 overflow-y-auto bg-orange-50 dark:bg-gray-800">
-                    <ul class="space-y-2 font-medium">
-                        @foreach ($menus as $item)
-                            <li>
-                                @can($item->permiso)
-                                    <button type="button" wire:click.prevent="buscar(2,{{$item->id}})" class="iflex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ">
-                                        <i class="{{$item->icono}}"></i>
-                                        <span class="ml-3">{{$item->name}}</span>
-                                    </button>
-                                @endcan
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-            @if ($is_pdf)
-                <livewire:admin.ayuda.detalle :tipo="$tipo" :crt="$orid"/>
-            @endif
+        <div class="grid sm:grid-cols-1 md:grid-cols-6 justify-center gap-2 m-3 bg-orange-200 p-3 rounded-lg">
+            <button type="button" wire:click.prevent="buscar(2,{{0}})" class="ext-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 shadow-lg shadow-orange-500/50 dark:shadow-lg dark:shadow-orange-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                <i class="fa-solid fa-helicopter-symbol"></i>
+                <span class="ml-3">Generales</span>
+            </button>
+            @foreach ($menus as $item)
+                @can($item->permiso)
+                    <button type="button" wire:click.prevent="buscar(2,{{$item->id}})" class="ext-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 shadow-lg shadow-orange-500/50 dark:shadow-lg dark:shadow-orange-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        <i class="{{$item->icono}}"></i>
+                        <span class="ml-3">{{$item->name}}</span>
+                    </button>
+                @endcan
+            @endforeach
         </div>
+        @if ($is_pdf)
+            <livewire:admin.ayuda.detalle :tipo="$tipo" :crt="$orid"/>
+        @endif
     @endif
 </div>
