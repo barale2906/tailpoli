@@ -492,7 +492,7 @@ class MatriculasCrear extends Component
             'status'        =>4
         ]);
         $this->dispatch('alerta', name:'Se registro el no pago aún de la matricula.');
-        $this->resetFields();
+        //$this->resetFields();
         $this->finrecibo=!$this->finrecibo;
     }
 
