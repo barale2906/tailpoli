@@ -21,6 +21,7 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
 
     private $buscamin;
     private $sede;
+    private $sedecurso;
     private $matriculo;
     private $comercial;
     private $crea;
@@ -28,10 +29,11 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     private $fileName = "Matriculas.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$sede,$matriculo,$comercial,$crea,$inicia)
+    public function __construct($buscamin,$sede,$sedecurso,$matriculo,$comercial,$crea,$inicia)
     {
         $this->buscamin=$buscamin;
         $this->sede=$sede;
+        $this->sedecurso=$sedecurso;
         $this->matriculo=$matriculo;
         $this->comercial=$comercial;
         $this->crea=$crea;
@@ -46,6 +48,7 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     {
         return Matricula::buscar($this->buscamin)
                         ->sede($this->sede)
+                        ->sedecurso($this->sedecurso)
                         ->creador($this->matriculo)
                         ->comercial($this->comercial)
                         ->crea($this->crea)
@@ -63,7 +66,8 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
         return [
             'Fecha Matricula',
             'Fecha Inicia',
-            'Sede',
+            'Sede matricula',
+            'Sede donde toma el curso',
             'Curso',
             //'Programación',
             'Estudiante',
@@ -90,6 +94,7 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             $matricula->created_at,
             $matricula->fecha_inicia,
             $matricula->sede->name,
+            $matricula->control->sede->name,
             $matricula->curso->name,
             //$matricula->control->ciclo->name,
             $matricula->alumno->name,

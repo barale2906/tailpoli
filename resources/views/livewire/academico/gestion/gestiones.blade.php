@@ -105,7 +105,7 @@
                             @endif
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('inicia')">
-                            Matricula -- Fecha Inicio
+                            Fecha Inicio
                             @if ($ordena != 'inicia')
                                 <i class="fas fa-sort"></i>
                             @else
@@ -115,6 +115,9 @@
                                     <i class="fas fa-sort-down"></i>
                                 @endif
                             @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Matricula -- Fecha matricula
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                             Estudiante
@@ -239,7 +242,10 @@
 
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$controle->matricula_id}} -- {{$controle->inicia}}
+                                {{$controle->inicia}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                {{$controle->matricula_id}} -- <br>{{$controle->matricula->created_at}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$controle->estudiante->name}} -- {{$controle->estudiante->documento}}

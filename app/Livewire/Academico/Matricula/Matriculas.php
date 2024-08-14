@@ -57,6 +57,7 @@ class Matriculas extends Component
     public $filtrocrea=[];
     public $filtroinicia=[];
     public $filtroSede;
+    public $filtrosedecurso;
     public $filtrocurso;
     public $matriculo=[];
     public $comercial=[];
@@ -82,7 +83,9 @@ class Matriculas extends Component
             'filtrocom',
             'filtroestatumatri',
             'filtroestatualum',
-            'filtrocurso'
+            'filtrocurso',
+            'filtrosede',
+            'filtrosedecurso'
         );
         $this->resetPage();
         $this->matriculas();
@@ -235,6 +238,7 @@ class Matriculas extends Component
         return new AcaMatriculaExport(
                                         $this->buscamin,
                                         $this->filtroSede,
+                                        $this->filtrosedecurso,
                                         $this->filtromatri,
                                         $this->filtrocom,
                                         $this->filtrocrea,
@@ -294,7 +298,8 @@ class Matriculas extends Component
     private function matriculas()
     {
         return Matricula::buscar($this->buscamin)
-                            ->sede($this->filtroSede)
+                            ->sede($this->filtroSede) // Sede en que se matriculo
+                            ->sedecurso($this->filtrosedecurso)
                             ->curso($this->filtrocurso)
                             ->creador($this->filtromatri)
                             ->comercial($this->filtrocom)

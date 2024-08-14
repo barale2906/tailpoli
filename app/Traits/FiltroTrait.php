@@ -13,6 +13,7 @@ trait FiltroTrait
     public $is_matri=false;
     public $is_estatumatri=false;
     public $is_sede=false;
+    public $is_sedecurso=false;
     public $is_sededir=false;
 
     //Curso
@@ -59,6 +60,7 @@ trait FiltroTrait
                 $this->is_matri=true;
                 $this->is_estatumatri=true;
                 $this->is_sede=true;
+                $this->is_sedecurso=true;
                 $this->is_curso=true;
                 break;
 
