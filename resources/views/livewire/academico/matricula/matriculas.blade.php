@@ -122,7 +122,8 @@
                                         <i class="fa-solid fa-book"></i>
                                     </a>
                                 </span>
-                                @if ($matricula->status)
+
+                                @if ($matricula->status_est!==11 && $matricula->status_est!==4)
                                     @can('ac_matriculaAnular')
                                         <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
                                             <a href="#" wire:click.prevent="show({{$matricula}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
@@ -138,11 +139,9 @@
                                         </span>
                                     @endcan
                                 @else
-                                <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
-                                    <i class="fa-solid fa-plane-circle-xmark mr-2"></i>{{$matricula->id}}
-                                </span>
-
-
+                                    <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                                        <i class="fa-solid fa-plane-circle-xmark mr-2"></i>{{$matricula->id}}
+                                    </span>
                                 @endif
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
@@ -158,6 +157,7 @@
                                 {{$matricula->curso->name}}
                             </th>
                             <th scope="row" class="px-1 py-1 font-medium text-gray-900  dark:text-white capitalize">
+
 
                                 @if ($matricula->anula)
                                     {{$matricula->anula}} -por:  {{$matricula->anula_user}}
@@ -192,6 +192,11 @@
                                 @endif
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                @if ($matricula->status_est===4)
+                                    <h2 class=" font-extrabold">
+                                        FINALIZÓ EL CURSO - EGRESADO:
+                                    </h2>
+                                @endif
                                 {{$matricula->alumno->name}} -- {{$matricula->alumno->documento}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">

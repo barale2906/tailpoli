@@ -41,6 +41,7 @@ class MatriculasCrear extends Component
     public $ciclosel;
     public $horarios;
     public $fecha_inicia;
+    public $status_est;
 
     public $fechaRegistro;
 
@@ -301,6 +302,12 @@ class MatriculasCrear extends Component
         $this->cursoName=$curso->name;
 
         $date = Carbon::parse($this->ciclosel->inicia);
+        if($this->fecha_inicia>now()){
+            $this->status_est=9;
+        }else{
+            $this->status_est=1;
+        }
+
         //Crear registro
         $this->matricula = Matricula::create([
                                 'medio'=>$this->medio,
@@ -313,7 +320,8 @@ class MatriculasCrear extends Component
                                 'alumno_id'=>$this->alumno_id,
                                 'comercial_id'=>$this->comercial_id,
                                 'creador_id'=>Auth::user()->id,
-                                'configpago'=>$this->config_id
+                                'configpago'=>$this->config_id,
+                                'status_est'=>$this->status_est
                             ]);
 
         $this->elegido=$this->matricula->id;
@@ -336,7 +344,8 @@ class MatriculasCrear extends Component
             'responsable_id'=>$this->alumno_id,
             'estado_cartera_id'=>1,
             'sede_id'=>$sede->id,
-            'sector_id'=>$sede->sector_id
+            'sector_id'=>$sede->sector_id,
+            'status_est'=>$this->status_est
         ]);
 
         //Cuotas
@@ -364,7 +373,8 @@ class MatriculasCrear extends Component
                     'responsable_id'=>$this->alumno_id,
                     'estado_cartera_id'=>1,
                     'sede_id'=>$sede->id,
-                    'sector_id'=>$sede->sector_id
+                    'sector_id'=>$sede->sector_id,
+                    'status_est'=>$this->status_est
                 ]);
                 $a++;
             }
@@ -419,7 +429,8 @@ class MatriculasCrear extends Component
             'matricula_id'  =>$this->matricula->id,
             'ciclo_id'      =>$this->ciclosel->id,
             'sede_id'       =>$this->sede_id,
-            'estudiante_id' =>$this->alumno_id
+            'estudiante_id' =>$this->alumno_id,
+            'status_est'=>$this->status_est
         ]);
 
         //Asignar grupos

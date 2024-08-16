@@ -291,7 +291,7 @@ class Convenio extends Component
         $obser=now()." ".Auth::user()->name." --- ANULADO --- ".$this->observaciones." ----- ".$dato->observaciones;
 
         $dato->update([
-            'status'            => false,
+            'status'            => 7,
             'observaciones'     => $obser
         ]);
 

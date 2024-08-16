@@ -50,7 +50,8 @@ class MatriculasAnular extends Component
         Matricula::whereId($this->id)->update([
             'anula'=>now()." ¡¡¡ANULADO!!! ".strtolower($this->motivo),
             'anula_user'=>Auth::user()->name,
-            'status'=>false
+            'status'=>false,
+            'status_est'=>11
         ]);
 
         // Descontar estudiante de los grupos
@@ -74,6 +75,7 @@ class MatriculasAnular extends Component
         foreach ($carteras as $value) {
             Cartera::whereId($value->id)->update([
                 'status'=>$estado->id,
+                'status_est'=>11,
                 'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$value->observaciones
             ]);
         }
@@ -83,7 +85,8 @@ class MatriculasAnular extends Component
 
         $crt->update([
             //'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$crt->observaciones,
-            'status'=>false
+            'status'=>false,
+            'status_est'=>11
         ]);
 
         Pqrs::create([

@@ -14,6 +14,10 @@ class EstadoSeeder extends Seeder
     public function run(): void
     {
         Estado::create([
+            'name' => 'anulado',
+            'tipo' => 'estudiante',
+        ]);
+        /* Estado::create([
             'name' => 'activo',
             'tipo' => 'todos',
         ]);
@@ -52,6 +56,6 @@ class EstadoSeeder extends Seeder
         Estado::create([
             'name' => 'paga cuando retomen las clases',
             'tipo' => 'estudiante',
-        ]);
+        ]); */
     }
 }
