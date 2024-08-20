@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Models\Academico\Control;
+use App\Models\Academico\Matricula;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Estado;
+use App\Models\Financiera\Cartera;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -50,8 +52,10 @@ class desercion extends Command
 
         $this->activo=$conec->id;
 
+        $inic=Carbon::today()->subMonths(20);
+;
         $controles=Control::where('status', true)
-                            ->where('inicia', '<', Carbon::today())
+                            ->whereBetween('inicia', [$inic, Carbon::today()])
                             ->get();
 
         foreach ($controles as $value) {
@@ -67,6 +71,18 @@ class desercion extends Command
                                 'status_est'=>$this->desertado
                             ]);
 
+                            //Actualizar Matricula
+                            Matricula::where('id',$value->matricula_id)
+                                        ->update([
+                                            'status_est'=>$this->desertado
+                                        ]);
+
+                            //Actualizar Cartera
+                            Cartera::where('matricula_id', $value->matricula_id)
+                                    ->update([
+                                        'status_est'=>$this->desertado
+                                    ]);
+
                             Pqrs::create([
                                 'estudiante_id' =>$value->estudiante_id,
                                 'gestion_id'    =>$value->matricula->creador_id,
@@ -81,6 +97,18 @@ class desercion extends Command
                             $value->update([
                                 'status_est'=>$this->desertado
                             ]);
+
+                            //Actualizar Matricula
+                            Matricula::where('id',$value->matricula_id)
+                                        ->update([
+                                            'status_est'=>$this->desertado
+                                        ]);
+
+                            //Actualizar Cartera
+                            Cartera::where('matricula_id', $value->matricula_id)
+                                    ->update([
+                                        'status_est'=>$this->desertado
+                                    ]);
 
                             Pqrs::create([
                                 'estudiante_id' =>$value->estudiante_id,
@@ -99,6 +127,18 @@ class desercion extends Command
                             $value->update([
                                 'status_est'=>$this->activo
                             ]);
+
+                            //Actualizar Matricula
+                            Matricula::where('id',$value->matricula_id)
+                                        ->update([
+                                            'status_est'=>$this->desertado
+                                        ]);
+
+                            //Actualizar Cartera
+                            Cartera::where('matricula_id', $value->matricula_id)
+                                    ->update([
+                                        'status_est'=>$this->desertado
+                                    ]);
 
                             User::where('id',$value->estudiante_id)
                                     ->update([
