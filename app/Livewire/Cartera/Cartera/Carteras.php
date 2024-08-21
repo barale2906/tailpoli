@@ -126,7 +126,7 @@ class Carteras extends Component
 
     private function carteras(){
 
-        return Cartera::selectRaw('sum(saldo) as saldo, matricula_id, responsable_id')
+        return Cartera::selectRaw('sum(saldo) as saldo, sum(valor) as original,matricula_id, responsable_id')
                         ->groupBy('matricula_id','responsable_id')
                         ->buscar($this->buscamin)
                         ->vencido($this->filtroven)
