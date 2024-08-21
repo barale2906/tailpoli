@@ -59,6 +59,7 @@ class desercion extends Command
                             ->get();
 
         foreach ($controles as $value) {
+            Log::info('Linea control: ' . $value->id . ' VERIFICA');
             try {
                     $margen=$value->ciclo->desertado+1;
                     $inicio=new Carbon($value->ciclo->inicia);
@@ -131,13 +132,13 @@ class desercion extends Command
                             //Actualizar Matricula
                             Matricula::where('id',$value->matricula_id)
                                         ->update([
-                                            'status_est'=>$this->desertado
+                                            'status_est'=>$this->activo
                                         ]);
 
                             //Actualizar Cartera
                             Cartera::where('matricula_id', $value->matricula_id)
                                     ->update([
-                                        'status_est'=>$this->desertado
+                                        'status_est'=>$this->activo
                                     ]);
 
                             User::where('id',$value->estudiante_id)
@@ -160,10 +161,5 @@ class desercion extends Command
                 Log::info('Linea control: ' . $value->id . ' Deserción No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
-
-
-
-
-
     }
 }
