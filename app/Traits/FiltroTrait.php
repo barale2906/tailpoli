@@ -35,6 +35,7 @@ trait FiltroTrait
 
     //Cartera
     public $is_vencimiento=false;
+    public $is_status_est=false;
 
     //Ciclos
     public $is_jornada=false;
@@ -127,6 +128,7 @@ trait FiltroTrait
                 //Cartera
                 $this->is_vencimiento=true;
                 $this->is_sede=true;
+                $this->is_status_est=true;
                 break;
 
             case 10:

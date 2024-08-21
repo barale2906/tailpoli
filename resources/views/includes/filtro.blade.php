@@ -313,6 +313,21 @@
                 </div>
             @endif
 
+            @if ($is_status_est)
+                <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+
+                    <label for="estado" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Estado</label>
+                    @foreach ($status_estu as $item)
+                        <div class="flex items-center mb-4 capitalize">
+                            <input id="default-checkbox" wire:model="estado_estudiante" type="checkbox" value="{{$item->id}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 " >
+                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                {{$item->name}}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
         </div>
     </div>
 

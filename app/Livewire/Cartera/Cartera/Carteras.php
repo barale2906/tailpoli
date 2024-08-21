@@ -5,6 +5,7 @@ namespace App\Livewire\Cartera\Cartera;
 use App\Exports\CarCarteraExport;
 use App\Models\Financiera\Cartera;
 use App\Traits\FiltroTrait;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -32,11 +33,15 @@ class Carteras extends Component
     public $filtroven=[];
     public $filtroCiudad;
     public $filtroSede;
+    public $filtrostatusest=[];
+    public $estado_estudiante=[];
 
     protected $listeners = ['refresh' => '$refresh'];
 
     public function mount(){
         $this->claseFiltro(9);
+        $this->filtrostatusest=[1,7,8];
+        $this->estado_estudiante=[1,7,8];
     }
 
     public function updatedFiltroVenhas(){
@@ -48,6 +53,12 @@ class Carteras extends Component
         }else{
             $this->reset('filtroVendes','filtroVenhas');
         }
+    }
+
+    public function updatedEstadoEstudiante(){
+        dd("actua");
+        $this->carteras();
+        $this->total();
     }
 
     //Cargar variable
@@ -121,17 +132,18 @@ class Carteras extends Component
                         ->vencido($this->filtroven)
                         ->sede($this->filtroSede)
                         ->ciudad($this->filtroCiudad)
+                        ->status($this->estado_estudiante)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 
     }
 
     private function total(){
-        return Cartera::where('status', true)
-                        ->buscar($this->buscamin)
+        return Cartera::buscar($this->buscamin)
                         ->vencido($this->filtroven)
                         ->sede($this->filtroSede)
                         ->ciudad($this->filtroCiudad)
+                        ->status($this->estado_estudiante)
                         ->sum('saldo');
 
     }
@@ -150,6 +162,13 @@ class Carteras extends Component
                         ->get();
     }
 
+    private function status_estu(){
+        return DB::table('estados')
+                    ->orderBy('name')
+                    ->get();
+
+    }
+
     public function render()
     {
         return view('livewire.cartera.cartera.carteras', [
@@ -157,6 +176,7 @@ class Carteras extends Component
             'total'     =>$this->total(),
             'sedes'     =>$this->sedes(),
             'ciudades'  =>$this->ciudades(),
+            'status_estu'=>$this->status_estu(),
         ]);
     }
 }

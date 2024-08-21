@@ -91,4 +91,10 @@ class Cartera extends Model
         });
     }
 
+    public function scopeStatus($query, $status){
+        $query->when($status ?? null, function($query, $status){
+            $query->whereIn('status_est', $status);
+        });
+    }
+
 }
