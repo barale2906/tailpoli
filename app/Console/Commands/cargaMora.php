@@ -46,11 +46,17 @@ class cargaMora extends Command
             }); */
 
         $vencida=Cartera::where('fecha_pago', Carbon::today()->subDay())
+                        ->whereNotIn('status', [5,6,7])
                         ->where('saldo', '>', 0)
                         ->get();
 
         foreach ($vencida as $value) {
             try {
+
+                //Poner la carter en mora
+                $value->update([
+                    'status'=>3
+                ]);
 
                 $control=Control::where('status', true)
                                 ->where('estudiante_id', $value->responsable_id)

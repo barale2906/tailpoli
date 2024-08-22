@@ -10,13 +10,15 @@ class Financieros extends Component
     public $is_pagos=false;
     public $is_crm=false;
     public $is_cierre=false;
+    public $is_gerencia=false;
 
     public function cancelando(){
         $this->reset(
             'is_cartera',
             'is_pagos',
             'is_crm',
-            'is_cierre'
+            'is_cierre',
+            'is_gerencia'
         );
     }
 
@@ -38,6 +40,10 @@ class Financieros extends Component
 
             case 4:
                 $this->is_cierre=true;
+                break;
+
+            case 5:
+                $this->is_gerencia=true;
                 break;
 
         }
