@@ -16,7 +16,12 @@
         </div>
         <div class="relative overflow-x-auto">
             <h2 class=" text-center font-semibold text-lg">
-                Cartera según parámetros: $ {{number_format($total, 0, ',', '.')}}
+                Cartera según parámetros: $ {{number_format($total, 0, ',', '.')}} para los estudiantes con estado:
+                @foreach ($elegidos as $item)
+                    <span class=" capitalize font-extrabold">
+                        {{$item->name}},
+                    </span>
+                @endforeach
             </h2>
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -76,10 +81,10 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$cartera->responsable->name}} - {{$cartera->matricula->curso->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-right dark:text-white capitalize">
                                 $ {{number_format($cartera->saldo, 0, ',', '.')}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-right dark:text-white capitalize">
                                 $ {{number_format($cartera->original, 0, ',', '.')}}
                             </th>
 

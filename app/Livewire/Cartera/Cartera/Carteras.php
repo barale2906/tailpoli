@@ -42,6 +42,7 @@ class Carteras extends Component
         $this->claseFiltro(9);
         $this->filtrostatusest=[1,7,8];
         $this->estado_estudiante=[1,7,8];
+        $this->elegidos();
     }
 
     public function updatedFiltroVenhas(){
@@ -56,9 +57,9 @@ class Carteras extends Component
     }
 
     public function updatedEstadoEstudiante(){
-        dd("actua");
         $this->carteras();
         $this->total();
+        $this->elegidos();
     }
 
     //Cargar variable
@@ -124,6 +125,13 @@ class Carteras extends Component
 
     }
 
+    private function elegidos(){
+        return DB::table('estados')
+                    ->whereIn('id',$this->estado_estudiante)
+                    ->orderBy('name')
+                    ->get();
+    }
+
     private function carteras(){
 
         return Cartera::selectRaw('sum(saldo) as saldo, sum(valor) as original,matricula_id, responsable_id')
@@ -177,6 +185,7 @@ class Carteras extends Component
             'sedes'     =>$this->sedes(),
             'ciudades'  =>$this->ciudades(),
             'status_estu'=>$this->status_estu(),
+            'elegidos'  =>$this->elegidos()
         ]);
     }
 }
