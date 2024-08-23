@@ -50,7 +50,8 @@ class AnuladosSeeder extends Seeder
                             Cartera::where('matricula_id', intval($data[0]))
                                     ->update([
                                         'status_est'    =>11,
-                                        'status'        =>7
+                                        'status'        =>7,
+                                        'estado_cartera_id'=>7
                                     ]);
                         }else{
                             Log::info('matricula: ' . intval($data[0]) . ' Anulados no esta la matricula en CARTERA.');

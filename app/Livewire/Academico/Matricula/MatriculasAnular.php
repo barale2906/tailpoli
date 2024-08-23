@@ -75,6 +75,7 @@ class MatriculasAnular extends Component
         foreach ($carteras as $value) {
             Cartera::whereId($value->id)->update([
                 'status'=>$estado->id,
+                'estado_cartera_id'=>$estado->id,
                 'status_est'=>11,
                 'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$value->observaciones
             ]);

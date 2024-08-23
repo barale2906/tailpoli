@@ -46,7 +46,7 @@ class cargaMora extends Command
             }); */
 
         $vencida=Cartera::where('fecha_pago', Carbon::today()->subDay())
-                        ->whereNotIn('status', [5,6,7])
+                        ->where('status', '<',5)
                         ->where('saldo', '>', 0)
                         ->get();
 
@@ -55,7 +55,8 @@ class cargaMora extends Command
 
                 //Poner la carter en mora
                 $value->update([
-                    'status'=>3
+                    'status'=>3,
+                    'estado_cartera_id'=>3,
                 ]);
 
                 $control=Control::where('status', true)

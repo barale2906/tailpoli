@@ -34,7 +34,7 @@ class Detalle extends Component
                                 ->get();
 
         $this->total=DB::table('carteras')
-                        ->where('status', true)
+                        ->where('status', '<',5)
                         ->where('responsable_id', $this->actual->id)
                         ->selectRaw('sum(saldo) as saldo, sum(valor) as valor')
                         ->groupBy('responsable_id')

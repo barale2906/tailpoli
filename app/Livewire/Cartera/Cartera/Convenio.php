@@ -49,7 +49,7 @@ class Convenio extends Component
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
             ->delete();
-        $this->cartera=Cartera::Where('status', true)
+        $this->cartera=Cartera::where('status', '<',5)
                                 ->where('responsable_id', $this->responsable_id)
                                 ->get();
 
@@ -99,20 +99,20 @@ class Convenio extends Component
 
     public function updatedResponsableId(){
         $this->deudas=Cartera::where('responsable_id', $this->responsable_id)
-                            ->where('status', true)
+                            ->where('status', '<',5)
                             ->get();
 
         if($this->deudas->count()>0){
             $crt=Cartera::where('responsable_id', $this->responsable_id)
-            ->where('status', true)
-            ->first();
+                        ->where('status', '<',5)
+                        ->first();
 
             $this->sede_id=$crt->sede_id;
             $this->sector_id=$crt->sector_id;
         }
 
         $this->total=Cartera::where('responsable_id', $this->responsable_id)
-                            ->where('status', true)
+                            ->where('status', '<',5)
                             ->sum('saldo');
     }
 
@@ -202,8 +202,8 @@ class Convenio extends Component
             $this->matricula_id=$value->matricula_id;
             Cartera::whereId($value->id)
                     ->update([
-                        'status'        =>false,
-                        'estado_cartera_id' =>$estado->id,
+                        'status'        =>7,
+                        'estado_cartera_id' =>7,
                         'observaciones' =>$obser
                     ]);
 
@@ -223,9 +223,10 @@ class Convenio extends Component
             'concepto_pago_id'=>$concepto->id,
             'concepto'=>$concepto->name,
             'responsable_id'=>$this->responsable_id,
-            'estado_cartera_id'=>1,
+            'estado_cartera_id'=>4,
             'sede_id'=>$this->sede_id,
-            'sector_id'=>$this->sector_id
+            'sector_id'=>$this->sector_id,
+            'status'=>4
         ]);
 
         //Cargar nueva cartera
@@ -254,9 +255,10 @@ class Convenio extends Component
                     'concepto_pago_id'=>$concepto->id,
                     'concepto'=>$concepto->name,
                     'responsable_id'=>$this->responsable_id,
-                    'estado_cartera_id'=>1,
+                    'estado_cartera_id'=>4,
                     'sede_id'=>$this->sede_id,
-                    'sector_id'=>$this->sector_id
+                    'sector_id'=>$this->sector_id,
+                    'status'=>4
                 ]);
 
                 $a++;
@@ -292,6 +294,7 @@ class Convenio extends Component
 
         $dato->update([
             'status'            => 7,
+            'estado_cartera_id'=>7,
             'observaciones'     => $obser
         ]);
 

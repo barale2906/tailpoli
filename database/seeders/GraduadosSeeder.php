@@ -47,7 +47,9 @@ class GraduadosSeeder extends Seeder
                         if($car>0){
                             Cartera::where('matricula_id',intval($data[0]))
                                     ->update([
-                                        'status_est'    =>4
+                                        'status_est'    =>4,
+                                        'estado_cartera_id'=>6,
+                                        'status'=>6
                                     ]);
                         }else{
                             Log::info('matricula: ' . intval($data[0]) . ' no esta la matricula en CARTERA.');

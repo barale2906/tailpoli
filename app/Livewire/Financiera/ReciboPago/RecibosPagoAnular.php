@@ -118,7 +118,7 @@ class RecibosPagoAnular extends Component
             'saldo'=>$saldo,
             'observaciones'=>$observaciones,
             'estado_cartera_id'=>$this->estado,
-            'status'=>true
+            'status'=>$this->estado
         ]);
     }
 

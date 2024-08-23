@@ -33,7 +33,7 @@ trait MailTrait
 
         $recibo=ReciboPago::find($id);
         $saldo=Cartera::where('responsable_id', $recibo->paga_id)
-                        ->where('status', true)
+                        ->where('status', '<',5)
                         ->sum('saldo');
 
         $destinatario=$recibo->paga->email;

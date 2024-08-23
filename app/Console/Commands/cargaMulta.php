@@ -67,6 +67,7 @@ class cargaMulta extends Command
                 }); */
 
         $vencida=Cartera::where('fecha_pago', Carbon::today()->subDay())
+                        ->where('status', '<',5)
                         ->where('saldo', '>', 0)
                         ->get();
 
@@ -84,7 +85,8 @@ class cargaMulta extends Command
                         'responsable_id'=>$value->responsable_id,
                         'estado_cartera_id'=>1,
                         'sede_id'=>$value->sede_id,
-                        'sector_id'=>$value->sector_id
+                        'sector_id'=>$value->sector_id,
+                        'status_est'=>$value->status_est
                     ]);
 
                     Pqrs::create([

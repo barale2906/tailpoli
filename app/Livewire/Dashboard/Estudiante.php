@@ -91,7 +91,7 @@ class Estudiante extends Component
 
     private function cartera(){
         return Cartera::where('responsable_id', Auth::user()->id)
-                        ->where('status', true)
+                        ->where('status', '<',5)
                         ->get();
     }
 

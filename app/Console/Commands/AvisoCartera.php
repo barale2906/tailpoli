@@ -34,7 +34,7 @@ class AvisoCartera extends Command
     {
         $fecha=Carbon::today()->addDays(15);
         $hoy=Carbon::today();
-        $proximos=Cartera::where('status', true)
+        $proximos=Cartera::where('status', '<',5)
                         ->whereIn('fecha_pago', [$hoy,$fecha])
                         ->select('id')
                         ->get();
