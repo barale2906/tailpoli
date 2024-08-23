@@ -154,6 +154,13 @@ trait FiltroTrait
                 //Grupos
                 $this->is_curso=true;
                 break;
+
+            case 13:
+                $this->txt="Busque por acá: Nombre - documento del estudiante";
+                $this->is_sededir=true;
+                $this->is_Inides=true;
+                $this->is_curso=true;
+                break;
         }
     }
 
