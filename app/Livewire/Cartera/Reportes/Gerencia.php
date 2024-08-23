@@ -57,9 +57,13 @@ class Gerencia extends Component
     }
 
     public function estuactivo(){
-        $this->activos=Cartera::selectRaw('sum(saldo) as saldo, sum(valor) as original,sede_id')
+        $this->activos=
+
+
+        Cartera::selectRaw('sum(saldo) as saldo, sum(valor) as original,sede_id')
                                 ->groupBy('sede_id')
                                 ->whereBetween('fecha_pago',[$this->inicia,$this->finaliza])
+                                ->where('status', '<',5)
                                 ->get();
     }
 
