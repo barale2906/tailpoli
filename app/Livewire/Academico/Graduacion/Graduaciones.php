@@ -21,7 +21,8 @@ class Graduaciones extends Component
     public $pages = 3;
 
     public $is_modify = true;
-    public $is_vergrupo=false;
+    public $is_vernotas=false;
+    public $is_verasistencia=false;
     public $crtid;
 
     public $buscar='';
@@ -96,14 +97,17 @@ class Graduaciones extends Component
         }
     }
 
-    public function muestragrupo($id,$mus){
+    public function muestrasitencia($id,$mus){
+
+        $this->reset('is_verasistencia','crtid');
+
         if($mus===1){
-            $this->is_vergrupo=!$this->is_vergrupo;
+            $this->is_verasistencia=true;
             $this->crtid=$id;
         }
         if($mus===2){
             $this->reset(
-                'is_vergrupo',
+                'is_verasistencia',
                 'crtid'
             );
         }
