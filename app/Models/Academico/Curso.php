@@ -2,6 +2,7 @@
 
 namespace App\Models\Academico;
 
+use App\Models\Financiera\Cobranza;
 use App\Models\Financiera\ConfiguracionPago;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,5 +42,11 @@ class Curso extends Model
     public function planes(): HasMany
     {
         return $this->hasMany(Planes::class);
+    }
+
+    //Relación uno a muchos
+    public function cobranzas(): HasMany
+    {
+        return $this->hasMany(Cobranza::class);
     }
 }

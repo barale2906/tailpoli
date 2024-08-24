@@ -190,4 +190,16 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Días de cobranza
+    |--------------------------------------------------------------------------
+    |
+    | Esta variable permite establecer con que antigüedad se inicia la labor de cobranza y se genera reporte
+    |
+    */
+
+    'dias_cobranza'=>env('DIAS_COBRANZA',30),
+    'dias_reporte'=>env('DIAS_REPORTE',35),
+
 ];

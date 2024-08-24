@@ -24,11 +24,16 @@ return new class extends Migration
             $table->unsignedBigInteger('matricula_id');
             $table->foreign('matricula_id')->references('id')->on('matriculas');
 
+            $table->unsignedBigInteger('curso_id');
+            $table->foreign('curso_id')->references('id')->on('cursos');
+
             $table->unsignedBigInteger('sede_id');
             $table->foreign('sede_id')->references('id')->on('sedes');
 
-            $table->longText('correos')->comment('Registra las fechas en que se envían los correos de cobranza y los apuntes respectivos.');
+            $table->longText('correos')->nullable()->comment('Registra las fechas en que se envían los correos de cobranza y los apuntes respectivos.');
             $table->integer('dias')->comment('Va contando los días de mora del respectivo registro');
+            $table->integer('diasreporte')->default(5)->comment('Cuenta regresiva envío a centrales');
+            $table->double('saldo')->comment('Valor adeudado');
             $table->integer('status')->comment('Muestra el estado de carteras');
 
             $table->timestamps();

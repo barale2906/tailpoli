@@ -2,6 +2,7 @@
 
 namespace App\Models\Financiera;
 
+use App\Models\Academico\Curso;
 use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Sede;
 use App\Models\User;
@@ -37,5 +38,11 @@ class Cobranza extends Model
     public function sede() : BelongsTo
     {
         return $this->BelongsTo(Sede::class);
+    }
+
+    //Relacion uno a muchos inversa
+    public function curso() : BelongsTo
+    {
+        return $this->BelongsTo(Curso::class);
     }
 }
