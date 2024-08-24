@@ -51,7 +51,7 @@ class Observaciones extends Component
             'fecha'         =>now(),
             'tipo'          =>1,
             'observaciones' =>'GESTIÓN: '.Auth::user()->name." escribio: ".$this->comentarios." ----- ",
-            'status'        =>4
+            'status'        =>1
         ]);
 
         $this->dispatch('alerta', name:'Comentario guardado satisfactoriamente');

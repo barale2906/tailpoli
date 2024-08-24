@@ -160,6 +160,7 @@ trait FiltroTrait
                 $this->is_sededir=true;
                 $this->is_Inides=true;
                 $this->is_curso=true;
+                $this->is_status_est=true;
                 break;
         }
     }

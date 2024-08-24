@@ -4,9 +4,14 @@ namespace App\Livewire\Academico\Graduacion;
 
 use App\Models\Academico\Control;
 use App\Models\Academico\Curso;
+use App\Models\Academico\Matricula;
+use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Estado;
 use App\Models\Configuracion\Sede;
+use App\Models\Financiera\Cartera;
 use App\Traits\FiltroTrait;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -23,7 +28,12 @@ class Graduaciones extends Component
     public $is_modify = true;
     public $is_vernotas=false;
     public $is_verasistencia=false;
+    public $is_observaciones=false;
+    public $is_document=false;
+    public $is_gradua=false;
     public $crtid;
+    public $elegido;
+    public $ruta=2;
 
     public $buscar='';
     public $buscamin='';
@@ -32,6 +42,8 @@ class Graduaciones extends Component
     public $filtroInides;
     public $filtroInihas;
     public $filtroinicia=[];
+    public $observaciones;
+    public $estado_estudiante;
 
     public $sedesids=[];
     public $cursosids=[];
@@ -138,7 +150,67 @@ class Graduaciones extends Component
     {
         $this->reset(
                         'is_modify',
+                        'is_observaciones',
+                        'is_document',
+                        'is_gradua',
+                        'observaciones'
                     );
+    }
+
+    // Mostrar
+    public function show($esta, $act, $est=null){
+
+        $this->elegido=$esta;
+        $this->is_modify = !$this->is_modify;
+
+        switch ($act) {
+            case 0:
+                $this->is_observaciones=!$this->is_observaciones;
+                break;
+
+            case 1:
+                $this->is_document=!$this->is_document;
+                break;
+
+        }
+    }
+
+    public function graduafun($id){
+        $this->is_gradua=!$this->is_gradua;
+        $this->elegido=Control::find($id);
+        $this->crtid=$id;
+    }
+
+    public function graduaprueba(){
+        Cartera::where('matricula_id',$this->elegido->matricula_id)
+                                    ->update([
+                                        'status_est'    =>4,
+                                        'estado_cartera_id'=>6,
+                                        'status'=>6
+                                    ]);
+
+        Matricula::where('id', $this->elegido->matricula_id)
+                        ->update([
+                            'status_est'    =>4
+                        ]);
+
+        $this->elegido->update([
+                        'status_est'    =>4
+                    ]);
+
+        Pqrs::create([
+            'estudiante_id' =>$this->elegido->estudiante_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>1,
+            'observaciones' =>'ACÁDEMICO: '.Auth::user()->name." escribio: ".$this->observaciones.". GRADUADO(A) ----- ",
+            'status'        =>4
+        ]);
+
+        $this->dispatch('alerta', name:'Estudiante registrado como GRADUADO(A)');
+
+        //refresh
+        $this->dispatch('cancelando');
     }
 
     private function singrados(){
@@ -147,6 +219,7 @@ class Graduaciones extends Component
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
                         ->inicia($this->filtroinicia)
+                        ->status($this->estado_estudiante)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
     }
@@ -172,6 +245,14 @@ class Graduaciones extends Component
                     ->get();
     }
 
+    private function status_estu(){
+        return DB::table('estados')
+                    ->whereNotIn('id',[2,4,9,11])
+                    ->orderBy('name')
+                    ->get();
+
+    }
+
     public function render()
     {
         return view('livewire.academico.graduacion.graduaciones',[
@@ -179,6 +260,7 @@ class Graduaciones extends Component
             'estados'   => $this->estados(),
             'cursos'    => $this->cursos(),
             'asignadas' => $this->asignadas(),
+            'status_estu'=>$this->status_estu()
         ]);
     }
 }

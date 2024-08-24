@@ -79,5 +79,11 @@ class Control extends Model
             $query->whereBetween('inicia', [$fecha1 , $fecha2]);
         });
     }
+
+    public function scopeStatus($query, $status){
+        $query->when($status ?? null, function($query, $status){
+            $query->where('status_est', $status);
+        });
+    }
 }
 
