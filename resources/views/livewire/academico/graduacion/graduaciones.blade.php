@@ -41,7 +41,7 @@
                             Programación
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
-                            Asistencia
+                            Asistencia - Notas
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('ultimo_pago')">
                             Último Pago
@@ -165,14 +165,30 @@
 
                                     <span class="bg-cyan-100 text-cyan-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-cyan-900 dark:text-cyan-300">
                                         <a href="#" wire:click.prevent="muestrasitencia({{$item->estudiante_id}},{{2}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
-                                            <i class="fa-solid fa-eye-slash"></i>
+                                            <i class="fa-regular fa-calendar-minus"></i>
                                         </a>
                                     </span>
                                     <livewire:academico.asistencia.resumen :id="$crtid" />
                                 @else
                                     <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
                                         <a href="#" wire:click.prevent="muestrasitencia({{$item->estudiante_id}},{{1}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
-                                            <i class="fa-solid fa-binoculars"></i>
+                                            <i class="fa-regular fa-calendar-days"></i>
+                                        </a>
+                                    </span>
+                                @endif
+
+                                @if ($is_vernotas && $crtid===$item->estudiante_id)
+
+                                    <span class="bg-cyan-100 text-cyan-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-cyan-900 dark:text-cyan-300">
+                                        <a href="#" wire:click.prevent="muestranota({{$item->estudiante_id}},{{2}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </a>
+                                    </span>
+                                    <livewire:academico.nota.resumen :id="$crtid" />
+                                @else
+                                    <span class="bg-green-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                        <a href="#" wire:click.prevent="muestranota({{$item->estudiante_id}},{{1}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                            <i class="fa-solid fa-chart-simple"></i>
                                         </a>
                                     </span>
                                 @endif

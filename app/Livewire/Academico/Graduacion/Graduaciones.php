@@ -114,6 +114,23 @@ class Graduaciones extends Component
 
     }
 
+    public function muestranota($id,$mus){
+
+        $this->reset('is_vernotas','crtid');
+
+        if($mus===1){
+            $this->is_vernotas=true;
+            $this->crtid=$id;
+        }
+        if($mus===2){
+            $this->reset(
+                'is_vernotas',
+                'crtid'
+            );
+        }
+
+    }
+
     //Activar evento
     #[On('cancelando')]
     //Mostrar formulario de creación
