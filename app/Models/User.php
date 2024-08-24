@@ -17,6 +17,7 @@ use App\Models\Configuracion\Perfil;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\CierreCaja;
+use App\Models\Financiera\Cobranza;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
 use App\Models\Inventario\Inventario;
@@ -236,6 +237,12 @@ class User extends Authenticatable
     public function coorcajas(): HasMany
     {
         return $this->hasMany(CierreCaja::class);
+    }
+
+    //Relación uno a muchos
+    public function cobranzas(): HasMany
+    {
+        return $this->hasMany(Cobranza::class);
     }
 
     /**

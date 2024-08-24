@@ -38,6 +38,18 @@ class CreaGradosSeeder extends Seeder
                         'modulo'=>'academico'
                     ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
+        Permission::create([
+                        'name'=>'ca_cobranzas',
+                        'descripcion'=>'Acceso al modulo de cobranzas.',
+                        'modulo'=>'cartera'
+                    ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
+        Permission::create([
+                        'name'=>'ca_cobranzas_editar',
+                        'descripcion'=>'Edita la información de cobranzas.',
+                        'modulo'=>'cartera'
+                    ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
+
         Submenu::create([
             'permiso'           => 'ac_graduaciones',
             'ruta'              => 'academico.gradua',
@@ -46,6 +58,15 @@ class CreaGradosSeeder extends Seeder
             'icono'             => 'fa-solid fa-book text-gray-500',
             'menu_id'           => 1
 
+        ]);
+
+        Submenu::create([
+            'permiso'           => 'ca_cobranzas',
+            'ruta'              => 'cartera.cobranzas',
+            'identificaRuta'    => 'cartera.cobranzas',
+            'name'              => 'Cobranzas',
+            'icono'             => 'fa-solid fa-credit-card text-gray-500',
+            'menu_id'           => 3
         ]);
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\CierreCaja;
+use App\Models\Financiera\Cobranza;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
 use App\Models\Inventario\Almacen;
@@ -105,5 +106,11 @@ class Sede extends Model
     public function carteras(): HasMany
     {
         return $this->hasMany(Cartera::class);
+    }
+
+    //Relación uno a muchos
+    public function cobranzas(): HasMany
+    {
+        return $this->hasMany(Cobranza::class);
     }
 }

@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class Cartera extends Model
 {
     use HasFactory;
@@ -50,6 +52,11 @@ class Cartera extends Model
     public function sede() : BelongsTo
     {
         return $this->BelongsTo(Sede::class);
+    }
+
+    public function cobranzas():HasMany
+    {
+        return $this->hasMany(Cobranza::class);
     }
 
     public function scopeBuscar($query, $item){
