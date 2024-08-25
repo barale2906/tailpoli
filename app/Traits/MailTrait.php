@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Mail\BienvenidaMailable;
 use App\Mail\CobranzaMailable;
+use App\Mail\CobranzanegociacionMailable;
 use App\Mail\RecartMailable;
 use App\Mail\ReciboMailable;
 use App\Models\Academico\Matricula;
@@ -106,10 +107,10 @@ trait MailTrait
         try {
 
             $destinatario=$cobranza->alumno->email;
-            Mail::to($destinatario)->send(new RecartMailable($id));
+            Mail::to($destinatario)->send(new CobranzanegociacionMailable($id));
 
         } catch(Exception $exception){
-            Log::info('Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+            Log::info('Mail Trait Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
         }
     }
 

@@ -19,8 +19,8 @@
             <img src="{{ public_path('img/logo.jpeg') }}" alt="marcagua" width="400">
         </div>
 
-        <h1 class=" text-center uppercase font-extrabold text-3xl mt-4">
-            notificación
+        <h1 class=" text-center uppercase font-extrabold text-3xl mt-4 text-red-500">
+            <span class=" text-red-700">notificación</span>
         </h1>
 
         <div class=" text-justify font-sans text-[12px] leading-normal">
@@ -39,15 +39,15 @@
             </p>
 
             <p class="italic mt-4">
-                “Actualmente su obligación se encuentra en mora de {{$cobro->dias}} días, motivo por el cual la información relativa al incumplimiento será enviada a la Central de Información Crediticia y de Riesgo. DATACREDITO Si tienen alguna inconformidad con esta información por favor comuníquese con nosotros”.
+                “Actualmente su obligación se encuentra en mora de {{$cobro->dias}} días, motivo por el cual la información relativa al incumplimiento será enviada a la Central de Información Crediticia y de Riesgo. <span class=" font-bold">DATACREDITO</span> Si tienen alguna inconformidad con esta información por favor comuníquese con nosotros”.
             </p>
 
             <p class="mt-2">
-                Usted tendrá un término máximo de tiempo de <span class=" font-extrabold">{{$cobro->diasreporte}}</span> días calendario contados a partir del envío de esta para realizar Acuerdo de Pago y/o la cancelación total de su deuda con nuestra entidad/empresa.
+                Usted tendrá un término máximo de tiempo de <span class=" font-extrabold">{{$cobro->diasreporte}}</span> días calendario contados a partir del envío de esta para realizar Acuerdo de Pago y/o la cancelación total de su deuda con nuestra institución. Evite ser reportado negativamente a centrales de riesgo.
             </p>
 
             <p class="mt-2">
-                De acuerdo a la cláusula Decima del contrato de servicios Estudiantiles suscrito con el INSTITUTO POLIANDINO CENTRAL SAS, cualquier incumplimiento en los pagos acordados dentro de los programas académicos serán reportados, y divulgados a DATACREDITO Central de Información y de Riesgo, toda la información referente a mi comportamiento comercial. Lo anterior implica que el cumplimiento o incumplimiento de mis obligaciones se reflejará en las mencionadas bases de datos.
+                De acuerdo a la cláusula Decima del contrato de servicios Estudiantiles suscrito con el INSTITUTO POLIANDINO CENTRAL SAS, cualquier incumplimiento en los pagos acordados dentro de los programas académicos serán reportados, y divulgados a <span class=" font-bold">DATACREDITO Central de Información y de Riesgo</span>, toda la información referente a mi comportamiento comercial. Lo anterior implica que el cumplimiento o incumplimiento de mis obligaciones se reflejará en las mencionadas bases de datos.
             </p>
 
             <p class="mb-6 mt-11">
