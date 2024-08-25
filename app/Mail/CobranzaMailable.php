@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Financiera\Cobranza;
+use App\Models\Financiera\Cobranzarchivo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailables\Attachment;
@@ -29,6 +30,14 @@ class CobranzaMailable extends Mailable
         $nombre=$this->cobro->alumno->documento."-".$id."_cobranzainicial.pdf";
         $rutapdf='cobranza/'.$nombre;
         $this->ruta=Storage::url($rutapdf);
+        $this->cargasoporte();
+    }
+
+    public function cargasoporte(){
+        Cobranzarchivo::create([
+            'corbranza_id'=>$this->cobro->id,
+            'ruta'=>$this->ruta
+        ]);
     }
 
     /**
