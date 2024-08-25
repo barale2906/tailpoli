@@ -14,4 +14,6 @@ return[
     'desertado_fin'         =>env('DESERTADO_FIN_SEMANA'),
     'desertado_entresemana' =>env('DESERTADO_ENTRESEMANA'),
     'max_registros'         =>env('MAX_REGISTROS'),
+    'dias_cobranza'         =>env('DIAS_COBRANZA',30),
+    'dias_reporte'          =>env('DIAS_REPORTE',35),
 ];

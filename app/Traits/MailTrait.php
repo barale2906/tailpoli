@@ -3,11 +3,14 @@
 namespace App\Traits;
 
 use App\Mail\BienvenidaMailable;
+use App\Mail\CobranzaMailable;
 use App\Mail\RecartMailable;
 use App\Mail\ReciboMailable;
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\Cobranza;
 use App\Models\Financiera\ReciboPago;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -78,40 +81,63 @@ trait MailTrait
 
     public function cobranza($id){
         //Envío de carta inicio cobranza
+        $cobranza=Cobranza::find($id);
 
-        $cartera=Cartera::find($id);
+        try {
 
-        $destinatario=$cartera->responsable->email;
-        Mail::to($destinatario)->send(new RecartMailable($id));
-        Log::info('AvisoCartera: envio correo a: ' . $destinatario);
+            $destinatario=$cobranza->alumno->email;
+            Mail::to($destinatario)->send(new CobranzaMailable($id));
+            //Actualizar campo diasreporte restando un día.
+            $cobranza->update([
+                'diasreporte'=>$cobranza->diasreporte-1,
+                'correos'=>now()." AUTOMATICO: Correo primera Notificación. ----- ".$cobranza->correos,
+            ]);
+
+        } catch(Exception $exception){
+            Log::info('Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+        }
+
     }
 
     public function cobranzanegociacion($id){
         //Envío de carta negociación cobranza
+        $cobranza=Cobranza::find($id);
 
-        $cartera=Cartera::find($id);
+        try {
 
-        $destinatario=$cartera->responsable->email;
-        Mail::to($destinatario)->send(new RecartMailable($id));
-        Log::info('AvisoCartera: envio correo a: ' . $destinatario);
+            $destinatario=$cobranza->alumno->email;
+            Mail::to($destinatario)->send(new RecartMailable($id));
+
+        } catch(Exception $exception){
+            Log::info('Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+        }
     }
 
     public function cobranzareporte($id){
         //Envío de carta de notificación de reporte a centrales
+        $cobranza=Cobranza::find($id);
 
-        $cartera=Cartera::find($id);
+        try {
 
-        $destinatario=$cartera->responsable->email;
-        Mail::to($destinatario)->send(new RecartMailable($id));
-        Log::info('AvisoCartera: envio correo a: ' . $destinatario);
+            $destinatario=$cobranza->alumno->email;
+            Mail::to($destinatario)->send(new RecartMailable($id));
+
+        } catch(Exception $exception){
+            Log::info('Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+        }
     }
 
     public function cobranzareportenegoci($id){
         //Envío de carta negocia retiro reporte
-        $cartera=Cartera::find($id);
+        $cobranza=Cobranza::find($id);
 
-        $destinatario=$cartera->responsable->email;
-        Mail::to($destinatario)->send(new RecartMailable($id));
-        Log::info('AvisoCartera: envio correo a: ' . $destinatario);
+        try {
+
+            $destinatario=$cobranza->alumno->email;
+            Mail::to($destinatario)->send(new RecartMailable($id));
+
+        } catch(Exception $exception){
+            Log::info('Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+        }
     }
 }

@@ -23,7 +23,7 @@ class Cobranza extends Model
     }
 
     //Relacion uno a muchos inversa
-    public function deudor() : BelongsTo
+    public function alumno() : BelongsTo
     {
         return $this->BelongsTo(User::class);
     }

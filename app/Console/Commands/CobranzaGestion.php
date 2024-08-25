@@ -33,30 +33,26 @@ class CobranzaGestion extends Command
      */
     public function handle()
     {
-        $dias=config('dias_cobranza');
-        $cobranza=config('dias_reporte');
+        $dias=config('instituto.dias_cobranza');
+        $cobranza=config('instituto.dias_reporte');
         $diferencia=$cobranza-$dias;
 
         $cobranzas=Cobranza::where('status',3)->get();
 
         foreach ($cobranzas as $value) {
+
             try {
 
-                if($value->dias===$dias){
+                if($value->dias===intval($dias)){
                     //Enviar primera notificación
                     //Genera Carta
                     $this->cobranzapdf($value->id);
 
                     //Enviar email
                     $this->claseEmail(4,$value->id);
-
-                    //Actualizar campo diasreporte restando un día.
-                    $value->update([
-                        'diasreporte'=>$value->diasreporte-1,
-                    ]);
                 }
 
-                if($value->dias>$dias && $value->dias<$cobranza){
+                if($value->dias>intval($dias) && $value->dias<intval($cobranza)){
                     //Enviar invitaciones a negociar
                     //Genera invitación a negociar
                     $this->cobranzanegociacionpdf($value->id);
@@ -67,19 +63,25 @@ class CobranzaGestion extends Command
                     //Actualizar campo diasreporte restando un día.
                     $value->update([
                         'diasreporte'=>$value->diasreporte-1,
+                        'correos'=>now()." AUTOMATICO: Correo Notificación anticipación: ".$value->diasreporte." días. ----- ".$value->correos,
                     ]);
                 }
 
-                if($value->dias===$cobranza){
+                if($value->dias===intval($cobranza)){
                     //Enviar notificación de reporte
                     //Genera notificación
                     $this->cobranzareportepdf($value->id);
 
                     //Enviar email
                     $this->claseEmail(6,$value->id);
+
+                    //Actualizar campo correos
+                    $value->update([
+                        'correos'=>now()." AUTOMATICO: Correo Notificación envío reporte. ----- ".$value->correos,
+                    ]);
                 }
 
-                if($value->dias>$cobranza && $value->diasreporte<=$diferencia){
+                if($value->dias>intval($cobranza) && $value->diasreporte<=$diferencia){
                     //Enviar notificación de negociación
                     //Genera invitación a negociar
                     $this->cobranzareportenegocipdf($value->id);
@@ -90,6 +92,7 @@ class CobranzaGestion extends Command
                     //Aumentar diasreporte
                     $value->update([
                         'diasreporte'=>$value->diasreporte+1,
+                        'correos'=>now()." AUTOMATICO: Correo Notificación negociación: ".$value->diasreporte." días. ----- ".$value->correos,
                     ]);
                 }
 

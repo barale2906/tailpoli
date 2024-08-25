@@ -3,7 +3,9 @@
 namespace App\Traits;
 
 use App\Models\Academico\Matricula;
+use App\Models\Financiera\Cobranza;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 trait PdfTrait
@@ -20,6 +22,12 @@ trait PdfTrait
 
     public function cobranzapdf($id){
         //Carta de notificación de cobranza
+        $cobro=Cobranza::find($id);
+        $nombre=$cobro->alumno->documento."-".$id."_cobranzainicial.pdf";
+        $rutapdf='cobranza/'.$nombre;
+        $hoy=Carbon::today();
+        $pdf = Pdf::loadView('pdfs.cobrainicial', compact('cobro','hoy'))->download()->getOriginalContent();
+        Storage::put($rutapdf, $pdf);
     }
 
     public function cobranzanegociacionpdf($id){
