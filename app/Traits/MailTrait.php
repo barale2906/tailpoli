@@ -5,6 +5,8 @@ namespace App\Traits;
 use App\Mail\BienvenidaMailable;
 use App\Mail\CobranzaMailable;
 use App\Mail\CobranzanegociacionMailable;
+use App\Mail\CobranzareporteMailable;
+use App\Mail\CobranzareportenegociaMailable;
 use App\Mail\RecartMailable;
 use App\Mail\ReciboMailable;
 use App\Models\Academico\Matricula;
@@ -121,10 +123,10 @@ trait MailTrait
         try {
 
             $destinatario=$cobranza->alumno->email;
-            Mail::to($destinatario)->send(new RecartMailable($id));
+            Mail::to($destinatario)->send(new CobranzareporteMailable($id));
 
         } catch(Exception $exception){
-            Log::info('Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+            Log::info(' reporte mailtrait Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
         }
     }
 
@@ -135,10 +137,10 @@ trait MailTrait
         try {
 
             $destinatario=$cobranza->alumno->email;
-            Mail::to($destinatario)->send(new RecartMailable($id));
+            Mail::to($destinatario)->send(new CobranzareportenegociaMailable($id));
 
         } catch(Exception $exception){
-            Log::info('Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+            Log::info('reporte negocia mailtrait Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
         }
     }
 }
