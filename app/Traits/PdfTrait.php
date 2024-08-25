@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Academico\Matricula;
 use App\Models\Financiera\Cobranza;
+use App\Models\Financiera\Cobranzarchivo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
@@ -35,6 +36,9 @@ trait PdfTrait
             $fechaletras=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
             $pdf = Pdf::loadView('pdfs.cobrainicial', compact('cobro','fopaLetVr','fechaletras'))->download()->getOriginalContent();
             Storage::put($rutapdf, $pdf);
+
+            $this->cargasoporte($id,$rutapdf);
+
         } catch(Exception $exception){
             Log::info('creaPdf inicio cobranza cobro N°: ' . $cobro->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
         }
@@ -52,6 +56,9 @@ trait PdfTrait
             $fechaletras=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
             $pdf = Pdf::loadView('pdfs.cobranegocia', compact('cobro','fopaLetVr','fechaletras'))->download()->getOriginalContent();
             Storage::put($rutapdf, $pdf);
+
+            $this->cargasoporte($id,$rutapdf);
+
         } catch(Exception $exception){
             Log::info('creaPdf negociacion cobro N°: ' . $cobro->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
         }
@@ -72,6 +79,9 @@ trait PdfTrait
             $pdf = Pdf::loadView('pdfs.cobreporte', compact('cobro','fopaLetVr','fechaletras'))->download()->getOriginalContent();
             Storage::put($rutapdf, $pdf);
 
+            $this->cargasoporte($id,$rutapdf);
+
+
         } catch(Exception $exception){
             Log::info('creaPdf reporte cobro N°: ' . $cobro->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
         }
@@ -89,8 +99,22 @@ trait PdfTrait
             $fechaletras=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
             $pdf = Pdf::loadView('pdfs.cobrareporteneg', compact('cobro','fopaLetVr','fechaletras'))->download()->getOriginalContent();
             Storage::put($rutapdf, $pdf);
+
+            $this->cargasoporte($id,$rutapdf);
+
         } catch(Exception $exception){
             Log::info('creaPdf reporte negocia cobro N°: ' . $cobro->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
         }
     }
+
+    public function cargasoporte($id,$ruta){
+        $esta=Cobranzarchivo::where('ruta',$ruta)->count();
+        if($esta===0){
+            Cobranzarchivo::create([
+                'cobranza_id'=>$id,
+                'ruta'=>$ruta
+            ]);
+        }
+    }
+
 }
