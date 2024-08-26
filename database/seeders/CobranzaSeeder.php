@@ -14,7 +14,7 @@ class CobranzaSeeder extends Seeder
      */
     public function run(): void
     {
-        $cartera=Cartera::all();
+        $cartera=Cartera::select('id','status','estado_cartera_id','saldo')->get();
 
         foreach ($cartera as $value) {
 
