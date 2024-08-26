@@ -22,7 +22,7 @@ class Observaciones extends Component
 
     public function mount($elegido=null, $ruta=null){
         $this->ruta=$ruta;
-        $this->elegido=Control::find($elegido);
+        $this->elegido=Control::where('estudiante_id',$elegido)->first();
         $this->fecha=now();
         $this->alumn();
         //$this->arraobserva();

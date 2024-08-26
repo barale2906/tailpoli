@@ -37,7 +37,6 @@ class CobranzaGestion extends Command
         $cobranza=config('instituto.dias_reporte');
         $diferencia=$cobranza-$dias;
 
-        Log::info('Días mora: ' . $dias . ' Dias reporte: ' . $cobranza);
         $cobranzas=Cobranza::where('status',3)->get();
 
         foreach ($cobranzas as $value) {

@@ -1,5 +1,5 @@
 <div>
-    <h1 class="font-extrabold text-xl text-center capitalize">registrar cambios para: <strong class="uppercase">{{$elegido->estudiante->name}}</strong></h1>
+    <h1 class="font-extrabold text-xl text-center capitalize">registrar cambios para: <strong class="uppercase">{{$historialAlumno[0]->estudiante->name}}</strong></h1>
     <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:h-52">
         <div class="mb-6">
             <label for="comentarios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registre Observaciones</label>
