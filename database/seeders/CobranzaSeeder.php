@@ -17,6 +17,7 @@ class CobranzaSeeder extends Seeder
         $cartera=Cartera::select('id','status','estado_cartera_id','saldo')->get();
 
         foreach ($cartera as $value) {
+            Log::info(' id_control: '.$value->id.' saldo: '.$value->saldo.' estado: '.$value->estado_cartera_id.' sttus: '.$value->status);
 
             if($value->saldo===0 && $value->estado_cartera_id===6 && $value->status!==6){
                 $value->update([
@@ -33,7 +34,7 @@ class CobranzaSeeder extends Seeder
                 Log::info(' id_control: '.$value->id.' ANULADA.');
             }
 
-            if($value->status===1 && $value->estado_cartera_id1==1 && $value->saldo>0){
+            if($value->status===1 && $value->estado_cartera_id===1 && $value->saldo>0){
                 $value->update([
                     'status'=>3,
                     'estado_cartera_id'=>3
