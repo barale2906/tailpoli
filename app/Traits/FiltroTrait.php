@@ -36,6 +36,7 @@ trait FiltroTrait
     //Cartera
     public $is_vencimiento=false;
     public $is_status_est=false;
+    public $is_etapa=false;
 
     //Ciclos
     public $is_jornada=false;
@@ -161,6 +162,13 @@ trait FiltroTrait
                 $this->is_Inides=true;
                 $this->is_curso=true;
                 $this->is_status_est=true;
+                break;
+
+            case 14:
+                $this->txt="Busque por acá: Nombre - documento del estudiante";
+                $this->is_curso=true;
+                $this->is_sededir=true;
+                $this->is_etapa=true;
                 break;
         }
     }

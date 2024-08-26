@@ -75,7 +75,7 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('etapa')">
+                        <th scope="col" class="px-6 py-3 text-center" style="cursor: pointer;" wire:click="organizar('etapa')">
                             Étapa
                             @if ($ordena != 'etapa')
                                 <i class="fas fa-sort"></i>
@@ -86,6 +86,7 @@
                                     <i class="fas fa-sort-down"></i>
                                 @endif
                             @endif
+                            <br><span class=" text-xs capitalize">1. Inicio, 2. pre - reporte, 3. Reporte, 4. Post - reporte</span>
                         </th>
                     </tr>
                 </thead>
@@ -95,11 +96,11 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 
                                 <div class="inline-flex rounded-md shadow-sm" role="group">
-                                    <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                    {{-- <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                         <a href="" wire:click.prevent="show({{$item->matricula_id}},{{5}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                             <i class="fa-solid fa-book"></i>
                                         </a>
-                                    </button>
+                                    </button> --}}
                                     <button type="button" class="inline-flex rounded-e-lg items-center p-2 text-sm font-medium text-gray-900 bg-orange-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                         @can('ac_gestionCrear')
                                             <a href="" wire:click.prevent="show({{$item->id}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
@@ -117,7 +118,7 @@
                                 {{$item->sede->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$item->alumno->name}} -- {{$item->alumno->documento}}
+                                {{$item->alumno->name}} -- {{$item->alumno->documento}} -- {{$item->alumno->perfil->celular}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 text-justify dark:text-white capitalize">
                                 {{$item->dias}}
@@ -135,14 +136,14 @@
                                         @switch($value->etapa)
                                             @case(1)
                                                 <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-yellow-100 border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-yellow-700 focus:z-10 focus:ring-2 focus:ring-yellow-700 focus:text-yellow-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-yellow-500 dark:focus:text-white">
-                                                    <a href=""  class="inline-flex items-center font-medium text-yellow-600 dark:text-yellow-500 hover:underline">
+                                                    <a href="{{Storage::url($value->ruta)}}" target="_blank"  class="inline-flex items-center font-medium text-yellow-600 dark:text-yellow-500 hover:underline">
                                                         {{$value->etapa}}
                                                     </a>
                                                 </button>
                                                 @break
                                             @case(2)
                                                 <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-cyan-100 border border-gray-200  hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                    <a href="#"  class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
+                                                    <a href="{{Storage::url($value->ruta)}}" target="_blank"  class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
                                                         {{$value->etapa}}
                                                     </a>
                                                 </button>
@@ -150,14 +151,14 @@
 
                                             @case(3)
                                                 <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-orange-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-2 focus:ring-orange-700 focus:text-orange-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                    <a href=""  class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                                    <a href="{{Storage::url($value->ruta)}}" target="_blank"  class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
                                                         {{$value->etapa}}
                                                     </a>
                                                 </button>
                                                 @break
                                             @case(4)
                                                 <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-red-100 border-t border-b  rounded-e-lg border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                    <a href=""  class="inline-flex items-center font-medium text-red-600 dark:text-cyan-500 hover:underline">
+                                                    <a href="{{Storage::url($value->ruta)}}" target="_blank"  class="inline-flex items-center font-medium text-red-600 dark:text-cyan-500 hover:underline">
                                                         {{$value->etapa}}
                                                     </a>
                                                 </button>

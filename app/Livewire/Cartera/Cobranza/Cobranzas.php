@@ -28,6 +28,7 @@ class Cobranzas extends Component
     public $buscamin='';
     public $filtroSede;
     public $filtrocurso;
+    public $filtroetapa;
     public $sedeids=[];
     public $curids=[];
 
@@ -37,7 +38,7 @@ class Cobranzas extends Component
 
     public function mount(){
 
-        $this->claseFiltro(11);
+        $this->claseFiltro(14);
     }
 
     //Cargar variable
@@ -107,6 +108,7 @@ class Cobranzas extends Component
         $cobrar=Cobranza::buscar($this->buscamin)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
+                        ->etapa($this->filtroetapa)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 
@@ -134,7 +136,7 @@ class Cobranzas extends Component
     {
         return view('livewire.cartera.cobranza.cobranzas',[
             'cobranzas' => $this->cobranzas(),
-            'sedes'     => $this->sedes(),
+            'asignadas' => $this->sedes(),
             'cursos'    => $this->cursos(),
         ]);
     }

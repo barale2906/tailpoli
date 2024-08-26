@@ -72,4 +72,10 @@ class Cobranza extends Model
             $query->where('curso_id', intval($curso));
         });
     }
+
+    public function scopeEtapa($query, $etapa){
+        $query->when($etapa ?? null, function($query, $etapa){
+            $query->where('etapa', intval($etapa));
+        });
+    }
 }
