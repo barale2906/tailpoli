@@ -19,14 +19,14 @@ class CobranzaSeeder extends Seeder
         foreach ($cartera as $value) {
             Log::info(' id_control: '.$value->id.' saldo: '.$value->saldo.' estado: '.$value->estado_cartera_id.' sttus: '.$value->status);
 
-            if($value->saldo===0 && $value->estado_cartera_id===6 && $value->status!==6){
+            if($value->saldo===0 && $value->estado_cartera_id===6 && $value->status===0){
                 $value->update([
                     'status'=>6,
                 ]);
                 Log::info(' id_control: '.$value->id.' CERRADA.');
             }
 
-            if($value->status===0 && $value->estado_cartera_id!==6){
+            if($value->status===0 && $value->saldo>0){
                 $value->update([
                     'status'=>7,
                     'estado_cartera_id'=>7
