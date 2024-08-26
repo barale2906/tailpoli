@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('cobranza_id')->references('id')->on('cobranzas');
 
             $table->string('ruta')->comment('lugar donde esta archivo');
+            $table->integer('etapa')->default(1)->comment('1 aviso, 2 negociacion, 3 reporte, 4 post-reporte');
 
             $table->timestamps();
         });

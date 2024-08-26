@@ -51,4 +51,25 @@ class Cobranza extends Model
     {
         return $this->BelongsTo(Curso::class);
     }
+
+    public function scopeBuscar($query, $item){
+        $query->when($item ?? null, function($query, $item){
+            $query->wherehas('alumno', function($query) use($item){
+                        $query->where('users.name', 'like', "%".$item."%")
+                                ->orwhere('users.documento', 'like', "%".$item."%");
+                    });
+        });
+    }
+
+    public function scopeSede($query, $sede){
+        $query->when($sede ?? null, function($query, $sede){
+            $query->where('sede_id', intval($sede));
+        });
+    }
+
+    public function scopeCurso($query, $curso){
+        $query->when($curso ?? null, function($query, $curso){
+            $query->where('curso_id', intval($curso));
+        });
+    }
 }

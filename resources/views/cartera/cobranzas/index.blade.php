@@ -3,6 +3,6 @@
         Cobranzas
     @endpush
 
-    <livewire:cartera.cartera.carteras />
+    <livewire:cartera.cobranza.cobranzas />
 
 </x-admin-layout>

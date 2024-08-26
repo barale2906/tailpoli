@@ -22,6 +22,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('Matricula:bienvenida-email')->timezone('America/Bogota')->at('02:30');  //everyMinute();
         $schedule->command('Cartera:aviso-cartera')->timezone('America/Bogota')->at('02:50'); //->at('02:50');  //everyMinute();
         $schedule->command('Academico:Gastos')->timezone('America/Bogota')->at('03:10'); //->at('03:10');  //everyMinute();
+        $schedule->command('Cobranza:Carga')->timezone('America/Bogota')->at('03:40'); //->at('03:40');  //everyMinute();
+        $schedule->command('Cobranza:Descarga')->timezone('America/Bogota')->at('04:10'); //->at('04:10');  //everyMinute();
+        $schedule->command('Cobranza:Carga')->timezone('America/Bogota')->at('04:40'); //->at('04:40');  //everyMinute();
+        $schedule->command('Cobranza:Gestion')->timezone('America/Bogota')->at('06:30'); //->at('06:30');  //everyMinute();
+
     }
     /**
      * Register the commands for the application.

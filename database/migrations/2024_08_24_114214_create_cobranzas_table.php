@@ -34,6 +34,7 @@ return new class extends Migration
             $table->integer('dias')->comment('Va contando los días de mora del respectivo registro');
             $table->integer('diasreporte')->default(5)->comment('Cuenta regresiva envío a centrales');
             $table->double('saldo')->comment('Valor adeudado');
+            $table->integer('etapa')->default(1)->comment('1 aviso, 2 negociacion, 3 reporte, 4 post-reporte');
             $table->integer('status')->comment('Muestra el estado de carteras');
 
             $table->timestamps();

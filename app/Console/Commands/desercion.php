@@ -55,6 +55,7 @@ class desercion extends Command
         $inic=Carbon::today()->subMonths(20);
 ;
         $controles=Control::where('status', true)
+                            ->whereNotIn('status_est',[2,6,9,11])
                             ->whereBetween('inicia', [$inic, Carbon::today()])
                             ->get();
 

@@ -35,6 +35,7 @@ class CobranzaCarga extends Command
         $tiempo=$cobranza-$dias;
 
         $hoy=Carbon::today()->subDays($dias);
+        Log::info('Cobranza Carga Cartera fecha: ' . $hoy);
 
         $carteras=Cartera::where('fecha_pago',$hoy)
                             ->where('estado_cartera_id',3)
