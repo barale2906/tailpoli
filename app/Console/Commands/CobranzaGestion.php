@@ -38,11 +38,8 @@ class CobranzaGestion extends Command
         $diferencia=$cobranza-$dias;
 
         $cobranzas=Cobranza::where('status',3)->get();
-        Log::info('Cobranza N°:  cobranzas: '.$cobranzas );
 
         foreach ($cobranzas as $value) {
-
-            Log::info('Cobranza N°: '.$value->id.'  cobranzas: '.$value.' Días: '.$dias.' reporte: '.$cobranza );
 
             try {
 
@@ -56,9 +53,8 @@ class CobranzaGestion extends Command
 
                     //Actualizar campo diasreporte restando un día.
                     $value->update([
-                        'dias'      =>$value->dias+1,
                         'diasreporte'=>$value->diasreporte-1,
-                        'correos'=>now()." AUTOMATICO: Correo primera Notificación. ----- ".$cobranza->correos,
+                        'correos'=>now()." AUTOMATICO: Correo primera Notificación. ----- ".$value->correos,
                     ]);
                 }
 
@@ -72,7 +68,6 @@ class CobranzaGestion extends Command
 
                     //Actualizar campo diasreporte restando un día.
                     $value->update([
-                        'dias'      =>$value->dias+1,
                         'diasreporte'=>$value->diasreporte-1,
                         'correos'=>now()." AUTOMATICO: Correo Notificación anticipación: ".$value->diasreporte." días. ----- ".$value->correos,
                     ]);
@@ -88,7 +83,6 @@ class CobranzaGestion extends Command
 
                     //Actualizar campo correos
                     $value->update([
-                        'dias'      =>$value->dias+1,
                         'correos'=>now()." AUTOMATICO: Correo Notificación envío reporte. ----- ".$value->correos,
                     ]);
                 }
@@ -103,14 +97,17 @@ class CobranzaGestion extends Command
 
                     //Aumentar diasreporte
                     $value->update([
-                        'dias'      =>$value->dias+1,
                         'diasreporte'=>$value->diasreporte+1,
                         'correos'=>now()." AUTOMATICO: Correo Notificación negociación: ".$value->diasreporte." días. ----- ".$value->correos,
                     ]);
                 }
 
+                $value->update([
+                    'dias'      =>$value->dias+1,
+                ]);
+
             } catch(Exception $exception){
-                Log::info('Cobranza N°: ' . $value->id . ' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+                Log::info('Cobranza gestion N°: ' . $value->id . ' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
             }
         }
     }
