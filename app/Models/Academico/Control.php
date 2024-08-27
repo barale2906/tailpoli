@@ -85,5 +85,11 @@ class Control extends Model
             $query->where('status_est', $status);
         });
     }
+
+    public function scopeGrado($query, $grado){
+        $query->when($grado ?? null, function($query, $grado){
+            $query->where('fecha_grado', $grado);
+        });
+    }
 }
 

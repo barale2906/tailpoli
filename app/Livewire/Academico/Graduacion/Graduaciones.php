@@ -42,6 +42,7 @@ class Graduaciones extends Component
     public $filtroInides;
     public $filtroInihas;
     public $filtroinicia=[];
+    public $filtrogrado;
     public $observaciones;
     public $fecha_grado;
     public $estado_estudiante;
@@ -221,6 +222,7 @@ class Graduaciones extends Component
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
                         ->inicia($this->filtroinicia)
+                        ->grado($this->filtrogrado)
                         ->status($this->estado_estudiante)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);

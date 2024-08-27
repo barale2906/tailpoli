@@ -39,8 +39,6 @@ class CobranzaGestion extends Command
 
         $cobranzas=Cobranza::where('status',3)->get();
 
-        Log::info('Cobranza N°: probando');
-
         foreach ($cobranzas as $value) {
 
             try {
