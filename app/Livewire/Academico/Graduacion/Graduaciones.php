@@ -43,6 +43,7 @@ class Graduaciones extends Component
     public $filtroInihas;
     public $filtroinicia=[];
     public $observaciones;
+    public $fecha_grado;
     public $estado_estudiante;
 
     public $sedesids=[];
@@ -195,7 +196,8 @@ class Graduaciones extends Component
                         ]);
 
         $this->elegido->update([
-                        'status_est'    =>4
+                        'status_est'    =>4,
+                        'fecha_grado'   =>$this->fecha_grado,
                     ]);
 
         Pqrs::create([
@@ -214,7 +216,7 @@ class Graduaciones extends Component
     }
 
     private function singrados(){
-        return Control::whereNotIn('status_est',[2,4,9,11])
+        return Control::whereNotIn('status_est',[2,11])
                         ->buscar($this->buscamin)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
@@ -247,7 +249,7 @@ class Graduaciones extends Component
 
     private function status_estu(){
         return DB::table('estados')
-                    ->whereNotIn('id',[2,4,9,11])
+                    ->whereNotIn('id',[2,11])
                     ->orderBy('name')
                     ->get();
 

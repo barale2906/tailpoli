@@ -34,6 +34,18 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_grado')">
+                            Fecha Grado
+                            @if ($ordena != 'fecha_grado')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                             Estudiante -- Matricula -- Fecha matricula
                         </th>
@@ -147,12 +159,15 @@
                                             </a>
                                         </button>
                                     @endcan
-                                    @can('ac_graduaciones_aprobar')
-                                        <button type="button" class="inline-flex rounded-e-lg items-center p-2 text-sm font-medium text-gray-900 bg-green-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:ring-2 focus:ring-green-700 focus:text-green-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-500 dark:focus:text-white">
-                                            <a href="" wire:click.prevent="graduafun({{$item->id}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
-                                                <i class="fa-solid fa-graduation-cap"></i>
-                                            </a>
-                                        </button>
+                                    @can('ac_gradu_aprobar')
+                                        @if ($item->status_est!==4)
+                                            <button type="button" class="inline-flex rounded-e-lg items-center p-2 text-sm font-medium text-gray-900 bg-green-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:ring-2 focus:ring-green-700 focus:text-green-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-500 dark:focus:text-white">
+                                                <a href="" wire:click.prevent="graduafun({{$item->id}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
+                                                    <i class="fa-solid fa-graduation-cap"></i>
+                                                </a>
+                                            </button>
+                                        @endif
+
                                         @if ($is_gradua && $crtid===$item->id)
                                             <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
                                                 <label for="observaciones" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">
@@ -162,8 +177,15 @@
                                                     <input wire:model.live="observaciones" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
                                                     <label for="observaciones" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Registrar</label>
                                                 </div>
+                                                <label for="observaciones" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">
+                                                    Fecha de graducaión:
+                                                </label>
+                                                <div class="relative z-0 w-full mb-5 group">
+                                                    <input wire:model.live="fecha_grado" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
+                                                    <label for="observaciones" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Registrar</label>
+                                                </div>
                                                 <div class="inline-flex rounded-md shadow-sm" role="group">
-                                                    @if ($observaciones)
+                                                    @if ($observaciones && $fecha_grado)
                                                         <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-green-100 border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:ring-2 focus:ring-green-700 focus:text-green-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-green-500 dark:focus:text-white">
                                                             <a href="" wire:click.prevent="graduaprueba" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
                                                                 <i class="fa-solid fa-check"></i>
@@ -183,6 +205,9 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$item->inicia}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{$item->fecha_grado}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-justify capitalize">
                                 {{$item->estudiante->name}} -- {{$item->estudiante->documento}} -- Matricula: {{$item->matricula_id}} -- <br>{{$item->matricula->created_at}}

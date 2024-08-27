@@ -24,7 +24,7 @@
         </h1>
 
         <div class=" text-justify font-sans text-[12px] leading-normal">
-            <p class=" mt-3">
+            <p class=" mt-5">
                 Bogotá, {{$fechaletras}}
             </p>
             <p class=" font-arial capitalize mt-2">
@@ -33,25 +33,13 @@
                 Documento: {{$cobro->alumno->perfil->tipo_documento}} - {{$cobro->alumno->documento}}
             </p>
 
-            <p class="  uppercase font-bold mt-1">
+            <p class="  uppercase font-bold mt-1 mb-4">
                 referencia: obligación número: {{$cobro->matricula_id}}.<br>
                 <span class=" capitalize">valor cartera vencida: {{$fopaLetVr}} ($ {{number_format($cobro->saldo, 0, ',', '.')}}).</span>
             </p>
 
-            <p class="mt-2 font-extrabold text-center uppercase text-2xl">
-                Usted ha sido reportado negativamente a centrales de riesgo, lo invitamos a conciliar su cartera.
-            </p>
-
-            <p class="mt-2">
-                Usted ha sido reportado negativamente a centrales de riesgo, lo invitamos a conciliar su cartera. Actualmente su obligación se encuentra en mora de {{$cobro->dias}} días, motivo por el cual la información relativa al incumplimiento será enviada a <span class=" font-bold">DATACREDITO Central de Información Crediticia y de Riesgo</span> Si tienen alguna inconformidad con esta información por favor comuníquese con nosotros”.
-            </p>
-
-
-            <p class="mt-2">
-                De acuerdo a la cláusula Decima del contrato de servicios Estudiantiles suscrito con el INSTITUTO POLIANDINO CENTRAL SAS, cualquier incumplimiento en los pagos acordados dentro de los programas académicos serán reportados, y divulgados a <span class=" font-bold">DATACREDITO Central de Información y de Riesgo</span>, toda la información referente a mi comportamiento comercial. Lo anterior implica que el cumplimiento o incumplimiento de mis obligaciones se reflejará en las mencionadas bases de datos.
-            </p>
-            <p class="mt-2">
-                ¡Comuníquese con nosotros lo más pronto posible para evitar este registro!
+            <p class=" mt-7">
+                Actualmente su obligación se encuentra en mora de {{$cobro->dias}} días, motivo por el cual SOLICITAREMOS EL EMBARGO DE SUS ACREENCIAS (SALARIOS Y CUENTAS BANCARIAS) ANTE LA JUSTICIA ORDINARIA, PARA DAR CUMPLIMIENTO CON LA OBLIGACION PENDIENTE DE PAGO.
             </p>
 
             <p class="mb-6 mt-11">

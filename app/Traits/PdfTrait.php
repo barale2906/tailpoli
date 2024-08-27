@@ -117,6 +117,31 @@ trait PdfTrait
 
             $this->cargasoporte($id,$rutapdf,4);
             $this->observa($cobro->alumno_id);
+            $this->cobranzareportembargopdf($id);
+
+        } catch(Exception $exception){
+            Log::info('creaPdf reporte negocia cobro N°: ' . $cobro->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+        }
+    }
+
+    public function cobranzareportembargopdf($id){
+        //Invitación a negociar retiro reporte
+        $cobro=Cobranza::find($id);
+
+        try {
+            $nombre=$cobro->alumno->documento."-".$id."_cobranzareportemba.pdf";
+            $rutapdf='cobranzareportemba/'.$nombre;
+            $formapagoES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
+            $fopaLetVr=ucwords($formapagoES->format($cobro->saldo))." Pesos M/L."; //Valor en letras adeudado
+            $fechaletras=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');
+            $pdf = Pdf::loadView('pdfs.cobrareportemb', compact('cobro','fopaLetVr','fechaletras'))->download()->getOriginalContent();
+            Storage::put($rutapdf, $pdf);
+
+            $cobro->update([
+                'etapa'=>4,
+            ]);
+
+            $this->cargasoporte($id,$rutapdf,5);
 
         } catch(Exception $exception){
             Log::info('creaPdf reporte negocia cobro N°: ' . $cobro->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());

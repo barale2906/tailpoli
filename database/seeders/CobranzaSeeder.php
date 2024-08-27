@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Financiera\Cartera;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
@@ -15,6 +16,7 @@ class CobranzaSeeder extends Seeder
     public function run(): void
     {
         $cartera=Cartera::select('id','status','estado_cartera_id','saldo')->get();
+        $hoy=Carbon::today();
 
         foreach ($cartera as $value) {
             Log::info(' id_control: '.$value->id.' saldo: '.$value->saldo.' estado: '.$value->estado_cartera_id.' sttus: '.$value->status);
@@ -34,7 +36,7 @@ class CobranzaSeeder extends Seeder
                 Log::info(' id_control: '.$value->id.' ANULADA.');
             }
 
-            if($value->status===1 && $value->estado_cartera_id===1 && $value->saldo>0){
+            if($value->status===1 && $value->estado_cartera_id===1 && $value->saldo>0 && $value->fecha_pago<$hoy){
                 $value->update([
                     'status'=>3,
                     'estado_cartera_id'=>3

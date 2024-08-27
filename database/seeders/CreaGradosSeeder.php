@@ -21,19 +21,19 @@ class CreaGradosSeeder extends Seeder
         $Auxiliar=Role::where('name','Auxiliar')->first();
 
         Permission::create([
-                        'name'=>'ac_graduaciones',
+                        'name'=>'ac_gradua',
                         'descripcion'=>'Acceso al modulo de graduaciones.',
                         'modulo'=>'academico'
                     ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
         Permission::create([
-                        'name'=>'ac_graduaciones_editar',
+                        'name'=>'ac_grad_editar',
                         'descripcion'=>'Edita la información de graduaciones.',
                         'modulo'=>'academico'
                     ])->syncRoles([$Superusuario,$Administrador,$Coordinador]);
 
         Permission::create([
-                        'name'=>'ac_graduaciones_aprobar',
+                        'name'=>'ac_gradu_aprobar',
                         'descripcion'=>'Aprueba la graduación de un estudiante.',
                         'modulo'=>'academico'
                     ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
@@ -51,7 +51,7 @@ class CreaGradosSeeder extends Seeder
                     ])->syncRoles([$Superusuario,$Administrador,$Coordinador,$Auxiliar]);
 
         Submenu::create([
-            'permiso'           => 'ac_graduaciones',
+            'permiso'           => 'ac_gradua',
             'ruta'              => 'academico.gradua',
             'identificaRuta'    => 'academico.gradua',
             'name'              => 'Graduaciones',

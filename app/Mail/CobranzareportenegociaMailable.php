@@ -18,6 +18,7 @@ class CobranzareportenegociaMailable extends Mailable
 
     public $cobro;
     public $ruta;
+    public $rutaemb;
 
     /**
      * Create a new message instance.
@@ -29,6 +30,10 @@ class CobranzareportenegociaMailable extends Mailable
         $nombre=$this->cobro->alumno->documento."-".$id."_cobranzareporteneg.pdf";
         $rutapdf='cobranzareporteneg/'.$nombre;
         $this->ruta=Storage::url($rutapdf);
+        //Documento de embargo
+        $nombremb=$this->cobro->alumno->documento."-".$id."_cobranzareportemba.pdf";
+        $rutapdfem='cobranzareportemba/'.$nombremb;
+        $this->rutaemb=Storage::url($rutapdfem);
     }
 
 
@@ -64,6 +69,7 @@ class CobranzareportenegociaMailable extends Mailable
     {
         return [
             Attachment::fromPath($this->ruta),
+            Attachment::fromPath($this->rutaemb),
         ];
     }
 }

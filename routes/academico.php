@@ -44,4 +44,4 @@ Route::get('/especial', function () {
 
 Route::get('/gradua', function () {
     return view('academico.graduacion.index');
-})->middleware('can:ac_graduaciones')->name('gradua');
+})->middleware('can:ac_gradua')->name('gradua');
