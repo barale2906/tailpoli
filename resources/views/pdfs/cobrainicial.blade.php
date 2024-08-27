@@ -43,10 +43,6 @@
             </p>
 
             <p class="mt-2">
-                Usted tendrá un término máximo de tiempo de <span class=" font-extrabold">{{$cobro->diasreporte}}</span> días calendario contados a partir del envío de esta para realizar Acuerdo de Pago y/o la cancelación total de su deuda con nuestra entidad/empresa.
-            </p>
-
-            <p class="mt-2">
                 De acuerdo a la cláusula Decima del contrato de servicios Estudiantiles suscrito con el INSTITUTO POLIANDINO CENTRAL SAS, cualquier incumplimiento en los pagos acordados dentro de los programas académicos serán reportados, y divulgados a DATACREDITO Central de Información y de Riesgo, toda la información referente a mi comportamiento comercial. Lo anterior implica que el cumplimiento o incumplimiento de mis obligaciones se reflejará en las mencionadas bases de datos.
             </p>
 

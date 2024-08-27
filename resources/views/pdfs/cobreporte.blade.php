@@ -43,7 +43,7 @@
             </p>
 
             <p class="mt-2">
-                Debido a que a la fecha no hemos recibido respuesta de su parte, nuestros sistemas realizarán el reporte <span class=" uppercase font-extrabold">EL DIA DE HOY </span> a las respectivas centrales de riesgo de manera automática.
+                Debido a que a la fecha no hemos recibido respuesta de su parte, nuestros sistemas realizarán el reporte <span class=" uppercase font-extrabold">EL DIA DE HOY </span> a las respectivas centrales de riesgo.
             </p>
 
             <p class="mt-2">
