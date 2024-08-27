@@ -90,11 +90,7 @@ trait MailTrait
 
             $destinatario=$cobranza->alumno->email;
             Mail::to($destinatario)->send(new CobranzaMailable($id));
-            //Actualizar campo diasreporte restando un día.
-            $cobranza->update([
-                'diasreporte'=>$cobranza->diasreporte-1,
-                'correos'=>now()." AUTOMATICO: Correo primera Notificación. ----- ".$cobranza->correos,
-            ]);
+
 
         } catch(Exception $exception){
             Log::info('Cobranza N°: ' . $cobranza->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
