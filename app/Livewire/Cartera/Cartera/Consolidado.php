@@ -22,7 +22,7 @@ class Consolidado extends Component
 
     public function mount(){
             $this->activa=Cartera::whereIn('status_est', [1,3,7,8])
-                                    ->where('estado_cartera_id', '<',5)
+                                    ->whereIn('estado_cartera_id', [1,2,3,4,6])
                                     ->select('saldo','fecha_pago')
                                     ->orderBy('id', 'ASC')
                                     ->get();
