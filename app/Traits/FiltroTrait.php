@@ -36,7 +36,7 @@ trait FiltroTrait
     //Cartera
     public $is_vencimiento=false;
     public $is_status_est=false;
-    public $is_status_cart=true;
+    public $is_status_cart=false;
     public $is_etapa=false;
     public $is_grado=false;
 
@@ -62,7 +62,7 @@ trait FiltroTrait
                 $this->is_Creades=true;
                 $this->is_Inides=true;
                 $this->is_matri=true;
-                $this->is_estatumatri=true;
+                //$this->is_estatumatri=true;
                 $this->is_sede=true;
                 $this->is_sedecurso=true;
                 $this->is_curso=true;

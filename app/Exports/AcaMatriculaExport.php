@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Academico\Control;
 use App\Models\Academico\Matricula;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -22,20 +23,24 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     private $buscamin;
     private $sede;
     private $sedecurso;
+    private $curso;
     private $matriculo;
     private $comercial;
+    private $estado;
     private $crea;
     private $inicia;
     private $fileName = "Matriculas.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$sede,$sedecurso,$matriculo,$comercial,$crea,$inicia)
+    public function __construct($buscamin,$sede,$sedecurso,$curso,$matriculo,$comercial,$estado,$crea,$inicia)
     {
         $this->buscamin=$buscamin;
         $this->sede=$sede;
         $this->sedecurso=$sedecurso;
+        $this->curso=$curso;
         $this->matriculo=$matriculo;
         $this->comercial=$comercial;
+        $this->estado=$estado;
         $this->crea=$crea;
         $this->inicia=$inicia;
 
@@ -49,8 +54,10 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
         return Matricula::buscar($this->buscamin)
                         ->sede($this->sede)
                         ->sedecurso($this->sedecurso)
+                        ->curso($this->curso)
                         ->creador($this->matriculo)
                         ->comercial($this->comercial)
+                        ->status($this->estado)
                         ->crea($this->crea)
                         ->inicia($this->inicia)
                         ->orderBy('fecha_inicia', 'ASC')
@@ -89,12 +96,19 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
         } else {
             $estado="Inactiva";
         }
+        $sede=Control::where('matricula_id',$matricula->id)->first();
+        $nombre="";
+        if($sede){
+            $nombre=$sede->sede->name;
+        }else{
+            $nombre="";
+        }
 
         return [
             $matricula->created_at,
             $matricula->fecha_inicia,
             $matricula->sede->name,
-            $matricula->control->sede->name,
+            $nombre,
             $matricula->curso->name,
             //$matricula->control->ciclo->name,
             $matricula->alumno->name,

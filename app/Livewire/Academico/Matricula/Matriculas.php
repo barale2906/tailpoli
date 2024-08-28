@@ -239,8 +239,10 @@ class Matriculas extends Component
                                         $this->buscamin,
                                         $this->filtroSede,
                                         $this->filtrosedecurso,
+                                        $this->filtrocurso,
                                         $this->filtromatri,
                                         $this->filtrocom,
+                                        $this->filtroestatumatri,
                                         $this->filtrocrea,
                                         $this->filtroinicia
                                     );

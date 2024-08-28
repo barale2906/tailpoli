@@ -77,9 +77,9 @@ class Matricula extends Model
     }
 
     //Relación uno a muchos
-    public function control(): HasOne
+    public function control(): HasMany
     {
-        return $this->hasOne(Control::class);
+        return $this->hasMany(Control::class);
     }
 
 
@@ -135,7 +135,7 @@ class Matricula extends Model
 
     public function scopeStatus($query, $status){
         $query->when($status ?? null, function($query, $status){
-            $crt;
+            $crt=null;
             if($status===2){
                 $crt=0;
             }

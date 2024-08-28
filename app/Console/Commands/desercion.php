@@ -36,22 +36,6 @@ class desercion extends Command
      */
     public function handle()
     {
-        /* //Verificar si entra en deserción
-        $con=Estado::where('status', true)
-                    ->where('name', 'desertado')
-                    ->select('id')
-                    ->first();
-
-        $this->desertado=$con->id;
-
-        //Verificar si sale de deserción
-        $conec=Estado::where('status', true)
-                    ->where('name', 'reintegro')
-                    ->select('id')
-                    ->first();
-
-        $this->activo=$conec->id; */
-
         $inic=Carbon::today()->subMonths(26);
         $hoy=Carbon::today();
 ;
@@ -89,11 +73,11 @@ class desercion extends Command
         */
 
         foreach ($controles as $value) {
-            Log::info('Linea control: ' . $value->id . ' VERIFICA');
+            Log::info('Linea control Deserción: ' . $value->id . ' VERIFICA');
 
             try {
                     $hoy=Carbon::today();
-                    $margen=$value->ciclo->desertado+1; //Control de deserción
+                    $margen=config('instituto.desertado_fin')+1; //Control de deserción
                     $inicio=new Carbon($value->ciclo->inicia);
                     $fecha=Carbon::today()->subDays($margen); //tIEMPO DE ASISTENCIA
 
