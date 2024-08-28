@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Academico\Control;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Documento;
@@ -15,6 +16,7 @@ trait RenderDocTrait
 {
     public $docuTipo;
     public $docuMatricula;
+    public $controlele;
     public $Modulos;
     public $docuFormaP;
     public $cuotas;
@@ -46,6 +48,7 @@ trait RenderDocTrait
         $this->plantilla=$plantilla->plantilla;
 
         $this->docuMatricula=Matricula::whereId($id)->first();
+        $this->controlele=Control::where('matricula_id',$id)->first();
 
         $this->docuDetalle();
         $this->formaPago();
@@ -223,7 +226,7 @@ trait RenderDocTrait
         $documentoEstu=number_format($this->docuMatricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
         $tipodocuEstu=strtoupper($this->docuMatricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
         $docuExpedi=strtoupper($this->docuMatricula->alumno->perfil->lugar_expedicion); //docuExpedi	expedición del documento
-        $horaDocu=$this->docuMatricula->control->ciclo->name; //horario explicito en el nombre del ciclo respectivo
+        $horaDocu=$this->controlele->ciclo->name; //horario explicito en el nombre del ciclo respectivo
         $direccionEstu=ucwords($this->docuMatricula->alumno->perfil->direccion); //direccionEstu	direccion del estudiante
         $ciudadEstu=ucwords($this->docuMatricula->alumno->perfil->state->name); //ciudadEstu	ciudad del estudiante
         $telefonoEstu=$this->docuMatricula->alumno->perfil->celular; //telefonoEstu	teléfono del estudiante
