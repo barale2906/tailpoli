@@ -52,7 +52,7 @@ class desercion extends Command
 
         $this->activo=$conec->id; */
 
-        $inic=Carbon::today()->subMonths(20);
+        $inic=Carbon::today()->subMonths(26);
         $hoy=Carbon::today();
 ;
         $controles=Control::where('status', true)
