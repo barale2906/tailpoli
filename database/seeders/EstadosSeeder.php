@@ -20,40 +20,50 @@ class EstadosSeeder extends Seeder
     {
         $inic=Carbon::today()->subMonths(26);
 ;
-        $controles=Control::all();
+        $controles=Matricula::all();
 
         foreach ($controles as $value) {
             try {
                 Log::info(' id_control: '.$value->id.' VERIFICADO.');
                 if ($value->inicia<$inic) {
-                    $value->update([
-                        'status_est'=>2
-                    ]);
+
+                    $crt=Control::where('matricula_id',$value->id)->first();
+
+                    if($crt){
+                        $crt->update([
+                            'status_est'=>2
+                        ]);
+                    }
+
                     //Actualizar Matricula
-                    Matricula::where('id',$value->matricula_id)
+                    Matricula::where('id',$value->id)
                     ->update([
                         'status_est'=>2
                     ]);
 
                     //Actualizar Cartera
-                    Cartera::where('matricula_id', $value->matricula_id)
+                    Cartera::where('matricula_id', $value->id)
                             ->update([
                                 'status_est'=>2
                             ]);
 
                 }else{
-                    $value->update([
-                        'status_est'=>3
-                    ]);
+                    $crt=Control::where('matricula_id',$value->id)->first();
+
+                    if($crt){
+                        $crt->update([
+                            'status_est'=>2
+                        ]);
+                    }
 
                     //Actualizar Matricula
-                    Matricula::where('id',$value->matricula_id)
+                    Matricula::where('id',$value->id)
                     ->update([
                         'status_est'=>3
                     ]);
 
                     //Actualizar Cartera
-                    Cartera::where('matricula_id', $value->matricula_id)
+                    Cartera::where('matricula_id', $value->id)
                             ->update([
                                 'status_est'=>3
                             ]);
