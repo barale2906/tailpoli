@@ -104,4 +104,10 @@ class Cartera extends Model
         });
     }
 
+    public function scopeStatcar($query, $stat){
+        $query->when($stat ?? null, function($query, $stat){
+            $query->whereIn('estado_cartera_id', $stat);
+        });
+    }
+
 }

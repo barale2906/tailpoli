@@ -23,15 +23,19 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
     private $periodo;
     private $ciudad;
     private $sede;
+    private $estestudiante;
+    private $estcartera;
     private $fileName = "Carteras.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$periodo,$ciudad,$sede)
+    public function __construct($buscamin,$periodo,$ciudad,$sede,$estestudiante,$estcartera)
     {
         $this->buscamin=$buscamin;
         $this->periodo=$periodo;
         $this->ciudad=$ciudad;
         $this->sede=$sede;
+        $this->estestudiante=$estestudiante;
+        $this->estcartera=$estcartera;
     }
 
     /**
@@ -39,11 +43,12 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
     */
     public function collection()
     {
-        return Cartera::where('status',true)
-                        ->buscar($this->buscamin)
+        return Cartera::buscar($this->buscamin)
                         ->vencido($this->periodo)
                         ->sede($this->sede)
                         ->ciudad($this->ciudad)
+                        ->status($this->estestudiante)
+                        ->statcar($this->estcartera)
                         ->orderBy('matricula_id', 'ASC')
                         ->get();
     }
@@ -73,11 +78,58 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
             'Ciudad',
             'Sede',
             'Observaciones',
+            'Estado Estudiante',
+            'Estado Cartera'
         ];
     }
 
     public function map($cartera): array
     {
+        switch ($cartera->status_est) {
+            case 1:
+                $estudiante="Activo";
+                break;
+
+            case 2:
+                $estudiante="InActivo";
+                break;
+
+            case 3:
+                $estudiante="Desertado";
+                break;
+
+            case 4:
+                $estudiante="Egresado";
+                break;
+
+            case 5:
+                $estudiante="Aplazado";
+                break;
+
+            case 6:
+                $estudiante="Retirado";
+                break;
+
+            case 7:
+                $estudiante="Reintegro";
+                break;
+
+            case 8:
+                $estudiante="Acuerdo Pago";
+                break;
+
+            case 9:
+                $estudiante="Por Iniciar";
+                break;
+
+            case 10:
+                $estudiante="Retomen Clases";
+                break;
+
+            case 11:
+                $estudiante="Anulado";
+                break;
+        }
         return [
             $cartera->responsable->perfil->tipo_documento,
             $cartera->responsable->documento,
@@ -96,6 +148,8 @@ class CarCarteraExport implements FromCollection, WithCustomStartCell, Responsab
             $cartera->sector->name,
             $cartera->sede->name,
             $cartera->observaciones,
+            $estudiante,
+            $cartera->estadoCartera->name,
         ];
     }
 

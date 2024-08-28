@@ -349,14 +349,20 @@
                             <option value={{$item->id}}>{{$item->name}}</option>
                         @endforeach
                     </select>
-                    {{-- @foreach ($status_estu as $item)
-                        <div class="flex items-center mb-4 capitalize">
-                            <input id="default-checkbox" wire:model="estado_estudiante" type="checkbox" value="{{$item->id}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 " >
-                            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                {{$item->name}}
-                            </label>
-                        </div>
-                    @endforeach --}}
+                </div>
+            @endif
+
+            @if ($is_status_cart)
+                <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+
+                    <label for="estado_cartera" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Estado Cartera</label>
+                    <select wire:model.live="estado_cartera" multiple id="estado_cartera"
+                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                        <option >Estado cartera... </option>
+                        @foreach ($estacartera as $item)
+                            <option value={{$item->id}}>{{$item->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
             @endif
 

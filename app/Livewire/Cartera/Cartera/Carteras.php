@@ -4,6 +4,7 @@ namespace App\Livewire\Cartera\Cartera;
 
 use App\Exports\CarCarteraExport;
 use App\Models\Financiera\Cartera;
+use App\Models\Financiera\EstadoCartera;
 use App\Traits\FiltroTrait;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -35,6 +36,7 @@ class Carteras extends Component
     public $filtroSede;
     public $filtrostatusest=[];
     public $estado_estudiante=[];
+    public $estado_cartera=[];
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -42,6 +44,7 @@ class Carteras extends Component
         $this->claseFiltro(9);
         $this->filtrostatusest=[1,7,8];
         $this->estado_estudiante=[1,7,8];
+        $this->estado_cartera=[1,2,3,4,6];
         $this->elegidos();
     }
 
@@ -57,6 +60,12 @@ class Carteras extends Component
     }
 
     public function updatedEstadoEstudiante(){
+        $this->carteras();
+        $this->total();
+        $this->elegidos();
+    }
+
+    public function updatedEstadoCartera(){
         $this->carteras();
         $this->total();
         $this->elegidos();
@@ -107,7 +116,7 @@ class Carteras extends Component
     }
 
     public function exportar(){
-        return new CarCarteraExport($this->buscamin,$this->filtroven,$this->filtroCiudad,$this->filtroSede);
+        return new CarCarteraExport($this->buscamin,$this->filtroven,$this->filtroCiudad,$this->filtroSede,$this->estado_estudiante,$this->estado_cartera);
     }
 
     public function show($alumno,$est){
@@ -134,16 +143,18 @@ class Carteras extends Component
 
     private function carteras(){
 
-        return Cartera::selectRaw('sum(saldo) as saldo, sum(valor) as original,matricula_id, responsable_id')
+        return Cartera::selectRaw('sum(saldo) as saldo, matricula_id, responsable_id')
+                        //->selectRaw('SUM(CASE WHEN estado_cartera_id < 5 THEN valor WHEN estado_cartera_id = 6 THEN valor ELSE 0 END) as original')
+                        ->selectRaw('sum(valor) as original')
                         ->groupBy('matricula_id','responsable_id')
                         ->buscar($this->buscamin)
                         ->vencido($this->filtroven)
                         ->sede($this->filtroSede)
                         ->ciudad($this->filtroCiudad)
                         ->status($this->estado_estudiante)
+                        ->statcar($this->estado_cartera)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
-
     }
 
     private function total(){
@@ -152,8 +163,8 @@ class Carteras extends Component
                         ->sede($this->filtroSede)
                         ->ciudad($this->filtroCiudad)
                         ->status($this->estado_estudiante)
+                        ->statcar($this->estado_cartera)
                         ->sum('saldo');
-
     }
 
     private function sedes(){
@@ -174,7 +185,12 @@ class Carteras extends Component
         return DB::table('estados')
                     ->orderBy('name')
                     ->get();
+    }
 
+    private function estadoscartera(){
+        return EstadoCartera::where('status',true)
+                                ->orderBy('id','ASC')
+                                ->get();
     }
 
     public function render()
@@ -185,7 +201,8 @@ class Carteras extends Component
             'sedes'     =>$this->sedes(),
             'ciudades'  =>$this->ciudades(),
             'status_estu'=>$this->status_estu(),
-            'elegidos'  =>$this->elegidos()
+            'elegidos'  =>$this->elegidos(),
+            'estacartera'=>$this->estadoscartera()
         ]);
     }
 }

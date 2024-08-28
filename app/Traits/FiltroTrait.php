@@ -36,6 +36,7 @@ trait FiltroTrait
     //Cartera
     public $is_vencimiento=false;
     public $is_status_est=false;
+    public $is_status_cart=true;
     public $is_etapa=false;
     public $is_grado=false;
 
@@ -131,6 +132,7 @@ trait FiltroTrait
                 $this->is_vencimiento=true;
                 $this->is_sede=true;
                 $this->is_status_est=true;
+                $this->is_status_cart=true;
                 break;
 
             case 10:

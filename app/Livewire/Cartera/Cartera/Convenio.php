@@ -19,6 +19,11 @@ class Convenio extends Component
     public $responsable_id;
     public $deudas;
     public $total;
+    public $tipoconvenio;
+
+    public $is_total=false;
+    public $is_aplaza=false;
+    public $is_retiro=false;
 
     public $contado=true;
     public $especiales=false;
@@ -125,6 +130,28 @@ class Convenio extends Component
         }
     }
 
+    public function updatedTipoconvenio(){
+        $id=intval($this->tipoconvenio);
+        $this->reset('is_total','is_aplaza','is_retiro');
+        switch ($id) {
+            case 1:
+                $this->is_total=true;
+                break;
+
+            case 2:
+                $this->is_aplaza=true;
+                $this->valor_cuota=0;
+                break;
+
+            case 3:
+                $this->is_retiro=true;
+                $this->cuotas=0;
+                $this->valor_cuota=0;
+                $this->dia=1;
+                break;
+        }
+    }
+
     //Activa cuotas
     public function calcuCuota(){
 
@@ -148,6 +175,19 @@ class Convenio extends Component
             $this->valor_cuota=$saldo/$this->cuotas;
             $this->redondear();
         }
+    }
+
+    //Calculo cuotas afectadas
+    public function calculafectadas(){
+        $descontar=$this->valor_inicial*$this->cuotas;
+        if($descontar<$this->total){
+            for ($i=0; $i < $this->cuotas; $i++) {
+                # code...
+            }
+        }else{
+
+        }
+
     }
 
     public function redondear(){
@@ -198,72 +238,107 @@ class Convenio extends Component
                                 ->first();
 
         foreach ($this->deudas as $value) {
-            $obser=now()." ".Auth::user()->name." --- ANULADO POR CONVENIO DE PAGO --- ".$value->observaciones;
+            $obser=now()." ".Auth::user()->name." --- CASTIGADO POR CONVENIO DE PAGO --- ".$value->observaciones;
             $this->matricula_id=$value->matricula_id;
             Cartera::whereId($value->id)
                     ->update([
-                        'status'        =>7,
-                        'estado_cartera_id' =>7,
+                        'status'        =>5,
+                        'estado_cartera_id' =>5,
                         'observaciones' =>$obser
                     ]);
 
         }
 
-        //Cargar convenio
-        $concepto=ConceptoPago::where('name', 'Inicial convenio')
+        $id=intval($this->tipoconvenio);
+        switch ($id) {
+            case 1:
+                //Cargar convenio
+                $concepto=ConceptoPago::where('name', 'Inicial convenio')
                                 ->where('status', true)
                                 ->first();
-
-        Cartera::create([
-            'fecha_pago'=>$this->fecha,
-            'valor'=>$this->valor_inicial,
-            'saldo'=>$this->valor_inicial,
-            'observaciones'=>'--- CONVENIO PAGO --- primera cuota de un convenio por: '.$this->total." -- ".$this->descripcion,
-            'matricula_id'=>$this->matricula_id,
-            'concepto_pago_id'=>$concepto->id,
-            'concepto'=>$concepto->name,
-            'responsable_id'=>$this->responsable_id,
-            'estado_cartera_id'=>4,
-            'sede_id'=>$this->sede_id,
-            'sector_id'=>$this->sector_id,
-            'status'=>4
-        ]);
-
-        //Cargar nueva cartera
-        //Cuotas
-        $concepto=ConceptoPago::where('name', 'Convenio mes')
-                                ->where('status', true)
-                                ->first();
-
-        $year = now();
-        $year = date('Y');
-        $mes =now();
-        $mes= date('m');
-        $date=Carbon::create($year, $mes, $this->dia);
-        if($this->cuotas>0){
-            $a=1;
-            while ($a <= $this->cuotas) {
-
-                $endDate = $date->addMonths();
 
                 Cartera::create([
-                    'fecha_pago'=>$endDate,
-                    'valor'=>$this->valor_cuota,
-                    'saldo'=>$this->valor_cuota,
-                    'observaciones'=>'Cuota N°: '.$a.' mensual CONVENIO PAGO ----- de un convenio por: '.$this->total." -- ".$this->descripcion,
-                    'matricula_id'=>$this->matricula_id,
-                    'concepto_pago_id'=>$concepto->id,
-                    'concepto'=>$concepto->name,
-                    'responsable_id'=>$this->responsable_id,
-                    'estado_cartera_id'=>4,
-                    'sede_id'=>$this->sede_id,
-                    'sector_id'=>$this->sector_id,
-                    'status'=>4
+                        'fecha_pago'=>$this->fecha,
+                        'valor'=>$this->valor_inicial,
+                        'saldo'=>$this->valor_inicial,
+                        'observaciones'=>'--- CONVENIO PAGO --- primera cuota de un convenio por: '.$this->total." -- ".strtolower($this->descripcion),
+                        'matricula_id'=>$this->matricula_id,
+                        'concepto_pago_id'=>$concepto->id,
+                        'concepto'=>$concepto->name,
+                        'responsable_id'=>$this->responsable_id,
+                        'estado_cartera_id'=>4,
+                        'sede_id'=>$this->sede_id,
+                        'sector_id'=>$this->sector_id,
+                        'status'=>4
                 ]);
 
-                $a++;
-            }
+                //Cargar nueva cartera
+                //Cuotas
+                $concepto=ConceptoPago::where('name', 'Convenio mes')
+                        ->where('status', true)
+                        ->first();
 
+
+                if($this->cuotas>0){
+
+                    $year = now();
+                    $year = date('Y');
+                    $mes =now();
+                    $mes= date('m');
+                    $date=Carbon::create($year, $mes, $this->dia);
+
+                    $a=1;
+                    while ($a <= $this->cuotas) {
+
+                        $endDate = $date->addMonths();
+
+                        Cartera::create([
+                        'fecha_pago'=>$endDate,
+                        'valor'=>$this->valor_cuota,
+                        'saldo'=>$this->valor_cuota,
+                        'observaciones'=>'Cuota N°: '.$a.' mensual CONVENIO PAGO ----- de un convenio por: '.$this->total." -- ".strtolower($this->descripcion),
+                        'matricula_id'=>$this->matricula_id,
+                        'concepto_pago_id'=>$concepto->id,
+                        'concepto'=>$concepto->name,
+                        'responsable_id'=>$this->responsable_id,
+                        'estado_cartera_id'=>4,
+                        'sede_id'=>$this->sede_id,
+                        'sector_id'=>$this->sector_id,
+                        'status'=>4
+                        ]);
+
+                        $a++;
+                    }
+
+                }
+                break;
+
+            case 2:
+
+                break;
+
+            case 3:
+                //Cargar convenio
+                $concepto=ConceptoPago::where('name', 'Inicial convenio')
+                                ->where('status', true)
+                                ->first();
+
+                Cartera::create([
+                        'fecha_pago'=>$this->fecha,
+                        'valor'=>$this->valor_inicial,
+                        'saldo'=>$this->valor_inicial,
+                        'observaciones'=>'--- CONVENIO PAGO RETIRO --- Cuota retiro por: '.$this->total." -- ".strtolower($this->descripcion),
+                        'matricula_id'=>$this->matricula_id,
+                        'concepto_pago_id'=>$concepto->id,
+                        'concepto'=>$concepto->name,
+                        'responsable_id'=>$this->responsable_id,
+                        'estado_cartera_id'=>4,
+                        'sede_id'=>$this->sede_id,
+                        'sector_id'=>$this->sector_id,
+                        'status'=>4
+                ]);
+
+                break;
         }
 
         Pqrs::create([
