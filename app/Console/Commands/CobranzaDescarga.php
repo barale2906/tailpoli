@@ -41,7 +41,6 @@ class CobranzaDescarga extends Command
 
             $value->update([
                 'saldo'=>$est->saldo,
-                'dias'=>$value->dias+1,
             ]);
         }
     }

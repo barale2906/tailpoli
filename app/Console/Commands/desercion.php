@@ -36,7 +36,7 @@ class desercion extends Command
      */
     public function handle()
     {
-        //Verificar si entra en deserción
+        /* //Verificar si entra en deserción
         $con=Estado::where('status', true)
                     ->where('name', 'desertado')
                     ->select('id')
@@ -50,7 +50,7 @@ class desercion extends Command
                     ->select('id')
                     ->first();
 
-        $this->activo=$conec->id;
+        $this->activo=$conec->id; */
 
         $inic=Carbon::today()->subMonths(20);
         $hoy=Carbon::today();
@@ -100,24 +100,24 @@ class desercion extends Command
                     if($value->ultima_asistencia){
                         if($value->ultima_asistencia > $fecha){
                             //Verificar si ya ERA DESERTADO
-                            if($value->status_est===$this->desertado){
+                            if(intval($value->status_est)===3){
 
                                 //Asignar Estado de reintegrado si hasta ahora vuelve
 
                                 $value->update([
-                                    'status_est'=>$this->activo
+                                    'status_est'=>7
                                 ]);
 
                                 //Actualizar Matricula
                                 Matricula::where('id',$value->matricula_id)
                                             ->update([
-                                                'status_est'=>$this->activo
+                                                'status_est'=>7
                                             ]);
 
                                 //Actualizar Cartera
                                 Cartera::where('matricula_id', $value->matricula_id)
                                         ->update([
-                                            'status_est'=>$this->activo
+                                            'status_est'=>7
                                         ]);
 
                                 Pqrs::create([
@@ -159,19 +159,19 @@ class desercion extends Command
                             }
                         }else{
                             $value->update([
-                                'status_est'=>$this->desertado
+                                'status_est'=>3
                             ]);
 
                             //Actualizar Matricula
                             Matricula::where('id',$value->matricula_id)
                                         ->update([
-                                            'status_est'=>$this->desertado
+                                            'status_est'=>3
                                         ]);
 
                             //Actualizar Cartera
                             Cartera::where('matricula_id', $value->matricula_id)
                                     ->update([
-                                        'status_est'=>$this->desertado
+                                        'status_est'=>3
                                     ]);
 
                             Pqrs::create([
@@ -187,19 +187,19 @@ class desercion extends Command
                         if($hoy>$inicio){
 
                             $value->update([
-                                'status_est'=>$this->desertado
+                                'status_est'=>3
                             ]);
 
                             //Actualizar Matricula
                             Matricula::where('id',$value->matricula_id)
                                         ->update([
-                                            'status_est'=>$this->desertado
+                                            'status_est'=>3
                                         ]);
 
                             //Actualizar Cartera
                             Cartera::where('matricula_id', $value->matricula_id)
                                     ->update([
-                                        'status_est'=>$this->desertado
+                                        'status_est'=>3
                                     ]);
 
                             Pqrs::create([
