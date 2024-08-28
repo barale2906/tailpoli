@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('carteras', function (Blueprint $table) {
-            $table->integer('status_est')->default(2)->after('status')->comment('Estado del estudiante según tabla de estados');
+            $table->integer('status_est')->default(1)->after('status')->comment('Estado del estudiante según tabla de estados');
         });
     }
 

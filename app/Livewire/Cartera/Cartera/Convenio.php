@@ -54,7 +54,7 @@ class Convenio extends Component
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
             ->delete();
-        $this->cartera=Cartera::where('status', '<',5)
+        $this->cartera=Cartera::where('estado_cartera_id', '<',5)
                                 ->where('responsable_id', $this->responsable_id)
                                 ->get();
 
@@ -246,7 +246,6 @@ class Convenio extends Component
                         'estado_cartera_id' =>5,
                         'observaciones' =>$obser
                     ]);
-
         }
 
         $id=intval($this->tipoconvenio);
