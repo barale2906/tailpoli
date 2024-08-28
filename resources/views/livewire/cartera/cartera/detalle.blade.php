@@ -154,7 +154,7 @@
                                 $ {{number_format($cartera->saldo, 0, ',', '.')}}
                             </th>
                             <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
-                                @if ($cartera->status<5)
+                                @if ($cartera->estado_cartera_id<5)
                                     @if ($cartera->fecha_pago < $fecha)
                                         @php
                                             $fecha1 = date_create($cartera->fecha_pago);

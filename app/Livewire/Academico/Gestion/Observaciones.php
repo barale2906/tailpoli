@@ -70,7 +70,7 @@ class Observaciones extends Component
 
     private function saldoCartera(){
         return Cartera::where('responsable_id', $this->elegido->estudiante_id)
-                        ->where('status', '<',5)
+                        ->where('estado_cartera_id', '<',5)
                         ->sum('saldo');
     }
 

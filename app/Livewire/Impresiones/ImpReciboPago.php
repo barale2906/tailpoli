@@ -84,7 +84,7 @@ class ImpReciboPago extends Component
 
     public function obteSaldo(){
         $this->saldo=Cartera::where('responsable_id', $this->obtener->paga_id)
-                        ->where('status', '<',5)
+                        ->where('estado_cartera_id', '<',5)
                         ->get();
 
         $this->total=$this->matriculas->sum('valor');

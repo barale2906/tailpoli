@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Financiera\Cartera;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class SincroCarteraMatriAnuladaSeeder extends Seeder
 {

@@ -168,14 +168,14 @@ class Carteras extends Component
     }
 
     private function sedes(){
-        return Cartera::where('status', '<',5)
+        return Cartera::where('estado_cartera_id', '<',5)
                         ->select('sede_id')
                         ->groupBy('sede_id')
                         ->get();
     }
 
     private function ciudades(){
-        return Cartera::where('status', '<',5)
+        return Cartera::where('estado_cartera_id', '<',5)
                         ->select('sector_id')
                         ->groupBy('sector_id')
                         ->get();

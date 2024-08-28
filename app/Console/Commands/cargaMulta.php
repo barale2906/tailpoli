@@ -67,7 +67,7 @@ class cargaMulta extends Command
                 }); */
 
         $vencida=Cartera::where('fecha_pago', Carbon::today()->subDay())
-                        ->where('status', '<',5)
+                        ->where('estado_cartera_id', '<',5)
                         ->whereNotIn('status_est',[2,6,11])
                         ->where('saldo', '>', 0)
                         ->get();

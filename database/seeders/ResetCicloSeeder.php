@@ -124,7 +124,7 @@ class ResetCicloSeeder extends Seeder
 
                         //Actualizar fechas de pago reales cartera
                         Cartera::where('matricula_id', $matricula->id)
-                                    ->where('status', 1)
+                                    ->where('estado_cartera_id', '<',5)
                                     ->update([
                                         'fecha_real'=>null
                                     ]);
@@ -145,7 +145,7 @@ class ResetCicloSeeder extends Seeder
                         $ayer=Carbon::today()->subDay();
 
                         $mora=Cartera::where('responsable_id', $matricula->alumno_id)
-                                        ->where('status', true)
+                                        ->where('estado_cartera_id','<',5)
                                         ->where('fecha_pago', '<=', $ayer)
                                         ->where('saldo', '>', 10000)
                                         ->sum('saldo');

@@ -104,12 +104,12 @@ class Convenio extends Component
 
     public function updatedResponsableId(){
         $this->deudas=Cartera::where('responsable_id', $this->responsable_id)
-                            ->where('status', '<',5)
+                            ->where('estado_cartera_id', '<',5)
                             ->get();
 
         if($this->deudas->count()>0){
             $crt=Cartera::where('responsable_id', $this->responsable_id)
-                        ->where('status', '<',5)
+                        ->where('estado_cartera_id', '<',5)
                         ->first();
 
             $this->sede_id=$crt->sede_id;
@@ -117,7 +117,7 @@ class Convenio extends Component
         }
 
         $this->total=Cartera::where('responsable_id', $this->responsable_id)
-                            ->where('status', '<',5)
+                            ->where('estado_cartera_id', '<',5)
                             ->sum('saldo');
     }
 
