@@ -42,8 +42,8 @@ class Carteras extends Component
 
     public function mount(){
         $this->claseFiltro(9);
-        $this->filtrostatusest=[1,3,7,8,9];
-        $this->estado_estudiante=[1,3,7,8,9];
+        $this->filtrostatusest=[1,7,8];
+        $this->estado_estudiante=[1,7,8];
         $this->estado_cartera=[1,2,3,4,6];
         $this->elegidos();
     }
@@ -116,7 +116,14 @@ class Carteras extends Component
     }
 
     public function exportar(){
-        return new CarCarteraExport($this->buscamin,$this->filtroven,$this->filtroCiudad,$this->filtroSede,$this->estado_estudiante,$this->estado_cartera);
+        return new CarCarteraExport(
+                        $this->buscamin,
+                        $this->filtroven,
+                        $this->filtroCiudad,
+                        $this->filtroSede,
+                        $this->estado_estudiante,
+                        $this->estado_cartera
+                    );
     }
 
     public function show($alumno,$est){

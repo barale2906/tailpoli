@@ -44,6 +44,8 @@ class Convenio extends Component
     public $dia;
     public $elegible=[];
 
+    public $valor_aplazamiento;
+
     public function mount($id=null){
         if($id){
             $this->responsable_id=$id;
@@ -60,6 +62,10 @@ class Convenio extends Component
 
         $this->hoy=now();
         $this->hoy=date('Y-m-d');
+
+        $this->valor_aplazamiento= DB::table('cuotaplaza')
+                                            ->where('status',1)
+                                            ->first();
 
         $this->filtrar();
         $this->dias();
