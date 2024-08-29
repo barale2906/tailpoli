@@ -41,25 +41,25 @@ trait PdfTrait
 
         switch ($accion) {
             case 1:
-                $this->carpeta='cobranza/cobrainicial/';
+                $this->carpeta='gestioncobrar/cobrainicial/';
                 $this->nombre='_cobranzainicial.pdf';
                 $this->vista='pdfs.cobrainicial';
                 break;
 
             case 2:
-                $this->carpeta='cobranza/cobranzanegocia/';
+                $this->carpeta='gestioncobrar/cobranzanegocia/';
                 $this->nombre='_cobranzanegocia.pdf';
                 $this->vista='pdfs.cobranegocia';
                 break;
 
             case 3:
-                $this->carpeta='cobranza/cobranreporte/';
+                $this->carpeta='gestioncobrar/cobranreporte/';
                 $this->nombre='_cobranreporte.pdf';
                 $this->vista='pdfs.cobreporte';
                 break;
 
             case 4:
-                $this->carpeta='cobranza/cobranzareporteneg/';
+                $this->carpeta='gestioncobrar/cobranzareporteneg/';
                 $this->nombre='_cobranzareporteneg.pdf';
                 $this->vista='pdfs.cobrareporteneg';
                 break;
