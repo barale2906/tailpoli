@@ -27,7 +27,7 @@ class CobranzareporteMailable extends Mailable
         $this->cobro=Cobranza::find($id);
         //Buscar el documento descargado
         $nombre=$this->cobro->alumno->documento."-".$id."_cobranreporte.pdf";
-        $rutapdf='cobranreporte/'.$nombre;
+        $rutapdf='gestioncobrar/cobranreporte/'.$nombre;
         $this->ruta=Storage::url($rutapdf);
     }
 

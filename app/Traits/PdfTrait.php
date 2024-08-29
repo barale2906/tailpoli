@@ -90,7 +90,7 @@ trait PdfTrait
                 ]);
             }
 
-            if($this->accion===4){
+            if($this->accion>3){
                 $this->cobranzareportembargopdf();
             }
 
@@ -103,7 +103,7 @@ trait PdfTrait
         $cobro=Cobranza::find($this->id);
         try {
             $nombre=$cobro->alumno->documento."-".$this->id."_cobranzareportemba.pdf";
-            $rutapdf='cobranza/cobranzareportemba/'.$nombre;
+            $rutapdf='gestioncobrar/cobranzareportemba/'.$nombre;
             $formapagoES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
             $fopaLetVr=ucwords($formapagoES->format($cobro->saldo))." Pesos M/L."; //Valor en letras adeudado
             $fechaletras=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');

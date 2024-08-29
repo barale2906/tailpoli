@@ -28,11 +28,11 @@ class CobranzareportenegociaMailable extends Mailable
         $this->cobro=Cobranza::find($id);
         //Buscar el documento descargado
         $nombre=$this->cobro->alumno->documento."-".$id."_cobranzareporteneg.pdf";
-        $rutapdf='cobranzareporteneg/'.$nombre;
+        $rutapdf='gestioncobrar/cobranzareporteneg/'.$nombre;
         $this->ruta=Storage::url($rutapdf);
         //Documento de embargo
         $nombremb=$this->cobro->alumno->documento."-".$id."_cobranzareportemba.pdf";
-        $rutapdfem='cobranzareportemba/'.$nombremb;
+        $rutapdfem='gestioncobrar/cobranzareportemba/'.$nombremb;
         $this->rutaemb=Storage::url($rutapdfem);
     }
 
