@@ -31,7 +31,7 @@ trait PdfTrait
 
         try {
             $nombre=$cobro->alumno->documento."-".$id."_cobranzainicial.pdf";
-            $rutapdf='cobranza/'.$nombre;
+            $rutapdf='cobrainicial/'.$nombre;
             $formapagoES = new NumberFormatter("es", NumberFormatter::SPELLOUT);
             $fopaLetVr=ucwords($formapagoES->format($cobro->saldo))." Pesos M/L."; //Valor en letras adeudado
             $fechaletras=Carbon::now()->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y');

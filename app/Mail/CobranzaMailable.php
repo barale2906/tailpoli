@@ -27,7 +27,7 @@ class CobranzaMailable extends Mailable
         $this->cobro=Cobranza::find($id);
         //Buscar el documento descargado
         $nombre=$this->cobro->alumno->documento."-".$id."_cobranzainicial.pdf";
-        $rutapdf='cobranza/'.$nombre;
+        $rutapdf='cobrainicial/'.$nombre;
         $this->ruta=Storage::url($rutapdf);
     }
 
