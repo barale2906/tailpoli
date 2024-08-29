@@ -40,6 +40,7 @@ trait PdfTrait
 
             $this->cargasoporte($id,$rutapdf,1);
             $this->observa($cobro->alumno_id);
+            Log::info('creaPdf inicio cobranza cobro N°: ' . $cobro->id);
 
         } catch(Exception $exception){
             Log::info('creaPdf inicio cobranza cobro N°: ' . $cobro->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
