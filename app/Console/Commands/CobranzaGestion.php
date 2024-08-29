@@ -48,7 +48,7 @@ class CobranzaGestion extends Command
                 if($value->dias===intval($dias)){
                     //Enviar primera notificación
                     //Genera Carta
-                    $this->cobranzapdf($value->id);
+                    $this->cobrapdf($value->id,1);
 
                     //Enviar email
                     $this->claseEmail(4,$value->id);
@@ -63,7 +63,7 @@ class CobranzaGestion extends Command
                 if($value->dias>intval($dias) && $value->dias<intval($cobranza)){
                     //Enviar invitaciones a negociar
                     //Genera invitación a negociar
-                    $this->cobranzanegociacionpdf($value->id);
+                    $this->cobrapdf($value->id,2);
 
                     //Enviar email
                     $this->claseEmail(5,$value->id);
@@ -78,7 +78,7 @@ class CobranzaGestion extends Command
                 if($value->dias===intval($cobranza)){
                     //Enviar notificación de reporte
                     //Genera notificación
-                    $this->cobranzareportepdf($value->id);
+                    $this->cobrapdf($value->id,3);
 
                     //Enviar email
                     $this->claseEmail(6,$value->id);
@@ -92,7 +92,7 @@ class CobranzaGestion extends Command
                 if($value->dias>intval($cobranza)){
                     //Enviar notificación de negociación
                     //Genera invitación a negociar
-                    $this->cobranzareportenegocipdf($value->id);
+                    $this->cobrapdf($value->id,4);
 
                     //Enviar email
                     $this->claseEmail(7,$value->id);
