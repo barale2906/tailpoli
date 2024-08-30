@@ -41,6 +41,7 @@
                                     <option value="destinatario">Estudiante Destinatario (nombre - cédula)</option>
                                     <option value="parrafo">parráfo</option>
                                     <option value="parrafo1">parráfo con fondo gris claro</option>
+                                    <option value="parrafo2">parráfo con tamaño de letra mas grande</option>
                                     <option value="linea">Línea constancia con fecha</option>
                                     <option value="linea1">Línea constancia  y acuerdo con fecha</option>
                                     <option value="firma1">firma estudiante (todos los datos)</option>
@@ -52,6 +53,7 @@
                                     <option value="firma7">firma directora</option>
                                     <option value="firma8">firma estudiante - instituto</option>
                                     <option value="formaPago">forma de pago</option>
+                                    <option value="horario">Horario</option>
                                     <option value="cartera">cartera</option>
                                     <option value="matricula">cuadro matricula</option>
                                     <option value="modulos">Insertar modulos del curso</option>

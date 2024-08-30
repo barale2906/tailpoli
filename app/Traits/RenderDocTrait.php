@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\Academico\Ciclogrupo;
 use App\Models\Academico\Control;
+use App\Models\Academico\Horario;
 use App\Models\Academico\Matricula;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Documento;
@@ -33,6 +35,7 @@ trait RenderDocTrait
     public $diaprimer;
     public $mesprimer;
     public $anoprimer;
+    public $horarios;
 
 
     //public function docubase($id, $tipo, $ori=null){
@@ -53,6 +56,23 @@ trait RenderDocTrait
         $this->docuDetalle();
         $this->formaPago();
         $this->modulosCurso();
+        $this->creahorarios();
+    }
+
+    public function creahorarios(){
+        $this->primerGrupo=Ciclogrupo::where('ciclo_id', $this->controlele->ciclo_id)->orderBy('fecha_inicio', 'ASC')->first();
+
+        $horarios=Horario::where('grupo_id', $this->primerGrupo->grupo_id)
+                                ->orderBy('hora', 'ASC')
+                                ->get();
+
+        if($horarios){
+            $this->horarios=$horarios;
+        }else{
+            $this->horarios=0;
+        }
+
+
     }
 
     public function modulosCurso(){

@@ -41,7 +41,8 @@ class PdfController extends Controller
         $matricula=1;
         $modulos=$this->Modulos;
         $plantilla=$this->plantilla;
-        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad','matricula','modulos','plantilla'));
+        $horarios=$this->horarios;
+        $pdf = Pdf::loadView('pdfs.matricular', compact('matr','id','detalles','docuMatricula','fecha','fechaMes','docuFormaP','docuCartera','edad','matricula','modulos','plantilla','horarios'));
 
         return $pdf->stream();
     }
