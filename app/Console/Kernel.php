@@ -23,9 +23,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('Cartera:aviso-cartera')->timezone('America/Bogota')->at('02:50'); //->at('02:50');  //everyMinute();
         $schedule->command('Academico:Gastos')->timezone('America/Bogota')->at('03:10'); //->at('03:10');  //everyMinute();
         $schedule->command('Cobranza:Carga')->timezone('America/Bogota')->at('03:40'); //->at('03:40');  //everyMinute();
-        $schedule->command('Cobranza:Descarga')->timezone('America/Bogota')->at('04:10'); //->at('04:10');  //everyMinute();
-        $schedule->command('Cobranza:Carga')->timezone('America/Bogota')->at('04:40'); //->at('04:40');  //everyMinute();
-        $schedule->command('Cobranza:Gestion')->timezone('America/Bogota')->at('08:30'); //->at('08:30');  //everyMinute();
+        $schedule->command('Cobranza:Descarga')->timezone('America/Bogota')->at('04:40'); //->at('04:10');  //everyMinute();
+        $schedule->command('Cobranza:Gestion')->timezone('America/Bogota')->at('10:45'); //->at('10:45');  //everyMinute();
 
     }
     /**
