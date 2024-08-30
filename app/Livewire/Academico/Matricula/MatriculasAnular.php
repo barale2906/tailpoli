@@ -70,12 +70,12 @@ class MatriculasAnular extends Component
 
         // Inactivar Cartera
         $carteras=Cartera::where('matricula_id', $this->id)->get();
-        $estado=EstadoCartera::where('name', 'anulada')->first();
+        //$estado=EstadoCartera::where('name', 'anulada')->first();
 
         foreach ($carteras as $value) {
             Cartera::whereId($value->id)->update([
-                'status'=>$estado->id,
-                'estado_cartera_id'=>$estado->id,
+                'status'=>7,
+                'estado_cartera_id'=>7,
                 'status_est'=>11,
                 'observaciones'=>now().": Se anulo la matricula con motivo de: ".$this->motivo.", por: ".Auth::user()->name." --- ".$value->observaciones
             ]);

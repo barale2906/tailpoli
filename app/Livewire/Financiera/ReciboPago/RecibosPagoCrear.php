@@ -137,12 +137,14 @@ class RecibosPagoCrear extends Component
     public function obligaciones(){
         $this->pendientes= Cartera::where('responsable_id', $this->alumno_id)
                                 ->where('estado_cartera_id', '<',5)
+                                ->where('saldo','>',0)
                                 ->orderBy('matricula_id')
                                 ->orderBy('fecha_pago')
                                 ->get();
 
         $this->totalCartera=Cartera::where('responsable_id', $this->alumno_id)
                                     ->where('estado_cartera_id', '<',5)
+                                    ->where('saldo','>',0)
                                     ->sum('saldo');
 
         $this->student();

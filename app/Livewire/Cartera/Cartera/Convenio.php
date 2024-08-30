@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Cartera\Cartera;
 
+use App\Models\Academico\Control;
+use App\Models\Academico\Matricula;
 use App\Models\Clientes\Pqrs;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
@@ -10,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Convenio extends Component
@@ -24,6 +27,7 @@ class Convenio extends Component
     public $is_total=false;
     public $is_aplaza=false;
     public $is_retiro=false;
+    public $is_aplazadeta=false;
 
     public $contado=true;
     public $especiales=false;
@@ -34,6 +38,9 @@ class Convenio extends Component
     public $saldo;
     public $cuotas;
     public $valor_cuota;
+    public $saldo_aplazamiento;
+    public $cuotadiferidas;
+    public $cuotasaldo;
     public $descripcion;
     public $matricula_id;
     public $sede_id;
@@ -58,6 +65,7 @@ class Convenio extends Component
             ->delete();
         $this->cartera=Cartera::where('estado_cartera_id', '<',5)
                                 ->where('responsable_id', $this->responsable_id)
+                                ->where('saldo','>',0)
                                 ->get();
 
         $this->hoy=now();
@@ -111,11 +119,13 @@ class Convenio extends Component
     public function updatedResponsableId(){
         $this->deudas=Cartera::where('responsable_id', $this->responsable_id)
                             ->where('estado_cartera_id', '<',5)
+                            ->where('saldo','>',0)
                             ->get();
 
         if($this->deudas->count()>0){
             $crt=Cartera::where('responsable_id', $this->responsable_id)
                         ->where('estado_cartera_id', '<',5)
+                        ->where('saldo','>',0)
                         ->first();
 
             $this->sede_id=$crt->sede_id;
@@ -124,6 +134,7 @@ class Convenio extends Component
 
         $this->total=Cartera::where('responsable_id', $this->responsable_id)
                             ->where('estado_cartera_id', '<',5)
+                            ->where('saldo','>',0)
                             ->sum('saldo');
     }
 
@@ -145,8 +156,10 @@ class Convenio extends Component
                 break;
 
             case 2:
+
                 $this->is_aplaza=true;
-                $this->valor_cuota=0;
+                $this->valor_inicial=$this->valor_aplazamiento->valor;
+                $this->cuomensual();
                 break;
 
             case 3:
@@ -174,6 +187,23 @@ class Convenio extends Component
         }
     }
 
+    //Determina v alor de cuota mensual
+    public function cuomensual(){
+        $crt=Cartera::where('responsable_id', $this->responsable_id)
+                        ->where('saldo','>',0)
+                        ->where('concepto_pago_id',2)
+                        ->select('valor')
+                        ->first();
+
+        if($crt){
+            $this->valor_cuota=$crt->valor;
+        }else{
+            $this->reset('is_aplaza','tipoconvenio');
+            $this->dispatch('alerta', name:'Haga Convenio completo o Retiro.');
+        }
+
+    }
+
     // Calculo de las cuotas
     public function calcula(){
         if($this->cuotas>0 && $this->total>$this->valor_inicial){
@@ -185,14 +215,21 @@ class Convenio extends Component
 
     //Calculo cuotas afectadas
     public function calculafectadas(){
-        $descontar=$this->valor_inicial*$this->cuotas;
-        if($descontar<$this->total){
-            for ($i=0; $i < $this->cuotas; $i++) {
-                # code...
-            }
+
+        if($this->cuotas<=12 && $this->cuotas>0){
+            $aplazamiento=$this->cuotas*$this->valor_inicial;
+            $this->saldo_aplazamiento=$this->total-$aplazamiento;
+            $this->cuotadiferidas=floor($this->saldo_aplazamiento/$this->valor_cuota);  //Calcula el número de cuotas completas
+            $cuotadif=$this->saldo_aplazamiento-($this->cuotadiferidas*$this->valor_cuota);
+            $diferencia=$cuotadif % 1000;
+            $this->cuotasaldo=$cuotadif-$diferencia; // Cuota saldo redondeada a 1000
+            $this->is_aplazadeta=true;
         }else{
+            $this->reset('cuotas');
+            $this->dispatch('alerta', name:'Entre 1 y 12 cuotas.');
 
         }
+
 
     }
 
@@ -228,7 +265,9 @@ class Convenio extends Component
                         'descripcion',
                         'saldo',
                         'fecha',
-                        'dia'
+                        'dia',
+                        'cuotadiferidas',
+                        'cuotasaldo'
                     );
     }
 
@@ -239,9 +278,9 @@ class Convenio extends Component
 
         //anular todos
         //Cargar convenio
-        $estado=EstadoCartera::where('name', 'convenio')
+        /* $estado=EstadoCartera::where('name', 'convenio')
                                 ->where('status', true)
-                                ->first();
+                                ->first(); */
 
         foreach ($this->deudas as $value) {
             $obser=now()." ".Auth::user()->name." --- CASTIGADO POR CONVENIO DE PAGO --- ".$value->observaciones;
@@ -319,6 +358,98 @@ class Convenio extends Component
                 break;
 
             case 2:
+                //Calcular cuotas faltantes de aplazamiento
+                $cuoaplaza=$this->cuotas-1;
+
+                if($cuoaplaza>0){
+                    $this->cuotadiferidas=$this->cuotadiferidas+$cuoaplaza;
+                }
+
+                // Cargar primer cuota de aplzamiento
+                $concepto=ConceptoPago::where('name', 'Inicial convenio')
+                                ->where('status', true)
+                                ->first();
+
+                Cartera::create([
+                        'fecha_pago'=>$this->fecha,
+                        'valor'=>$this->valor_inicial,
+                        'saldo'=>$this->valor_inicial,
+                        'observaciones'=>'--- CONVENIO PAGO APLAZAMIENTO --- primera cuota de un convenio por: '.$this->total." -- ".strtolower($this->descripcion),
+                        'matricula_id'=>$this->matricula_id,
+                        'concepto_pago_id'=>$concepto->id,
+                        'concepto'=>$concepto->name,
+                        'responsable_id'=>$this->responsable_id,
+                        'estado_cartera_id'=>4,
+                        'sede_id'=>$this->sede_id,
+                        'sector_id'=>$this->sector_id,
+                        'status'=>4
+                ]);
+
+                // Cargar las demás cuotas de aplazamiento
+                $conceptomes=ConceptoPago::where('name', 'Convenio mes')
+                                            ->where('status', true)
+                                            ->first();
+
+                $year = now();
+                    $year = date('Y');
+                    $mes =now();
+                    $mes= date('m');
+                    $date=Carbon::create($year, $mes, $this->dia);
+
+                $a=1;
+                while ($a <= $this->cuotadiferidas) {
+
+                    $valor=0;
+
+                    if($a<=$cuoaplaza){
+                        // Cargar cuotas aplazamiento pendientes
+                        $valor=$this->valor_inicial;
+                    }else{
+                        // Cargar cuotas de cuota mensual
+                        $valor=$this->valor_cuota;
+                    }
+
+                    $endDate = $date->addMonths();
+
+                    Log::info('Convenio: ' . $valor. ' N°: '.$a." Aplaxa: ".$cuoaplaza." Diferidas: ".$this->cuotadiferidas." SAldo: ".$this->cuotasaldo.' fecha: '.$endDate);
+
+                    Cartera::create([
+                            'fecha_pago'=>$endDate,
+                            'valor'=>$valor,
+                            'saldo'=>$valor,
+                            'observaciones'=>'Cuota N°: '.$a.' mensual CONVENIO PAGO APLAZAMIENTO ----- de un convenio por: '.$this->total." -- ".strtolower($this->descripcion),
+                            'matricula_id'=>$this->matricula_id,
+                            'concepto_pago_id'=>$conceptomes->id,
+                            'concepto'=>$conceptomes->name,
+                            'responsable_id'=>$this->responsable_id,
+                            'estado_cartera_id'=>4,
+                            'sede_id'=>$this->sede_id,
+                            'sector_id'=>$this->sector_id,
+                            'status'=>4
+                    ]);
+
+                    $a++;
+                }
+
+                if($this->cuotasaldo>0){
+                    $endDate = $date->addMonths();
+                    log::info(' fecha:'.$endDate);
+
+                    Cartera::create([
+                        'fecha_pago'=>$endDate,
+                        'valor'=>$this->cuotasaldo,
+                        'saldo'=>$this->cuotasaldo,
+                        'observaciones'=>'Cuota N°: '.$a.' mensual CONVENIO PAGO APLAZAMIENTO ----- de un convenio por: '.$this->total." -- ".strtolower($this->descripcion),
+                        'matricula_id'=>$this->matricula_id,
+                        'concepto_pago_id'=>$conceptomes->id,
+                        'concepto'=>$conceptomes->name,
+                        'responsable_id'=>$this->responsable_id,
+                        'estado_cartera_id'=>4,
+                        'sede_id'=>$this->sede_id,
+                        'sector_id'=>$this->sector_id,
+                        'status'=>4
+                    ]);
+                }
 
                 break;
 
@@ -342,6 +473,44 @@ class Convenio extends Component
                         'sector_id'=>$this->sector_id,
                         'status'=>4
                 ]);
+
+                //Marcar como retirado el estudiante
+                $esta=Control::where('estudiante_id', $this->responsable_id)
+                                        ->count();
+
+                if($esta>0){
+                    Control::where('estudiante_id', $this->responsable_id)
+                            ->update([
+                                'status_est'    =>6
+                            ]);
+                }
+
+                //Estado en cartera
+                $car=Cartera::where('responsable_id', $this->responsable_id)
+                ->count();
+
+                if($car>0){
+                    Cartera::where('responsable_id', $this->responsable_id)
+                            ->update([
+                                'status_est'    =>6,
+                            ]);
+                }
+
+                //Matriculas
+                $matr=Matricula::where('alumno_id', $this->responsable_id)
+                ->count();
+
+                if($matr>0){
+                    Matricula::where('alumno_id', $this->responsable_id)
+                                ->update([
+                                    'status_est'    =>6,
+                                    'anula'=>now()." ¡¡¡ANULADO POR RETIRO!!! ".strtolower($this->observaciones),
+                                    'anula_user'=>Auth::user()->name,
+                                    'status'=>false,
+                                ]);
+                }
+
+
 
                 break;
         }

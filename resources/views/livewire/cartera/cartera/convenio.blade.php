@@ -5,69 +5,111 @@
         </h1>
     @endif
 
-    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
-        @if (!$especiales)
-            <div class="mb-6">
-                <label for="responsable_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Elija alumno</label>
-                <select wire:model.live="responsable_id" id="responsable_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                    <option >Elija alumno...</option>
-                    @foreach ($responsables as $item)
-                        <option value={{$item->id_producto}}>{{$item->producto}} - {{$item->almacen}}</option>
-                    @endforeach
-                </select>
-            </div>
-        @endif
-        @if ($responsable_id>0)
-            <div class="flex flex-col items-center justify-center mb-4">
-                <dt class="mb-2 text-3xl font-extrabold text-cyan-700">$ {{number_format($total, 0, ',', '.')}}</dt>
-                <dd class="text-gray-500 dark:text-gray-400">Total de la deuda</dd>
-            </div>
-            <div class="mb-6">
-                <label for="tipoconvenio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Tipo de Convenio</label>
-                <select wire:model.live="tipoconvenio" id="tipoconvenio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                    <option >Elija ...</option>
-                    <option value="1">Total</option>
-                    {{-- <option value="2">Aplazamiento</option> --}}
-                    <option value="3">Retiro</option>
-                </select>
-                @error('tipoconvenio')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
-            </div>
-            @if ($is_total)
+    @if ($total>0)
+        <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+            @if (!$especiales)
                 <div class="mb-6">
-                    <label for="contado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">forma de Pago</label>
-                    <select wire:model.live="contado" id="contado" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                        <option >Elija ...</option>
-                        <option value="0">Crédito</option>
-                        <option value="1">Contado</option>
+                    <label for="responsable_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Elija alumno</label>
+                    <select wire:model.live="responsable_id" id="responsable_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                        <option >Elija alumno...</option>
+                        @foreach ($responsables as $item)
+                            <option value={{$item->id_producto}}>{{$item->producto}} - {{$item->almacen}}</option>
+                        @endforeach
                     </select>
-                    @error('contado')
+                </div>
+            @endif
+            @if ($responsable_id>0)
+                <div class="flex flex-col items-center justify-center mb-4">
+                    <dt class="mb-2 text-3xl font-extrabold text-cyan-700">$ {{number_format($total, 0, ',', '.')}}</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Total de la deuda</dd>
+                </div>
+                <div class="mb-6">
+                    <label for="tipoconvenio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Tipo de Convenio</label>
+                    <select wire:model.live="tipoconvenio" id="tipoconvenio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                        <option >Elija ...</option>
+                        <option value="1">Total</option>
+                        <option value="2">Aplazamiento</option>
+                        <option value="3">Retiro</option>
+                    </select>
+                    @error('tipoconvenio')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                         </div>
                     @enderror
                 </div>
-            @endif
-
-
-            @if ($is_total)
-                @if (!$contado)
+                @if ($is_total)
                     <div class="mb-6">
-                        <label for="valor_inicial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor inicial</label>
-                        <input type="number" id="valor_inicial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Defina el valor" wire:model.live="valor_inicial" wire:keydown="calcuCuota()">
-                        @error('valor_inicial')
+                        <label for="contado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">forma de Pago</label>
+                        <select wire:model.live="contado" id="contado" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                            <option >Elija ...</option>
+                            <option value="0">Crédito</option>
+                            <option value="1">Contado</option>
+                        </select>
+                        @error('contado')
                             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                             </div>
                         @enderror
                     </div>
 
+                    @if (!$contado)
+                        <div class="mb-6">
+                            <label for="valor_inicial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor inicial</label>
+                            <input type="number" id="valor_inicial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Defina el valor" wire:model.live="valor_inicial" wire:keydown="calcuCuota()">
+                            @error('valor_inicial')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="cuotas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Número de cuotas{{$saldo>0 ? " Para: $ ".number_format($saldo, 0, '.', ' '):""}}</label>
+                            <input type="number" id="cuotas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número de cuotas" wire:model.live="cuotas" wire:keydown="calcula()">
+                            @error('cuotas')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+
+
+                        @if ($cuotas>0)
+                            <div class="mb-6">
+                                <label for="valor_cuota" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor cuota</label>
+                                <input type="number" step="any" id="valor_cuota" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor de la cuota" wire:model.live="valor_cuota">
+                                @error('valor_cuota')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-6">
+                                <label for="dia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Día de pago:</label>
+                                <select wire:model.live="dia" id="contado" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                    <option >Elija ...</option>
+                                    @foreach ($elegible as $item)
+                                        <option value={{$item}}>{{$item}}</option>
+                                    @endforeach
+                                </select>
+                                @error('dia')
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                    </div>
+                                @enderror
+                            </div>
+                        @endif
+
+                    @endif
+
+                @endif
+
+                @if ($is_aplaza)
+
                     <div class="mb-6">
-                        <label for="cuotas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Número de cuotas{{$saldo>0 ? " Para: $ ".number_format($saldo, 0, '.', ' '):""}}</label>
-                        <input type="number" id="cuotas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número de cuotas" wire:model.live="cuotas" wire:keydown="calcula()">
+                        <label for="cuotas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Meses (cuotas de aplazamiento)</label>
+                        <input type="number" id="cuotas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número de cuotas" wire:model.live="cuotas" wire:keydown="calculafectadas()">
                         @error('cuotas')
                             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
@@ -77,15 +119,16 @@
 
 
                     @if ($cuotas>0)
-                        <div class="mb-6">
-                            <label for="valor_cuota" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor cuota</label>
-                            <input type="number" step="any" id="valor_cuota" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor de la cuota" wire:model.live="valor_cuota">
-                            @error('valor_cuota')
-                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                                </div>
-                            @enderror
-                        </div>
+                        @if ($is_aplazadeta && $cuotas>0 && $cuotas<=12)
+                            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                                <span class="font-bold">Total: $ {{number_format($total, 0, ',', '.')}}</span>, se distribuye a <span class="font-bold">{{$cuotas}}</span> cuotas de aplazamiento por: <span class="font-bold">$ {{number_format($valor_inicial, 0, ',', '.')}}</span> cada una. Generando un saldo por aplazamiento de: <span class="font-bold">$ {{number_format($saldo_aplazamiento, 0, ',', '.')}} </span>, que se distribuye en <span class="font-bold">{{$cuotadiferidas}}</span> cuotas de: <span class="font-bold">$ {{number_format($valor_cuota, 0, ',', '.')}} </span>
+                                @if ($cuotasaldo>0)
+                                    , y una cuota final de: <span class="font-bold">$ {{number_format($cuotasaldo, 0, ',', '.')}} </span>
+                                @else
+                                    .
+                                @endif
+                            </div>
+                        @endif
 
                         <div class="mb-6">
                             <label for="dia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Día de pago:</label>
@@ -101,108 +144,71 @@
                                 </div>
                             @enderror
                         </div>
+
+                        <div class="mb-6">
+                            <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha pago: <span class=" text-xs text-red-600">(Pago primer cuota de Aplazamiento)</span></label>
+                            <input type="date" id="fecha" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fecha" required>
+                            @error('fecha')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+
                     @endif
-
                 @endif
 
-            @endif
-
-            @if ($is_aplaza)
-                <div class="mb-6">
-                    <label for="valor_inicial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor cuota aplazamiento</label>
-                    <input type="number" readonly id="valor_inicial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Defina el valor" wire:model.live="valor_inicial" wire:keydown="calcuCuota()">
-                    @error('valor_inicial')
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="mb-6">
-                    <label for="cuotas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Meses (cuotas de aplazamiento)</label>
-                    <input type="number" id="cuotas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número de cuotas" wire:model.live="cuotas" wire:keydown="calculafectadas()">
-                    @error('cuotas')
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                        </div>
-                    @enderror
-                </div>
-
-
-                @if ($cuotas>0)
+                @if ($is_retiro)
                     <div class="mb-6">
-                        <label for="valor_cuota" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor cuota</label>
-                        <input type="number" step="any" id="valor_cuota" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor de la cuota" wire:model.live="valor_cuota">
-                        @error('valor_cuota')
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-6">
-                        <label for="dia" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Día de pago:</label>
-                        <select wire:model.live="dia" id="contado" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                            <option >Elija ...</option>
-                            @foreach ($elegible as $item)
-                                <option value={{$item}}>{{$item}}</option>
-                            @endforeach
-                        </select>
-                        @error('dia')
+                        <label for="valor_inicial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor cuota de retiro</label>
+                        <input type="number" id="valor_inicial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Defina el valor" wire:model.live="valor_inicial" wire:keydown="calcuCuota()">
+                        @error('valor_inicial')
                             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                             </div>
                         @enderror
                     </div>
                 @endif
-            @endif
 
-            @if ($is_retiro)
+                @if (!$is_aplaza)
+                    <div class="mb-6">
+                        <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha pago: <span class=" text-xs text-red-600">(Pago primer cuota de Aplazamiento)</span></label>
+                        <input type="date" id="fecha" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fecha" required>
+                        @error('fecha')
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                            </div>
+                        @enderror
+                    </div>
+                @endif
                 <div class="mb-6">
-                    <label for="valor_inicial" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Valor cuota de retiro</label>
-                    <input type="number" id="valor_inicial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Defina el valor" wire:model.live="valor_inicial" wire:keydown="calcuCuota()">
-                    @error('valor_inicial')
+                    <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Descripción</label>
+                    <input type="text" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Descripción del acuerdo" wire:model.live="descripcion">
+                    @error('descripcion')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
                         </div>
                     @enderror
                 </div>
+
+
+                @if ($descripcion && $fecha && $tipoconvenio)
+                    <button
+                        class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
+                        wire:click="crea"
+                    >
+                        Nuevo Convenio
+                    </button>
+                @endif
+                <a href="" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
+                    <i class="fa-solid fa-backward"></i> Volver
+                </a>
+
             @endif
-
-            <div class="mb-6">
-                <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha pago: <span class=" text-xs text-red-600">(Pago inicial o valor total o Cuota de Retiro)</span></label>
-                <input type="date" id="fecha" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fecha" required>
-                @error('fecha')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
-            </div>
-            <div class="mb-6">
-                <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Descripción</label>
-                <input type="text" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Descripción del acuerdo" wire:model.live="descripcion">
-                @error('descripcion')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
-            </div>
+        </div>
+    @endif
 
 
-            @if ($descripcion && $fecha && $tipoconvenio)
-                <button
-                    class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-400"
-                    wire:click="crea"
-                >
-                    Nuevo Convenio
-                </button>
-            @endif
-            <a href="" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                <i class="fa-solid fa-backward"></i> Volver
-            </a>
-
-        @endif
-    </div>
     @if ($responsable_id>0)
         @if ($deudas->count()>0)
             <div class="relative overflow-x-auto">

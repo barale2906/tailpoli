@@ -123,7 +123,7 @@
                                     </a>
                                 </span>
 
-                                @if ($matricula->status_est!==11 && $matricula->status_est!==4)
+                                @if ($matricula->status)
                                     @can('ac_matriculaAnular')
                                         <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
                                             <a href="#" wire:click.prevent="show({{$matricula}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
