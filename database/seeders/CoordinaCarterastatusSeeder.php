@@ -28,7 +28,7 @@ class CoordinaCarterastatusSeeder extends Seeder
                         Log::info('Cartera: ' . intval($data[0]) . ' Coordinando status.');
 
                         Cartera::where('id', intval($data[0]))->update([
-                            'observaciones'=>$data[1],
+                            //'observaciones'=>$data[1],
                             'status'=>$data[2],
                             'estado_cartera_id'=>$data[2],
                         ]);
