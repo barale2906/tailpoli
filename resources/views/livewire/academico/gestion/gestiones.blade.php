@@ -194,51 +194,55 @@
                     @foreach ($controles as $controle)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-
-                                <div class="inline-flex rounded-md shadow-sm" role="group">
-                                    <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                        <a href="" wire:click.prevent="show({{$controle->matricula_id}},{{5}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                            <i class="fa-solid fa-book"></i>
-                                        </a>
-                                    </button>
-                                    <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-orange-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                        @can('ac_gestionCrear')
-                                            <a href="" wire:click.prevent="show({{$controle->estudiante_id}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
-                                                <i class="fa-solid fa-marker"></i>
+                                @if ($controle->matricula->status)
+                                    <div class="inline-flex rounded-md shadow-sm" role="group">
+                                        <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                            <a href="" wire:click.prevent="show({{$controle->matricula_id}},{{5}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                                <i class="fa-solid fa-book"></i>
                                             </a>
-                                        @endcan
-                                    </button>
+                                        </button>
+                                        <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-orange-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                            @can('ac_gestionCrear')
+                                                <a href="" wire:click.prevent="show({{$controle->estudiante_id}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                                    <i class="fa-solid fa-marker"></i>
+                                                </a>
+                                            @endcan
+                                        </button>
 
 
-                                    @if ($controle->estudiante->transUser)
-                                        @can('fi_transaccionesCrear')
-                                            @php
-                                                $conteo=0;
-                                                foreach ($controle->estudiante->transUser as $value) {
-                                                    if($value->status>1 && $value->status<4){
-                                                        $conteo=$conteo+1;
+                                        @if ($controle->estudiante->transUser)
+                                            @can('fi_transaccionesCrear')
+                                                @php
+                                                    $conteo=0;
+                                                    foreach ($controle->estudiante->transUser as $value) {
+                                                        if($value->status>1 && $value->status<4){
+                                                            $conteo=$conteo+1;
+                                                        }
                                                     }
-                                                }
-                                            @endphp
-                                            <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-red-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                @if ($conteo>0)
-                                                    <a href="" wire:click.prevent="show({{$controle->estudiante_id}},{{4}})" class="inline-flex items-center font-medium text-red-600 dark:text-cyan-500 hover:underline">
-                                                        <i class="fa-solid fa-triangle-exclamation"></i>
-                                                    </a>
-                                                @endif
-                                            </button>
-                                        @endcan
+                                                @endphp
+                                                <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-red-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                                    @if ($conteo>0)
+                                                        <a href="" wire:click.prevent="show({{$controle->estudiante_id}},{{4}})" class="inline-flex items-center font-medium text-red-600 dark:text-cyan-500 hover:underline">
+                                                            <i class="fa-solid fa-triangle-exclamation"></i>
+                                                        </a>
+                                                    @endif
+                                                </button>
+                                            @endcan
 
-                                    @endif
+                                        @endif
 
-                                    <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-cyan-100 border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                        @can('fi_transaccionesCrear')
-                                            <a href="#" wire:click.prevent="show({{$controle->estudiante->id}},{{3}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
-                                                <i class="fa-solid fa-camera"></i>
-                                            </a>
-                                        @endcan
-                                    </button>
-                                </div>
+                                        <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-cyan-100 border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                            @can('fi_transaccionesCrear')
+                                                <a href="#" wire:click.prevent="show({{$controle->estudiante->id}},{{3}})" class="inline-flex items-center font-medium text-cyan-600 dark:text-cyan-500 hover:underline">
+                                                    <i class="fa-solid fa-camera"></i>
+                                                </a>
+                                            @endcan
+                                        </button>
+                                    </div>
+                                @else
+                                    Anulada
+                                @endif
+
 
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
