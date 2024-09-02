@@ -161,7 +161,7 @@ class Ciclos extends Component
 
             $this->filtroinicia=$crea;
         }else{
-            $this->reset('filtroInides','filtroInihas');
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
     }
 

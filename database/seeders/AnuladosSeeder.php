@@ -65,6 +65,7 @@ class AnuladosSeeder extends Seeder
                             Matricula::where('id', intval($data[0]))
                                         ->update([
                                             'status_est'    =>11,
+                                            'status'        =>false,
                                             'anula_user'    =>strtolower($data[1]),
                                             'anula'         =>strtolower($data[2])
                                         ]);
