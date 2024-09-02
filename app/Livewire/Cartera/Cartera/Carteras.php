@@ -55,7 +55,7 @@ class Carteras extends Component
             array_push($crea, $this->filtroVenhas);
             $this->filtroven=$crea;
         }else{
-            $this->reset('filtroVendes','filtroVenhas');
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
     }
 
