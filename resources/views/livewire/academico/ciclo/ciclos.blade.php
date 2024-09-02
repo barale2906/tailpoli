@@ -128,7 +128,8 @@
                                             <i class="fa-solid fa-recycle mr-1 text-black"></i>
                                             <span class=" text-sm text-green-100">{{$ciclo->id}}</span>
                                         </a>
-
+                                    @else
+                                        {{$ciclo->id}}
                                     @endif
                                 @endcan
                             </th>
