@@ -282,7 +282,7 @@ class Matriculas extends Component
             array_push($crea, $this->filtroCreahas);
             $this->filtrocrea=$crea;
         }else{
-            $this->reset('filtroCreades','filtroCreahas');
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
     }
 
@@ -293,7 +293,7 @@ class Matriculas extends Component
             array_push($crea, $this->filtroInihas);
             $this->filtroinicia=$crea;
         }else{
-            $this->reset('filtroInides','filtroInihas');
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
     }
 

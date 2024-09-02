@@ -105,7 +105,7 @@ class CierreCajas extends Component
             array_push($crea, $this->filtroCreahas);
             $this->filtrocrea=$crea;
         }else{
-            $this->reset('filtroCreades','filtroCreahas');
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
     }
 
