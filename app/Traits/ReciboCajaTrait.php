@@ -161,6 +161,8 @@ trait ReciboCajaTrait
             array_push($crea, $this->filtroCreades);
             array_push($crea, $this->filtroCreahas);
             $this->filtrocrea=$crea;
+        }else{
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
     }
 
@@ -170,6 +172,8 @@ trait ReciboCajaTrait
             array_push($tra, $this->filtroTransdes);
             array_push($tra, $this->filtroTranshas);
             $this->filtrotrans=$tra;
+        }else{
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
     }
 
