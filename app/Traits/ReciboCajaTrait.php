@@ -161,8 +161,6 @@ trait ReciboCajaTrait
             array_push($crea, $this->filtroCreades);
             array_push($crea, $this->filtroCreahas);
             $this->filtrocrea=$crea;
-        }else{
-            $this->reset('filtroCreades','filtroCreahas');
         }
     }
 
@@ -172,8 +170,6 @@ trait ReciboCajaTrait
             array_push($tra, $this->filtroTransdes);
             array_push($tra, $this->filtroTranshas);
             $this->filtrotrans=$tra;
-        }else{
-            $this->reset('filtroTransdes','filtroTranshas');
         }
     }
 
