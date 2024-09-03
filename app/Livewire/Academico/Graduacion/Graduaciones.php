@@ -58,8 +58,8 @@ class Graduaciones extends Component
     }
 
     public function obtenerids(){
-        $sedes=Control::whereNotIn('status_est',[2,4,9,11])
-                        ->select('sede_id')
+        $sedes=Control:://whereNotIn('status_est',[2,4,9,11])
+                        select('sede_id')
                         ->groupBy('sede_id')
                         ->get();
 
@@ -217,7 +217,7 @@ class Graduaciones extends Component
     }
 
     private function singrados(){
-        return Control::whereNotIn('status_est',[2,11])
+        return Control::whereNotIn('status_est',[11])
                         ->buscar($this->buscamin)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)

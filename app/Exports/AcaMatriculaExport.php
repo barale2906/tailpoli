@@ -29,10 +29,11 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
     private $estado;
     private $crea;
     private $inicia;
+    private $estest;
     private $fileName = "Matriculas.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$sede,$sedecurso,$curso,$matriculo,$comercial,$estado,$crea,$inicia)
+    public function __construct($buscamin,$sede,$sedecurso,$curso,$matriculo,$comercial,$estado,$crea,$inicia,$estest)
     {
         $this->buscamin=$buscamin;
         $this->sede=$sede;
@@ -43,7 +44,7 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
         $this->estado=$estado;
         $this->crea=$crea;
         $this->inicia=$inicia;
-
+        $this->estest=$estest;
     }
 
     /**
@@ -60,6 +61,7 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
                         ->status($this->estado)
                         ->crea($this->crea)
                         ->inicia($this->inicia)
+                        ->statusest($this->estest)
                         ->orderBy('fecha_inicia', 'ASC')
                         ->get();
     }
@@ -84,7 +86,8 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             'valor',
             'Matriculo',
             'Comercial',
-            'Estado'
+            'Estado',
+            'Estado Estudiante',
         ];
     }
 
@@ -104,6 +107,52 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             $nombre="";
         }
 
+        switch ($matricula->status_est) {
+            case 1:
+                $estudiante="Activo";
+                break;
+
+            case 2:
+                $estudiante="InActivo";
+                break;
+
+            case 3:
+                $estudiante="Desertado";
+                break;
+
+            case 4:
+                $estudiante="Egresado";
+                break;
+
+            case 5:
+                $estudiante="Aplazado";
+                break;
+
+            case 6:
+                $estudiante="Retirado";
+                break;
+
+            case 7:
+                $estudiante="Reintegro";
+                break;
+
+            case 8:
+                $estudiante="Acuerdo Pago";
+                break;
+
+            case 9:
+                $estudiante="Por Iniciar";
+                break;
+
+            case 10:
+                $estudiante="Retomen Clases";
+                break;
+
+            case 11:
+                $estudiante="Anulado";
+                break;
+        }
+
         return [
             $matricula->created_at,
             $matricula->fecha_inicia,
@@ -118,7 +167,8 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             $matricula->valor,
             $matricula->creador->name,
             $matricula->comercial->name,
-            $estado
+            $estado,
+            $estudiante
         ];
     }
 

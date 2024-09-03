@@ -66,6 +66,7 @@ trait FiltroTrait
                 $this->is_sede=true;
                 $this->is_sedecurso=true;
                 $this->is_curso=true;
+                $this->is_status_est=true;
                 break;
 
             case 2:

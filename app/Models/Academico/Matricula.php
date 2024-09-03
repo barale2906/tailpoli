@@ -163,4 +163,10 @@ class Matricula extends Model
         });
     }
 
+    public function scopeStatusest($query, $statusest){
+        $query->when($statusest ?? null, function($query, $statusest){
+            $query->whereIn('status_est', $statusest);
+        });
+    }
+
 }

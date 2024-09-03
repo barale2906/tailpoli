@@ -7,6 +7,7 @@ use App\Models\Academico\Curso;
 use App\Models\Academico\Matricula;
 use App\Models\User;
 use App\Traits\FiltroTrait;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -54,6 +55,7 @@ class Matriculas extends Component
     public $filtroestatumatri;
     public $estadoMatricula;
     public $filtroestatualum;
+    public $estado_estudiante=[];
     public $filtrocrea=[];
     public $filtroinicia=[];
     public $filtroSede;
@@ -244,7 +246,8 @@ class Matriculas extends Component
                                         $this->filtrocom,
                                         $this->filtroestatumatri,
                                         $this->filtrocrea,
-                                        $this->filtroinicia
+                                        $this->filtroinicia,
+                                        $this->estado_estudiante,
                                     );
     }
 
@@ -254,6 +257,8 @@ class Matriculas extends Component
             $this->reportes=false;
         }
         $this->claseFiltro(1);
+
+        $this->estado_estudiante=[1,2,3,4,5,6,7,8,9,10,11];
 
         $creadores=Matricula::select('creador_id')
                                     ->groupBy('creador_id')
@@ -297,6 +302,10 @@ class Matriculas extends Component
         }
     }
 
+    public function updatedEstadoEstudiante(){
+
+    }
+
     private function matriculas()
     {
         return Matricula::buscar($this->buscamin)
@@ -306,6 +315,7 @@ class Matriculas extends Component
                             ->creador($this->filtromatri)
                             ->comercial($this->filtrocom)
                             ->status($this->filtroestatumatri)
+                            ->statusest($this->estado_estudiante)
                             ->crea($this->filtrocrea)
                             ->inicia($this->filtroinicia)
                             ->orderBy($this->ordena, $this->ordenado)
@@ -338,6 +348,13 @@ class Matriculas extends Component
                     ->get();
     }
 
+    private function status_estu(){
+        return DB::table('estados')
+                    ->orderBy('name')
+                    ->get();
+    }
+
+
     public function render()
     {
         return view('livewire.academico.matricula.matriculas', [
@@ -346,6 +363,7 @@ class Matriculas extends Component
             'usuComercial'      => $this->usuComercial(),
             'sedes'             => $this->sedes(),
             'cursos'            => $this->cursos(),
+            'status_estu'       =>$this->status_estu(),
         ]);
     }
 }
