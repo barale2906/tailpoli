@@ -161,11 +161,15 @@
                                     @endcan
                                     @can('ac_gradu_aprobar')
                                         @if ($item->status_est!==4)
-                                            <button type="button" class="inline-flex rounded-e-lg items-center p-2 text-sm font-medium text-gray-900 bg-green-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:ring-2 focus:ring-green-700 focus:text-green-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-500 dark:focus:text-white">
-                                                <a href="" wire:click.prevent="graduafun({{$item->id}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
-                                                    <i class="fa-solid fa-graduation-cap"></i>
-                                                </a>
-                                            </button>
+                                            @if ($item->status_est!==6)
+                                                @if ($item->status_est!==11 && $item->status_est!==2)
+                                                    <button type="button" class="inline-flex rounded-e-lg items-center p-2 text-sm font-medium text-gray-900 bg-green-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:ring-2 focus:ring-green-700 focus:text-green-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-500 dark:focus:text-white">
+                                                        <a href="" wire:click.prevent="graduafun({{$item->id}})" class="inline-flex items-center font-medium text-green-600 dark:text-green-500 hover:underline">
+                                                            <i class="fa-solid fa-graduation-cap"></i>
+                                                        </a>
+                                                    </button>
+                                                @endif
+                                            @endif
                                         @endif
 
                                         @if ($is_gradua && $crtid===$item->id)
