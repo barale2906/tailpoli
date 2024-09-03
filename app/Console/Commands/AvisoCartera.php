@@ -40,6 +40,8 @@ class AvisoCartera extends Command
                         ->select('id')
                         ->get();
 
+        Log::info(now().': AvisoCartera.');
+
         if($proximos->count()>0){
             foreach ($proximos as $value) {
 

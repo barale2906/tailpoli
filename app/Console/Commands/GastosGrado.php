@@ -7,6 +7,7 @@ use App\Models\Financiera\ReciboPago;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 use function Laravel\Prompts\table;
 
@@ -37,6 +38,8 @@ class GastosGrado extends Command
                         ->whereIn('concepto_pago_id', [15,17])
                         ->where('created_at', '>=', $hoy )
                         ->get();
+
+        Log::info(now().': GastosGRado.');
 
         foreach ($recibos as $value) {
             $encabezado=ReciboPago::where('id', $value->recibo_pago_id)

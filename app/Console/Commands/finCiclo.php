@@ -32,6 +32,7 @@ class finCiclo extends Command
         $ciclos=Ciclo::where('finaliza', Carbon::today()->subDay())
                         ->get();
 
+        Log::info(now().': finCiclo.');
         foreach ($ciclos as $value) {
             try {
                 $value->update([

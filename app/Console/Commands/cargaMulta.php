@@ -65,7 +65,7 @@ class cargaMulta extends Command
                         'status'        =>4
                     ]);
                 }); */
-
+        Log::info(now().': Carga Multa.');
         $vencida=Cartera::where('fecha_pago', Carbon::today()->subDay())
                         ->where('estado_cartera_id', '<',5)
                         ->whereNotIn('status_est',[2,6,11])

@@ -41,7 +41,9 @@ class CobranzaCarga extends Command
                             ->whereBetween('concepto_pago_id',[1,4])
                             ->get();
 
-        foreach ($carteras as $value) {
+            Log::info(now().': CobranzaCarga.');
+
+            foreach ($carteras as $value) {
             try {
                 Cobranza::create([
                     'cartera_id'=>$value->id,

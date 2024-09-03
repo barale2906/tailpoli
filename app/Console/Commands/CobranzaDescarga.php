@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\Cobranza;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class CobranzaDescarga extends Command
 {
@@ -28,6 +29,8 @@ class CobranzaDescarga extends Command
     public function handle()
     {
         $registros=Cobranza::where('status',3)->get();
+
+        Log::info(now().': CobranzaDescarga.');
 
         foreach ($registros as $value) {
 

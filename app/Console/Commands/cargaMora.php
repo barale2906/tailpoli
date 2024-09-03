@@ -54,6 +54,8 @@ class cargaMora extends Command
                         ->where('saldo', '>', 0)
                         ->get();
 
+        Log::info(now().': CargaMora.');
+
         foreach ($vencida as $value) {
             try {
 

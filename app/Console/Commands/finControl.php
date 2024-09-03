@@ -52,6 +52,7 @@ class finControl extends Command
                             ->get();
 
         $cont=Carbon::today()->subMonths(2);
+        Log::info(now().': finControl.');
 
         foreach ($controles as $value) {
             try {
