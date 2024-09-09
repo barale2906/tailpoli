@@ -66,15 +66,15 @@ class Cartera extends Model
                     ->orwherehas('responsable', function($query) use($item){
                         $query->where('users.name', 'like', "%".$item."%")
                                 ->orwhere('users.documento', 'like', "%".$item."%");
-                    })
-
+                    });
+/*
                     ->orwherehas('concepto_pago', function($query) use($item){
                         $query->where('concepto_pagos.name', 'like', "%".$item."%");
-                    })
+                    });
 
                     ->orwherehas('estadoCartera', function($query) use($item){
                         $query->where('estado_carteras.name', 'like', "%".$item."%");
-                    });
+                    }); */
         });
     }
     public function scopeVencido($query, $lapso){

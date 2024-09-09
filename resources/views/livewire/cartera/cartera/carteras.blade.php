@@ -81,10 +81,10 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$cartera->responsable->name}} - {{$cartera->matricula->curso->name}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-right dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  text-right dark:text-white capitalize">
                                 $ {{number_format($cartera->saldo, 0, ',', '.')}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-right dark:text-white capitalize">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  text-right dark:text-white capitalize">
                                 $ {{number_format($cartera->original, 0, ',', '.')}}
                             </th>
 

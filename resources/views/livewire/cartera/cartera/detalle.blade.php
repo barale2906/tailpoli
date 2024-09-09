@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <nav class="dark:bg-gray-700 rounded-lg">
+    {{-- <nav class="dark:bg-gray-700 rounded-lg">
         <div class="max-w-screen-xl mx-auto">
             <div class="flex items-center">
                 <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm capitalize">
@@ -108,79 +108,85 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> --}}
     @if ($carterastate)
-        <div class="{{$carterastate ? 'bg-green-100': ''}} p-2">
-            <h5 class="text-xl uppercase text-center ">Registros de Cartera</h5>
-            <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3" >
-                            Fecha Programada
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Fecha Registro Pago
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Valor
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Saldo
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Días de Retraso
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Concepto
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Observaciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($carteras as $cartera)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$cartera->fecha_pago}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$cartera->fecha_real}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                $ {{number_format($cartera->valor, 0, ',', '.')}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                $ {{number_format($cartera->saldo, 0, ',', '.')}}
-                            </th>
-                            <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
-                                @if ($cartera->estado_cartera_id<5)
-                                    @if ($cartera->fecha_pago < $fecha)
-                                        @php
-                                            $fecha1 = date_create($cartera->fecha_pago);
-                                            $dias = date_diff($fecha1, $fecha)->format('%R%a');
-                                        @endphp
-                                        {{$dias}} días
-                                    @endif
-                                @else
-                                    Fecha pago: {{$cartera->fecha_real}}
-                                @endif
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$cartera->concepto}} - {{$cartera->matricula->curso->name}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$cartera->observaciones}}
-                            </th>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+
     @endif
 
     @if ($recibostate)
-        <div class="{{$recibostate ? 'bg-orange-100': ''}} p-2">
+
+    @endif
+
+    <div class="{{$carterastate ? 'bg-green-100': ''}} p-2 rounded-2xl">
+        <h5 class="text-xl uppercase text-center ">Registros de Cartera</h5>
+        <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3" >
+                        Fecha Programada
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Fecha Registro Pago
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Valor
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Saldo
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Días de Retraso
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Concepto
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Observaciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($carteras as $cartera)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{$cartera->fecha_pago}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                            {{$cartera->fecha_real}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            $ {{number_format($cartera->valor, 0, ',', '.')}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            $ {{number_format($cartera->saldo, 0, ',', '.')}}
+                        </th>
+                        <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
+                            @if ($cartera->estado_cartera_id<5)
+                                @if ($cartera->fecha_pago < $fecha)
+                                    @php
+                                        $fecha1 = date_create($cartera->fecha_pago);
+                                        $dias = date_diff($fecha1, $fecha)->format('%R%a');
+                                    @endphp
+                                    {{$dias}} días
+                                @endif
+                            @else
+                                Fecha pago: {{$cartera->fecha_real}}
+                            @endif
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                            {{$cartera->concepto}} - {{$cartera->matricula->curso->name}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                            {{$cartera->observaciones}}
+                        </th>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    @if ($recibos)
+        <div class="bg-orange-100 p-2 rounded-2xl mt-6">
             <h5 class="text-xl uppercase text-center ">Recibos de pago</h5>
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -217,7 +223,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 
                                 <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                                    <a href="/impresiones/imprecibo?rut=0&r={{$recibo->id}}" class="inline-flex items-center font-medium text-blue-600 dark:texgreen-500 hover:underline">
+                                    <a href="/impresiones/imprecibo?rut=0&r={{$recibo->id}}" target="_blank" class="inline-flex items-center font-medium text-blue-600 dark:texgreen-500 hover:underline">
                                         <i class="fa-solid fa-print"></i>
                                     </a>
                                 </span>
@@ -249,6 +255,13 @@
                 </tbody>
             </table>
         </div>
+    @else
+        <h1>
+            No tiene recibos
+        </h1>
     @endif
+
+{{--     <div class="{{$recibostate ? 'bg-orange-100': ''}} p-2"> --}}
+
 
 </div>

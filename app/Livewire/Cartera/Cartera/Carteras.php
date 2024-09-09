@@ -18,7 +18,7 @@ class Carteras extends Component
 
     public $ordena='responsable_id';
     public $ordenado='DESC';
-    public $pages = 10;
+    public $pages = 3;
 
     public $alumno;
 
@@ -74,6 +74,13 @@ class Carteras extends Component
     //Cargar variable
     public function buscaText(){
         $this->resetPage();
+        $this->reset(
+                'filtroven',
+                'filtroCiudad',
+                'filtroSede',
+                'estado_estudiante',
+                'estado_cartera',
+        );
         $this->buscamin=strtolower($this->buscar);
     }
 
@@ -150,22 +157,31 @@ class Carteras extends Component
 
     private function carteras(){
 
-        return Cartera::selectRaw('sum(saldo) as saldo, matricula_id, responsable_id')
-                        //->selectRaw('SUM(CASE WHEN estado_cartera_id < 5 THEN valor WHEN estado_cartera_id = 6 THEN valor ELSE 0 END) as original')
-                        ->selectRaw('sum(valor) as original')
-                        ->groupBy('matricula_id','responsable_id')
+        //DB::enableQueryLog();
+
+        $consulta= Cartera::with(['responsable','estadoCartera','concepto_pago'])
                         ->buscar($this->buscamin)
                         ->vencido($this->filtroven)
                         ->sede($this->filtroSede)
                         ->ciudad($this->filtroCiudad)
                         ->status($this->estado_estudiante)
                         ->statcar($this->estado_cartera)
+                        ->selectRaw('sum(saldo) as saldo, matricula_id, responsable_id')
+                        //->selectRaw('SUM(CASE WHEN estado_cartera_id < 5 THEN valor WHEN estado_cartera_id = 6 THEN valor ELSE 0 END) as original')
+                        ->selectRaw('sum(valor) as original')
+                        ->groupBy('matricula_id','responsable_id')
                         ->orderBy($this->ordena, $this->ordenado)
-                        ->paginate($this->pages);
+                        ->Paginate($this->pages);
+
+        //dd(DB::getQueryLog());
+
+        return $consulta;
     }
 
     private function total(){
-        return Cartera::buscar($this->buscamin)
+
+        return Cartera::with(['responsable','estadoCartera','concepto_pago'])
+                        ->buscar($this->buscamin)
                         ->vencido($this->filtroven)
                         ->sede($this->filtroSede)
                         ->ciudad($this->filtroCiudad)
