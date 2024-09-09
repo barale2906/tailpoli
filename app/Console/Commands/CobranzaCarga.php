@@ -41,7 +41,7 @@ class CobranzaCarga extends Command
                             ->whereBetween('concepto_pago_id',[1,4])
                             ->get();
 
-            Log::info(now().': CobranzaCarga.');
+            Log::info(now().': Ejecuta CobranzaCarga.');
 
             foreach ($carteras as $value) {
             try {

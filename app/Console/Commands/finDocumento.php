@@ -51,7 +51,7 @@ class finDocumento extends Command
                                 ->get();
 
 
-        Log::info(now().': finDocumento.');
+        Log::info(now().': Ejecuta finDocumento.');
         foreach ($documentos as $value) {
             try {
 

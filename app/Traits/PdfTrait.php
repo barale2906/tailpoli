@@ -82,7 +82,7 @@ trait PdfTrait
 
             $this->cargasoporte($this->id,$rutapdf,$this->accion);
             $this->observa($cobro->alumno_id);
-            Log::info('funcion generacobropdf Éxito N°: ' . $this->id);
+            //Log::info('funcion generacobropdf Éxito N°: ' . $this->id);
 
             if($this->accion>1){
                 $cobro->update([
@@ -115,7 +115,7 @@ trait PdfTrait
             ]);
 
             $this->cargasoporte($this->id,$rutapdf,5);
-            Log::info('creaPdf reporte embargo cobro N°: ' . $cobro->id);
+            //Log::info('creaPdf reporte embargo cobro N°: ' . $cobro->id);
 
         } catch(Exception $exception){
             Log::info('creaPdf reporte embargo cobro N°: ' . $cobro->id .' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());

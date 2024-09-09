@@ -39,7 +39,7 @@ class CastigaCartera extends Command
 
         $mensaje=now()." AUTOMATICO se castiga la cartera por prescripción de la deuda. ----- ";
         if($prescritos){
-            Log::info(now().': Carga Multa.'.' consulta: '.$prescritos->count().' registros: '.$prescritos);
+            Log::info(now().': Ejecuta Castiga Cartera. Consulta: '.$prescritos->count().' registros: '.$prescritos);
 
             foreach ($prescritos as $value) {
 

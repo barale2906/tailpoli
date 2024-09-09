@@ -39,7 +39,7 @@ class desercion extends Command
         $inic=Carbon::today()->subMonths(26);
         $hoy=Carbon::today();
 
-        Log::info(now().': Deserción.');
+        Log::info(now().': Ejecuta Deserción.');
 ;
         $controles=Control::where('status', true)
                             ->whereNotIn('status_est',[2,6,11])

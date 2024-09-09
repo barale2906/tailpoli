@@ -37,7 +37,7 @@ class CobranzaGestion extends Command
         $cobranza=config('instituto.dias_reporte');
         $diferencia=$cobranza-$dias;
 
-        Log::info('Cobranza gestion ejecuta: ' . now());
+        Log::info('Ejecuta Cobranza gestion ejecuta: ' . now());
 
         $cobranzas=Cobranza::where('status',3)->get();
 

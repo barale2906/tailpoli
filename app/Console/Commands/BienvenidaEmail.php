@@ -40,7 +40,7 @@ class BienvenidaEmail extends Command
                             ->where('status', true)
                             ->select('id')
                             ->get();
-        Log::info(now().': Correo Bienvenida.');
+        Log::info(now().': Ejecuta Correo Bienvenida.');
 
         if($nuevos->count()>0){
             foreach ($nuevos as $value) {

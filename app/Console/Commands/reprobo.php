@@ -78,7 +78,7 @@ class reprobo extends Command
                     }); */
 
         $ciclos=Ciclogrupo::where('fecha_fin', Carbon::today()->subMonths(2))->get();
-        Log::info(now().': Reprobo.');
+        Log::info(now().': Ejecuta Reprobo.');
 
         foreach ($ciclos as $item) {
             try {

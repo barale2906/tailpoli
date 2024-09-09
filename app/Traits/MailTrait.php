@@ -79,7 +79,7 @@ trait MailTrait
 
         $destinatario=$cartera->responsable->email;
         Mail::to($destinatario)->send(new RecartMailable($id));
-        Log::info('AvisoCartera: envio correo a: ' . $destinatario);
+        //Log::info('AvisoCartera: envio correo a: ' . $destinatario);
     }
 
     public function cobranza($id){
