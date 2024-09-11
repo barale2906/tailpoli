@@ -103,7 +103,7 @@ class Graduaciones extends Component
         $this->pages=$valor;
     }
 
-    public function updatedFiltroInigra(){
+    public function updatedFiltroFingra(){
         if($this->filtroInigra<=$this->filtroFingra){
             $crea=array();
             array_push($crea, $this->filtroInigra);
