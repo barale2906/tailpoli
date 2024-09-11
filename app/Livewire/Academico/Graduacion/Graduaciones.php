@@ -276,7 +276,7 @@ class Graduaciones extends Component
 
     private function status_estu(){
         return DB::table('estados')
-                    ->whereNotIn('id',[2,11])
+                    //->whereNotIn('id',[2,11])
                     ->orderBy('name')
                     ->get();
 
