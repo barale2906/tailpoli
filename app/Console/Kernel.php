@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('Cobranza:Carga')->timezone('America/Bogota')->at('03:40'); //->at('03:40');  //everyMinute();
         $schedule->command('Cartera:Castiga')->timezone('America/Bogota')->at('04:00'); //->at('04:00');  //everyMinute();
         $schedule->command('Cobranza:Descarga')->timezone('America/Bogota')->at('04:40'); //->at('04:10');  //everyMinute();
+        $schedule->command('Cartera:DescargaMora')->timezone('America/Bogota')->at('05:40');  //->everyThreeMinutes();
         $schedule->command('Cobranza:Gestion')->timezone('America/Bogota')->at('10:45'); //->at('10:45');  //everyMinute();
 
     }
