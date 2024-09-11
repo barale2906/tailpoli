@@ -82,7 +82,7 @@ class Control extends Model
 
     public function scopeStatus($query, $status){
         $query->when($status ?? null, function($query, $status){
-            $query->where('status_est', $status);
+            $query->whereIn('status_est', $status);
         });
     }
 

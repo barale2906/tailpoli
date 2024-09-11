@@ -48,7 +48,7 @@ class Graduaciones extends Component
     public $filtrogrado=[];
     public $observaciones;
     public $fecha_grado;
-    public $estado_estudiante;
+    public $estado_estudiante=[];
 
     public $sedesids=[];
     public $cursosids=[];
@@ -123,6 +123,10 @@ class Graduaciones extends Component
         }else{
             $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
+    }
+
+    public function updatedEstadoEstudiante(){
+        $this->singrados();
     }
 
     public function muestrasitencia($id,$mus){
