@@ -48,7 +48,7 @@ class GastosGrado extends Command
 
             if($value->concepto_pago_id===15){
                 Control::where('estudiante_id', $encabezado->paga_id)
-                        ->whereNotIn('status_est',[2,4,11])
+                        //->whereNotIn('status_est',[2,4,11])
                         ->whereNull('ceremonia')
                         ->orderBy('id', 'ASC')
                         ->update([
@@ -57,7 +57,7 @@ class GastosGrado extends Command
             }
             if($value->concepto_pago_id===17){
                 Control::where('estudiante_id', $encabezado->paga_id)
-                        ->whereNotIn('status_est',[2,4,11])
+                        //->whereNotIn('status_est',[2,4,11])
                         ->whereNull('diploma')
                         ->orderBy('id', 'ASC')
                         ->update([
