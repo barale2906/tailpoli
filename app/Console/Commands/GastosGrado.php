@@ -36,7 +36,7 @@ class GastosGrado extends Command
         //Verificr pago diploma
         $recibos= DB::table('concepto_pago_recibo_pago')
                         ->whereIn('concepto_pago_id', [15,17])
-                        ->where('created_at', '>=', $hoy )
+                        //->where('created_at', '>=', $hoy )
                         ->get();
 
         Log::info(now().': Ejecuta GastosGrado.');
