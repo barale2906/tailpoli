@@ -88,7 +88,9 @@ class Control extends Model
 
     public function scopeGrado($query, $grado){
         $query->when($grado ?? null, function($query, $grado){
-            $query->where('fecha_grado', $grado);
+            $fecha1=Carbon::parse($grado[0]);
+            $fecha2=Carbon::parse($grado[1]);
+            $query->whereBetween('fecha_grado', [$fecha1 , $fecha2]);
         });
     }
 }

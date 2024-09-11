@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Graduacion;
 
+use App\Exports\GraduacionExport;
 use App\Models\Academico\Control;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Matricula;
@@ -42,7 +43,9 @@ class Graduaciones extends Component
     public $filtroInides;
     public $filtroInihas;
     public $filtroinicia=[];
-    public $filtrogrado;
+    public $filtroInigra;
+    public $filtroFingra;
+    public $filtrogrado=[];
     public $observaciones;
     public $fecha_grado;
     public $estado_estudiante;
@@ -100,6 +103,17 @@ class Graduaciones extends Component
         $this->pages=$valor;
     }
 
+    public function updatedFiltroInigra(){
+        if($this->filtroInigra<=$this->filtroFingra){
+            $crea=array();
+            array_push($crea, $this->filtroInigra);
+            array_push($crea, $this->filtroFingra);
+            $this->filtrogrado=$crea;
+        }else{
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
+        }
+    }
+
     public function updatedFiltroInihas(){
         if($this->filtroInides<=$this->filtroInihas){
             $crea=array();
@@ -107,7 +121,7 @@ class Graduaciones extends Component
             array_push($crea, $this->filtroInihas);
             $this->filtroinicia=$crea;
         }else{
-            $this->reset('filtroInides','filtroInihas');
+            $this->dispatch('alerta', name:'Fecha de inicio debe ser menor a fecha fin');
         }
     }
 
@@ -175,6 +189,17 @@ class Graduaciones extends Component
                 break;
 
         }
+    }
+
+    public function exportar(){
+        return new GraduacionExport(
+                                        $this->buscamin,
+                                        $this->filtroSede,
+                                        $this->filtrocurso,
+                                        $this->filtroinicia,
+                                        $this->filtrogrado,
+                                        $this->estado_estudiante,
+                                    );
     }
 
     public function graduafun($id){
