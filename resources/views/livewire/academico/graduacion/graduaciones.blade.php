@@ -55,7 +55,10 @@
                             @endif
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
-                            Estudiante -- Matricula -- Fecha matricula
+                            Estudiante -- Documento -- Telefono -- email
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
+                            Matricula -- Fecha matricula
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
                             Programación
@@ -222,7 +225,10 @@
                                 {{$item->fecha_grado}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-justify capitalize">
-                                {{$item->estudiante->name}} -- {{$item->estudiante->documento}} -- Matricula: {{$item->matricula_id}} -- <br>{{$item->matricula->created_at}}
+                                {{$item->estudiante->name}} -- {{$item->estudiante->documento}} -- {{$item->estudiante->email}} -- {{$item->estudiante->perfil->celular}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-justify capitalize">
+                                Matricula: {{$item->matricula_id}} -- <br>{{$item->matricula->created_at}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$item->ciclo->name}}

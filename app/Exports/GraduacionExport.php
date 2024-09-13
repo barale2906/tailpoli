@@ -78,6 +78,8 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
         return [
             'Estudiante',
             'Documento',
+            'correo electrónico',
+            'celular',
             'Matricula',
             'Fecha Matricula',
             'Fecha Inicio',
@@ -101,9 +103,17 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
             }
         }
 
+        $celular=0;
+
+        if($graduacion->estudiante->perfil){
+            $celular=$graduacion->estudiante->perfil->celular;
+        }
+
         return [
             $graduacion->estudiante->name,
             $graduacion->estudiante->documento,
+            $graduacion->estudiante->email,
+            $celular,
             $graduacion->matricula->id,
             $graduacion->matricula->created_at,
             $graduacion->inicia,
