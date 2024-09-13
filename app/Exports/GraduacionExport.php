@@ -133,11 +133,11 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
     public function columnFormats(): array
     {
         return [
-            'D' => 'dd/mm/yyyy',
-            'E' => 'dd/mm/yyyy',
             'F' => 'dd/mm/yyyy',
             'G' => 'dd/mm/yyyy',
             'H' => 'dd/mm/yyyy',
+            'j' => 'dd/mm/yyyy',
+            'k' => 'dd/mm/yyyy',
         ];
     }
 
