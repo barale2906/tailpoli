@@ -137,7 +137,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
             'G' => 'dd/mm/yyyy',
             'H' => 'dd/mm/yyyy',
             'j' => 'dd/mm/yyyy',
-            'k' => 'dd/mm/yyyy',
+            'K' => 'dd/mm/yyyy',
         ];
     }
 
