@@ -38,6 +38,7 @@ class Gestiones extends Component
     public $is_document=false;
     public $is_especiales=false;
     public $is_vergrupo=false;
+    public $is_activar=false;
     public $crtid;
 
     public $sedes=[];
@@ -126,7 +127,8 @@ class Gestiones extends Component
                         'is_transacciones',
                         'is_gestransaccion',
                         'is_document',
-                        'is_especiales'
+                        'is_especiales',
+                        'is_activar'
                     );
     }
 
@@ -187,6 +189,10 @@ class Gestiones extends Component
 
             case 5:
                 $this->is_document=!$this->is_document;
+                break;
+
+            case 6:
+                $this->is_activar=!$this->is_activar;
                 break;
 
         }

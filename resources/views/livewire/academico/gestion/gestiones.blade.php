@@ -208,7 +208,13 @@
                                                 </a>
                                             @endcan
                                         </button>
-
+                                        @if ($controle->status_est===2)
+                                            <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-red-100 border-t border-b border-red-200 hover:bg-red-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-red-700 focus:text-red-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-red-500 dark:focus:text-white">
+                                                <a href="" wire:click.prevent="show({{$controle->estudiante_id}},{{6}})" class="inline-flex items-center font-medium text-red-600 dark:text-red-500 hover:underline">
+                                                    <i class="fa-solid fa-circle-radiation"></i>
+                                                </a>
+                                            </button>
+                                        @endif
 
                                         @if ($controle->estudiante->transUser)
                                             @can('fi_transaccionesCrear')
@@ -220,13 +226,13 @@
                                                         }
                                                     }
                                                 @endphp
-                                                <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-red-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                    @if ($conteo>0)
+                                                @if ($conteo>0)
+                                                    <button type="button" class="inline-flex items-center p-2 text-sm font-medium text-gray-900 bg-red-100 border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                                         <a href="" wire:click.prevent="show({{$controle->estudiante_id}},{{4}})" class="inline-flex items-center font-medium text-red-600 dark:text-cyan-500 hover:underline">
                                                             <i class="fa-solid fa-triangle-exclamation"></i>
                                                         </a>
-                                                    @endif
-                                                </button>
+                                                    </button>
+                                                @endif
                                             @endcan
 
                                         @endif
@@ -402,6 +408,10 @@
 
     @if ($is_document)
         <livewire:academico.matricula.documentos :elegido="$elegido" />
+    @endif
+
+    @if ($is_activar)
+        <livewire:academico.gestion.activar :estud="$elegido" />
     @endif
 
     @if ($is_especiales)

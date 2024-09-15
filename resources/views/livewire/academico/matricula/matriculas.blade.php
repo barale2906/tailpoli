@@ -122,6 +122,13 @@
                                         <i class="fa-solid fa-book"></i>
                                     </a>
                                 </span>
+                                @if ($matricula->status_est===2)
+                                    <button type="button" class="inline-flex items-center px-2.5 py-0.5 rounded text-sm font-medium text-gray-900 bg-red-100 border-t border-b border-red-200 hover:bg-red-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-red-700 focus:text-red-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-red-500 dark:focus:text-white">
+                                        <a href="" wire:click.prevent="show({{$matricula->alumno_id}},{{5}})" class="inline-flex items-center font-medium text-red-600 dark:text-red-500 hover:underline">
+                                            <i class="fa-solid fa-circle-radiation"></i>
+                                        </a>
+                                    </button>
+                                @endif
 
                                 @if ($matricula->status)
                                     @can('ac_matriculaAnular')
@@ -259,6 +266,10 @@
 
     @if ($is_especiales)
         <livewire:academico.estudiante.caso-esp-matr />
+    @endif
+
+    @if ($is_activar)
+        <livewire:academico.gestion.activar :estud="$elegido" />
     @endif
 
     @push('js')

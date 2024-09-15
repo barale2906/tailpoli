@@ -31,6 +31,7 @@ class Matriculas extends Component
     public $is_document=false;
     public $is_especiales=false;
     public $is_vergrupo=false;
+    public $is_activar=false;
     public $crtid;
     public $reportes=true;
 
@@ -87,7 +88,8 @@ class Matriculas extends Component
             'filtroestatualum',
             'filtrocurso',
             'filtrosede',
-            'filtrosedecurso'
+            'filtrosedecurso',
+            'is_activar'
         );
         $this->resetPage();
         $this->matriculas();
@@ -125,7 +127,8 @@ class Matriculas extends Component
                         'is_change',
                         'is_grupos',
                         'is_document',
-                        'is_especiales'
+                        'is_especiales',
+                        'is_activar'
                     );
     }
     //Activar evento
@@ -182,6 +185,10 @@ class Matriculas extends Component
 
             case 4:
                 $this->is_document=!$this->is_document;
+                break;
+
+            case 5:
+                $this->is_activar=!$this->is_activar;
                 break;
         }
     }
