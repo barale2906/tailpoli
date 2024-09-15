@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('Gestion:LimpiApoyo')->timezone('America/Bogota')->at('12:10');  //->everyThreeMinutes();
         $schedule->command('Ciclo:vencimiento')->timezone('America/Bogota')->at('12:20');  //->everyThreeMinutes();
         $schedule->command('Control:vencimiento')->timezone('America/Bogota')->at('12:40');  //->everyThreeMinutes();
         $schedule->command('Documento:vigencia')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();

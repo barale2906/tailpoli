@@ -11,6 +11,7 @@ use App\Models\Configuracion\Documento;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConfiguracionPago;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use NumberFormatter;
 
@@ -60,14 +61,51 @@ trait RenderDocTrait
     }
 
     public function creahorarios(){
+
+        DB::table('apoyo_recibo')
+            ->where('id_creador', Auth::user()->id)
+            ->where('tipo','horario')
+            ->delete();
+
         $this->primerGrupo=Ciclogrupo::where('ciclo_id', $this->controlele->ciclo_id)->orderBy('fecha_inicio', 'ASC')->first();
 
         $horarios=Horario::where('grupo_id', $this->primerGrupo->grupo_id)
                                 ->orderBy('hora', 'ASC')
                                 ->get();
 
+        foreach ($horarios as $value) {
+            $reg=DB::table('apoyo_recibo')
+                    ->where('id_creador', Auth::user()->id)
+                    ->where('tipo','horario')
+                    ->where('concepto',$value->dia)
+                    ->first();
+
+            if($reg){
+                DB::table('apoyo_recibo')
+                    ->where('id_creador', Auth::user()->id)
+                    ->where('tipo','horario')
+                    ->where('concepto',$value->dia)
+                    ->update([
+                        'valor'=>$reg->valor+1,
+                    ]);
+            }else{
+                DB::table('apoyo_recibo')
+                    ->insert([
+                        'id_creador'    =>Auth::user()->id,
+                        'tipo'          =>'horario',
+                        'concepto'      =>$value->dia,
+                        'hora'          =>$value->hora,
+                        'valor'         =>1
+                    ]);
+            }
+        }
+
         if($horarios){
-            $this->horarios=$horarios;
+            //$this->horarios=$horarios;
+            $this->horarios=DB::table('apoyo_recibo')
+                                ->where('id_creador', Auth::user()->id)
+                                ->where('tipo','horario')
+                                ->get();
         }else{
             $this->horarios=0;
         }

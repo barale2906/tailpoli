@@ -79,138 +79,33 @@
                                             <table class=" mt-15 mb-15 border">
                                                 <thead class="font-sm  uppercase ">
                                                     <tr class="border">
-                                                        @for ($i = 1; $i <= 7; $i++)
-                                                            @switch($i)
-                                                                @case(1)
-                                                                    <th scope="col" class="centrado font-sm">
-                                                                        Lunes
-                                                                    </th>
-                                                                    @break
-                                                                @case(2)
-                                                                    <th scope="col" class="centrado font-sm">
-                                                                        martes
-                                                                    </th>
-                                                                    @break
-                                                                @case(3)
-                                                                    <th scope="col" class="centrado font-sm">
-                                                                        miércoles
-                                                                    </th>
-                                                                    @break
-                                                                @case(4)
-                                                                    <th scope="col" class="centrado font-sm">
-                                                                        jueves
-                                                                    </th>
-                                                                    @break
-                                                                @case(5)
-                                                                    <th scope="col" class="centrado font-sm">
-                                                                        viernes
-                                                                    </th>
-                                                                    @break
-                                                                @case(6)
-                                                                    <th scope="col" class="centrado font-sm">
-                                                                        sábado
-                                                                    </th>
-                                                                    @break
-                                                                @case(7)
-                                                                    <th scope="col" class="centrado font-sm">
-                                                                        domingo
-                                                                    </th>
-                                                                    @break
-                                                            @endswitch
-                                                        @endfor
+                                                        <th scope="col" class="centrado font-sm">
+                                                            Día
+                                                        </th>
+                                                        <th scope="col" class="centrado font-sm">
+                                                            Hora Inicio
+                                                        </th>
+                                                        <th scope="col" class="centrado font-sm">
+                                                            Intensidad Horaria
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($horarios as $item)
                                                         <tr>
-                                                            @for ($i = 1; $i <= 7; $i++)
-                                                                @switch($i)
-                                                                    @case(1)
-                                                                        @if ($item->periodo && $item->dia==="lunes")
-                                                                            <th scope="col" class="centrado font-sm">
-                                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
-                                                                            </th>
-                                                                        @else
-                                                                            <th scope="col" class="centrado font-sm">
-
-                                                                            </th>
-                                                                        @endif
-
-                                                                        @break
-                                                                    @case(2)
-                                                                        @if ($item->periodo && $item->dia==="martes")
-                                                                            <th scope="col" class="centrado font-sm">
-                                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
-                                                                            </th>
-                                                                        @else
-                                                                            <th scope="col" class="centrado font-sm">
-
-                                                                            </th>
-                                                                        @endif
-
-                                                                        @break
-                                                                    @case(3)
-                                                                        @if ($item->periodo && $item->dia==="miercoles")
-                                                                            <th scope="col" class="centrado font-sm">
-                                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
-                                                                            </th>
-                                                                        @else
-                                                                            <th scope="col" class="centrado font-sm">
-
-                                                                            </th>
-                                                                        @endif
-
-                                                                        @break
-                                                                    @case(4)
-                                                                        @if ($item->periodo && $item->dia==="jueves")
-                                                                            <th scope="col" class="centrado font-sm">
-                                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
-                                                                            </th>
-                                                                        @else
-                                                                            <th scope="col" class="centrado font-sm">
-
-                                                                            </th>
-                                                                        @endif
-
-                                                                        @break
-                                                                    @case(5)
-                                                                        @if ($item->periodo && $item->dia==="viernes")
-                                                                            <th scope="col" class="centrado font-sm">
-                                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
-                                                                            </th>
-                                                                        @else
-                                                                            <th scope="col" class="centrado font-sm">
-
-                                                                            </th>
-                                                                        @endif
-
-                                                                        @break
-                                                                    @case(6)
-                                                                        @if ($item->periodo && $item->dia==="sabado")
-                                                                            <th scope="col" class="centrado font-sm">
-                                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
-                                                                            </th>
-                                                                        @else
-                                                                            <th scope="col" class="centrado font-sm">
-
-                                                                            </th>
-                                                                        @endif
-
-                                                                        @break
-                                                                    @case(7)
-                                                                        @if ($item->periodo && $item->dia==="domingo")
-                                                                            <th scope="col" class="centrado font-sm">
-                                                                                <strong>{{$item->area->name}}</strong>: <strong>{{$item->hora}}</strong>
-                                                                            </th>
-                                                                        @else
-                                                                            <th scope="col" class="centrado font-sm">
-
-                                                                            </th>
-                                                                        @endif
-
-                                                                        @break
-                                                                @endswitch
-                                                            @endfor
+                                                            <th scope="col" class="centrado uppercase font-sm">
+                                                                {{$item->concepto}}
+                                                            </th>
+                                                            <th scope="col" class="centrado font-sm">
+                                                                {{$item->hora}}
+                                                            </th>
+                                                            <th scope="col" class="centrado font-sm">
+                                                                @if ($item->valor<=5)
+                                                                    {{$item->valor}}
+                                                                @else
+                                                                    5
+                                                                @endif
+                                                            </th>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
