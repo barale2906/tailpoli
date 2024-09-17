@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Financiera\CierreCaja;
+use App\Models\Financiera\Cuenta;
 use App\Models\Financiera\ReciboPago;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -73,6 +74,7 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
             'Encab: Empresa',
             'Encab: Tipo Documento',
             'Encab: Prefijo',
+            'Encab: Numero Recibo',
             'Encab: Fecha',
             'Encab: Tercero Interno',
             'Encab: Tercero Externo',
@@ -128,25 +130,54 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
                 $sede=$recibo->sede->name;
                 break;
         }
-        $lineas=array();
 
+        $cuenta="";
+
+        //Determinar cuenta a usar
+        if($recibo->medio==="transferencia"){
+            $reg=Cuenta::where('status',1)
+                        ->where('banco',$recibo->banco)
+                        ->where('tipo', 'Transferencia')
+                        ->first();
+            if($reg){
+                $cuenta=$reg->numero_cuenta;
+            }else{
+                $cuenta="No Registrado";
+            }
+        }
+
+        if($recibo->medio==="efectivo"){
+            if($recibo->sede->cuentas){
+                foreach ($recibo->sede->cuentas as $value) {
+                    if($value->tipo==="efectivo"){
+                        $cuenta=$value->numero_cuenta;
+                    }
+                }
+            }else{
+                $cuenta="No registrado efec";
+            }
+        }
+
+
+        $lineas=array();
 
         $credito = [
                     $this->nombre,
                     'RC',
                     'INGR',
-                    $recibo->fecha,
+                    $recibo->numero_recibo,
+                    $recibo->fecha_transaccion,
                     '900656857',
                     $recibo->paga->documento,
                     '-1',
                     '900656857',
-                    $recibo->fecha,
+                    $recibo->fecha_transaccion,
                     270545,
                     'RECAUDO RECIBO '.$recibo->numero_recibo,
                     $recibo->paga->documento,
                     0,
                     $recibo->valor_total,
-                    $recibo->fecha,
+                    $recibo->fecha_transaccion,
                     $sede
                 ];
 
@@ -154,18 +185,19 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
                     $this->nombre,
                     'RC',
                     'INGR',
-                    $recibo->fecha,
+                    $recibo->numero_recibo,
+                    $recibo->fecha_transaccion,
                     '900656857',
                     $recibo->paga->documento,
                     '-1',
                     '900656857',
-                    $recibo->fecha,
-                    11050501,
+                    $recibo->fecha_transaccion,
+                    $cuenta,
                     'RECAUDO RECIBO '.$recibo->numero_recibo,
                     $recibo->paga->documento,
                     $recibo->valor_total,
                     0,
-                    $recibo->fecha,
+                    $recibo->fecha_transaccion,
                     $sede
                 ];
 
