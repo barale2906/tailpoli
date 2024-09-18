@@ -25,3 +25,7 @@ Route::get('/cajero', function () {
 Route::get('/transacciones', function () {
     return view('financiera.transaccion.index');
 })->middleware('can:fi_transacciones')->name('transacciones');
+
+Route::get('/cuentas', function () {
+    return view('financiera.cuentas.index');
+})->middleware('can:fi_cuentas')->name('cuentas');

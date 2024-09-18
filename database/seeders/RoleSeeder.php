@@ -14,14 +14,36 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $Superusuario=Role::create(['name'=>'Superusuario']);
+        /* $Superusuario=Role::create(['name'=>'Superusuario']);
         $Administrador=Role::create(['name'=>'Administrador']);
         $Coordinador=Role::create(['name'=>'Coordinador']);
         $Auxiliar=Role::create(['name'=>'Auxiliar']);
         $Profesor=Role::create(['name'=>'Profesor']);
-        $Estudiante=Role::create(['name'=>'Estudiante']);
+        $Estudiante=Role::create(['name'=>'Estudiante']); */
 
+        Permission::create([
+                            'name'=>'fi_cuentas',
+                            'descripcion'=>'Ver las cuentas usadas para registrar los movimientos financieros',
+                            'modulo'=>'financiera'
+                            ])->syncRoles(['Superusuario','Administrador','Coordinador']);
 
+        Permission::create([
+                                'name'=>'fi_cuentasCrear',
+                                'descripcion'=>'crear cuentas',
+                                'modulo'=>'financiera'
+                                ])->syncRoles(['Superusuario','Administrador','Coordinador']);
+        Permission::create([
+                            'name'=>'fi_cuentasEditar',
+                            'descripcion'=>'editar cuentas',
+                            'modulo'=>'financiera'
+                            ])->syncRoles(['Superusuario','Administrador','Coordinador']);
+        Permission::create([
+                            'name'=>'fi_cuentasInactivar',
+                            'descripcion'=>'inactivar cuentas',
+                            'modulo'=>'financiera'
+                            ])->syncRoles(['Superusuario','Administrador','Coordinador']);
+
+/*
 
         Permission::create([
                             'name'=>'Academico',
@@ -844,7 +866,7 @@ class RoleSeeder extends Seeder
                             'name'=>'co_imporDB',
                             'descripcion'=>'importar base de datos',
                             'modulo'=>'configuracion'
-                            ])->syncRoles([$Superusuario]);
+                            ])->syncRoles([$Superusuario]); */
 
     }
 }

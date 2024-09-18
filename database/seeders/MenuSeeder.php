@@ -14,7 +14,16 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
-        $m1=Menu::create([
+        Submenu::create([
+            'permiso'           => 'fi_cuentas',
+            'ruta'              => 'financiera.cuentas',
+            'identificaRuta'    => 'financiera.cuentas',
+            'name'              => 'Cuentas',
+            'icono'             => 'fa-solid fa-ranking-star text-gray-500',
+            'menu_id'           => 4
+        ]);
+
+        /* $m1=Menu::create([
                 'name'              => 'ACÁDEMICO',
                 'identificaRuta'    => 'academico.*',
                 'permiso'           => 'Academico',
@@ -432,5 +441,5 @@ class MenuSeeder extends Seeder
                     'icono'             => 'fa-solid fa-wrench text-gray-500',
                     'menu_id'           => $m8->id
                 ]);
-    }
+ */    }
 }

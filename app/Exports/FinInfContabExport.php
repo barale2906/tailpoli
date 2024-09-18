@@ -149,7 +149,7 @@ class FinInfContabExport implements FromCollection, WithCustomStartCell, Respons
         if($recibo->medio==="efectivo"){
             if($recibo->sede->cuentas){
                 foreach ($recibo->sede->cuentas as $value) {
-                    if($value->tipo==="efectivo"){
+                    if($value->tipo==="efectivo" && $value->status){
                         $cuenta=$value->numero_cuenta;
                     }
                 }

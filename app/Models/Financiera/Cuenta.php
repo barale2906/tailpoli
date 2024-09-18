@@ -14,7 +14,7 @@ class Cuenta extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //Relación uno a muchos inversa
-    public function sedes(): BelongsTo
+    public function sede(): BelongsTo
     {
         return $this->belongsTo(Sede::class);
     }
