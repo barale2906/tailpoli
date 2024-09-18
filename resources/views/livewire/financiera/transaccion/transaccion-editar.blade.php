@@ -20,6 +20,11 @@
                         {{$this->actual->user->name}}
                     </h5>
                 </a>
+                @if ($cantidad>1)
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">TRANSACCIONES IGUALES: {{$cantidad}}</span>
+                    </div>
+                @endif
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     {{$this->actual->observaciones}}
                 </p>

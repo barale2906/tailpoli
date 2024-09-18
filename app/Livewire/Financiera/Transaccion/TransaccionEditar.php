@@ -21,6 +21,7 @@ class TransaccionEditar extends Component
     public $ruta=4;
     public $control;
     public $status_inventario;
+    public $cantidad;
 
     public $is_recibo=1;
 
@@ -44,10 +45,10 @@ class TransaccionEditar extends Component
     }
 
     public function searchcontrol(){
-        /* $this->control=Control::where('status', true)
-                                ->where('estudiante_id', $this->actual->alumno_id)
-                                ->select('id')
-                                ->get(); */
+        $this->cantidad=Transaccion::where('fecha_transaccion',$this->actual->fecha_transaccion)
+                                    ->where('total',$this->actual->total)
+                                    ->where('banco',$this->actual->banco)
+                                    ->count('id');
     }
 
     public function recibo($id){
