@@ -42,6 +42,7 @@ trait FiltroTrait
 
     //Ciclos
     public $is_jornada=false;
+    public $is_ciclos=false;
 
     // Recibos
     public $is_fechatransaccion=false;
@@ -151,6 +152,8 @@ trait FiltroTrait
                 $this->is_sededir=true;
                 $this->is_Inides=true;
                 $this->is_curso=true;
+                $this->is_status_est=true;
+                $this->is_ciclos=true;
                 break;
 
             case 12:
@@ -167,6 +170,7 @@ trait FiltroTrait
                 $this->is_curso=true;
                 $this->is_status_est=true;
                 $this->is_grado=true;
+                $this->is_ciclos=true;
                 break;
 
             case 14:

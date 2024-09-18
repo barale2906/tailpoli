@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Gestion;
 
+use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Nota;
 use App\Models\Academico\Curso;
@@ -9,6 +10,7 @@ use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\Estado;
 use App\Traits\FiltroTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -58,6 +60,8 @@ class Gestiones extends Component
     public $filtroInides;
     public $filtroInihas;
     public $filtroinicia=[];
+    public $estado_estudiante=[];
+    public $filtrociclo;
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -148,6 +152,10 @@ class Gestiones extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_inventario = !$this->is_inventario;
+    }
+
+    public function updatedEstadoEstudiante(){
+        $this->controles();
     }
 
     //Activar evento
@@ -281,14 +289,44 @@ class Gestiones extends Component
 
     private function controles()
     {
-        return Control::where('status', true)
+        $controles = Control::where('status', true)
                         ->whereIn('sede_id', $this->sedes)
                         ->buscar($this->buscamin)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
                         ->inicia($this->filtroinicia)
+                        ->status($this->estado_estudiante)
+                        ->ciclo($this->filtrociclo)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
+
+        $this->ciclos();
+
+        return $controles;
+    }
+
+    private function ciclos(){
+        $crt=Control::where('status', true)
+                    ->whereIn('sede_id', $this->sedes)
+                    ->buscar($this->buscamin)
+                    ->sede($this->filtroSede)
+                    ->curso($this->filtrocurso)
+                    ->inicia($this->filtroinicia)
+                    ->status($this->estado_estudiante)
+                    ->select('ciclo_id')
+                    ->groupBy('ciclo_id')
+                    ->get();
+
+        $ids=array();
+
+        foreach ($crt as $value) {
+            array_push($ids,$value->ciclo_id);
+        }
+
+        return Ciclo::whereIn('id',$ids)
+                        ->select('id','name','inicia')
+                        ->orderBy('inicia','DESC')
+                        ->get();
     }
 
     private function estados(){
@@ -311,13 +349,22 @@ class Gestiones extends Component
                         ->get();
     }
 
+    private function status_estu(){
+        return DB::table('estados')
+                    ->orderBy('name')
+                    ->get();
+
+    }
+
     public function render()
     {
         return view('livewire.academico.gestion.gestiones',[
-            'controles' =>$this->controles(),
-            'estados'    =>$this->estados(),
+            'controles'     =>$this->controles(),
+            'estados'       =>$this->estados(),
             'asignadas'     =>$this->sedeasignadas(),
             'cursos'        =>$this->cursos(),
+            'status_estu'   =>$this->status_estu(),
+            'ciclos'        =>$this->ciclos()
         ]);
     }
 }

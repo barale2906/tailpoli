@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Graduacion;
 
 use App\Exports\GraduacionExport;
+use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Matricula;
@@ -49,6 +50,7 @@ class Graduaciones extends Component
     public $observaciones;
     public $fecha_grado;
     public $estado_estudiante=[];
+    public $filtrociclo;
 
     public $sedesids=[];
     public $cursosids=[];
@@ -246,15 +248,44 @@ class Graduaciones extends Component
     }
 
     private function singrados(){
-        return Control::whereNotIn('status_est',[11])
+        $sing=Control::whereNotIn('status_est',[11])
                         ->buscar($this->buscamin)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
                         ->inicia($this->filtroinicia)
                         ->grado($this->filtrogrado)
                         ->status($this->estado_estudiante)
+                        ->ciclo($this->filtrociclo)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
+
+        $this->ciclos();
+
+        return $sing;
+    }
+
+    private function ciclos(){
+        $crt=Control::whereNotIn('status_est',[11])
+                    ->buscar($this->buscamin)
+                    ->sede($this->filtroSede)
+                    ->curso($this->filtrocurso)
+                    ->inicia($this->filtroinicia)
+                    ->grado($this->filtrogrado)
+                    ->status($this->estado_estudiante)
+                    ->select('ciclo_id')
+                    ->groupBy('ciclo_id')
+                    ->get();
+
+        $ids=array();
+
+        foreach ($crt as $value) {
+            array_push($ids,$value->ciclo_id);
+        }
+
+        return Ciclo::whereIn('id',$ids)
+                        ->select('id','name','inicia')
+                        ->orderBy('inicia','DESC')
+                        ->get();
     }
 
     private function cursos(){
@@ -293,7 +324,8 @@ class Graduaciones extends Component
             'estados'   => $this->estados(),
             'cursos'    => $this->cursos(),
             'asignadas' => $this->asignadas(),
-            'status_estu'=>$this->status_estu()
+            'status_estu'=>$this->status_estu(),
+            'ciclos'        =>$this->ciclos()
         ]);
     }
 }

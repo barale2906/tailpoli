@@ -86,6 +86,12 @@ class Control extends Model
         });
     }
 
+    public function scopeCiclo($query, $ciclo){
+        $query->when($ciclo ?? null, function($query, $ciclo){
+            $query->where('ciclo_id', $ciclo);
+        });
+    }
+
     public function scopeGrado($query, $grado){
         $query->when($grado ?? null, function($query, $grado){
             $fecha1=Carbon::parse($grado[0]);
