@@ -439,7 +439,7 @@ class RecibosPagoCrear extends Component
 
             $this->recargo=$porc->valor;
             $this->recargo_id=$porc->id;
-            $this->recargoValor=$this->Total*$this->recargo/100;
+            $this->recargoValor=($this->Total-$this->Totaldescue)*$this->recargo/100;
             $this->Total=$this->Total+$this->recargoValor;
             $this->medioele=$porc->name;
             $this->banco=$porc->name;

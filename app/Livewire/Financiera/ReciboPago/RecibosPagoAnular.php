@@ -5,6 +5,7 @@ namespace App\Livewire\Financiera\ReciboPago;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
+use App\Models\Financiera\Transaccion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -88,8 +89,11 @@ class RecibosPagoAnular extends Component
             }
         }
 
+        if($this->reciboActual->medio==="transferencia" || $this->reciboActual->medio==="PSE" || $this->reciboActual->medio==="cheque"){
+            $this->transacciones();
+        }
 
-        $this->dispatch('alerta', name:'Se ha ANULADO correctamente el recibo de pago N°: '.$this->id);
+        $this->dispatch('alerta', name:'Se ha ANULADO correctamente el recibo de pago N°: '.$this->reciboActual->numero_recibo);
         $this->resetFields();
 
         //refresh
@@ -98,13 +102,26 @@ class RecibosPagoAnular extends Component
 
     }
 
+    public function transacciones(){
+        $reci=Transaccion::where('observaciones', 'like', "%".$this->reciboActual->numero_recibo."%")
+                            ->first();
+
+        if($reci){
+            $reci->update([
+                'status'=>1,
+                'status_academico'=>0,
+                'observaciones'=>now().': '.Auth::user()->name.' ANULO EL RECIBO: '.$this->reciboActual->numero_recibo.' Y REACTIVO LA TRANSACCIÓN. ----- '.$reci->observaciones,
+            ]);
+        }
+    }
+
     public function ajusCartera($value){
 
         $registro=Cartera::whereId(intval($value->id_relacional))->first();
 
 
         $saldo=$registro->saldo+$value->valor;
-        $observaciones=now()." ".Auth::user()->name." ANULO EL RECIBO N°: ".$this->id." por el motivo: ".$this->motivo.", se descontaron $ ".number_format($value->valor, 0, ',', '.')." --- ".$registro->observaciones;
+        $observaciones=now()." ".Auth::user()->name." ANULO EL RECIBO N°: ".$this->reciboActual->numero_recibo." por el motivo: ".$this->motivo.", se descontaron $ ".number_format($value->valor, 0, ',', '.')." --- ".$registro->observaciones;
 
         if($saldo>$value->valor){
             $esta=EstadoCartera::where('name', 'abonada')->first();

@@ -5,7 +5,7 @@
             <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-2 lg:gap-2">
                 <div class="flex flex-col justify-center">
                     <h1 class="mb-4 text-xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                        Datos del recibo N°: {{$id}}
+                        Datos del recibo N°: {{$reciboActual->numero_recibo}}
                     </h1>
                     <h2 class="md:text-2xl font-bold text-gray-900 dark:text-white">
                         A nombre de: {{$reciboActual->paga->name}}
