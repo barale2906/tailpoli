@@ -615,7 +615,7 @@ class RecibosPagoCrear extends Component
                 $primer=explode("-----",$value->observaciones);
                 $inicial=$primer[0];
 
-                $observa=$inicial." ----- ".now()." ".$this->alumnoName." realizo pago por ".number_format($value->saldo, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$value->observaciones;
+                $observa=$inicial." ----- ".now()." ".$this->alumnoName." realizo pago por ".number_format($value->saldo, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". --- ".$value->observaciones;
 
                 Cartera::whereId($value->id)
                         ->update([
@@ -652,7 +652,7 @@ class RecibosPagoCrear extends Component
                     $obspr=$obs[0];
 
                     $saldo=$item->saldo-$value->valor;
-                    $observa=$obspr.'-----'.now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
+                    $observa=$obspr.'-----'.now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". --- ".$item->observaciones;
 
                     if($saldo>0){
                         $esta=EstadoCartera::where('name', 'abonada')->first();
@@ -708,7 +708,7 @@ class RecibosPagoCrear extends Component
                         $obs=explode('-----',$item->observaciones);
                         $obspr=$obs[0];
 
-                        $observa=$obspr.'-----'.now()." recibio descuento por $".number_format($this->descuento, 0, ',', '.').", con el recibo N°: ".$recibo->id.". --- ".$item->observaciones;
+                        $observa=$obspr.'-----'.now()." recibio descuento por $".number_format($this->descuento, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". --- ".$item->observaciones;
                         $descu=$item->descuento+$this->descuento;
 
                         $item->update([
