@@ -6,8 +6,10 @@ use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Nota;
 use App\Models\Academico\Curso;
+use App\Models\Academico\Grupo;
 use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\Estado;
+use App\Models\User;
 use App\Traits\FiltroTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -62,6 +64,7 @@ class Gestiones extends Component
     public $filtroinicia=[];
     public $estado_estudiante=[];
     public $filtrociclo;
+    public $filtroprofesor;
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -297,6 +300,7 @@ class Gestiones extends Component
                         ->inicia($this->filtroinicia)
                         ->status($this->estado_estudiante)
                         ->ciclo($this->filtrociclo)
+                        ->profesor($this->filtroprofesor)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 
@@ -313,6 +317,7 @@ class Gestiones extends Component
                     ->curso($this->filtrocurso)
                     ->inicia($this->filtroinicia)
                     ->status($this->estado_estudiante)
+                    ->profesor($this->filtroprofesor)
                     ->select('ciclo_id')
                     ->groupBy('ciclo_id')
                     ->get();
@@ -356,6 +361,23 @@ class Gestiones extends Component
 
     }
 
+    private function profesores(){
+        $profe=Grupo::where('status',true)
+                    ->select('profesor_id')
+                    ->groupBy('profesor_id')
+                    ->get();
+
+        $ids=array();
+        foreach ($profe as $value) {
+            array_push($ids,$value->profesor_id);
+        }
+
+        return User::whereIn('id',$ids)
+                    ->select('id','name')
+                    ->orderBy('name', 'ASC')
+                    ->get();
+    }
+
     public function render()
     {
         return view('livewire.academico.gestion.gestiones',[
@@ -364,7 +386,8 @@ class Gestiones extends Component
             'asignadas'     =>$this->sedeasignadas(),
             'cursos'        =>$this->cursos(),
             'status_estu'   =>$this->status_estu(),
-            'ciclos'        =>$this->ciclos()
+            'ciclos'        =>$this->ciclos(),
+            'profesores'    =>$this->profesores(),
         ]);
     }
 }

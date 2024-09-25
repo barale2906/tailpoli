@@ -28,6 +28,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
     private $estado_estudiante;
     private $estados;
     private $status;
+    private $estadoestudiante;
     private $fileName = "Graduaciones.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
@@ -47,9 +48,11 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
         $this->filtrogrado=$filtrogrado;
         $this->estado_estudiante=$estado_estudiante;
 
-        $this->estados=Estado::where('status', true)
-                                ->orderBy('name', 'ASC')
-                                ->get();
+        $estados=Estado::all();
+
+        foreach ($estados as $value) {
+            array_push($this->estadoestudiante,$value->name);
+        }
     }
 
     /**
@@ -97,11 +100,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
 
     public function map($graduacion): array
     {
-        foreach ($this->estados as $value) {
-            if($value->id===intval($graduacion->status_est)){
-                $this->status=$value->name;
-            }
-        }
+        $id=$graduacion->status_est-1;
 
         $celular=0;
 
@@ -125,7 +124,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
             $graduacion->overol,
             $graduacion->diploma,
             $graduacion->ceremonia,
-            $this->status,
+            $this->estadoestudiante[$id],
         ];
 
     }

@@ -41,13 +41,20 @@ class Control extends Model
 
     public function scopeBuscar($query, $item){
         $query->when($item ?? null, function($query, $item){
-            $query->wherehas('estudiante', function($query) use($item){
-                        $query->where('users.name', 'like', "%".$item."%")
-                                ->orwhere('users.documento', 'like', "%".$item."%");
-                    })
+            $query->wherehas('ciclo', function($query) use($item){
+                $query->where('ciclos.name', 'like', "%".$item."%");
+            });
+        });
+    }
 
-                    ->orwherehas('ciclo', function($query) use($item){
-                        $query->where('ciclos.name', 'like', "%".$item."%");
+    public function scopeProfesor($query, $profe){
+        $query->when($profe ?? null, function($query, $profe){
+            $query->wherehas('ciclo', function($query) use($profe){
+                        $query->wherehas('ciclogrupos', function($query) use($profe){
+                            $query->wherehas('grupo', function($query) use($profe){
+                                $query->where('grupos.profesor_id', intval($profe));
+                            });
+                        });
                     });
         });
     }

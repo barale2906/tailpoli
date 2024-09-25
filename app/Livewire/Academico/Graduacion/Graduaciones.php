@@ -6,11 +6,13 @@ use App\Exports\GraduacionExport;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Curso;
+use App\Models\Academico\Grupo;
 use App\Models\Academico\Matricula;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Estado;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
+use App\Models\User;
 use App\Traits\FiltroTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,6 +53,7 @@ class Graduaciones extends Component
     public $fecha_grado;
     public $estado_estudiante=[];
     public $filtrociclo;
+    public $filtroprofesor;
 
     public $sedesids=[];
     public $cursosids=[];
@@ -256,6 +259,7 @@ class Graduaciones extends Component
                         ->grado($this->filtrogrado)
                         ->status($this->estado_estudiante)
                         ->ciclo($this->filtrociclo)
+                        ->profesor($this->filtroprofesor)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 
@@ -315,6 +319,23 @@ class Graduaciones extends Component
                     ->orderBy('name')
                     ->get();
 
+    }
+
+    private function profesores(){
+        $profe=Grupo::where('status',true)
+                    ->select('profesor_id')
+                    ->groupBy('profesor_id')
+                    ->get();
+
+        $ids=array();
+        foreach ($profe as $value) {
+            array_push($ids,$value->profesor_id);
+        }
+
+        return User::whereIn('id',$ids)
+                    ->select('id','name')
+                    ->orderBy('name', 'ASC')
+                    ->get();
     }
 
     public function render()
