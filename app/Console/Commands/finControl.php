@@ -31,28 +31,12 @@ class finControl extends Command
      */
     public function handle()
     {
-        /* Ciclo::where('finaliza', Carbon::today()->subDays(20))
-                ->each(function($ciclo){
-                    $ciclo->control->each(function($crt){
-                        $crt->update([
-                            'status'=>false
-                        ]);
-                        Pqrs::create([
-                            'estudiante_id' =>$crt->estudiante_id,
-                            'gestion_id'    =>$crt->matricula->creador_id,
-                            'fecha'         =>now(),
-                            'tipo'          =>1,
-                            'observaciones' =>'GESTIÓN: Finaliza ciclo cierre automático. ----- ',
-                            'status'        =>4
-                        ]);
-                    });
-                }); */
+        Log::info(now().': Ejecuta Control:vencimiento-finControl.');
 
         $controles=Control::where('status', true)
                             ->get();
 
         $cont=Carbon::today()->subMonths(2);
-        Log::info(now().': Ejecuta finControl.');
 
         foreach ($controles as $value) {
             try {

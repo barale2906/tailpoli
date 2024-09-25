@@ -29,10 +29,10 @@ class finCiclo extends Command
      */
     public function handle()
     {
+        Log::info(now().': Ejecuta Ciclo:vencimiento-finCiclo.');
         $ciclos=Ciclo::where('finaliza', Carbon::today()->subDay())
                         ->get();
 
-        Log::info(now().': Ejecuta finCiclo.');
         foreach ($ciclos as $value) {
             try {
                 $value->update([

@@ -5,31 +5,27 @@ namespace App\Console\Commands;
 use App\Models\Academico\Control;
 use App\Models\Academico\Matricula;
 use App\Models\Clientes\Pqrs;
-use App\Models\Configuracion\Estado;
 use App\Models\Financiera\Cartera;
-use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class desercion extends Command
+class DesertadoAntiguo extends Command
 {
-    public $desertado;
-    public $activo;
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'Academico:desercion';
+    protected $signature = 'Academico:DesercionAntiguo';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Verifica el estado de un estudiante según el tiempo de su última asistencia';
+    protected $description = 'Registra la deserción de los estudiantes con inicio anterior a 18 meses';
 
     /**
      * Execute the console command.
@@ -41,17 +37,18 @@ class desercion extends Command
         $margen=config('instituto.desertado_fin')+1; //Control de deserción
         $fecha=Carbon::today()->subDays($margen); //tIEMPO DE ASISTENCIA
 
-        Log::info(now().': Ejecuta Deserción reciente. margen: '.$margen.' fecha margen: '.$fecha);
+        Log::info(now().': Ejecuta Deserción antiguo. margen: '.$margen.' fecha margen: '.$fecha);
 ;
         $controles=Control::where('status', true)
                             ->whereNotIn('status_est',[2,6,11])
-                            ->where('inicia','>', $inic)
+                            ->where('inicia','<', $inic)
                             ->orderBy('inicia','ASC')
                             ->get();
 
         foreach ($controles as $value) {
             //Log::info("Inicia: ".$value->inicia." Asistencia: ".$value->ultima_asistencia." Documento: ".$value->estudiante->documento);
             try {
+
                     $inicio=new Carbon($value->ciclo->inicia);
 
                     if($value->ultima_asistencia){
@@ -116,19 +113,19 @@ class desercion extends Command
                             }
                         }else{
                             $value->update([
-                                'status_est'=>3
+                                'status_est'=>12
                             ]);
 
                             //Actualizar Matricula
                             Matricula::where('id',$value->matricula_id)
                                         ->update([
-                                            'status_est'=>3
+                                            'status_est'=>12
                                         ]);
 
                             //Actualizar Cartera
                             Cartera::where('matricula_id', $value->matricula_id)
                                     ->update([
-                                        'status_est'=>3
+                                        'status_est'=>12
                                     ]);
 
                             Pqrs::create([
@@ -136,7 +133,7 @@ class desercion extends Command
                                 'gestion_id'    =>$value->matricula->creador_id,
                                 'fecha'         =>now(),
                                 'tipo'          =>4,
-                                'observaciones' =>'ACÁDEMICO:  --- ¡DESERTADO! --- --- AUTOMATICO -----  ',
+                                'observaciones' =>'ACÁDEMICO:  --- ¡DESERTADO ANTIGUO! --- --- AUTOMATICO -----  ',
                                 'status'        =>4
                             ]);
                         }
@@ -144,19 +141,19 @@ class desercion extends Command
                         if($hoy>$inicio){
 
                             $value->update([
-                                'status_est'=>3
+                                'status_est'=>12
                             ]);
 
                             //Actualizar Matricula
                             Matricula::where('id',$value->matricula_id)
                                         ->update([
-                                            'status_est'=>3
+                                            'status_est'=>12
                                         ]);
 
                             //Actualizar Cartera
                             Cartera::where('matricula_id', $value->matricula_id)
                                     ->update([
-                                        'status_est'=>3
+                                        'status_est'=>12
                                     ]);
 
                             Pqrs::create([
@@ -164,7 +161,7 @@ class desercion extends Command
                                 'gestion_id'    =>$value->matricula->creador_id,
                                 'fecha'         =>now(),
                                 'tipo'          =>4,
-                                'observaciones' =>'ACÁDEMICO:  --- ¡DESERTADO! --- --- AUTOMATICO -----  ',
+                                'observaciones' =>'ACÁDEMICO:  --- ¡DESERTADO ANTIGUO! --- --- AUTOMATICO -----  ',
                                 'status'        =>4
                             ]);
                         }else{
@@ -196,7 +193,7 @@ class desercion extends Command
                     }
 
             } catch(Exception $exception){
-                Log::info('Linea control: ' . $value->id . ' Deserción No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::info('Linea control: ' . $value->id . ' Deserción No permitio registrar antiguo: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
     }

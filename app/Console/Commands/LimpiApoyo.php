@@ -27,7 +27,7 @@ class LimpiApoyo extends Command
      */
     public function handle()
     {
-        Log::info(now().': Ejecuta CobranzaDescarga.');
+        Log::info(now().': Ejecuta Gestion:LimpiApoyo.');
 
         DB::table('apoyo_recibo')
             ->delete();
