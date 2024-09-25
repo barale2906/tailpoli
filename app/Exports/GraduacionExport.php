@@ -29,6 +29,8 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
     private $estados;
     private $status;
     private $estadoestudiante;
+    private $filtroprofesor;
+    private $filtrociclo;
     private $fileName = "Graduaciones.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
@@ -39,6 +41,8 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
                                     $filtroinicia,
                                     $filtrogrado,
                                     $estado_estudiante,
+                                    $filtrociclo,
+                                    $filtroprofesor,
                                 )
     {
         $this->buscamin=$buscamin;
@@ -47,6 +51,8 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
         $this->filtroinicia=$filtroinicia;
         $this->filtrogrado=$filtrogrado;
         $this->estado_estudiante=$estado_estudiante;
+        $this->filtrociclo=$filtrociclo;
+        $this->filtroprofesor=$filtroprofesor;
 
         $estados=Estado::all();
 
@@ -67,6 +73,8 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
                         ->inicia($this->filtroinicia)
                         ->grado($this->filtrogrado)
                         ->status($this->estado_estudiante)
+                        ->ciclo($this->filtrociclo)
+                        ->profesor($this->filtroprofesor)
                         ->orderBy('fecha_grado', 'DESC')
                         ->get();
     }

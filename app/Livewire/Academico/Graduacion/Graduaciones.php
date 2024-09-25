@@ -208,6 +208,8 @@ class Graduaciones extends Component
                                         $this->filtroinicia,
                                         $this->filtrogrado,
                                         $this->estado_estudiante,
+                                        $this->filtrociclo,
+                                        $this->filtroprofesor,
                                     );
     }
 
