@@ -348,7 +348,8 @@ class Graduaciones extends Component
             'cursos'    => $this->cursos(),
             'asignadas' => $this->asignadas(),
             'status_estu'=>$this->status_estu(),
-            'ciclos'        =>$this->ciclos()
+            'ciclos'        =>$this->ciclos(),
+            'profesores'=>$this->profesores()
         ]);
     }
 }
