@@ -265,7 +265,7 @@ class Matriculas extends Component
         }
         $this->claseFiltro(1);
 
-        $this->estado_estudiante=[1,2,3,4,5,6,7,8,9,10,11];
+        $this->estado_estudiante=[1,2,3,4,5,6,7,8,9,10,11,12];
 
         $creadores=Matricula::select('creador_id')
                                     ->groupBy('creador_id')
