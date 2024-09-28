@@ -388,7 +388,7 @@ class GruposCrear extends Component
                 $this->modulo_id    =$value->id;
                 $this->slugCrear();
                 $this->crear();
-                Log::info('Line: ' . $value->id. ' modulo: '.$this->modulo.' id: '.$this->modulo_id);
+                //Log::info('Line: ' . $value->id. ' modulo: '.$this->modulo.' id: '.$this->modulo_id);
             }
             $this->dispatch('alerta', name:'Se crearon todos los grupos para los modulos respectivos');
 

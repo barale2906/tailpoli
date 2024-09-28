@@ -97,7 +97,7 @@
                 <select wire:model.live="modulo_id" id="modulo_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                     <option >Defina Modulo a Cargar</option>
                     @foreach ($modulos as $item)
-                        <option value={{$item->id}}>{{$item->name}}</option>
+                        <option value={{$item->id}}>{{$item->name}} - Profesor: {{$item->profesor->name}}</option>
                     @endforeach
 
                 </select>
