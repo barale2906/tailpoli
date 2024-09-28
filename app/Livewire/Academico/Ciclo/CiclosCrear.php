@@ -319,7 +319,7 @@ class CiclosCrear extends Component
         'sede_id'=>'required|integer',
         'curso_id'=>'required|integer',
         'name' => 'required|max:200',
-        'inicia'=>'required|date|after:fechaRegistro',
+        //'inicia'=>'required|date|after:fechaRegistro',
         'finaliza'=>'required|date',
         'jornada'=>'required|integer',
         'desertado'=>'required'
