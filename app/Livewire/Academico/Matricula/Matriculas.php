@@ -5,6 +5,7 @@ namespace App\Livewire\Academico\Matricula;
 use App\Exports\AcaMatriculaExport;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Matricula;
+use App\Models\Configuracion\Estado;
 use App\Models\User;
 use App\Traits\FiltroTrait;
 use Illuminate\Support\Facades\DB;
@@ -265,7 +266,7 @@ class Matriculas extends Component
         }
         $this->claseFiltro(1);
 
-        $this->estado_estudiante=[1,2,3,4,5,6,7,8,9,10,11,12];
+        //$this->estado_estudiante=[1,2,3,4,5,6,7,8,9,10,11,12];
 
         $creadores=Matricula::select('creador_id')
                                     ->groupBy('creador_id')
@@ -275,6 +276,15 @@ class Matriculas extends Component
         }
 
         $this->genComerci();
+        $this->estado();
+    }
+
+    public function estado(){
+        $est=Estado::select('id')->orderBy('id','ASC')->get();
+
+        foreach ($est as $value) {
+            array_push($this->estado_estudiante,$value->id);
+        }
     }
 
     public function genComerci(){
