@@ -97,7 +97,7 @@
                 <select wire:model.live="modulo_id" id="modulo_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                     <option >Defina Modulo a Cargar</option>
                     @foreach ($modulos as $item)
-                        <option value={{$item->id}}>{{$item->name}} - Profesor: {{$item->profesor->name}}</option>
+                        <option value={{$item->id}}>{{$item->name}}</option>
                     @endforeach
 
                 </select>
@@ -133,7 +133,7 @@
                         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
                             @foreach ($grupos as $item)
                                 <a href="" wire:click.prevent="activFecha({{$item->id}},{{$item->modulo_id}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
-                                    <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item->name}}
+                                    <i class="fa-regular fa-circle-check fa-beat-fade"></i> {{$item->name}} - Profesor: {{$item->profesor->name}}
                                 </a>
                             @endforeach
                         </div>
