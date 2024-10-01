@@ -28,7 +28,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
     private $estado_estudiante;
     private $estados;
     private $status;
-    private $estadoestudiante;
+    private $estadoestudiante=[];
     private $filtroprofesor;
     private $filtrociclo;
     private $fileName = "Graduaciones.xlsx";
@@ -54,7 +54,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
         $this->filtrociclo=$filtrociclo;
         $this->filtroprofesor=$filtroprofesor;
 
-        $estados=Estado::all();
+        $estados=Estado::orderBy('id','ASC')->get();
 
         foreach ($estados as $value) {
             array_push($this->estadoestudiante,$value->name);
