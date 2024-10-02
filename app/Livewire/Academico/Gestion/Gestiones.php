@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Gestion;
 
+use App\Exports\GraduacionExport;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Nota;
@@ -65,6 +66,7 @@ class Gestiones extends Component
     public $estado_estudiante=[];
     public $filtrociclo;
     public $filtroprofesor;
+    public $filtrogrado=[];
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -288,6 +290,19 @@ class Gestiones extends Component
         $this->ciclo=$ciclo;
         $this->show($item, 1, $id); //envío id del grupo
 
+    }
+
+    public function exportar(){
+        return new GraduacionExport(
+                                        $this->buscamin,
+                                        $this->filtroSede,
+                                        $this->filtrocurso,
+                                        $this->filtroinicia,
+                                        $this->filtrogrado,
+                                        $this->estado_estudiante,
+                                        $this->filtrociclo,
+                                        $this->filtroprofesor,
+                                    );
     }
 
     private function controles()

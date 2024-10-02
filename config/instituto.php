@@ -16,4 +16,5 @@ return[
     'max_registros'         =>env('MAX_REGISTROS'),
     'dias_cobranza'         =>env('DIAS_COBRANZA',30),
     'dias_reporte'          =>env('DIAS_REPORTE',35),
+    'copia_carnet'          =>env('COPIA_CARNET','publiandino@gmail.com'),
 ];

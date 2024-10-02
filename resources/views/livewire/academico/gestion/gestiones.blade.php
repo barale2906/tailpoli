@@ -8,6 +8,14 @@
 
     @if ($is_modify)
         @include('includes.filtro')
+        @can('ac_export')
+            @if ($controles->count()<=1000)
+                <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl p-2 text-center mr-2 mb-2 capitalize" >
+                    <i class="fa-solid fa-file-excel fa-beat"></i>
+                </a>
+            @endif
+
+        @endcan
         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
 
             {{-- pantalla grande --}}

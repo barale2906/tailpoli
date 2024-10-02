@@ -70,7 +70,9 @@ trait MailTrait
                         ->first();
 
         $destinatario=$mat->alumno->email;
-        Mail::to($destinatario)->send(new BienvenidaMailable($id));
+        Mail::to($destinatario)
+                ->cc(config('instituto.copia_carnet'))
+                ->send(new BienvenidaMailable($id));
     }
 
     public function recordatorio($id){

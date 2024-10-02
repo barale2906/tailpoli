@@ -38,7 +38,7 @@ class CobranzaCarga extends Command
 
         $carteras=Cartera::where('fecha_pago',$hoy)
                             ->where('estado_cartera_id',3)
-                            ->whereBetween('concepto_pago_id',[1,4])
+                            ->whereBetween('concepto_pago_id',[2,4])
                             ->get();
 
             Log::info(now().': Ejecuta CobranzaCarga.');
