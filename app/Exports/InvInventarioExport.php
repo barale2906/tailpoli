@@ -76,24 +76,9 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
 
     public function map($inventario): array
     {
-        $tipo="";
-        switch ($inventario->tipo) {
-            case 0:
-                $tipo="ENTRADA";
-                break;
+        $estados=["SALIDA","ENTRADA","PENDIENTE","TRASLADO"];
+        $tipo=$estados[$inventario->tipo];
 
-            case 1:
-                $tipo="SALIDA";
-                break;
-
-            case 2:
-                $tipo="PENDIENTE";
-                break;
-
-            case 3:
-                $tipo="TRASLADO";
-                break;
-        }
         if($inventario->saldo===0){
             $saldo=0;
         }else{
