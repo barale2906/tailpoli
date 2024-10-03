@@ -517,7 +517,12 @@ class RecibosPagoCrear extends Component
         $this->validate();
 
         if($this->pagoTotal){
-            $this->Totaldescue=$this->descuento;
+            if($this->descuento>0){
+                $this->Totaldescue=$this->descuento;
+            }else{
+                $this->Totaldescue=0;
+            }
+
         }
 
         $this->fecha_pago=now();
