@@ -468,7 +468,7 @@
                                                                 $ {{number_format($item->valor, 0, '.', '.')}}
                                                             </th>
                                                             <th scope="row" class="derecha capitalize font-sm">
-                                                                @if ($item->status)
+                                                                @if ($item->estado_cartera_id<5)
                                                                     @if ($item->fecha_pago < $fecha)
                                                                         @php
                                                                             $fecha1 = date_create($item->fecha_pago);
@@ -482,7 +482,7 @@
 
                                                             </th>
                                                             <th scope="row" class="derecha capitalize font-sm">
-                                                                @if ($item->status)
+                                                                @if ($item->estado_cartera_id<5)
                                                                     @if ($item->fecha_pago < $fecha)
                                                                         $ {{number_format($item->saldo, 0, '.', '.')}}
                                                                     @endif
