@@ -106,8 +106,14 @@
             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
 
                     @if ($is_date)
+
                         <div class="mb-6">
-                            <label for="fechaModulo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio del Modulo</label>
+                            @if (!$seleccionados)
+                                <a href="" wire:click.prevent="generatodas" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-4 mb-5 capitalize">
+                                    Cargar todos los modulos.
+                                </a>
+                            @endif
+                            <label for="fechaModulo" class="block mb-2 mt-3 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio del Modulo</label>
                             <input type="date" id="fechaModulo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3"  wire:model.live="fechaModulo">
 
                             @if ($fechaModulo)
@@ -120,11 +126,6 @@
 
                             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 m-2">
                                 @if ($fechaModulo && $fechaFin)
-                                    @if (!$seleccionados)
-                                        <a href="" wire:click.prevent="generatodas" class="text-black bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-4 capitalize">
-                                            Todas
-                                        </a>
-                                    @endif
                                     <a href="" wire:click.prevent="selGrupo" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-4 capitalize">
                                         <i class="fa-solid fa-check-double"></i>
                                     </a>
