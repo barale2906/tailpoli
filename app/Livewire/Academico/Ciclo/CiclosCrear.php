@@ -27,6 +27,9 @@ class CiclosCrear extends Component
     public $finaliza;
     public $finalizaej;
     public $jornada;
+    public $dia;
+    public $hora;
+    public $profesor;
     public $desertado;
     public $contar=0;
     public $maximo;
@@ -79,24 +82,6 @@ class CiclosCrear extends Component
             if($grupo->count()>0){
 
                 foreach ($grupo as $value) {
-
-                    /* $nuevo=[
-                        'id'            =>$value->id,
-                        'name'          =>$value->name,
-                        'profesor_id'   =>$value->profesor_id,
-                        'profesor'      =>$value->profesor->name,
-                        'inscritos'     =>$value->inscritos,
-                        'limit'         =>$value->quantity_limit,
-                        'modulo'        =>$value->modulo->id,
-                    ];
-
-                    if(in_array($nuevo, $this->grupos)){
-
-                    }else{
-                        array_push($this->grupos, $nuevo);
-
-                    } */
-
                     $this->contar=$this->contar+1;
                 }
 
@@ -295,6 +280,95 @@ class CiclosCrear extends Component
 
     }
 
+    public function generatodas(){
+        //Solo se muestra para el primer modulo
+
+        //Identifica los grupos aplicables teniendo en cuenta jornada, curso, sede, día y hora
+        $elgi=Horario::where('grupo_id',$this->grupoId)->first();
+        $gru=Grupo::find($this->grupoId);
+
+        //Identificar día y hora de inicio.
+        $this->dia=$elgi->dia;
+        $this->hora=$elgi->hora;
+        $this->profesor=$gru->profesor_id;
+
+
+
+        //Selecciona los grupos
+        foreach ($this->modulos as $value) {
+            //dd("Jornada: ".$this->jornada." profesor: ".$this->profesor." sede: ".$this->sede_id." modulo_id: ".$value->id." dia: ".$this->dia." hora: ".$this->hora);
+            $ele=Grupo::join('horarios', 'grupos.id', '=', 'horarios.grupo_id')
+                            ->where('grupos.status',true)
+                            ->where('grupos.jornada', $this->jornada)
+                            ->where('grupos.profesor_id', $this->profesor)
+                            ->where('grupos.sede_id',$this->sede_id)
+                            ->where('grupos.modulo_id',$value->id)
+                            ->where('horarios.status',true)
+                            ->where('horarios.dia',$this->dia)
+                            ->where('horarios.hora',$this->hora)
+                            ->select('grupos.*','horarios.dia','horarios.hora')
+                            ->first();
+
+            if($ele){
+                DB::table('apoyo_recibo')
+                    ->insert([
+                        'id_creador'        =>Auth::user()->id,
+                        'id_concepto'       =>$ele->id,
+                        'tipo'              =>$ele->name,
+                        'id_producto'       =>$ele->profesor_id,
+                        'producto'          =>$ele->profesor->name,
+                        'valor'             =>$ele->inscritos,
+                        'id_ultimoreg'      =>$ele->quantity_limit,
+                        'id_cartera'        =>$ele->modulo_id,
+                        'fecha_movimiento'  =>$this->inicia,
+                        'fecha_fin'         =>$this->fechaFin,
+                        'hora'              =>$ele->hora,
+                        'almacen'           =>$ele->dia
+                    ]);
+            }
+        }
+
+        $this->cargarmultiple();
+    }
+
+    public function cargarmultiple(){
+        $cargados=DB::table('apoyo_recibo')
+                    ->where('id_creador', Auth::user()->id)
+                    ->get();
+        $a=1;
+        foreach ($cargados as $value) {
+            if($a===1){
+                $fini=Carbon::create($value->fecha_movimiento)->addDays($this->lapso);
+                $fin=$fini->format('Y-m-d');
+                DB::table('apoyo_recibo')
+                    ->where('id', $value->id)
+                    ->update([
+                        'fecha_fin'         =>$fin,
+                    ]);
+
+                $this->reset('fechaFin','fechafinsugerida');
+                $this->fechaFin=$fin;
+            }
+            if($a>1){
+                $inicio=Carbon::create($this->fechaFin)->addDay();
+                $ini=$inicio->format('Y-m-d');
+                $fini=Carbon::create($inicio)->addDays($this->lapso);
+                $fin=$fini->format('Y-m-d');
+                DB::table('apoyo_recibo')
+                    ->where('id', $value->id)
+                    ->update([
+                        'fecha_movimiento'  =>$ini,
+                        'fecha_fin'         =>$fin,
+                    ]);
+
+                $this->reset('fechaFin');
+                $this->fechaFin=$fin;
+            }
+            $a++;
+        }
+        $this->reset('is_date', 'fechaModulo','fechaFin' , 'grupoId', 'modulo_id', 'moduloId','grupos');
+        $this->ordenarrender();
+    }
 
     public function ordenarrender(){
 
