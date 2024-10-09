@@ -26,14 +26,11 @@
                 @if ($buscar)
                     <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                         @foreach ($estudiantes as $item)
-                            @if ($item->rol_id===6)
-                                <li class="w-full mt-2 mb-2 capitalize">
-                                    {{$item->name}} - {{$item->documento}} <a href="#" wire:click.prevent="selAlumno({{$item}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 text-center capitalize">
-                                        <i class="fa-solid fa-check fa-beat"></i> elegir
-                                    </a>
-                                </li>
-                            @endif
-
+                            <li class="w-full mt-2 mb-2 capitalize">
+                                {{$item->name}} - {{$item->documento}} <a href="#" wire:click.prevent="selAlumno({{$item}})" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 text-center capitalize">
+                                    <i class="fa-solid fa-check fa-beat"></i> elegir
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 @endif

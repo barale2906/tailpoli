@@ -515,7 +515,12 @@ class MatriculasCrear extends Component
 
     private function estudiantes(){
 
-        $consulta = User::query();
+        return User::buscar($this->buscaestudi)
+                    ->orderBy($this->ordena, $this->ordenado)
+                    ->paginate($this->pages);
+
+
+        /* $consulta = User::query();
 
         if($this->buscaestudi){
             $consulta = $consulta->where('name', 'like', "%".$this->buscaestudi."%")
@@ -524,15 +529,7 @@ class MatriculasCrear extends Component
         }
 
         return $consulta->orderBy($this->ordena, $this->ordenado)
-                        ->paginate($this->pages);
-
-        /* return User::where('status', true)
-                        ->where('name', 'like', "%".$this->buscaestudi."%")
-                        ->orWhere('documento', 'like', "%".$this->buscaestudi."%")
-                        ->orderBy('name')
-                        ->with('roles')->get()->filter(
-                            fn ($user) => $user->roles->where('name', 'Estudiante')->toArray()
-                        ); */
+                        ->paginate($this->pages); */
     }
 
     private function noestudiantes(){
@@ -541,12 +538,6 @@ class MatriculasCrear extends Component
                     ->whereBetween('rol_id', [1,4])
                     ->orderBy('name', 'ASC')
                     ->get();
-
-        /* return User::where('status', true)
-                        ->orderBy('name')
-                        ->with('roles')->get()->filter(
-                            fn ($user) => $user->roles->where('name', '!=', 'Estudiante')->toArray()
-                        ); */
     }
 
     private function sedes(){
