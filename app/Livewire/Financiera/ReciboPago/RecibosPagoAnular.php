@@ -141,29 +141,44 @@ class RecibosPagoAnular extends Component
     }
 
     public function ajusInventario($value){
-
         //Buscar el movimiento del registro con el
-        // Crear registro inverso
-        $nuevoRegistro=Inventario::create([
-            'tipo'=>$this->tipo,
-            'fecha_movimiento'=>now(),
-            'cantidad'=>$this->cantidad,
-            'saldo'=>$this->nuevoSaldo,
-            'precio'=>$this->precio,
-            'descripcion'=>"--- ¡ANULACIÓN! ---".now()." ".Auth::user()->name." crea movimiento de anulación del movimiento N°: ".$this->id." por: ".$this->motivo.". ".$this->descripcion,
-            'almacen_id'=>$this->almacen_id,
-            'producto_id'=>$this->producto_id,
-            'user_id'=>Auth::user()->id
-        ]);
-        //Actualizar registros
-        Inventario::whereId($this->id)->update([
-            'descripcion'=>"--- ¡ANULADO! ---".now()." ".Auth::user()->name." creo el movimiento de anulación N°: ".$nuevoRegistro->id." por: ".$this->motivo.". ".$this->descripcion,
-            'status'=>false
-        ]);
+        $reg=Inventario::where('id',intval($value->id_relacional))->first();
+        if($reg->tipo===0){
 
-        Inventario::whereId($this->ultimoregistro->id)->update([
-            'status'=>false
-        ]);
+                $ultimoregistro= Inventario::where('almacen_id', $reg->almacen_id)
+                                            ->where('producto_id', $reg->producto_id)
+                                            ->where('status', true)
+                                            ->first();
+                // Crear registro inverso
+                $nuevoRegistro=Inventario::create([
+                                                'tipo'=>1,
+                                                'fecha_movimiento'=>now(),
+                                                'cantidad'=>$reg->cantidad,
+                                                'saldo'=>$reg->cantidad+$ultimoregistro->saldo,
+                                                'precio'=>$reg->precio,
+                                                'descripcion'=>"--- ¡ANULACIÓN! ---".now()." ".Auth::user()->name." ANULO EL RECIBO N°: ".$this->reciboActual->numero_recibo." por el motivo: ".$this->motivo.", se sumaron: ".$reg->cantidad." ----- ",
+                                                'almacen_id'=>$reg->almacen_id,
+                                                'producto_id'=>$reg->producto_id,
+                                                'user_id'=>Auth::user()->id
+                                            ]);
+
+                //Actualizar registros
+                $reg->update([
+                    'descripcion'=>"--- ¡ANULADO! ---".now()." ".Auth::user()->name." creo el movimiento de anulación N°: ".$nuevoRegistro->id." por: ".$this->motivo.". ".$reg->descripcion,
+                    'status'=>false
+                ]);
+
+                Inventario::whereId($ultimoregistro->id)->update([
+                    'status'=>false
+                ]);
+        }else{
+            //Actualizar registros
+            $reg->update([
+                'descripcion'=>"--- ¡ANULADO! ---".now()." ".Auth::user()->name." cambia estado de pendiente . ".$reg->descripcion,
+                'status'=>false,
+                'entregado'=>true
+            ]);
+        }
     }
 
     public function render()

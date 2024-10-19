@@ -444,6 +444,12 @@ class Salida extends Component
                                             'entregado'=>true
                                         ]);
 
+                            DB::table('apoyo_recibo')
+                                ->where('id',$value->id)
+                                ->update([
+                                        'id_cartera'=>$inventa->id
+                                    ]);
+
                         Pqrs::create([
                                 'estudiante_id' =>$this->alumno_id,
                                 'gestion_id'    =>Auth::user()->id,
@@ -481,12 +487,6 @@ class Salida extends Component
                             'status'=>false
                             ]);
 
-                        DB::table('apoyo_recibo')
-                            ->whereId($value->id)
-                            ->update([
-                                'id_cartera'=>$inventa->id
-                            ]);
-
 
                     }else{
 
@@ -504,6 +504,12 @@ class Salida extends Component
                                                 'entregado'=>false,
                                                 'status'=>false,
                                                 ]);
+
+                        DB::table('apoyo_recibo')
+                            ->where('id',$value->id)
+                            ->update([
+                                    'id_cartera'=>$inventa->id
+                                ]);
 
                         $con=Control::where('estudiante_id', $this->alumno_id)
                             ->where('status', true)
@@ -533,16 +539,20 @@ class Salida extends Component
 
 
                         DB::table('apoyo_recibo')
-                            ->whereId($value->id)
+                            ->where('id',$value->id)
                             ->update([
                                     'entregado'=>false,
-                                    'status'=>false
+                                    'status'=>false,
                                 ]);
 
                             $this->control=$this->control+1;
                         /* $costo=$value->cantidad*$value->valor;
                         $this->Total=$this->Total-$costo; */
                     }
+
+
+
+
 
                 }
 
