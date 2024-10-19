@@ -277,11 +277,12 @@ class Gestiones extends Component
     }
 
     public function updatedFiltrocurso(){
+        $this->reset('filtrocursogrupo','filtrogrupo');
         $modulos=Modulo::where('curso_id',intval($this->filtrocurso))
                         ->where('status',true)
                         ->select('id')
                         ->get();
-        $this->reset('filtrocursogrupo');
+
         foreach ($modulos as $value) {
             array_push($this->filtrocursogrupo,$value->id);
         }
