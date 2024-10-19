@@ -96,4 +96,10 @@ class Grupo extends Model
         });
     }
 
+    public function scopeSede($query, $sede){
+        $query->when($sede ?? null, function($query, $sede){
+            $query->where('sede_id',$sede);
+        });
+    }
+
 }

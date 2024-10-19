@@ -107,5 +107,11 @@ class Control extends Model
             $query->whereBetween('fecha_grado', [$fecha1 , $fecha2]);
         });
     }
+
+    public function scopeEstudiantes($query, $estudiantes){
+        $query->when($estudiantes ?? null, function($query, $estudiantes){
+            $query->whereIn('estudiante_id', $estudiantes);
+        });
+    }
 }
 

@@ -18,6 +18,7 @@ trait FiltroTrait
 
     //Curso
     public $is_curso=false;
+    public $is_grupo=false;
 
     //Inventario
     public $is_tipo=false;
@@ -156,6 +157,7 @@ trait FiltroTrait
                 $this->is_status_est=true;
                 $this->is_ciclos=true;
                 $this->is_profesor=true;
+                $this->is_grupo=true;
                 break;
 
             case 12:

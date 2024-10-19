@@ -14,6 +14,7 @@ class InventariosSede extends Component
     public $producto;
     public $detalle;
     public $almacen='';
+    public $tipos=['SALIDA','ENTRADA','PENDIENTE','TRASLADO'];
 
     public $ordena='status';
     public $ordenado='DESC';

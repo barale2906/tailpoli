@@ -6,6 +6,7 @@ use App\Models\Financiera\Cartera;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
+use App\Models\Inventario\Inventario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -141,6 +142,28 @@ class RecibosPagoAnular extends Component
 
     public function ajusInventario($value){
 
+        //Buscar el movimiento del registro con el
+        // Crear registro inverso
+        $nuevoRegistro=Inventario::create([
+            'tipo'=>$this->tipo,
+            'fecha_movimiento'=>now(),
+            'cantidad'=>$this->cantidad,
+            'saldo'=>$this->nuevoSaldo,
+            'precio'=>$this->precio,
+            'descripcion'=>"--- ¡ANULACIÓN! ---".now()." ".Auth::user()->name." crea movimiento de anulación del movimiento N°: ".$this->id." por: ".$this->motivo.". ".$this->descripcion,
+            'almacen_id'=>$this->almacen_id,
+            'producto_id'=>$this->producto_id,
+            'user_id'=>Auth::user()->id
+        ]);
+        //Actualizar registros
+        Inventario::whereId($this->id)->update([
+            'descripcion'=>"--- ¡ANULADO! ---".now()." ".Auth::user()->name." creo el movimiento de anulación N°: ".$nuevoRegistro->id." por: ".$this->motivo.". ".$this->descripcion,
+            'status'=>false
+        ]);
+
+        Inventario::whereId($this->ultimoregistro->id)->update([
+            'status'=>false
+        ]);
     }
 
     public function render()

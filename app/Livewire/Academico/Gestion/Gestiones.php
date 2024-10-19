@@ -8,6 +8,7 @@ use App\Models\Academico\Control;
 use App\Models\Academico\Nota;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
+use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sede;
 use App\Models\Configuracion\Estado;
 use App\Models\User;
@@ -60,12 +61,15 @@ class Gestiones extends Component
     public $buscamin='';
     public $filtroSede;
     public $filtrocurso;
+    public $filtrocursogrupo=[];
     public $filtroInides;
     public $filtroInihas;
     public $filtroinicia=[];
     public $estado_estudiante=[];
     public $filtrociclo;
     public $filtroprofesor;
+    public $filtrogrupo;
+    public $estudy=[];
     public $filtrogrado=[];
 
     protected $listeners = ['refresh' => '$refresh'];
@@ -272,6 +276,29 @@ class Gestiones extends Component
         }
     }
 
+    public function updatedFiltrocurso(){
+        $modulos=Modulo::where('curso_id',intval($this->filtrocurso))
+                        ->where('status',true)
+                        ->select('id')
+                        ->get();
+        $this->reset('filtrocursogrupo');
+        foreach ($modulos as $value) {
+            array_push($this->filtrocursogrupo,$value->id);
+        }
+    }
+
+    public function updatedFiltrogrupo(){
+        $this->reset('estudy');
+        $estu=DB::table('grupo_user')
+                    ->where('grupo_id',intval($this->filtrogrupo))
+                    ->orderBY('user_id','ASC')
+                    ->get();
+
+        foreach ($estu as $value) {
+            array_push($this->estudy,$value->user_id);
+        }
+    }
+
     public function notas($item, $id){
 
         $notas=Nota::where('grupo_id', $item)->first();
@@ -316,6 +343,7 @@ class Gestiones extends Component
                         ->status($this->estado_estudiante)
                         ->ciclo($this->filtrociclo)
                         ->profesor($this->filtroprofesor)
+                        ->estudiantes($this->estudy)
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
 
@@ -393,6 +421,17 @@ class Gestiones extends Component
                     ->get();
     }
 
+    private function grupos(){
+        return Grupo::where('inscritos','>',0)
+                        ->where('status',true)
+                        ->sede($this->filtroSede)
+                        ->curso($this->filtrocursogrupo)
+                        ->select('id','name')
+                        ->orderBy('jornada','ASC')
+                        ->orderBy('name','ASC')
+                        ->get();
+    }
+
     public function render()
     {
         return view('livewire.academico.gestion.gestiones',[
@@ -403,6 +442,7 @@ class Gestiones extends Component
             'status_estu'   =>$this->status_estu(),
             'ciclos'        =>$this->ciclos(),
             'profesores'    =>$this->profesores(),
+            'grupos'        =>$this->grupos()
         ]);
     }
 }
