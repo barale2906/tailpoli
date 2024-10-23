@@ -14,6 +14,7 @@ use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\User;
 use App\Traits\FiltroTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -51,6 +52,7 @@ class Graduaciones extends Component
     public $filtrogrado=[];
     public $observaciones;
     public $fecha_grado;
+    public $filtrodeser;
     public $estado_estudiante=[];
     public $filtrociclo;
     public $filtroprofesor;
@@ -74,6 +76,13 @@ class Graduaciones extends Component
         foreach ($sedes as $value) {
             array_push($this->sedesids,$value->sede_id);
         }
+    }
+
+    //Obtener desertados hoy
+    public function deserhoy(){
+        $margen=config('instituto.desertado_fin')+1; //Control de deserción
+        $fecha=Carbon::today()->subDays($margen); //tIEMPO DE ASISTENCIA
+        $this->filtrodeser=$fecha;
     }
 
     //Cargar variable
@@ -210,6 +219,7 @@ class Graduaciones extends Component
                                         $this->estado_estudiante,
                                         $this->filtrociclo,
                                         $this->filtroprofesor,
+                                        $this->filtrodeser
                                     );
     }
 
@@ -256,6 +266,7 @@ class Graduaciones extends Component
         $sing=Control::whereNotIn('status_est',[11])
                         ->selectRaw('controls.*, DATEDIFF(CURDATE(), ultima_asistencia) as dias_pasados')
                         ->buscar($this->buscamin)
+                        ->desert($this->filtrodeser)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
                         ->inicia($this->filtroinicia)
@@ -275,6 +286,7 @@ class Graduaciones extends Component
         $crt=Control::whereNotIn('status_est',[11])
                     ->buscar($this->buscamin)
                     ->sede($this->filtroSede)
+                    ->desert($this->filtrodeser)
                     ->curso($this->filtrocurso)
                     ->inicia($this->filtroinicia)
                     ->grado($this->filtrogrado)

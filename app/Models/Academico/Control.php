@@ -113,5 +113,11 @@ class Control extends Model
             $query->whereIn('estudiante_id', $estudiantes);
         });
     }
+
+    public function scopeDesert($query, $deser){
+        $query->when($deser ?? null, function($query, $deser){
+            $query->where('ultima_asistencia', $deser);
+        });
+    }
 }
 

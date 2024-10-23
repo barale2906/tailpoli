@@ -31,6 +31,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
     private $estadoestudiante=[];
     private $filtroprofesor;
     private $filtrociclo;
+    private $filtrodeser;
     private $fileName = "Graduaciones.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
@@ -43,6 +44,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
                                     $estado_estudiante,
                                     $filtrociclo,
                                     $filtroprofesor,
+                                    $filtrodeser,
                                 )
     {
         $this->buscamin=$buscamin;
@@ -53,6 +55,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
         $this->estado_estudiante=$estado_estudiante;
         $this->filtrociclo=$filtrociclo;
         $this->filtroprofesor=$filtroprofesor;
+        $this->filtrodeser=$filtrodeser;
 
         $estados=Estado::orderBy('id','ASC')->get();
 
@@ -69,6 +72,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
         return Control::whereNotIn('status_est',[11])
                         ->selectRaw('controls.*, DATEDIFF(CURDATE(), ultima_asistencia) as dias_pasados')
                         ->buscar($this->buscamin)
+                        ->desert($this->filtrodeser)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
                         ->inicia($this->filtroinicia)
