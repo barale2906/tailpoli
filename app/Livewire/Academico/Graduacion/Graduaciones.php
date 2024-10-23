@@ -254,6 +254,7 @@ class Graduaciones extends Component
 
     private function singrados(){
         $sing=Control::whereNotIn('status_est',[11])
+                        ->selectRaw('controls.*, DATEDIFF(CURDATE(), ultima_asistencia) as dias_pasados')
                         ->buscar($this->buscamin)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)

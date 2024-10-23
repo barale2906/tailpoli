@@ -67,6 +67,7 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
     public function collection()
     {
         return Control::whereNotIn('status_est',[11])
+                        ->selectRaw('controls.*, DATEDIFF(CURDATE(), ultima_asistencia) as dias_pasados')
                         ->buscar($this->buscamin)
                         ->sede($this->filtroSede)
                         ->curso($this->filtrocurso)
@@ -94,10 +95,12 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
             'Matricula',
             'Fecha Matricula',
             'Fecha Inicio',
+            'Fecha Finaliza',
             'Fecha Grado',
             'Programación',
             'Último Pago',
             'Última Asistencia',
+            'Días desde última asistencia',
             'Mora',
             'Kit',
             'Diploma',
@@ -124,10 +127,12 @@ class GraduacionExport implements FromCollection, WithCustomStartCell, Responsab
             $graduacion->matricula->id,
             $graduacion->matricula->created_at,
             $graduacion->inicia,
+            $graduacion->ciclo->finaliza,
             $graduacion->fecha_grado,
             $graduacion->ciclo->name,
             $graduacion->ultimo_pago,
             $graduacion->ultima_asistencia,
+            $graduacion->dias_pasados,
             $graduacion->mora,
             $graduacion->overol,
             $graduacion->diploma,

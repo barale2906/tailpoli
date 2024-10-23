@@ -42,6 +42,9 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Fecha Finalización programada
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('fecha_grado')">
                             Fecha Grado
                             @if ($ordena != 'fecha_grado')
@@ -81,6 +84,18 @@
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('ultima_asistencia')">
                             Última Asistencia
                             @if ($ordena != 'ultima_asistencia')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
+                        </th>
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('dias_pasados')">
+                            Días transcurridos
+                            @if ($ordena != 'dias_pasados')
                                 <i class="fas fa-sort"></i>
                             @else
                                 @if ($ordenado=='ASC')
@@ -222,6 +237,9 @@
                                 {{$item->inicia}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{$item->ciclo->finaliza}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$item->fecha_grado}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white text-justify capitalize">
@@ -273,6 +291,9 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$item->ultima_asistencia}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                {{$item->dias_pasados}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 $ {{number_format($item->mora, 0, ',', '.')}}
