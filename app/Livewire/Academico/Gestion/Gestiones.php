@@ -69,6 +69,7 @@ class Gestiones extends Component
     public $filtrociclo;
     public $filtroprofesor;
     public $filtrogrupo;
+    public $filtrodeser;
     public $estudy=[];
     public $filtrogrado=[];
 
@@ -330,6 +331,7 @@ class Gestiones extends Component
                                         $this->estado_estudiante,
                                         $this->filtrociclo,
                                         $this->filtroprofesor,
+                                        $this->filtrodeser
                                     );
     }
 
