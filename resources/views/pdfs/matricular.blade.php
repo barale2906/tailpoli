@@ -65,6 +65,12 @@
                                         </div>
                                         @break
 
+                                    @case('espacios')
+                                        @for ($i = 1; $i < $item['contenido']; $i++)
+                                            <br>
+                                        @endfor
+                                        @break
+
                                     @case('parrafo2')
                                         <p class="justificado font-l mt-15">
                                             {{$item['contenido']}}
@@ -848,6 +854,12 @@
                                                 </div>
                                                 @break
 
+                                            @case('espacios')
+                                                @for ($i = 1; $i < $item['contenido']; $i++)
+                                                    <br>
+                                                @endfor
+                                                @break
+
                                             @case('modulos')
                                                 <div class="content">
                                                     <h1>
@@ -1598,6 +1610,12 @@
                             </div>
                             @break
 
+                        @case('espacios')
+                                @for ($i = 1; $i < $item['contenido']; $i++)
+                                    <br>
+                                @endfor
+                                @break
+
                         @case('modulos')
                             <div class="content">
                                 <h1>
@@ -1610,6 +1628,7 @@
                                 @endforeach
                             </div>
                             @break
+
 
                         @case('linea')
                             <p class="justificado font-sm">
@@ -2329,6 +2348,12 @@
                                             {{$item['contenido']}}
                                         </p>
                                     </div>
+                                    @break
+
+                                @case('espacios')
+                                    @for ($i = 1; $i < $item['contenido']; $i++)
+                                        <br>
+                                    @endfor
                                     @break
 
                                 @case('modulos')
@@ -3066,6 +3091,12 @@
                             </div>
                             @break
 
+                        @case('espacios')
+                                @for ($i = 1; $i < $item['contenido']; $i++)
+                                    <br>
+                                @endfor
+                                @break
+
                         @case('modulos')
                             <div class="content">
                                 <h1>
@@ -3797,6 +3828,12 @@
                                             {{$item['contenido']}}
                                         </p>
                                     </div>
+                                    @break
+
+                                @case('espacios')
+                                    @for ($i = 1; $i < $item['contenido']; $i++)
+                                        <br>
+                                    @endfor
                                     @break
 
                                 @case('modulos')

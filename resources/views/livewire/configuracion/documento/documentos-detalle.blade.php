@@ -57,6 +57,7 @@
                                     <option value="cartera">cartera</option>
                                     <option value="matricula">cuadro matricula</option>
                                     <option value="modulos">Insertar modulos del curso</option>
+                                    <option value="espacios">Espacio(s)</option>
                                 </select>
                                 @error('tipodetalle')
                                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
