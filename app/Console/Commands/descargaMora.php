@@ -29,29 +29,34 @@ class descargaMora extends Command
      */
     public function handle()
     {
-        $morados=Control::whereNotIn('status_est',[2,6,11])
-                            ->where('mora','>',0)
+        $morados=Control::whereNotIn('status_est',[2,4,6,11])
+                            //->where('mora','>',0)
                             ->get();
 
-        Log::info(now().': Ejecuta DescargaMora.');
+        Log::info(now().': Ejecuta DescargaMora Ajustado.');
         foreach ($morados as $value) {
+            Control::where('id',$value->id)
+                    ->update([
+                        'mora'=>0,
+                        'estado_cartera'=>2
+                    ]);
             $cartera=Cartera::where('matricula_id',$value->matricula_id)
-                                ->where('status',3)
+                                ->where('estado_cartera_id',3)
                                 ->select('saldo')
                                 ->get();
 
             try {
-                $mora=0;
-                $registro=Control::where('id',$value->id)->first();
-                $registro->update([
-                    'mora'=>0
-                ]);
                 if($cartera){
+                    $mora=0;
                     foreach ($cartera as $item) {
-                        $registro->update([
-                            'mora'=>$mora+$item->saldo,
-                        ]);
+                        $mora=$mora+$item->saldo;
                     }
+
+                    Control::where('id',$value->id)
+                        ->update([
+                            'mora'=>$mora,
+                            'estado_cartera'=>5
+                        ]);
                 }
             } catch(Exception $exception){
                 Log::info('Linea control: ' . $value->id . ' DescargaMora No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());

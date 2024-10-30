@@ -60,18 +60,20 @@ class cargaMora extends Command
             try {
 
                 //Poner la carter en mora
-                $value->update([
-                    'status'=>3,
-                    'estado_cartera_id'=>3,
-                ]);
+                Cartera::where('id',$value->id)
+                        ->update([
+                            'status'=>3,
+                            'estado_cartera_id'=>3,
+                        ]);
 
                 $control=Control::where('status', true)
                                 ->where('estudiante_id', $value->responsable_id)
                                 ->get();
 
                 foreach ($control as $item) {
-                    $item->update([
-                        'mora'=>$item->mora+$value->saldo,
+                    $uno=Control::find($item->id);
+                    $uno->update([
+                        'mora'=>$uno->mora+$value->saldo,
                     ]);
                 }
 
