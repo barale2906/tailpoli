@@ -34,13 +34,12 @@ class DesertadoAntiguo extends Command
     {
         $inic=Carbon::today()->subMonths(12);
         $hoy=Carbon::today();
-        $margen=config('instituto.desertado_fin')+1; //Control de deserción
+        $margen=config('instituto.desertado_fin'); //Control de deserción
         $fecha=Carbon::today()->subDays($margen); //tIEMPO DE ASISTENCIA
 
         Log::info(now().': Ejecuta Deserción antiguo. margen: '.$margen.' fecha margen: '.$fecha);
 ;
-        $controles=Control::where('status', true)
-                            ->whereNotIn('status_est',[2,6,11])
+        $controles=Control::whereNotIn('status_est',[2,4,6,11])
                             ->where('inicia','<', $inic)
                             ->orderBy('inicia','ASC')
                             ->get();
@@ -193,7 +192,7 @@ class DesertadoAntiguo extends Command
                     }
 
             } catch(Exception $exception){
-                Log::info('Linea control: ' . $value->id . ' Deserción No permitio registrar antiguo: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::info('Linea control: ' . $value->id . ' Deserción antiguo No permitio registrar antiguo: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
     }

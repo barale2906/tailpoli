@@ -38,13 +38,13 @@ class desercion extends Command
     {
         $inic=Carbon::today()->subMonths(12);
         $hoy=Carbon::today();
-        $margen=config('instituto.desertado_fin')+1; //Control de deserción
+        $margen=config('instituto.desertado_fin'); //Control de deserción
         $fecha=Carbon::today()->subDays($margen); //tIEMPO DE ASISTENCIA
 
         Log::info(now().': Ejecuta Deserción reciente. margen: '.$margen.' fecha margen: '.$fecha);
 ;
         $controles=Control::where('status', true)
-                            ->whereNotIn('status_est',[2,6,11])
+                            ->whereNotIn('status_est',[2,4,6,11])
                             ->where('inicia','>', $inic)
                             ->orderBy('inicia','ASC')
                             ->get();
