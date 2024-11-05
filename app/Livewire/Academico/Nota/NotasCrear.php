@@ -13,6 +13,7 @@ class NotasCrear extends Component
 {
     public $actual;
     public $profesor_id;
+    public $jornada_id;
     public $grupo_id;
     public $grupos;
     public $profesores;
@@ -51,7 +52,7 @@ class NotasCrear extends Component
                                 );
     }
 
-    public function updatedProfesorId(){
+    public function updatedJornadaId(){
         $this->grupoUsu();
     }
 
@@ -73,6 +74,7 @@ class NotasCrear extends Component
 
         $this->grupos=Grupo::where('status', true)
                             ->where('profesor_id', $this->profesor_id)
+                            ->where('jornada',$this->jornada_id)
                             ->orderBy('name')
                             ->get();
 

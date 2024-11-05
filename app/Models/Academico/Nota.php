@@ -26,5 +26,31 @@ class Nota extends Model
         return $this->BelongsTo(Grupo::class);
     }
 
+    public function scopeBuscar($query, $item){
+        $query->when($item ?? null, function($query, $item){
+            $query->where('descripcion', 'like', "%".$item."%")
+                    ->orWhereHas('grupo', function($q) use($item) {
+                        $q->where('name', 'like', "%".$item."%");
+                    })
+                    ->orWhereHas('profesor', function($qu) use($item){
+                        $qu->where('name', 'like', "%".$item."%");
+                    });
+        });
+    }
+
+    public function scopeProfesor($query, $profesor){
+        $query->when($profesor ?? null, function($query, $profesor){
+            $query->where('profesor_id', $profesor);
+        });
+    }
+
+    public function scopeJornada($query, $jornada){
+        $query->when($jornada ?? null, function($query, $jornada){
+            $query->WhereHas('grupo', function($qu) use($jornada){
+                $qu->where('jornada', $jornada);
+            });
+        });
+    }
+
 
 }

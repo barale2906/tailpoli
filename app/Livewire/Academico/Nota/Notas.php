@@ -3,6 +3,7 @@
 namespace App\Livewire\Academico\Nota;
 
 use App\Models\Academico\Nota;
+use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,6 +21,9 @@ class Notas extends Component
     public $is_editing = false;
     public $is_asistencia = false;
     public $act;
+
+    public $filtroprofesor;
+    public $filtrojornada;
 
 
     public $elegido;
@@ -120,25 +124,24 @@ class Notas extends Component
 
     private function notas()
     {
-        return Nota::query()
-                        ->with(['grupo', 'profesor'])
-                        ->when($this->buscamin, function($query){
-                            return $query->where('descripcion', 'like', "%".$this->buscamin."%")
-                                    ->orWhereHas('grupo', function($q){
-                                        $q->where('name', 'like', "%".$this->buscamin."%");
-                                    })
-                                    ->orWhereHas('profesor', function($qu){
-                                        $qu->where('name', 'like', "%".$this->buscamin."%");
-                                    });
-                        })
+        return Nota::buscar($this->buscamin)
+                        ->profesor(intval($this->filtroprofesor))
+                        ->jornada(intval($this->filtrojornada))
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
+    }
+
+    private function profesores(){
+        return User::where('rol_id',5)
+                    ->orderBy('name','ASC')
+                    ->get();
     }
 
     public function render()
     {
         return view('livewire.academico.nota.notas',[
             'notas'=>$this->notas(),
+            'profesores'=>$this->profesores()
         ]);
     }
 }

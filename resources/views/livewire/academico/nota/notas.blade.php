@@ -5,6 +5,7 @@
 
     @if ($is_modify)
         <div class="flex justify-end mb-4 ">
+
             <div class="w-full">
                 <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
                 <div class="relative">
@@ -24,6 +25,30 @@
                         Limpiar Filtro
                     </button>
                 </div>
+            </div>
+        </div>
+        <div class="flex justify-end mb-4 ">
+            <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+
+                <label for="filtroprofesor" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Profesores</label>
+                <select wire:model.live="filtroprofesor" id="filtroprofesor"
+                class="block py-2.5 px-2.5 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    <option >Profesor...</option>
+                    @foreach ($profesores as $item)
+                        <option value={{$item->id}}>{{$item->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+                <label for="filtrojornada" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Jornada</label>
+                <select wire:model.live="filtrojornada" id="filtrojornada"
+                class="block py-2.5 px-1 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    <option >Elija Jornada...</option>
+                    <option value=1>Mañana</option>
+                    <option value=2>Tarde</option>
+                    <option value=3>Noche</option>
+                    <option value=4>Fin de Semana</option>
+                </select>
             </div>
             @can('ac_notaCrear')
                 <a href="#" wire:click.prevent="$dispatch('created')" class="w-auto text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
