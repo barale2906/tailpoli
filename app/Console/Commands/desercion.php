@@ -44,7 +44,7 @@ class desercion extends Command
         Log::info(now().': Ejecuta Deserción reciente. margen: '.$margen.' fecha margen: '.$fecha);
 ;
         $controles=Control::where('status', true)
-                            ->whereNotIn('status_est',[2,4,6,11])
+                            ->whereNotIn('status_est',[2,4,6,11,13])
                             ->where('inicia','>', $inic)
                             ->orderBy('inicia','ASC')
                             ->get();

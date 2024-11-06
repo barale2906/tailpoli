@@ -36,6 +36,7 @@ class Graduaciones extends Component
     public $is_observaciones=false;
     public $is_document=false;
     public $is_gradua=false;
+    public $is_status=false;
     public $crtid;
     public $elegido;
     public $ruta=2;
@@ -52,6 +53,7 @@ class Graduaciones extends Component
     public $filtrogrado=[];
     public $observaciones;
     public $fecha_grado;
+    public $nuevoestado;
     public $filtrodeser;
     public $estado_estudiante=[];
     public $filtrociclo;
@@ -187,7 +189,9 @@ class Graduaciones extends Component
                         'is_observaciones',
                         'is_document',
                         'is_gradua',
-                        'observaciones'
+                        'is_status',
+                        'observaciones',
+                        'nuevoestado'
                     );
     }
 
@@ -227,6 +231,42 @@ class Graduaciones extends Component
         $this->is_gradua=!$this->is_gradua;
         $this->elegido=Control::find($id);
         $this->crtid=$id;
+    }
+
+    public function statuscambiar($id){
+        $this->is_status=!$this->is_status;
+        $this->elegido=Control::find($id);
+        $this->crtid=$id;
+    }
+
+    public function statusactualiza(){
+        Cartera::where('responsable_id',$this->elegido->estudiante_id)
+                                    ->update([
+                                        'status_est'    =>$this->nuevoestado,
+                                    ]);
+
+        Matricula::where('alumno_id', $this->elegido->estudiante_id)
+                        ->update([
+                            'status_est'    =>$this->nuevoestado
+                        ]);
+
+        $this->elegido->update([
+                        'status_est'    =>$this->nuevoestado,
+                    ]);
+
+        Pqrs::create([
+            'estudiante_id' =>$this->elegido->estudiante_id,
+            'gestion_id'    =>Auth::user()->id,
+            'fecha'         =>now(),
+            'tipo'          =>1,
+            'observaciones' =>'ACÁDEMICO: '.Auth::user()->name." escribio: ".$this->observaciones.". CAMBIO DE ESTADO. ----- ",
+            'status'        =>4
+        ]);
+
+        $this->dispatch('alerta', name:'Estudiante CAMBIO DE ESTADO.');
+
+        //refresh
+        $this->dispatch('cancelando');
     }
 
     public function graduaprueba(){

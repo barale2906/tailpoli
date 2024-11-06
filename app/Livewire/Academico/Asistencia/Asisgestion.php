@@ -255,11 +255,19 @@ class Asisgestion extends Component
             ]);
 
         //Registrar control
-        Control::where('estudiante_id', $alumno_id)
+        $crt=Control::where('estudiante_id', $alumno_id)
                 ->where('status', true)
-                ->update([
+                ->first();
+
+                $crt->update([
                     'ultima_asistencia'=>$registro->fecha_clase,
                 ]);
+
+        if($crt->status_est===5){
+            $crt->update([
+                'status_est'=>1
+            ]);
+        }
 
         $this->cargarActual();
     }
