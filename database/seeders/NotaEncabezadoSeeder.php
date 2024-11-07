@@ -16,9 +16,11 @@ class NotaEncabezadoSeeder extends Seeder
      */
     public function run(): void
     {
-        $con=Grupo::where('inscritos', '>',0)
+        /* $con=Grupo::where('inscritos', '>',0)
                     ->orderBy('id', 'DESC')
-                    ->get();
+                    ->get(); */
+
+        $con=Grupo::all();
 
         foreach ($con as $value) {
             try {
