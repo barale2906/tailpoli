@@ -245,31 +245,41 @@ class Asisgestion extends Component
                     ->where('id',$registroasiste)
                     ->first();
 
-        DB::table('asistencia_detalle_registro')
+        //Verificar la carga
+        $esta=DB::table('asistencia_detalle_registro')
+                    ->where('asistencia_detalle_id',$detalle)
+                    ->where('registro_asistencia_id',$registro->id)
+                    ->where('fecha_asis',$registro->fecha_clase)
+                    ->count('id');
+
+        if($esta===0){
+            DB::table('asistencia_detalle_registro')
             ->insert([
-                'Asistencia_detalle_id'     => $detalle,
+                'asistencia_detalle_id'     => $detalle,
                 'fecha_asis'                => $registro->fecha_clase,
                 'registro_asistencia_id'    => $registro->id,
                 'created_at'                => now(),
                 'updated_at'                => now()
             ]);
 
-        //Registrar control
-        $crt=Control::where('estudiante_id', $alumno_id)
-                ->where('status', true)
-                ->first();
+            //Registrar control
+            $crt=Control::where('estudiante_id', $alumno_id)
+                    ->where('status', true)
+                    ->first();
 
+                    $crt->update([
+                        'ultima_asistencia'=>$registro->fecha_clase,
+                    ]);
+
+            if($crt->status_est===5){
                 $crt->update([
-                    'ultima_asistencia'=>$registro->fecha_clase,
+                    'status_est'=>1
                 ]);
+            }
 
-        if($crt->status_est===5){
-            $crt->update([
-                'status_est'=>1
-            ]);
+            $this->cargarActual();
         }
 
-        $this->cargarActual();
     }
 
     public function exportar(){
