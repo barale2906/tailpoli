@@ -151,6 +151,14 @@ class AcaMatriculaExport implements FromCollection, WithCustomStartCell, Respons
             case 11:
                 $estudiante="Anulado";
                 break;
+
+            case 12:
+                $estudiante="Desertado Antiguo";
+                break;
+
+            case 13:
+                $estudiante="Finalizado";
+                break;
         }
 
         return [
