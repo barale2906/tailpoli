@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('Gestion:LimpiApoyo')->timezone('America/Bogota')->at('00:10');  //->everyThreeMinutes();
         $schedule->command('Ciclo:vencimiento')->timezone('America/Bogota')->at('00:20');  //->everyThreeMinutes();
-        $schedule->command('Control:vencimiento')->timezone('America/Bogota')->at('00:40');  //->everyThreeMinutes();
+        //$schedule->command('Control:vencimiento')->timezone('America/Bogota')->at('00:40');  //->everyThreeMinutes();
         $schedule->command('Documento:vigencia')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
         $schedule->command('Cartera:cargaMulta')->timezone('America/Bogota')->at('01:10');  //->everyThreeMinutes();
         $schedule->command('Cartera:cargaMora')->timezone('America/Bogota')->at('01:30');  //->everyThreeMinutes();
