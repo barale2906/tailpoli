@@ -408,6 +408,7 @@ class Salida extends Component
                                             ->where('producto_id', $value->id_producto)
                                             ->where('status', true)
                                             ->select('id','saldo')
+                                            ->orderBy('id','DESC')
                                             ->first();
 
 

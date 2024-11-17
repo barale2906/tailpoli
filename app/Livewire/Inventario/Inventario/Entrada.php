@@ -68,6 +68,7 @@ class Entrada extends Component
         $this->ultimoregistro= Inventario::where('almacen_id', $this->almacen->id)
                                         ->where('producto_id', $this->producto->id)
                                         ->where('status', true)
+                                        ->orderBy('id','DESC')
                                         ->first();
 
         if($this->ultimoregistro){

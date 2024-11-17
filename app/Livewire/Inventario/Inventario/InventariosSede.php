@@ -27,6 +27,24 @@ class InventariosSede extends Component
 
     }
 
+    // Ordenar Registros
+    public function organizar($campo)
+    {
+        if($this->ordenado === 'ASC')
+        {
+            $this->ordenado = 'DESC';
+        }else{
+            $this->ordenado = 'ASC';
+        }
+        return $this->ordena = $campo;
+    }
+
+    //Numero de registros
+    public function paginas($valor)
+    {
+        $this->resetPage();
+        $this->pages=$valor;
+    }
 
 
     public function alma($item){
