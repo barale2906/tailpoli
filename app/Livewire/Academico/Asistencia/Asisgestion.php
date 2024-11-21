@@ -267,9 +267,12 @@ class Asisgestion extends Component
                     ->where('status', true)
                     ->first();
 
-                    $crt->update([
-                        'ultima_asistencia'=>$registro->fecha_clase,
-                    ]);
+            //Verificar si la fecha es menor a la ya registrada
+            if($crt->ultima_asistencia<$registro->fecha_clase){
+                $crt->update([
+                    'ultima_asistencia'=>$registro->fecha_clase,
+                ]);
+            }
 
             if($crt->status_est===5){
                 $crt->update([
