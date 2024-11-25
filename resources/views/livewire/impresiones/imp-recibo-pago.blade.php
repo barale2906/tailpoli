@@ -51,7 +51,7 @@
                         </tr>
                         <tr>
                             <th scope="col" colspan="2" class="px-6 py-3 ">
-                                <h1 class="text-justify  capitalize"> teléfono cliente: {{$obtener->creador->perfil->celular}}</h1>
+                                <h1 class="text-justify  capitalize"> teléfono cliente: {{$obtener->paga->perfil->celular}}</h1>
                             </th>
                             <th scope="col" colspan="2" class="px-6 py-3 ">
                                 <h1 class="text-justify  capitalize"> Asesor: {{$obtener->creador->name}}</h1>
@@ -179,7 +179,7 @@
                         </tr>
                         <tr>
                             <th scope="col" colspan="2" class="px-6 py-3 ">
-                                <h1 class="text-justify  capitalize"> teléfono cliente: {{$obtener->creador->perfil->celular}}</h1>
+                                <h1 class="text-justify  capitalize"> teléfono cliente: {{$obtener->paga->perfil->celular}}</h1>
                             </th>
                             <th scope="col" colspan="2" class="px-6 py-3 ">
                                 <h1 class="text-justify  capitalize"> Asesor: {{$obtener->creador->name}}</h1>
@@ -306,7 +306,7 @@
                         </tr>
                         <tr>
                             <th scope="col" colspan="2" class="px-6 py-3 ">
-                                <h1 class="text-justify  capitalize"> teléfono cliente: {{$obtener->creador->perfil->celular}}</h1>
+                                <h1 class="text-justify  capitalize"> teléfono cliente: {{$obtener->paga->perfil->celular}}</h1>
                             </th>
                             <th scope="col" colspan="2" class="px-6 py-3 ">
                                 <h1 class="text-justify  capitalize"> Asesor: {{$obtener->creador->name}}</h1>
@@ -434,7 +434,7 @@
                         </tr>
                         <tr>
                             <th scope="col" colspan="2" class="px-6 py-3 ">
-                                <h1 class="text-justify  capitalize"> teléfono cliente: {{$obtener->creador->perfil->celular}}</h1>
+                                <h1 class="text-justify  capitalize"> teléfono cliente: {{$obtener->paga->perfil->celular}}</h1>
                             </th>
                             <th scope="col" colspan="2" class="px-6 py-3 ">
                                 <h1 class="text-justify  capitalize"> Asesor: {{$obtener->creador->name}}</h1>
