@@ -3,6 +3,7 @@
 namespace App\Livewire\Configuracion\Documento;
 
 use App\Models\Academico\Matricula;
+use App\Models\Configuracion\Docugrado;
 use App\Models\Configuracion\Documento;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -49,7 +50,14 @@ class DocumentosDetalle extends Component
 
         $matr=Matricula::where('status', true)->select('id')->orderBy('id', 'DESC')->first();
 
-        $this->ruta="/pdfs/documento/".$matr->id."/".$this->actual->id;
+        if($this->actual->control!==3){
+            $this->ruta="/pdfs/documento/".$matr->id."/".$this->actual->id;
+        }else{
+            $docus=Docugrado::orderBy('id','DESC')->first();
+            $this->ruta="/pdfs/docugrado/".$docus->id."/".$docus->id."/".$this->actual->id;
+        }
+
+
 
         /* switch ($this->actual->tipo) {
 

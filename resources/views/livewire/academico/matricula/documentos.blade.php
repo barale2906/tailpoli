@@ -22,12 +22,15 @@
             @endif
 
             @foreach ($documentos as $item)
-                <a href="{{$item['ruta']}}" target="_blank" class="block max-w-sm p-1 bg-teal-400 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                @if ($item['control']<2)
+                    <a href="{{$item['ruta']}}" target="_blank" class="block max-w-sm p-1 bg-teal-400 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
-                    <h5 class="mb-2 text-xs md:text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                        {{$item['titulo']}} - {{$item['tipo']}}
-                    </h5>
-                </a>
+                        <h5 class="mb-2 text-xs md:text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{$item['titulo']}} - {{$item['tipo']}}
+                        </h5>
+                    </a>
+                @endif
+
             @endforeach
         </div>
 

@@ -16,6 +16,9 @@ class DocumentosCrear extends Component
     public $detalles=false;
     public $actual;
     public $hoy;
+    public $control;
+
+    public $statuscontrol=['Libre Impresión', 'Controlado', 'Graduación'];
 
     public $enviado;
 
@@ -43,6 +46,7 @@ class DocumentosCrear extends Component
     protected $rules = [
         'fecha'        => 'required|after:hoy',
         'tipo'         => 'required',
+        'control'      => 'required',
         'titulo'       => 'required|unique:documentos|max:255',
     ];
 
@@ -54,6 +58,7 @@ class DocumentosCrear extends Component
         $this->reset(
                         'fecha',
                         'tipo',
+                        'control',
                         'titulo'
                     );
     }
@@ -69,6 +74,7 @@ class DocumentosCrear extends Component
                                     'fecha'     =>$this->fecha,
                                     'tipo'      =>$this->tipo,
                                     'titulo'    =>$this->titulo,
+                                    'control'   =>$this->control,
                                     'creador_id'=>Auth::user()->id,
                                 ]);
 

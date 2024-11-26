@@ -2,6 +2,7 @@
 
 namespace App\Models\Academico;
 
+use App\Models\Configuracion\Docugrado;
 use App\Models\Configuracion\Documento;
 use App\Models\Configuracion\DocumentoFirmado;
 use App\Models\Configuracion\Sede;
@@ -13,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Matricula extends Model
 {
@@ -80,6 +80,11 @@ class Matricula extends Model
     public function control(): HasMany
     {
         return $this->hasMany(Control::class);
+    }
+
+    public function docugrados(): HasMany
+    {
+        return $this->hasMany(Docugrado::class);
     }
 
 

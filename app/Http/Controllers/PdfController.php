@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\docugradosTrait;
 use App\Traits\RenderDocTrait;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 class PdfController extends Controller
 {
     use RenderDocTrait;
+    use docugradosTrait;
 
     public $documentos=['contrato','pagare','cartapagare','actaPago','comproCredito','comproEntrega','gastocertifinal','matricula'];
     public $contrat=['contrato'];
@@ -66,5 +68,17 @@ class PdfController extends Controller
 
         return $pdf->stream();
 
+    }
+
+    public function grados($ini,$fin,$doc){
+
+        $this->iniciaregistros($ini,$fin,$doc);
+
+        $cuerpodocu=$this->cuerpodocu;
+        dd($cuerpodocu);
+
+        $pdf = Pdf::loadView('pdfs.graduacion', compact(
+            'cuerpodocu'
+        ));
     }
 }

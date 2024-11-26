@@ -22,6 +22,15 @@ class RoleSeeder extends Seeder
         $Estudiante=Role::create(['name'=>'Estudiante']); */
 
         Permission::create([
+                                'name'=>'co_docugrado',
+                                'descripcion'=>'Generar los documentos de graduación',
+                                'modulo'=>'configuracion'
+                            ])->syncRoles(['Superusuario']);
+
+
+/*
+
+        Permission::create([
                             'name'=>'fi_cuentas',
                             'descripcion'=>'Ver las cuentas usadas para registrar los movimientos financieros',
                             'modulo'=>'financiera'
@@ -42,8 +51,6 @@ class RoleSeeder extends Seeder
                             'descripcion'=>'inactivar cuentas',
                             'modulo'=>'financiera'
                             ])->syncRoles(['Superusuario','Administrador','Coordinador']);
-
-/*
 
         Permission::create([
                             'name'=>'Academico',

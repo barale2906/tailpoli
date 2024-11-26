@@ -93,6 +93,7 @@ class Documentos extends Component
             $nuevo=[
                 'titulo'=>$value->titulo,
                 'tipo'=>$value->tipo,
+                'control'=>$value->control,
                 'ruta'=>$this->ruta
             ];
 
@@ -145,6 +146,7 @@ class Documentos extends Component
             $nuevo=[
                 'titulo'=>$value->titulo,
                 'tipo'=>$value->tipo,
+                'control'=>$value->control,
                 'ruta'=>$this->ruta
             ];
 

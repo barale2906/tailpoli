@@ -12,6 +12,7 @@ use App\Models\Academico\Matricula;
 use App\Models\Academico\Nota;
 use App\Models\Clientes\Crm;
 use App\Models\Clientes\Pqrs;
+use App\Models\Configuracion\Docugrado;
 use App\Models\Configuracion\DocumentoFirmado;
 use App\Models\Configuracion\Perfil;
 use App\Models\Configuracion\Sede;
@@ -243,6 +244,12 @@ class User extends Authenticatable
     public function cobranzas(): HasMany
     {
         return $this->hasMany(Cobranza::class);
+    }
+
+    //Relación uno a muchos
+    public function docugrados(): HasMany
+    {
+        return $this->hasMany(Docugrado::class);
     }
 
     /**

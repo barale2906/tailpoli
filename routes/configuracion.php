@@ -29,3 +29,7 @@ Route::get('/users', function () {
 Route::get('/documentos', function () {
     return view('configuracion.documentos.index');
 })->middleware('can:co_documentos')->name('documentos');
+
+Route::get('/docugrados', function () {
+    return view('configuracion.docugrados.index');
+})->middleware('can:co_docugrado')->name('docugrados');
