@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Configuracion\Docugrado;
+use App\Models\Configuracion\Documento;
 use Illuminate\Support\Facades\DB;
 
 trait docugradosTrait
@@ -14,9 +15,13 @@ trait docugradosTrait
     public $palab=[];
     public $reempla=[];
     public $docugrado;
+    public $orientacion;
 
 
-    public function iniciaregistros($ini,$fin,$doc){
+    public function iniciaregistros($acta,$doc){
+
+        $documento=Documento::find($doc);
+        $this->orientacion=$documento->orientacion;
 
         $this->componentes=$this->detalles=DB::table('detalle_documento')
                                             ->where('status', true)
@@ -25,10 +30,13 @@ trait docugradosTrait
                                             ->orderBy('orden', 'ASC')
                                             ->get();
 
-        for ($i=$ini; $i <= $fin; $i++) {
-            $this->docugrado=Docugrado::find($i);
-            $this->cargaPalabras();
+        $seleccionados=Docugrado::where('acta',$acta)
+                                ->select('id')
+                                ->get();
 
+        foreach ($seleccionados as $value) {
+            $this->docugrado=Docugrado::find($value->id);
+            $this->cargaPalabras();
         }
     }
 

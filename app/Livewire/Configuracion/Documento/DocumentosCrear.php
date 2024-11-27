@@ -17,6 +17,8 @@ class DocumentosCrear extends Component
     public $actual;
     public $hoy;
     public $control;
+    public $tipo_curso=3;
+    public $orientacion=1;
 
     public $statuscontrol=['Libre Impresión', 'Controlado', 'Graduación'];
 
@@ -37,6 +39,9 @@ class DocumentosCrear extends Component
         $this->fecha=$this->enviado->fecha;
         $this->tipo=$this->enviado->tipo;
         $this->titulo=$this->enviado->titulo;
+        $this->control=$this->enviado->control;
+        $this->tipo_curso=$this->enviado->tipo_curso;
+        $this->orientacion=$this->enviado->orientacion;
     }
 
 
@@ -59,7 +64,9 @@ class DocumentosCrear extends Component
                         'fecha',
                         'tipo',
                         'control',
-                        'titulo'
+                        'titulo',
+                        'tipo_curso',
+                        'orientacion'
                     );
     }
 
@@ -71,11 +78,13 @@ class DocumentosCrear extends Component
 
         //Crear documento
         $this->actual=Documento::create([
-                                    'fecha'     =>$this->fecha,
-                                    'tipo'      =>$this->tipo,
-                                    'titulo'    =>$this->titulo,
-                                    'control'   =>$this->control,
-                                    'creador_id'=>Auth::user()->id,
+                                    'fecha'         =>$this->fecha,
+                                    'tipo'          =>$this->tipo,
+                                    'titulo'        =>$this->titulo,
+                                    'control'       =>$this->control,
+                                    'tipo_curso'    =>$this->tipo_curso,
+                                    'orientacion'   =>$this->orientacion,
+                                    'creador_id'    =>Auth::user()->id,
                                 ]);
 
         //Cargar detalles si es reutilizado

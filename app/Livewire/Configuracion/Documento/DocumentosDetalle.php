@@ -50,11 +50,11 @@ class DocumentosDetalle extends Component
 
         $matr=Matricula::where('status', true)->select('id')->orderBy('id', 'DESC')->first();
 
-        if($this->actual->control!==3){
+        if($this->actual->control!==2){
             $this->ruta="/pdfs/documento/".$matr->id."/".$this->actual->id;
         }else{
-            $docus=Docugrado::orderBy('id','DESC')->first();
-            $this->ruta="/pdfs/docugrado/".$docus->id."/".$docus->id."/".$this->actual->id;
+            $docus=Docugrado::orderBy('id','DESC')->select('acta')->first();
+            $this->ruta="/pdfs/docugrado/".$docus->acta."/".$this->actual->id;
         }
 
 

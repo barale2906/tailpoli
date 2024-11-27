@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::table('documentos', function (Blueprint $table) {
 
-            $table->integer('control')->default(1)->after('tipo')->comment('1 libre impresión, 2 Controlado, 3 Graduaciones');
+            $table->integer('control')->default(0)->after('tipo')->comment('0 libre impresión, 1 Controlado, 2 Graduaciones');
+            $table->integer('tipo_curso')->default(3)->after('control')->comment('1 Práctico, 2 Técnico, 3 Indiferente');
+            $table->integer('orientacion')->default(1)->after('tipo_curso')->comment('1 Vertical, 2 Horizontal');
+
         });
     }
 
@@ -25,6 +28,8 @@ return new class extends Migration
         Schema::table('documentos', function (Blueprint $table) {
 
             $table->dropColumn('control');
+            $table->dropColumn('tipo_curso');
+            $table->dropColumn('orientacion');
         });
     }
 };

@@ -70,15 +70,20 @@ class PdfController extends Controller
 
     }
 
-    public function grados($ini,$fin,$doc){
+    public function grados($acta,$doc){
 
-        $this->iniciaregistros($ini,$fin,$doc);
+        $this->iniciaregistros($acta,$doc);
 
         $cuerpodocu=$this->cuerpodocu;
-        dd($cuerpodocu);
 
         $pdf = Pdf::loadView('pdfs.graduacion', compact(
             'cuerpodocu'
         ));
+
+        if($this->orientacion===2){
+            $pdf->setPaper('letter', 'landscape');
+        }
+
+        return $pdf->stream();
     }
 }
