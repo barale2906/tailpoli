@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('control')->default(0)->after('tipo')->comment('0 libre impresión, 1 Controlado, 2 Graduaciones');
             $table->integer('tipo_curso')->default(3)->after('control')->comment('1 Práctico, 2 Técnico, 3 Indiferente');
             $table->integer('orientacion')->default(1)->after('tipo_curso')->comment('1 Vertical, 2 Horizontal');
+            $table->integer('tamano')->default(1)->after('orientacion')->comment('1 carta, 2 oficio');
 
         });
     }
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->dropColumn('control');
             $table->dropColumn('tipo_curso');
             $table->dropColumn('orientacion');
+            $table->dropColumn('tamano');
         });
     }
 };

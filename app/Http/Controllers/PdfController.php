@@ -80,9 +80,7 @@ class PdfController extends Controller
             'cuerpodocu'
         ));
 
-        if($this->orientacion===2){
-            $pdf->setPaper('letter', 'landscape');
-        }
+        $pdf->setPaper($this->tamano, $this->orientacion);
 
         return $pdf->stream();
     }

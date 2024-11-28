@@ -20,9 +20,11 @@ return new class extends Migration
             $table->unsignedBigInteger('graduando_id');
             $table->foreign('graduando_id')->references('id')->on('users');
 
+            $table->string('titulo')->comment('Titulo obtenido');
             $table->integer('tipo_curso')->default(1)->comment('1 Práctico, 2 Técnico, 3 Indiferente');
             $table->date('fecha_grado')->comment('Fecha de la graduación');
             $table->string('acta')->comment('Número del acta');
+            $table->date('fecha_acta')->comment('Fecha del acta');
             $table->integer('alumnos_graduados')->comment('Alumnos graduados con esa acta');
             $table->string('alumno_inicia')->comment('Primer alumno registrado en el acta');
             $table->string('alumno_finaliza')->comment('último alumno registrado en el acta');

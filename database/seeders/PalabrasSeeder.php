@@ -15,6 +15,71 @@ class PalabrasSeeder extends Seeder
     {
         DB::table('palabras_clave')
                 ->insert([
+                    'palabra'=>'gradonumeroacta',
+                    'descripcion'=>'Número de acta de grado.',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'gradoactafecha',
+                    'descripcion'=>'Fecha acta de grado.',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'gradofecha',
+                    'descripcion'=>'Fecha de grado.',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'gradocantgraduados',
+                    'descripcion'=>'Número de alumnos graduados en esa acta.',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'gradoinicialumno',
+                    'descripcion'=>'Alumno inicia acta',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'gradoalumnofinaliza',
+                    'descripcion'=>'Alumno finaliza acta',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'gradofolio',
+                    'descripcion'=>'Número de folio del acta',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        DB::table('palabras_clave')
+                ->insert([
+                    'palabra'=>'gradotitulo',
+                    'descripcion'=>'Número de folio del acta',
+                    'created_at'=>now(),
+                    'updated_at'=>now(),
+                ]);
+
+        /*
+        DB::table('palabras_clave')
+                ->insert([
                     'palabra'=>'fopamatricula',
                     'descripcion'=>'Valor en numeros de la matricula a pagar inicial.',
                     'created_at'=>now(),
@@ -29,7 +94,7 @@ class PalabrasSeeder extends Seeder
                     'updated_at'=>now(),
                 ]);
 
-        /* DB::table('palabras_clave')
+        DB::table('palabras_clave')
                 ->insert([
                     'palabra'=>'fopaprimerdia',
                     'descripcion'=>'Día de pago de la primer cuota.',

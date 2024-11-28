@@ -19,6 +19,7 @@ class DocumentosCrear extends Component
     public $control;
     public $tipo_curso=3;
     public $orientacion=1;
+    public $tamano=1;
 
     public $statuscontrol=['Libre Impresión', 'Controlado', 'Graduación'];
 
@@ -42,6 +43,7 @@ class DocumentosCrear extends Component
         $this->control=$this->enviado->control;
         $this->tipo_curso=$this->enviado->tipo_curso;
         $this->orientacion=$this->enviado->orientacion;
+        $this->tamano=$this->enviado->tamano;
     }
 
 
@@ -66,7 +68,8 @@ class DocumentosCrear extends Component
                         'control',
                         'titulo',
                         'tipo_curso',
-                        'orientacion'
+                        'orientacion',
+                        'tamano'
                     );
     }
 
@@ -84,6 +87,7 @@ class DocumentosCrear extends Component
                                     'control'       =>$this->control,
                                     'tipo_curso'    =>$this->tipo_curso,
                                     'orientacion'   =>$this->orientacion,
+                                    'tamano'        =>$this->tamano,
                                     'creador_id'    =>Auth::user()->id,
                                 ]);
 

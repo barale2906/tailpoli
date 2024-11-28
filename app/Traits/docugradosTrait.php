@@ -16,12 +16,25 @@ trait docugradosTrait
     public $reempla=[];
     public $docugrado;
     public $orientacion;
+    public $tamano;
 
 
     public function iniciaregistros($acta,$doc){
 
         $documento=Documento::find($doc);
-        $this->orientacion=$documento->orientacion;
+        if($documento->orientacion===1){
+            $this->orientacion='portrait';
+        }
+        if($documento->orientacion===2){
+            $this->orientacion='landscape';
+        }
+        if($documento->tamano===1){
+            $this->orientacion='letter';
+        }
+        if($documento->tamano===2){
+            $this->orientacion=[0, 0, 612, 1008];
+        }
+
 
         $this->componentes=$this->detalles=DB::table('detalle_documento')
                                             ->where('status', true)
@@ -58,7 +71,15 @@ trait docugradosTrait
             'docuExpedi',
             'cursoEstu',
             'nitInsti',
-            'nombreInsti'
+            'nombreInsti',
+            'gradonumeroacta',
+            'gradoactafecha',
+            'gradofecha',
+            'gradocantgraduados',
+            'gradoinicialumno',
+            'gradoalumnofinaliza',
+            'gradofolio',
+            'gradotitulo',
         ];
 
         $this->equi();
@@ -79,6 +100,14 @@ trait docugradosTrait
         $cursoEstu=strtoupper($this->docugrado->matricula->curso->name); //cursoEstu	Curso al que se inscribio estudiante
         $nitInsti=config('instituto.nit'); //nitInsti	NIT del poliandino
         $nombreInsti=strtoupper(config('instituto.nombre_empresa')); //nombreInsti	Nombre del poliandino
+        $gradonumeroacta=$this->docugrado->gradonumeroacta;
+        $gradoactafecha=$this->docugrado->gradoactafecha;
+        $gradofecha=$this->docugrado->gradofecha;
+        $gradocantgraduados=$this->docugrado->gradocantgraduados;
+        $gradoinicialumno=$this->docugrado->gradoinicialumno;
+        $gradoalumnofinaliza=$this->docugrado->gradoalumnofinaliza;
+        $gradofolio=$this->docugrado->gradofolio;
+        $gradotitulo=$this->docugrado->gradotitulo;
 
         $this->reempla=[
             $matriculaEstu,
@@ -93,6 +122,14 @@ trait docugradosTrait
             $cursoEstu,
             $nitInsti,
             $nombreInsti,
+            $gradonumeroacta,
+            $gradoactafecha,
+            $gradofecha,
+            $gradocantgraduados,
+            $gradoinicialumno,
+            $gradoalumnofinaliza,
+            $gradofolio,
+            $gradotitulo
         ];
 
         $this->doccrea();
