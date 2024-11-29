@@ -17,23 +17,16 @@ trait docugradosTrait
     public $docugrado;
     public $orientacion;
     public $tamano;
+    public $documento;
+    public $margensup=35;
+    public $titulotec;
+    public $temas;
 
 
     public function iniciaregistros($acta,$doc){
 
-        $documento=Documento::find($doc);
-        if($documento->orientacion===1){
-            $this->orientacion='portrait';
-        }
-        if($documento->orientacion===2){
-            $this->orientacion='landscape';
-        }
-        if($documento->tamano===1){
-            $this->orientacion='letter';
-        }
-        if($documento->tamano===2){
-            $this->orientacion=[0, 0, 612, 1008];
-        }
+        $this->documento=Documento::find($doc);
+        $this->configpag();
 
 
         $this->componentes=$this->detalles=DB::table('detalle_documento')
@@ -49,12 +42,51 @@ trait docugradosTrait
 
         foreach ($seleccionados as $value) {
             $this->docugrado=Docugrado::find($value->id);
+            $this->titulobten();
             $this->cargaPalabras();
         }
     }
 
+    public function titulobten(){
+        if($this->docugrado->tipo_curso===1){
+            $titulo=DB::table('titulotecnico')
+                        ->where('curso_id',$this->docugrado->matricula->curso->id)
+                        ->where('tipo',1)
+                        ->first();
 
+            $this->titulotec=$titulo->descripcion;
 
+            $this->temas=DB::table('titulotecnico')
+                            ->where('curso_id',$this->docugrado->matricula->curso->id)
+                            ->where('tipo',2)
+                            ->get();
+        }
+    }
+
+    public function configpag(){
+
+        // Configurar orientación
+        if($this->documento->orientacion===1){
+            $this->orientacion='portrait';
+        }
+        if($this->documento->orientacion===2){
+            $this->orientacion='landscape';
+        }
+
+        // Configurar tamaño
+        if($this->documento->tamano===1){
+            $this->tamano='letter';
+        }
+        if($this->documento->tamano===2){ //oficio
+            $this->tamano=[0, 0, 612, 1008];
+        }
+
+        // Configurar margen superior
+        if($this->documento->tipo==="diploma"){
+            $this->margensup=100;
+        }
+
+    }
 
     public function cargaPalabras(){
 

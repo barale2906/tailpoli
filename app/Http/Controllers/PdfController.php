@@ -75,10 +75,20 @@ class PdfController extends Controller
         $this->iniciaregistros($acta,$doc);
 
         $cuerpodocu=$this->cuerpodocu;
+        $margensup=$this->margensup;
+        $titulotec=$this->titulotec;
+        $temas=$this->temas;
 
         $pdf = Pdf::loadView('pdfs.graduacion', compact(
-            'cuerpodocu'
+            'cuerpodocu',
+            'margensup',
+            'titulotec',
+            'temas'
         ));
+
+        /* $pdf->setOptions([
+            'margin-top' => $this->margensup,  // Margen superior en milímetros
+        ]); */
 
         $pdf->setPaper($this->tamano, $this->orientacion);
 
