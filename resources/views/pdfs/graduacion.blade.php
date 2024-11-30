@@ -130,7 +130,7 @@
             .footer {
                 bottom: 4cm;
                 position: fixed;
-                text-align: center;
+                text-align: right;
                 width: 100%;
                 font-size: x-small;
             }
