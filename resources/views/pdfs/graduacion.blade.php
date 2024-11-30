@@ -128,7 +128,7 @@
             }
 
             .footer {
-                bottom: 2.5cm;
+                bottom: 4cm;
                 position: fixed;
                 text-align: center;
                 width: 100%;
