@@ -6,6 +6,7 @@ trait FiltroTrait
 {
     public $is_filtro=true;
     public $txt;
+    public $is_campo=true;
 
     //Matricula
     public $is_Creades=false;
@@ -50,6 +51,10 @@ trait FiltroTrait
     public $is_fechatransaccion=false;
     public $is_medio=false;
     public $is_cajero=false;
+
+    //Documentos grado
+    public $is_acta=false;
+    public $is_control=false;
 
 
     public function filtroMostrar(){
@@ -183,6 +188,18 @@ trait FiltroTrait
                 $this->is_curso=true;
                 $this->is_sededir=true;
                 $this->is_etapa=true;
+                break;
+
+            case 15:
+                $this->is_campo=false;
+                $this->is_status_est=true;
+                $this->is_sede=true;
+                break;
+            case 16:
+                $this->is_campo=false;
+                $this->is_acta=true;
+                $this->is_control=true;
+                $this->is_filtro=!$this->is_filtro;
                 break;
         }
     }

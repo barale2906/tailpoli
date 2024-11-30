@@ -3,6 +3,6 @@
         Documentos de grado
     @endpush
 
-    <livewire:configuracion.documento.documentos />
+    <livewire:configuracion.docugrado.gestion-grados />
 
 </x-admin-layout>

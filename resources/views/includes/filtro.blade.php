@@ -1,19 +1,22 @@
 @if ($is_filtro)
-    <div class="w-full">
-        <label for="search" class="mb-2 text-xs font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
-        <h1 class="text-center text-xs md:text-lg font-semibold">{{$txt}}</h1>
-        <div class="relative">
-            <input
-                type="search"
-                id="buscar"
-                class="block w-full p-4 pl-10 text-xs md:text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="ingrese datos"
-                wire:model.live="buscar"
-                wire:keydown="buscaText()"
-                >
+    @if ($is_campo)
+        <div class="w-full">
+            <label for="search" class="mb-2 text-xs font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
+            <h1 class="text-center text-xs md:text-lg font-semibold">{{$txt}}</h1>
+            <div class="relative">
+                <input
+                    type="search"
+                    id="buscar"
+                    class="block w-full p-4 pl-10 text-xs md:text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="ingrese datos"
+                    wire:model.live="buscar"
+                    wire:keydown="buscaText()"
+                    >
 
+            </div>
         </div>
-    </div>
+    @endif
+
 @else
 
 
@@ -21,20 +24,22 @@
         <h5 class="mb-2 text-xs md:text-xl font-bold text-gray-900 dark:text-white">Seleccione los parámetros de filtrado </h5>
 
         <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="w-full sm:col-span-1 md:col-span-4">
-                <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar: </label>
-                <h1 class="text-center text-xs md:text-lg font-semibold">{{$txt}}</h1>
-                <div class="relative">
+            @if ($is_campo)
+                <div class="w-full sm:col-span-1 md:col-span-4">
+                    <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar: </label>
+                    <h1 class="text-center text-xs md:text-lg font-semibold">{{$txt}}</h1>
+                    <div class="relative">
 
-                    <input
-                        type="search"
-                        id="buscar"
-                        class="block w-full p-4 pl-10 text-xs md:text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ingrese datos"
-                        wire:model.live="buscar"
-                        wire:keydown="buscaText()"
-                        >
+                        <input
+                            type="search"
+                            id="buscar"
+                            class="block w-full p-4 pl-10 text-xs md:text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ingrese datos"
+                            wire:model.live="buscar"
+                            wire:keydown="buscaText()"
+                            >
+                    </div>
                 </div>
-            </div>
+            @endif
             @if ($is_Creades)
                 <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
                     <label for="filtroCreades" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Fecha de creación</label>
@@ -407,6 +412,33 @@
                         <option >Elija programación... </option>
                         @foreach ($ciclos as $item)
                             <option value={{$item->id}}><strong>INICIA: {{$item->inicia}}</strong> /// NOMBRE: {{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+
+            @if ($is_control)
+                <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+
+                    <label for="filtrotipo_curso" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Tipo de Curso</label>
+                    <select wire:model.live="filtrotipo_curso" id="filtrotipo_curso"
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                        <option >Tipo curso</option>
+                        <option value=1>Práctico</option>
+                        <option value=2>Técnico</option>
+                    </select>
+                </div>
+            @endif
+
+            @if ($is_acta && $filtrotipo_curso>0)
+                <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+
+                    <label for="filtroacta" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Seleccione Acta</label>
+                    <select wire:model.live="filtroacta" id="filtroacta"
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                        <option >Elija acta... </option>
+                        @foreach ($actas as $item)
+                            <option value={{$item->acta}}><strong>ACTA: {{$item->acta}}</strong> /// CURSO: {{$item->titulo}}</option>
                         @endforeach
                     </select>
                 </div>
