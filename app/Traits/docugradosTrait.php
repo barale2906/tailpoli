@@ -80,6 +80,7 @@ trait docugradosTrait
         $this->folio=$this->docugrado->folio_acta;
         $this->libroregistro=$this->docugrado->libro;
         $this->acta=$this->docugrado->acta;
+        $this->diplomas=$this->docugrado->tipo_curso;
     }
 
     public function configpag(){

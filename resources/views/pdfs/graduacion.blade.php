@@ -7,14 +7,22 @@
         <link rel="shortcut icon" href="{{public_path('img/icon.ico')}}">
         <style>
             @page {
-                @if ($margensup == 100)
+                @if ($margensup == 100 && $diplomas==2)
                     margin-top: 13cm;
                     margin-right: 3cm;
                     margin-left: 3cm;
-                @else
-                    margin-top: 2.5cm;
-                    margin-right: 2cm;
-                    margin-left: 2cm;
+                @endif
+
+                @if ($margensup == 100 && $diplomas==1)
+                    margin-top: 10cm;
+                    margin-right: 3cm;
+                    margin-left: 3cm;
+                @endif
+
+                @if ($margensup != 100)
+                    margin-top: 5.5cm;
+                    margin-right: 1cm;
+                    margin-left: 3cm;
                 @endif
 
 
@@ -152,7 +160,7 @@
                     @break
 
                 @case('subtitulo')
-                    <div class="centrado font-sm capitalize p-1">
+                    <div class="centrado font-sm capitalize p-1 bold">
                         {{$item['contenido']}}
                     </div>
                     @break
@@ -257,9 +265,9 @@
 
                 @case('firma11')
                     <p class="justificado font-medium">
-                        En constancia se firma en <span class=" uppercase">{{$ciudad}}</span>, a los {{$fechagrado}}
+                        En constancia se firma en BOGOTÁ D.C., a los {{$fechagrado}}
                     </p>
-                    <table class="font-sm mt-4">
+                    <table class="font-sm mt-2">
                         <thead >
                             <tr>
                                 <th scope="col" class="celdafirma">
