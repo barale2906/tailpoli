@@ -21,8 +21,8 @@
 
                 @if ($margensup != 100)
                     margin-top: 4.5cm;
-                    margin-right: 0.8cm;
-                    margin-left: 2.7cm;
+                    margin-right: 0.9cm;
+                    margin-left: 2.4cm;
                 @endif
 
 
@@ -267,7 +267,7 @@
                     <p class="justificado font-medium">
                         En constancia se firma en BOGOTÁ D.C., a los {{$fechagrado}}
                     </p>
-                    <table class="font-sm mt-1">
+                    <table class="font-sm mt-2">
                         <thead >
                             <tr>
                                 <th scope="col" class="celdafirma">
