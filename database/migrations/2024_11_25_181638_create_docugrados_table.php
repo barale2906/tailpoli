@@ -25,10 +25,11 @@ return new class extends Migration
             $table->date('fecha_grado')->comment('Fecha de la graduación');
             $table->string('acta')->comment('Número del acta');
             $table->date('fecha_acta')->comment('Fecha del acta');
-            $table->integer('alumnos_graduados')->comment('Alumnos graduados con esa acta');
-            $table->string('alumno_inicia')->comment('Primer alumno registrado en el acta');
-            $table->string('alumno_finaliza')->comment('último alumno registrado en el acta');
+            $table->integer('alumnos_graduados')->nullable()->comment('Alumnos graduados con esa acta');
+            $table->string('alumno_inicia')->nullable()->comment('Primer alumno registrado en el acta');
+            $table->string('alumno_finaliza')->nullable()->comment('último alumno registrado en el acta');
             $table->string('folio_acta')->nullable()->comment('Número de folio del acta si aplica');
+            $table->string('libro')->nullable()->comment('libro de registro');
 
             $table->longText('observaciones')->comment('Datos del historial de uso de este registro.');
             $table->integer('user_gestiona')->comment('Id del último usuario que uso este registro.');

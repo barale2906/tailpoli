@@ -78,12 +78,25 @@ class PdfController extends Controller
         $margensup=$this->margensup;
         $titulotec=$this->titulotec;
         $temas=$this->temas;
+        $acta=$this->acta;
+        $ciudad=$this->ciudad;
+        $fechagrado=$this->fechagrado;
+        $folio=$this->folio;
+        $libro=$this->libroregistro;
+        $fechacta=$this->fechacta;
+
 
         $pdf = Pdf::loadView('pdfs.graduacion', compact(
             'cuerpodocu',
             'margensup',
             'titulotec',
-            'temas'
+            'temas',
+            'ciudad',
+            'fechagrado',
+            'acta',
+            'folio',
+            'libro',
+            'fechacta'
         ));
 
         /* $pdf->setOptions([

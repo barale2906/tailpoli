@@ -15,7 +15,8 @@ class PalabrasSeeder extends Seeder
     {
         DB::table('palabras_clave')
                 ->insert([
-                    'palabra'=>'gradonumeroacta',
+                    'control'=>2,
+                    'palabra'=>'gradnumacta',
                     'descripcion'=>'Número de acta de grado.',
                     'created_at'=>now(),
                     'updated_at'=>now(),
@@ -23,7 +24,8 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
-                    'palabra'=>'gradoactafecha',
+                    'control'=>2,
+                    'palabra'=>'gradactafec',
                     'descripcion'=>'Fecha acta de grado.',
                     'created_at'=>now(),
                     'updated_at'=>now(),
@@ -31,7 +33,8 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
-                    'palabra'=>'gradofecha',
+                    'control'=>2,
+                    'palabra'=>'gradfec',
                     'descripcion'=>'Fecha de grado.',
                     'created_at'=>now(),
                     'updated_at'=>now(),
@@ -39,7 +42,8 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
-                    'palabra'=>'gradocantgraduados',
+                    'control'=>2,
+                    'palabra'=>'gradcangrads',
                     'descripcion'=>'Número de alumnos graduados en esa acta.',
                     'created_at'=>now(),
                     'updated_at'=>now(),
@@ -47,7 +51,8 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
-                    'palabra'=>'gradoinicialumno',
+                    'control'=>2,
+                    'palabra'=>'gradinialu',
                     'descripcion'=>'Alumno inicia acta',
                     'created_at'=>now(),
                     'updated_at'=>now(),
@@ -55,7 +60,8 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
-                    'palabra'=>'gradoalumnofinaliza',
+                    'control'=>2,
+                    'palabra'=>'gradalufin',
                     'descripcion'=>'Alumno finaliza acta',
                     'created_at'=>now(),
                     'updated_at'=>now(),
@@ -63,7 +69,8 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
-                    'palabra'=>'gradofolio',
+                    'control'=>2,
+                    'palabra'=>'gradfol',
                     'descripcion'=>'Número de folio del acta',
                     'created_at'=>now(),
                     'updated_at'=>now(),
@@ -71,8 +78,9 @@ class PalabrasSeeder extends Seeder
 
         DB::table('palabras_clave')
                 ->insert([
-                    'palabra'=>'gradotitulo',
-                    'descripcion'=>'Número de folio del acta',
+                    'control'=>2,
+                    'palabra'=>'gradtit',
+                    'descripcion'=>'titulo obtenido',
                     'created_at'=>now(),
                     'updated_at'=>now(),
                 ]);

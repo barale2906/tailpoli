@@ -36,28 +36,42 @@
                                 <label for="tipodetalle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">tipo de detalle</label>
                                 <select wire:model.live="tipodetalle" id="tipodetalle" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                                     <option >Elija tipo de detalle a agregar...</option>
-                                    <option value="titulo">titulo</option>
-                                    <option value="ciudadfecha">ciudad y fecha de hoy</option>
-                                    <option value="destinatario">Estudiante Destinatario (nombre - cédula)</option>
-                                    <option value="parrafo">parráfo</option>
-                                    <option value="parrafo1">parráfo con fondo gris claro</option>
-                                    <option value="parrafo2">parráfo con tamaño de letra mas grande</option>
-                                    <option value="linea">Línea constancia con fecha</option>
-                                    <option value="linea1">Línea constancia  y acuerdo con fecha</option>
-                                    <option value="firma1">firma estudiante (todos los datos)</option>
-                                    <option value="firma2">firma estudiante (nombre - documento)</option>
-                                    <option value="firma3">firma estudiante (lineas diligenciar)</option>
-                                    <option value="firma4">firma estudiante con huella</option>
-                                    <option value="firma5">firma estudiante con huella (lineas diligenciar)</option>
-                                    <option value="firma6">firma departamento cartera</option>
-                                    <option value="firma7">firma directora</option>
-                                    <option value="firma8">firma estudiante - instituto</option>
-                                    <option value="formaPago">forma de pago</option>
-                                    <option value="horario">Horario</option>
-                                    <option value="cartera">cartera</option>
-                                    <option value="matricula">cuadro matricula</option>
-                                    <option value="modulos">Insertar modulos del curso</option>
                                     <option value="espacios">Espacio(s)</option>
+                                    <option value="titulo">titulo</option>
+                                    <option value="parrafo">parráfo</option>
+                                    {{--
+                                    <option value="parrafo1">parráfo con fondo gris claro</option>
+                                    <option value="parrafo2">parráfo con tamaño de letra mas grande</option> --}}
+                                    @if ($actual->control===1)
+                                        <option value="ciudadfecha">ciudad y fecha de hoy</option>
+                                        <option value="destinatario">Estudiante Destinatario (nombre - cédula)</option>
+                                        <option value="linea">Línea constancia con fecha</option>
+                                        <option value="linea1">Línea constancia  y acuerdo con fecha</option>
+                                        <option value="formaPago">forma de pago</option>
+                                        <option value="horario">Horario</option>
+                                        <option value="cartera">cartera</option>
+                                        <option value="matricula">cuadro matricula</option>
+                                        <option value="modulos">Insertar modulos del curso</option>
+                                        <option value="firma1">firma estudiante (todos los datos)</option>
+                                        <option value="firma2">firma estudiante (nombre - documento)</option>
+                                        <option value="firma3">firma estudiante (lineas diligenciar)</option>
+                                        <option value="firma4">firma estudiante con huella</option>
+                                        <option value="firma5">firma estudiante con huella (lineas diligenciar)</option>
+                                        <option value="firma6">firma departamento cartera</option>
+                                        <option value="firma8">firma estudiante - instituto</option>
+                                    @endif
+                                    @if ($actual->control===2)
+                                        <option value="subtitulo">Sub - titulo</option>
+                                        <option value="titulo_obtenido">Titulo Obtenido</option>
+                                        <option value="temastecnico">Temas curso - Técnico</option>
+                                        <option value="firma9">firma directora - coordinador manual / Fecha de grado pie de página</option>
+                                        <option value="firma11">firma directora - coordinador manual / Sin Fecha de grado pie de página</option>
+                                        <option value="firma10">firma directora - Sede </option>
+                                        <option value="firma12">firma directora - constancia </option>
+
+                                    @endif
+                                    <option value="firma7">firma directora - digital</option>
+
                                 </select>
                                 @error('tipodetalle')
                                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -224,7 +238,7 @@
                 @endif
             </div>
             <div class="ring ring-yellow-300">
-                <livewire:configuracion.documento.palabras  />
+                <livewire:configuracion.documento.palabras :control="$actual->control" />
             </div>
 
         </div>

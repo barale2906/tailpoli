@@ -9,19 +9,330 @@
             @page {
                 @if ($margensup == 100)
                     margin-top: 10cm;  /* Margen superior de 10 cm */
+                    margin-right: 3cm;
+                    margin-left: 3cm;
                 @else
                     margin-top: 2.5cm;  /* Margen por defecto */
+                    margin-right: 2cm;
+                    margin-left: 2cm;
                 @endif
 
+
                 margin-bottom: 0.5cm;  /* Margen inferior fijo */
+            }
+
+            .border {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 0.2cm;
+            }
+
+            .justificado{
+                text-align: justify;
+            }
+
+            .derecha{
+                text-align: right;
+            }
+
+            .izquierda{
+                text-align: left;
+            }
+
+            .centrado{
+                text-align:center;
+            }
+            .capitalize{
+                text-transform: capitalize;
+            }
+            .uppercase{
+                text-transform: uppercase;
+            }
+            .font-l{
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: large;
+            }
+
+            .font-xl{
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: x-large;
+            }
+
+            .font-medium{
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: medium;
+            }
+            .font-sm{
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: small;
+            }
+
+            .font-titulo{
+                font-family: Comic Sans MS, cursive;
+                font-size: xx-large;
+            }
+            .bold{
+                font-weight: bold;
+            }
+
+            .mt-2{
+                margin-top: 2.2cm;
+            }
+
+            .mt-4{
+                margin-top: 4cm;
+            }
+
+            .mt-1{
+                margin-top: 0.5cm;
+            }
+
+            .mt-15{
+                margin-top: 1.5cm;
+            }
+
+            .mb-15{
+                margin-bottom: 1.5cm;
+            }
+            .celdafirma{
+                width: 50%;
+                height: auto;
+            }
+            .p-1{
+                padding: 0.1cm;
+                line-height: 1;
+            }
+            p {
+                padding: 0.1cm;
+                margin: 0.1cm;
+                line-height: 2;
+            }
+
+            h1 {
+                font-size: large;
+            }
+
+            .imgfirma{
+                width: 4cm;
+            }
+            .salto{
+                page-break-after: always;
+            }
+
+            table{
+                table-layout: auto;
+                width: 100%;
+                height: auto;
+                border-collapse:collapse;
+                border: 0.1mm;
+            }
+
+            .footer {
+                bottom: 1.5cm;
+                position: fixed;
+                text-align: center;
+                width: 100%;
+                font-size: x-small;
             }
         </style>
     </head>
     <body>
         @foreach ($cuerpodocu as $item)
-            @switch($item->tipo)
-                @case('')
+            @switch($item['tipo'])
+                @case('titulo')
+                    <h1 class="centrado uppercase font-xl">
+                        {{$item['contenido']}}
+                    </h1>
+                    @break
 
+                @case('titulo_obtenido')
+                    <h1 class="justificado uppercase bold font-l">
+                        {{$titulotec}}
+                    </h1>
+                    @break
+
+                @case('subtitulo')
+                    <div class="centrado font-sm capitalize p-1">
+                        {{$item['contenido']}}
+                    </div>
+                    @break
+
+                @case('espacios')
+                    @for ($i = 1; $i < $item['contenido']; $i++)
+                        <br>
+                    @endfor
+                    @break
+
+                @case('parrafo')
+                    <p class="justificado font-medium">
+                        {{$item['contenido']}}
+                    </p>
+                    @break
+
+                @case('firma7')
+                    <table >
+                        <thead >
+                            <tr>
+                                <th scope="col" >
+                                    <p class="justificado font-sm uppercase mt-1">
+                                        Cordialmente:
+                                    </p>
+
+                                    <p class="justificado font-sm capitalize mt-1">
+                                        Firma:
+                                    </p>
+                                    <div class="justificado">
+                                        <img class="imgfirma" src="{{public_path('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
+                                    </div>
+
+                                    <p class="justificado font-sm uppercase">
+                                        director(a)
+                                    </p>
+                                </th>
+                                <th scope="col" >
+
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="salto"></div>
+                    @break
+
+                @case('firma9')
+                    <p class="justificado font-medium">
+                        En constancia de lo anterior se firma el presente titulo, en <span class=" uppercase">{{$ciudad}}</span>, el {{$fechagrado}}
+                    </p>
+                    <table class="font-sm mt-4">
+                        <thead >
+                            <tr>
+                                <th scope="col" class="celdafirma">
+                                    ____________________________________
+                                </th>
+                                <th scope="col" class="celdafirma">
+                                    ____________________________________
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="celdafirma centrado uppercase">
+                                    DIRECTORA
+                                </th>
+                                <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                    COORDINADOR
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="footer">
+                        Anotado al folio: {{$folio}} del libro de Registro N°: {{$libro}} Acta N°: {{$acta}} a los {{$fechacta}}
+                    </div>
+                    <div class="salto"></div>
+                    @break
+
+                @case('firma10')
+                    <table >
+                        <thead >
+                            <tr>
+                                <th scope="col" >
+                                    <div class="justificado">
+                                        <img class="imgfirma" src="{{public_path('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
+                                    </div>
+
+                                    <div class="justificado font-sm p-1">
+                                        Firma <br>
+                                        Directora General
+                                    </div>
+                                </th>
+                                <th scope="col" >
+                                    <div class="derecha font-sm p-1">
+                                        Esta constancia se expide de acuerdo al Articulo 43 de la ley 115 y Art. 12 Dec. <br>
+                                        <span class="uppercase">{{$ciudad}}</span>, {{$fechagrado}}
+
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="salto"></div>
+                    @break
+
+                @case('firma11')
+                    <p class="justificado font-medium">
+                        En constancia se firma en <span class=" uppercase">{{$ciudad}}</span>, a los {{$fechagrado}}
+                    </p>
+                    <table class="font-sm mt-4">
+                        <thead >
+                            <tr>
+                                <th scope="col" class="celdafirma">
+                                    ____________________________________
+                                </th>
+                                <th scope="col" class="celdafirma">
+                                    ____________________________________
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="celdafirma centrado uppercase">
+                                    DIRECTORA
+                                </th>
+                                <th scope="col" class="celdafirma uppercase centrado font-sm p-1">
+                                    COORDINADOR
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="salto"></div>
+                    @break
+
+                @case('firma12')
+                    <p class="justificado font-medium">
+                        La anterior constancia se encuentra en el libro de registro N°: {{$libro}}, registro realizado a los {{$fechacta}}. Acta N°: {{$acta}},  folio: {{$folio}}.
+                    </p>
+                    <br>
+                    <table >
+                        <thead >
+                            <tr>
+                                <th scope="col" >
+                                    <div class="justificado">
+                                        <img class="imgfirma" src="{{public_path('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
+                                    </div>
+
+                                    <div class="justificado font-sm p-1">
+                                        {{config('instituto.directora')}} <br>
+                                        Directora General
+                                    </div>
+                                </th>
+                                <th scope="col" >
+
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="salto"></div>
+                    @break
+
+                @case('temastecnico')
+                    <table class="border">
+                        <thead >
+                            <tr>
+                                <th scope="col" class="centrado font-l bold border">
+                                    TEMAS DEL CURSO
+                                </th>
+                                <th scope="col" class="centrado font-l bold border">
+                                    ASISTENCIA Y CAPACITACIÓN
+                                </th>
+                            </tr>
+                            @foreach ($temas as $item)
+                                <tr>
+                                    <th scope="col" class="justificado font-medium border">
+                                        {{$item->descripcion}}
+                                    </th>
+                                    <th scope="col" class="centrado font-medium border">
+                                        APROBO
+                                    </th>
+                                </tr>
+                            @endforeach
+
+                        </thead>
+                    </table>
                     @break
 
             @endswitch

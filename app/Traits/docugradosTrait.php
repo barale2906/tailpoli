@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Configuracion\Docugrado;
 use App\Models\Configuracion\Documento;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 trait docugradosTrait
@@ -21,6 +22,13 @@ trait docugradosTrait
     public $margensup=35;
     public $titulotec;
     public $temas;
+    public $ciudad;
+    public $fechagrado;
+    public $folio;
+    public $libroregistro;
+    public $acta;
+    public $fechacta;
+
 
 
     public function iniciaregistros($acta,$doc){
@@ -60,7 +68,18 @@ trait docugradosTrait
                             ->where('curso_id',$this->docugrado->matricula->curso->id)
                             ->where('tipo',2)
                             ->get();
+        }else{
+            $this->titulotec=$this->docugrado->titulo;
         }
+
+        $this->ciudad=$this->docugrado->matricula->sede->sector->name;
+        $fechagrado=Carbon::create($this->docugrado->fecha_grado);
+        $this->fechagrado=$fechagrado->format('d') . ' de ' . $fechagrado->locale('es')->monthName . ' de ' . $fechagrado->format('Y');
+        $fechacta=Carbon::create($this->docugrado->fecha_acta);
+        $this->fechacta=$fechacta->format('d') . ' días del mes de ' . $fechacta->locale('es')->monthName . ' de ' . $fechacta->format('Y');
+        $this->folio=$this->docugrado->folio_acta;
+        $this->libroregistro=$this->docugrado->libro;
+        $this->acta=$this->docugrado->acta;
     }
 
     public function configpag(){
@@ -104,14 +123,14 @@ trait docugradosTrait
             'cursoEstu',
             'nitInsti',
             'nombreInsti',
-            'gradonumeroacta',
-            'gradoactafecha',
-            'gradofecha',
-            'gradocantgraduados',
-            'gradoinicialumno',
-            'gradoalumnofinaliza',
-            'gradofolio',
-            'gradotitulo',
+            'gradnumacta',
+            'gradactafec',
+            'gradfec',
+            'gradcangrads',
+            'gradinialu',
+            'gradalufin',
+            'gradfol',
+            'gradtit',
         ];
 
         $this->equi();
@@ -132,14 +151,19 @@ trait docugradosTrait
         $cursoEstu=strtoupper($this->docugrado->matricula->curso->name); //cursoEstu	Curso al que se inscribio estudiante
         $nitInsti=config('instituto.nit'); //nitInsti	NIT del poliandino
         $nombreInsti=strtoupper(config('instituto.nombre_empresa')); //nombreInsti	Nombre del poliandino
-        $gradonumeroacta=$this->docugrado->gradonumeroacta;
-        $gradoactafecha=$this->docugrado->gradoactafecha;
-        $gradofecha=$this->docugrado->gradofecha;
-        $gradocantgraduados=$this->docugrado->gradocantgraduados;
-        $gradoinicialumno=$this->docugrado->gradoinicialumno;
-        $gradoalumnofinaliza=$this->docugrado->gradoalumnofinaliza;
-        $gradofolio=$this->docugrado->gradofolio;
-        $gradotitulo=$this->docugrado->gradotitulo;
+        $fechacta=Carbon::create($this->docugrado->fecha_acta);
+        $fechactatexto=$fechacta->format('d') . ' de ' . $fechacta->locale('es')->monthName . ' de ' . $fechacta->format('Y');
+        $fechagrado=Carbon::create($this->docugrado->fecha_grado);
+        $fechagradotexto=$fechagrado->format('d') . ' de ' . $fechagrado->locale('es')->monthName . ' de ' . $fechagrado->format('Y');
+
+        $gradnumacta=$this->docugrado->acta;
+        $gradactafec=$fechactatexto;
+        $gradfec=$fechagradotexto;
+        $gradcangrads=$this->docugrado->alumnos_graduados;
+        $gradinialu=$this->docugrado->alumno_inicia;
+        $gradalufin=$this->docugrado->alumno_finaliza;
+        $gradfol=$this->docugrado->folio_acta;
+        $gradtit=$this->docugrado->titulo;
 
         $this->reempla=[
             $matriculaEstu,
@@ -154,14 +178,14 @@ trait docugradosTrait
             $cursoEstu,
             $nitInsti,
             $nombreInsti,
-            $gradonumeroacta,
-            $gradoactafecha,
-            $gradofecha,
-            $gradocantgraduados,
-            $gradoinicialumno,
-            $gradoalumnofinaliza,
-            $gradofolio,
-            $gradotitulo
+            $gradnumacta,
+            $gradactafec,
+            $gradfec,
+            $gradcangrads,
+            $gradinialu,
+            $gradalufin,
+            $gradfol,
+            $gradtit,
         ];
 
         $this->doccrea();

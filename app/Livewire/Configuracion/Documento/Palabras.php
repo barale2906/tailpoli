@@ -7,9 +7,17 @@ use Livewire\Component;
 
 class Palabras extends Component
 {
+    public $control=[];
+
+    public function mount($control){
+        $this->control=[0,$control];
+
+    }
+
     private function palabras(){
 
         return DB::table('palabras_clave')
+                    ->whereIn('control', $this->control)
                     ->where('status', true)
                     ->get();
     }
