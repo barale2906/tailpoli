@@ -8,11 +8,11 @@
         <style>
             @page {
                 @if ($margensup == 100)
-                    margin-top: 10cm;  /* Margen superior de 10 cm */
+                    margin-top: 13cm;
                     margin-right: 3cm;
                     margin-left: 3cm;
                 @else
-                    margin-top: 2.5cm;  /* Margen por defecto */
+                    margin-top: 2.5cm;
                     margin-right: 2cm;
                     margin-left: 2cm;
                 @endif
@@ -128,7 +128,7 @@
             }
 
             .footer {
-                bottom: 1.5cm;
+                bottom: 2.5cm;
                 position: fixed;
                 text-align: center;
                 width: 100%;
@@ -146,7 +146,7 @@
                     @break
 
                 @case('titulo_obtenido')
-                    <h1 class="justificado uppercase bold font-l">
+                    <h1 class="centrado uppercase bold font-l">
                         {{$titulotec}}
                     </h1>
                     @break
@@ -200,7 +200,7 @@
 
                 @case('firma9')
                     <p class="justificado font-medium">
-                        En constancia de lo anterior se firma el presente titulo, en <span class=" uppercase">{{$ciudad}}</span>, el {{$fechagrado}}
+                        En constancia de lo anterior se firma el presente titulo, en BOGOTÁ D.C., el {{$fechagrado}}
                     </p>
                     <table class="font-sm mt-4">
                         <thead >
@@ -222,7 +222,7 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="footer">
+                    <div class="footer bold">
                         Anotado al folio: {{$folio}} del libro de Registro N°: {{$libro}} Acta N°: {{$acta}} a los {{$fechacta}}
                     </div>
                     <div class="salto"></div>

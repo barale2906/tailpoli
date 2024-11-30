@@ -146,7 +146,12 @@ trait docugradosTrait
         $matriState=$this->docugrado->matricula->sede->sector->state->name; // matriState Departamento en el que se matriculo.
         $nombreEstu=strtoupper($this->docugrado->matricula->alumno->name); //nombreEstu	Nombre del estudiante
         $documentoEstu=number_format($this->docugrado->matricula->alumno->documento, 0, '.', '.'); //documentoEstu	documento del estudiante
-        $tipodocuEstu=strtoupper($this->docugrado->matricula->alumno->perfil->tipo_documento); //tipodocuEstu	tipo de documento del estudiante
+        $docuregistrado=$this->docugrado->matricula->alumno->perfil->tipo_documento; //tipodocuEstu	tipo de documento del estudiante
+        if($docuregistrado=='tarjeta identidad'){
+            $tipodocuEstu="TI";
+        }else{
+            $tipodocuEstu="CC";
+        }
         $docuExpedi=strtoupper($this->docugrado->matricula->alumno->perfil->lugar_expedicion); //docuExpedi	expedición del documento
         $cursoEstu=strtoupper($this->docugrado->matricula->curso->name); //cursoEstu	Curso al que se inscribio estudiante
         $nitInsti=config('instituto.nit'); //nitInsti	NIT del poliandino
