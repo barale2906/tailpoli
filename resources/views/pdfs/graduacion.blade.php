@@ -28,9 +28,9 @@
 
                 @if ($margensup == 100 && $diplomas==1)
                     margin-top: 10cm;
-                    margin-right: 3cm;
-                    margin-left: 3cm;
-                    margin-bottom: 1.5cm;
+                    margin-right: 3.5cm;
+                    margin-left: 3.5cm;
+                    margin-bottom: 2cm;
                 @endif
 
                 @if ($margensup != 100 && $diplomas==1)
@@ -189,7 +189,7 @@
                     @break
 
                 @case('titulo_obtepractico')
-                    <h1 class="justificado uppercase bold font-xl">
+                    <h1 class="justificado uppercase bold font-medium">
                         {{$titulotec}}
                     </h1>
                     @break
