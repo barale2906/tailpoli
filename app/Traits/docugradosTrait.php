@@ -6,6 +6,7 @@ use App\Models\Configuracion\Docugrado;
 use App\Models\Configuracion\Documento;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use NumberFormatter;
 
 trait docugradosTrait
 {
@@ -28,6 +29,7 @@ trait docugradosTrait
     public $libroregistro;
     public $acta;
     public $fechacta;
+    public $fechalarga;
 
 
 
@@ -81,6 +83,24 @@ trait docugradosTrait
         $this->libroregistro=$this->docugrado->libro;
         $this->acta=$this->docugrado->acta;
         $this->diplomas=$this->docugrado->tipo_curso;
+
+        $this->creafechalarga();
+    }
+
+    public function creafechalarga(){
+        $fechalarga = Carbon::create($this->docugrado->fecha_acta);
+
+        // Crea un formateador para convertir números a palabras en español
+        $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+
+        // Extrae y convierte el día y el año a palabras
+        $diaPalabra = $formatter->format($fechalarga->day);
+        $mesPalabra = $fechalarga->locale('es')->monthName;
+        $anioPalabra = $formatter->format($fechalarga->year);
+
+        // Construye la fecha en el formato requerido
+        $this->fechalarga = ucfirst("$diaPalabra ({$fechalarga->day}) de $mesPalabra de $anioPalabra ({$fechalarga->year})");
+
     }
 
     public function configpag(){

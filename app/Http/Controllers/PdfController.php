@@ -85,6 +85,7 @@ class PdfController extends Controller
         $libro=$this->libroregistro;
         $fechacta=$this->fechacta;
         $diplomas=$this->diplomas;
+        $fechalarga=$this->fechalarga;
 
 
         $pdf = Pdf::loadView('pdfs.graduacion', compact(
@@ -98,6 +99,7 @@ class PdfController extends Controller
             'folio',
             'libro',
             'fechacta',
+            'fechalarga',
             'diplomas'
         ));
 

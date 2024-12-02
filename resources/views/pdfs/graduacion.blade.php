@@ -87,6 +87,10 @@
                 color: #A8518A;
             }
 
+            .font-parrafo{
+                font-family: Comic Sans MS, cursive;
+            }
+
             .font-titulobtenido{
                 font-style: italic;
                 color: #3E4095;
@@ -184,7 +188,7 @@
                     @break
 
                 @case('parrafo')
-                    <p class="justificado font-medium">
+                    <p class="justificado font-medium font-parrafo font-l">
                         {{$item['contenido']}}
                     </p>
                     @break
@@ -219,8 +223,8 @@
                     @break
 
                 @case('firma9')
-                    <p class="justificado font-medium">
-                        En constancia de lo anterior se firma el presente titulo, en BOGOTÁ D.C., el {{$fechagrado}}
+                    <p class="justificado font-medium font-parrafo font-l">
+                        En constancia de lo anterior se firma el presente titulo, en BOGOTÁ D.C., el {{$fechalarga}}
                     </p>
                     <table class="font-sm mt-4">
                         <thead >
