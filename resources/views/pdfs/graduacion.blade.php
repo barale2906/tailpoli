@@ -13,13 +13,19 @@
                     margin-left: 3cm;
                 @endif
 
+                @if ($margensup != 100 && $diplomas==2)
+                    margin-top: 4.5cm;
+                    margin-right: 0.9cm;
+                    margin-left: 2.4cm;
+                @endif
+
                 @if ($margensup == 100 && $diplomas==1)
                     margin-top: 10cm;
                     margin-right: 3cm;
                     margin-left: 3cm;
                 @endif
 
-                @if ($margensup != 100)
+                @if ($margensup != 100 && $diplomas==1)
                     margin-top: 4.5cm;
                     margin-right: 0.9cm;
                     margin-left: 2.4cm;
@@ -57,27 +63,33 @@
                 text-transform: uppercase;
             }
             .font-l{
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
                 font-size: large;
             }
 
             .font-xl{
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
                 font-size: x-large;
             }
 
             .font-medium{
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
                 font-size: medium;
             }
             .font-sm{
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
                 font-size: small;
             }
 
             .font-titulo{
                 font-family: Comic Sans MS, cursive;
                 font-size: xx-large;
+            }
+
+            .font-subtitulo{
+                font-style: italic;
+                color: #A8518A;
+            }
+
+            .font-titulobtenido{
+                font-style: italic;
+                color: #3E4095;
             }
             .bold{
                 font-weight: bold;
@@ -148,19 +160,19 @@
         @foreach ($cuerpodocu as $item)
             @switch($item['tipo'])
                 @case('titulo')
-                    <h1 class="centrado uppercase font-xl">
+                    <h1 class="centrado uppercase font-xl font-subtitulo">
                         {{$item['contenido']}}
                     </h1>
                     @break
 
                 @case('titulo_obtenido')
-                    <h1 class="centrado uppercase bold font-l">
+                    <h1 class="centrado uppercase bold font-xl font-titulobtenido">
                         {{$titulotec}}
                     </h1>
                     @break
 
                 @case('subtitulo')
-                    <div class="centrado font-sm capitalize p-1 bold">
+                    <div class="centrado font-medium capitalize p-1 bold font-subtitulo">
                         {{$item['contenido']}}
                     </div>
                     @break
