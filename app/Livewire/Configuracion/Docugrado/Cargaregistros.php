@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Configuracion\Docugrado;
 
+use App\Models\Academico\Control;
 use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Docugrado;
+use App\Models\Financiera\Cartera;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -64,28 +66,49 @@ class Cargaregistros extends Component
 
                 try {
 
-                    $matricula=Matricula::find(intval($data[0]));
+                    $existe=Docugrado::where('matricula_id', intval($data[0]))->count('id');
 
+                    if($existe>0){
+                        $error="La matricula: ".intval($data[0])." ya esta cargada";
+                        array_push($this->crterrores,$error);
+                    }else{
+                        $matricula=Matricula::find(intval($data[0]));
 
+                        Docugrado::create([
 
-                    Docugrado::create([
+                                    'matricula_id'=>$matricula->id,
+                                    'graduando_id'=>$matricula->alumno_id,
+                                    'titulo'=>strtolower($data[1]),
+                                    'tipo_curso'=>$data[2],
+                                    'fecha_grado'=>$data[3],
+                                    'acta'=>$data[4],
+                                    'fecha_acta'=>$data[5],
+                                    'alumnos_graduados'=>$data[6],
+                                    'alumno_inicia'=>strtolower($data[7]),
+                                    'alumno_finaliza'=>strtolower($data[8]),
+                                    'folio_acta'=>$data[9],
+                                    'libro'=>$data[10],
+                                    'observaciones'=>$observaciones,
+                                    'user_gestiona'=>Auth::user()->id
 
-                                'matricula_id'=>$matricula->id,
-                                'graduando_id'=>$matricula->alumno_id,
-                                'titulo'=>strtolower($data[1]),
-                                'tipo_curso'=>$data[2],
-                                'fecha_grado'=>$data[3],
-                                'acta'=>$data[4],
-                                'fecha_acta'=>$data[5],
-                                'alumnos_graduados'=>$data[6],
-                                'alumno_inicia'=>strtolower($data[7]),
-                                'alumno_finaliza'=>strtolower($data[8]),
-                                'folio_acta'=>$data[9],
-                                'libro'=>$data[10],
-                                'observaciones'=>$observaciones,
-                                'user_gestiona'=>Auth::user()->id
+                        ]);
 
-                    ]);
+                        //ACtualizar status_est de los estudiantes
+
+                        $matricula->update([
+                                'status_est'=>4
+                            ]);
+                        Cartera::where('matricula_id', $matricula->id)
+                                ->update([
+                                    'status_est'=>4
+                                ]);
+
+                        Control::where('matricula_id', $matricula->id)
+                                ->update([
+                                    'status_est'=>4
+                                ]);
+                    }
+
 
                 }catch(Exception $exception){
                     //Log::info('Line: ' . $row . ' '.$this->ruta.' with error: ' . $exception->getMessage().' real: '.$data[1]);

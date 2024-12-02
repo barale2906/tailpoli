@@ -16,7 +16,7 @@
             Elimine todas las filas de ejemplo.
         </li>
         <li class="w-full px-4 py-2 rounded-b-lg">
-            Guarde el archivo sin cambiar el tipo de formato (csv).
+            Guarde el archivo sin cambiar el tipo de formato (csv) usando el comando control g.
         </li>
         <li class="w-full px-4 py-2 rounded-b-lg">
             Cargue el archivo generado.

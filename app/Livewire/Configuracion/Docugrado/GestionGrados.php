@@ -18,6 +18,10 @@ class GestionGrados extends Component
         $this->claseFiltro(16);
     }
 
+    public function updatedFiltrotipoCurso(){
+        $this->reset('filtroacta');
+    }
+
     private function actas(){
         return Docugrado::where('tipo_curso',$this->filtrotipo_curso)
                         ->select('acta', 'titulo')
