@@ -200,6 +200,12 @@
                     </div>
                     @break
 
+                @case('subnormal')
+                    <div class="centrado uppercase font-xl bold">
+                        {{$item['contenido']}}
+                    </div>
+                    @break
+
                 @case('lineadocumento')
                     <div class="centrado font-sm capitalize p-1">
                         {{$item['contenido']}}

@@ -62,6 +62,7 @@
                                     @endif
                                     @if ($actual->control===2)
                                         <option value="subtitulo">Sub - titulo</option>
+                                        <option value="subnormal">Sub - titulo color negro</option>
                                         <option value="lineadocumento">Línea para cargar documento estudiante</option>
                                         <option value="titulo_obtenido">Titulo Obtenido técnico</option>
                                         <option value="titulo_obtepractico">Titulo Obtenido práctico</option>
