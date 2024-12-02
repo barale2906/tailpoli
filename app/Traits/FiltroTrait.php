@@ -201,6 +201,11 @@ trait FiltroTrait
                 $this->is_control=true;
                 $this->is_filtro=!$this->is_filtro;
                 break;
+            case 17:
+                $this->is_jornada=true;
+                $this->is_curso=true;
+                $this->is_profesor=true;
+                break;
         }
     }
 

@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Academico\Nota;
 
+use App\Models\Academico\Curso;
 use App\Models\Academico\Nota;
 use App\Models\User;
+use App\Traits\FiltroTrait;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +13,7 @@ use Livewire\WithPagination;
 class Notas extends Component
 {
     use WithPagination;
+    use FiltroTrait;
 
     public $ordena='id';
     public $ordenado='DESC';
@@ -24,7 +27,7 @@ class Notas extends Component
 
     public $filtroprofesor;
     public $filtrojornada;
-
+    public $filtrocurso;
 
     public $elegido;
 
@@ -32,6 +35,10 @@ class Notas extends Component
     public $buscamin='';
 
     protected $listeners = ['refresh' => '$refresh'];
+
+    public function mount(){
+        $this->claseFiltro(17);
+    }
 
     //Cargar variable
     public function buscaText(){
@@ -127,6 +134,7 @@ class Notas extends Component
         return Nota::buscar($this->buscamin)
                         ->profesor(intval($this->filtroprofesor))
                         ->jornada(intval($this->filtrojornada))
+                        ->curso(intval($this->filtrocurso))
                         ->orderBy($this->ordena, $this->ordenado)
                         ->paginate($this->pages);
     }
@@ -137,11 +145,17 @@ class Notas extends Component
                     ->get();
     }
 
+    private function cursos(){
+        return Curso::orderby('name','ASC')
+                        ->get();
+    }
+
     public function render()
     {
         return view('livewire.academico.nota.notas',[
             'notas'=>$this->notas(),
-            'profesores'=>$this->profesores()
+            'profesores'=>$this->profesores(),
+            'cursos'=>$this->cursos(),
         ]);
     }
 }

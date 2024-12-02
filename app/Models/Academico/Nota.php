@@ -52,5 +52,15 @@ class Nota extends Model
         });
     }
 
+    public function scopeCurso($query, $curso){
+        $query->when($curso ?? null, function($query, $curso){
+            $query->WhereHas('grupo', function($quer) use($curso){
+                $quer->WhereHas('modulo', function($qu) use($curso){
+                    $qu->where('curso_id', $curso);
+                });
+            });
+        });
+    }
+
 
 }
