@@ -53,7 +53,7 @@ class DocumentosDetalle extends Component
         if($this->actual->control!==2){
             $this->ruta="/pdfs/documento/".$matr->id."/".$this->actual->id;
         }else{
-            $docus=Docugrado::orderBy('id','DESC')->select('acta')->first();
+            $docus=Docugrado::where('tipo_curso',$this->actual->tipo_curso)->orderBy('id','DESC')->select('acta')->first();
             $this->ruta="/pdfs/docugrado/".$docus->acta."/".$this->actual->id;
         }
 

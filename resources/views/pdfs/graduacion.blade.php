@@ -16,28 +16,29 @@
                     margin-top: 13cm;
                     margin-right: 3cm;
                     margin-left: 3cm;
+                    margin-bottom: 0.5cm;
                 @endif
 
                 @if ($margensup != 100 && $diplomas==2)
                     margin-top: 4.5cm;
                     margin-right: 0.9cm;
                     margin-left: 2.4cm;
+                    margin-bottom: 0.5cm;
                 @endif
 
                 @if ($margensup == 100 && $diplomas==1)
                     margin-top: 10cm;
                     margin-right: 3cm;
                     margin-left: 3cm;
+                    margin-bottom: 1.5cm;
                 @endif
 
                 @if ($margensup != 100 && $diplomas==1)
                     margin-top: 4.5cm;
                     margin-right: 0.9cm;
                     margin-left: 2.4cm;
+                    margin-bottom: 0.5cm;
                 @endif
-
-
-                margin-bottom: 0.5cm;  /* Margen inferior fijo */
             }
 
             .border {
@@ -90,6 +91,10 @@
             .font-subtitulo{
                 font-style: italic;
                 color: #A8518A;
+            }
+
+            .font-cursiva{
+                font-style: italic;
             }
 
             .font-parrafo{
@@ -172,7 +177,7 @@
         @foreach ($cuerpodocu as $item)
             @switch($item['tipo'])
                 @case('titulo')
-                    <h1 class="centrado uppercase font-xl font-subtitulo">
+                    <h1 class="centrado uppercase font-xl font-subtitulo font-monotype">
                         {{$item['contenido']}}
                     </h1>
                     @break
@@ -196,7 +201,7 @@
                     @break
 
                 @case('lineadocumento')
-                    <div class="centrado font-medium capitalize p-1">
+                    <div class="centrado font-sm capitalize p-1">
                         {{$item['contenido']}}
                     </div>
                     @break
@@ -287,7 +292,7 @@
                                     </div>
                                 </th>
                                 <th scope="col" >
-                                    <div class="derecha font-sm p-1">
+                                    <div class="derecha font-sm p-1 font-cursiva">
                                         Esta constancia se expide de acuerdo al Articulo 43 de la ley 115 y Art. 12 Dec. <br>
                                         <span class="uppercase">{{$ciudad}}</span>, {{$fechagrado}}
 
