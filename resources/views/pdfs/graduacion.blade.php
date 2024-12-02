@@ -139,6 +139,11 @@
                 padding: 0.1cm;
                 line-height: 1;
             }
+
+            .p-5{
+                padding: 0.5cm;
+                line-height: 1;
+            }
             p {
                 padding: 0.1cm;
                 margin: 0.1cm;
@@ -229,18 +234,18 @@
                         <thead >
                             <tr>
                                 <th scope="col" >
-                                    <p class="justificado font-sm uppercase mt-1">
+                                    <p class="justificado font-sm uppercase mt-1 p-5">
                                         Cordialmente:
                                     </p>
 
-                                    <p class="justificado font-sm capitalize mt-1">
+                                    <p class="justificado font-sm capitalize mt-1 p-5">
                                         Firma:
                                     </p>
-                                    <div class="justificado">
+                                    <div class="justificado p-5" >
                                         <img class="imgfirma" src="{{public_path('img/firma_directora.png')}}" alt="{{config('instituto.directora')}}">
                                     </div>
 
-                                    <p class="justificado font-sm uppercase">
+                                    <p class="justificado font-sm uppercase p-5">
                                         director(a)
                                     </p>
                                 </th>
@@ -299,7 +304,7 @@
                                 </th>
                                 <th scope="col" >
                                     <div class="derecha font-sm p-1 font-cursiva">
-                                        <br><br><br><br>
+                                        <br><br><br><br><br><br>
                                         Esta constancia se expide de acuerdo al Articulo 43 de la ley 115 y Art. 12 Dec. <br>
                                         <span class="uppercase">{{$ciudad}}</span>, {{$fechagrado}}
 
