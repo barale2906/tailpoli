@@ -106,7 +106,7 @@
             }
             .font-monotype {
                 font-family: "MonotypeCorsiva", sans-serif;
-                font-size: 18px;
+                /* font-size: 18px; */
             }
             .bold{
                 font-weight: bold;
