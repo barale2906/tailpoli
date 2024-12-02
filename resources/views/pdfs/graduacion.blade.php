@@ -6,6 +6,11 @@
         <title>Impresión de graduaciones</title>
         <link rel="shortcut icon" href="{{public_path('img/icon.ico')}}">
         <style>
+            @font-face {
+                font-family: "MonotypeCorsiva";
+                src: url("' . public_path('fonts/MonotypeCorsiva.ttf') . '") format("truetype");
+            }
+
             @page {
                 @if ($margensup == 100 && $diplomas==2)
                     margin-top: 13cm;
@@ -92,8 +97,11 @@
             }
 
             .font-titulobtenido{
-                font-style: italic;
                 color: #3E4095;
+            }
+            .font-monotype {
+                font-family: "MonotypeCorsiva", sans-serif;
+                font-size: 18px;
             }
             .bold{
                 font-weight: bold;
@@ -170,13 +178,25 @@
                     @break
 
                 @case('titulo_obtenido')
-                    <h1 class="centrado uppercase bold font-xl font-titulobtenido">
+                    <h1 class="centrado uppercase bold font-xl font-titulobtenido font-monotype">
+                        {{$titulotec}}
+                    </h1>
+                    @break
+
+                @case('titulo_obtepractico')
+                    <h1 class="justificado uppercase bold font-xl">
                         {{$titulotec}}
                     </h1>
                     @break
 
                 @case('subtitulo')
                     <div class="centrado font-medium capitalize p-1 bold font-subtitulo">
+                        {{$item['contenido']}}
+                    </div>
+                    @break
+
+                @case('lineadocumento')
+                    <div class="centrado font-medium capitalize p-1">
                         {{$item['contenido']}}
                     </div>
                     @break

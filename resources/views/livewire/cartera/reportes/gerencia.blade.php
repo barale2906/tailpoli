@@ -2,6 +2,7 @@
     <h1 class=" text-center uppercase font-extrabold text-3xl">
         Seleccione el año y mes que desea evaluar.
     </h1>
+    @include('includes.filtro')
     <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
         <div></div>
         <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
@@ -37,6 +38,9 @@
         <div></div>
     </div>
     @if ($is_reporte)
+            @foreach ($activos as $item)
+                ----- Sede: {{$item->sede->name}} SALDO: $ {{number_format($item->total_saldo, 0, ',', '.')}} INICIAL: $ {{number_format($item->total_saldo_inicial, 0, ',', '.')}} ESTADO: {{$estados[intval($item->status_est)]}} -- {{$item->status_est}} TOTAL: {{$item->total_estado}} ----- <br><br><br>
+            @endforeach
         <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
 
         </div>

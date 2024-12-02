@@ -62,7 +62,9 @@
                                     @endif
                                     @if ($actual->control===2)
                                         <option value="subtitulo">Sub - titulo</option>
-                                        <option value="titulo_obtenido">Titulo Obtenido</option>
+                                        <option value="lineadocumento">Línea para cargar documento estudiante</option>
+                                        <option value="titulo_obtenido">Titulo Obtenido técnico</option>
+                                        <option value="titulo_obtepractico">Titulo Obtenido práctico</option>
                                         <option value="temastecnico">Temas curso - Técnico</option>
                                         <option value="firma9">firma directora - coordinador manual / Fecha de grado pie de página</option>
                                         <option value="firma11">firma directora - coordinador manual / Sin Fecha de grado pie de página</option>
