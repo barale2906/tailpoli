@@ -183,7 +183,7 @@
                     @break
 
                 @case('titulo_obtenido')
-                    <h1 class="centrado uppercase bold font-xl font-titulobtenido font-monotype">
+                    <h1 class="centrado uppercase bold font-medium font-titulobtenido font-monotype">
                         {{$titulotec}}
                     </h1>
                     @break
