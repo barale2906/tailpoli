@@ -299,7 +299,7 @@
                                 </th>
                                 <th scope="col" >
                                     <div class="derecha font-sm p-1 font-cursiva">
-                                        <br>
+                                        <br><br><br><br>
                                         Esta constancia se expide de acuerdo al Articulo 43 de la ley 115 y Art. 12 Dec. <br>
                                         <span class="uppercase">{{$ciudad}}</span>, {{$fechagrado}}
 
