@@ -177,13 +177,13 @@
         @foreach ($cuerpodocu as $item)
             @switch($item['tipo'])
                 @case('titulo')
-                    <h1 class="centrado uppercase font-xl font-subtitulo font-monotype">
+                    <h1 class="centrado uppercase font-xl">
                         {{$item['contenido']}}
                     </h1>
                     @break
 
                 @case('titulo_obtenido')
-                    <h1 class="centrado uppercase bold font-medium font-titulobtenido font-monotype">
+                    <h1 class="centrado uppercase bold font-xl font-titulobtenido font-monotype">
                         {{$titulotec}}
                     </h1>
                     @break
@@ -195,7 +195,7 @@
                     @break
 
                 @case('subtitulo')
-                    <div class="centrado font-medium capitalize p-1 bold font-subtitulo">
+                    <div class="centrado uppercase font-xl font-subtitulo font-monotype">
                         {{$item['contenido']}}
                     </div>
                     @break
