@@ -109,7 +109,7 @@
                 /* font-size: 18px; */
             }
             .bold{
-                font-weight: bold;
+                font-weight: 900;
             }
 
             .mt-2{
@@ -200,7 +200,7 @@
                     @break
 
                 @case('subtitulo')
-                    <div class="centrado uppercase font-xl font-subtitulo font-monotype">
+                    <div class="centrado uppercase font-xl bold font-subtitulo font-monotype">
                         {{$item['contenido']}}
                     </div>
                     @break
@@ -260,7 +260,7 @@
 
                 @case('firma9')
                     <p class="justificado font-medium font-parrafo font-l">
-                        En constancia de lo anterior se firma el presente titulo, en BOGOTÁ D.C., el {{$fechalarga}}
+                        En constancia de lo anterior se firma el presente título, en Bogotá D.C, el {{$fechalarga}}
                     </p>
                     <table class="font-sm mt-4">
                         <thead >
@@ -283,7 +283,7 @@
                         </thead>
                     </table>
                     <div class="footer bold">
-                        Anotado al folio: {{$folio}} del libro de Registro N°: {{$libro}} Acta N°: {{$acta}} a los {{$fechacta}}
+                        Anotado al folio: {{$folio}} del libro de Registro N°: 1 Acta N°: {{$acta}} a los {{$fechacta}}
                     </div>
                     <div class="salto"></div>
                     @break
