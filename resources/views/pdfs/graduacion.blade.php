@@ -106,7 +106,7 @@
             }
             .font-monotype {
                 font-family: "MonotypeCorsiva", sans-serif;
-                /* font-size: 18px; */
+                font-weight: 900;
             }
             .bold{
                 font-weight: 900;
@@ -200,7 +200,7 @@
                     @break
 
                 @case('subtitulo')
-                    <div class="centrado uppercase font-xl bold font-subtitulo font-monotype">
+                    <div class="centrado uppercase font-xl font-subtitulo bold font-monotype">
                         {{$item['contenido']}}
                     </div>
                     @break
