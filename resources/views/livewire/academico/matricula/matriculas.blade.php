@@ -120,7 +120,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
                                     <a href="" wire:click.prevent="show({{$matricula->id}},{{4}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                        <i class="fa-solid fa-book"></i>
+                                        <i class="fa-solid fa-book"></i> {{$matricula->id}}
                                     </a>
                                 </span>
                                 @if ($matricula->status_est===2)
@@ -135,7 +135,7 @@
                                     @can('ac_matriculaAnular')
                                         <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
                                             <a href="#" wire:click.prevent="show({{$matricula}},{{0}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
-                                                <i class="fa-solid fa-marker"></i> - {{$matricula->id}}
+                                                <i class="fa-solid fa-marker"></i>
                                             </a>
                                         </span>
                                     @endcan
