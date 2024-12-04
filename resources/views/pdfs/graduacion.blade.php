@@ -200,9 +200,9 @@
                     @break
 
                 @case('subtitulo')
-                    <p class="centrado uppercase font-xl font-subtitulo bold font-cursiva">
+                    <h1 class="centrado uppercase font-xl font-subtitulo bold">
                         {{$item['contenido']}}
-                    </p>
+                    </h1>
                     @break
 
                 @case('subnormal')
