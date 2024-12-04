@@ -89,7 +89,6 @@
             }
 
             .font-subtitulo{
-                font-style: italic;
                 color: #A8518A;
             }
 
@@ -200,7 +199,7 @@
                     @break
 
                 @case('subtitulo')
-                    <h1 class="centrado uppercase font-xl font-subtitulo bold font-parrafo">
+                    <h1 class="centrado uppercase font-xl font-subtitulo bold font-cursiva">
                         {{$item['contenido']}}
                     </h1>
                     @break
