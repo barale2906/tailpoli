@@ -188,7 +188,7 @@
                     @break
 
                 @case('titulo_obtenido')
-                    <h1 class="centrado uppercase bold font-xl font-titulobtenido font-monotype">
+                    <h1 class="centrado uppercase bold font-xl font-titulobtenido">
                         {{$titulotec}}
                     </h1>
                     @break
@@ -200,7 +200,7 @@
                     @break
 
                 @case('subtitulo')
-                    <div class="centrado uppercase font-xl font-subtitulo bold font-monotype">
+                    <div class="centrado uppercase font-xl font-subtitulo bold ">
                         {{$item['contenido']}}
                     </div>
                     @break
