@@ -95,6 +95,7 @@
             .font-subtitulo{
                 color: #A8518A;
                 font-family: Arial, Helvetica, sans-serif;
+                font-weight: bold;
             }
 
             .font-cursiva{
@@ -204,7 +205,7 @@
                     @break
 
                 @case('subtitulo')
-                    <h1 class="centrado uppercase font-xxl font-subtitulo bold font-cursiva">
+                    <h1 class="centrado uppercase font-xl font-subtitulo font-cursiva">
                         {{$item['contenido']}}
                     </h1>
                     @break
