@@ -94,6 +94,7 @@
 
             .font-subtitulo{
                 color: #A8518A;
+                font-family: Arial, Helvetica, sans-serif;
             }
 
             .font-cursiva{
