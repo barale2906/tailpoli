@@ -76,6 +76,10 @@
                 font-size: x-large;
             }
 
+            .font-xxl{
+                font-size: xx-large;
+            }
+
             .font-medium{
                 font-size: medium;
             }
@@ -199,7 +203,7 @@
                     @break
 
                 @case('subtitulo')
-                    <h1 class="centrado uppercase font-xl font-subtitulo bold font-cursiva">
+                    <h1 class="centrado uppercase font-xxl font-subtitulo bold font-cursiva">
                         {{$item['contenido']}}
                     </h1>
                     @break
