@@ -5,12 +5,15 @@ namespace App\Livewire\Inventario\Inventario;
 use App\Models\Inventario\Almacen;
 use App\Models\Inventario\Inventario;
 use App\Models\Inventario\Producto;
+use App\Traits\CrtStatusTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class InventariosCrear extends Component
 {
+    use CrtStatusTrait;
+
     public $tipo='';
     public $tipon;
     public $fecha_movimiento = '';

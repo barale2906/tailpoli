@@ -137,20 +137,8 @@
                                 @endif
 
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                @switch($inventario->tipo)
-                                    @case(0)
-                                        SALIDA
-                                        @break
-                                    @case(1)
-                                        ENTRADA
-                                        @break
-                                    @case(2)
-                                        PENDIENTE
-                                        @break
-
-
-                                @endswitch
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white uppercase">
+                                {{$statusInventipo[$inventario->tipo]}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$inventario->fecha_movimiento}}

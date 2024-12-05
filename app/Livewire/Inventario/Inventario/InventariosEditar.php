@@ -4,11 +4,14 @@ namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Configuracion\Sede;
 use App\Models\Inventario\Inventario;
+use App\Traits\CrtStatusTrait;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
 class InventariosEditar extends Component
 {
+    use CrtStatusTrait;
+
     public $id='';
     public $movimiento;
     public $tipo='';

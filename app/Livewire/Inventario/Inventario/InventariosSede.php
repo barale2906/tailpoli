@@ -4,17 +4,18 @@ namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Inventario\Almacen;
 use App\Models\Inventario\Inventario;
+use App\Traits\CrtStatusTrait;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class InventariosSede extends Component
 {
     use WithPagination;
+    use CrtStatusTrait;
 
     public $producto;
     public $detalle;
     public $almacen='';
-    public $tipos=['SALIDA','ENTRADA','PENDIENTE','TRASLADO'];
 
     public $ordena='status';
     public $ordenado='DESC';

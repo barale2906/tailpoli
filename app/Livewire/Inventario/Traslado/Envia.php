@@ -6,6 +6,7 @@ use App\Models\Configuracion\Sede;
 use App\Models\Inventario\Almacen;
 use App\Models\Inventario\Inventario;
 use App\Models\Inventario\Producto;
+use App\Traits\CrtStatusTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,8 @@ use Livewire\Component;
 
 class Envia extends Component
 {
+    use CrtStatusTrait;
+
     public $almacen;
     public $almacen_id;
     public $sede;

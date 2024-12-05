@@ -17,18 +17,8 @@
                     <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg">
                         <li>Fecha de movimiento: <strong>{{$actual->fecha_movimiento}}</strong></li>
                         <li>Tipo de movimiento:
-                            <strong>
-                                @switch($actual->tipo)
-                                    @case(0)
-                                        SALIDA
-                                        @break
-                                    @case(1)
-                                        ENTRADA
-                                        @break
-                                    @case(2)
-                                        PENDIENTE
-                                        @break
-                                @endswitch
+                            <strong class=" uppercase">
+                                {{$statusInventipo[$actual->tipo]}}
                             </strong>
                         </li>
                     </ul>

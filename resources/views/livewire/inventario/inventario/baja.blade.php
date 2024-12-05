@@ -69,7 +69,7 @@
                                     </li>
                                     <li class="flex space-x-3 items-center">
                                         <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">Tipo Movimiento: </span>
-                                        <span class="bg-green-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-600">{{$statusInventipo[$ultimoregistro->tipo]}}</span>
+                                        <span class="bg-green-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-600">{{$ultimoregistro->tipo===1 ? "ENTRADA" : "SALIDA" }}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -107,105 +107,104 @@
             </div>
         </div>
     @endif
+    @if ($ultimoregistro && $ultimoregistro->saldo>0)
+        <div class="grid grid-cols-2 gap-3 bg-slate-300 m-3 p-3">
+            <div class="grid grid-cols-4 gap-3 m-1 p-1">
 
-    <div class="grid grid-cols-2 gap-3 bg-slate-300 m-3 p-3">
-        <div class="grid grid-cols-4 gap-3 m-1 p-1">
+                <div class="mb-6">
+                    <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
+                    <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
+                    @error('cantidad')
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                        </div>
+                    @enderror
+                </div>
+                <div>
+                    @if ($cantidad>0 && $producto)
+                        <label for="temporal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargar</label>
+                        <a href="#" wire:click.prevent="temporal()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                    @endif
+                    @if ($is_cantidad)
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">¡IMPORTANTE!</span>  La cantidad debe menor al saldo disponible: {{$saldo}}.
+                        </div>
+                    @endif
 
-            <div class="mb-6">
-                <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
-                <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
-                @error('cantidad')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
+                </div>
+
             </div>
-            <div class="mb-6">
-                <label for="precio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio</label>
-                <input type="text" id="precio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Precio de la transacción" wire:model.live="precio">
-                @error('precio')
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                    </div>
-                @enderror
-            </div>
-            <div>
-                @if ($cantidad>0 && $producto && $precio>0)
-                <label for="temporal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cargar</label>
-                    <a href="#" wire:click.prevent="temporal()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
-                        <i class="fa-solid fa-check"></i>
-                    </a>
+            <div class="ring-2 bg-gray-50 p-2">
+
+                @if ($movimientos)
+
+                    <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3" >
+                                    Producto
+                                </th>
+                                <th scope="col" class="px-6 py-3" >
+                                    Cantidad
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($movimientos as $otros)
+
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                            {{$otros->producto}}
+                                        </th>
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                            {{$otros->cantidad}}
+                                        </th>
+                                        <th>
+                                            <a href="#" wire:click.prevent="elimOtro({{$otros->id}})"  class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+
+                            @endforeach
+                        </tbody>
+                    </table>
+
                 @endif
             </div>
-
         </div>
-        <div class="ring-2 bg-gray-50 p-2">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                Total: $ {{number_format($Total, 0, ',', '.')}}
-            </h5>
-
-            @if ($movimientos)
-
-                <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3" >
-                                Producto
-                            </th>
-                            <th scope="col" class="px-6 py-3" >
-                                Valor Unitario
-                            </th>
-                            <th scope="col" class="px-6 py-3" >
-                                Cantidad
-                            </th>
-                            <th scope="col" class="px-6 py-3" >
-                                Subtotal
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($movimientos as $otros)
-
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                        {{$otros->producto}}
-                                    </th>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                        $ {{number_format($otros->valor, 0, ',', '.')}}
-                                    </th>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                        {{$otros->cantidad}}
-                                    </th>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                        $ {{number_format($otros->valor*$otros->cantidad, 0, ',', '.')}}
-                                    </th>
-                                    <th>
-                                        <a href="#" wire:click.prevent="elimOtro({{$otros->id}})"  class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </th>
-                                </tr>
-
-                        @endforeach
-                    </tbody>
-                </table>
-
-            @endif
-        </div>
-    </div>
-
-    <div class="mb-6">
-        <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
-        <input type="text" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Datos relevantes" wire:model.blur="descripcion">
-        @error('descripcion')
-            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-            </div>
-        @enderror
-    </div>
+    @endif
 
     <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 m-2">
+        <div class="mb-6">
+            <label for="motivo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Motivo para dar de baja</label>
+            <select wire:model.live="motivo" id="motivo" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 capitalize">
+                <option >Seleccione...</option>
+                @for ($i = 0; $i < count($statusInventipo); $i++)
+                    @if ($i>3)
+                        <option value={{$i}}>{{$statusInventipo[$i]}}</option>
+                    @endif
+                @endfor
+            </select>
+            @error('motivo')
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-6">
+            <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+            <input type="text" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Datos relevantes" wire:model.blur="descripcion">
+            @error('descripcion')
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                </div>
+            @enderror
+        </div>
         @if ($movimientos)
             <a href="" wire:click.prevent="new()" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-upload"></i> Nuevo Registro

@@ -18,6 +18,9 @@
                         <option value=0>Sálida</option>
                         <option value=2>Pendientes</option>
                         <option value=3>Traslado</option>
+                        @can('in_productoCrear')
+                            <option value=4>Dar de baja</option>
+                        @endcan
                     </select>
                     @error('tipo')
                         <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -82,6 +85,10 @@
 
                 @case(3)
                     <livewire:inventario.traslado.envia :almacen_id="$almacen_id" :sede_id="$sede_id" :ruta="$ruta" />
+                    @break
+
+                @case(4)
+                    <livewire:inventario.inventario.baja :almacen_id="$almacen_id"  />
                     @break
 
             @endswitch

@@ -13,6 +13,7 @@ use App\Models\Inventario\Inventario;
 use App\Models\Inventario\PagoConfig;
 use App\Models\Inventario\Producto;
 use App\Models\User;
+use App\Traits\CrtStatusTrait;
 use App\Traits\MailTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,7 @@ class Salida extends Component
 {
     use MailTrait;
     use WithPagination;
+    use CrtStatusTrait;
 
     public $almacen;
     public $cantidad;

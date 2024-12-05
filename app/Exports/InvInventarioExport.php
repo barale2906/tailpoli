@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Inventario\Inventario;
+use App\Traits\CrtStatusTrait;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -18,6 +19,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class InvInventarioExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
 {
     use Exportable;
+    use CrtStatusTrait;
 
     private $buscamin;
     private $filtrocrea;
@@ -76,8 +78,7 @@ class InvInventarioExport implements FromCollection, WithCustomStartCell, Respon
 
     public function map($inventario): array
     {
-        $estados=["SALIDA","ENTRADA","PENDIENTE","TRASLADO"];
-        $tipo=$estados[$inventario->tipo];
+        $tipo=$this->statusInventipo[$inventario->tipo];
 
         if($inventario->saldo===0){
             $saldo=0;

@@ -3,10 +3,13 @@
 namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Inventario\Inventario;
+use App\Traits\CrtStatusTrait;
 use Livewire\Component;
 
 class InventariosConsultar extends Component
 {
+    use CrtStatusTrait;
+
     public $id='';
     public $actual;
 

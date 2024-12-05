@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Inventario\Inventario;
 
-use App\Models\Financiera\ConceptoPago;
 use App\Models\Inventario\Almacen;
 use App\Models\Inventario\Inventario;
 use App\Models\Inventario\Producto;
@@ -11,22 +10,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class Entrada extends Component
+class Baja extends Component
 {
     use CrtStatusTrait;
 
     public $almacen;
     public $cantidad;
-    public $precio;
-    public $conceptopago;
-
     public $descripcion;
+    public $motivo;
 
     public $movimientos;
-    public $Total=0;
     public $id_ultimo;
     public $saldo;
-
 
     public $producto_id;
     public $producto;
@@ -36,17 +31,12 @@ class Entrada extends Component
     public $buscaproducto=0;
     public $ultimoregistro;
 
-    public function mount($almacen_id=null){
+    public $is_cantidad=false;
+
+    public function mount($almacen_id){
         $id=intval($almacen_id);
         $this->almacen=Almacen::find($id);
 
-        $this->concepto();
-
-    }
-
-    public function concepto(){
-        $this->conceptopago=ConceptoPago::where('tipo', 'inventario')
-                                            ->first();
     }
 
     //Buscar producto
@@ -86,43 +76,39 @@ class Entrada extends Component
     //cargar productos
     public function temporal(){
 
-        $this->saldo=$this->saldo+$this->cantidad;
+        if($this->saldo>=intval($this->cantidad)){
 
-        $valor=$this->precio*$this->cantidad;
-        $this->Total=$this->Total+$valor;
+            $this->saldo=$this->saldo-intval($this->cantidad);
 
-        DB::table('apoyo_recibo')->insert([
-            'tipo'=>'inventario',
-            'id_creador'=>Auth::user()->id,
-            'id_concepto'=>$this->conceptopago->id,
-            'concepto'=>"Entrada de Inventario",
-            'valor'=>$this->precio,
-            'cantidad'=>$this->cantidad,
-            'id_producto'=>$this->producto->id,
-            'producto'=>$this->producto->name,
-            'id_almacen'=>$this->almacen->id,
-            'almacen'=>$this->almacen->name,
-            'id_ultimoreg'=>$this->id_ultimo,
-            'saldo'=>$this->saldo
-        ]);
+            DB::table('apoyo_recibo')->insert([
+                'tipo'=>'inventario',
+                'id_creador'=>Auth::user()->id,
+                'id_concepto'=>4,
+                'concepto'=>"Dar de Baja",
+                'valor'=>0,
+                'cantidad'=>intval($this->cantidad),
+                'id_producto'=>$this->producto->id,
+                'producto'=>$this->producto->name,
+                'id_almacen'=>$this->almacen->id,
+                'almacen'=>$this->almacen->name,
+                'id_ultimoreg'=>$this->id_ultimo,
+                'saldo'=>$this->saldo
+            ]);
 
-        $this->reset('cantidad','precio','producto','producto_id');
+            $this->reset('cantidad','producto','producto_id', 'is_cantidad');
 
-        $this->cargando();
+            $this->cargando();
+        }else{
+            $this->is_cantidad=true;
+        }
     }
 
     //Eliminar producto
     public function elimOtro($item){
 
-        $prod=DB::table('apoyo_recibo')->whereId($item)->first();
-
         DB::table('apoyo_recibo')
             ->where('id', $item)
             ->delete();
-
-        $valori=$prod->valor*$prod->cantidad;
-        $this->Total=$this->Total-$valori;
-
 
         $this->cargando();
     }
@@ -140,7 +126,8 @@ class Entrada extends Component
      */
     protected $rules = [
         'fecha_movimiento'=> 'required',
-        'descripcion'=> 'required'
+        'descripcion'=> 'required',
+        'motivo'=>'required'
     ];
 
     /**
@@ -152,7 +139,7 @@ class Entrada extends Component
             'fecha_movimiento',
             'cantidad',
             'saldo',
-            'precio',
+            'motivo',
             'descripcion',
             'producto_id'
         );
@@ -162,11 +149,10 @@ class Entrada extends Component
         // validate
         $this->validate();
 
-
         if($this->movimientos->count()>0){
             foreach ($this->movimientos as $value) {
                 Inventario::create([
-                    'tipo'=>1,
+                    'tipo'=>intval($this->motivo),
                     'fecha_movimiento'=>$this->fecha_movimiento,
                     'cantidad'=>$value->cantidad,
                     'saldo'=>$value->saldo,
@@ -186,7 +172,7 @@ class Entrada extends Component
             }
 
             // Notificación
-            $this->dispatch('alerta', name:'Se ha cargado correctamente el movimiento de inventario');
+            $this->dispatch('alerta', name:'Se han dado de baja todos los productos.');
             $this->resetFields();
 
             //refresh
@@ -211,8 +197,8 @@ class Entrada extends Component
 
     public function render()
     {
-        return view('livewire.inventario.inventario.entrada',[
-            'productos'     =>$this->productos()
+        return view('livewire.inventario.inventario.baja',[
+            'productos' => $this->productos(),
         ]);
     }
 }

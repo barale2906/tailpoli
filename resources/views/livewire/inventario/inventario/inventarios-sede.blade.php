@@ -110,8 +110,8 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$inventario->id}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$tipos[$inventario->tipo]}}
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                {{$statusInventipo[$inventario->tipo]}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                 {{$inventario->fecha_movimiento}}

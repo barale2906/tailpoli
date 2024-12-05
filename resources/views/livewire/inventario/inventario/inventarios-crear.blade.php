@@ -93,7 +93,7 @@
                                         </li>
                                         <li class="flex space-x-3 items-center">
                                             <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">Tipo Movimiento: </span>
-                                            <span class="bg-green-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-600">{{$ultimoregistro->tipo===1 ? "ENTRADA" : "SALIDA" }}</span>
+                                            <span class="bg-green-200 text-black text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-600">{{$statusInventipo[$ultimoregistro->tipo]}}</span>
                                         </li>
                                     </ul>
                                 </div>

@@ -5,6 +5,7 @@ namespace App\Livewire\Inventario\Inventario;
 use App\Exports\InvInventarioExport;
 use App\Models\Inventario\Inventario;
 use App\Models\Inventario\Almacen;
+use App\Traits\CrtStatusTrait;
 use App\Traits\FiltroTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
@@ -15,6 +16,7 @@ class Inventarios extends Component
 {
     use WithPagination;
     use FiltroTrait;
+    use CrtStatusTrait;
 
     public $ordena='status';
     public $ordenado='DESC';
