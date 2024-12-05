@@ -51,6 +51,7 @@ trait FiltroTrait
     public $is_fechatransaccion=false;
     public $is_medio=false;
     public $is_cajero=false;
+    public $is_conceptopag=false;
 
     //Documentos grado
     public $is_acta=false;
@@ -94,6 +95,7 @@ trait FiltroTrait
                 $this->is_fechatransaccion=true;
                 $this->is_medio=true;
                 $this->is_cajero=true;
+                $this->is_conceptopag=true;
                 break;
 
             case 4:

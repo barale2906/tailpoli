@@ -101,7 +101,7 @@
 
                     <label for="filtroCiudad" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Ciudad</label>
                     <select wire:model.live="filtroCiudad" id="filtroCiudad"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >ciudad</option>
                         @foreach ($ciudades as $item)
                             <option value={{$item->sector_id}}>{{$item->sector->name}}</option>
@@ -115,7 +115,7 @@
 
                     <label for="filtroSede" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Sede</label>
                     <select wire:model.live="filtroSede" id="filtroSede"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >sede</option>
                         @foreach ($sedes as $item)
                             <option value={{$item->sede_id}}>{{$item->sede->name}}</option>
@@ -129,7 +129,7 @@
 
                     <label for="filtrosedecurso" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Sede donde toma el curso</label>
                     <select wire:model.live="filtrosedecurso" id="filtrosedecurso"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >sede toma curso</option>
                         @foreach ($sedes as $item)
                             <option value={{$item->sede_id}}>{{$item->sede->name}}</option>
@@ -143,9 +143,23 @@
 
                     <label for="filtrocajero" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Cajero</label>
                     <select wire:model.live="filtrocajero" id="filtrocajero"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Cajero...</option>
                         @foreach ($cajeros as $item)
+                            <option value={{$item->id}}>{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+
+            @if ($is_conceptopag)
+                <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+
+                    <label for="filtroconcepto" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Conceptos de pago</label>
+                    <select wire:model.live="filtroconcepto" id="filtroconcepto"
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                        <option >Concepto...</option>
+                        @foreach ($conpagos as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
                         @endforeach
                     </select>
@@ -157,7 +171,7 @@
 
                     <label for="filtromedio" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Medio de Pago</label>
                     <select wire:model.live="filtromedio" id="filtromedio"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Medio...</option>
                         <option value="PSE">PSE</option>
                         <option value="transferencia">Transferencia</option>
@@ -173,7 +187,7 @@
 
                     <label for="filtroSede" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Sede</label>
                     <select wire:model.live="filtroSede" id="filtroSede"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >sede</option>
                         @foreach ($asignadas as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
@@ -201,7 +215,7 @@
 
                     <label for="filtromatri" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Registro</label>
                     <select wire:model.live="filtromatri" id="filtromatri"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Matriculo</option>
                         @foreach ($usuMatriculo as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
@@ -209,7 +223,7 @@
                     </select>
 
                     <select wire:model.live="filtrocom" id="filtrocom"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
                         <option >Comercial</option>
                         @foreach ($usuComercial as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
@@ -265,7 +279,7 @@
 
                     <label for="filtroetapa" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Étapa de Cobro</label>
                     <select wire:model.live="filtroetapa" id="filtroetapa"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Étapa...</option>
                         <option value=1>Inicia Proceso de cobro</option>
                         <option value=2>Pre - Reporte</option>
@@ -280,7 +294,7 @@
 
                     <label for="filtrojornada" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Jornada</label>
                     <select wire:model.live="filtrojornada" id="filtrojornada"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Elija Jornada...</option>
                         <option value=1>Mañana</option>
                         <option value=2>Tarde</option>
@@ -295,7 +309,7 @@
 
                     <label for="filtrotipo" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
                     <select wire:model.live="filtrotipo" id="filtrotipo"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Tipo...</option>
                         @foreach ($tipo as $item)
                             <option value={{$item['id']}}>{{$item['nombre']}}</option>
@@ -309,7 +323,7 @@
 
                     <label for="filtroalmacen" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Almacen</label>
                     <select wire:model.live="filtroalmacen" id="filtroalmacen"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >almacén ...</option>
                         @foreach ($almacenes as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
@@ -323,7 +337,7 @@
 
                     <label for="Saldofiltro" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Obtener Saldo</label>
                     <select wire:model.live="Saldofiltro" id="Saldofiltro"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option>Obtiene ...</option>
                         <option value="si">SI</option>
                         <option value="no">No</option>
@@ -336,7 +350,7 @@
 
                     <label for="filtrorol" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Rol</label>
                     <select wire:model.live="filtrorol" id="filtrorol"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                    class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
                         <option >Tipo...</option>
                         @foreach ($roles as $item)
                             <option value={{$item->name}}>{{$item->name}}</option>
@@ -365,7 +379,7 @@
 
                     <label for="estado" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Estado</label>
                     <select wire:model.live="estado" id="estado"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
                         <option >Estado transaccion</option>
                         <option value=1>Creada</option>
                         <option value=2>Pendiente Entrega Inventario</option>
@@ -380,7 +394,7 @@
 
                     <label for="estado_estudiante" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Estado</label>
                     <select wire:model.live="estado_estudiante" multiple id="estado_estudiante"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
                         <option >Estado estudiante</option>
                         @foreach ($status_estu as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>
@@ -394,7 +408,7 @@
 
                     <label for="estado_cartera" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Estado Cartera</label>
                     <select wire:model.live="estado_cartera" multiple id="estado_cartera"
-                    class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
                         <option >Estado cartera... </option>
                         @foreach ($estacartera as $item)
                             <option value={{$item->id}}>{{$item->name}}</option>

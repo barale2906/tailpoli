@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 use App\Exports\FinReciboExport;
+use App\Models\Financiera\ConceptoPago;
 use App\Models\Financiera\ReciboPago;
 use App\Models\User;
 use App\Traits\FiltroTrait;
@@ -44,6 +45,7 @@ trait ReciboCajaTrait
     public $filtrotrans=[];
     public $filtromedio;
     public $filtrocajero;
+    public $filtroconcepto;
 
     //protected $listeners = ['refresh' => '$refresh'];
 
@@ -139,7 +141,17 @@ trait ReciboCajaTrait
     }
 
     public function exportar(){
-        return new FinReciboExport($this->buscamin, $this->filtroSede, $this->filtrocrea,$this->is_poliandino,$this->is_logo,$this->filtrotrans,$this->filtromedio,$this->filtrocajero);
+        return new FinReciboExport(
+            $this->buscamin,
+            $this->filtroSede,
+            $this->filtrocrea,
+            $this->is_poliandino,
+            $this->is_logo,
+            $this->filtrotrans,
+            $this->filtromedio,
+            $this->filtrocajero,
+            $this->filtroconcepto
+        );
     }
 
     public function empresa(){
@@ -186,6 +198,7 @@ trait ReciboCajaTrait
                             ->transaccion($this->filtrotrans)
                             ->medio($this->filtromedio)
                             ->cajero($this->filtrocajero)
+                            ->tipo($this->filtroconcepto)
                             ->orderBy($this->ordena, $this->ordenado)
                             ->paginate($this->pages);
 
@@ -201,6 +214,7 @@ trait ReciboCajaTrait
                             ->transaccion($this->filtrotrans)
                             ->medio($this->filtromedio)
                             ->cajero($this->filtrocajero)
+                            ->tipo($this->filtroconcepto)
                             ->select(
                                 DB::raw('SUM(valor_total) as total_valor_total'),
                                 DB::raw('SUM(descuento) as total_descuento')
@@ -234,6 +248,12 @@ trait ReciboCajaTrait
         return ReciboPago::select('sede_id')
                         ->groupBy('sede_id')
                         ->get();
+    }
+
+    private function conpagos(){
+        return ConceptoPago::where('status', true)
+                            ->orderBy('name')
+                            ->get();
     }
 
 }

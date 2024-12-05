@@ -27,10 +27,21 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     private $filtrotrans;
     private $filtromedio;
     private $filtrocajero;
+    private $filtroconcepto;
     private $fileName = "Recibos.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct($buscamin,$filtroSede,$filtrocrea,$is_poliandino,$is_logo,$filtrotrans,$filtromedio,$filtrocajero)
+    public function __construct(
+        $buscamin,
+        $filtroSede,
+        $filtrocrea,
+        $is_poliandino,
+        $is_logo,
+        $filtrotrans,
+        $filtromedio,
+        $filtrocajero,
+        $filtroconcepto
+        )
     {
         $this->buscamin=$buscamin;
         $this->filtrosede=$filtroSede;
@@ -40,6 +51,7 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
         $this->filtrotrans=$filtrotrans;
         $this->filtromedio=$filtromedio;
         $this->filtrocajero=$filtrocajero;
+        $this->filtroconcepto=$filtroconcepto;
     }
 
     /**
@@ -54,6 +66,7 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
                             ->transaccion($this->filtrotrans)
                             ->medio($this->filtromedio)
                             ->cajero($this->filtrocajero)
+                            ->tipo($this->filtroconcepto)
                             ->orderBy('id', 'ASC')
                             ->get();
     }
@@ -103,21 +116,6 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
         array_push($sale,$recibo->observaciones);
 
         return $sale;
-
-
-        /* return [
-            $recibo->id,
-            $recibo->fecha,
-            $recibo->paga->name,
-            $recibo->paga->documento,
-            $recibo->sede->name,
-            $recibo->valor_total,
-            $recibo->descuento,
-            $recibo->medio,
-            $neto,
-            $recibo->creador->name,
-            $recibo->observaciones,
-        ]; */
     }
 
     public function columnFormats(): array

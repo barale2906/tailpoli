@@ -19,7 +19,8 @@ class ConceptoPago extends Model
      */
     public function recibos(): BelongsToMany
     {
-        return $this->belongsToMany(ReciboPago::class);
+        return $this->belongsToMany(ReciboPago::class, 'concepto_pago_recibo_pago')
+                    ->withPivot('valor','tipo','medio','producto','cantidad','unitario','subtotal','id_relacional');
     }
 
     public function carteras():HasMany

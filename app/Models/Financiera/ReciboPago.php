@@ -50,7 +50,8 @@ class ReciboPago extends Model
      */
     public function conceptos(): BelongsToMany
     {
-        return $this->belongsToMany(ConceptoPago::class);
+        return $this->belongsToMany(ConceptoPago::class, 'concepto_pago_recibo_pago')
+                    ->withPivot('valor','tipo','medio','producto','cantidad','unitario','subtotal','id_relacional');
     }
 
     public function scopeBuscar($query, $item){
@@ -100,7 +101,7 @@ class ReciboPago extends Model
         });
     }
 
-    public function scopetransaccion($query, $latrans){
+    public function scopeTransaccion($query, $latrans){
         $query->when($latrans ?? null, function($query, $latrans){
             $fec1=Carbon::parse($latrans[0]);
             $fec2=Carbon::parse($latrans[1]);
@@ -110,6 +111,12 @@ class ReciboPago extends Model
         });
     }
 
-
+    public function scopeTipo($query, $conpago){
+        $query->when($conpago ?? null, function ($qu, $conpago){
+            $qu->wherehas('conceptos', function($quer) use($conpago){
+                $quer->where('concepto_pago_recibo_pago.concepto_pago_id', $conpago);
+            });
+        });
+    }
 
 }
