@@ -34,7 +34,7 @@ class GestionGrados extends Component
     private function actas(){
         return Docugrado::where('tipo_curso',$this->filtrotipo_curso)
                         ->select('id','acta', 'titulo')
-                        ->groupBy('id','acta','titulo')
+                        ->groupBy('acta','titulo')
                         ->get();
     }
 
