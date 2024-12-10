@@ -33,7 +33,7 @@ trait docugradosTrait
 
 
 
-    public function iniciaregistros($acta,$doc){
+    public function iniciaregistros($acta,$curso,$doc){
 
         $this->documento=Documento::find($doc);
         $this->configpag();
@@ -47,6 +47,7 @@ trait docugradosTrait
                                             ->get();
 
         $seleccionados=Docugrado::where('acta',$acta)
+                                ->where('curso_id',$curso)
                                 ->select('id')
                                 ->get();
 
@@ -60,14 +61,14 @@ trait docugradosTrait
     public function titulobten(){
         if($this->docugrado->tipo_curso===1){
             $titulo=DB::table('titulotecnico')
-                        ->where('curso_id',$this->docugrado->matricula->curso->id)
+                        ->where('curso_id',$this->docugrado->curso_id)
                         ->where('tipo',1)
                         ->first();
 
             $this->titulotec=$titulo->descripcion;
 
             $this->temas=DB::table('titulotecnico')
-                            ->where('curso_id',$this->docugrado->matricula->curso->id)
+                            ->where('curso_id',$this->docugrado->curso_id)
                             ->where('tipo',2)
                             ->get();
         }else{

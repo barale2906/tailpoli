@@ -13,6 +13,8 @@ class GestionGrados extends Component
 
     public $filtrotipo_curso;
     public $filtroacta;
+    public $curso;
+    public $acta;
 
     public function mount(){
         $this->claseFiltro(16);
@@ -22,10 +24,17 @@ class GestionGrados extends Component
         $this->reset('filtroacta');
     }
 
+    public function updatedFiltroacta(){
+        $this->reset('curso_id','acta');
+        $elegido=Docugrado::find($this->filtroacta);
+        $this->acta=$elegido->acta;
+        $this->curso=$elegido->curso_id;
+    }
+
     private function actas(){
         return Docugrado::where('tipo_curso',$this->filtrotipo_curso)
-                        ->select('acta', 'titulo')
-                        ->groupBy('acta','titulo')
+                        ->select('id','acta', 'titulo')
+                        ->groupBy('id','acta','titulo')
                         ->get();
     }
 

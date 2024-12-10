@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/documento/{id}/{doc}', [PdfController::class, 'documento']);
 Route::get('/matricular/{id}', [PdfController::class, 'matri']);
-Route::get('/docugrado/{acta}/{doc}', [PdfController::class, 'grados']);
+Route::get('/docugrado/{acta}/{curso}/{doc}', [PdfController::class, 'grados']);
 
 /*
 Route::get('/certificado/{id}', [PdfController::class, 'certificado']);

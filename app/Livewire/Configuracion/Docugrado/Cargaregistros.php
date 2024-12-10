@@ -79,6 +79,7 @@ class Cargaregistros extends Component
                                     'matricula_id'=>$matricula->id,
                                     'graduando_id'=>$matricula->alumno_id,
                                     'titulo'=>strtolower($data[1]),
+                                    'curso_id'=>$matricula->curso_id,
                                     'tipo_curso'=>$data[2],
                                     'fecha_grado'=>$data[3],
                                     'acta'=>$data[4],

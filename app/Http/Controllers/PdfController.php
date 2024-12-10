@@ -70,9 +70,9 @@ class PdfController extends Controller
 
     }
 
-    public function grados($acta,$doc){
+    public function grados($acta,$curso,$doc){
 
-        $this->iniciaregistros($acta,$doc);
+        $this->iniciaregistros($acta,$curso,$doc);
 
         $cuerpodocu=$this->cuerpodocu;
         $margensup=$this->margensup;
