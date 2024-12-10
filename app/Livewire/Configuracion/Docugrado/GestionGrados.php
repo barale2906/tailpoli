@@ -25,7 +25,7 @@ class GestionGrados extends Component
     }
 
     public function updatedFiltroacta(){
-        $this->reset('curso_id','acta');
+        $this->reset('curso','acta');
         $elegido=Docugrado::find($this->filtroacta);
         $this->acta=$elegido->acta;
         $this->curso=$elegido->curso_id;
