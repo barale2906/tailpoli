@@ -102,6 +102,9 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Detalles del recibo
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('medio')">
                             Medio
                             @if ($ordena != 'medio')
@@ -114,6 +117,9 @@
                                 @endif
                             @endif
                         </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Creador
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('observaciones')">
                             Observaciones
                             @if ($ordena != 'observaciones')
@@ -125,9 +131,6 @@
                                     <i class="fas fa-sort-down"></i>
                                 @endif
                             @endif
-                        </th>
-                        <th scope="col" class="px-6 py-3" >
-                            Creador
                         </th>
                     </tr>
                 </thead>
@@ -184,14 +187,54 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
                                 $ {{number_format($recibo->descuento, 0, '.', ' ')}}
                             </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+
+                                <table class=" text-xs text-left text-gray-500 dark:text-gray-400 border border-collapse">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        <tr>
+                                            <th>
+                                                Concepto
+                                            </th>
+                                            <th>
+                                                Producto
+                                            </th>
+                                            <th>
+                                                Cantidad
+                                            </th>
+                                            <th>
+                                                Valor
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($recibo->conceptos as $item)
+                                            <tr class="bg-white border dark:bg-gray-800 dark:border-gray-700 hover:bg-cyan-200 text-sm">
+                                                <td>
+                                                    {{$item->name}}
+                                                </td>
+                                                <td>
+                                                    {{$item->pivot->producto}}
+                                                </td>
+                                                <td class=" text-center">
+                                                    {{$item->pivot->cantidad}}
+                                                </td>
+                                                <td class=" text-right">
+                                                    $ {{number_format($item->pivot->valor, 0, '.', '')}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                            </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-right">
                                 {{$recibo->medio}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
-                                {{$recibo->observaciones}}
-                            </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$recibo->creador->name}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                {{$recibo->observaciones}}
                             </th>
                         </tr>
                     @endforeach
@@ -202,6 +245,7 @@
                     <label class="relative inline-flex items-center mb-4 cursor-pointer">
                         <span class="ml-3 mr-3 text-sm font-medium text-gray-900 dark:text-gray-300">Registros:</span>
                         <select wire:click="paginas($event.target.value)" id="countries" class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value=3>3</option>
                             <option value=15>15</option>
                             <option value=20>20</option>
                             <option value=50>50</option>

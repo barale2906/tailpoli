@@ -20,7 +20,7 @@ trait ReciboCajaTrait
 
     public $ordena='id';
     public $ordenado='DESC';
-    public $pages = 10;
+    public $pages = 3;
 
     public $is_modify = true;
     public $is_creating = false;
