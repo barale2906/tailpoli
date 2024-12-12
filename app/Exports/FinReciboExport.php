@@ -87,6 +87,7 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
             'Valor',
             'Descuento',
             'Neto',
+            'Detalle',
             'Medio',
             'banco',
             'fecha_transaccion',
@@ -98,6 +99,13 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
     public function map($recibo): array
     {
         $sale=array();
+        $detalle = "Concepto | Producto | Cantidad | Valor\n";
+
+        foreach ($recibo->conceptos as $value) {
+            $detalle .= "{$value->name} | {$value->pivot->producto} | " .
+                    ($value->pivot->cantidad ?? 'N/A') . " | " .
+                    number_format($value->pivot->valor, 2) . "\n";
+        }
 
         $neto=$recibo->valor_total-$recibo->descuento;
 
@@ -109,6 +117,7 @@ class FinReciboExport implements FromCollection, WithCustomStartCell, Responsabl
         array_push($sale,$recibo->valor_total);
         array_push($sale,$recibo->descuento);
         array_push($sale,$neto);
+        array_push($sale,$detalle);
         array_push($sale,$recibo->medio);
         array_push($sale,$recibo->banco);
         array_push($sale,$recibo->fecha_transaccion);
