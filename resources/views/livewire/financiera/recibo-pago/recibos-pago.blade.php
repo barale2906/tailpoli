@@ -182,10 +182,10 @@
                                 {{$recibo->sede->name}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                $ {{number_format($recibo->valor_total, 0, '.', ' ')}}
+                                $ {{number_format($recibo->valor_total, 0, ',', '.')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                $ {{number_format($recibo->descuento, 0, '.', ' ')}}
+                                $ {{number_format($recibo->descuento, 0, ',', '.')}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
 
@@ -219,7 +219,7 @@
                                                     {{$item->pivot->cantidad}}
                                                 </td>
                                                 <td class=" text-right">
-                                                    $ {{number_format($item->pivot->valor, 0, '.', '')}}
+                                                    $ {{number_format($item->pivot->valor, 0, ',', '.')}}
                                                 </td>
                                             </tr>
                                         @endforeach
