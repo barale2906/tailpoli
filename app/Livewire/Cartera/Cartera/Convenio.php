@@ -411,7 +411,7 @@ class Convenio extends Component
 
                     $endDate = $date->addMonths();
 
-                    Log::info('Convenio: ' . $valor. ' N°: '.$a." Aplaxa: ".$cuoaplaza." Diferidas: ".$this->cuotadiferidas." SAldo: ".$this->cuotasaldo.' fecha: '.$endDate);
+                    Log::info('Convenio: ' . $valor. ' N°: '.$a." Aplaza: ".$cuoaplaza." Diferidas: ".$this->cuotadiferidas." SAldo: ".$this->cuotasaldo.' fecha: '.$endDate);
 
                     Cartera::create([
                             'fecha_pago'=>$endDate,

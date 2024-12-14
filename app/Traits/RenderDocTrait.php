@@ -177,6 +177,7 @@ trait RenderDocTrait
     public function financiacion(){
 
         $this->docuCartera=Cartera::where('matricula_id', $this->docuMatricula->id)
+                                    ->whereNotIn('estado_cartera_id',[5,7])
                                     ->get();
 
 
