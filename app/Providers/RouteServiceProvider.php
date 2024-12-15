@@ -90,6 +90,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('pdfs')
                 ->name('pdfs.')
                 ->group(base_path('routes/pdfs.php'));
+
+            Route::middleware('web', 'auth')
+                ->prefix('humana')
+                ->name('humana.')
+                ->group(base_path('routes/humana.php'));
         });
     }
 }

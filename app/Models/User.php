@@ -21,6 +21,8 @@ use App\Models\Financiera\CierreCaja;
 use App\Models\Financiera\Cobranza;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
+use App\Models\Humana\Funcionario;
+use App\Models\Humana\Funcionariosoporte;
 use App\Models\Inventario\Inventario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -250,6 +252,18 @@ class User extends Authenticatable
     public function docugrados(): HasMany
     {
         return $this->hasMany(Docugrado::class);
+    }
+
+    //Relación uno a muchos
+    public function funcionarios(): HasMany
+    {
+        return $this->hasMany(Funcionario::class);
+    }
+
+    //Relación uno a muchos
+    public function funciosoportes(): HasMany
+    {
+        return $this->hasMany(Funcionariosoporte::class);
     }
 
     /**

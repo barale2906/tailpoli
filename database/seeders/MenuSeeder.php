@@ -14,6 +14,23 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
+        $m1=Menu::create([
+            'name'              => 'HUMANA',
+            'identificaRuta'    => 'humana.*',
+            'permiso'           => 'Humana',
+            'icono'             => 'fa-solid fa-handshake  text-gray-500'
+        ]);
+
+        Submenu::create([
+            'permiso'           => 'hu_configuracion',
+            'ruta'              => 'humana.configuracion',
+            'identificaRuta'    => 'humana.configuracion',
+            'name'              => 'Configuración',
+            'icono'             => 'fa-solid fa-stethoscope text-gray-500',
+            'menu_id'           => $m1->id
+        ]);
+
+        /*
         Submenu::create([
             'permiso'           => 'co_docugrado',
             'ruta'              => 'configuracion.docugrados',
@@ -23,7 +40,6 @@ class MenuSeeder extends Seeder
             'menu_id'           => 9
         ]);
 
-        /*
         Submenu::create([
             'permiso'           => 'fi_cuentas',
             'ruta'              => 'financiera.cuentas',

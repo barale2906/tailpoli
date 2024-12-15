@@ -22,13 +22,37 @@ class RoleSeeder extends Seeder
         $Estudiante=Role::create(['name'=>'Estudiante']); */
 
         Permission::create([
+                    'name'=>'Humana',
+                    'descripcion'=>'ingreso al menú gestión humana.',
+                    'modulo'=>'humana'
+                ])->syncRoles(['Superusuario','Administrador','Profesor','Coordinador','Auxiliar']);
+
+        Permission::create([
+                    'name'=>'hu_configuracion',
+                    'descripcion'=>'Ver parámetros de gestión humana',
+                    'modulo'=>'humana'
+                ])->syncRoles(['Superusuario','Administrador']);
+
+        Permission::create([
+                    'name'=>'hu_humanaeditar',
+                    'descripcion'=>'Editar parámetros de gestión humana',
+                    'modulo'=>'humana'
+                ])->syncRoles(['Superusuario','Administrador']);
+
+        Permission::create([
+                    'name'=>'hu_personal',
+                    'descripcion'=>'Ver mis datos de gestión humana',
+                    'modulo'=>'humana'
+                ])->syncRoles(['Superusuario','Administrador','Profesor','Coordinador','Auxiliar']);
+
+
+/*
+
+        Permission::create([
                                 'name'=>'co_docugrado',
                                 'descripcion'=>'Generar los documentos de graduación',
                                 'modulo'=>'configuracion'
                             ])->syncRoles(['Superusuario']);
-
-
-/*
 
         Permission::create([
                             'name'=>'fi_cuentas',
