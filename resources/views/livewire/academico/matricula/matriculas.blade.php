@@ -6,7 +6,11 @@
     @if ($is_modify)
         <div class="flex flex-wrap justify-end mb-4 ">
 
+
             @include('includes.filtro')
+            @if (!$reportes)
+                @include('includes.matriculasresumen')
+            @endif
 
             @if ($reportes)
                 @can('ac_matriculaCrear')

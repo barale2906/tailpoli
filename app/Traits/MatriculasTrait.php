@@ -1,24 +1,20 @@
 <?php
 
-namespace App\Livewire\Academico\Matricula;
+namespace App\Traits;
 
 use App\Exports\AcaMatriculaExport;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Matricula;
 use App\Models\Configuracion\Estado;
 use App\Models\User;
-use App\Traits\FiltroTrait;
-use App\Traits\MatriculasTrait;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
-use Livewire\Component;
 use Livewire\WithPagination;
 
-class Matriculas extends Component
+trait MatriculasTrait
 {
-    use MatriculasTrait;
 
-    /* use WithPagination;
+    use WithPagination;
     use FiltroTrait;
 
     public $ordena='id';
@@ -68,7 +64,7 @@ class Matriculas extends Component
     public $matriculo=[];
     public $comercial=[];
 
-    protected $listeners = ['refresh' => '$refresh'];
+    //protected $listeners = ['refresh' => '$refresh'];
 
     //Cargar variable
     public function buscaText(){
@@ -259,29 +255,9 @@ class Matriculas extends Component
                                         $this->filtroinicia,
                                         $this->estado_estudiante,
                                     );
-    } */
-
-    public function mount($crt=null){
-
-        if($crt){
-            $this->reportes=false;
-        }
-        $this->claseFiltro(1);
-
-        //$this->estado_estudiante=[1,2,3,4,5,6,7,8,9,10,11,12];
-
-        $creadores=Matricula::select('creador_id')
-                                    ->groupBy('creador_id')
-                                    ->get();
-        foreach ($creadores as $value) {
-            array_push($this->matriculo, $value->creador_id);
-        }
-
-        $this->genComerci();
-        $this->estado();
     }
 
-    /* public function estado(){
+    public function estado(){
         $est=Estado::select('id')->orderBy('id','ASC')->get();
 
         foreach ($est as $value) {
@@ -371,21 +347,72 @@ class Matriculas extends Component
         return DB::table('estados')
                     ->orderBy('name')
                     ->get();
-    } */
-
-
-    public function render()
-    {
-        return view('livewire.academico.matricula.matriculas', [
-            'matriculas'        => $this->matriculas(),
-            'usuMatriculo'      => $this->usuMatriculo(),
-            'usuComercial'      => $this->usuComercial(),
-            'sedes'             => $this->sedes(),
-            'cursos'            => $this->cursos(),
-            'status_estu'       =>$this->status_estu(),
-            'consolidado'       => $this->consolidado(),
-            'consocomer'        => $this->consocomer(),
-            'consocurso'        => $this->consocurso(),
-        ]);
     }
+
+    private function consolidado(){
+        if(!$this->reportes){
+            return Matricula::buscar($this->buscamin)
+                            ->sede($this->filtroSede) // Sede en que se matriculo
+                            ->sedecurso($this->filtrosedecurso)
+                            ->curso($this->filtrocurso)
+                            ->creador($this->filtromatri)
+                            ->comercial($this->filtrocom)
+                            ->status($this->filtroestatumatri)
+                            ->statusest($this->estado_estudiante)
+                            ->crea($this->filtrocrea)
+                            ->inicia($this->filtroinicia)
+                            ->select(
+                                DB::raw('count(*) as total_registros'),
+                                'medio',
+                            )
+                            ->groupBy('medio')
+                            ->get();
+        }
+
+    }
+
+    private function consocurso(){
+        if(!$this->reportes){
+            return Matricula::buscar($this->buscamin)
+                            ->sede($this->filtroSede) // Sede en que se matriculo
+                            ->sedecurso($this->filtrosedecurso)
+                            ->curso($this->filtrocurso)
+                            ->creador($this->filtromatri)
+                            ->comercial($this->filtrocom)
+                            ->status($this->filtroestatumatri)
+                            ->statusest($this->estado_estudiante)
+                            ->crea($this->filtrocrea)
+                            ->inicia($this->filtroinicia)
+                            ->select(
+                                DB::raw('count(*) as total_registros'),
+                                'curso_id',
+                            )
+                            ->groupBy('curso_id')
+                            ->get();
+        }
+
+    }
+
+    private function consocomer(){
+        if(!$this->reportes){
+            return Matricula::buscar($this->buscamin)
+                            ->sede($this->filtroSede) // Sede en que se matriculo
+                            ->sedecurso($this->filtrosedecurso)
+                            ->curso($this->filtrocurso)
+                            ->creador($this->filtromatri)
+                            ->comercial($this->filtrocom)
+                            ->status($this->filtroestatumatri)
+                            ->statusest($this->estado_estudiante)
+                            ->crea($this->filtrocrea)
+                            ->inicia($this->filtroinicia)
+                            ->select(
+                                DB::raw('count(*) as total_registros'),
+                                'comercial_id'
+                            )
+                            ->groupBy('comercial_id')
+                            ->get();
+        }
+
+    }
+
 }
