@@ -37,4 +37,16 @@ class Funcionario extends Model
     {
         return $this->hasMany(Funcionariosalario::class);
     }
+
+    public function scopeBuscar($query, $item){
+        $query->when($item ?? null, function($query, $item){
+            $query->wherehas('user', function($query) use($item){
+                        $query->where('users.name', 'like', "%".$item."%")
+                                ->where('users.documento', 'like', "%".$item."%")
+                                ->where('users.email', 'like', "%".$item."%");
+                    });
+        });
+    }
+
+
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('tipo_contrato')->comment('0 Indefinido, 1 inferior a un año, 2 Prestación de servicios, 3 obra labor');
             $table->string('educacion')->comment('nivel de escolaridad de la persona');
             $table->date('contrato')->comment('FEcha de contrato vigente');
+            $table->double('salario')->comment('Salario actual');
             $table->date('fecha_inicio')->comment('Fecha de inicio vigente');
             $table->date('fecha_fin')->nullable()->comment('Fecha de fin vigente');
             $table->date('fecha_otrosi')->nullable()->comment('Fecha último Otrosí');

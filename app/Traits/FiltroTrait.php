@@ -208,6 +208,10 @@ trait FiltroTrait
                 $this->is_curso=true;
                 $this->is_profesor=true;
                 break;
+
+            case 18:
+                $this->txt="Busque por acá: Nombre, documento.";
+                break;
         }
     }
 
