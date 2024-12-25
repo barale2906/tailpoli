@@ -67,7 +67,8 @@
                 <tr>
                     <th scope="col" class="px-6 py-3" >
 
-                    </th><th scope="col" class="px-6 py-3" >
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
                         Básico
                     </th>
                     <th scope="col" class="px-6 py-3" >
@@ -90,6 +91,9 @@
             <tbody>
                 @foreach ($salarios as $item)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+
+                        </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                             $ {{number_format($item->basico, 0, ',', '.')}}
                         </th>

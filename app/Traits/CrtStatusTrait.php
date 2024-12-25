@@ -44,4 +44,15 @@ trait CrtStatusTrait
         'Inactivo',
         'Activo'
     ];
+
+    public $documentosFuncionarios=[
+        'Hoja de Vida',
+        'Documento',
+        'Contrato',
+        'Otrosí',
+        'Comprobante de pago',
+        'Planilla Afiliación',
+        'Cartas (Vacaciones, Memorandos, Llamados de atención)',
+        'Otro'
+    ];
 }
