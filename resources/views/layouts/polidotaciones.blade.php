@@ -19,8 +19,8 @@
 
         <!-- Font Awesome -->
         {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-        <link href="{{ asset('build/assets/app-fa36c09a.css') }}" rel="stylesheet">
-        <script src="{{ asset('build/assets/app-e201fd2b.js') }}" defer></script>
+        <link href="{{ asset('build/assets/app-83d7ee29.css') }}" rel="stylesheet">
+        <script src="{{ asset('build/assets/app-7dc077a2.js') }}" defer></script>
 
         <!-- Sweetalert2 -->
         {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}

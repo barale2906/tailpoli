@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\Humana\Funcionario;
 use Livewire\WithPagination;
 use App\Traits\FiltroTrait;
+use Livewire\Attributes\On;
 
 trait FuncionariosTrait
 {
@@ -16,6 +17,7 @@ trait FuncionariosTrait
     public $pages = 3;
 
     public $is_modify = true;
+    public $is_editing= false;
 
     public $elegido;
 
@@ -51,6 +53,29 @@ trait FuncionariosTrait
     {
         $this->resetPage();
         $this->pages=$valor;
+    }
+
+    public function show($id){
+        $this->elegido=$id;
+        $this->is_modify=false;
+        $this->is_editing=true;
+    }
+
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_modify',
+                        'is_editing',
+                        'elegido'
+                    );
+    }
+
+    public function detalle($id){
+        $this->funcionario=Funcionario::where('user_id', $id)
+                                        ->first();
     }
 
     private function funcionarios(){

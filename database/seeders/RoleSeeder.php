@@ -21,29 +21,41 @@ class RoleSeeder extends Seeder
         $Profesor=Role::create(['name'=>'Profesor']);
         $Estudiante=Role::create(['name'=>'Estudiante']); */
 
-        Permission::create([
+        $per1=Permission::create([
                     'name'=>'Humana',
                     'descripcion'=>'ingreso al menú gestión humana.',
-                    'modulo'=>'humana'
-                ])->syncRoles(['Superusuario','Administrador','Profesor','Coordinador','Auxiliar']);
+                    'modulo'=>'humana',
+                    'guard_name' => 'web',
+                ]);
 
-        Permission::create([
+        $per1->syncRoles(['Superusuario','Administrador','Profesor','Coordinador','Auxiliar']);
+
+        $per2=Permission::create([
                     'name'=>'hu_configuracion',
                     'descripcion'=>'Ver parámetros de gestión humana',
-                    'modulo'=>'humana'
-                ])->syncRoles(['Superusuario','Administrador']);
+                    'modulo'=>'humana',
+                    'guard_name' => 'web',
+                ]);
 
-        Permission::create([
+        $per2->syncRoles(['Superusuario','Administrador']);
+
+        $per3=Permission::create([
                     'name'=>'hu_humanaeditar',
                     'descripcion'=>'Editar parámetros de gestión humana',
-                    'modulo'=>'humana'
-                ])->syncRoles(['Superusuario','Administrador']);
+                    'modulo'=>'humana',
+                    'guard_name' => 'web',
+                ]);
 
-        Permission::create([
+        $per3->syncRoles(['Superusuario','Administrador']);
+
+        $per4=Permission::create([
                     'name'=>'hu_personal',
                     'descripcion'=>'Ver mis datos de gestión humana',
-                    'modulo'=>'humana'
-                ])->syncRoles(['Superusuario','Administrador','Profesor','Coordinador','Auxiliar']);
+                    'modulo'=>'humana',
+                    'guard_name' => 'web',
+                ]);
+
+        $per4->syncRoles(['Superusuario','Administrador','Profesor','Coordinador','Auxiliar']);
 
 
 /*

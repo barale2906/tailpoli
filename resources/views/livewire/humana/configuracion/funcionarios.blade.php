@@ -49,8 +49,17 @@
                                 @endif
                             @endif
                         </th>
-                        <th scope="col" class="px-6 py-3" >
+                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('salario')">
                             Salario
+                            @if ($ordena != 'salario')
+                                <i class="fas fa-sort"></i>
+                            @else
+                                @if ($ordenado=='ASC')
+                                    <i class="fas fa-sort-up"></i>
+                                @else
+                                    <i class="fas fa-sort-down"></i>
+                                @endif
+                            @endif
                         </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('eps')">
                             EPS
@@ -71,8 +80,8 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                                    <a href="" wire:click.prevent="show({{$item->id}},{{4}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                        <i class="fa-solid fa-book"></i> - {{$item->id}}
+                                    <a href="" wire:click.prevent="show({{$item->user_id}})" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                        <i class="fa-solid fa-users-gear"></i>
                                     </a>
                                 </span>
                             </th>
@@ -117,4 +126,27 @@
             </div>
         </div>
     @endif
+
+    @if ($is_editing)
+        <livewire:configuracion.user.perfil :elegido="$elegido" :perf="0"/>
+    @endif
+
+    @push('js')
+        <script>
+            document.addEventListener('livewire:initialized', function (){
+                @this.on('alerta', (name)=>{
+                    const variable = name;
+                    console.log(variable['name'])
+                    Swal.fire({
+                        position: 'bottom-end',
+                        icon: 'success',
+                        title: variable['name'],
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                });
+            });
+        </script>
+    @endpush
+
 </div>

@@ -10,11 +10,15 @@ use App\Models\Configuracion\Perfil as ConfiguracionPerfil;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\State;
 use App\Models\User;
+use App\Traits\FuncionariosTrait;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Perfil extends Component
 {
+    use FuncionariosTrait;
+
     public $id;
     public $elegido;
     public $perf=0;
@@ -65,6 +69,7 @@ class Perfil extends Component
     public $arl_usuario;
     public $rh_usuario;
     public $sorteo_usuario;
+    public $funcionario;
 
     public $habilidades;
 
@@ -73,7 +78,12 @@ class Perfil extends Component
 
     public $impresion;
 
-
+    public $is_contrasena=false;
+    public $is_sedes=false;
+    public $is_salarios=false;
+    public $is_documentos=false;
+    public $is_familias=false;
+    public $is_contratos=false;
 
 
 
@@ -85,9 +95,59 @@ class Perfil extends Component
         $this->impresion=$impresion;
         $this->ruta=$ruta;
 
+        if(intval($perf)===0){
+            $this->detalle($elegido);
+        }
+
         $this->valores();
         $this->personasMulti();
 
+    }
+
+    //Activar evento
+    #[On('cancelando')]
+    //Mostrar formulario de creación
+    public function cancela()
+    {
+        $this->reset(
+                        'is_contrasena',
+                        'is_sedes',
+                        'is_salarios',
+                        'is_documentos',
+                        'is_familias',
+                        'is_contratos',
+                    );
+    }
+
+    public function show($id){
+
+        $this->cancela();
+
+        switch ($id) {
+            case 1:
+                $this->is_contrasena=true;
+                break;
+
+            case 2:
+                $this->is_sedes=true;
+                break;
+
+            case 3:
+                $this->is_salarios=true;
+                break;
+
+            case 4:
+                $this->is_documentos=true;
+                break;
+
+            case 5:
+                $this->is_familias=true;
+                break;
+
+            case 6:
+                $this->is_contratos=true;
+                break;
+        }
     }
 
     public function valores(){
