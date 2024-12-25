@@ -74,7 +74,7 @@ trait FuncionariosTrait
     }
 
     public function detalle($id){
-        $this->funcionario=Funcionario::where('user_id', $id)
+        $this->actual=Funcionario::where('user_id', $id)
                                         ->first();
     }
 

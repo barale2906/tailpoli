@@ -55,7 +55,9 @@
         @endif
 
         @if ($is_salarios)
-            Cargar Salarios
+            <div class="bg-blue-50 border-blue-500 mb-3 p-2 rounded-xl">
+                <livewire:humana.salario.salarios :elegido="$elegido"/>
+            </div>
         @endif
 
         @if ($is_documentos)

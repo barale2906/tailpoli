@@ -17,7 +17,6 @@ use Livewire\Component;
 
 class Perfil extends Component
 {
-    use FuncionariosTrait;
 
     public $id;
     public $elegido;
@@ -94,10 +93,6 @@ class Perfil extends Component
         $this->perf=$perf;
         $this->impresion=$impresion;
         $this->ruta=$ruta;
-
-        if(intval($perf)===0){
-            $this->detalle($elegido);
-        }
 
         $this->valores();
         $this->personasMulti();

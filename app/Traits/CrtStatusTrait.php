@@ -39,4 +39,9 @@ trait CrtStatusTrait
         'Hijo(a)',
         'Conyuge'
     ];
+
+    public $estados=[
+        'Inactivo',
+        'Activo'
+    ];
 }
