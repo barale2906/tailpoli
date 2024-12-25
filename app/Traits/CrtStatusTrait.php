@@ -33,6 +33,7 @@ trait CrtStatusTrait
     ];
 
     public $familiares=[
+        'Abuelo(a)',
         'Mamá',
         'Papá',
         'Hermano(a)',
@@ -54,5 +55,10 @@ trait CrtStatusTrait
         'Planilla Afiliación',
         'Cartas (Vacaciones, Memorandos, Llamados de atención)',
         'Otro'
+    ];
+
+    public $binario=[
+        'No',
+        'Si'
     ];
 }
