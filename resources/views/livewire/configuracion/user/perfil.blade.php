@@ -61,11 +61,11 @@
         @endif
 
         @if ($is_documentos)
-            Cargar Soportes
+            <livewire:humana.documento.documentos :elegido="$elegido"/>
         @endif
 
         @if ($is_familias)
-            Cargar Beneficiarios
+            <livewire:humana.familia.familias :elegido="$elegido"/>
         @endif
 
         @if ($is_contratos)

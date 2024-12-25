@@ -36,9 +36,10 @@ trait CrtStatusTrait
         'Abuelo(a)',
         'Mamá',
         'Papá',
-        'Hermano(a)',
         'Hijo(a)',
-        'Conyuge'
+        'Hermano(a)',
+        'Conyuge',
+        'Tío(a)'
     ];
 
     public $estados=[

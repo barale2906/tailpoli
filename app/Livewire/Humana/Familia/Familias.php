@@ -64,12 +64,9 @@ class Familias extends Component
         // Notificación
         $this->dispatch('alerta', name:'Se cargo correctamente familiar: '.$this->name);
         $this->resetFields();
-        //refresh
-        $this->dispatch('refresh');
-        $this->dispatch('cancelando');
     }
 
-    private function familiares(){
+    private function beneficias(){
         return Funcionariofamilia::where('funcionario_id', $this->actual->id)
                                     ->orderBy('name','ASC')
                                     ->get();
@@ -78,7 +75,7 @@ class Familias extends Component
     public function render()
     {
         return view('livewire.humana.familia.familias',[
-            'familiares'    =>$this->familiares(),
+            'beneficias'    =>$this->beneficias(),
         ]);
     }
 }

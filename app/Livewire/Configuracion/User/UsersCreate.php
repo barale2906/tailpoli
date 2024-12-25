@@ -3,7 +3,9 @@
 namespace App\Livewire\Configuracion\User;
 
 use App\Models\Configuracion\Perfil;
+use App\Models\Humana\Funcionario;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -120,6 +122,28 @@ class UsersCreate extends Component
                 'name'=>strtolower($this->name),
                 'lastname'=>strtolower($this->lastname)
             ]);
+
+            // Crear funcionario
+            if($rolelegido->id<6){
+                Funcionario::create([
+                            'user_id'=>$this->nuevoUs->id,
+                            'cargo'=>$rolelegido->name,
+                            'tipo_contrato'=>1,
+                            'educacion'=>'básico',
+                            'contrato'=>now(),
+                            'salario'=>0,
+                            'fecha_inicio'=>now(),
+                            'banco'=>'Banco',
+                            'cuenta'=>'pendiente',
+                            'arl'=>'Sura',
+                            'porcen_arl'=>0.522,
+                            'pension'=>'pendiente',
+                            'eps'=>'pendiente',
+                            'caja'=>'pendiente',
+                            'conyuge'=>' ',
+                            'observaciones'=>now().' '.Auth::user()->name.': Creo el funcionario en el sistema.',
+                ]);
+            }
 
 
             // Notificación

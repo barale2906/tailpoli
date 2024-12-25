@@ -6,17 +6,20 @@ use App\Models\Humana\Funcionariosoporte;
 use App\Traits\CrtStatusTrait;
 use App\Traits\FuncionariosTrait;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Documentos extends Component
 {
     use CrtStatusTrait;
     use FuncionariosTrait;
+    use WithFileUploads;
 
     public $fecha_documento;
     public $name;
     public $ruta;
     public $tipo;
     public $actual;
+    public $archivo;
 
     public function mount($elegido){
         $this->detalle($elegido);
@@ -66,9 +69,6 @@ class Documentos extends Component
         // Notificación
         $this->dispatch('alerta', name:'Se cargo correctamente el registro: '.$this->name);
         $this->resetFields();
-        //refresh
-        $this->dispatch('refresh');
-        $this->dispatch('cancelando');
     }
 
     private function documentos(){

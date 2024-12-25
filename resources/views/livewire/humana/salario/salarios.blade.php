@@ -1,6 +1,6 @@
-<div>
+<div class="border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
     <h1 class=" text-center font-bold uppercase mb-3">
-        Ver / Asignar los salarios de {{-- {{$actual->user->name}} --}}
+        Ver / Asignar los salarios de {{$actual->user->name}}
     </h1>
     <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 mb-3">
         <div class="mb-6">

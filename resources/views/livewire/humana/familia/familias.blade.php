@@ -1,6 +1,6 @@
-<div>
+<div class="border bg-cyan-50 border-cyan-500 mb-3 p-2 rounded-xl">
     <h1 class=" text-center font-bold uppercase mb-3">
-        Ver / Registrar las personas dependientes de {{-- {{$actual->user->name}} --}}
+        Ver / Registrar las personas dependientes de {{$actual->user->name}}
     </h1>
     <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 mb-3">
         <div class="mb-6">
@@ -95,7 +95,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($familiares as $item)
+                @foreach ($beneficias as $item)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
 

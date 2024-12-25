@@ -62,6 +62,11 @@ class Salarios extends Component
                         'observaciones' => $this->observaciones,
         ]);
 
+        //Actualizar Funcionario
+        $this->actual->update([
+            'salario'   => $this->basico
+        ]);
+
         // Notificación
         $this->dispatch('alerta', name:'Se asigno correcto el salario: '.$this->basico);
         $this->resetFields();
