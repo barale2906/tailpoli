@@ -15,7 +15,7 @@ class MenuSeeder extends Seeder
     public function run(): void
     {
         $m1=Menu::create([
-            'name'              => 'HUMANA',
+            'name'              => 'GESTIÓN HUMANA',
             'identificaRuta'    => 'humana.*',
             'permiso'           => 'Humana',
             'icono'             => 'fa-solid fa-handshake  text-gray-500'
