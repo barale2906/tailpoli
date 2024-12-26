@@ -28,6 +28,12 @@
                         <th scope="col" class="px-6 py-3" >
                             Edad
                         </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Teléfono
+                        </th>
+                        <th scope="col" class="px-6 py-3" >
+                            Correo Electrónico
+                        </th>
                         <th scope="col" class="px-6 py-3" style="cursor: pointer;" wire:click="organizar('cargo')">
                             Cargo
                             @if ($ordena != 'cargo')
@@ -101,6 +107,12 @@
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{$item->user->perfil->edad}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{$item->user->perfil->celular}}
+                            </th>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{$item->user->perfil->email}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                                 {{$item->cargo}}

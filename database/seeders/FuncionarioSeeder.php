@@ -10,7 +10,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
-class FuncionarioSeed extends Seeder
+class FuncionarioSeeder extends Seeder
 {
     /**
      * Run the database seeds.

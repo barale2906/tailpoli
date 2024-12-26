@@ -21,6 +21,7 @@ return new class extends Migration
             $table->double('subsidio_transporte')->comment('subsidio ley');
             $table->double('otros_subisidios')->nullable()->comment('Otros aplicables conectividad, calzado');
             $table->double('bonificacion')->nullable()->comment('bonificación');
+            $table->date('vigencia')->comment('Inicio en vigencia de este salario');
             $table->longText('observaciones');
             $table->integer('status')->default(1)->comment('1 activo, 0 Inactivo');
 

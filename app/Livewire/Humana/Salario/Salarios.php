@@ -17,6 +17,7 @@ class Salarios extends Component
     public $subsidio_transporte;
     public $otros_subisidios;
     public $bonificacion;
+    public $vigencia;
     public $observaciones;
 
     public function mount($elegido){
@@ -31,6 +32,7 @@ class Salarios extends Component
         'subsidio_transporte'=>'required|numeric',
         'otros_subisidios'=>'required|numeric',
         'bonificacion'=>'required|numeric',
+        'vigencia'=>'required',
         'observaciones'=>'required',
     ];
 
@@ -44,6 +46,7 @@ class Salarios extends Component
                         'subsidio_transporte',
                         'otros_subisidios',
                         'bonificacion',
+                        'vigencia',
                         'observaciones',
                     );
     }
@@ -59,6 +62,7 @@ class Salarios extends Component
                         'subsidio_transporte' => $this->subsidio_transporte,
                         'otros_subisidios' => $this->otros_subisidios,
                         'bonificacion' => $this->bonificacion,
+                        'vigencia'  => $this->vigencia,
                         'observaciones' => $this->observaciones,
         ]);
 
@@ -70,9 +74,6 @@ class Salarios extends Component
         // Notificación
         $this->dispatch('alerta', name:'Se asigno correcto el salario: '.$this->basico);
         $this->resetFields();
-        //refresh
-        $this->dispatch('refresh');
-        $this->dispatch('cancelando');
     }
 
     private function salarios(){

@@ -49,7 +49,8 @@ trait CrtStatusTrait
 
     public $documentosFuncionarios=[
         'Hoja de Vida',
-        'Documento',
+        'Documento identidad',
+        'Documento familiar',
         'Contrato',
         'Otrosí',
         'Comprobante de pago',

@@ -31,21 +31,23 @@
             <a href="" wire:click.prevent="show(1)" class="text-black bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
                 <i class="fa-solid fa-key"></i> Cambiar Contraseña
             </a>
-            <a href="" wire:click.prevent="show(2)" class="text-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
-                <i class="fa-solid fa-building"></i> Sedes
-            </a>
-            <a href="" wire:click.prevent="show(3)" class="text-black bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-400 dark:focus:ring-cyan-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
-                <i class="fa-solid fa-comment-dollar"></i> Salarios
-            </a>
-            <a href="" wire:click.prevent="show(4)" class="text-black bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-100 dark:focus:ring-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
-                <i class="fa-solid fa-cloud-arrow-up"></i> Cargar Soportes
-            </a>
-            <a href="" wire:click.prevent="show(5)" class="text-black bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-100 dark:focus:ring-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
-                <i class="fa-solid fa-people-group"></i> Ver Beneficiarios
-            </a>
-            <a href="" wire:click.prevent="show(6)" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
-                <i class="fa-solid fa-file-signature"></i> Historial de Contratación
-            </a>
+            @if ($actual->rol_id<6)
+                <a href="" wire:click.prevent="show(2)" class="text-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
+                    <i class="fa-solid fa-building"></i> Sedes
+                </a>
+                <a href="" wire:click.prevent="show(3)" class="text-black bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-400 dark:focus:ring-cyan-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
+                    <i class="fa-solid fa-comment-dollar"></i> Salarios
+                </a>
+                <a href="" wire:click.prevent="show(4)" class="text-black bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-100 dark:focus:ring-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Cargar Soportes
+                </a>
+                <a href="" wire:click.prevent="show(5)" class="text-black bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-100 dark:focus:ring-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
+                    <i class="fa-solid fa-people-group"></i> Ver Beneficiarios
+                </a>
+                <a href="" wire:click.prevent="show(6)" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-1 capitalize">
+                    <i class="fa-solid fa-file-signature"></i> Historial de Contratación
+                </a>
+            @endif
         </div>
 
         @if ($is_contrasena)
