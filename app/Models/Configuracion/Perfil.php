@@ -5,6 +5,7 @@ namespace App\Models\Configuracion;
 use App\Models\Admin\PersonaMulticultural;
 use App\Models\Admin\RegimenSalud;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -59,5 +60,11 @@ class Perfil extends Model
     public function personamulticulturals(): BelongsToMany
     {
         return $this->belongsToMany(PersonaMulticultural::class);
+    }
+
+    // Accesor para calcular la edad
+    public function getEdadAttribute()
+    {
+        return Carbon::parse($this->fecha_nacimiento)->age;
     }
 }

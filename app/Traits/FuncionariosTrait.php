@@ -18,6 +18,7 @@ trait FuncionariosTrait
 
     public $is_modify = true;
     public $is_editing= false;
+    public $is_actualizar=false;
 
     public $elegido;
 
@@ -55,10 +56,18 @@ trait FuncionariosTrait
         $this->pages=$valor;
     }
 
-    public function show($id){
+    public function show($id,$est){
         $this->elegido=$id;
         $this->is_modify=false;
-        $this->is_editing=true;
+        switch ($est) {
+            case 1:
+                $this->is_editing=true;
+                break;
+
+            case 2:
+                $this->is_actualizar=true;
+                break;
+        }
     }
 
     //Activar evento
@@ -69,7 +78,8 @@ trait FuncionariosTrait
         $this->reset(
                         'is_modify',
                         'is_editing',
-                        'elegido'
+                        'elegido',
+                        'is_actualizar'
                     );
     }
 

@@ -62,4 +62,16 @@ trait CrtStatusTrait
         'No',
         'Si'
     ];
+
+    public $escolaridad=[
+        'Sin Estudios',
+        'Pre-Escolar',
+        'Básica Primaria',
+        'Básica Secundaria',
+        'Media',
+        'Técnico Laboral',
+        'Pregrado',
+        'Post-Grado',
+        'Sin Información'
+    ];
 }

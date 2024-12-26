@@ -10,6 +10,7 @@ use App\Models\Configuracion\Perfil as ConfiguracionPerfil;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\State;
 use App\Models\User;
+use App\Traits\CrtStatusTrait;
 use App\Traits\FuncionariosTrait;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -17,6 +18,7 @@ use Livewire\Component;
 
 class Perfil extends Component
 {
+    use CrtStatusTrait;
 
     public $id;
     public $elegido;

@@ -57,6 +57,20 @@ class Documentos extends Component
         $this->ruta='funcionarios/'.$this->actual->id."-".uniqid().".".$this->archivo->extension();
         $this->archivo->storeAs($this->ruta);
 
+        //Actualizar status del documento
+        $anteriores=Funcionariosoporte::where('funcionario_id',$this->actual->id)
+                                        ->where('status',1)
+                                        ->where('tipo',$this->tipo)
+                                        ->get();
+
+        if($anteriores){
+            foreach ($anteriores as $value) {
+                $value->update([
+                    'status'=>0
+                ]);
+            }
+        }
+
         Funcionariosoporte::create([
                         'funcionario_id' => $this->actual->id,
                         'user_id' => $this->actual->user_id,
@@ -65,6 +79,8 @@ class Documentos extends Component
                         'tipo' => $this->tipo,
                         'ruta' => $this->ruta,
         ]);
+
+
 
         // Notificación
         $this->dispatch('alerta', name:'Se cargo correctamente el registro: '.$this->name);
