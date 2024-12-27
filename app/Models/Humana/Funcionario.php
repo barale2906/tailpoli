@@ -42,8 +42,8 @@ class Funcionario extends Model
         $query->when($item ?? null, function($query, $item){
             $query->wherehas('user', function($query) use($item){
                         $query->where('users.name', 'like', "%".$item."%")
-                                ->where('users.documento', 'like', "%".$item."%")
-                                ->where('users.email', 'like', "%".$item."%");
+                                ->orwhere('users.documento', 'like', "%".$item."%")
+                                ->orwhere('users.email', 'like', "%".$item."%");
                     });
         });
     }
