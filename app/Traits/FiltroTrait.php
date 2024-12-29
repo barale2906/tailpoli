@@ -212,6 +212,10 @@ trait FiltroTrait
             case 18:
                 $this->txt="Busque por acá: Nombre, documento.";
                 break;
+
+            case 19:
+                $this->txt="Busque por acá: Nombre del grupo.";
+                break;
         }
     }
 

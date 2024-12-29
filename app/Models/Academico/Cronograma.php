@@ -33,4 +33,21 @@ class Cronograma extends Model
     {
         return $this->hasMany(Cronodeta::class);
     }
+
+    public function scopeBuscar($query, $item){
+        $query->when($item ?? null, function($query, $item){
+
+            $query->wherehas('grupo', function($query) use($item){
+                        $query->where('grupos.name', 'like', "%".$item."%");
+                    });
+        });
+    }
+
+    public function scopeProfesor($query, $profesor){
+        $query->when($profesor ?? null, function($query, $profesor){
+            $query->wherehas('grupo', function($que) use ($profesor){
+                    $que->where('grupos.profesor_id', $profesor);
+            });
+        });
+    }
 }
