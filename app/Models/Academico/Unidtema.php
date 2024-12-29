@@ -7,34 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Modulo extends Model
+class Unidtema extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //Relacion uno a muchos inversa
-    public function curso() : BelongsTo
+    public function unidad() : BelongsTo
     {
-        return $this->BelongsTo(Curso::class);
+        return $this->BelongsTo(Unidade::class);
     }
 
     /**
      * Relación muchos a muchos.
-     * Grupos de este horario
+     * detalles del cronograma para el tema
      */
-    public function grupos(): HasMany
+    public function crodetas(): HasMany
     {
-        return $this->hasMany(Grupo::class);
+        return $this->hasMany(Cronodeta::class);
     }
 
     /**
      * Relación muchos a muchos.
-     * unidades del modulo
+     * Temas de la unidad
      */
-    public function unidades(): HasMany
+    public function plandeta(): HasMany
     {
-        return $this->hasMany(Unidade::class);
+        return $this->hasMany(Acaplandeta::class);
     }
-
 }

@@ -55,6 +55,24 @@ class Ciclo extends Model
         return $this->hasMany(Asistencia::class);
     }
 
+    /**
+     * Relación muchos a muchos.
+     * cronogramas del ciclo
+     */
+    public function cronogramas(): HasMany
+    {
+        return $this->hasMany(Cronograma::class);
+    }
+
+    /**
+     * Relación muchos a muchos.
+     * Planes academicos del modulo
+     */
+    public function acaplans(): HasMany
+    {
+        return $this->hasMany(Acaplan::class);
+    }
+
     public function scopeBuscar($query, $item){
         $query->when($item ?? null, function($query, $item){
             $query->where('name', 'like', "%".$item."%")

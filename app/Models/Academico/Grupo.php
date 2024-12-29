@@ -70,6 +70,24 @@ class Grupo extends Model
         return $this->BelongsToMany(Matricula::class);
     }
 
+    /**
+     * Relación muchos a muchos.
+     * cronogramas del modulo
+     */
+    public function cronogramas(): HasMany
+    {
+        return $this->hasMany(Cronograma::class);
+    }
+
+    /**
+     * Relación muchos a muchos.
+     * Planes academicos del modulo
+     */
+    public function acaplans(): HasMany
+    {
+        return $this->hasMany(Acaplan::class);
+    }
+
     public function scopeBuscar($query, $item){
         $query->when($item ?? null, function($query, $item){
 

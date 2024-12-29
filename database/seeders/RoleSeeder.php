@@ -22,11 +22,32 @@ class RoleSeeder extends Seeder
         $Estudiante=Role::create(['name'=>'Estudiante']); */
 
         $per1=Permission::create([
-                    'name'=>'Humana',
-                    'descripcion'=>'ingreso al menú gestión humana.',
-                    'modulo'=>'humana',
-                    'guard_name' => 'web',
-                ]);
+                            'name'=>'ac_planeacion',
+                            'descripcion'=>'Ver listado de planes.',
+                            'modulo'=>'academico',
+                            'guard_name' => 'web',
+                        ]);
+
+        $per1->syncRoles(['Superusuario','Administrador','Profesor','Coordinador']);
+
+        $per2=Permission::create([
+                            'name'=>'ac_planeacion_editar',
+                            'descripcion'=>'Edición de planes.',
+                            'modulo'=>'academico',
+                            'guard_name' => 'web',
+                        ]);
+
+        $per2->syncRoles(['Superusuario','Administrador','Profesor','Coordinador']);
+
+
+/*
+
+        $per1=Permission::create([
+                            'name'=>'Humana',
+                            'descripcion'=>'ingreso al menú gestión humana.',
+                            'modulo'=>'humana',
+                            'guard_name' => 'web',
+                        ]);
 
         $per1->syncRoles(['Superusuario','Administrador','Profesor','Coordinador','Auxiliar']);
 
@@ -56,9 +77,6 @@ class RoleSeeder extends Seeder
                 ]);
 
         $per4->syncRoles(['Superusuario','Administrador','Profesor','Coordinador','Auxiliar']);
-
-
-/*
 
         Permission::create([
                                 'name'=>'co_docugrado',
