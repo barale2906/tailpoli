@@ -33,6 +33,7 @@ trait MatriculasTrait
     public $is_activar=false;
     public $crtid;
     public $reportes=true;
+    public $is_comerciales;
 
     public $ruta=0;
 
@@ -127,7 +128,8 @@ trait MatriculasTrait
                         'is_grupos',
                         'is_document',
                         'is_especiales',
-                        'is_activar'
+                        'is_activar',
+                        'is_comerciales'
                     );
     }
     //Activar evento
@@ -188,6 +190,10 @@ trait MatriculasTrait
 
             case 5:
                 $this->is_activar=!$this->is_activar;
+                break;
+
+            case 6:
+                $this->is_comerciales=!$this->is_comerciales;
                 break;
         }
     }

@@ -150,6 +150,13 @@
                                             </a>
                                         </span>
                                     @endcan
+                                    @can('ac_grupoAsignar')
+                                        <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                            <a href="#" wire:click.prevent="show({{$matricula->id}},{{6}})" class="inline-flex items-center font-medium text-orange-600 dark:text-orange-500 hover:underline">
+                                                <i class="fa-solid fa-person-dots-from-line"></i>
+                                            </a>
+                                        </span>
+                                    @endcan
                                 @else
                                     <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
                                         <i class="fa-solid fa-plane-circle-xmark mr-2"></i>{{$matricula->id}}
@@ -275,6 +282,10 @@
 
     @if ($is_activar)
         <livewire:academico.gestion.activar :estud="$elegido" />
+    @endif
+
+    @if ($is_comerciales)
+        <livewire:academico.matricula.comerciales :elegido="$elegido" />
     @endif
 
     @push('js')
