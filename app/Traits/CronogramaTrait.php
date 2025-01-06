@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Academico\Cronodeta;
 use App\Models\Academico\Cronograma;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
@@ -10,6 +11,7 @@ use App\Models\Academico\Unidtema;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -24,9 +26,12 @@ trait CronogramaTrait
 
     public $buscar='';
     public $buscamin='';
-    public $periodo;
     public $dias=[];
     public $ids=[];
+    public $cronog;
+    public $grupo;
+    public $inicia;
+    public $finaliza;
 
     public $is_modify = true;
 
@@ -68,29 +73,47 @@ trait CronogramaTrait
     }
 
     public function cronocrea($ciclo,$inicia,$finaliza,$grupo){
+
+        $this->reset(
+            'dias',
+            'ids',
+            'cronog',
+            'grupo',
+            'inicia',
+            'finaliza',
+        );
+
         $examenfinal = Carbon::create($finaliza)->addMonths(1);
         $notas = Carbon::create($finaliza)->addDays(45);
-        $inicio=Carbon::create($inicia);
-        $fin=Carbon::create($finaliza);
-        $this->periodo=CarbonPeriod::create($inicio,$fin);
-        $cronograma=Cronograma::create([
+        $this->inicia=$inicia;
+        $this->finaliza=$finaliza;
+        $this->grupo=$grupo;
+
+        $this->cronog=Cronograma::create([
                                     'grupo_id'      =>$grupo,
                                     'ciclo_id'      =>$ciclo,
                                     'fecha_final'   =>$examenfinal,
                                     'fecha_notas'   =>$notas
                                 ]);
 
-        $this->generadias($cronograma->id,$grupo);
+        Log::info('ciclo: '.$ciclo.' Grupo: '.$grupo.' inicia: '.$inicia.' fin: '.$finaliza.' Crnograma: '.$this->cronog->id);
+
+        $this->generadias();
     }
 
-    public function generadias($cronograma,$grupo){
+    public function generadias(){
+
+        $inicio=Carbon::create($this->inicia);
+        $fin=Carbon::create($this->finaliza);
+        $periodo=CarbonPeriod::create($inicio,$fin);
+
         $this->reset('dias');
-        $diaclases=Horario::where('grupo_id', $grupo)
+        $diaclases=Horario::where('grupo_id', $this->grupo)
                         ->select('dia', DB::raw('COUNT(*) as total'))
                         ->groupBy('dia')
                         ->get();
 
-        foreach ($this->periodo as $item) {
+        foreach ($periodo as $item) {
             $crt=true;
             foreach ($diaclases as $value) {
                 if ($crt && $item->isMonday() && $value->dia==='lunes') {
@@ -173,22 +196,73 @@ trait CronogramaTrait
         }
 
 
-        $this->cronounidades($cronograma,$grupo);
+        $this->cronounidades();
     }
 
-    public function cronounidades($id,$grupo){
+    public function cronounidades(){
         $this->reset('ids');
-        $gru=Grupo::where('id',$grupo)->select('modulo_id')->first();
+        $gru=Grupo::where('id',$this->grupo)->select('modulo_id')->first();
         $unidades=Unidade::where('modulo_id',$gru->modulo_id)->select('id')->get();
         foreach ($unidades as $value) {
             array_push($this->ids,$value->id);
         }
 
-        $this->cronodetalles($id,$grupo);
+        $this->cronodetalles();
     }
 
-    public function cronodetalles($id,$grupo){
+    public function cronodetalles(){
+
         $temas=Unidtema::whereIn('unidade_id',$this->ids)->get();
+
+        $asignaciones = [];
+        foreach ($temas as $tema) {
+
+            $tiempoRequerido = $tema->duracion;
+
+            foreach ($this->dias as &$dia) {
+                // Si hay horas disponibles ese día
+                if ($dia['intensidad'] > 0) {
+                    // Asignar las horas posibles al día actual
+                    $horasAsignadas = min($dia['intensidad'], $tiempoRequerido);
+                    $asignaciones[] = [
+                        'tema_id' => $tema->id,
+                        'fecha' => $dia['fecha'],
+                        'horas_asignadas' => $horasAsignadas,
+                    ];
+
+                    // Reducir las horas disponibles y el tiempo requerido
+                    $dia['intensidad'] -= $horasAsignadas;
+                    $tiempoRequerido -= $horasAsignadas;
+
+                    // Si la tema ya no necesita más tiempo, pasar a la siguiente tema
+                    if ($tiempoRequerido <= 0) {
+                        break;
+                    }
+                }
+            }
+
+            // Si al final de todas las fechas no hay tiempo suficiente, marcar como pendiente
+            if ($tiempoRequerido > 0) {
+                $asignaciones[] = [
+                    'tema_id' => $tema->id,
+                    'fecha' => null,
+                    'horas_asignadas' => -1,
+                ];
+            }
+        }
+
+        foreach ($asignaciones as $value) {
+            Log::info('id: '.$value['horas_asignadas']);
+            if($value['horas_asignadas']>0){
+
+                Cronodeta::create([
+                    'cronograma_id'     => $this->cronog->id,
+                    'unidtema_id'       => $value['tema_id'],
+                    'fecha_programada'  => $value['fecha'],
+                    'duracion'          => $value['horas_asignadas']
+                ]);
+            }
+        }
 
         //REcorrer los temas y compararlo con las fechas encontradas
         //Puede pasar que las fechas no coincidan o no den los tiempos.
