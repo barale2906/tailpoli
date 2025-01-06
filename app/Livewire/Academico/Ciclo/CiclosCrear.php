@@ -10,6 +10,7 @@ use App\Models\Academico\Horario;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
+use App\Traits\CronogramaTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,8 @@ use Livewire\Component;
 
 class CiclosCrear extends Component
 {
+    use CronogramaTrait;
+
     public $sede_id;
     public $curso_id;
     public $curso;
@@ -450,6 +453,7 @@ class CiclosCrear extends Component
                         'fecha_fin'      =>$value->fecha_fin,
                     ]);
 
+                    $this->cronocrea($ciclo->id,$value->fecha_movimiento,$value->fecha_fin,$value->id_concepto);
                 }
 
                 // Notificación
