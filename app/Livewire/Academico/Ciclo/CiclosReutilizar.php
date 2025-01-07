@@ -4,8 +4,7 @@ namespace App\Livewire\Academico\Ciclo;
 
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
-use App\Models\Academico\Cronodeta;
-use App\Models\Academico\Cronograma;
+use App\Traits\AcaplanTrait;
 use App\Traits\CronogramaTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +14,7 @@ use Livewire\Component;
 class CiclosReutilizar extends Component
 {
     use CronogramaTrait;
+    use AcaplanTrait;
 
     public $actual;
     public $duracion;
@@ -262,6 +262,7 @@ class CiclosReutilizar extends Component
                         ]);
 
             $this->cronocrea($ciclo->id,$this->fechainicia,$this->fechafinaliza,$value->id_producto);
+            $this->plancrea($ciclo->id,$value->id_producto);
 
             DB::table('apoyo_recibo')
                 ->where('id', $value->id)

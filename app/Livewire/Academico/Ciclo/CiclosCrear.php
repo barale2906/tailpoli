@@ -4,14 +4,13 @@ namespace App\Livewire\Academico\Ciclo;
 
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
-use App\Models\Academico\Cronodeta;
-use App\Models\Academico\Cronograma;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
 use App\Models\Academico\Modulo;
 use App\Models\Configuracion\Sector;
 use App\Models\Configuracion\Sede;
+use App\Traits\AcaplanTrait;
 use App\Traits\CronogramaTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +20,7 @@ use Livewire\Component;
 class CiclosCrear extends Component
 {
     use CronogramaTrait;
+    use AcaplanTrait;
 
     public $sede_id;
     public $curso_id;
@@ -456,6 +456,7 @@ class CiclosCrear extends Component
                     ]);
 
                     $this->cronocrea($ciclo->id,$value->fecha_movimiento,$value->fecha_fin,$value->id_concepto);
+                    $this->plancrea($ciclo->id,$value->id_concepto);
                 }
 
                 $this->verifechas($ciclo->id);
