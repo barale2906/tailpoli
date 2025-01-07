@@ -4,6 +4,8 @@ namespace App\Livewire\Academico\Ciclo;
 
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
+use App\Models\Academico\Cronodeta;
+use App\Models\Academico\Cronograma;
 use App\Models\Academico\Curso;
 use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
@@ -456,6 +458,8 @@ class CiclosCrear extends Component
                     $this->cronocrea($ciclo->id,$value->fecha_movimiento,$value->fecha_fin,$value->id_concepto);
                 }
 
+                $this->verifechas($ciclo->id);
+
                 // Notificación
                 $this->dispatch('alerta', name:'Se ha creado correctamente el ciclo: '.$this->name);
                 $this->resetFields();
@@ -463,18 +467,13 @@ class CiclosCrear extends Component
                 //refresh
                 $this->dispatch('refresh');
                 $this->dispatch('cancelando');
+
             }else{
                 $this->dispatch('alerta', name:'La fecha de inicio debe ser inferior a la de finalización');
             }
         }else{
             $this->dispatch('alerta', name:'La fecha de inicio debe ser igual a la del primer modulo');
         }
-
-
-
-
-
-
     }
 
     private function cursos(){

@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->date('fecha_programada')->comment('FEcha en que se debe ejecutar la tarea');
             $table->double('duracion')->comment('Duración de la en horas');
+            $table->integer('usuario')->comment('Usuario que genera el registro');
 
 
             $table->timestamps();

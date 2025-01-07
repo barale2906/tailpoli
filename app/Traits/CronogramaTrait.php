@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Academico\Ciclo;
 use App\Models\Academico\Cronodeta;
 use App\Models\Academico\Cronograma;
 use App\Models\Academico\Grupo;
@@ -10,6 +11,7 @@ use App\Models\Academico\Unidade;
 use App\Models\Academico\Unidtema;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
@@ -83,20 +85,67 @@ trait CronogramaTrait
             'finaliza',
         );
 
-        $examenfinal = Carbon::create($finaliza)->addMonths(1);
-        $notas = Carbon::create($finaliza)->addDays(45);
-        $this->inicia=$inicia;
-        $this->finaliza=$finaliza;
-        $this->grupo=$grupo;
+        $ultimo=Cronograma::join('cronodetas','cronogramas.id','=','cronodetas.cronograma_id')
+                            ->where('cronogramas.ciclo_id',$ciclo)
+                            ->select('cronodetas.fecha_programada')
+                            ->orderBy('cronodetas.id','DESC')
+                            ->first();
 
-        $this->cronog=Cronograma::create([
-                                    'grupo_id'      =>$grupo,
-                                    'ciclo_id'      =>$ciclo,
-                                    'fecha_final'   =>$examenfinal,
-                                    'fecha_notas'   =>$notas
-                                ]);
+        if($ultimo){
+            //Log::info('inicia: '.$inicia.' ultimo: '.$ultimo->fecha_programada);
+            if($ultimo->fecha_programada>$inicia){
 
-        Log::info('ciclo: '.$ciclo.' Grupo: '.$grupo.' inicia: '.$inicia.' fin: '.$finaliza.' Crnograma: '.$this->cronog->id);
+                $ini=Carbon::create($inicia);
+                $fin=Carbon::create($finaliza);
+
+                $dif=$ini->diffInDays($fin);
+                $fechaini=Carbon::create($ultimo->fecha_programada);
+                $fechafin=$fechaini->addDays($dif);
+
+                $examenfinal = Carbon::create($fechafin)->addMonths(1);
+                $notas = Carbon::create($fechafin)->addDays(45);
+                $this->inicia=$fechaini;
+                $this->finaliza=$fechafin;
+                $this->grupo=$grupo;
+
+                $this->cronog=Cronograma::create([
+                                            'grupo_id'      =>$grupo,
+                                            'ciclo_id'      =>$ciclo,
+                                            'fecha_final'   =>$examenfinal,
+                                            'fecha_notas'   =>$notas
+                                        ]);
+            }else{
+                $examenfinal = Carbon::create($finaliza)->addMonths(1);
+                $notas = Carbon::create($finaliza)->addDays(45);
+                $this->inicia=$inicia;
+                $this->finaliza=$finaliza;
+                $this->grupo=$grupo;
+
+                $this->cronog=Cronograma::create([
+                                            'grupo_id'      =>$grupo,
+                                            'ciclo_id'      =>$ciclo,
+                                            'fecha_final'   =>$examenfinal,
+                                            'fecha_notas'   =>$notas
+                                        ]);
+            }
+
+        }else{
+            //Log::info('inicia: '.$inicia.' ultimo: nnn');
+            $examenfinal = Carbon::create($finaliza)->addMonths(1);
+            $notas = Carbon::create($finaliza)->addDays(45);
+            $this->inicia=$inicia;
+            $this->finaliza=$finaliza;
+            $this->grupo=$grupo;
+
+            $this->cronog=Cronograma::create([
+                                        'grupo_id'      =>$grupo,
+                                        'ciclo_id'      =>$ciclo,
+                                        'fecha_final'   =>$examenfinal,
+                                        'fecha_notas'   =>$notas
+                                    ]);
+        }
+
+
 
         $this->generadias();
     }
@@ -104,7 +153,7 @@ trait CronogramaTrait
     public function generadias(){
 
         $inicio=Carbon::create($this->inicia);
-        $fin=Carbon::create($this->finaliza);
+        $fin=Carbon::create($this->finaliza)->addMonths(2);
         $periodo=CarbonPeriod::create($inicio,$fin);
 
         $this->reset('dias');
@@ -243,6 +292,7 @@ trait CronogramaTrait
 
             // Si al final de todas las fechas no hay tiempo suficiente, marcar como pendiente
             if ($tiempoRequerido > 0) {
+                //Log::info('pendiente: '.$tema->id);
                 $asignaciones[] = [
                     'tema_id' => $tema->id,
                     'fecha' => null,
@@ -252,20 +302,47 @@ trait CronogramaTrait
         }
 
         foreach ($asignaciones as $value) {
-            Log::info('id: '.$value['horas_asignadas']);
+
             if($value['horas_asignadas']>0){
 
                 Cronodeta::create([
                     'cronograma_id'     => $this->cronog->id,
                     'unidtema_id'       => $value['tema_id'],
                     'fecha_programada'  => $value['fecha'],
-                    'duracion'          => $value['horas_asignadas']
+                    'duracion'          => $value['horas_asignadas'],
+                    'usuario'           => Auth::user()->id
                 ]);
             }
         }
 
         //REcorrer los temas y compararlo con las fechas encontradas
         //Puede pasar que las fechas no coincidan o no den los tiempos.
+    }
+
+    public function verifechas($id){
+
+        /* $crono=Cronograma::where('ciclo_id',$id)
+                            ->select('id')
+                            ->orderBy('id','DESC')
+                            ->first();
+
+        $ultimo=Cronodeta::where('cronograma_id',$crono->id)
+                            ->orderBy('id', 'DESC')
+                            ->first(); */
+
+        $ultimo=Cronodeta::where('usuario',Auth::user()->id)
+                            ->orderBy('id', 'DESC')
+                            ->first();
+
+        $ciclofinal=Ciclo::find($id);
+
+        if($ciclofinal->finaliza<$ultimo->fecha_programada){
+            $ciclofinal->update([
+                'finaliza'  => $ultimo->fecha_programada,
+            ]);
+        }
+
+
     }
 
     private function cronogramas(){

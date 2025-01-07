@@ -17,6 +17,8 @@ class Cronogramas extends Component
         if(Auth::user()->rol_id===5){
             $this->filtro_profesor=Auth::user()->id;
         }
+
+        //$this->prt();
     }
 
     public function prt(){
