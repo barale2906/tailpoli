@@ -8,27 +8,32 @@ use App\Models\Academico\Cronograma;
 use App\Models\Academico\Unidade;
 use App\Models\Academico\Unidtema;
 use App\Models\Academico\Acaplandeta;
+use Illuminate\Support\Facades\Log;
 
 trait AcaplanTrait
 {
     public $plan;
 
     public function plancrea($ciclo,$grupo){
+
         $crono=Cronograma::where('ciclo_id',$ciclo)
                             ->where('grupo_id',$grupo)
-                            ->select('id')
+                            ->select('id','fecha_final')
                             ->first();
 
-        $fechas = Cronodeta::where('cronograma_id', $crono->id)
+        $detalle=Cronodeta::where('cronograma_id', $crono->id)
                             ->selectRaw('MAX(fecha_programada) as fin, MIN(fecha_programada) as inicio')
                             ->first();
 
-        if($fechas){
+
+
+        if($detalle && $detalle->inicio && $detalle->fin){
+
             $this->plan=Acaplan::create([
                 'ciclo_id'  => $ciclo,
                 'grupo_id'  => $grupo,
-                'fecha_inicio'  => $fechas->inicio,
-                'fecha_fin' => $fechas->fin,
+                'fecha_inicio'  => $detalle->inicio,
+                'fecha_fin' => $detalle->fin,
             ]);
         }else{
             $this->plan=Acaplan::create([

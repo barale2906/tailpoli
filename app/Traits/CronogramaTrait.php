@@ -91,9 +91,9 @@ trait CronogramaTrait
                             ->orderBy('cronodetas.id','DESC')
                             ->first();
 
-        if($ultimo){
+        if($ultimo && $ultimo->fecha_programada){
             //Log::info('inicia: '.$inicia.' ultimo: '.$ultimo->fecha_programada);
-            if($ultimo->fecha_programada>$inicia){
+            /* if($ultimo->fecha_programada>$inicia){
 
                 $ini=Carbon::create($inicia);
                 $fin=Carbon::create($finaliza);
@@ -104,7 +104,7 @@ trait CronogramaTrait
 
                 $examenfinal = Carbon::create($fechafin)->addMonths(1);
                 $notas = Carbon::create($fechafin)->addDays(45);
-                $this->inicia=$fechaini;
+                $this->inicia=$ultimo->fecha_programada;
                 $this->finaliza=$fechafin;
                 $this->grupo=$grupo;
 
@@ -127,7 +127,27 @@ trait CronogramaTrait
                                             'fecha_final'   =>$examenfinal,
                                             'fecha_notas'   =>$notas
                                         ]);
-            }
+            } */
+
+            $ini=Carbon::create($inicia);
+                $fin=Carbon::create($finaliza);
+
+                $dif=$ini->diffInDays($fin);
+                $fechaini=Carbon::create($ultimo->fecha_programada);
+                $fechafin=$fechaini->addDays($dif);
+
+                $examenfinal = Carbon::create($fechafin)->addMonths(1);
+                $notas = Carbon::create($fechafin)->addDays(45);
+                $this->inicia=Carbon::create($ultimo->fecha_programada)->addDay(); // Evita sobre cargar una fecha y deja horas disponibles en la ultima fecha
+                $this->finaliza=$fechafin;
+                $this->grupo=$grupo;
+
+                $this->cronog=Cronograma::create([
+                                            'grupo_id'      =>$grupo,
+                                            'ciclo_id'      =>$ciclo,
+                                            'fecha_final'   =>$examenfinal,
+                                            'fecha_notas'   =>$notas
+                                        ]);
 
         }else{
             //Log::info('inicia: '.$inicia.' ultimo: nnn');
@@ -153,10 +173,13 @@ trait CronogramaTrait
     public function generadias(){
 
         $inicio=Carbon::create($this->inicia);
-        $fin=Carbon::create($this->finaliza)->addMonths(2);
+        $fin=Carbon::create($this->finaliza)->addMonths(4);
         $periodo=CarbonPeriod::create($inicio,$fin);
 
+        //Log::info('inicia: '.$inicio.' ultimo: '.$fin);
+
         $this->reset('dias');
+
         $diaclases=Horario::where('grupo_id', $this->grupo)
                         ->select('dia', DB::raw('COUNT(*) as total'))
                         ->groupBy('dia')
@@ -283,6 +306,8 @@ trait CronogramaTrait
                     $dia['intensidad'] -= $horasAsignadas;
                     $tiempoRequerido -= $horasAsignadas;
 
+                    //Log::info('dia: '.$dia['intensidad'].' tema: '.$tema->id);
+
                     // Si la tema ya no necesita más tiempo, pasar a la siguiente tema
                     if ($tiempoRequerido <= 0) {
                         break;
@@ -315,8 +340,29 @@ trait CronogramaTrait
             }
         }
 
+
         //REcorrer los temas y compararlo con las fechas encontradas
         //Puede pasar que las fechas no coincidan o no den los tiempos.
+    }
+
+    public function fechascronograma(){
+        $ultimo=Cronodeta::where('usuario', Auth::user()->id)
+                            ->select('fecha_programada')
+                            ->orderBy('id','DESC')
+                            ->first();
+
+        $crono=Cronograma::find($ultimo->cronograma_id);
+
+        if($ultimo->fecha_programada>$crono->fecha_final){
+            $ref=Carbon::create($ultimo->fecha_programada);
+            $final=$ref->addDays(30);
+            $notas=$ref->addDays(45);
+
+            $crono->update([
+                'fecha_final'   =>$final,
+                'fecha_notas'   =>$notas
+            ]);
+        }
     }
 
     public function verifechas($id){
