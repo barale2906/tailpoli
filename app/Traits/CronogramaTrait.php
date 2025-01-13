@@ -9,6 +9,7 @@ use App\Models\Academico\Grupo;
 use App\Models\Academico\Horario;
 use App\Models\Academico\Unidade;
 use App\Models\Academico\Unidtema;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +24,8 @@ trait CronogramaTrait
     use FiltroTrait;
 
     public $ordena='id';
-    public $ordenado='DESC';
-    public $pages = 3;
+    public $ordenado='ASC';
+    public $pages = 15;
 
     public $buscar='';
     public $buscamin='';
@@ -35,9 +36,13 @@ trait CronogramaTrait
     public $inicia;
     public $finaliza;
 
-    public $is_modify = true;
+    public $elegido;
 
-    public $filtro_profesor;
+    public $is_modify = true;
+    public $is_creating=false;
+
+    public $filtroprofesor;
+    public $filtrociclo;
 
     //Cargar variable
     public function buscaText(){
@@ -71,6 +76,7 @@ trait CronogramaTrait
     {
         $this->reset(
                         'is_modify',
+                        'is_creating'
                     );
     }
 
@@ -391,11 +397,30 @@ trait CronogramaTrait
 
     }
 
+    public function show($id){
+        $this->is_creating=true;
+        $this->is_modify=false;
+        $this->elegido=$id;
+    }
+
     private function cronogramas(){
         return Cronograma::buscar($this->buscamin)
-                            ->profesor($this->filtro_profesor)
+                            ->profesor($this->filtroprofesor)
+                            ->progra($this->filtrociclo)
                             ->orderBy($this->ordena, $this->ordenado)
                             ->paginate($this->pages);
+    }
+
+    private function profesores(){
+        return User::where('rol_id', 5)
+                    ->orderBy('name', 'ASC')
+                    ->get();
+    }
+
+    private function ciclos(){
+        return Cronograma::select('ciclo_id')
+                            ->groupBy('ciclo_id')
+                            ->get();
     }
 
 }

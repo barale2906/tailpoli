@@ -261,17 +261,19 @@
             @endif
 
             @if ($is_profesor)
-                <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+                @if ($no_soy_profe)
+                    <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
 
-                    <label for="filtroprofesor" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Profesores</label>
-                    <select wire:model.live="filtroprofesor" id="filtroprofesor"
-                    class="block py-2.5 px-2.5 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
-                        <option >Profesor...</option>
-                        @foreach ($profesores as $item)
-                            <option value={{$item->id}}>{{$item->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
+                        <label for="filtroprofesor" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Profesores</label>
+                        <select wire:model.live="filtroprofesor" id="filtroprofesor"
+                        class="block py-2.5 px-2.5 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2 capitalize">
+                            <option >Profesor...</option>
+                            @foreach ($profesores as $item)
+                                <option value={{$item->id}}>{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
             @endif
 
             @if ($is_etapa)
@@ -426,6 +428,20 @@
                         <option >Elija programación... </option>
                         @foreach ($ciclos as $item)
                             <option value={{$item->id}}><strong>INICIA: {{$item->inicia}}</strong> /// NOMBRE: {{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+
+            @if ($is_ciclos_crono)
+                <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2">
+
+                    <label for="filtrociclo" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Programación</label>
+                    <select wire:model.live="filtrociclo" id="filtrociclo"
+                    class="block py-2.5 px-2 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer mb-2">
+                        <option >Elija programación... </option>
+                        @foreach ($ciclos as $item)
+                            <option value={{$item->ciclo_id}}><strong>INICIA: {{$item->ciclo->inicia}}</strong> /// NOMBRE: {{$item->ciclo->name}}</option>
                         @endforeach
                     </select>
                 </div>

@@ -50,4 +50,10 @@ class Cronograma extends Model
             });
         });
     }
+
+    public function scopeProgra($query, $ciclo){
+        $query->when($ciclo ?? null, function($query, $ciclo){
+            $query->where('ciclo_id',$ciclo);
+        });
+    }
 }

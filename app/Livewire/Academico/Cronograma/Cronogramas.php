@@ -15,7 +15,8 @@ class Cronogramas extends Component
     public function mount(){
         $this->claseFiltro(19);
         if(Auth::user()->rol_id===5){
-            $this->filtro_profesor=Auth::user()->id;
+            $this->filtroprofesor=Auth::user()->id;
+            $this->no_soy_profe=false;
         }
 
         //$this->prt();
@@ -34,6 +35,8 @@ class Cronogramas extends Component
     {
         return view('livewire.academico.cronograma.cronogramas',[
             'cronogramas'   =>$this->cronogramas(),
+            'profesores'    =>$this->profesores(),
+            'ciclos'        =>$this->ciclos(),
         ]);
     }
 }

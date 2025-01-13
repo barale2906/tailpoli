@@ -45,7 +45,9 @@ trait FiltroTrait
     //Ciclos
     public $is_jornada=false;
     public $is_ciclos=false;
+    public $is_ciclos_crono=false;
     public $is_profesor=false;
+    public $no_soy_profe=true;
 
     // Recibos
     public $is_fechatransaccion=false;
@@ -215,6 +217,8 @@ trait FiltroTrait
 
             case 19:
                 $this->txt="Busque por acá: Nombre del grupo.";
+                $this->is_profesor=true;
+                $this->is_ciclos_crono=true;
                 break;
         }
     }
