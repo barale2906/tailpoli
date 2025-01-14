@@ -32,7 +32,7 @@ class Unidtema extends Model
      * Relación muchos a muchos.
      * Temas de la unidad
      */
-    public function plandeta(): HasMany
+    public function plandetas(): HasMany
     {
         return $this->hasMany(Acaplandeta::class);
     }

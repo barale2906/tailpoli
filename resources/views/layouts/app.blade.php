@@ -16,9 +16,9 @@
         <script src="https://kit.fontawesome.com/c5e988e23f.js" crossorigin="anonymous"></script>
 
         <!-- Scripts -->
-        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-        <link href="{{ asset('build/assets/app-83d7ee29.css') }}" rel="stylesheet">
-        <script src="{{ asset('build/assets/app-7dc077a2.js') }}" defer></script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- <link href="{{ asset('build/assets/app-83d7ee29.css') }}" rel="stylesheet">
+        <script src="{{ asset('build/assets/app-7dc077a2.js') }}" defer></script> --}}
 
         <!-- Styles -->
         @livewireStyles

@@ -13,13 +13,13 @@ class Acaplandeta extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     //Relacion uno a muchos inversa
-    public function Acaplan() : BelongsTo
+    public function acaplan() : BelongsTo
     {
         return $this->BelongsTo(Acaplan::class);
     }
 
     //Relacion uno a muchos inversa
-    public function unitema() : BelongsTo
+    public function tema() : BelongsTo
     {
         return $this->BelongsTo(Unidtema::class);
     }

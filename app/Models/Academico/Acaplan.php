@@ -29,8 +29,8 @@ class Acaplan extends Model
      * Relación muchos a muchos.
      * Detalles del plan
      */
-    public function cronodetas(): HasMany
+    public function detaplanes(): HasMany
     {
-        return $this->hasMany(Cronodeta::class);
+        return $this->hasMany(Acaplandeta::class);
     }
 }
