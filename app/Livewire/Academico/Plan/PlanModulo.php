@@ -8,6 +8,7 @@ use App\Models\Academico\Cronograma;
 use App\Models\Academico\Cronodeta;
 use App\Models\Academico\Unidade;
 use App\Models\Academico\Unidtema;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class PlanModulo extends Component
@@ -17,6 +18,12 @@ class PlanModulo extends Component
     public $cronodetalles;
     public $temas;
     public $ids=[];
+    public $plan;
+    public $crono;
+    public $fecha;
+
+    public $is_mostrar=true;
+    public $is_cierre=false;
 
     public function mount($grupo,$idciclo){
         $this->actual=Acaplan::where('grupo_id',$grupo)
@@ -60,8 +67,17 @@ class PlanModulo extends Component
 
     public function carcronodet(){
         $this->cronodetalles=Cronodeta::whereIn('cronograma_id',$this->ids)
-                                        ->select('unidtema_id','fecha_programada')
+                                        ->select('id','unidtema_id','fecha_programada')
                                         ->get();
+    }
+
+    #[On('cerrando')]
+    public function fin($plan=null,$crono=null){
+
+        $this->is_cierre=!$this->is_cierre;
+        $this->is_mostrar=!$this->is_mostrar;
+        $this->plan=$plan;
+        $this->crono=$crono;
     }
 
     public function render()
