@@ -78,6 +78,7 @@ class PlanModulo extends Component
         $this->is_mostrar=!$this->is_mostrar;
         $this->plan=$plan;
         $this->crono=$crono;
+        $this->mount($this->actual->grupo_id,$this->actual->ciclo_id);
     }
 
     public function render()

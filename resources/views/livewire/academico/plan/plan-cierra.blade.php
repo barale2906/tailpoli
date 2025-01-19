@@ -1,4 +1,10 @@
 <div>
+    <h1 class=" text-center font-bold capitalize text-2xl">
+        Tema: {{$tema->name}}
+    </h1>
+    <h1 class=" text-center font-bold capitalize text-2xl">
+        Fecha de clase: {{$crono->fecha_programada}}
+    </h1>
     <form wire:submit.prevent="new">
 
         <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">

@@ -102,7 +102,7 @@
 
 
     @if ($is_cierre)
-        <livewire:academico.plan.plan-cierra :plan="$plan" :crono="$crono" :fecha="$fecha" />
+        <livewire:academico.plan.plan-cierra :plan="$plan" :crono="$crono" />
     @endif
 
 </div>

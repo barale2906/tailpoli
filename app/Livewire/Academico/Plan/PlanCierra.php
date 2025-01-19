@@ -6,6 +6,7 @@ use App\Models\Academico\Acaplandeta;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Models\Academico\Cronodeta;
+use App\Models\Academico\Unidtema;
 use Illuminate\Support\Facades\Auth;
 
 class PlanCierra extends Component
@@ -16,6 +17,7 @@ class PlanCierra extends Component
     public $actividades;
     public $evidencias;
     public $resultados;
+    public $tema;
 
     public function mount($plan,$crono){
         $esta=DB::table('crono_plan_cierre')
@@ -23,14 +25,15 @@ class PlanCierra extends Component
                     ->where('plan_id',$plan)
                     ->first();
 
-        if($esta && $esta->nombre){
+        if($esta!==null && $esta->nombre!==null){
             // Notificación
             $this->dispatch('alerta', name:$esta->nombre.': Cerro esta fecha el día: '.$esta->fecha_cierre);
             $this->dispatch('cerrando');
-        }else{
-            $this->plan=Acaplandeta::find($plan);
-            $this->crono=Cronodeta::find($crono);
         }
+
+        $this->plan=Acaplandeta::find($plan);
+        $this->crono=Cronodeta::find($crono);
+        $this->tema=Unidtema::find($this->crono->unidtema_id);
     }
 
     /**
@@ -75,12 +78,14 @@ class PlanCierra extends Component
                         'fecha_crono'=>$this->crono->fecha_programada,
                         'usuario'=>Auth::user()->id,
                         'nombre'=>Auth::user()->name,
+                        'created_at'=>now(),
+                        'updated_at'=>now()
             ]);
 
         // Notificación
         $this->dispatch('alerta', name:'Se cerro la actividad con fecha: '.$this->crono->fecha_programada);
-        $this->dispatch('cerrando');
         $this->resetFields();
+        $this->dispatch('cerrando');
     }
 
     public function render()
