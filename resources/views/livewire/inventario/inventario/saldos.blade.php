@@ -1,6 +1,6 @@
 <div>
     <div class="flex flex-wrap justify-end mb-4 ">
-        <a href="#" wire:click.prevent="$dispatch('Editando')" class="w-auto text-teal-600 bg-gradient-to-r from-teal-100 via-teal-300 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-100 dark:focus:ring-teal-600 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+        <a href="#" wire:click.prevent="$dispatch('cancelando')" class="w-auto text-teal-600 bg-gradient-to-r from-teal-100 via-teal-300 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-100 dark:focus:ring-teal-600 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
             <i class="fa-solid fa-backward-step"></i> Volver
         </a>
     </div>
