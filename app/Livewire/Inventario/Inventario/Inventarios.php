@@ -26,6 +26,7 @@ class Inventarios extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $is_saldos = false;
 
     public $elegido;
 
@@ -116,6 +117,7 @@ class Inventarios extends Component
                         'is_creating',
                         'is_editing',
                         'is_deleting',
+                        'is_saldos'
                     );
     }
 
@@ -179,6 +181,12 @@ class Inventarios extends Component
 
     public function exportar(){
         return new InvInventarioExport($this->buscamin,$this->filtrocrea,$this->valorFiltrotipo,$this->filtroalmacen,$this->filtrosaldo);
+    }
+
+    public function saldosTotales(){
+        $this->cancela();
+        $this->is_modify=false;
+        $this->is_saldos=true;
     }
 
     private function inventarios()
