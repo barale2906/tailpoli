@@ -2,9 +2,12 @@
 
 namespace App\Livewire\Inventario\Inventario;
 
+use App\Exports\InvSaldoExport;
 use App\Models\Inventario\Almacen;
 use App\Models\Inventario\Inventario;
 use App\Models\Inventario\Producto;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Saldos extends Component
@@ -13,10 +16,12 @@ class Saldos extends Component
     public $almacenes;
     public $productos;
     public $ids=[];
+    public $totales=[];
 
     public function mount(){
-        $this->existencias=Inventario::where('status',true)->get();
+        //$this->existencias=Inventario::where('status',true)->get();
         $this->obtealma();
+        //$this->obtetotal();
     }
 
     public function obtealma(){
@@ -57,6 +62,37 @@ class Saldos extends Component
         $this->productos=Producto::whereIn('id',$this->ids)
                                     ->orderBy('name', 'ASC')
                                     ->get();
+        $this->obtetotales();
+    }
+
+    public function obtetotales(){
+
+        foreach ($this->productos as $value) {
+            $this->reset('existencias');
+
+            $row=[
+                'producto'=>$value->name
+            ];
+            foreach ($this->almacenes as $alma) {
+                $this->existencias=Inventario::where('status', true)
+                                        ->where('producto_id', $value->id)
+                                        ->where('almacen_id', $alma->id)
+                                        ->first();
+
+                if($this->existencias){
+                    $row[$alma->id]=$this->existencias->saldo;
+                    //Log::info('HABIA producto: ' . $value->name.' almacén: '.$alma->name.' SAldo: '.$this->existencias->saldo);
+                }else{
+                    $row[$alma->id]=0;
+                    //Log::info('SIN producto: ' . $value->name.' almacén: '.$alma->name);
+                }
+            }
+            array_push($this->totales,$row);
+        }
+    }
+
+    public function exportar(){
+        return new InvSaldoExport(/* $this->buscamin,$this->filtrocrea,$this->valorFiltrotipo,$this->filtroalmacen,$this->filtrosaldo */);
     }
 
 
