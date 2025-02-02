@@ -82,14 +82,21 @@ trait CronogramaTrait
 
     public function cronocrea($ciclo,$inicia,$finaliza,$grupo){
 
-        $this->reset(
+        /* $this->reset(
             'dias',
             'ids',
             'cronog',
             'grupo',
             'inicia',
             'finaliza',
-        );
+        ); */
+
+        $this->dias=[];
+        $this->ids=[];
+        $this->cronog=null;
+        $this->grupo=null;
+        $this->inicia=null;
+        $this->finaliza=null;
 
         $ultimo=Cronograma::join('cronodetas','cronogramas.id','=','cronodetas.cronograma_id')
                             ->where('cronogramas.ciclo_id',$ciclo)
@@ -142,8 +149,8 @@ trait CronogramaTrait
                 $fechaini=Carbon::create($ultimo->fecha_programada);
                 $fechafin=$fechaini->addDays($dif);
 
-                $examenfinal = Carbon::create($fechafin)->addMonths(1);
-                $notas = Carbon::create($fechafin)->addDays(45);
+                $examenfinal = Carbon::create($fechafin)->addDays(15);
+                $notas = Carbon::create($fechafin)->addDays(20);
                 $this->inicia=Carbon::create($ultimo->fecha_programada)->addDay(); // Evita sobre cargar una fecha y deja horas disponibles en la ultima fecha
                 $this->finaliza=$fechafin;
                 $this->grupo=$grupo;
@@ -184,7 +191,8 @@ trait CronogramaTrait
 
         //Log::info('inicia: '.$inicio.' ultimo: '.$fin);
 
-        $this->reset('dias');
+        /* $this->reset('dias'); */
+        $this->dias=[];
 
         $diaclases=Horario::where('grupo_id', $this->grupo)
                         ->select('dia', DB::raw('COUNT(*) as total'))
@@ -278,7 +286,8 @@ trait CronogramaTrait
     }
 
     public function cronounidades(){
-        $this->reset('ids');
+        /* $this->reset('ids'); */
+        $this->ids=[];
         $gru=Grupo::where('id',$this->grupo)->select('modulo_id')->first();
         $unidades=Unidade::where('modulo_id',$gru->modulo_id)->select('id')->get();
         foreach ($unidades as $value) {
@@ -418,9 +427,13 @@ trait CronogramaTrait
     }
 
     private function ciclos(){
-        return Cronograma::select('ciclo_id')
-                            ->groupBy('ciclo_id')
+        return Cronograma::profesor($this->filtroprofesor)
+                            ->select('cronogramas.ciclo_id') // Especifica la tabla para evitar ambigüedades
+                            ->join('ciclos', 'cronogramas.ciclo_id', '=', 'ciclos.id') // Join con la tabla ciclos
+                            ->groupBy('cronogramas.ciclo_id') // Agrupa por ciclo_id
+                            ->orderBy('ciclos.inicia', 'DESC') // Ordena por el campo inicia de la tabla ciclos
                             ->get();
+
     }
 
 }
