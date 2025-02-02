@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Exports;
-use App\Models\Inventario\Inventario;
-use App\Traits\CrtStatusTrait;
+
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -18,23 +17,18 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class InvSaldoExport implements FromCollection, WithCustomStartCell, Responsable, WithMapping, WithColumnFormatting, WithHeadings, ShouldAutoSize, WithDrawings, WithStyles
 {
     use Exportable;
-    use CrtStatusTrait;
 
-    private $buscamin;
-    private $filtrocrea;
-    private $valorFiltrotipo;
-    private $filtrosaldo;
-    private $filtroalmacen;
+    private $totales;
+    private $almacenes;
+    private $ids;
     private $fileName = "InvenSaldo.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
 
-    public function __construct(/* $buscamin,$filtrocrea,$valorFiltrotipo,$filtroalmacen,$filtrosaldo */)
+    public function __construct($totales,$almacenes,$ids)
     {
-        /* $this->buscamin=$buscamin;
-        $this->filtrocrea=$filtrocrea;
-        $this->valorFiltrotipo=$valorFiltrotipo;
-        $this->filtroalmacen=$filtroalmacen;
-        $this->filtrosaldo=$filtrosaldo; */
+        $this->totales=$totales;
+        $this->almacenes=$almacenes;
+        $this->ids=$ids;
     }
 
     /**
@@ -42,8 +36,7 @@ class InvSaldoExport implements FromCollection, WithCustomStartCell, Responsable
     */
     public function collection()
     {
-        $caso=Inventario::where('status',true)->get();
-        return  $caso;
+        return collect($this->totales);
     }
 
     public function startCell(): string
@@ -53,52 +46,29 @@ class InvSaldoExport implements FromCollection, WithCustomStartCell, Responsable
 
     public function headings(): array
     {
-        return [
-            'Fecha Movimiento',
-            //'Tipo (1 sálida, 2 entrada, 3 pendiente, 4 traslado)',
-            'Tipo',
-            'Ciudad',
-            'Sede',
-            'Almacén',
-            'Producto',
-            'Cantidad',
-            'Saldo con este movimiento (si el campo esta vacio su valor es cero)',
-            'Precio (si el campo esta vacio su valor es cero)',
-            'Responsable del Movimiento',
-            'Descripción'
-        ];
+        $alma=[];
+        array_push($alma,'Producto');
+        foreach ($this->almacenes as $value) {
+            array_push($alma,$value->name);
+        }
+        return $alma;
     }
 
-    public function map($inventario): array
+    public function map($total): array
     {
-        $tipo=$this->statusInventipo[$inventario->tipo];
+        $row=[];
 
-        if($inventario->saldo===0){
-            $saldo=0;
-        }else{
-            $saldo=$inventario->saldo;
+        array_push($row,$total['producto']);
+
+        for ($i=0; $i < $this->almacenes->count(); $i++) {
+            $almaid=$this->almacenes[$i]->id;
+
+            if(isset($total[$almaid])){
+                array_push($row,$total[$almaid]);
+            }
         }
 
-        if($inventario->precio===0){
-            $precio=0;
-        }else{
-            $precio=$inventario->precio;
-        }
-
-        return [
-            $inventario->fecha_movimiento,
-            //$inventario->tipo+1,// ? "ENTRADA":"SALIDA",
-            $tipo,
-            $inventario->almacen->sede->sector->name,
-            $inventario->almacen->sede->name,
-            $inventario->almacen->name,
-            $inventario->producto->name,
-            $inventario->cantidad,
-            $inventario->saldo,
-            $inventario->precio,
-            $inventario->user->name,
-            $inventario->descripcion
-        ];
+        return $row;
     }
 
     public function columnFormats(): array

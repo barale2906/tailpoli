@@ -92,7 +92,7 @@ class Saldos extends Component
     }
 
     public function exportar(){
-        return new InvSaldoExport(/* $this->buscamin,$this->filtrocrea,$this->valorFiltrotipo,$this->filtroalmacen,$this->filtrosaldo */);
+        return new InvSaldoExport($this->totales,$this->almacenes,$this->ids);
     }
 
 
