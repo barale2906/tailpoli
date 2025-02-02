@@ -295,12 +295,11 @@
                                 <option value="X">X</option>
                                 <option value="Página Web">Página Web</option>
                                 <option value="Recomendación">Recomendación</option>
-                                <option value="Redes Sociales">Redes Sociales</option>
                                 <option value="Referencia">Referencia</option>
                                 <option value="Volante">Volante</option>
                                 <option value="Correo Electrónico">Correo Electrónico</option>
                                 <option value="Visita en sitio">Visita en sitio</option>
-                                <option value="Otro">Otro</option>
+                                <option value="Visita sitio web">Visita sitio web</option>
                             </select>
                             @error('medio')
                                 <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
