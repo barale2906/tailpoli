@@ -548,8 +548,8 @@ class MatriculasCrear extends Component
 
     private function medios(){
         return DB::table('medios')
+                    ->where('status', 1)
                     ->orderBy('name', 'ASC')
-                    ->orderBy('status', 'DESC')
                     ->get();
     }
 
