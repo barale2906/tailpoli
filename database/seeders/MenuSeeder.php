@@ -15,6 +15,17 @@ class MenuSeeder extends Seeder
     public function run(): void
     {
         Submenu::create([
+            'permiso'           => 'co_rols',
+            'ruta'              => 'configuracion.medios',
+            'identificaRuta'    => 'configuracion.medios',
+            'name'              => 'Medios',
+            'icono'             => 'fa-solid fa-wrench text-gray-500',
+            'menu_id'           => 9
+        ]);
+
+        /*
+
+        Submenu::create([
             'permiso'           => 'ac_planeacion',
             'ruta'              => 'academico.planes',
             'identificaRuta'    => 'academico.planes',
@@ -23,8 +34,6 @@ class MenuSeeder extends Seeder
             'menu_id'           => 1
 
         ]);
-
-        /*
 
         $m1=Menu::create([
             'name'              => 'GESTIÓN HUMANA',
