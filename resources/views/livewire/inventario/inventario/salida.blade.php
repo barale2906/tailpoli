@@ -309,10 +309,13 @@
         @endif
 
         <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 m-2">
-            @if ($movimientos)
+            @if ($movimientos && $Total>0)
                 <a href="" wire:click.prevent="new()" class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                     <i class="fa-solid fa-upload"></i> Nuevo Registro
                 </a>
+                <div wire:loading class=" text-2xl text-red-700 font-extrabold uppercase">
+                    Generando Registro...
+                </div>
             @endif
             <a href="" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-rectangle-xmark"></i> cancelar
