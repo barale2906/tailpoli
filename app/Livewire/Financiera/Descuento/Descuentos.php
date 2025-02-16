@@ -41,6 +41,7 @@ class Descuentos extends Component
     public function show($esta, $act){
 
         $this->is_modify = false;
+        $this->reset('elegido');
 
         switch ($act) {
             case 0:

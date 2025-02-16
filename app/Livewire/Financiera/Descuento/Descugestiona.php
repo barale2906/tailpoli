@@ -17,6 +17,7 @@ class Descugestiona extends Component
     public $actual;
 
     public function mount($elegido=null){
+        $this->resetFields();
         if($elegido){
             $this->actual=Descuento::find($elegido);
             $this->valores();
@@ -50,7 +51,13 @@ class Descugestiona extends Component
                         'valor',
                         'tipo',
                         'aplica',
+                        'actual'
                     );
+    }
+
+    public function regresar(){
+        $this->resetFields();
+        $this->dispatch('volviendo');
     }
 
     public function new(){
