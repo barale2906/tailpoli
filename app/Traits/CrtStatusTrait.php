@@ -75,4 +75,14 @@ trait CrtStatusTrait
         'Post-Grado',
         'Sin Información'
     ];
+
+    public $descuentos=[
+        'Valor',
+        'Porcentaje'
+    ];
+
+    public $aplicadescuento=[
+        'Fecha de Pago',
+        'Fecha de Inicio'
+    ];
 }
