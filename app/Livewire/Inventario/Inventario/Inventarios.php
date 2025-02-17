@@ -122,19 +122,21 @@ class Inventarios extends Component
     }
 
     public function updatedFiltrotipo(){
-        switch ($this->filtrotipo) {
-            case '1':
-                $this->valorFiltrotipo=0;
-                break;
+        $this->valorFiltrotipo=$this->filtrotipo;
 
-            case '2':
+        /* switch ($this->filtrotipo) {
+            case '1':
                 $this->valorFiltrotipo=1;
                 break;
 
-            case '3':
+            case '2':
                 $this->valorFiltrotipo=2;
                 break;
-        }
+
+            case '3':
+                $this->valorFiltrotipo=3;
+                break;
+        } */
     }
 
     public function updatedSaldofiltro(){
