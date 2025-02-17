@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('name')->comment('nombre del descuento');
             $table->integer('tipo')->comment('0 valor, 1 porcentaje');
             $table->double('valor')->comment('Valor del descuento a aplicar');
-            $table->integer('aplica')->comment('0 fecha de pago, 1 fecha de inicio, ');
-            $table->integer('status')->comment('0 inactivo 1 activo');
+            $table->integer('aplica')->comment('0 fecha de pago, 1 fecha de inicio, 2 otros conceptos');
+            $table->integer('status')->default(1)->comment('0 inactivo 1 activo');
 
             $table->timestamps();
         });

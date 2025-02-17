@@ -8,12 +8,14 @@ use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
+use App\Models\Financiera\Descuento;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
 use App\Models\User;
 use App\Traits\ComunesTrait;
 use App\Traits\MailTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -49,6 +51,8 @@ class RecibosPagoCrear extends Component
 
     public $concepdescuento;
     public $descuento;
+    public $base;
+    public $aplica;
 
     public $concepotro;
     public $otro;
@@ -182,6 +186,7 @@ class RecibosPagoCrear extends Component
 
     public function cargaOtro(){
 
+        $this->calcudescu(0,"otro");
         if($this->otro>=$this->descuento){
 
             $ite=ConceptoPago::find($this->concepotro);
@@ -206,7 +211,54 @@ class RecibosPagoCrear extends Component
         }
     }
 
+    public function calcudescu($id,$aplicaa,$fecha=null){
+        $this->reset(
+                    'descuento',
+                    'base',
+                    'aplica'
+                );
+
+        if($id===0){
+            $this->aplica=2;
+            $this->base=$this->otro;
+            $this->obtienedescuento();
+        }
+
+        if($id===1){
+            $this->aplica=0;
+            $this->base=$aplicaa;
+            $hoy=Carbon::today();
+
+            if($fecha>=$hoy){
+                //dd(" HOY Es ANTES: ",$hoy,$fecha);
+                $this->obtienedescuento();
+            }else{
+                //dd(" HOY ES DESPUES: ",$hoy,$fecha);
+                $this->descuento=0;
+            }
+        }
+
+    }
+
+    public function obtienedescuento(){
+
+        $descu=Descuento::where('aplica',$this->aplica)
+                        ->where('status',1)
+                        ->first();
+
+        if($descu && $descu->tipo===0){
+
+            $this->descuento=$descu->valor;
+        }
+
+        if($descu && $descu->tipo===1){
+            $this->descuento=$this->base*$descu->valor/100;
+        }
+    }
+
     public function asigOtro($id, $item,$conf=null){
+
+        $this->calcudescu($id,$item['saldo'],$item['fecha_pago']);
 
         if($this->valor>=$this->descuento){
             $dato=explode("-----",$item['observaciones']);

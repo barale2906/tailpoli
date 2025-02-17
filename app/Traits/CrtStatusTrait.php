@@ -83,6 +83,7 @@ trait CrtStatusTrait
 
     public $aplicadescuento=[
         'Fecha de Pago',
-        'Fecha de Inicio'
+        'Fecha de Inicio',
+        'otros conceptos'
     ];
 }
