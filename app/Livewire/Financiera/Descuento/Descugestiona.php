@@ -64,6 +64,12 @@ class Descugestiona extends Component
         // validate
         $this->validate();
 
+        //Inactiva descuento anterior
+        Descuento::where('aplica',$this->aplica)
+                    ->update([
+                        'status' => 0
+                    ]);
+
         Descuento::create([
                         'name' => strtolower($this->name),
                         'valor' => $this->valor,
@@ -71,6 +77,8 @@ class Descugestiona extends Component
                         'aplica' => $this->aplica,
                         'status' => 1
                     ]);
+
+
 
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente el descuento: '.$this->name);
