@@ -16,7 +16,7 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  font-extrabold uppercase">POLIDOTACIONES</h1>
-                            <h2 class="text-center  font-extrabold uppercase">XXXXXXXXX</h2>
+                            <h2 class="text-center  font-extrabold uppercase">1018 422.760</h2>
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  uppercase">sede envía:</h1>
@@ -103,7 +103,7 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  font-extrabold uppercase">POLIDOTACIONES</h1>
-                            <h2 class="text-center  font-extrabold uppercase">XXXXXXXXX</h2>
+                            <h2 class="text-center  font-extrabold uppercase">1018 422.760</h2>
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <h1 class="text-center  uppercase">sede envía:</h1>

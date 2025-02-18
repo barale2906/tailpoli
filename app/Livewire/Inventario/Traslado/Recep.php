@@ -88,6 +88,10 @@ class Recep extends Component
                             'entregado'         =>true,
                         ]);
 
+        $ultimo->update([
+            'status'    =>false
+        ]);
+
         $this->dispatch('alerta', name:'Recibido.');
         $this->reset('id_mov');
         $this->mount($this->almacen->id);
