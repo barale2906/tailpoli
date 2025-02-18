@@ -55,6 +55,7 @@ class RecibosPagoCrear extends Component
     public $aplica;
     public $inicial;
     public $diferencia;
+    public $fechatransaccion;
 
     public $concepotro;
     public $otro;
@@ -94,12 +95,13 @@ class RecibosPagoCrear extends Component
 
     public $pendientes;
 
-    public function mount($ruta=null, $elegido=null, $estudiante=null){
+    public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null){
 
         $this->limpiapoyo();
         $this->cierre();
 
         $this->ruta=$ruta;
+        $this->fechatransaccion=$fechatransaccion;
 
         if($elegido){
             $this->transaccion=Transaccion::find($elegido);
@@ -236,7 +238,11 @@ class RecibosPagoCrear extends Component
                 $this->base=$aplicaa;
                 $this->inicial=$inicial;
                 $this->diferencia=$inicial-$aplicaa;
-                $hoy=Carbon::today();
+                if($this->fechatransaccion){
+                    $hoy=$this->fechatransaccion;
+                }else{
+                    $hoy=Carbon::today();
+                }
 
                 if($fecha>=$hoy){
                     //dd(" HOY Es ANTES: ",$hoy,$fecha);
