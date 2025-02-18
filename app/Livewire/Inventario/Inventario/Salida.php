@@ -301,7 +301,10 @@ class Salida extends Component
     //cargar productos
     public function temporal(){
 
-        $this->calcudescu();
+        if($this->precio>0){
+            $this->calcudescu();
+        }
+
 
         if($this->precio>=$this->descuento){
             $this->saldo=$this->saldo-$this->cantidad;
