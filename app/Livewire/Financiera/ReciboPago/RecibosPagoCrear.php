@@ -50,7 +50,7 @@ class RecibosPagoCrear extends Component
     public $fecha_transaccion;
 
     public $concepdescuento;
-    public $descuento;
+    public $descuento=0;
     public $base;
     public $aplica;
     public $inicial;
@@ -276,7 +276,9 @@ class RecibosPagoCrear extends Component
 
     public function asigOtro($id, $item,$conf=null){
 
-        $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+        if(intval($item['concepto_pago_id'])===2){
+            $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+        }
 
         if($this->valor>=$this->descuento){
             $dato=explode("-----",$item['observaciones']);
