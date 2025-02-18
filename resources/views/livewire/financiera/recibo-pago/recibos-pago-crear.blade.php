@@ -124,8 +124,20 @@
                                 <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
-                                            <th scope="col" class="px-6 py-3 uppercase text-xl font-semibold" colspan="5">
+                                            <th scope="col" class="px-6 py-3 uppercase text-xl font-semibold" colspan="3">
                                                 Registrar pago por otros conceptos
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 capitalize text-lg font-semibold" colspan="2">
+                                                Descuento aplicable:
+                                                @foreach ($vigentedescuento as $item)
+                                                    @if ($item->aplica===2)
+                                                        @if ($item->tipo===1)
+                                                            {{$item->name}}: {{$item->valor}} %
+                                                        @else
+                                                            {{$item->name}}: $ {{number_format($item->valor, 0, ',', '.')}}
+                                                        @endif
+                                                    @endif
+                                                @endforeach
                                             </th>
                                         </tr>
                                         <tr>
@@ -159,6 +171,18 @@
                                         <h5 class="mb-2 mt-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                             Obligaciones de Cartera
                                         </h5>
+                                        <h4 class="mb-2 mt-2 text-center text-lg capitalize font-semibold tracking-tight text-gray-900 dark:text-white">
+                                            Descuento aplicable:
+                                                @foreach ($vigentedescuento as $item)
+                                                    @if ($item->aplica===0)
+                                                        @if ($item->tipo===1)
+                                                            {{$item->name}}: {{$item->valor}} %
+                                                        @else
+                                                            {{$item->name}}: $ {{number_format($item->valor, 0, ',', '.')}}
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                        </h4>
                                         <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                                 <tr>
@@ -408,6 +432,10 @@
                                     >
                                         Nuevo Recibo
                                     </button>
+
+                                    <div wire:loading class=" text-2xl text-red-700 font-extrabold uppercase">
+                                        Espere generando Recibo...
+                                    </div>
                                 </div>
                             </div>
                         </div>
