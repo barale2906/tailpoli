@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Ciclo;
 
+use App\Models\Academico\Acaplan;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
 use App\Traits\AcaplanTrait;
@@ -33,11 +34,18 @@ class CiclosReutilizar extends Component
     public $fechafin;
     public $lapso;
 
+    public $is_reorden=true;
     public $is_discre=true;
 
-    public function mount($elegido){
+    public function mount($elegido,$reor=null){
+
         $this->actual=Ciclo::find($elegido);
+        if($reor===1){
+            $this->is_reorden=false;
+        }
+
         $this->orden();
+
     }
 
     public function orden(){
@@ -57,7 +65,8 @@ class CiclosReutilizar extends Component
                 'id_creador'    =>Auth::user()->id,
                 'valor'         =>$a, //Orden en que aparece
                 'producto'      =>$value->grupo->name,
-                'id_producto'   =>$value->grupo_id
+                'id_producto'   =>$value->grupo_id,
+                'id_concepto'   =>$this->actual->id
             ]);
             $a++;
         }
@@ -169,6 +178,37 @@ class CiclosReutilizar extends Component
 
         if(!$this->is_discre){
             $this->crtdiscre();
+        }
+        if(!$this->is_reorden){
+            $this->eliminaejec();
+        }
+    }
+
+    public function eliminaejec(){
+        $hoy=Carbon::today();
+        dd("Entro",$hoy);
+
+        foreach ($this->modulos as $value) {
+            $registro=Acaplan::where('ciclo_id',$value->id_concepto)
+                                ->where('grupo_id',$value->id_producto)
+                                ->first();
+
+            if($hoy<$registro->fecha_inicio){
+                DB::table('apoyo_recibo')
+                    ->where('id', $value->id)
+                    ->update([
+                        'fecha_fin'=>$registro->fecha_inicio,
+                        'id_almacen'=>1
+                    ]);
+            }else{
+                DB::table('apoyo_recibo')
+                    ->where('id', $value->id)
+                    ->update([
+                        'fecha_fin'=>$registro->fecha_inicio,
+                        'id_almacen'=>0
+                    ]);
+            }
+
         }
     }
 
@@ -282,6 +322,10 @@ class CiclosReutilizar extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('cancelando');
+    }
+
+    public function cambiactual(){
+
     }
 
 

@@ -128,6 +128,10 @@
                                             <i class="fa-solid fa-recycle mr-1 text-black"></i>
                                             <span class=" text-sm text-green-100">{{$ciclo->id}}</span>
                                         </a>
+                                        <a href="" wire:click.prevent="show({{$ciclo->id}},{{0}})" class=" bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm p-1 text-center mr-2 mb-2 capitalize">
+                                            <i class="fa-solid fa-sort"></i>
+                                            <span class=" text-sm text-blue-100">{{$ciclo->id}}</span>
+                                        </a>
                                     @else
                                         {{$ciclo->id}}
                                     @endif
@@ -260,7 +264,8 @@
     @endif
 
     @if ($is_editing)
-        {{-- <livewire:academico.ciclo.ciclos-editar :elegido="$elegido" /> --}}
+        <h1>ESTAMOS AQUÍ {{$elegido}}</h1>
+        <livewire:academico.ciclo.ciclos-reutilizar :elegido="$elegido" :reor="1"/>
     @endif
 
     @if ($is_deleting)
