@@ -60,7 +60,8 @@ class Inventario extends Model
 
     public function scopeTipo($query, $tipo){
         $query->when($tipo ?? null, function($query, $tipo){
-            $query->where('tipo', $tipo);
+            $crt=$tipo-1;
+            $query->where('tipo', intval($crt));
         });
     }
 

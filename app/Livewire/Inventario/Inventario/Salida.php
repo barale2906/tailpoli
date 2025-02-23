@@ -3,9 +3,11 @@
 namespace App\Livewire\Inventario\Inventario;
 
 use App\Models\Academico\Control;
+use App\Models\Academico\Matricula;
 use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\ConceptoPago;
+use App\Models\Financiera\Descuento;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
 use App\Models\Inventario\Almacen;
@@ -15,6 +17,7 @@ use App\Models\Inventario\Producto;
 use App\Models\User;
 use App\Traits\CrtStatusTrait;
 use App\Traits\MailTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -44,6 +47,7 @@ class Salida extends Component
     public $saldo;
     public $descuento;
     public $concepdescuento;
+    public $fechain;
 
 
     public $producto_id;
@@ -84,6 +88,8 @@ class Salida extends Component
 
     public function mount($almacen_id=null, $sede_id=null, $ruta=null, $transaccion=null){
 
+        $this->limpiapoyo();
+
         if($transaccion){
             $this->transaccion=Transaccion::find($transaccion);
             $this->selAlumno($this->transaccion->user_id);
@@ -103,6 +109,13 @@ class Salida extends Component
         $this->listaprecios($state);
 
         $this->concepto();
+
+    }
+
+    public function limpiapoyo(){
+        DB::table('apoyo_recibo')
+            ->where('id_creador', Auth::user()->id)
+            ->delete();
     }
 
     public function updatedMedio(){
@@ -201,6 +214,25 @@ class Salida extends Component
             $this->limpiar();
         }
 
+        $this->obtienefechaini();
+
+    }
+
+    public function obtienefechaini(){
+        $matri=Matricula::where('alumno_id',$this->alumno->id)
+                        ->select('fecha_inicia')
+                        ->orderBy('fecha_inicia','DESC')
+                        ->first();
+
+        if($matri){
+            $hoy=Carbon::today();
+            if($hoy<=$matri->fecha_inicia){
+                $this->fechain=1;
+            } else {
+                $this->fechain=0;
+            }
+        }
+
     }
 
     //Buscar producto
@@ -243,8 +275,36 @@ class Salida extends Component
         }
     }
 
+    //Calcular desceunto
+    public function calcudescu(){
+
+        $this->reset('descuento');
+        if($this->fechain===1){
+            $descu=Descuento::where('aplica',1)
+                                ->where('status',1)
+                                ->first();
+
+            if($descu && $descu->tipo===0){
+
+                $this->descuento=$descu->valor;
+            }
+
+            if($descu && $descu->tipo===1){
+                $this->descuento=$this->precio*$descu->valor/100;
+            }
+        }else{
+            $this->descuento=0;
+        }
+
+    }
+
     //cargar productos
     public function temporal(){
+
+        if($this->precio>0){
+            $this->calcudescu();
+        }
+
 
         if($this->precio>=$this->descuento){
             $this->saldo=$this->saldo-$this->cantidad;

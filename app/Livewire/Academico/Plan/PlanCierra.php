@@ -77,9 +77,7 @@ class PlanCierra extends Component
                         'fecha_cierre'=>now(),
                         'fecha_crono'=>$this->crono->fecha_programada,
                         'usuario'=>Auth::user()->id,
-                        'nombre'=>Auth::user()->name,
-                        'created_at'=>now(),
-                        'updated_at'=>now()
+                        'nombre'=>Auth::user()->name
             ]);
 
         // Notificación

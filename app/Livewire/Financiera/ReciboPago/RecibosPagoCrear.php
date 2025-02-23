@@ -8,12 +8,14 @@ use App\Models\Clientes\Pqrs;
 use App\Models\Configuracion\Sede;
 use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ConceptoPago;
+use App\Models\Financiera\Descuento;
 use App\Models\Financiera\EstadoCartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
 use App\Models\User;
 use App\Traits\ComunesTrait;
 use App\Traits\MailTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -48,7 +50,12 @@ class RecibosPagoCrear extends Component
     public $fecha_transaccion;
 
     public $concepdescuento;
-    public $descuento;
+    public $descuento=0;
+    public $base;
+    public $aplica;
+    public $inicial;
+    public $diferencia;
+    public $fechatransaccion;
 
     public $concepotro;
     public $otro;
@@ -88,12 +95,13 @@ class RecibosPagoCrear extends Component
 
     public $pendientes;
 
-    public function mount($ruta=null, $elegido=null, $estudiante=null){
+    public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null){
 
         $this->limpiapoyo();
         $this->cierre();
 
         $this->ruta=$ruta;
+        $this->fechatransaccion=$fechatransaccion;
 
         if($elegido){
             $this->transaccion=Transaccion::find($elegido);
@@ -182,6 +190,7 @@ class RecibosPagoCrear extends Component
 
     public function cargaOtro(){
 
+        $this->calcudescu(0,"otro",0,0);
         if($this->otro>=$this->descuento){
 
             $ite=ConceptoPago::find($this->concepotro);
@@ -206,7 +215,70 @@ class RecibosPagoCrear extends Component
         }
     }
 
+    public function calcudescu($id,$aplicaa,$inicial,$descuento,$fecha=null){
+        $this->reset(
+                    'descuento',
+                    'base',
+                    'aplica',
+                    'inicial',
+                    'diferencia'
+                );
+
+        if($descuento && $descuento>0){
+            $this->descuento=0;
+        }else{
+            if($id===0){
+                $this->aplica=2;
+                $this->base=$this->otro;
+                $this->obtienedescuento();
+            }
+
+            if($id===1){
+                $this->aplica=0;
+                $this->base=$aplicaa;
+                $this->inicial=$inicial;
+                $this->diferencia=$inicial-$aplicaa;
+                if($this->fechatransaccion){
+                    $hoy=$this->fechatransaccion;
+                }else{
+                    $hoy=Carbon::today();
+                }
+
+                if($fecha>=$hoy){
+                    //dd(" HOY Es ANTES: ",$hoy,$fecha);
+                    $this->obtienedescuento();
+                }else{
+                    //dd(" HOY ES DESPUES: ",$hoy,$fecha);
+                    $this->descuento=0;
+                }
+            }
+        }
+
+
+
+    }
+
+    public function obtienedescuento(){
+
+        $descu=Descuento::where('aplica',$this->aplica)
+                        ->where('status',1)
+                        ->first();
+
+        if($descu && $descu->tipo===0){
+
+            $this->descuento=$descu->valor;
+        }
+
+        if($descu && $descu->tipo===1){
+            $this->descuento=$this->base*$descu->valor/100;
+        }
+    }
+
     public function asigOtro($id, $item,$conf=null){
+
+        if(intval($item['concepto_pago_id'])===2){
+            $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+        }
 
         if($this->valor>=$this->descuento){
             $dato=explode("-----",$item['observaciones']);
@@ -859,12 +931,18 @@ class RecibosPagoCrear extends Component
                             ->get();
     }
 
+    private function vigentedescuento(){
+        return Descuento::where('status', 1)
+                            ->get();
+    }
+
     public function render(){
         return view('livewire.financiera.recibo-pago.recibos-pago-crear',[
             'sedes'=>$this->sedes(),
             'estudiantes'=>$this->estudiantes(),
             'concePagos'=>$this->concePagos(),
             'tarjetas'=>$this->tarjetas(),
+            'vigentedescuento'=>$this->vigentedescuento(),
         ]);
     }
 }

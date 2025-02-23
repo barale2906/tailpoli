@@ -26,6 +26,7 @@ class Inventarios extends Component
     public $is_creating = false;
     public $is_editing = false;
     public $is_deleting = false;
+    public $is_saldos = false;
 
     public $elegido;
 
@@ -116,23 +117,26 @@ class Inventarios extends Component
                         'is_creating',
                         'is_editing',
                         'is_deleting',
+                        'is_saldos'
                     );
     }
 
     public function updatedFiltrotipo(){
-        switch ($this->filtrotipo) {
-            case '1':
-                $this->valorFiltrotipo=0;
-                break;
+        $this->valorFiltrotipo=$this->filtrotipo;
 
-            case '2':
+        /* switch ($this->filtrotipo) {
+            case '1':
                 $this->valorFiltrotipo=1;
                 break;
 
-            case '3':
+            case '2':
                 $this->valorFiltrotipo=2;
                 break;
-        }
+
+            case '3':
+                $this->valorFiltrotipo=3;
+                break;
+        } */
     }
 
     public function updatedSaldofiltro(){
@@ -179,6 +183,12 @@ class Inventarios extends Component
 
     public function exportar(){
         return new InvInventarioExport($this->buscamin,$this->filtrocrea,$this->valorFiltrotipo,$this->filtroalmacen,$this->filtrosaldo);
+    }
+
+    public function saldosTotales(){
+        $this->cancela();
+        $this->is_modify=false;
+        $this->is_saldos=true;
     }
 
     private function inventarios()

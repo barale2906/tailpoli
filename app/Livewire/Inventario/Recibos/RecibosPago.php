@@ -112,6 +112,7 @@ class RecibosPago extends Component
             'sedes'=>$this->sedes(),
             'recibosTotal'=>$this->recibosTotal(),
             'cajeros'=>$this->cajeros(),
+            'conpagos'=>$this->conpagos(),
         ]);
     }
 }

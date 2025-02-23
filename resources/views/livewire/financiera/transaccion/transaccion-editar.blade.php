@@ -115,7 +115,7 @@
                 @break
             @case(2)
                 <div class="sm:col-span-1 md:col-span-3">
-                    <livewire:financiera.recibo-pago.recibos-pago-crear :ruta="$ruta" :elegido="$this->actual->id"/>
+                    <livewire:financiera.recibo-pago.recibos-pago-crear :ruta="$ruta" :elegido="$this->actual->id" :fechatransaccion="$this->actual->fecha_transaccion"/>
                 </div>
                 @break
 

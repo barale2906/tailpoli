@@ -33,3 +33,7 @@ Route::get('/documentos', function () {
 Route::get('/docugrados', function () {
     return view('configuracion.docugrados.index');
 })->middleware('can:co_docugrado')->name('docugrados');
+
+Route::get('/medios', function () {
+    return view('configuracion.medios.index');
+})->middleware('can:co_rols')->name('medios');
