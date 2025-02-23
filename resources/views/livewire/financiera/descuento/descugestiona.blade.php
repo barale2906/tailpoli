@@ -6,7 +6,7 @@
             crear descuento
         @endif
     </h1>
-    <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 m-3">
+    <div class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 m-3">
         <div></div>
         <div>
             <div class="mb-6">
@@ -64,11 +64,47 @@
                     <i class="fa-solid fa-tags"></i> Crear Descuento
                 </a>
             @endif
+            <br>
             <a href="#" wire:click.prevent="regresar()" class="text-black bg-gradient-to-r from-red-300 via-red-400 to-red-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">
                 <i class="fa-solid fa-rectangle-xmark"></i> cancelar
             </a>
         </div>
-        <div></div>
+        @if ($actual)
+            <div class="block max-w-sm p-6 bg-white border border-gray-200 ring rounded-2xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <a href="" wire:click.prevent="" >
+
+                    <h5 class="mb-2 text-sm md:text-xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
+                        conceptos de pago
+                    </h5>
+                    @foreach ($conceptos as $item)
+                        <p class="font-normal text-xs md:text-lg text-justify text-gray-700 dark:text-gray-400 capitalize">
+                            <a href="" wire:click.prevent="cargar({{$item->id}})">
+                                {{$item->name}} - <i class="fa-solid fa-check-double text-green-500 text-xs"></i>
+                            </a>
+                        </p>
+                    @endforeach
+                </a>
+            </div>
+            @if ($asignados)
+                <div class="block max-w-sm p-6 bg-white border border-gray-200 ring rounded-2xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    <a href="" wire:click.prevent="" >
+
+                        <h5 class="mb-2 text-sm md:text-xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
+                            Asignados
+                        </h5>
+                        @foreach ($asignados as $item)
+                            <p class="font-normal text-xs md:text-lg text-justify text-gray-700 dark:text-gray-400 capitalize">
+                                <a href="" wire:click.prevent="eliminar({{$item->elegido}})">
+                                    {{$item->name}} - {{$item->elegido}} - <i class="fa-solid fa-trash-can text-red-600 text-xs"></i>
+                                </a>
+                            </p>
+                        @endforeach
+                    </a>
+                </div>
+            @endif
+
+        @endif
+
         <div></div>
     </div>
 </div>
