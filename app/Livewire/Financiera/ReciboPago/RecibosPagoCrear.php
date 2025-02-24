@@ -67,6 +67,7 @@ class RecibosPagoCrear extends Component
     public $conceptos=0;
     public $concep=[];
     public $nameConcep;
+    public $conceptoelegido;
     public $Total=0;
     public $Totaldescue=0;
     public $subtotal;
@@ -190,7 +191,9 @@ class RecibosPagoCrear extends Component
 
     public function cargaOtro(){
 
+        $this->conceptoelegido=$this->concepotro;
         $this->calcudescu(0,"otro",0,0);
+
         if($this->otro>=$this->descuento){
 
             $ite=ConceptoPago::find($this->concepotro);
@@ -260,25 +263,33 @@ class RecibosPagoCrear extends Component
 
     public function obtienedescuento(){
 
-        $descu=Descuento::where('aplica',$this->aplica)
-                        ->where('status',1)
+        $descu=Descuento::join('descuento_producto', 'descuentos.id', '=', 'descuento_producto.descuento_id')
+                        ->where('descuentos.aplica',$this->aplica)
+                        ->where('descuentos.status',1)
+                        ->where('descuento_producto.concepto_pago_id', $this->conceptoelegido)
                         ->first();
 
-        if($descu && $descu->tipo===0){
+        if($descu){
+            if($descu && $descu->tipo===0){
 
-            $this->descuento=$descu->valor;
+                $this->descuento=$descu->valor;
+            }
+
+            if($descu && $descu->tipo===1){
+                $this->descuento=$this->base*$descu->valor/100;
+            }
+        }else{
+            $this->descuento=0;
         }
 
-        if($descu && $descu->tipo===1){
-            $this->descuento=$this->base*$descu->valor/100;
-        }
+
     }
 
     public function asigOtro($id, $item,$conf=null){
 
-        if(intval($item['concepto_pago_id'])===2){
-            $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
-        }
+        $this->conceptoelegido=$item['concepto_pago_id'];
+
+        $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
 
         if($this->valor>=$this->descuento){
             $dato=explode("-----",$item['observaciones']);
