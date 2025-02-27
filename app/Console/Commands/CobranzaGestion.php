@@ -39,7 +39,9 @@ class CobranzaGestion extends Command
 
         Log::info('Ejecuta Cobranza gestion ejecuta: ' . now());
 
-        $cobranzas=Cobranza::where('status',3)->get();
+        $cobranzas=Cobranza::where('status',3)
+                            ->whereNotIn('sede_id', [9])
+                            ->get();
 
         foreach ($cobranzas as $value) {
 
