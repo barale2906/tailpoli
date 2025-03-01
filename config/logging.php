@@ -64,7 +64,11 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
         ],
-
+        'comandos_log' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/comandos_log.log'),
+            'level' => 'info',
+        ],
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

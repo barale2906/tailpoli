@@ -29,7 +29,7 @@ class finCiclo extends Command
      */
     public function handle()
     {
-        Log::info(now().': Ejecuta Ciclo:vencimiento-finCiclo.');
+        Log::channel('comandos_log')->info(now().': Ejecuta Ciclo:vencimiento-finCiclo.');
         $ciclos=Ciclo::where('finaliza', Carbon::today()->subDay())
                         ->get();
 
@@ -39,7 +39,7 @@ class finCiclo extends Command
                                     'status'=>false,
                                 ]);
             } catch(Exception $exception){
-                Log::info('Linea ciclo: ' . $value->id . ' Ciclo No permitio registrar: ' . $exception->getMessage().' registro: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea ciclo: ' . $value->id . ' Ciclo No permitio registrar: ' . $exception->getMessage().' registro: '.$exception->getLine());
             }
         }
 

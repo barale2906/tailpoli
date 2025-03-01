@@ -40,7 +40,7 @@ class BienvenidaEmail extends Command
                             ->where('status', true)
                             ->select('id')
                             ->get();
-        Log::info(now().': Ejecuta Correo Bienvenida.');
+        Log::channel('comandos_log')->info(now().': Ejecuta Correo Bienvenida.');
 
         if($nuevos->count()>0){
             foreach ($nuevos as $value) {
@@ -55,11 +55,11 @@ class BienvenidaEmail extends Command
 
 
                 } catch(Exception $exception){
-                    Log::info('Matricula N°: ' . $value->id . ' Algo paso: ' . $exception->getMessage().' Donde: '.$exception->getLine());
+                    Log::channel('comandos_log')->info('Matricula N°: ' . $value->id . ' Algo paso: ' . $exception->getMessage().' Donde: '.$exception->getLine());
                 }
             }
         }else{
-            Log::info('no se generaron registros en la consulta' );
+            Log::channel('comandos_log')->info('no se generaron registros en la consulta' );
         }
     }
 }

@@ -65,7 +65,7 @@ class cargaMulta extends Command
                         'status'        =>4
                     ]);
                 }); */
-        Log::info(now().': Ejecuta Carga Multa.');
+        Log::channel('comandos_log')->info(now().': Ejecuta Carga Multa.');
         $vencida=Cartera::where('fecha_pago', Carbon::today()->subDay())
                         ->where('estado_cartera_id', '<',5)
                         ->whereNotIn('status_est',[2,6,11])
@@ -100,7 +100,7 @@ class cargaMulta extends Command
                     ]);
 
             } catch(Exception $exception){
-                Log::info('Linea cartera: ' . $value->id . ' CargaMulta No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea cartera: ' . $value->id . ' CargaMulta No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
 

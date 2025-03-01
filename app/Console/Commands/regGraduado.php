@@ -32,7 +32,7 @@ class regGraduado extends Command
      */
     public function handle()
     {
-        Log::info(now().': Academico:Graduado Válida estuidiantes que se graduan hoy.');
+        Log::channel('comandos_log')->info(now().': Academico:Graduado Válida estuidiantes que se graduan hoy.');
         $hoy=Carbon::today();
 
         $graduados=Control::whereNotIn('status_est',[2,4,6,11])
@@ -67,7 +67,7 @@ class regGraduado extends Command
                     'status'        =>4
                 ]);
             } catch(Exception $exception){
-                Log::info('Linea control: ' . $value->id . ' REgistro de graduados no permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea control: ' . $value->id . ' REgistro de graduados no permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
     }

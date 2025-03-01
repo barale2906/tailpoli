@@ -30,7 +30,7 @@ class CobranzaDescarga extends Command
     {
         $registros=Cobranza::where('status',3)->get();
 
-        Log::info(now().': Ejecuta CobranzaDescarga.');
+        Log::channel('comandos_log')->info(now().': Ejecuta CobranzaDescarga.');
 
         foreach ($registros as $value) {
 

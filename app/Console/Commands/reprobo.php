@@ -78,7 +78,7 @@ class reprobo extends Command
                     }); */
 
         $ciclos=Ciclogrupo::where('fecha_fin', Carbon::today()->subMonths(2))->get();
-        Log::info(now().': Ejecuta Reprobo.');
+        Log::channel('comandos_log')->info(now().': Ejecuta Reprobo.');
 
         foreach ($ciclos as $item) {
             try {
@@ -130,7 +130,7 @@ class reprobo extends Command
 
 
             } catch(Exception $exception){
-                Log::info('Linea notas: ' . $value->id . ' notas No permitio registrar: ' . $exception->getMessage().' nota: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea notas: ' . $value->id . ' notas No permitio registrar: ' . $exception->getMessage().' nota: '.$exception->getLine());
             }
         }
     }

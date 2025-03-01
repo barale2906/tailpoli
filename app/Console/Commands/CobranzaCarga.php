@@ -41,7 +41,7 @@ class CobranzaCarga extends Command
                             ->whereBetween('concepto_pago_id',[2,4])
                             ->get();
 
-            Log::info(now().': Ejecuta CobranzaCarga.');
+            Log::channel('comandos_log')->info(now().': Ejecuta CobranzaCarga.');
 
             foreach ($carteras as $value) {
             try {
@@ -58,7 +58,7 @@ class CobranzaCarga extends Command
                     'status'=>$value->estado_cartera_id,
                 ]);
             } catch(Exception $exception){
-                Log::info('Cobranza Carga Cartera: ' . $value->id . ' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Cobranza Carga Cartera: ' . $value->id . ' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
             }
         }
 

@@ -33,7 +33,7 @@ class descargaMora extends Command
                             //->where('mora','>',0)
                             ->get();
 
-        Log::info(now().': Ejecuta DescargaMora Ajustado.');
+        Log::channel('comandos_log')->info(now().': Ejecuta DescargaMora Ajustado.');
         foreach ($morados as $value) {
             Control::where('id',$value->id)
                     ->update([
@@ -59,7 +59,7 @@ class descargaMora extends Command
                         ]);
                 }
             } catch(Exception $exception){
-                Log::info('Linea control: ' . $value->id . ' DescargaMora No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea control: ' . $value->id . ' DescargaMora No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
 
         }

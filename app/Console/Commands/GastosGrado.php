@@ -39,7 +39,7 @@ class GastosGrado extends Command
                         ->where('created_at', '>=', $hoy )
                         ->get();
 
-        Log::info(now().': Ejecuta GastosGrado.');
+        Log::channel('comandos_log')->info(now().': Ejecuta GastosGrado.');
 
         foreach ($recibos as $value) {
             $encabezado=ReciboPago::where('id', $value->recibo_pago_id)
