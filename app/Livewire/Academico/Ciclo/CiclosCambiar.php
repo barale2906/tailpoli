@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Ciclo;
 
+use App\Models\Academico\Asistencia;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
@@ -120,6 +121,52 @@ class CiclosCambiar extends Component
             $inscritos->update([
                 'inscritos'=>$tot
             ]);
+
+            //Cargar registros para asistencia
+            $asistencia=Asistencia::where('grupo_id', $value->grupo_id)
+                                    ->where('ciclo_id',$this->ciclo->id)
+                                    ->first();
+
+
+            if($asistencia){
+                $clases=$asistencia->registros+1;
+                $asistencia->update([
+                    'registros' => $clases,
+                ]);
+
+                DB::table('asistencia_detalle')
+                    ->insert([
+                        'asistencia_id' =>$asistencia->id,
+                        'alumno_id'     =>$this->control->estudiante_id,
+                        'alumno'        =>$this->control->estudiante->name,
+                        'profesor_id'   =>$inscritos->profesor->id,
+                        'profesor'      =>$inscritos->profesor->name,
+                        'grupo_id'      =>$inscritos->id,
+                        'grupo'         =>$inscritos->name,
+                        'created_at'    =>now(),
+                        'updated_at'    =>now(),
+                    ]);
+            }else{
+                $cumplimiento=Asistencia::create([
+                                                'profesor_id'   =>$inscritos->profesor->id,
+                                                'grupo_id'      =>$inscritos->id,
+                                                'ciclo_id'      =>$this->ciclo->id,
+                                                'registros'     =>0
+                                            ]);
+
+                DB::table('asistencia_detalle')
+                                ->insert([
+                                    'asistencia_id' =>$cumplimiento->id,
+                                    'alumno_id'     =>$this->control->estudiante_id,
+                                    'alumno'        =>$this->control->estudiante->name,
+                                    'profesor_id'   =>$inscritos->profesor->id,
+                                    'profesor'      =>$inscritos->profesor->name,
+                                    'grupo_id'      =>$inscritos->id,
+                                    'grupo'         =>$inscritos->name,
+                                    'created_at'    =>now(),
+                                    'updated_at'    =>now(),
+                                ]);
+            }
         }
 
         $this->dispatch('alerta', name:'Se ha cambiado el ciclo correctamente. Las notas y Asistencias NO SE MODIFICAN NI ACTUALIZAN');
