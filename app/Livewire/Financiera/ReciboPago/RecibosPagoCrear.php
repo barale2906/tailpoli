@@ -227,6 +227,8 @@ class RecibosPagoCrear extends Component
                     'diferencia'
                 );
 
+        $fecha=Carbon::create($fecha);
+
         if($descuento && $descuento>0){
             $this->descuento=0;
         }else{
