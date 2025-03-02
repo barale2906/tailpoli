@@ -63,6 +63,7 @@ class Observaciones extends Component
 
     private function cartera(){
         return Cartera::where('responsable_id', $this->elegido->estudiante_id)
+                        ->whereNot('estado_cartera_id',5)
                         ->orderBy('matricula_id', 'ASC')
                         ->orderBy('fecha_pago', 'ASC')
                         ->get();

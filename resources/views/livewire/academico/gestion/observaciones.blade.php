@@ -83,17 +83,40 @@
                                 $ {{number_format($item->valor, 0, '.', '.')}}
                             </th>
                             <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
-                                @if ($item->status)
-                                    @if ($item->fecha_pago < $fecha)
+                                @switch($item->status)
+                                    @case(1)
+
+                                        @break
+                                    @case(2)
+                                        Abonada
+                                        @break
+
+                                    @case(3)
                                         @php
                                             $fecha1 = date_create($item->fecha_pago);
                                             $dias = date_diff($fecha1, $fecha)->format('%R%a');
                                         @endphp
                                         {{$dias}} días
-                                    @endif
-                                @else
-                                    Fecha pago: {{$item->fecha_real}}
-                                @endif
+                                        @break
+
+                                    @case(4)
+                                        Convenio
+                                        @break
+
+                                    @case(5)
+                                        Castigada
+                                        @break
+
+                                    @case(6)
+                                        Fecha pago: {{$item->fecha_real}}
+                                        @break
+
+                                    @case(7)
+                                        Anulada
+                                        @break
+
+
+                                @endswitch
                             </th>
                             <th scope="row" class="px-3 py-1 text-right text-gray-900 text-xs  dark:text-white capitalize">
                                 @if ($item->status)
