@@ -96,7 +96,8 @@ class reprobo extends Command
                                 ->where('id', $value->id)
                                 ->update([
                                     'aprobo'=>1,
-                                    'observaciones'=>now()." AUTOMATICO: APROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones
+                                    'observaciones'=>now()." AUTOMATICO: APROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones,
+                                    'updated_at'    =>now()
                                 ]);
 
                             Pqrs::create([
@@ -113,7 +114,8 @@ class reprobo extends Command
                                 ->where('id', $value->id)
                                 ->update([
                                     'aprobo'=>2,
-                                    'observaciones'=>now()." AUTOMATICO: REPROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones
+                                    'observaciones'=>now()." AUTOMATICO: REPROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones,
+                                    'updated_at'    =>now()
                                 ]);
 
                             Pqrs::create([
