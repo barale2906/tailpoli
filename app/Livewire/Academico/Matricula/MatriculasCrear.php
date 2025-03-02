@@ -310,7 +310,7 @@ class MatriculasCrear extends Component
 
         //Crear registro
         $this->matricula = Matricula::create([
-                                'medio'=>$this->medio,
+                                'medio'=>strtolower($this->medio),
                                 'fecha_inicia'=>$this->fecha_inicia,
                                 'nivel'=>$this->nivel,
                                 'valor'=>$this->valor_curso,
@@ -546,11 +546,19 @@ class MatriculasCrear extends Component
                     ->get();
     }
 
+    private function medios(){
+        return DB::table('medios')
+                    ->where('status', 1)
+                    ->orderBy('name', 'ASC')
+                    ->get();
+    }
+
     public function render(){
         return view('livewire.academico.matricula.matriculas-crear', [
             'estudiantes'=>$this->estudiantes(),
             'noestudiantes'=>$this->noestudiantes(),
             'sedes'=>$this->sedes(),
+            'medios'=>$this->medios()
         ]);
     }
 }

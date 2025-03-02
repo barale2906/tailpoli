@@ -78,7 +78,7 @@ class reprobo extends Command
                     }); */
 
         $ciclos=Ciclogrupo::where('fecha_fin', Carbon::today()->subMonths(2))->get();
-        Log::info(now().': Ejecuta Reprobo.');
+        Log::channel('comandos_log')->info(now().': Ejecuta Reprobo.');
 
         foreach ($ciclos as $item) {
             try {
@@ -86,6 +86,7 @@ class reprobo extends Command
                 $registros= DB::table('notas_detalle')
                                 ->where('grupo_id', $item->grupo_id)
                                 ->where('aprobo', 0)
+                                ->whereNotNull('acumulado')
                                 ->get();
 
                 if($registros){
@@ -96,7 +97,8 @@ class reprobo extends Command
                                 ->where('id', $value->id)
                                 ->update([
                                     'aprobo'=>1,
-                                    'observaciones'=>now()." AUTOMATICO: APROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones
+                                    'observaciones'=>now()." AUTOMATICO: APROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones,
+                                    'updated_at'    =>now()
                                 ]);
 
                             Pqrs::create([
@@ -113,7 +115,8 @@ class reprobo extends Command
                                 ->where('id', $value->id)
                                 ->update([
                                     'aprobo'=>2,
-                                    'observaciones'=>now()." AUTOMATICO: REPROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones
+                                    'observaciones'=>now()." AUTOMATICO: REPROBO EL MODULO: ".$value->grupo." ----- ".$value->observaciones,
+                                    'updated_at'    =>now()
                                 ]);
 
                             Pqrs::create([
@@ -130,7 +133,7 @@ class reprobo extends Command
 
 
             } catch(Exception $exception){
-                Log::info('Linea notas: ' . $value->id . ' notas No permitio registrar: ' . $exception->getMessage().' nota: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea notas: ' . $value->id . ' notas No permitio registrar: ' . $exception->getMessage().' nota: '.$exception->getLine());
             }
         }
     }

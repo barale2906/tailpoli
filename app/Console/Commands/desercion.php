@@ -41,7 +41,7 @@ class desercion extends Command
         $margen=config('instituto.desertado_fin'); //Control de deserción
         $fecha=Carbon::today()->subDays($margen); //tIEMPO DE ASISTENCIA
 
-        Log::info(now().': Ejecuta Deserción reciente. margen: '.$margen.' fecha margen: '.$fecha);
+        Log::channel('comandos_log')->info(now().': Ejecuta Deserción reciente. margen: '.$margen.' fecha margen: '.$fecha);
 ;
         $controles=Control::where('status', true)
                             ->whereNotIn('status_est',[2,4,6,11,13])
@@ -196,7 +196,7 @@ class desercion extends Command
                     }
 
             } catch(Exception $exception){
-                Log::info('Linea control: ' . $value->id . ' Deserción No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea control: ' . $value->id . ' Deserción No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
     }

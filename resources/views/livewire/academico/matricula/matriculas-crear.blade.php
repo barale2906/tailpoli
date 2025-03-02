@@ -286,21 +286,11 @@
                     <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="mb-6">
                             <label for="medio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">¿Cómo se entero de nosotros?</label>
-                            <select wire:model.blur="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <select wire:model.blur="medio" id="medio" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                                 <option >Elija su respuesta...</option>
-                                <option value="Google">Google</option>
-                                <option value="Facebook">Facebook</option>
-                                <option value="Instagram">Instagram</option>
-                                <option value="Tik Tok">Tik Tok</option>
-                                <option value="X">X</option>
-                                <option value="Página Web">Página Web</option>
-                                <option value="Recomendación">Recomendación</option>
-                                <option value="Redes Sociales">Redes Sociales</option>
-                                <option value="Referencia">Referencia</option>
-                                <option value="Volante">Volante</option>
-                                <option value="Correo Electrónico">Correo Electrónico</option>
-                                <option value="Visita en sitio">Visita en sitio</option>
-                                <option value="Otro">Otro</option>
+                                @foreach ($medios as $item)
+                                    <option value={{$item->name}}>{{$item->name}}</option>
+                                @endforeach
                             </select>
                             @error('medio')
                                 <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">

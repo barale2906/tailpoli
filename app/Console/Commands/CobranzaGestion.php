@@ -37,9 +37,11 @@ class CobranzaGestion extends Command
         $cobranza=config('instituto.dias_reporte');
         $diferencia=$cobranza-$dias;
 
-        Log::info('Ejecuta Cobranza gestion ejecuta: ' . now());
+        Log::channel('comandos_log')->info('Ejecuta Cobranza gestion ejecuta: ' . now());
 
-        $cobranzas=Cobranza::where('status',3)->get();
+        $cobranzas=Cobranza::where('status',3)
+                            ->whereNotIn('sede_id', [9])
+                            ->get();
 
         foreach ($cobranzas as $value) {
 
@@ -109,7 +111,7 @@ class CobranzaGestion extends Command
                 ]);
 
             } catch(Exception $exception){
-                Log::info('Cobranza gestion N°: ' . $value->id . ' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Cobranza gestion N°: ' . $value->id . ' Error: ' . $exception->getMessage().' Línea: '.$exception->getLine());
             }
         }
     }

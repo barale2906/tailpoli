@@ -39,7 +39,7 @@ class CastigaCartera extends Command
 
         $mensaje=now()." AUTOMATICO se castiga la cartera por prescripción de la deuda. ----- ";
         if($prescritos){
-            Log::info(now().': Ejecuta Castiga Cartera. Consulta: '.$prescritos->count().' registros: '.$prescritos);
+            Log::channel('comandos_log')->info(now().': Ejecuta Castiga Cartera. Consulta: '.$prescritos->count().' registros: '.$prescritos);
 
             foreach ($prescritos as $value) {
 
@@ -54,12 +54,12 @@ class CastigaCartera extends Command
                                     'updated_at'=>now()
                                 ]);
                 } catch(Exception $exception){
-                    Log::info('matricula_id: ' . $value->matricula_id . ' CastigaCartera No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+                    Log::channel('comandos_log')->info('matricula_id: ' . $value->matricula_id . ' CastigaCartera No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
                 }
 
             }
         }else{
-            Log::info(now().': Carga Multa.'.' consulta: Sin registros.');
+            Log::channel('comandos_log')->info(now().': Carga Multa.'.' consulta: Sin registros.');
         }
 
     }

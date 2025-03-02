@@ -51,7 +51,7 @@ class finDocumento extends Command
                                 ->get();
 
 
-        Log::info(now().': Ejecuta finDocumento.');
+        Log::channel('comandos_log')->info(now().': Ejecuta finDocumento.');
         foreach ($documentos as $value) {
             try {
 
@@ -69,7 +69,7 @@ class finDocumento extends Command
 
 
             } catch(Exception $exception){
-                Log::info('Linea documento: ' . $value->id . ' Documento No permitio registrar: ' . $exception->getMessage().' documen: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea documento: ' . $value->id . ' Documento No permitio registrar: ' . $exception->getMessage().' documen: '.$exception->getLine());
             }
         }
 

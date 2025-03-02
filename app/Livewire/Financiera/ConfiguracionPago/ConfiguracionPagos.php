@@ -26,6 +26,7 @@ class ConfiguracionPagos extends Component
     public $is_otros=false;
     public $is_otrosEdit=false;
     public $is_otrosInactivar=false;
+    public $is_descuentos=false;
 
     public $lpstate=true;
     public $otrostate=false;
@@ -47,7 +48,7 @@ class ConfiguracionPagos extends Component
 
     public function cancelar()
     {
-        $this->reset('is_modify','is_creating','is_editing','is_deleting','is_otros', 'is_otrosEdit', 'is_otrosInactivar');
+        $this->reset('is_modify','is_creating','is_editing','is_deleting','is_otros', 'is_otrosEdit', 'is_otrosInactivar', 'is_descuentos');
     }
 
     public function cambiaVista(){
@@ -145,6 +146,16 @@ class ConfiguracionPagos extends Component
     {
         $this->is_modify = !$this->is_modify;
         $this->is_deleting = !$this->is_deleting;
+    }
+
+    //Activar evento
+    #[On('descuento')]
+    //Mostrar formulario de inactivación
+    public function descuentactiv()
+    {
+        $this->cancelar();
+        $this->is_modify=false;
+        $this->is_descuentos=true;
     }
 
     private function configuraciones()

@@ -12,6 +12,9 @@
                 </a>
             @endcan
             @can('in_export')
+                <a href="#" wire:click.prevent="saldosTotales" class="w-auto text-teal-600 bg-gradient-to-r from-teal-100 via-teal-300 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-100 dark:focus:ring-teal-600 font-medium rounded-lg px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
+                    <i class="fa-solid fa-cart-flatbed"></i> SALDO
+                </a>
                 <a href="#" wire:click.prevent="exportar" class="w-auto text-teal-800 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2 capitalize" >
                     <i class="fa-solid fa-file-excel fa-beat"></i>
                 </a>
@@ -205,6 +208,10 @@
 
     @if ($is_deleting)
         <livewire:inventario.inventario.inventarios-consultar :elegido="$elegido" />
+    @endif
+
+    @if ($is_saldos)
+        <livewire:inventario.inventario.saldos />
     @endif
 
     @push('js')

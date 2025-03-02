@@ -40,7 +40,7 @@ class AvisoCartera extends Command
                         ->select('id')
                         ->get();
 
-        Log::info(now().': Ejecuta AvisoCartera.');
+        Log::channel('comandos_log')->info(now() . ': Ejecuta AvisoCartera.');
 
         if($proximos->count()>0){
             foreach ($proximos as $value) {
@@ -51,11 +51,11 @@ class AvisoCartera extends Command
                     $this->claseEmail(3,$value->id);
 
                 } catch(Exception $exception){
-                    Log::info('AvisoCartera: ' . $value->id . ' No cargo: ' . $exception->getMessage().' Donde: '.$exception->getLine());
+                    Log::channel('comandos_log')->info('AvisoCartera: ' . $value->id . ' No cargo: ' . $exception->getMessage().' Donde: '.$exception->getLine());
                 }
             }
         }else{
-            Log::info('no se generaron registros en la consulta' );
+            Log::channel('comandos_log')->info('no se generaron registros en la consulta' );
         }
     }
 }

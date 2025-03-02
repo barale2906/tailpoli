@@ -54,7 +54,7 @@ class cargaMora extends Command
                         ->where('saldo', '>', 0)
                         ->get();
 
-        Log::info(now().': Ejecuta CargaMora.');
+        Log::channel('comandos_log')->info(now().': Ejecuta CargaMora.');
 
         foreach ($vencida as $value) {
             try {
@@ -78,7 +78,7 @@ class cargaMora extends Command
                 }
 
             } catch(Exception $exception){
-                Log::info('Linea cartera: ' . $value->id . ' CargaMora No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea cartera: ' . $value->id . ' CargaMora No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
     }

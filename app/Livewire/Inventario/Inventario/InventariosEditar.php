@@ -14,7 +14,7 @@ class InventariosEditar extends Component
 
     public $id='';
     public $movimiento;
-    public $tipo='';
+    public $tipo=0;
     public $fecha_movimiento = '';
     public $cantidad='';
     public $saldo='';
@@ -131,11 +131,11 @@ class InventariosEditar extends Component
         //Actualizar registros
         Inventario::whereId($this->id)->update([
             'descripcion'=>"--- ¡ANULADO! ---".now()." ".Auth::user()->name." creo el movimiento de anulación N°: ".$nuevoRegistro->id." por: ".$this->motivo.". ".$this->descripcion,
-            'status'=>false
+            'status'=>0
         ]);
 
         Inventario::whereId($this->ultimoregistro->id)->update([
-            'status'=>false
+            'status'=>0
         ]);
 
 
@@ -144,7 +144,7 @@ class InventariosEditar extends Component
 
         //refresh
         $this->dispatch('refresh');
-        $this->dispatch('Editando');
+        $this->dispatch('cancelando');
     }
 
     public function render()

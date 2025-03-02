@@ -31,7 +31,7 @@ class finControl extends Command
      */
     public function handle()
     {
-        Log::info(now().': Ejecuta Control:vencimiento-finControl.');
+        Log::channel('comandos_log')->info(now().': Ejecuta Control:vencimiento-finControl.');
 
         $controles=Control::where('status', true)
                             ->get();
@@ -62,7 +62,7 @@ class finControl extends Command
                     }
 
             } catch(Exception $exception){
-                Log::info('Linea control: ' . $value->id . ' finControl: ' . $exception->getMessage().' control: '.$exception->getLine());
+                Log::channel('comandos_log')->info('Linea control: ' . $value->id . ' finControl: ' . $exception->getMessage().' control: '.$exception->getLine());
             }
         }
     }

@@ -264,8 +264,9 @@ class Asisgestion extends Component
 
             //Registrar control
             $crt=Control::where('estudiante_id', $alumno_id)
-                    ->where('status', true)
-                    ->first();
+                            ->where('status', true)
+                            ->where('ciclo_id', $this->ciclo)
+                            ->first();
 
             //Verificar si la fecha es menor a la ya registrada
             if($crt->ultima_asistencia<$registro->fecha_clase){

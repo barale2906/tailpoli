@@ -32,7 +32,7 @@ class InventarioSeeder extends Seeder
                         'cantidad'              =>intval($data[0]),
                         'saldo'                 =>intval($data[0]),
                         'precio'                =>1,
-                        'descripcion'           =>'POLIANDINO INVENTARIO INICIAL.',
+                        'descripcion'           =>'POLIANDINO INVENTARIO 2025.',
                         'status'                =>1,
                         'entregado'             =>1,
                         'almacen_id'            =>intval($data[1]),

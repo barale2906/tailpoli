@@ -75,12 +75,15 @@ class UsersEditar extends Component
         // validate
         $this->validate();
 
+        $rol=Role::where('name',$this->rol)->first();
+
         //Actualizar registros
         $completo=$this->name." ".$this->lastname;
         User::whereId($this->id)->update([
             'name'=>strtolower($completo),
             'email'=>strtolower($this->email),
             'documento'=>strtolower($this->documento),
+            'rol_id'=>$rol->id
         ]);
 
         //Actualizar Rol
