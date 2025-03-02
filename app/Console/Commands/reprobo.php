@@ -86,6 +86,7 @@ class reprobo extends Command
                 $registros= DB::table('notas_detalle')
                                 ->where('grupo_id', $item->grupo_id)
                                 ->where('aprobo', 0)
+                                ->whereNotNull('acumulado')
                                 ->get();
 
                 if($registros){
