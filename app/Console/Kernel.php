@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('Documento:vigencia')->timezone('America/Bogota')->at('01:00');  //->everyThreeMinutes();
         //$schedule->command('Cartera:cargaMulta')->timezone('America/Bogota')->at('01:10');  //->everyThreeMinutes();
         $schedule->command('Cartera:cargaMora')->timezone('America/Bogota')->at('01:30');  //->everyThreeMinutes();
-        $schedule->command('Academico:aprobo-reprobo')->timezone('America/Bogota')->at('01:50');  //->everyThreeMinutes();
+        //$schedule->command('Academico:aprobo-reprobo')->timezone('America/Bogota')->at('01:50');  //->everyThreeMinutes();
         $schedule->command('Academico:DesercionAntiguo')->timezone('America/Bogota')->at('02:05');  //->everyThreeMinutes();
         $schedule->command('Academico:desercion')->timezone('America/Bogota')->at('02:25');  //->everyThreeMinutes();
         $schedule->command('Matricula:bienvenida-email')->timezone('America/Bogota')->at('02:45');  //everyMinute();
