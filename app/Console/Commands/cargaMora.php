@@ -66,7 +66,7 @@ class cargaMora extends Command
                             'estado_cartera_id'=>3,
                         ]);
 
-                $control=Control::where('status', true)
+                /* $control=Control::where('status', true)
                                 ->where('estudiante_id', $value->responsable_id)
                                 ->get();
 
@@ -75,7 +75,7 @@ class cargaMora extends Command
                     $uno->update([
                         'mora'=>$uno->mora+$value->saldo,
                     ]);
-                }
+                } */
 
             } catch(Exception $exception){
                 Log::channel('comandos_log')->info('Linea cartera: ' . $value->id . ' CargaMora No permitio registrar: ' . $exception->getMessage().' control: '.$exception->getLine());
