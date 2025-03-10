@@ -45,10 +45,10 @@ class cargaMora extends Command
                             });
             }); */
 
-        $crt=Carbon::today()->subDay();
+        $crt=Carbon::today()/* ->subDay() */;
 
-        $vencida=Cartera::where('fecha_pago', $crt)
-                        ->whereNotIn('status_est',[2,6,11])
+        $vencida=Cartera::where('fecha_pago', '<',$crt)
+                        ->whereNotIn('status_est',[2,6,11,12,13])
                         ->where('estado_cartera_id', '<',5)
                         ->whereBetween('concepto_pago_id',[2,4])
                         ->where('saldo', '>', 0)

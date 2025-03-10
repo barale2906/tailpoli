@@ -33,7 +33,8 @@ class ResetCartera extends Command
 
         Control::whereNotIn('status_est',[2,4,6,11,12,13])
                             ->update([
-                                'mora'=>0
+                                'mora'=>0,
+                                'estado_cartera'=>1
                             ]);
 
         $listados=Control::whereNotIn('status_est',[2,4,6,11,12,13])
@@ -41,14 +42,21 @@ class ResetCartera extends Command
 
         foreach ($listados as $value) {
             try {
-                Log::channel('comandos_log')->info('Matricula ID:'.$value->matricula_id );
+
                 $cartera=Cartera::where('matricula_id', $value->matricula_id)
                                     ->where('estado_cartera_id',3)
                                     ->sum('saldo');
 
+                $estado=1;
+
+                if($cartera>0){
+                    $estado=3;
+                }
+                Log::channel('comandos_log')->info('Matricula ID:'.$value->matricula_id.' Valor Cartera: '.$cartera.' Estado Cartera: '.$estado );
                 Control::where('id',$value->id)
                         ->update([
                             'mora'          =>$cartera,
+                            'estado_cartera'=>$estado,
                             'updated_at'    =>now()
                         ]);
             } catch(Exception $exception){

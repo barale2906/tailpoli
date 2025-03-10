@@ -194,6 +194,12 @@ class RecibosPagoCrear extends Component
         $this->conceptoelegido=$this->concepotro;
         $this->calcudescu(0,"otro",0,0);
 
+        //Validar si el descuento es mayor que el precio
+        if($this->otro<=$this->descuento){
+            $this->descuento=0;
+            $this->dispatch('alerta', name:'el descuento es mayor que el pago, NO SE CARGARÁ');
+        }
+
         if($this->otro>=$this->descuento){
 
             $ite=ConceptoPago::find($this->concepotro);
@@ -292,6 +298,12 @@ class RecibosPagoCrear extends Component
         $this->conceptoelegido=$item['concepto_pago_id'];
 
         $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+
+        //Validar si el descuento es mayor que el precio
+        if($this->valor<=$this->descuento){
+            $this->descuento=0;
+            $this->dispatch('alerta', name:'el descuento es mayor que el pago, NO SE CARGARÁ');
+        }
 
         if($this->valor>=$this->descuento){
             $dato=explode("-----",$item['observaciones']);
