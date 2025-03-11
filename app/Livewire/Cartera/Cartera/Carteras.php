@@ -79,7 +79,7 @@ class Carteras extends Component
                 'filtroCiudad',
                 'filtroSede',
                 'estado_estudiante',
-                'estado_cartera',
+                //'estado_cartera',
         );
         $this->buscamin=strtolower($this->buscar);
     }

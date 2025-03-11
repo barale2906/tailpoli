@@ -6,7 +6,9 @@ use App\Exports\AcaAsistenciaExport;
 use App\Models\Academico\Asistencia;
 use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
+use App\Models\Clientes\Pqrs;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -280,6 +282,15 @@ class Asisgestion extends Component
                     'status_est'=>1
                 ]);
             }
+
+            Pqrs::create([
+                'estudiante_id' =>$alumno_id,
+                'gestion_id'    =>Auth::user()->id,
+                'fecha'         =>now(),
+                'tipo'          =>1,
+                'observaciones' =>'GESTIÓN: Se carga Asistencia del: '.$registro->fecha_clase.' ----- ',
+                'status'        =>4
+            ]);
 
             $this->cargarActual();
         }
