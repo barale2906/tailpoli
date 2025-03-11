@@ -50,6 +50,7 @@ class Convenio extends Component
     public $hoy;
     public $dia;
     public $elegible=[];
+    public $fechaPago;
 
     public $valor_aplazamiento;
 
@@ -282,6 +283,8 @@ class Convenio extends Component
                                 ->where('status', true)
                                 ->first(); */
 
+        $this->fechaPago = Carbon::createFromFormat('Y-m-d', $this->fecha)->setDay($this->dia);
+
         foreach ($this->deudas as $value) {
             $obser=now()." ".Auth::user()->name." --- CASTIGADO POR CONVENIO DE PAGO --- ".$value->observaciones;
             $this->matricula_id=$value->matricula_id;
@@ -325,16 +328,16 @@ class Convenio extends Component
 
                 if($this->cuotas>0){
 
-                    $year = now();
+                    /* $year = now();
                     $year = date('Y');
                     $mes =now();
                     $mes= date('m');
-                    $date=Carbon::create($year, $mes, $this->dia);
+                    $date=Carbon::create($year, $mes, $this->dia); */
 
                     $a=1;
                     while ($a <= $this->cuotas) {
 
-                        $endDate = $date->addMonths();
+                        $endDate = $this->fechaPago->addMonths();
 
                         Cartera::create([
                         'fecha_pago'=>$endDate,
@@ -390,11 +393,11 @@ class Convenio extends Component
                                             ->where('status', true)
                                             ->first();
 
-                $year = now();
+                /* $year = now();
                     $year = date('Y');
                     $mes =now();
                     $mes= date('m');
-                    $date=Carbon::create($year, $mes, $this->dia);
+                    $date=Carbon::create($year, $mes, $this->dia); */
 
                 $a=1;
                 while ($a <= $this->cuotadiferidas) {
@@ -409,7 +412,7 @@ class Convenio extends Component
                         $valor=$this->valor_cuota;
                     }
 
-                    $endDate = $date->addMonths();
+                    $endDate = $this->fechaPago->addMonths();
 
                     Log::info('Convenio: ' . $valor. ' N°: '.$a." Aplaza: ".$cuoaplaza." Diferidas: ".$this->cuotadiferidas." SAldo: ".$this->cuotasaldo.' fecha: '.$endDate);
 
@@ -432,7 +435,7 @@ class Convenio extends Component
                 }
 
                 if($this->cuotasaldo>0){
-                    $endDate = $date->addMonths();
+                    $endDate = $this->fechaPago->addMonths();
                     log::info(' fecha:'.$endDate);
 
                     Cartera::create([
