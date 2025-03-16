@@ -134,7 +134,7 @@ class Carteras extends Component
     }
 
     public function show($alumno,$est){
-        $this->alumno=$alumno;
+        $this->alumno=$alumno; //Se cambio el id del alumno por el Id de matricula
         $this->is_modify=!$this->is_modify;
         switch ($est) {
             case 0:

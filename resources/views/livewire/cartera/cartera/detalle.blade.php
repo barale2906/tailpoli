@@ -55,37 +55,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($matricu as $matricula)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-400">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$matricula->id}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                {{$matricula->created_at}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{$matricula->fecha_inicia}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$matricula->sede->name}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$matricula->curso->name}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$matricula->alumno->name}} -- {{number_format($matricula->alumno->documento, 0, ',', '.')}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                $ {{number_format($matricula->valor, 0, ',', '.')}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                {{$matricula->metodo}}
-                            </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                {{$matricula->creador->name}}
-                            </th>
-                        </tr>
-                    @endforeach
+                    {{-- @foreach ($matricu as $matricula)
+
+                    @endforeach --}}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-400">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{$matricu->id}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            {{$matricu->created_at}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{$matricu->fecha_inicia}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                            {{$matricu->sede->name}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                            {{$matricu->curso->name}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                            {{$matricu->alumno->name}} -- {{number_format($matricu->alumno->documento, 0, ',', '.')}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            $ {{number_format($matricu->valor, 0, ',', '.')}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            {{$matricu->metodo}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                            {{$matricu->creador->name}}
+                        </th>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -132,6 +133,12 @@
                         Valor
                     </th>
                     <th scope="col" class="px-6 py-3" >
+                        Descuento
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
+                        Pagado
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
                         Saldo
                     </th>
                     <th scope="col" class="px-6 py-3" >
@@ -158,6 +165,12 @@
                             $ {{number_format($cartera->valor, 0, ',', '.')}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            $ {{number_format($cartera->descuento, 0, ',', '.')}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            $ {{number_format($cartera->valor-$cartera->descuento-$cartera->saldo, 0, ',', '.')}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                             $ {{number_format($cartera->saldo, 0, ',', '.')}}
                         </th>
                         <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
@@ -167,7 +180,7 @@
                                         $fecha1 = date_create($cartera->fecha_pago);
                                         $dias = date_diff($fecha1, $fecha)->format('%R%a');
                                     @endphp
-                                    {{$dias}} días
+                                    MORA: $ {{number_format($cartera->saldo, 0, ',', '.')}}, <br>{{$dias}} días
                                 @endif
                             @else
                                 Fecha pago: {{$cartera->fecha_real}}

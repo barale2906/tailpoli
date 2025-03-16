@@ -22,21 +22,20 @@ class Detalle extends Component
     public $recibostate=false;
 
     public function mount($alumno){
-        $this->actual=User::find($alumno);
+        $this->matricu=Matricula::find($alumno);
         $this->fecha=now();
-        $this->deuda();
-        $this->pagos();
-        $this->matriculas();
+        //$this->matriculas();
+        $this->alumnitem();
     }
 
     public function deuda(){
-        $this->carteras=Cartera::where('responsable_id', $this->actual->id)
+        $this->carteras=Cartera::where('matricula_id', $this->matricu->id)
                                 ->get();
 
         $this->total=Cartera::where('estado_cartera_id', '<',5)
-                        ->where('responsable_id', $this->actual->id)
+                        ->where('matricula_id', $this->matricu->id)
                         ->selectRaw('sum(saldo) as saldo, sum(valor) as valor')
-                        ->groupBy('responsable_id')
+                        ->groupBy('matricula_id')
                         ->first();
     }
 
@@ -52,6 +51,13 @@ class Detalle extends Component
     public function matriculas(){
         $this->matricu=Matricula::where('alumno_id', $this->actual->id)
                                 ->get();
+    }
+
+    public function alumnitem(){
+        $this->actual=User::find($this->matricu->alumno_id);
+
+        $this->deuda();
+        $this->pagos();
     }
 
 
