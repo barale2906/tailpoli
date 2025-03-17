@@ -95,6 +95,7 @@ class RecibosPagoCrear extends Component
     public $controle_id=0;
 
     public $pendientes;
+    public $futuros;
 
     public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null){
 
@@ -144,19 +145,31 @@ class RecibosPagoCrear extends Component
     }
 
     public function obligaciones(){
-        $this->pendientes= Cartera::where('responsable_id', $this->alumno_id)
+        $hoy=Carbon::today();
+        $carteraTotal= Cartera::where('responsable_id', $this->alumno_id)
                                 ->where('estado_cartera_id', '<',5)
                                 ->where('saldo','>',0)
+                                //->where('fecha_pago','<=',$hoy)
                                 ->orderBy('matricula_id')
                                 ->orderBy('fecha_pago')
                                 ->get();
 
-        $this->totalCartera=Cartera::where('responsable_id', $this->alumno_id)
+        /* $this->totalCartera=Cartera::where('responsable_id', $this->alumno_id)
                                     ->where('estado_cartera_id', '<',5)
                                     ->where('saldo','>',0)
-                                    ->sum('saldo');
+                                    ->sum('saldo'); */
 
+        $this->totalCartera=$carteraTotal->sum('saldo');
+
+        $this->pendientes= $carteraTotal->filter(function ($deuda) use ($hoy) {
+                                                    return $deuda->fecha_pago <= $hoy;
+                                                });
+
+        $this->futuros=$carteraTotal->filter(function ($futur) use ($hoy) {
+                                                return $futur->fecha_pago > $hoy;
+                                            });
         $this->student();
+
     }
 
     #[On('cargados')]

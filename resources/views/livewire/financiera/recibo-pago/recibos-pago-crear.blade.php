@@ -167,7 +167,7 @@
                                 </table>
 
                                 <div>
-                                    @if ($pendientes->count()>0)
+                                    @if ($totalCartera)
                                         <h5 class="mb-2 mt-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                             Obligaciones de Cartera
                                         </h5>
@@ -183,69 +183,152 @@
                                                     @endif
                                                 @endforeach
                                         </h4>
-                                        <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
-                                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                                <tr>
-                                                    <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
-                                                        Fecha pago programada
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        <span class=" text-xs">Curso</span>
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        Saldo <small class=" text-red-400">De esta deuda</small>
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        Concepto de pago
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        Valor pagado
-                                                    </th>{{--
-                                                    <th scope="col" class="px-6 py-3" >
-                                                        Registrar Descuento
-                                                    </th> --}}
-                                                    <th scope="col" class="px-6 py-3" ></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($pendientes as $pendiente)
-                                                    @php
-                                                        $cuota=explode("-----",$pendiente->observaciones);
-                                                        $cuo=$cuota[0];
-                                                    @endphp
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                                            {{$pendiente->fecha_pago}}
+                                        <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2 bg-red-100">
+                                            <h4 class="mb-2 mt-2 text-center text-lg capitalize font-semibold tracking-tight text-gray-900 dark:text-white">
+                                                Saldo en mora: $ {{number_format($pendientes->sum('saldo'), 0, '.', ' ')}}
+                                            </h4>
+                                            <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+                                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                    <tr>
+                                                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
+                                                            Fecha pago programada
                                                         </th>
-                                                        <th scope="row" class="px-6 py-4 text-sm text-gray-900 dark:text-white text-justify">
-                                                            {{$pendiente->matricula->curso->name}}
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            <span class=" text-xs">Curso</span>
                                                         </th>
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                                            $ {{number_format($pendiente->saldo, 0, '.', ' ')}}
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            Saldo <small class=" text-red-400">De esta deuda</small>
                                                         </th>
-                                                        <th scope="row" class="px-6 py-4 text-sm text-justify  text-gray-900 dark:text-white capitalize">
-                                                            {{$cuo}} - {{$pendiente->concepto}}
-                                                        </th>
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
-                                                            <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            Concepto de pago
                                                         </th>{{--
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
-                                                            <input type="text" id="descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a descontar" wire:model.blur="descuento">
-                                                        </th> --}}
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white  text-right">
-                                                            <select wire:model.blur="conceptos" wire:change="asigOtro(1, {{$pendiente}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                                                <option>Seleccione...</option>
-                                                                @foreach ($concePagos as $item)
-                                                                    @if ($item->id===$pendiente->concepto_pago_id)
-                                                                        <option value={{$item->id}}>{{$item->name}}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            Valor pagado
                                                         </th>
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            Registrar Descuento
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3" ></th> --}}
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($pendientes as $pendiente)
+                                                        @php
+                                                            $cuota=explode("-----",$pendiente->observaciones);
+                                                            $cuo=$cuota[0];
+                                                        @endphp
+                                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                                                {{$pendiente->fecha_pago}}
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 text-sm text-gray-900 dark:text-white text-justify">
+                                                                {{$pendiente->matricula->curso->name}}
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                                                $ {{number_format($pendiente->saldo, 0, '.', ' ')}}
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 text-sm text-justify  text-gray-900 dark:text-white capitalize">
+                                                                {{$cuo}} - {{$pendiente->concepto}}
+                                                            </th>{{--
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                                                <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                                                <input type="text" id="descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a descontar" wire:model.blur="descuento">
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white  text-right">
+                                                                <select wire:model.blur="conceptos" wire:change="asigOtro(1, {{$pendiente}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                                                    <option>Seleccione...</option>
+                                                                    @foreach ($concePagos as $item)
+                                                                        @if ($item->id===$pendiente->concepto_pago_id)
+                                                                            <option value={{$item->id}}>{{$item->name}}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </th> --}}
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            <label for="filtrTransades" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Registre el valor de un total de: $ {{number_format($pendientes->sum('saldo'), 0, '.', ' ')}}</label>
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input wire:model.live="valor" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
+                                                <label for="valor" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valor a pagar</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-6 ring-1 ring-zinc-600 rounded-md p-2 bg-green-100">
+                                            <h4 class="mb-2 mt-2 text-center text-lg capitalize font-semibold tracking-tight text-gray-900 dark:text-white">
+                                                Saldo total del convenio: $ {{number_format($futuros->sum('saldo'), 0, '.', ' ')}}
+                                            </h4>
+                                            <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
+                                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                    <tr>
+                                                        <th scope="col" class="px-6 py-3" style="cursor: pointer;" >
+                                                            Fecha pago programada
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            <span class=" text-xs">Curso</span>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            Saldo <small class=" text-red-400">De esta deuda</small>
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            Concepto de pago
+                                                        </th>{{--
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            Valor pagado
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3" >
+                                                            Registrar Descuento
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3" ></th> --}}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($futuros as $futuro)
+                                                        @php
+                                                            $cuota=explode("-----",$futuro->observaciones);
+                                                            $cuo=$cuota[0];
+                                                        @endphp
+                                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                                                {{$futuro->fecha_pago}}
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 text-sm text-gray-900 dark:text-white text-justify">
+                                                                {{$futuro->matricula->curso->name}}
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                                                $ {{number_format($futuro->saldo, 0, '.', ' ')}}
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 text-sm text-justify  text-gray-900 dark:text-white capitalize">
+                                                                {{$cuo}} - {{$futuro->concepto}}
+                                                            </th>{{--
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                                                <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                                                <input type="text" id="descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a descontar" wire:model.blur="descuento">
+                                                            </th>
+                                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white  text-right">
+                                                                <select wire:model.blur="conceptos" wire:change="asigOtro(1, {{$futuro}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                                                    <option>Seleccione...</option>
+                                                                    @foreach ($concePagos as $item)
+                                                                        @if ($item->id===$futuro->concepto_pago_id)
+                                                                            <option value={{$item->id}}>{{$item->name}}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </th> --}}
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            <label for="filtrTransades" class="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white">Registre el valor de un total de: $ {{number_format($futuros->sum('saldo'), 0, '.', ' ')}}</label>
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input wire:model.live="valor" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
+                                                <label for="valor" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valor a pagar</label>
+                                            </div>
+                                        </div>
                                     @else
                                         <h5 class="mb-2 mt-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                             No Tiene Obligaciones de Cartera Registradas
