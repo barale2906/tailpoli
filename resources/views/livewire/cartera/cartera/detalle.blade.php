@@ -20,7 +20,7 @@
                 </a>
             </p>
             <h1 class=" text-center uppercase">
-                matriculas de este estudiante
+                Estamos evaluando la siguiente matricula
             </h1>
             <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -148,6 +148,9 @@
                         Concepto
                     </th>
                     <th scope="col" class="px-6 py-3" >
+                        Estado
+                    </th>
+                    <th scope="col" class="px-6 py-3" >
                         Observaciones
                     </th>
                 </tr>
@@ -171,7 +174,11 @@
                             $ {{number_format($cartera->valor-$cartera->descuento-$cartera->saldo, 0, ',', '.')}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                            $ {{number_format($cartera->saldo, 0, ',', '.')}}
+                            @if ($cartera->estado_cartera_id>4)
+                                $ {{number_format(0, 0, ',', '.')}}
+                            @else
+                                $ {{number_format($cartera->saldo, 0, ',', '.')}}
+                            @endif
                         </th>
                         <th scope="row" class="px-3 py-1 text-right text-red-700 text-xs  dark:text-white uppercase">
                             @if ($cartera->estado_cartera_id<5)
@@ -188,6 +195,9 @@
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                             {{$cartera->concepto}} - {{$cartera->matricula->curso->name}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white uppercase">
+                            {{$carterastatus[$cartera->estado_cartera_id]}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
                             {{$cartera->observaciones}}

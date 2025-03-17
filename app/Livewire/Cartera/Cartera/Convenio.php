@@ -45,6 +45,7 @@ class Convenio extends Component
     public $matricula_id;
     public $sede_id;
     public $sector_id;
+    public $matricula;
 
     public $fecha;
     public $hoy;
@@ -56,7 +57,8 @@ class Convenio extends Component
 
     public function mount($id=null){
         if($id){
-            $this->responsable_id=$id;
+            $this->matricula=Matricula::find($id);
+            $this->responsable_id=$this->matricula->alumno_id;
             $this->updatedResponsableId();
             $this->especiales=true;
             $this->datos();
@@ -64,10 +66,10 @@ class Convenio extends Component
         DB::table('apoyo_recibo')
             ->where('id_creador', Auth::user()->id)
             ->delete();
-        $this->cartera=Cartera::where('estado_cartera_id', '<',5)
+        /* $this->cartera=Cartera::where('estado_cartera_id', '<',5)
                                 ->where('responsable_id', $this->responsable_id)
                                 ->where('saldo','>',0)
-                                ->get();
+                                ->get(); */
 
         $this->hoy=now();
         $this->hoy=date('Y-m-d');
@@ -76,7 +78,7 @@ class Convenio extends Component
                                             ->where('status',1)
                                             ->first();
 
-        $this->filtrar();
+        //$this->filtrar();
         $this->dias();
     }
 
@@ -91,7 +93,8 @@ class Convenio extends Component
     }
 
     public function filtrar(){
-        foreach ($this->cartera as $value) {
+        /* foreach ($this->cartera as $value) { */
+        foreach ($this->deudas as $value) {
             $esta=DB::table('apoyo_recibo')->where('id_producto', $value->responsable_id)->count();
 
             //Cargar usuario a la tabla de apoyo
@@ -118,10 +121,18 @@ class Convenio extends Component
     }
 
     public function updatedResponsableId(){
-        $this->deudas=Cartera::where('responsable_id', $this->responsable_id)
+        $this->deudas=Cartera::where('matricula_id', $this->matricula->id)
                             ->where('estado_cartera_id', '<',5)
                             ->where('saldo','>',0)
                             ->get();
+
+        if ($this->deudas->isNotEmpty()) {
+            $primerRegistro = $this->deudas->first();
+            // Trabajas con el primer registro
+            $this->sede_id=$primerRegistro->sede_id;
+            $this->sector_id=$primerRegistro->sector_id;
+            $this->total=$this->deudas->sum('saldo');
+        } /*
 
         if($this->deudas->count()>0){
             $crt=Cartera::where('responsable_id', $this->responsable_id)
@@ -133,10 +144,12 @@ class Convenio extends Component
             $this->sector_id=$crt->sector_id;
         }
 
-        $this->total=Cartera::where('responsable_id', $this->responsable_id)
+        $this->total=Cartera::where('matricula_id', $this->matricula->id)
                             ->where('estado_cartera_id', '<',5)
                             ->where('saldo','>',0)
                             ->sum('saldo');
+ */
+        $this->filtrar();
     }
 
     public function updatedContado(){

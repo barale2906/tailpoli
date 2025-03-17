@@ -3,10 +3,13 @@
         <h1 class="text-center text-xl font-semibold">
             A continuación se presenta la información para <strong class=" uppercase font-extrabold">{{$actual->name}}</strong>, con documento: <strong class=" font-extrabold">{{$actual->documento}}</strong>
         </h1>
+        <h2 class=" text-center text-lg font-normal mb-10">
+            Aplica para la matricula N°:  <strong class=" font-extrabold">{{$matricula->id}}</strong> del curso:  <strong class=" font-extrabold uppercase">{{$matricula->curso->name}}</strong>
+        </h2>
     @endif
 
     @if ($total>0)
-        <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-2">
+        <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 m-10">
             @if (!$especiales)
                 <div class="mb-6">
                     <label for="responsable_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white capitalize">Elija alumno</label>
@@ -19,7 +22,7 @@
                 </div>
             @endif
             @if ($responsable_id>0)
-                <div class="flex flex-col items-center justify-center mb-4">
+                <div class="flex flex-col items-center justify-center mb-10 mt-10">
                     <dt class="mb-2 text-3xl font-extrabold text-cyan-700">$ {{number_format($total, 0, ',', '.')}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400">Total de la deuda</dd>
                 </div>
