@@ -8,6 +8,7 @@ use App\Models\Financiera\Cartera;
 use App\Models\Financiera\ReciboPago;
 use App\Models\Financiera\Transaccion;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Observaciones extends Component
@@ -17,12 +18,14 @@ class Observaciones extends Component
     public $fecha;
     public $ruta;
     public $alumno;
+    public $ids=[];
+    public $recid=[];
     //public $observaciones=[];
     public $historialAlumno;
 
     public function mount($elegido=null, $ruta=null){
         $this->ruta=$ruta;
-        $this->elegido=Control::where('estudiante_id',$elegido)->first();
+        $this->elegido=Control::where('id',$elegido)->first();
         $this->fecha=now();
         $this->alumn();
         //$this->arraobserva();
@@ -62,22 +65,43 @@ class Observaciones extends Component
     }
 
     private function cartera(){
-        return Cartera::where('responsable_id', $this->elegido->estudiante_id)
+        $this->reset('ids','recid');
+        $cartera=Cartera::where('responsable_id', $this->elegido->estudiante_id)
+                        ->where('matricula_id', $this->elegido->matricula_id)
                         ->whereNot('estado_cartera_id',5)
                         ->orderBy('matricula_id', 'ASC')
                         ->orderBy('fecha_pago', 'ASC')
                         ->get();
+
+        foreach ($cartera as $value) {
+            array_push($this->ids,$value->id);
+        }
+        //dd('ids', $this->ids,'Conteo',count($this->ids));
+        $i=0;
+        for ($i=0; $i < count($this->ids); $i++) {
+            $recibo=DB::table('concepto_pago_recibo_pago')
+                        ->where('id_relacional',$this->ids[$i])
+                        ->select('recibo_pago_id')
+                        ->first();
+
+            if($recibo){
+                array_push($this->recid,$recibo->recibo_pago_id);
+            }
+        }
+
+
+        return $cartera;
     }
 
     private function saldoCartera(){
         return Cartera::where('responsable_id', $this->elegido->estudiante_id)
+                        ->where('matricula_id', $this->elegido->matricula_id)
                         ->where('estado_cartera_id', '<',5)
                         ->sum('saldo');
     }
 
     private function recibos(){
-        return ReciboPago::where('paga_id', $this->elegido->estudiante_id)
-                            ->get();
+        return ReciboPago::whereIn('id', $this->recid)->get();
     }
 
     private function transacciones(){
