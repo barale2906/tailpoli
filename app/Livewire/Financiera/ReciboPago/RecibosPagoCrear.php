@@ -18,6 +18,7 @@ use App\Traits\MailTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -64,6 +65,7 @@ class RecibosPagoCrear extends Component
 
 
     public $valor=0;
+    public $pagado;
     public $conceptos=0;
     public $concep=[];
     public $nameConcep;
@@ -94,8 +96,12 @@ class RecibosPagoCrear extends Component
     public $is_inventa=false;
     public $controle_id=0;
 
+    public $carteraSeleccionada;
     public $pendientes;
     public $futuros;
+    public $matriculas;
+    public $matricula_id;
+    public $siguientecuota;
 
     public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null){
 
@@ -145,7 +151,16 @@ class RecibosPagoCrear extends Component
     }
 
     public function obligaciones(){
-        $hoy=Carbon::today();
+
+        $this->matriculas = Cartera::where('responsable_id', $this->alumno_id)
+                                    ->where('estado_cartera_id', '<', 5)
+                                    ->where('saldo', '>', 0)
+                                    ->groupBy('matricula_id') // Agrupa por matricula_id
+                                    ->selectRaw('matricula_id, SUM(saldo) as total_saldo') // Selecciona y agrega el saldo
+                                    ->orderBy('matricula_id')
+                                    ->get();
+
+
         $carteraTotal= Cartera::where('responsable_id', $this->alumno_id)
                                 ->where('estado_cartera_id', '<',5)
                                 ->where('saldo','>',0)
@@ -161,15 +176,35 @@ class RecibosPagoCrear extends Component
 
         $this->totalCartera=$carteraTotal->sum('saldo');
 
-        $this->pendientes= $carteraTotal->filter(function ($deuda) use ($hoy) {
+        $this->pendientes= $carteraTotal;
+        $this->student();
+
+    }
+
+    public function matrielegida($idmatricu){
+
+        $this->reset('pendientes','matricula_id');
+        $this->matricula_id=$idmatricu;
+
+        $hoy=Carbon::today();
+        $this->carteraSeleccionada= Cartera::where('responsable_id', $this->alumno_id)
+                                            ->where('estado_cartera_id', '<',5)
+                                            ->where('saldo','>',0)
+                                            ->where('matricula_id',$idmatricu)
+                                            ->orderBy('fecha_pago')
+                                            ->get();
+
+        $this->totalCartera=$this->carteraSeleccionada->sum('saldo');
+
+        $this->pendientes= $this->carteraSeleccionada->filter(function ($deuda) use ($hoy) {
                                                     return $deuda->fecha_pago <= $hoy;
                                                 });
 
-        $this->futuros=$carteraTotal->filter(function ($futur) use ($hoy) {
+        $this->futuros=$this->carteraSeleccionada->filter(function ($futur) use ($hoy) {
                                                 return $futur->fecha_pago > $hoy;
                                             });
-        $this->student();
 
+        $this->siguientecuota=$this->futuros->first();
     }
 
     #[On('cargados')]
@@ -268,7 +303,7 @@ class RecibosPagoCrear extends Component
                     $hoy=Carbon::today();
                 }
 
-                if($fecha>=$hoy){
+                if($fecha>=$hoy && $this->valor===$aplicaa){
                     //dd(" HOY Es ANTES: ",$hoy,$fecha);
                     $this->obtienedescuento();
                 }else{
@@ -441,9 +476,26 @@ class RecibosPagoCrear extends Component
         }else{
             $this->dispatch('alerta', name:'el descuento debe ser menor o igual al pago');
         }
+    }
 
+    public function cargaPago(){
+        foreach ($this->carteraSeleccionada as $value) {
 
+            if($this->pagado>0){
+                if($this->pagado>$value->saldo){
+                    $this->valor=$value->saldo;
+                }
 
+                if($this->pagado<=$value->saldo){
+                    $this->valor=$this->pagado;
+                }
+                $this->conceptos=$value->concepto_pago_id;
+                $this->asigOtro(1,$value);
+                $this->pagado=$this->pagado-$value->saldo;
+            }
+        }
+
+        $this->reset('pagado');
     }
 
     public function cargaDescuento(){
@@ -615,6 +667,7 @@ class RecibosPagoCrear extends Component
     public function updatedPagoTotal(){
         if($this->pagoTotal){
             $this->Total=$this->totalCartera;
+            $this->descuento="";
 
         }else{
             $this->reset('totalCartera');
