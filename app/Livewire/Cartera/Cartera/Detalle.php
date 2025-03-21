@@ -24,6 +24,8 @@ class Detalle extends Component
 
     public $carterastate=true;
     public $recibostate=false;
+    public $observaview=false;
+    public $elegid;
 
     public function mount($alumno){
         $this->estadocartera();
@@ -94,7 +96,22 @@ class Detalle extends Component
         $this->deuda();
     }
 
+    public function observ($id){
+        $this->reset(
+            'observaview',
+            'elegid'
+        );
+        dd($id);
+        if($id!==$this->elegid){
+            $this->observaview=true;
+            $this->elegid=$id;
+        }
+    }
 
+    public function muestraObs($cartera)
+    {
+        dd($cartera);
+    }
     public function render()
     {
         return view('livewire.cartera.cartera.detalle');

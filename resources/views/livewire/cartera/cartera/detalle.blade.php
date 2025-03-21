@@ -200,7 +200,14 @@
                             {{$carterastatus[$cartera->estado_cartera_id]}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                            {{$cartera->observaciones}}
+                            <button type="button" wire:click.prevent="muestraObs({{$cartera->id}})" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                                <i class="fa-regular fa-comments"></i>
+                            </button>
+
+                            @if ($observaview && $cartera->id===$elegid)
+                                {{$cartera->observaciones}}
+                            @endif
+
                         </th>
                     </tr>
                 @endforeach
@@ -268,6 +275,7 @@
                                 {{$recibo->medio}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+
                                 {{$recibo->observaciones}}
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">

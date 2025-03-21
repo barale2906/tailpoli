@@ -338,7 +338,7 @@ class RecibosPagoCrear extends Component
             $this->descuento=0;
         }
 
-
+        $this->pagado=$this->pagado+$this->descuento;
     }
 
     public function asigOtro($id, $item,$conf=null){
