@@ -133,6 +133,31 @@ class RecibosPagoCrear extends Component
             ->delete();
     }
 
+    public function limpiafin(){
+
+        $fin = DB::table('apoyo_recibo')
+                    ->where('id_creador', Auth::user()->id)
+                    ->wherein('tipo',['cartera','financiero'])
+                    ->get();
+
+        foreach ($fin as $value) {
+            if($value->tipo==='cartera'){
+                $this->Total=$this->Total-$value->valor;
+                $this->elimregistro($value->id);
+            }
+            if($value->tipo==='financiero' && $value->id_cartera>0){
+                $this->Totaldescue=$this->Totaldescue-$value->valor;
+                $this->elimregistro($value->id);
+            }
+        }
+    }
+
+    public function elimregistro($id){
+        DB::table('apoyo_recibo')
+                ->where('id',$id)
+                ->delete();
+    }
+
     public function variables(){
         $this->alumno_id=$this->transaccion->user_id;
         $this->alumnoName=$this->transaccion->user->name;
@@ -272,6 +297,30 @@ class RecibosPagoCrear extends Component
         }
     }
 
+    public function obtienedescuento(){
+
+        $descu=Descuento::join('descuento_producto', 'descuentos.id', '=', 'descuento_producto.descuento_id')
+                        ->where('descuentos.aplica',$this->aplica)
+                        ->where('descuentos.status',1)
+                        ->where('descuento_producto.concepto_pago_id', $this->conceptoelegido)
+                        ->first();
+
+        if($descu){
+            if($descu && $descu->tipo===0){
+
+                $this->descuento=$descu->valor;
+            }
+
+            if($descu && $descu->tipo===1){
+                $this->descuento=$this->base*$descu->valor/100;
+            }
+        }else{
+            $this->descuento=0;
+        }
+
+        $this->pagado=$this->pagado+$this->descuento;
+    }
+
     public function calcudescu($id,$aplicaa,$inicial,$descuento,$fecha=null){
         $this->reset(
                     'descuento',
@@ -297,10 +346,21 @@ class RecibosPagoCrear extends Component
                 $this->base=$aplicaa;
                 $this->inicial=$inicial;
                 $this->diferencia=$inicial-$aplicaa;
+
                 if($this->fechatransaccion){
                     $hoy=$this->fechatransaccion;
                 }else{
                     $hoy=Carbon::today();
+                }
+
+                Log::info('fecha: '.$fecha.' hoy: '. $hoy . ' Valor pagado: '.$this->valor.' Saldo a pagar: '.$aplicaa);
+
+                if($fecha>=$hoy){
+                    Log::info('Compara las fechas');
+                }
+
+                if($this->valor===$aplicaa){
+                    Log::info('Compara los valores');
                 }
 
                 if($fecha>=$hoy && $this->valor===$aplicaa){
@@ -315,30 +375,6 @@ class RecibosPagoCrear extends Component
 
 
 
-    }
-
-    public function obtienedescuento(){
-
-        $descu=Descuento::join('descuento_producto', 'descuentos.id', '=', 'descuento_producto.descuento_id')
-                        ->where('descuentos.aplica',$this->aplica)
-                        ->where('descuentos.status',1)
-                        ->where('descuento_producto.concepto_pago_id', $this->conceptoelegido)
-                        ->first();
-
-        if($descu){
-            if($descu && $descu->tipo===0){
-
-                $this->descuento=$descu->valor;
-            }
-
-            if($descu && $descu->tipo===1){
-                $this->descuento=$this->base*$descu->valor/100;
-            }
-        }else{
-            $this->descuento=0;
-        }
-
-        $this->pagado=$this->pagado+$this->descuento;
     }
 
     public function asigOtro($id, $item,$conf=null){
@@ -479,6 +515,9 @@ class RecibosPagoCrear extends Component
     }
 
     public function cargaPago(){
+
+        $this->limpiafin();
+
         foreach ($this->carteraSeleccionada as $value) {
 
             if($this->pagado>0){
