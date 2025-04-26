@@ -291,6 +291,7 @@ class RecibosPagoCrear extends Component
             $this->Total=$this->Total+abs($this->otro);
 
             $this->cargaDescuento();
+            $this->reset('otro','pagado');
 
         }else{
             $this->dispatch('alerta', name:'el descuento debe ser menor o igual al pago');
