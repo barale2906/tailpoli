@@ -364,7 +364,7 @@ class RecibosPagoCrear extends Component
                     Log::info('Compara los valores');
                 }
 
-                if($fecha>=$hoy && $this->valor===$aplicaa){
+                if($fecha>=$hoy && floatval($this->valor)===floatval($aplicaa)){
                     //dd(" HOY Es ANTES: ",$hoy,$fecha);
                     $this->obtienedescuento();
                 }else{
