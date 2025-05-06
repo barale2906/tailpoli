@@ -574,5 +574,3 @@
     @endif
 
 </div>
-
-{{-- Hola cuando uso la funcion obtienedescuento() me calcula el descuento aplicable, en terminos generales funciona muy bien pero cuando registro el valor extaco del saldo no me calcula el descuento así se cumplan los parametros, por ejemplo si el saldo es 440000 y en el campo  $pagado registro ese valor no me calcula el descuento, pero si registro 440001 si lo calcula y aplica bien la funcionalidad. Me ayudas a revisar e identificar por que ocurre esto? --}}

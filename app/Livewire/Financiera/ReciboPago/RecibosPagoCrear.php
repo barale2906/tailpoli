@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Traits\ComunesTrait;
 use App\Traits\MailTrait;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -102,6 +103,7 @@ class RecibosPagoCrear extends Component
     public $matriculas;
     public $matricula_id;
     public $siguientecuota;
+    public $matrids=[];
 
     public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null){
 
@@ -352,16 +354,6 @@ class RecibosPagoCrear extends Component
                     $hoy=$this->fechatransaccion;
                 }else{
                     $hoy=Carbon::today();
-                }
-
-                Log::info('fecha: '.$fecha.' hoy: '. $hoy . ' Valor pagado: '.$this->valor.' Saldo a pagar: '.$aplicaa);
-
-                if($fecha>=$hoy){
-                    Log::info('Compara las fechas');
-                }
-
-                if($this->valor===$aplicaa){
-                    Log::info('Compara los valores');
                 }
 
                 if($fecha>=$hoy && floatval($this->valor)===floatval($aplicaa)){
@@ -855,6 +847,11 @@ class RecibosPagoCrear extends Component
                 if($value->tipo==="cartera"){
 
                     $item=Cartera::find($value->id_cartera);
+                    if(in_array($item->id, $this->matrids )){
+
+                    }else{
+                        array_push($this->matrids, $item->id);
+                    }
 
                     $obs=explode('-----',$item->observaciones);
                     $obspr=$obs[0];
@@ -997,6 +994,35 @@ class RecibosPagoCrear extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('cancelando');
+
+        $hoy=Carbon::today();
+
+        for ($i=0; $i < count($this->matrids); $i++) {
+            $cartera=Cartera::where('id',$this->matrids[$i])
+                                ->where('fecha_pago','<',$hoy)
+                                ->where('saldo','>',0)
+                                ->select('saldo')
+                                ->get();
+
+            try {
+                if($cartera){
+                    $mora=0;
+                    foreach ($cartera as $item) {
+                        $mora=$mora+$item->saldo;
+                    }
+
+                    if($mora>0){
+                        Control::where('id',$value->id)
+                                ->update([
+                                    'mora'=>$mora,
+                                    'estado_cartera'=>3
+                                ]);
+                    }
+                }
+            } catch(Exception $exception){
+                Log::info('Crear Recibo: ' . $value->id . ' Actualiza Mora: ' . $exception->getMessage().' Matricula_id: '.$exception->getLine());
+            }
+        }
 
         //Enviar por correo electrónico
         $this->claseEmail(1,$recibo->id);
