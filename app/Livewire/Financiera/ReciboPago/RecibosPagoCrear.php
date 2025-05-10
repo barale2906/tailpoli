@@ -105,7 +105,7 @@ class RecibosPagoCrear extends Component
     public $siguientecuota;
     public $matrids=[];
 
-    public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null){
+    public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null, $matricula=null){
 
         $this->limpiapoyo();
         $this->cierre();
@@ -120,13 +120,22 @@ class RecibosPagoCrear extends Component
 
         if($estudiante){
             $alum=User::find($estudiante);
-            $this->alumno_id=$alum->id;
-            $this->alumnoName=$alum->name;
-            $this->alumnodocumento=$alum->documento;
-            $this->obligaciones();
+            $this->siEstudiante($alum,$estudiante);
+        }
+
+        if($matricula){
+            $matri=intval($matricula);
+            $this->matrielegida($matri);
         }
 
         $this->descuentoConcepto();
+    }
+
+    public function siEstudiante($alum){
+        $this->alumno_id=$alum->id;
+        $this->alumnoName=$alum->name;
+        $this->alumnodocumento=$alum->documento;
+        $this->obligaciones();
     }
 
     public function limpiapoyo(){

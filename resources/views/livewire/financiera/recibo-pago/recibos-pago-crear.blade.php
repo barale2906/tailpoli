@@ -188,16 +188,18 @@
                                             Seleccione la matricula a pagar.
                                         </h4>
                                         <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-2 mb-4">
-                                            @foreach ($matriculas as $item)
-                                                <a href="" wire:click.prevent="matrielegida({{$item->matricula_id}})" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                                        $ {{number_format($item->total_saldo, 0, '.', ' ')}}
-                                                    </h5>
-                                                    <p class="font-normal text-gray-700 dark:text-gray-400 capitalize">
-                                                        {{$item->matricula->curso->name}}
-                                                    </p>
-                                                </a>
-                                            @endforeach
+                                            @if ($matriculas)
+                                                @foreach ($matriculas as $item)
+                                                    <a href="" wire:click.prevent="matrielegida({{$item->matricula_id}})" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                                            $ {{number_format($item->total_saldo, 0, '.', ' ')}}
+                                                        </h5>
+                                                        <p class="font-normal text-gray-700 dark:text-gray-400 capitalize">
+                                                            {{$item->matricula->curso->name}}
+                                                        </p>
+                                                    </a>
+                                                @endforeach
+                                            @endif
                                         </div>
 
                                         @if ($matricula_id>0)

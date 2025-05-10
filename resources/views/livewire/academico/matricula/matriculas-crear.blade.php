@@ -415,7 +415,7 @@
             </div>
         </div>
         @if (!$genrecibo)
-            <livewire:financiera.recibo-pago.recibos-pago-crear :ruta="$ruta" :estudiante="$alumno_id"/>
+            <livewire:financiera.recibo-pago.recibos-pago-crear :ruta="$ruta" :estudiante="$alumno_id" :matricula="$elegido"/>
         @endif
         @if ($is_document)
             <livewire:academico.matricula.documentos :elegido="$elegido" />

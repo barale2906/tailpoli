@@ -464,7 +464,7 @@ class MatriculasCrear extends Component
                     'updated_at'    =>now(),
                 ]);
 
-
+            //CARGAR EL ESTUDIANTE asistencia_detalle
 
             //Sumar usuario al grupo
             $inscritos=Grupo::find($value->grupo_id);
