@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Academico\Matricula;
 
+use App\Models\Academico\Asistencia;
 use App\Models\Academico\Ciclo;
 use App\Models\Academico\Ciclogrupo;
 use App\Models\Academico\Control;
@@ -75,6 +76,7 @@ class MatriculasCrear extends Component
     public $is_document=false;
     public $is_incompleto=false;
     public $primerGrupo;
+    public $actual; //Grupo en gestión para asistencia.
 
 
     public $buscar=null;
@@ -465,7 +467,7 @@ class MatriculasCrear extends Component
                 ]);
 
             //CARGAR EL ESTUDIANTE asistencia_detalle
-
+            $this->gestasistencia($value);
             //Sumar usuario al grupo
             $inscritos=Grupo::find($value->grupo_id);
 
@@ -490,6 +492,49 @@ class MatriculasCrear extends Component
         $this->vista=!$this->vista;
 
         $this->url='/pdfs/matricular/'.$this->matricula->id;
+    }
+
+    public function gestasistencia($grupo){
+
+        $gruele=Grupo::find($grupo->grupo_id);
+
+        $esta=Asistencia::where('profesor_id', $gruele->profesor_id)
+                        ->where('grupo_id', $grupo->grupo_id)
+                        ->where('ciclo_id', $grupo->ciclo_id)
+                        ->first();
+
+        if($esta){
+            $this->actual=$esta;
+            $this->cargarEstudiante();
+        }else{
+            $this->nuevo($grupo,$gruele);
+        }
+    }
+
+    public function nuevo($grupo,$gruele){
+        $this->actual=Asistencia::create([
+                                    'profesor_id'   => $gruele->profesor_id,
+                                    'grupo_id'      => $gruele->id,
+                                    'ciclo_id'      => $grupo->ciclo_id,
+                                    'registros'     => 0
+                                ]);
+
+        $this->cargarEstudiante();
+    }
+
+    public function cargarEstudiante(){
+        DB::table('asistencia_detalle')
+            ->insert([
+                'asistencia_id' =>$this->actual->id,
+                'alumno_id'     =>$this->matricula->alumno->id,
+                'alumno'        =>$this->matricula->alumno->name,
+                'profesor_id'   =>$this->actual->profesor_id,
+                'profesor'      =>$this->actual->profesor->name,
+                'grupo_id'      =>$this->actual->grupo_id,
+                'grupo'         =>$this->actual->grupo->name,
+                'created_at'    =>now(),
+                'updated_at'    =>now()
+            ]);
     }
 
     //Registrar Pago por transferencia
