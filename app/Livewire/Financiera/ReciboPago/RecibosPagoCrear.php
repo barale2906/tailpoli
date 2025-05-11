@@ -104,6 +104,10 @@ class RecibosPagoCrear extends Component
     public $matricula_id;
     public $siguientecuota;
     public $matrids=[];
+    public $hoy;
+    public $minimodescuento=0;
+    public $descuentomin=0;
+    public $gestion=0;
 
     public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null, $matricula=null){
 
@@ -112,6 +116,11 @@ class RecibosPagoCrear extends Component
 
         $this->ruta=$ruta;
         $this->fechatransaccion=$fechatransaccion;
+        if($fechatransaccion){
+            $this->hoy=$fechatransaccion;
+        } else{
+            $this->hoy=Carbon::today();
+        }
 
         if($elegido){
             $this->transaccion=Transaccion::find($elegido);
@@ -149,6 +158,7 @@ class RecibosPagoCrear extends Component
         $fin = DB::table('apoyo_recibo')
                     ->where('id_creador', Auth::user()->id)
                     ->wherein('tipo',['cartera','financiero'])
+                    ->where('id_almacen',$this->alumnodocumento)
                     ->get();
 
         foreach ($fin as $value) {
@@ -200,7 +210,7 @@ class RecibosPagoCrear extends Component
         $carteraTotal= Cartera::where('responsable_id', $this->alumno_id)
                                 ->where('estado_cartera_id', '<',5)
                                 ->where('saldo','>',0)
-                                //->where('fecha_pago','<=',$hoy)
+                                //->where('fecha_pago','<=',$this->hoy)
                                 ->orderBy('matricula_id')
                                 ->orderBy('fecha_pago')
                                 ->get();
@@ -222,7 +232,6 @@ class RecibosPagoCrear extends Component
         $this->reset('pendientes','matricula_id');
         $this->matricula_id=$idmatricu;
 
-        $hoy=Carbon::today();
         $this->carteraSeleccionada= Cartera::where('responsable_id', $this->alumno_id)
                                             ->where('estado_cartera_id', '<',5)
                                             ->where('saldo','>',0)
@@ -232,15 +241,47 @@ class RecibosPagoCrear extends Component
 
         $this->totalCartera=$this->carteraSeleccionada->sum('saldo');
 
-        $this->pendientes= $this->carteraSeleccionada->filter(function ($deuda) use ($hoy) {
-                                                    return $deuda->fecha_pago <= $hoy;
+        $this->pendientes= $this->carteraSeleccionada->filter(function ($deuda) /* use ($hoy) */ {
+                                                    return $deuda->fecha_pago <= $this->hoy;
                                                 });
 
-        $this->futuros=$this->carteraSeleccionada->filter(function ($futur) use ($hoy) {
-                                                return $futur->fecha_pago > $hoy;
+        $this->futuros=$this->carteraSeleccionada->filter(function ($futur) /* use ($hoy) */ {
+                                                return $futur->fecha_pago > $this->hoy;
                                             });
 
         $this->siguientecuota=$this->futuros->first();
+
+        $this->calcuminimo();
+    }
+
+    public function calcuminimo(){
+        if($this->siguientecuota){
+            if($this->hoy<=$this->siguientecuota->fecha_pago){
+                if($this->pendientes && $this->pendientes->sum('saldo')>0){
+                    $this->reset('minimodescuento');
+                }else{
+
+                    $descu=Descuento::where('aplica',0)
+                                        ->where('status',1)
+                                        ->first();
+
+                    if($descu){
+                        if($descu && $descu->tipo===0){
+                            $this->descuentomin=$descu->valor;
+                        }
+
+                        if($descu && $descu->tipo===1){
+                            $this->descuentomin=$this->siguientecuota->saldo*$descu->valor/100;
+                        }
+                    }else{
+                        $this->descuentomin=0;
+                    }
+
+                    $this->minimodescuento=$this->siguientecuota->saldo-$this->descuentomin;
+                }
+            }
+        }
+
     }
 
     #[On('cargados')]
@@ -248,6 +289,7 @@ class RecibosPagoCrear extends Component
     public function cargando(){
         $this->cargados=DB::table('apoyo_recibo')
                             ->where('id_creador', Auth::user()->id)
+                            ->where('id_almacen',$this->alumnodocumento)
                             ->get();
     }
 
@@ -295,6 +337,7 @@ class RecibosPagoCrear extends Component
                 'id_concepto'=>$this->concepotro,
                 'concepto'=>$ite->name,
                 'id_producto'=>$this->concepotro,
+                'id_almacen'=>$this->alumnodocumento,
                 'producto'=>$ite->name,
                 'valor'=>abs($this->otro),
             ]);
@@ -359,13 +402,12 @@ class RecibosPagoCrear extends Component
                 $this->inicial=$inicial;
                 $this->diferencia=$inicial-$aplicaa;
 
-                if($this->fechatransaccion){
-                    $hoy=$this->fechatransaccion;
+                /* if($this->fechatransaccion){
+                $hoy=Carbon::create($this->fechatransaccion);
                 }else{
                     $hoy=Carbon::today();
-                }
-
-                if($fecha>=$hoy && floatval($this->valor)===floatval($aplicaa)){
+                } */
+                if($fecha>=$this->hoy && floatval($this->valor)===floatval($aplicaa)){
                     //dd(" HOY Es ANTES: ",$hoy,$fecha);
                     $this->obtienedescuento();
                 }else{
@@ -379,11 +421,57 @@ class RecibosPagoCrear extends Component
 
     }
 
+    public function cargaPago(){
+
+        $this->limpiafin();
+        if($this->pagado<=$this->carteraSeleccionada->sum('saldo')){
+            foreach ($this->carteraSeleccionada as $value) {
+
+                if($this->pagado>0){
+                    if($this->pagado>$value->saldo){
+                        $this->valor=$value->saldo;
+                    }
+
+                    if($this->pagado<=$value->saldo){
+                        $this->valor=$this->pagado;
+                    }
+                    $this->conceptos=$value->concepto_pago_id;
+                    $this->asigOtro(1,$value);
+                    $this->pagado=$this->pagado-$value->saldo;
+                }
+            }
+
+            $this->reset('pagado');
+        }else{
+            $this->dispatch('alerta', name:'El valor a pagar debe ser menor al valor adeudado.');
+        }
+
+    }
+
     public function asigOtro($id, $item,$conf=null){
 
         $this->conceptoelegido=$item['concepto_pago_id'];
+        if($this->siguientecuota){
+            $saldosiguiente=$this->siguientecuota->saldo;
+        }else{
+            $saldosiguiente=$this->pagado;
+        }
 
-        $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+        if(floatval($this->minimodescuento)===floatval($this->pagado)){
+
+            $this->descuento=$this->descuentomin;
+            $this->valor=$this->pagado+$this->descuentomin;
+
+        }else if(floatval($this->minimodescuento)<floatval($this->pagado) && floatval($this->pagado)<floatval($saldosiguiente)){
+
+            $this->descuento=$this->descuentomin;
+            $this->valor=$this->pagado+$this->descuentomin;
+            //$this->pagado=$this->pagado-$this->minimodescuento;
+            $this->pagado=$this->pagado+$this->descuento;
+
+        }else{
+            $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+        }
 
         //Validar si el descuento es mayor que el precio
         if($this->valor<=$this->descuento){
@@ -485,6 +573,7 @@ class RecibosPagoCrear extends Component
                             'valor'=>$this->valor,
                             'saldo'=>$this->saldo,
                             'id_cartera'=>$this->id_cartera,
+                            'id_almacen'=>$this->alumnodocumento,
                             'subtotal'=>$this->subtotal
                         ]);
 
@@ -516,29 +605,6 @@ class RecibosPagoCrear extends Component
         }
     }
 
-    public function cargaPago(){
-
-        $this->limpiafin();
-
-        foreach ($this->carteraSeleccionada as $value) {
-
-            if($this->pagado>0){
-                if($this->pagado>$value->saldo){
-                    $this->valor=$value->saldo;
-                }
-
-                if($this->pagado<=$value->saldo){
-                    $this->valor=$this->pagado;
-                }
-                $this->conceptos=$value->concepto_pago_id;
-                $this->asigOtro(1,$value);
-                $this->pagado=$this->pagado-$value->saldo;
-            }
-        }
-
-        $this->reset('pagado');
-    }
-
     public function cargaDescuento(){
 
         if($this->descuento>0){
@@ -551,10 +617,11 @@ class RecibosPagoCrear extends Component
                     'id_concepto'   =>$this->concepdescuento,
                     'concepto'      =>'Descuento',
                     'valor'         =>abs($this->descuento),
-                    'id_cartera'    =>$this->id_cartera
+                    'id_cartera'    =>$this->id_cartera,
+                    'id_almacen'    =>$this->alumnodocumento
                 ]);
             }else{
-                $ultimo=DB::table('apoyo_recibo')->orderBy('id', 'DESC')->first();
+                $ultimo=DB::table('apoyo_recibo')->where('id_almacen',$this->alumnodocumento)->orderBy('id', 'DESC')->first();
                 DB::table('apoyo_recibo')->insert([
                     'tipo'          =>'financiero',
                     'id_creador'    =>Auth::user()->id,
@@ -562,7 +629,8 @@ class RecibosPagoCrear extends Component
                     'concepto'      =>'Descuento',
                     'valor'         =>abs($this->descuento),
                     'id_producto'   =>$ultimo->id_concepto,
-                    'producto'      =>$ultimo->concepto
+                    'producto'      =>$ultimo->concepto,
+                    'id_almacen'    =>$this->alumnodocumento
                 ]);
             }
 
@@ -654,7 +722,8 @@ class RecibosPagoCrear extends Component
                 'id_creador'=>Auth::user()->id,
                 'id_concepto'=>$porc->id,
                 'concepto'=>$porc->name,
-                'valor'=>$this->recargoValor
+                'valor'=>$this->recargoValor,
+                'id_almacen'=>$this->alumnodocumento
             ]);
 
             $this->cargando();
@@ -856,11 +925,6 @@ class RecibosPagoCrear extends Component
                 if($value->tipo==="cartera"){
 
                     $item=Cartera::find($value->id_cartera);
-                    if(in_array($item->id, $this->matrids )){
-
-                    }else{
-                        array_push($this->matrids, $item->id);
-                    }
 
                     $obs=explode('-----',$item->observaciones);
                     $obspr=$obs[0];
@@ -965,7 +1029,7 @@ class RecibosPagoCrear extends Component
             Control::whereId($value->id)
                     ->update([
                         //'observaciones' =>strtolower($observa),
-                        'ultimo_pago'   =>$this->fecha_pago
+
                     ]);
         }
 
@@ -995,6 +1059,39 @@ class RecibosPagoCrear extends Component
             ->where('id_creador', Auth::user()->id)
             ->delete();
 
+
+
+        /* $hoy=Carbon::today(); */
+
+        $cartera=Cartera::where('matricula_id',$this->matricula_id)
+                                ->where('fecha_pago','<=',$this->hoy)
+                                ->where('estado_cartera_id','<',5)
+                                ->select('saldo')
+                                ->get();
+
+        try {
+            if($cartera){
+                $mora=0;
+                foreach ($cartera as $item) {
+                    $mora=$mora+$item->saldo;
+                }
+
+                if($mora>0){
+                    $estadocartera=3;
+                }else{
+                    $estadocartera=1;
+                }
+
+                Control::where('matricula_id',$this->matricula_id)
+                            ->update([
+                                'mora'=>$mora,
+                                'estado_cartera'=>$estadocartera,
+                                'ultimo_pago'   =>$this->fecha_pago
+                            ]);
+            }
+        } catch(Exception $exception){
+            Log::info('Descargar mora en control matricula_id: ' . $this->matricula_id . ' Actualiza Mora: ' . $exception->getMessage().' Matricula_id-mora: '.$exception->getLine());
+        }
         // Notificación
         $this->dispatch('alerta', name:'Se ha creado correctamente el recibo: '.$recibo->numero_recibo);
         $this->resetFields();
@@ -1003,36 +1100,6 @@ class RecibosPagoCrear extends Component
         //refresh
         $this->dispatch('refresh');
         $this->dispatch('cancelando');
-
-        $hoy=Carbon::today();
-
-        for ($i=0; $i < count($this->matrids); $i++) {
-            $cartera=Cartera::where('id',$this->matrids[$i])
-                                ->where('fecha_pago','<',$hoy)
-                                ->where('saldo','>',0)
-                                ->select('saldo')
-                                ->get();
-
-            try {
-                if($cartera){
-                    $mora=0;
-                    foreach ($cartera as $item) {
-                        $mora=$mora+$item->saldo;
-                    }
-
-                    if($mora>0){
-                        Control::where('id',$value->id)
-                                ->update([
-                                    'mora'=>$mora,
-                                    'estado_cartera'=>3
-                                ]);
-                    }
-                }
-            } catch(Exception $exception){
-                Log::info('Crear Recibo: ' . $value->id . ' Actualiza Mora: ' . $exception->getMessage().' Matricula_id: '.$exception->getLine());
-            }
-        }
-
         //Enviar por correo electrónico
         $this->claseEmail(1,$recibo->id);
 

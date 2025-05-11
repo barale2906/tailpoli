@@ -306,39 +306,39 @@
                                                         </thead>
                                                         <tbody>
                                                             @php
-                                                                    $cuota=explode("-----",$siguientecuota->observaciones);
-                                                                    $cuo=$cuota[0];
-                                                                @endphp
-                                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
-                                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                                                        {{$siguientecuota->fecha_pago}}
-                                                                    </th>
-                                                                    <th scope="row" class="px-6 py-4 text-sm text-gray-900 dark:text-white text-justify">
-                                                                        {{$siguientecuota->matricula->curso->name}}
-                                                                    </th>
-                                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                                                                        $ {{number_format($siguientecuota->saldo, 0, '.', ' ')}}
-                                                                    </th>
-                                                                    <th scope="row" class="px-6 py-4 text-sm text-justify  text-gray-900 dark:text-white capitalize">
-                                                                        {{$cuo}} - {{$siguientecuota->concepto}}
-                                                                    </th>{{--
-                                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
-                                                                        <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
-                                                                    </th>
-                                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
-                                                                        <input type="text" id="descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a descontar" wire:model.blur="descuento">
-                                                                    </th>
-                                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white  text-right">
-                                                                        <select wire:model.blur="conceptos" wire:change="asigOtro(1, {{$futuro}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                                                                            <option>Seleccione...</option>
-                                                                            @foreach ($concePagos as $item)
-                                                                                @if ($item->id===$futuro->concepto_pago_id)
-                                                                                    <option value={{$item->id}}>{{$item->name}}</option>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </th> --}}
-                                                                </tr>
+                                                                $cuota=explode("-----",$siguientecuota->observaciones);
+                                                                $cuo=$cuota[0];
+                                                            @endphp
+                                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
+                                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
+                                                                    {{$siguientecuota->fecha_pago}}
+                                                                </th>
+                                                                <th scope="row" class="px-6 py-4 text-sm text-gray-900 dark:text-white text-justify">
+                                                                    {{$siguientecuota->matricula->curso->name}}
+                                                                </th>
+                                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                                                                    $ {{number_format($siguientecuota->saldo, 0, '.', ' ')}}
+                                                                </th>
+                                                                <th scope="row" class="px-6 py-4 text-sm text-justify  text-gray-900 dark:text-white capitalize">
+                                                                    {{$cuo}} - {{$siguientecuota->concepto}}
+                                                                </th>{{--
+                                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                                                    <input type="text" id="valor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a pagar" wire:model.blur="valor">
+                                                                </th>
+                                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white capitalize">
+                                                                    <input type="text" id="descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Valor a descontar" wire:model.blur="descuento">
+                                                                </th>
+                                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white  text-right">
+                                                                    <select wire:model.blur="conceptos" wire:change="asigOtro(1, {{$futuro}})" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                                                                        <option>Seleccione...</option>
+                                                                        @foreach ($concePagos as $item)
+                                                                            @if ($item->id===$futuro->concepto_pago_id)
+                                                                                <option value={{$item->id}}>{{$item->name}}</option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </select>
+                                                                </th> --}}
+                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -350,15 +350,21 @@
                                                         Mínimo sugerido: $ {{number_format($pendientes->sum('saldo'), 0, '.', ' ')}}
                                                     </span>
                                                 @endif
+                                                @if ($minimodescuento>0)
+                                                    <span class=" text-xs text-blue-500">
+                                                        Mínimo sugerido con descuento: $ {{number_format($minimodescuento, 0, '.', ' ')}}
+                                                    </span>
+                                                @endif
                                             </label>
                                             <div class="relative z-0 w-full mb-5 group">
                                                 <input wire:model.live="pagado" class="block py-2.5 px-0 w-full text-xs md:text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  />
                                                 <label for="pagado" class="peer-focus:font-medium absolute text-xs md:text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valor a pagar</label>
                                             </div>
-                                            <a href="" wire:click.prevent="cargaPago()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
-                                                <i class="fa-solid fa-cash-register"></i>
-                                            </a>
-
+                                            @if ($pagado>0)
+                                                <a href="" wire:click.prevent="cargaPago()"  class="text-black bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-700 font-medium rounded-lg text-sm p-2 text-center mr-2 mb-2 capitalize">
+                                                    <i class="fa-solid fa-cash-register"></i>
+                                                </a>
+                                            @endif
                                         @endif
                                     @else
                                         <h5 class="mb-2 mt-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
