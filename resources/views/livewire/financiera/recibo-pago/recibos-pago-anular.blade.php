@@ -42,6 +42,18 @@
                                 </h2>
                             </div>
                             <div>
+                                <label for="valor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descuento Aplicado:</label>
+                                <h2 class="md:text-xl font-bold text-gray-900 dark:text-white">
+                                    $ {{number_format($reciboActual->descuento, 0, ',', '.')}}
+                                </h2>
+                            </div>
+                            <div>
+                                <label for="valor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor pagado:</label>
+                                <h2 class="md:text-xl font-bold text-gray-900 dark:text-white">
+                                    $ {{number_format($reciboActual->valor_total-$reciboActual->descuento, 0, ',', '.')}}
+                                </h2>
+                            </div>
+                            <div>
                                 <label for="sede" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">generado en:</label>
                                 <h2 class="md:text-xl font-bold text-gray-900 dark:text-white">
                                     {{$reciboActual->sede->name}}
