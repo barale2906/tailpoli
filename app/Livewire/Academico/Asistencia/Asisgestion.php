@@ -8,6 +8,7 @@ use App\Models\Academico\Control;
 use App\Models\Academico\Grupo;
 use App\Models\Clientes\Pqrs;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -26,11 +27,16 @@ class Asisgestion extends Component
     public $encabezado=[];
     public $encabid=[];
     public $xls=[];
+    public $hoy;
+    public $margen;
 
     public function mount($ciclo, $elegido=null, $estudiante_id=null){
 
         $this->ciclo=$ciclo;
         $this->grupo_id=$elegido;
+        $this->hoy=Carbon::today();
+        $margen=config('instituto.desertado_fin'); //Control de deserción
+        $this->margen=Carbon::today()->subDays($margen); //tIEMPO DE ASISTENCIA
         $this->grupo=Grupo::find($elegido);
         if($estudiante_id){
             $this->estudiante=User::find($estudiante_id);
@@ -251,6 +257,7 @@ class Asisgestion extends Component
 
         $registro=DB::table('asistencia_registro')
                     ->where('id',$registroasiste)
+                    ->orderBy('fecha_clase','DESC')
                     ->first();
 
         //Verificar la carga
@@ -277,16 +284,36 @@ class Asisgestion extends Component
                             ->first();
 
             //Verificar si la fecha es menor a la ya registrada
-            if($crt->ultima_asistencia<$registro->fecha_clase){
-                $crt->update([
-                    'ultima_asistencia'=>$registro->fecha_clase,
-                ]);
+            if($crt && $crt->ultima_asistencia !== null){
+                if($crt->ultima_asistencia < $registro->fecha_clase){
+                    $crt->update([
+                        'ultima_asistencia'=>$registro->fecha_clase,
+                    ]);
+                }
+            }else{
+                if($crt){
+                    $crt->update([
+                        'ultima_asistencia'=>$registro->fecha_clase,
+                    ]);
+                }else{
+                    $this->dispatch('alerta', name:'Estudiante antiguo, no tiene Control');
+                }
             }
 
-            if($crt->status_est===5){
-                $crt->update([
-                    'status_est'=>1
-                ]);
+            if($registro->fecha_clase>=$this->margen){
+
+                if($crt->status_est===7 || $crt->status_est===9){
+                    $crt->update([
+                        'status_est'=>1
+                    ]);
+                }
+
+                if($crt->status_est===3){
+                    $crt->update([
+                        'status_est'=>7
+                    ]);
+                }
+
             }
 
             Pqrs::create([

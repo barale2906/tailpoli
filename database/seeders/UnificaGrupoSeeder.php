@@ -105,7 +105,7 @@ class UnificaGrupoSeeder extends Seeder
         foreach ($estudiantes as $value) {
             $this->matricula=Matricula::where('alumno_id',$value->user_id)
                                     ->where('curso_id',$curso)
-                                    ->where('status',1)
+                                    //->where('status',1)
                                     ->first();
 
             if($this->matricula){
@@ -148,8 +148,8 @@ class UnificaGrupoSeeder extends Seeder
 
     private function updateCiclo($id){
 
-        $total=Control::where('status',1)
-                        ->where('ciclo_id',$id)
+        $total=Control::where('ciclo_id',$id)
+                        //->where('status',1)
                         ->count();
 
         if($total){
