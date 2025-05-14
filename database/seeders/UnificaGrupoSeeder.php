@@ -108,23 +108,29 @@ class UnificaGrupoSeeder extends Seeder
                                     ->where('status',1)
                                     ->first();
 
-            $control=Control::where('estudiante_id',$value->user_id)
-                                ->where('matricula_id',$this->matricula->id)
-                                ->first();
+            if($this->matricula){
+                $control=Control::where('estudiante_id',$value->user_id)
+                                    ->where('matricula_id',$this->matricula->id)
+                                    ->first();
 
-            $esta=Asistencia::where('grupo_id', $this->grupo->id)
-                                ->where('ciclo_id', $control->ciclo_id)
-                                ->first();
+                    $esta=Asistencia::where('grupo_id', $this->grupo->id)
+                                    ->where('ciclo_id', $control->ciclo_id)
+                                    ->first();
 
-            if($esta){
-                $this->asistencia=$esta;
-                $this->cargarEstudiante();
+                    if($esta){
+                        $this->asistencia=$esta;
+                        $this->cargarEstudiante();
+                    }else{
+                        $this->nuevo($control);
+                    }
+
+                    $this->updateCiclo($control->ciclo_id);
+                    $this->cantidadAsistencia();
             }else{
-                $this->nuevo($control);
+                Log::info('GRUPO REGISTRADOS: updategrupoelegido NO TIENE MATRICULA ACTIVA: '.$this->grupo->id.' Ciclo: '.$curso);
             }
 
-            $this->updateCiclo($control->ciclo_id);
-            $this->cantidadAsistencia();
+
         }
 
     }
@@ -146,12 +152,17 @@ class UnificaGrupoSeeder extends Seeder
                         ->where('ciclo_id',$id)
                         ->count();
 
-        Ciclo::where('id',$id)
-                ->update([
-                    'registrado'    =>intval($total)
-                ]);
+        if($total){
+            Ciclo::where('id',$id)
+            ->update([
+                'registrados'    =>intval($total)
+            ]);
 
-        Log::info('CICLO REGISTRADOS: ciclo:' . $id.' Estudiantes Registrados: '.$total);
+            Log::info('CICLO REGISTRADOS: ciclo:' . $id.' Estudiantes Registrados: '.$total);
+
+        }else{
+            Log::info('CICLO REGISTRADOS: NO ENCONTRO REGISTRO PARA EL CICLO:' . $id);
+        }
     }
 
     private function cargarEstudiante(){
