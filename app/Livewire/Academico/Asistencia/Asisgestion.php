@@ -44,7 +44,7 @@ class Asisgestion extends Component
 
         $esta=Asistencia::where('profesor_id', $this->grupo->profesor_id)
                         ->where('grupo_id', $this->grupo->id)
-                        ->where('ciclo_id', $this->ciclo)
+                        //->where('ciclo_id', $this->ciclo)
                         ->first();
 
         if($esta){
@@ -68,21 +68,26 @@ class Asisgestion extends Component
 
     public function cargarEstudiantes(){
 
-        $alumnos=User::query()
-                        ->with(['alumnosGrupo'])
-                        ->when($this->grupo_id, function($qu){
-                            return $qu->where('status', true)
-                                    ->whereHas('alumnosGrupo', function($q){
-                                        $q->where('grupo_id', $this->grupo_id);
-                                    });
-                        })
-                        ->select('id', 'name')
-                        ->orderBy('name')
-                        ->get();
+        $alumnos = User::query()
+            ->select('id', 'name')
+            ->when($this->grupo_id, function($query) {
+                return $query->where('status', true)
+                    ->whereHas('alumnosGrupo', function($q) {
+                        $q->where('grupo_id', $this->grupo_id)
+                            ->select('grupo_id', 'user_id');
+                    });
+            })
+            ->with(['alumnosGrupo' => function($query) {
+                $query->where('grupo_id', $this->grupo_id)
+                        ->select('grupo_id', 'user_id');
+            }])
+            ->orderBy('name')
+            ->get();
 
         foreach ($alumnos as $value) {
             $esta=DB::table('asistencia_detalle')
-                        ->where('asistencia_id', $this->actual->id)
+                        //->where('asistencia_id', $this->actual->id)
+                        ->where('grupo_id', $this->actual->grupo_id)
                         ->where('alumno_id', $value->id)
                         ->count();
 
@@ -132,7 +137,8 @@ class Asisgestion extends Component
         }else{
             $this->asistencias=DB::table('asistencia_detalle')
                                     //->where('status', true)
-                                    ->where('asistencia_id', $this->actual->id)
+                                    //->where('asistencia_id', $this->actual->id)
+                                    ->where('grupo_id', $this->actual->grupo_id)
                                     ->orderBy('alumno')
                                     ->get();
         }

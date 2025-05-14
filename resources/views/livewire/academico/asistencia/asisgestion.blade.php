@@ -45,11 +45,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($asist as $item)
-
+                    @foreach ($asist as $key => $item)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200">
                             <th scope="col" class="px-6 py-3 text-center uppercase">
-                                {{$item[2]}}
+                                {{$key + 1}} -. {{$item[2]}}
                             </th>
                             @for ($i = 3; $i < count($item); $i++)
                                 <th scope="col" class="px-6 py-3 text-center uppercase">
