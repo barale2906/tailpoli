@@ -18,7 +18,6 @@ class AsignadocumentoSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->matriculacontrol();
 
         $matriculas = Matricula::where('configpago', 0)
             //->select('id', 'curso_id','sede_id')
@@ -27,6 +26,8 @@ class AsignadocumentoSeeder extends Seeder
         foreach ($matriculas as $matricula) {
             $this->procesarMatricula($matricula,1);
         }
+
+        $this->matriculacontrol();
     }
 
     private function matriculacontrol(){
