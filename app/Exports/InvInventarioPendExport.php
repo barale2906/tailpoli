@@ -27,8 +27,10 @@ class InvInventarioPendExport implements FromCollection, WithCustomStartCell, Re
     */
     public function collection()
     {
-        return Inventario::where('entregado', false)
-                            ->orderBy('id', 'DESC')
+        return Inventario::join('users', 'inventarios.compra_id', '=', 'users.id')
+                            ->where('inventarios.tipo', 2)
+                            ->where('inventarios.entregado', false)
+                            ->orderBy('inventarios.id', 'DESC')
                             ->get();
     }
 
@@ -43,6 +45,7 @@ class InvInventarioPendExport implements FromCollection, WithCustomStartCell, Re
             'Fecha Movimiento',
             'Ciudad',
             'Sede',
+            'Alumno',
             'Almacén',
             'Producto',
             'Cantidad',
@@ -58,6 +61,7 @@ class InvInventarioPendExport implements FromCollection, WithCustomStartCell, Re
             $inventario->fecha_movimiento,
             $inventario->almacen->sede->sector->name,
             $inventario->almacen->sede->name,
+            $inventario->name,
             $inventario->almacen->name,
             $inventario->producto->name,
             $inventario->cantidad,
