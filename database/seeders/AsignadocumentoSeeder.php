@@ -18,34 +18,61 @@ class AsignadocumentoSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->matriculacontrol();
+
         $matriculas = Matricula::where('configpago', 0)
             //->select('id', 'curso_id','sede_id')
             ->get();
 
         foreach ($matriculas as $matricula) {
-            $this->procesarMatricula($matricula);
+            $this->procesarMatricula($matricula,1);
         }
     }
 
-    private function procesarMatricula($matricula)
+    private function matriculacontrol(){
+        $ids=[];
+
+        $matriculascompletas=Matricula::where('anula_user',null)->get();
+
+        foreach ($matriculascompletas as $value) {
+            $esta=Control::where('matricula_id', $value->id)
+                            ->count();
+
+            if(intval($esta)===0){
+                array_push($ids,$value->id);
+            }
+        }
+
+        for ($i=0; $i < count($ids); $i++) {
+            $matricula=Matricula::find($ids[$i]);
+            $this->procesarMatricula($matricula,2);
+        }
+    }
+
+    private function procesarMatricula($matricula,$act)
     {
         $cartera = $this->obtenerCartera($matricula->id);
         $cuotas = $cartera ? $cartera->count('valor') - 1 : 0;
 
         if ($this->esMatriculaValida($cartera, $cuotas)) {
             $this->validaCiclo($matricula, $cartera->first());
-            $this->asignarConfiguracionCuotas($matricula, $cartera->first(), $cuotas);
+            if(intval($act)===1){
+                $this->asignarConfiguracionCuotas($matricula, $cartera->first(), $cuotas);
+            }
+
         } else {
             $this->validaCiclo($matricula, 1);
-            $this->asignarConfiguracionDefault($matricula);
+            if(intval($act)===1){
+                $this->asignarConfiguracionDefault($matricula);
+            }
         }
     }
 
     private function obtenerCartera($matriculaId)
     {
         return Cartera::where('matricula_id', $matriculaId)
-            ->whereIn('concepto_pago_id', [1, 2])
-            ->get();
+                        ->whereIn('concepto_pago_id', [1, 2])
+                        ->get();
     }
 
     private function validaCiclo($matricula,$cartera){
@@ -57,25 +84,60 @@ class AsignadocumentoSeeder extends Seeder
         if($ciclo){
 
         }else{
-
-            Log::info('NO TENIA CICLO: Matricula N°:  '. $matricula->id);
+            if($matricula->curso_id===13){
+                $cursoid=2;
+            }else{
+                $cursoid=$matricula->curso_id;
+            }
             $elegido=Ciclo::where('sede_id',$matricula->sede_id)
-                            ->where('curso_id',$matricula->curso_id)
+                            ->where('curso_id',$cursoid)
                             ->select('id')
                             ->first();
 
             if($elegido){
-                Control::create([
-                    'inicia'        =>$matricula->fecha_inicia,
-                    'matricula_id'  =>$matricula->id,
-                    'ciclo_id'      =>$elegido->id,
-                    'sede_id'       =>$matricula->sede_id,
-                    'estudiante_id' =>$matricula->alumno_id,
-                    'estado_cartera'=>$estadoCartera,
-                    'status_est'    =>$matricula->status_est,
-                    'status'        =>0
-                ]);
+                $ar=Control::create([
+                                        'inicia'        =>$matricula->fecha_inicia,
+                                        'matricula_id'  =>$matricula->id,
+                                        'ciclo_id'      =>$elegido->id,
+                                        'sede_id'       =>$matricula->sede_id,
+                                        'estudiante_id' =>$matricula->alumno_id,
+                                        'estado_cartera'=>$estadoCartera,
+                                        'status_est'    =>$matricula->status_est,
+                                        'status'        =>0
+                                    ]);
+
+                Log::info('NO TENIA CONTROL: Matricula N°:  '. $matricula->id.' Se le asigno el control N°: '.$ar->id);
+            }else{
+                $this->sinCiclo($matricula,$cursoid,$estadoCartera);
+
             }
+        }
+    }
+
+    private function sinCiclo($matricula,$cursoid,$estadoCartera){
+        $opcional=Ciclo::where('curso_id',$cursoid)
+                        ->select('id')
+                        ->inRandomOrder()
+                        ->first();
+
+        if($opcional){
+
+            $ar=Control::create([
+                            'inicia'        =>$matricula->fecha_inicia,
+                            'matricula_id'  =>$matricula->id,
+                            'ciclo_id'      =>$opcional->id,
+                            'sede_id'       =>$matricula->sede_id,
+                            'estudiante_id' =>$matricula->alumno_id,
+                            'estado_cartera'=>$estadoCartera,
+                            'status_est'    =>$matricula->status_est,
+                            'status'        =>0
+                        ]);
+
+
+            Log::info('NO TENIA CONTROL: Matricula N°:  '. $matricula->id.' NO TUBO CONTROL QUE COINCIDIERA. Se le asigno el control N°: '.$ar->id);
+        }else{
+
+            Log::info('NO TENIA CONTROL: Matricula N°:  '. $matricula->id.' NO EXISTE CONTROL APLICABLE');
         }
     }
 
