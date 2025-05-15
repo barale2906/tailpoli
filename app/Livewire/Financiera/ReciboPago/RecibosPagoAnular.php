@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
+use function Laravel\Prompts\table;
+
 class RecibosPagoAnular extends Component
 {
     public $id='';
@@ -53,7 +55,7 @@ class RecibosPagoAnular extends Component
         $this->detalles=DB::table('concepto_pago_recibo_pago')
                             ->where('concepto_pago_recibo_pago.recibo_pago_id',$this->id)
                             ->join('concepto_pagos', 'concepto_pago_recibo_pago.concepto_pago_id', '=', 'concepto_pagos.id')
-                            ->select('concepto_pagos.name', 'concepto_pago_recibo_pago.valor', 'concepto_pago_recibo_pago.tipo', 'concepto_pago_recibo_pago.id_relacional')
+                            ->select('concepto_pagos.name', 'concepto_pago_recibo_pago.valor', 'concepto_pago_recibo_pago.tipo', 'concepto_pago_recibo_pago.id_relacional','concepto_pago_recibo_pago.concepto_pago_id')
                             ->get();
     }
 
@@ -82,6 +84,10 @@ class RecibosPagoAnular extends Component
             switch ($value->tipo) {
                 case 'cartera':
                     $this->ajusCartera($value);
+                    break;
+
+                case 'financiero':
+                    $this->ajusDescuento($value);
                     break;
 
                 case 'inventario':
@@ -124,20 +130,36 @@ class RecibosPagoAnular extends Component
         $saldo=$registro->saldo+$value->valor;
         $observaciones=now()." ".Auth::user()->name." ANULO EL RECIBO N°: ".$this->reciboActual->numero_recibo." por el motivo: ".$this->motivo.", se descontaron $ ".number_format($value->valor, 0, ',', '.')." --- ".$registro->observaciones;
 
-        if($saldo>$value->valor){
+        if($registro->valor>$saldo){
             $esta=EstadoCartera::where('name', 'abonada')->first();
             $this->estado=$esta->id;
-        }else{
+        }else if(floatval($registro->valor)===floatval($saldo)){
             $esta=EstadoCartera::where('name', 'activa')->first();
             $this->estado=$esta->id;
         }
 
         $registro->update([
-            'saldo'=>$saldo,
-            'observaciones'=>$observaciones,
-            'estado_cartera_id'=>$this->estado,
-            'status'=>$this->estado
+            'saldo'             =>$saldo,
+            'observaciones'     =>$observaciones,
+            'estado_cartera_id' =>$this->estado,
+            'status'            =>$this->estado,
+            'fecha_real'        =>Null
         ]);
+    }
+
+    public function ajusDescuento($value){
+
+        if(intval($value->concepto_pago_id)===21){
+
+            $registro=Cartera::whereId(intval($value->id_relacional))->first();
+            $valor=$registro->descuento-$value->valor;
+
+            $registro->update([
+                'descuento'     =>$valor,
+                'fecha_real'    =>Null
+            ]);
+        }
+
     }
 
     public function ajusInventario($value){

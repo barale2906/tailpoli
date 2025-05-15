@@ -5,14 +5,14 @@
                 A continuación se presenta el estado de cartera de: <span class=" uppercase font-extrabold">{{$actual->name}}</span>, con el documento <span class=" uppercase font-extrabold">{{$actual->documento}}</span>.
             </h1>
             <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-6">
-                Celular: {{$actual->perfil->celular}} Correo Elecrónico: {{$actual->email}}
+                Celular: {{$actual->perfil->celular}} Correo Electrónico: {{$actual->email}}
             </p>
             <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-6">
                 Total Cartera: $
                 @if ($total)
-                    {{number_format($total->saldo, 0, ',', '.')}}, un valor pagado a la fecha de: $ {{number_format($carteras->sum('valor')-$total->saldo, 0, ',', '.')}}, de una cartera inicial de $ {{number_format($carteras->sum('valor'), 0, ',', '.')}}
+                    {{number_format($total->saldo, 0, ',', '.')}}, un valor pagado a la fecha de: $ {{number_format($carteras->sum('valor')-$total->saldo, 0, ',', '.')}}, de una cartera inicial de $ {{number_format($matricu->valor, 0, ',', '.')}}
                 @else
-                    un valor pagado a la fecha de: $ {{number_format($carteras->sum('valor'), 0, ',', '.')}}, de una cartera inicial de $ {{number_format($carteras->sum('valor'), 0, ',', '.')}}
+                    un valor pagado a la fecha de: $ {{number_format($carteras->sum('valor'), 0, ',', '.')}}, de una cartera inicial de $ {{number_format($matricu->valor, 0, ',', '.')}}
                 @endif
 
                 <a href="" wire:click.prevent="$dispatch('cancelando')" class="text-black bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 capitalize">

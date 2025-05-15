@@ -46,13 +46,14 @@ class Detalle extends Component
 
     public function deuda(){
         $this->carteras=Cartera::where('matricula_id', $this->matricu->id)
+                                ->whereNotIn('estado_cartera_id',[5,7])
                                 ->get();
 
         $this->total=Cartera::where('estado_cartera_id', '<',5)
-                        ->where('matricula_id', $this->matricu->id)
-                        ->selectRaw('sum(saldo) as saldo, sum(valor) as valor')
-                        ->groupBy('matricula_id')
-                        ->first();
+                                ->where('matricula_id', $this->matricu->id)
+                                ->selectRaw('sum(saldo) as saldo, sum(valor) as valor')
+                                ->groupBy('matricula_id')
+                                ->first();
 
         $this->pagos();
     }
@@ -68,8 +69,9 @@ class Detalle extends Component
         $i=0;
         for ($i=0; $i < count($this->ids); $i++) {
             $recibo=DB::table('concepto_pago_recibo_pago')
-                        ->where('id_relacional',$this->ids[$i])
                         ->select('recibo_pago_id')
+                        ->where('id_relacional',$this->ids[$i])
+                        ->orderBy('id','DESC')
                         ->first();
 
             if($recibo){
@@ -77,7 +79,9 @@ class Detalle extends Component
             }
         }
 
-        $this->recibos=ReciboPago::whereIn('id', $this->recid)->get();
+        $this->recibos=ReciboPago::whereIn('id', $this->recid)
+                                    //->where('status','<',2)
+                                    ->get();
     }
 
     public function cambiaVista(){
