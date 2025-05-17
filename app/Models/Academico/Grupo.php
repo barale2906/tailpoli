@@ -92,6 +92,7 @@ class Grupo extends Model
         $query->when($item ?? null, function($query, $item){
 
             $query->where('name', 'like', "%".$item."%")
+                    ->orwhere('id', 'like', "%".$item."%")
                     ->orwherehas('profesor', function($query) use($item){
                         $query->where('users.name', 'like', "%".$item."%");
                     })

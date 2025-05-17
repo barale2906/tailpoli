@@ -9,15 +9,14 @@
             <div class="grid grid-cols-3 gap-3 m-3">
                 <div>
                     <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg capitalize">
-                        <li>Inicia: <strong>{{$grupo->start_date}}</strong></li>
-                        <li>Términa: <strong>{{$grupo->finish_date}}</strong></li>
+                        <li>ID: <strong>{{$grupo->id}}</strong></li>
                         <li>Max Estudiantes: <strong>{{$grupo->quantity_limit}}</strong></li>
                         <li>Estudiantes Inscritos: <strong>{{$grupo->inscritos}}</strong></li>
-                        <li>Profesor: <strong>{{$grupo->profesor->name}}</strong></li>
                     </ul>
                 </div>
                 <div>
                     <ul class="mt-1.5 ml-4 list-disc list-inside mb-3 text-lg capitalize">
+                        <li>Profesor: <strong>{{$grupo->profesor->name}}</strong></li>
                         <li>Modulo: <strong>{{$modulo->name}}</strong></li>
                         <li>Curso: <strong>{{$modulo->curso->name}}</strong></li>
                     </ul>
