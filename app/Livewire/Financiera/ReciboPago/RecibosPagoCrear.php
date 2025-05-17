@@ -909,18 +909,7 @@ class RecibosPagoCrear extends Component
         }else{
             foreach ($this->cargados as $value) {
 
-                DB::table('concepto_pago_recibo_pago')
-                    ->insert([
-                        'valor'=>$value->valor,
-                        'tipo'=>$value->tipo,
-                        'medio'=>$this->medioele,
-                        'id_relacional'=>$value->id_cartera,
-                        'concepto_pago_id'=>$value->id_concepto,
-                        'producto'=>$value->producto,
-                        'recibo_pago_id'=>$recibo->id,
-                        'created_at'=>now(),
-                        'updated_at'=>now(),
-                    ]);
+                $estado="";
 
                 if($value->tipo==="cartera"){
 
@@ -930,17 +919,21 @@ class RecibosPagoCrear extends Component
                     $obspr=$obs[0];
 
                     $saldo=$item->saldo-$value->valor;
-                    $observa=$obspr.'-----'.now()." ".$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". --- ".$item->observaciones;
+
 
                     if($saldo>0){
                         $esta=EstadoCartera::where('name', 'abonada')->first();
                         $this->estado=$esta->id;
                         $this->status=$esta->id;
+                        $estado="ABONADA: ";
                     }else{
                         $esta=EstadoCartera::where('name', 'cerrada')->first();
                         $this->estado=$esta->id;
                         $this->status=$esta->id;
+                        $estado="CANCELADA: ";
                     }
+
+                    $observa=$obspr.'-----'.now()." ".$estado.$this->alumnoName." realizo pago por ".number_format($value->valor, 0, ',', '.').", con el recibo N°: ".$recibo->numero_recibo.". --- ".$item->observaciones;
 
                     $item->update([
                         'fecha_real'=>$this->fecha_pago,
@@ -1004,6 +997,19 @@ class RecibosPagoCrear extends Component
                                     ]);
                     }
                 }
+
+                DB::table('concepto_pago_recibo_pago')
+                    ->insert([
+                        'valor'=>$value->valor,
+                        'tipo'=>$value->tipo,
+                        'medio'=>$this->medioele,
+                        'id_relacional'=>$value->id_cartera,
+                        'concepto_pago_id'=>$value->id_concepto,
+                        'producto'=>$estado.$value->producto,
+                        'recibo_pago_id'=>$recibo->id,
+                        'created_at'=>now(),
+                        'updated_at'=>now(),
+                    ]);
                 $this->reset('estado', 'status');
             }
         }
