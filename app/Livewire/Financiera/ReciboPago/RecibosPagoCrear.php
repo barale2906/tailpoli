@@ -67,6 +67,7 @@ class RecibosPagoCrear extends Component
 
     public $valor=0;
     public $pagado;
+    public $apl_descuento=null;
     public $conceptos=0;
     public $concep=[];
     public $nameConcep;
@@ -441,11 +442,54 @@ class RecibosPagoCrear extends Component
                 }
             }
 
-            $this->reset('pagado');
+            if($this->apl_descuento>0){
+                $this->cupondescuento();
+            }
+
+            $this->reset('pagado','apl_descuento');
         }else{
             $this->dispatch('alerta', name:'El valor a pagar debe ser menor al valor adeudado.');
         }
 
+    }
+
+    private function cupondescuento(){
+        //Asignar el descuento a los itemes calculados
+        foreach ($this->cargados as $value) {
+            if($this->apl_descuento>0){
+
+                $diferencia=$value->saldo-$value->valor;
+                if($this->apl_descuento>$diferencia && $value->saldo>0 && $diferencia>0){
+
+                    DB::table('apoyo_recibo')->insert([
+                        'tipo'          =>'financiero',
+                        'id_creador'    =>$value->id_creador,
+                        'id_concepto'   =>$value->id_concepto,
+                        'concepto'      =>'Descuento',
+                        'valor'         =>$diferencia,
+                        'id_cartera'    =>$value->id_cartera,
+                        'id_almacen'    =>$value->id_almacen,
+                    ]);
+                }
+
+                if($this->apl_descuento<=$diferencia && $value->saldo>0){
+                    $valor=$this->apl_descuento;
+                    DB::table('apoyo_recibo')->insert([
+                        'tipo'          =>'financiero',
+                        'id_creador'    =>$value->id_creador,
+                        'id_concepto'   =>$value->id_concepto,
+                        'concepto'      =>'Descuento',
+                        'valor'         =>$valor,
+                        'id_cartera'    =>$value->id_cartera,
+                        'id_almacen'    =>$value->id_almacen,
+                    ]);
+                }
+
+                $this->apl_descuento=$this->apl_descuento-$diferencia;
+            }
+        }
+
+        $this->cargando();
     }
 
     public function asigOtro($id, $item,$conf=null){

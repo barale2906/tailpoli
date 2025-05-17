@@ -31,6 +31,7 @@ class Salida extends Component
 
     public $almacen;
     public $cantidad;
+    public $apl_descuento;
     public $precio;
     public $conceptopago;
     public $sede_id;
@@ -294,6 +295,10 @@ class Salida extends Component
             }
         }else{
             $this->descuento=0;
+        }
+
+        if($this->apl_descuento>0){
+            $this->descuento=$this->descuento+$this->apl_descuento;
         }
 
     }
