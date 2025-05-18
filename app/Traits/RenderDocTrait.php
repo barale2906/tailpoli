@@ -256,6 +256,7 @@ trait RenderDocTrait
             $this->valormes=$formaPago->valor_cuota;
             $primero=Cartera::where('responsable_id', $this->docuMatricula->alumno_id)
                                 ->where('observaciones', 'like', '%Cuota N°: 1%')
+                                ->orwhere('observaciones', 'like', '%Cuota Nro: 1%')
                                 ->first();
 
             $pago=Carbon::create($primero->fecha_pago);
