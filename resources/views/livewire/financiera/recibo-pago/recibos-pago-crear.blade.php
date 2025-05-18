@@ -350,9 +350,13 @@
                                                         Mínimo sugerido: $ {{number_format($pendientes->sum('saldo'), 0, '.', ' ')}}
                                                     </span>
                                                 @endif
-                                                @if ($minimodescuento>0)
+                                                @if ($siguientecuota && $pendientes && $pendientes->sum('saldo')>0)
                                                     <span class=" text-xs text-blue-500">
-                                                        Mínimo sugerido con descuento: $ {{number_format($minimodescuento, 0, '.', ' ')}}
+                                                        Mínimo sugerido con descuento y pago de siguiente cuota: $ {{number_format($minimodescuento+$pendientes->sum('saldo'), 0, '.', ' ')}}
+                                                    </span>
+                                                @else
+                                                    <span class=" text-xs text-blue-500">
+                                                        Sugerido con descuento y pago de siguiente cuota: $ {{number_format($minimodescuento, 0, '.', ' ')}}
                                                     </span>
                                                 @endif
                                             </label>
@@ -444,7 +448,7 @@
                                                 @if ($otros->tipo==='cartera' || $otros->tipo==='financiero')
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-green-200 text-sm">
                                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900  dark:text-white capitalize">
-                                                            {{$otros->concepto}}
+                                                            {{$otros->concepto}} <span class=" text-xs text-blue-500">({{$otros->producto}})</span>
                                                         </th>
                                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
                                                             $ {{number_format($otros->valor, 0, '.', ' ')}}

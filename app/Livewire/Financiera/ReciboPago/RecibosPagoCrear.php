@@ -258,7 +258,7 @@ class RecibosPagoCrear extends Component
     public function calcuminimo(){
         if($this->siguientecuota){
             if($this->hoy<=$this->siguientecuota->fecha_pago){
-                if($this->pendientes && $this->pendientes->sum('saldo')>0){
+                /* if($this->pendientes && $this->pendientes->sum('saldo')>0){
                     $this->reset('minimodescuento');
                 }else{
 
@@ -279,7 +279,25 @@ class RecibosPagoCrear extends Component
                     }
 
                     $this->minimodescuento=$this->siguientecuota->saldo-$this->descuentomin;
-                }
+                } */
+
+                $descu=Descuento::where('aplica',0)
+                                        ->where('status',1)
+                                        ->first();
+
+                    if($descu){
+                        if($descu && $descu->tipo===0){
+                            $this->descuentomin=$descu->valor;
+                        }
+
+                        if($descu && $descu->tipo===1){
+                            $this->descuentomin=$this->siguientecuota->saldo*$descu->valor/100;
+                        }
+                    }else{
+                        $this->descuentomin=0;
+                    }
+
+                    $this->minimodescuento=$this->siguientecuota->saldo-$this->descuentomin;
             }
         }
 
@@ -425,22 +443,23 @@ class RecibosPagoCrear extends Component
     public function cargaPago(){
 
         $this->limpiafin();
-        if($this->pagado<=$this->carteraSeleccionada->sum('saldo')){
+                if($this->pagado<=$this->carteraSeleccionada->sum('saldo')){
             foreach ($this->carteraSeleccionada as $value) {
 
-                if($this->pagado>0){
+                                if($this->pagado>0){
                     if($this->pagado>$value->saldo){
                         $this->valor=$value->saldo;
-                    }
+                                            }
 
                     if($this->pagado<=$value->saldo){
                         $this->valor=$this->pagado;
-                    }
+                                            }
                     $this->conceptos=$value->concepto_pago_id;
                     $this->asigOtro(1,$value);
                     $this->pagado=$this->pagado-$value->saldo;
                 }
-            }
+
+                            }
 
             if($this->apl_descuento>0){
                 $this->cupondescuento();
@@ -495,6 +514,7 @@ class RecibosPagoCrear extends Component
     public function asigOtro($id, $item,$conf=null){
 
         $this->conceptoelegido=$item['concepto_pago_id'];
+
         if($this->siguientecuota){
             $saldosiguiente=$this->siguientecuota->saldo;
         }else{
@@ -503,18 +523,18 @@ class RecibosPagoCrear extends Component
 
         if(floatval($this->minimodescuento)===floatval($this->pagado)){
 
-            $this->descuento=$this->descuentomin;
+                        $this->descuento=$this->descuentomin;
             $this->valor=$this->pagado+$this->descuentomin;
 
         }else if(floatval($this->minimodescuento)<floatval($this->pagado) && floatval($this->pagado)<floatval($saldosiguiente)){
 
-            $this->descuento=$this->descuentomin;
+                        $this->descuento=$this->descuentomin;
             $this->valor=$this->pagado+$this->descuentomin;
             //$this->pagado=$this->pagado-$this->minimodescuento;
             $this->pagado=$this->pagado+$this->descuento;
 
         }else{
-            $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+                        $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
         }
 
         //Validar si el descuento es mayor que el precio
