@@ -108,7 +108,9 @@ class RecibosPagoCrear extends Component
     public $hoy;
     public $minimodescuento=0;
     public $descuentomin=0;
+    public $descuentopleno;
     public $gestion=0;
+    public $descuconcepto;
 
     public function mount($ruta=null, $elegido=null, $estudiante=null, $fechatransaccion=null, $matricula=null){
 
@@ -120,7 +122,7 @@ class RecibosPagoCrear extends Component
         if($fechatransaccion){
             $this->hoy=$fechatransaccion;
         } else{
-            $this->hoy=Carbon::today();
+            $this->hoy = Carbon::today()->format('Y-m-d');
         }
 
         if($elegido){
@@ -243,19 +245,19 @@ class RecibosPagoCrear extends Component
         $this->totalCartera=$this->carteraSeleccionada->sum('saldo');
 
         $this->pendientes= $this->carteraSeleccionada->filter(function ($deuda) /* use ($hoy) */ {
-                                                    return $deuda->fecha_pago <= $this->hoy;
+                                                    return $deuda->fecha_pago < $this->hoy;
                                                 });
 
         $this->futuros=$this->carteraSeleccionada->filter(function ($futur) /* use ($hoy) */ {
-                                                return $futur->fecha_pago > $this->hoy;
+                                                return $futur->fecha_pago >= $this->hoy;
                                             });
 
         $this->siguientecuota=$this->futuros->first();
 
-        $this->calcuminimo();
+        $this->calcuminimo($idmatricu);
     }
 
-    public function calcuminimo(){
+    public function calcuminimo($idmatricu){
         if($this->siguientecuota){
             if($this->hoy<=$this->siguientecuota->fecha_pago){
                 /* if($this->pendientes && $this->pendientes->sum('saldo')>0){
@@ -298,6 +300,14 @@ class RecibosPagoCrear extends Component
                     }
 
                     $this->minimodescuento=$this->siguientecuota->saldo-$this->descuentomin;
+
+                    $descuentopleno=Cartera::where('matricula_id',$idmatricu)
+                                            ->where('estado_cartera_id', '<',5)
+                                            ->max('valor');
+
+                    $this->descuentopleno=$descuentopleno-$this->descuentomin;
+
+
             }
         }
 
@@ -373,20 +383,14 @@ class RecibosPagoCrear extends Component
 
     public function obtienedescuento(){
 
-        $descu=Descuento::join('descuento_producto', 'descuentos.id', '=', 'descuento_producto.descuento_id')
-                        ->where('descuentos.aplica',$this->aplica)
-                        ->where('descuentos.status',1)
-                        ->where('descuento_producto.concepto_pago_id', $this->conceptoelegido)
-                        ->first();
+        if($this->descuconcepto){
+            if($this->descuconcepto && $this->descuconcepto->tipo===0){
 
-        if($descu){
-            if($descu && $descu->tipo===0){
-
-                $this->descuento=$descu->valor;
+                $this->descuento=$this->descuconcepto->valor;
             }
 
-            if($descu && $descu->tipo===1){
-                $this->descuento=$this->base*$descu->valor/100;
+            if($this->descuconcepto && $this->descuconcepto->tipo===1){
+                $this->descuento=$this->base*$this->descuconcepto->valor/100;
             }
         }else{
             $this->descuento=0;
@@ -395,7 +399,7 @@ class RecibosPagoCrear extends Component
         $this->pagado=$this->pagado+$this->descuento;
     }
 
-    public function calcudescu($id,$aplicaa,$inicial,$descuento,$fecha=null){
+    public function calcudescu($id,$aplicaa,$inicial,$descuento,$fecha=null){ //1, salod, valor, descuento,fecha
         $this->reset(
                     'descuento',
                     'base',
@@ -404,7 +408,7 @@ class RecibosPagoCrear extends Component
                     'diferencia'
                 );
 
-        $fecha=Carbon::create($fecha);
+        $fecha=Carbon::create($fecha)->format('Y-m-d');
 
         if($descuento && $descuento>0){
             $this->descuento=0;
@@ -428,6 +432,7 @@ class RecibosPagoCrear extends Component
                 } */
                 if($fecha>=$this->hoy && floatval($this->valor)===floatval($aplicaa)){
                     //dd(" HOY Es ANTES: ",$hoy,$fecha);
+                    //Log::info('Saldo y valor iguales');
                     $this->obtienedescuento();
                 }else{
                     //dd(" HOY ES DESPUES: ",$hoy,$fecha);
@@ -443,23 +448,24 @@ class RecibosPagoCrear extends Component
     public function cargaPago(){
 
         $this->limpiafin();
-                if($this->pagado<=$this->carteraSeleccionada->sum('saldo')){
+
+        if($this->pagado<=$this->carteraSeleccionada->sum('saldo')){
             foreach ($this->carteraSeleccionada as $value) {
 
-                                if($this->pagado>0){
-                    if($this->pagado>$value->saldo){
-                        $this->valor=$value->saldo;
-                                            }
+                    if($this->pagado>0){
+                        if($this->pagado>$value->saldo){
+                            $this->valor=$value->saldo;
+                        }
 
-                    if($this->pagado<=$value->saldo){
-                        $this->valor=$this->pagado;
-                                            }
-                    $this->conceptos=$value->concepto_pago_id;
-                    $this->asigOtro(1,$value);
-                    $this->pagado=$this->pagado-$value->saldo;
-                }
+                        if($this->pagado<=$value->saldo){
+                            $this->valor=$this->pagado;
+                        }
+                        $this->conceptos=$value->concepto_pago_id;
+                        $this->asigOtro(1,$value);
+                        $this->pagado=$this->pagado-$value->saldo;
+                    }
 
-                            }
+            }
 
             if($this->apl_descuento>0){
                 $this->cupondescuento();
@@ -513,7 +519,21 @@ class RecibosPagoCrear extends Component
 
     public function asigOtro($id, $item,$conf=null){
 
+        $this->reset('descuconcepto');
+
+        if($id===0){
+            $this->aplica=2;
+        } else if($id===1){
+            $this->aplica=0;
+        }
+
         $this->conceptoelegido=$item['concepto_pago_id'];
+
+        $this->descuconcepto=Descuento::join('descuento_producto', 'descuentos.id', '=', 'descuento_producto.descuento_id')
+                        ->where('descuentos.aplica',$this->aplica)
+                        ->where('descuentos.status',1)
+                        ->where('descuento_producto.concepto_pago_id', $this->conceptoelegido)
+                        ->first();
 
         if($this->siguientecuota){
             $saldosiguiente=$this->siguientecuota->saldo;
@@ -521,20 +541,39 @@ class RecibosPagoCrear extends Component
             $saldosiguiente=$this->pagado;
         }
 
-        if(floatval($this->minimodescuento)===floatval($this->pagado)){
+        $fechavence=Carbon::create($item['fecha_pago'])->format('Y-m-d');
 
-                        $this->descuento=$this->descuentomin;
-            $this->valor=$this->pagado+$this->descuentomin;
+        //vARIABLES:
+        //Log::info('HOY: '.$this->hoy.' VEnce: '.$fechavence.' vALOR MINIMO PARA DESCUENTO: '.$this->minimodescuento.' Pagado:'.$this->pagado.' Saldo Siguiente: '.$saldosiguiente.' Saldo: '.$item['saldo'].' Valor inicial de pago: '.$item['valor']);
 
-        }else if(floatval($this->minimodescuento)<floatval($this->pagado) && floatval($this->pagado)<floatval($saldosiguiente)){
+        if($this->hoy<=$fechavence && $this->descuconcepto){
 
-                        $this->descuento=$this->descuentomin;
-            $this->valor=$this->pagado+$this->descuentomin;
-            //$this->pagado=$this->pagado-$this->minimodescuento;
-            $this->pagado=$this->pagado+$this->descuento;
+            if(floatval($this->minimodescuento)===floatval($this->pagado)){
 
+                $this->descuento=$this->descuentomin;
+                $this->valor=$this->pagado+$this->descuentomin;
+
+                //Log::info('IGUALES el descuento: ' . $this->minimodescuento);
+                //$this->minimodescuento=$this->descuentopleno;
+
+            }else if(floatval($this->minimodescuento)<floatval($this->pagado) && floatval($this->pagado)<=floatval($saldosiguiente)){
+
+                //Log::info('PAGADO MENOR AL SALDO SIGUIENTE el descuento: ' . $this->minimodescuento.' sALDO SIGUIENTE: '.$saldosiguiente.' VALOR PAGADO: '.$this->pagado);
+                $this->descuento=$this->descuentomin;
+                $this->valor=$this->pagado+$this->descuentomin;
+                //$this->pagado=$this->pagado-$this->minimodescuento;
+                $this->pagado=$this->pagado+$this->descuento;
+
+                //$this->minimodescuento=$this->descuentopleno;
+
+            }else{
+                //Log::info('PROCESO NORMAL ');
+                //($this->minimodescuento=$this->descuentopleno;
+                $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+
+            }
         }else{
-                        $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
+            $this->calcudescu($id,$item['saldo'],$item['valor'],$item['descuento'],$item['fecha_pago']);
         }
 
         //Validar si el descuento es mayor que el precio
