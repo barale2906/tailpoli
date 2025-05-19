@@ -207,6 +207,8 @@ class CiclosReutilizar extends Component
         $lapdia=30*$lapso;
         $this->lapso=round($lapdia);
 
+        $observaciones=now()." El usuario: ".Auth::user()->name.' creo el ciclo';
+
         //Crear ciclo
         $ciclo=Ciclo::create([
                         'sede_id'       =>$this->actual->sede_id,
@@ -215,7 +217,9 @@ class CiclosReutilizar extends Component
                         'inicia'        =>$this->inicio,
                         'finaliza'      =>$this->fin,
                         'jornada'       =>$this->actual->jornada,
-                        'desertado'     =>$this->actual->desertado
+                        'desertado'     =>$this->actual->desertado,
+                        'creado'        =>Auth::user()->id,
+                        'observaciones' =>$observaciones
                     ]);
 
 

@@ -31,12 +31,16 @@ class finCiclo extends Command
     {
         Log::channel('comandos_log')->info(now().': Ejecuta Ciclo:vencimiento-finCiclo.');
         $ciclos=Ciclo::where('finaliza', Carbon::today()->subDay())
+                        ->where('status',true)
                         ->get();
 
         foreach ($ciclos as $value) {
             try {
+                $observa=now().": AUTOMATICO se cierra el ciclo por fecha de finalización. ----- ".$value->observaciones;
+
                 $value->update([
-                                    'status'=>false,
+                                    'status'        =>false,
+                                    'observaciones' =>$observa
                                 ]);
             } catch(Exception $exception){
                 Log::channel('comandos_log')->info('Linea ciclo: ' . $value->id . ' Ciclo No permitio registrar: ' . $exception->getMessage().' registro: '.$exception->getLine());

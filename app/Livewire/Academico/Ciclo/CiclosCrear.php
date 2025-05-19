@@ -433,6 +433,8 @@ class CiclosCrear extends Component
                                 ->orderBy('fecha_movimiento', 'ASC')
                                 ->first();
 
+        $observaciones=now()." El usuario: ".Auth::user()->name.' creo el ciclo';
+
         if($primera->fecha_movimiento===$this->inicia){
             if($this->inicia<$this->finaliza){
                 //Crear ciclo
@@ -443,7 +445,9 @@ class CiclosCrear extends Component
                     'inicia'        =>$this->inicia,
                     'finaliza'      =>$this->finaliza,
                     'jornada'       =>$this->jornada,
-                    'desertado'     =>$this->desertado
+                    'desertado'     =>$this->desertado,
+                    'creado'        =>Auth::user()->id,
+                    'observaciones' =>$observaciones
                 ]);
 
                 foreach ($this->seleccionados as $value) {
