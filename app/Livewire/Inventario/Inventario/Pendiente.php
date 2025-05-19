@@ -76,7 +76,9 @@ class Pendiente extends Component
 
         $pr=Inventario::where('producto_id', $ele->producto_id)
                         ->where('almacen_id', $this->almacen_id)
+                        ->where('entregado', true)
                         ->where('status', true)
+                        ->orderBy('id','ASC')
                         ->first();
 
         //dd($ele, $pr, $ele->producto_id, $this->almacen_id);
@@ -136,7 +138,9 @@ class Pendiente extends Component
             $evaluapoyo=Inventario::where('almacen_id', $this->almacen_id)
                                     ->where('producto_id', $value['producto_id'])
                                     ->where('status', true)
+                                    ->where('entregado', true)
                                     ->select('id','saldo')
+                                    ->orderBy('id','DESC')
                                     ->first();
 
             if($evaluapoyo){

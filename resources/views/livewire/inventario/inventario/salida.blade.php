@@ -156,37 +156,30 @@
                             </label>
                         </div>
                         @if ($saldo>0)
-                            <div class="mb-6">
-                                <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
-                                <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
-                                @error('cantidad')
-                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                                    </div>
-                                @enderror
-                            </div>
+
                         @else
                             <div class="mb-6">
                                 <label for="precio" class="block mb-2 text-sm font-medium text-orange-500 dark:text-white uppercase">
                                     No hay existencias de este producto, puede cargarlo y dejarlo pendiente para entrega
                                 </label>
                             </div>
-                            <div class="mb-6">
-                                <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
-                                <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
-                                @error('cantidad')
-                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                        <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
-                                    </div>
-                                @enderror
-                            </div>
-                            @can('fi_cierrecajaAprobar')
-                                <div class="mb-6">
-                                    <label for="apl_descuento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Aplicar Descuento</label>
-                                    <input type="text" id="apl_descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="descuento" wire:model.live="apl_descuento">
-                                </div>
-                            @endcan
+
                         @endif
+                        <div class="mb-6">
+                            <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad de productos</label>
+                            <input type="text" id="cantidad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cantidad" wire:model.live="cantidad">
+                            @error('cantidad')
+                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">¡IMPORTANTE!</span>  {{ $message }} .
+                                </div>
+                            @enderror
+                        </div>
+                        @can('fi_cierrecajaAprobar')
+                            <div class="mb-6">
+                                <label for="apl_descuento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Aplicar Descuento</label>
+                                <input type="text" id="apl_descuento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="descuento" wire:model.live="apl_descuento">
+                            </div>
+                        @endcan
 
                         {{-- <div class="mb-6">
                             <label for="descuento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descuento</label>

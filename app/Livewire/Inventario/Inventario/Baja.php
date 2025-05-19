@@ -61,6 +61,7 @@ class Baja extends Component
         $this->ultimoregistro= Inventario::where('almacen_id', $this->almacen->id)
                                         ->where('producto_id', $this->producto->id)
                                         ->where('status', true)
+                                        ->where('entregado', true)
                                         ->orderBy('id','DESC')
                                         ->first();
 

@@ -191,7 +191,7 @@ class Inventarios extends Component
         $this->is_saldos=true;
     }
 
-    private function inventarios()
+    private function registros()
     {
         return Inventario::buscar($this->buscamin)
                             ->crea($this->filtrocrea)
@@ -225,7 +225,7 @@ class Inventarios extends Component
     public function render()
     {
         return view('livewire.inventario.inventario.inventarios', [
-            'inventarios'   => $this->inventarios(),
+            'inventarios'   => $this->registros(),
             'almacenes'     =>$this->almacenes(),
         ]);
     }

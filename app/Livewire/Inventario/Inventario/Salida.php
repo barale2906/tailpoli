@@ -265,6 +265,8 @@ class Salida extends Component
         $this->ultimoregistro= Inventario::where('almacen_id', $this->almacen->id)
                                         ->where('producto_id', $this->producto->id)
                                         ->where('status', true)
+                                        ->where('entregado', true)
+                                        ->orderBy('id','DESC')
                                         ->first();
 
         if($this->ultimoregistro){
@@ -389,7 +391,15 @@ class Salida extends Component
             $this->Totaldescuento=$this->Totaldescuento+abs($descuento);
         }
 
-        $this->reset('cantidad','precio','producto','producto_id', 'saldo', 'descuento');
+        $this->reset(
+                        'cantidad',
+                        'precio',
+                        'producto',
+                        'producto_id',
+                        'saldo',
+                        'descuento',
+                        'apl_descuento'
+                    );
 
         $this->cargando();
     }
@@ -474,6 +484,7 @@ class Salida extends Component
                     $evaluapoyo=Inventario::where('almacen_id', $this->almacen->id)
                                             ->where('producto_id', $value->id_producto)
                                             ->where('status', true)
+                                            ->where('entregado', true)
                                             ->select('id','saldo')
                                             ->orderBy('id','DESC')
                                             ->first();

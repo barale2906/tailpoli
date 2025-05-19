@@ -7,7 +7,6 @@ use App\Models\Inventario\Almacen;
 use App\Models\Inventario\Inventario;
 use App\Models\Inventario\Producto;
 use App\Traits\CrtStatusTrait;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -95,6 +94,7 @@ class Envia extends Component
         $this->ultimoregistro= Inventario::where('almacen_id', $this->almacen->id)
                                         ->where('producto_id', $this->producto->id)
                                         ->where('status', true)
+                                        ->where('entregado', true)
                                         ->first();
 
         if($this->ultimoregistro){
@@ -174,6 +174,7 @@ class Envia extends Component
                 $evaluapoyo=Inventario::where('almacen_id', $this->almacen->id)
                                         ->where('producto_id', $value->id_producto)
                                         ->where('status', true)
+                                        ->where('entregado', true)
                                         ->select('id','saldo')
                                         ->first();
 
@@ -195,7 +196,7 @@ class Envia extends Component
                                     'producto_id'=>$value->id_producto,
                                     'user_id'=>Auth::user()->id,
                                     'compra_id'=>$value->id_ultimoreg,
-                                    'entregado'=>false
+                                    'entregado'=>true
                                 ]);
 
                         Inventario::whereId($value->id_ultimoreg)
@@ -207,6 +208,7 @@ class Envia extends Component
                         $hay=Inventario::where('almacen_id', $this->dealma)
                                         ->where('producto_id', $value->id_producto)
                                         ->where('status', true)
+                                        ->where('entregado', true)
                                         ->select('id','saldo')
                                         ->first();
 

@@ -48,6 +48,7 @@ class Saldos extends Component
     public function obteprod(){
         $this->reset('ids');
         $productos=Inventario::where('status',true)
+                                ->where('entregado', true)
                                 ->select('producto_id')
                                 ->groupBy('producto_id')
                                 ->get();
@@ -75,8 +76,10 @@ class Saldos extends Component
             ];
             foreach ($this->almacenes as $alma) {
                 $this->existencias=Inventario::where('status', true)
+                                        ->where('entregado', true)
                                         ->where('producto_id', $value->id)
                                         ->where('almacen_id', $alma->id)
+                                        ->orderBy('id','DESC')
                                         ->first();
 
                 if($this->existencias){

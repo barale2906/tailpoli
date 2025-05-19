@@ -21,7 +21,7 @@ class Recep extends Component
         $this->traslados=Inventario::where('recibe', $almacen_id)
                                     ->where('entregado', false)
                                     ->where('tipo', 3)
-                                    ->orderBy('traslado', 'ASC')
+                                    ->orderBy('traslado', 'DESC')
                                     ->get();
         $this->enca();
     }
@@ -60,7 +60,9 @@ class Recep extends Component
 
         $ultimo=Inventario::where('status', true)
                             ->where('almacen_id', $this->almacen->id)
+                            ->where('entregado', true)
                             ->where('producto_id', $otros['producto_id'])
+                            ->orderBy('id','DESC')
                             ->first();
 
         $enviado=Inventario::find($otros['compra_id']);
@@ -88,9 +90,11 @@ class Recep extends Component
                             'entregado'         =>true,
                         ]);
 
-        $ultimo->update([
-            'status'    =>false
-        ]);
+        if ($ultimo) {
+            $ultimo->update([
+                'status'    =>false
+            ]);
+        }
 
         $this->dispatch('alerta', name:'Recibido.');
         $this->reset('id_mov');
