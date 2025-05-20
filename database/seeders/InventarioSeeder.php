@@ -32,7 +32,7 @@ class InventarioSeeder extends Seeder
                         'cantidad'              =>intval($data[0]),
                         'saldo'                 =>intval($data[0]),
                         'precio'                =>1,
-                        'descripcion'           =>'POLIANDINO INVENTARIO 2025.',
+                        'descripcion'           =>'2025-05-20 00:26:38 Ajuste de inventario nueva actualización - Gerencia -----',
                         'status'                =>1,
                         'entregado'             =>1,
                         'almacen_id'            =>intval($data[1]),
