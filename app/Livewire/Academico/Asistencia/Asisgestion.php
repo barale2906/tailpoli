@@ -188,6 +188,15 @@ class Asisgestion extends Component
     }
 
     public function genera($asistencia){
+
+        // Primero verificamos si el alumno ya existe en $this->asist
+        foreach ($this->asist as $registro) {
+            if ($registro[1] === $asistencia->alumno_id) { // El índice 1 contiene el alumno_id
+                return; // Si ya existe, salimos de la función
+            }
+        }
+
+    // Si no existe, continuamos con el código original
         $as=array();
 
         array_push($as, $asistencia->id);
