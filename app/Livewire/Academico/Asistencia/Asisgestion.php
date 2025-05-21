@@ -259,9 +259,19 @@ class Asisgestion extends Component
                     ->orderBy('fecha_clase','DESC')
                     ->first();
 
+        if($detalle){
+            $idcontrol=$detalle;
+        }else{
+            $existe=DB::table('asistencia_detalle')
+                        ->where('alumno_id',$alumno_id)
+                        ->where('grupo_id',$this->actual->grupo_id)
+                        ->first();
+            $idcontrol=$existe->id;
+        }
+
         //Verificar la carga
         $esta=DB::table('asistencia_detalle_registro')
-                    ->where('asistencia_detalle_id',$detalle)
+                    ->where('asistencia_detalle_id',$idcontrol)
                     ->where('registro_asistencia_id',$registro->id)
                     ->where('fecha_asis',$registro->fecha_clase)
                     ->count('id');
@@ -269,7 +279,7 @@ class Asisgestion extends Component
         if($esta===0){
             DB::table('asistencia_detalle_registro')
             ->insert([
-                'asistencia_detalle_id'     => $detalle,
+                'asistencia_detalle_id'     => $idcontrol,
                 'fecha_asis'                => $registro->fecha_clase,
                 'registro_asistencia_id'    => $registro->id,
                 'created_at'                => now(),
