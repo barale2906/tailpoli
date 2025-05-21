@@ -286,7 +286,7 @@
                                             @foreach ($controle->ciclo->ciclogrupos as $item)
                                                 <div class="block max-w-sm p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-cyan-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                                     <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white capitalize">
-                                                        {{$item->grupo->name}}
+                                                        {{$item->grupo->id}} - {{$item->grupo->name}}
                                                     </h5>
                                                     <p class="font-normal text-xs text-gray-700 dark:text-gray-400 capitalize">
                                                         Modulo: {{$item->grupo->modulo->name}}

@@ -25,32 +25,34 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
     private $final=array();
     private $fileName = "Asistencias.xlsx";
     private $writerType = \Maatwebsite\Excel\Excel::XLSX;
+    private $nombreGrupo;
 
-    public function __construct($id, $xls, $asist)
+    public function __construct($id, $xls, $asist, $name)
     {
-        $this->id=$id;
-        $this->xls=$xls;
-        $this->asist=$asist;
+        $this->id = $id;
+        $this->xls = $xls;
+        $this->asist = $asist;
+        $this->nombreGrupo = $name;
 
         $this->carga();
     }
 
     public function carga(){
-
+        $key = 0;
         foreach ($this->asist as $value) {
-            $as=array();
-            array_push($as, $value[2]);
-            $this->individual($value,$as);
+            $as = array();
+            array_push($as, ($key + 1) . ' -. ' . $value[2]);
+            $this->individual($value, $as);
+            $key++;
         }
     }
 
-    public function individual($item,$arr){
-        $as=array();
-        $as=$arr;
+    public function individual($item, $arr){
+        $as = array();
+        $as = $arr;
         for ($i = 3; $i < count($item); $i++) {
-            array_push($as, $item[$i]);
+            array_push($as, $item[$i] === "X" ? "X" : "");
         }
-
         array_push($this->final, $as);
     }
 
@@ -59,10 +61,7 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
     */
     public function collection()
     {
-        return DB::table('asistencia_detalle')
-                    ->where('asistencia_id', $this->id)
-                    ->orderBy('alumno')
-                    ->first();
+        return collect([1]);
     }
 
     public function startCell(): string
@@ -72,13 +71,18 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
 
     public function headings(): array
     {
-
-        return $this->xls;
+        //$headers = ['Alumno'];
+        foreach ($this->xls as $header) {
+            /* if ($header !== 'Alumno') {
+                $headers[] = $header;
+            } */
+            $headers[] = $header;
+        }
+        return $headers;
     }
 
     public function map($asistencia): array
     {
-
         return $this->final;
     }
 
@@ -105,6 +109,8 @@ class AcaAsistenciaExport implements FromCollection, WithCustomStartCell, Respon
     {
         $sheet->setTitle('Asistencias');
         $sheet->setCellValue('B2', 'LISTADO DE ASISTENCIAS A: '.now());
-        $sheet->mergeCells('B2:E2');
+        $sheet->setCellValue('B3', strtoupper($this->nombreGrupo));
+        $sheet->mergeCells('B2:G2');
+        $sheet->mergeCells('B3:G3');
     }
 }

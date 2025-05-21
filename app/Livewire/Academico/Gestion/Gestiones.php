@@ -27,7 +27,7 @@ class Gestiones extends Component
 
     public $ordena='estado_cartera';
     public $ordenado='DESC';
-    public $pages = 3;
+    public $pages = 15;
 
     public $is_modify = true;
     public $is_creating = false;

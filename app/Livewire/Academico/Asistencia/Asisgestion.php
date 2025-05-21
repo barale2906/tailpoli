@@ -156,9 +156,7 @@ class Asisgestion extends Component
     public function formaencabezado(){
 
         $this->reset('xls');
-        array_push($this->xls, "grupo");
-        array_push($this->xls, "profesor");
-        array_push($this->xls, "alumno");
+        array_push($this->xls, "Alumno");
 
         if($this->actual->registros>0){
 
@@ -169,6 +167,7 @@ class Asisgestion extends Component
 
             foreach ($this->clases as $value) {
                 array_push($this->encabezado, $value->fecha_clase);
+                array_push($this->xls, $value->fecha_clase);
                 array_push($this->encabid, $value->id);
             }
         }
@@ -300,7 +299,7 @@ class Asisgestion extends Component
                 }
             }
 
-            if($registro->fecha_clase>=$this->margen){
+            if($crt && $registro->fecha_clase>=$this->margen){
 
                 if($crt->status_est===7 || $crt->status_est===9){
                     $crt->update([
@@ -331,7 +330,7 @@ class Asisgestion extends Component
     }
 
     public function exportar(){
-        return new AcaAsistenciaExport($this->actual->id, $this->xls,$this->asist);
+        return new AcaAsistenciaExport($this->actual->id, $this->xls,$this->asist,$this->grupo->name);
     }
 
     public function render()
