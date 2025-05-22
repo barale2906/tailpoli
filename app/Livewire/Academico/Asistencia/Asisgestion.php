@@ -32,6 +32,7 @@ class Asisgestion extends Component
 
     public function mount($ciclo, $elegido=null, $estudiante_id=null){
 
+        //$this->validadobles();
         $this->ciclo=$ciclo;
         $this->grupo_id=$elegido;
         $this->hoy=Carbon::today();
@@ -42,6 +43,28 @@ class Asisgestion extends Component
             $this->estudiante=User::find($estudiante_id);
         }
         $this->cargarActual();
+    }
+
+    private function validadobles(){
+        $dobles = DB::table('asistencia_detalle')
+        ->select('alumno_id', 'grupo_id', DB::raw('COUNT(*) as total'))
+        ->groupBy('alumno_id', 'grupo_id')
+        ->having('total', '>', 1)
+        ->get();
+
+        $ids = [];
+        foreach ($dobles as $doble) {
+            $registros = DB::table('asistencia_detalle')
+                ->where('alumno_id', $doble->alumno_id)
+                ->where('grupo_id', $doble->grupo_id)
+                ->get();
+
+            foreach ($registros as $registro) {
+                $ids[] = $registro->id;
+            }
+        }
+
+        dd($ids);
     }
 
     public function cargarActual(){
@@ -191,7 +214,7 @@ class Asisgestion extends Component
 
         // Primero verificamos si el alumno ya existe en $this->asist
         foreach ($this->asist as $registro) {
-            if ($registro[1] === $asistencia->alumno_id) { // El índice 1 contiene el alumno_id
+            if ($registro[1] === $asistencia->alumno_id && $registro[0] === $asistencia->id) { // El índice 1 contiene el alumno_id
                 return; // Si ya existe, salimos de la función
             }
         }
