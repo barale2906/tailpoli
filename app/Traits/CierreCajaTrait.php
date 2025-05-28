@@ -191,9 +191,9 @@ trait CierreCajaTrait
      * Reglas de validación
      */
     protected $rules = [
-        'valor_total'       => 'required',
+        'valor_total'       => 'required|numeric|min:0',
         'comentarios'       => 'required',
-        'dinero_entegado'   => 'required'
+        'dinero_entegado'   => 'required|numeric|min:0'
     ];
 
     /**
@@ -216,7 +216,7 @@ trait CierreCajaTrait
         }
 
         // validate
-        //$this->validate();
+        $this->validate();
 
         $cierre=CierreCaja::create([
             'fecha_cierre'=>now(),

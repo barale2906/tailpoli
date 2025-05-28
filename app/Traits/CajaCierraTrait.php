@@ -346,9 +346,9 @@ trait CajaCierraTrait
      * Reglas de validación
      */
     protected $rules = [
-        'valor_total'       => 'required',
+        'valor_total'       => 'required|numeric|min:0',
         'comentarios'       => 'required',
-        'dinero_entegado'   => 'required'
+        'dinero_entegado'   => 'required|numeric|min:0'
     ];
 
     /**
@@ -370,83 +370,79 @@ trait CajaCierraTrait
         // validate
         $this->validate();
 
-        if($this->dinero_entegado && $this->dinero_entegado>=0){
-            $cierre=CierreCaja::create([
-                'fecha_cierre'=>now(),
-                'fecha'=>now(),
-                'valor_total'=>$this->valor_total,
-                'valor_reportado'=>$this->dinero_entegado,
-                'efectivo'=>$this->totalefectivo,
-                'efectivo_descuento'=>$this->totaldesefectivo,
-                'efectivo_disponible'=>$this->efectivoentrega,
-                'cobro_tarjeta'=>$this->totaltarjeta,
-                'tarjeta'=>$this->tarjetaventa,
-                'descuentotal'=>$this->descuentosT,
-                'observaciones'=>$this->comentarios,
+        $cierre=CierreCaja::create([
+            'fecha_cierre'=>now(),
+            'fecha'=>now(),
+            'valor_total'=>doubleval($this->valor_total),
+            'valor_reportado'=>doubleval($this->dinero_entegado),
+            'efectivo'=>$this->totalefectivo,
+            'efectivo_descuento'=>$this->totaldesefectivo,
+            'efectivo_disponible'=>$this->efectivoentrega,
+            'cobro_tarjeta'=>$this->totaltarjeta,
+            'tarjeta'=>$this->tarjetaventa,
+            'descuentotal'=>$this->descuentosT,
+            'observaciones'=>$this->comentarios,
 
-                'valor_pensiones'=>$this->totalpensiones,
-                'valor_efectivo'=>$this->totalefectivopensiones,
-                'valor_tarjeta'=>$this->totaltarjetapensiones,
-                'valor_cheque'=>$this->totalchequepensiones,
-                'valor_consignacion'=>$this->totaltransaccionpensiones,
+            'valor_pensiones'=>$this->totalpensiones,
+            'valor_efectivo'=>$this->totalefectivopensiones,
+            'valor_tarjeta'=>$this->totaltarjetapensiones,
+            'valor_cheque'=>$this->totalchequepensiones,
+            'valor_consignacion'=>$this->totaltransaccionpensiones,
 
-                'valor_otros'=>$this->valor_otros,
-                'valor_efectivo_o'=>$this->valor_efectivo_o,
-                'valor_tarjeta_o'=>$this->valor_otros-$this->valor_efectivo_o-$this->valor_cheque_o-$this->valor_consignacion_o,
-                'valor_cheque_o'=>$this->valor_cheque_o,
-                'valor_consignacion_o'=>$this->valor_consignacion_o,
+            'valor_otros'=>$this->valor_otros,
+            'valor_efectivo_o'=>$this->valor_efectivo_o,
+            'valor_tarjeta_o'=>$this->valor_otros-$this->valor_efectivo_o-$this->valor_cheque_o-$this->valor_consignacion_o,
+            'valor_cheque_o'=>$this->valor_cheque_o,
+            'valor_consignacion_o'=>$this->valor_consignacion_o,
 
-                'sede_id'=>$this->sede_id,
-                'cajero_id'=>$this->cajero_id,
-                'coorcaja_id'=>Auth::user()->id,
-                'dia'=>$this->dia,
-                'status'=>$this->status
+            'sede_id'=>$this->sede_id,
+            'cajero_id'=>$this->cajero_id,
+            'coorcaja_id'=>Auth::user()->id,
+            'dia'=>$this->dia,
+            'status'=>$this->status
+        ]);
+
+        //relacionar recibos
+        foreach ($this->reciboselegidos as $value) {
+
+            //Actualizar recibo
+            ReciboPago::whereId($value->id)->update([
+                                    'status'=>1,
+                                    'cierre'=>$cierre->id
+                                ]);
+
+            //Cargar recibo al cierre
+            DB::table('cierre_caja_recibo_pago')
+            ->insert([
+                'cierre_caja_id'=>$cierre->id,
+                'recibo_pago_id'=>$value->id,
+                'created_at'=>now(),
+                'updated_at'=>now(),
             ]);
-
-            //relacionar recibos
-            foreach ($this->reciboselegidos as $value) {
-
-                //Actualizar recibo
-                ReciboPago::whereId($value->id)->update([
-                                        'status'=>1,
-                                        'cierre'=>$cierre->id
-                                    ]);
-
-                //Cargar recibo al cierre
-                DB::table('cierre_caja_recibo_pago')
-                ->insert([
-                    'cierre_caja_id'=>$cierre->id,
-                    'recibo_pago_id'=>$value->id,
-                    'created_at'=>now(),
-                    'updated_at'=>now(),
-                ]);
-            }
-
-            //agregar recibos anulados
-            ReciboPago::where('creador_id', $this->cajero_id)
-                        ->where('status', 2)
-                        ->where('cierre', null)
-                        ->update([
-                            'cierre'=> $cierre->id
-                        ]);
-
-            //Datos de impresión
-            $this->elegido=$cierre;
-
-            // Notificación
-            $this->dispatch('alerta', name:'Se ha realizado correctamente el cierre de caja N°: '.$cierre->id);
-            $this->resetFields();
-
-            //refresh
-            $this->dispatch('refresh');
-            $this->print=!$this->print;
-
-            $ruta='/impresiones/impcierre?o='.$this->ruta.'&c='.$cierre->id;
-
-            $this->redirect($ruta);
-        }else{
-            $this->dispatch('alerta', name:'Debe registrar un valor en el campo de dinero entregado.');
         }
+
+        //agregar recibos anulados
+        ReciboPago::where('creador_id', $this->cajero_id)
+                    ->where('status', 2)
+                    ->where('cierre', null)
+                    ->update([
+                        'cierre'=> $cierre->id
+                    ]);
+
+        //Datos de impresión
+        $this->elegido=$cierre;
+
+        // Notificación
+        $this->dispatch('alerta', name:'Se ha realizado correctamente el cierre de caja N°: '.$cierre->id);
+        $this->resetFields();
+
+        //refresh
+        $this->dispatch('refresh');
+        $this->print=!$this->print;
+
+        $ruta='/impresiones/impcierre?o='.$this->ruta.'&c='.$cierre->id;
+
+        $this->redirect($ruta);
 
 
     }
