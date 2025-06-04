@@ -15,14 +15,14 @@
 
         </a>
 
-        <a href="" wire:click.prevent="show(5)" class="block max-w-sm p-6 bg-white border border-gray-200 ring rounded-2xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        {{-- <a href="" wire:click.prevent="show(5)" class="block max-w-sm p-6 bg-white border border-gray-200 ring rounded-2xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
             <h5 class="mb-2 text-2xl font-bold  tracking-tight text-gray-900 dark:text-white">
                 Reporte de Cartera / Gerencia
             </h5>
             <p class="font-normal text-justify text-gray-700 dark:text-gray-400">
                 Este reporte entrega el consolidado por mes y por sede de: Estudiantes Activos, Mora de los Activos, Alumnos que inician, se matriculan, desertan y se reintegran en el respectivo mes.
-            </p>
+            </p> --}}
 
 
         <a href="" wire:click.prevent="show(2)" class="block max-w-sm p-6 bg-white border border-gray-200 ring rounded-2xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
